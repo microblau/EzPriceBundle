@@ -28,7 +28,7 @@
 </head>
 
 
-<body {if or( $module_result.node_id|eq(2) )}id="home"{/if}>
+<body {if or( $module_result.node_id|eq(2) )}id="home"{/if} {if $module_result.content_info.class_identifier|eq('producto_imemento'}class="imemento"{/if}>
     <div id="wrapper">
   {if and( is_set( $pagedata.persistent_variable.extra_template_list ), 
              $pagedata.persistent_variable.extra_template_list|count() )}
