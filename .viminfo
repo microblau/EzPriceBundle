@@ -1,0 +1,403 @@
+# Este fichero viminfo fue generado por Vim 7.1.
+# Usted puede editarlo, ¡solo si tiene cuidado!
+
+# Valor de «encoding» cuando se escribió este fichero
+*encoding=utf-8
+
+
+# hlsearch on (H) or off (h):
+~H
+# Last Search Pattern:
+~MSle0~/i = 0
+
+# Última cadena de sustitución:
+$
+
+# Historia de «Línea de comandos» (de lo más nuevo a lo más antiguo):
+:q!
+:q
+:wq
+:Q!
+:a!
+:1
+:Wq
+:wQ
+:WQ
+:qª
+:q<F1>ª
+:w
+:$
+:W
+:exit
+:s
+:quit
+:'<,'>q!
+:Q1
+:x
+:48
+:44
+:9
+:77
+:!!
+:q1
+:!
+:qw
+:x!
+:q:!
+:.,.+1!:q!
+
+# Historia de «Cadena de búsqueda» (de lo más nuevo a lo más antiguo):
+?/i = 0
+?/prec
+?/DebugBy
+?/versiones.1
+?/boxPr
+?/ventaj
+?/Prefie
+?/99
+?/pre
+?/pri
+?/pr
+?/quiero
+?/Desde
+?/quier
+?/Ahora
+?/Aho
+?/Prué
+?/Pru
+?/producto_naut
+?/csv-e
+?/encuesta.label
+?/Questions marked
+?/questions
+?/Las pregun
+?/las preguntas mar
+?/tw
+?/tubeplay
+?/youtube-p
+?/tube
+?/tubepl
+?/azH
+?/az
+?/sage
+?/block
+?/block_sag
+?/dom
+? ^\d\{3}ÿ
+?/print
+?//
+?/Debug
+?/Pay
+?/7
+?/newsl
+?/xml
+?/Policy
+?/ezjsco
+?/UPDATE
+?/parent
+?/loQu
+?/h1
+
+# Historia de «Expresión» (de lo más nuevo a lo más antiguo):
+
+# Historia de «Línea de entrada» (de lo más nuevo a lo más antiguo):
+
+# Historia de «Línea de entrada» (de lo más nuevo a lo más antiguo):
+
+# Registros:
+"0	LINE	0
+	$FunctionList['encuesta'] = array( );
+""1	LINE	0
+	                $i = 0;
+"2	LINE	0
+	                        $i++;
+"3	LINE	0
+	                    }
+"4	LINE	0
+	                   if( $i<=20 ){
+"5	LINE	0
+	-->
+"6	LINE	0
+	<!-- {$node.data_map.precio.content|attribute(show)}
+"7	LINE	0
+	428
+<ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEArlRllm6iDq4mZvjnasnI2eE7wpPe3ynvXPk5b5b06UZp0PcrrSkPoCy4rsXYZKcR1cC6UbYgwFRKwdypjdyUjnNHezYg/8jaCLHH9SfOkADEtGO0VSXnoOzTBKyrral64v5l2O8TljrROBZdEuIwjwsBX8qpnJayzxIThCdC8Pw5lxy0qDy98cuiJpEkM8o1VlXyM5XWxrI6PTPTuPeKa4sv/qMRDR7pmbESj+AeUUwwSgDDMiEJ85m5hKa505c7w435ClenyAhaF4bdI2J9Msa9mhffthtHG8hifv+Z7asQ13LsMVTPtv11uO7WFLDKYDNPNmV37I5y601QXYQZaQ== joseignacio.honrado@back04.grupoonetec.local
+"8	LINE	0
+	    'functions' => array( 'kelkoo' ),
+"9	LINE	0
+	
+"e	CHAR	0
+	w
+"-	CHAR	0
+	t
+
+# Marcas en el fichero:
+'0  1391  16  ~/kernel/classes/ezcontentobject.php
+'1  1  0  ~/kernel/content/ezcontentoperationcollection.php
+'2  46  36  ~/design/site/templates/common/ficha_formacion/destacado_principal.tpl
+'3  46  2  ~/design/site/templates/common/ficha_formacion/destacado_principal.tpl
+'4  46  158  ~/design/site/templates/common/ficha_formacion/destacado_principal.tpl
+'5  1  0  ~/design/site/override/templates/full/detallecurso_distancia.tpl
+'6  541  18  ~/extension/efltwitter/classes/twitter/twitter.php
+'7  3  424  ~/.ssh/authorized_keys
+'8  10  0  ~/.ssh/known_hosts
+'9  11  424  ~/.ssh/known_hosts
+
+# Lista de saltos (el más reciente va primero):
+-'  1391  16  ~/kernel/classes/ezcontentobject.php
+-'  1  0  ~/kernel/classes/ezcontentobject.php
+-'  1  0  ~/kernel/content/ezcontentoperationcollection.php
+-'  46  36  ~/design/site/templates/common/ficha_formacion/destacado_principal.tpl
+-'  1  0  ~/design/site/templates/common/ficha_formacion/destacado_principal.tpl
+-'  1  0  ~/design/site/override/templates/full/detallecurso_distancia.tpl
+-'  541  18  ~/extension/efltwitter/classes/twitter/twitter.php
+-'  1  0  ~/extension/efltwitter/classes/twitter/twitter.php
+-'  3  424  ~/.ssh/authorized_keys
+-'  1  0  ~/.ssh/authorized_keys
+-'  10  0  ~/.ssh/known_hosts
+-'  1  0  ~/.ssh/known_hosts
+-'  11  424  ~/.ssh/known_hosts
+-'  85  13  ~/settings/override/site.ini.append.php
+-'  1  0  ~/settings/override/site.ini.append.php
+-'  200  31  ~/design/newhome/templates/common/producto_nautis.tpl
+-'  1  0  ~/design/newhome/templates/common/producto_nautis.tpl
+-'  236  50  ~/design/newhome/templates/common/producto_nautis.tpl
+-'  242  40  ~/design/newhome/templates/common/producto_nautis.tpl
+-'  149  41  ~/design/newhome/templates/common/producto_nautis.tpl
+-'  440  49  ~/design/newhome/templates/common/producto_nautis.tpl
+-'  402  49  ~/design/newhome/templates/common/producto_nautis.tpl
+-'  364  49  ~/design/newhome/templates/common/producto_nautis.tpl
+-'  296  51  ~/design/newhome/templates/common/producto_nautis.tpl
+-'  244  44  ~/design/newhome/templates/common/producto_nautis.tpl
+-'  202  44  ~/design/newhome/templates/common/producto_nautis.tpl
+-'  183  39  ~/design/newhome/templates/common/producto_nautis.tpl
+-'  40  0  ~/design/newhome/templates/common/producto_nautis.tpl
+-'  1  0  ~/design/newhome/templates/common/producto_nautis
+-'  29  3  ~/design/newhome/templates/node/view/relacionadoonline.tpl
+-'  1  0  ~/design/newhome/templates/node/view/relacionadoonline.tpl
+-'  1230  0  ~/design/newhome/templates/common/producto.tpl
+-'  1  0  ~/design/newhome/templates/common/producto.tpl
+-'  35  1  ~/design/newhome/override/templates/relacionado/producto_nautis.tpl
+-'  1  0  ~/design/newhome/override/templates/relacionado/producto_nautis.tpl
+-'  48  64  ~/design/newhome/override/templates/block/destacado.tpl
+-'  55  9  ~/design/newhome/override/templates/block/destacado.tpl
+-'  56  15  ~/design/newhome/override/templates/block/destacado.tpl
+-'  1  0  ~/design/newhome/override/templates/block/destacado.tpl
+-'  51  156  ~/design/newhome/override/templates/line/producto_nautis.tpl
+-'  55  44  ~/design/newhome/override/templates/line/producto_nautis.tpl
+-'  1  9  ~/design/newhome/override/templates/line/producto_nautis.tpl
+-'  36  16  ~/design/newhome/override/templates/line/producto_nautis.tpl
+-'  57  0  ~/design/newhome/override/templates/block/pruebagratis.tpl
+-'  1  0  ~/design/newhome/override/templates/block/pruebagratis.tpl
+-'  1  1  ~/design/newhome/override/templates/block/sabe_lo_que_quiere.tpl
+-'  1  95  ~/design/newhome/templates/content/collectedinfomail/prueba_producto_form.tpl
+-'  336  52  ~/design/newhome/templates/common/producto_nautis.tpl
+-'  304  55  ~/design/newhome/templates/common/producto_nautis.tpl
+-'  265  55  ~/design/newhome/templates/common/producto_nautis.tpl
+-'  190  52  ~/design/newhome/templates/common/producto_nautis.tpl
+-'  48  0  ~/design/newhome/templates/common/producto_nautis.tpl
+-'  39  42  ~/design/newhome/override/templates/line/producto_nautis.tpl
+-'  167  39  ~/design/newhome/override/templates/full/listadoproductos.tpl
+-'  1  0  ~/design/newhome/override/templates/full/listadoproductos.tpl
+-'  237  29  ~/extension/utils/modules/basket/module.php
+-'  1  0  ~/extension/utils/modules/basket/module.php
+-'  243  19  ~/extension/utils/modules/basket/module.php
+-'  487  0  ~/design/newhome/stylesheets/custom.css
+-'  1  0  ~/design/newhome/stylesheets/custom.css
+-'  2307  64  ~/design/newhome/stylesheets/presentation.css
+-'  1  0  ~/design/newhome/stylesheets/presentation.css
+-'  75  0  ~/settings/override/site.ini.append.php
+-'  5  0  ~/extension/ezsurvey/design/standard/templates/content/datatype/view/ezsurvey.tpl
+-'  1  0  ~/extension/ezsurvey/design/standard/templates/content/datatype/view/ezsurvey.tpl
+-'  49  126  ~/extension/ezsurvey/design/standard/templates/content/datatype/view/ezsurvey.tpl
+-'  3  13  ~/extension/ezsurvey/design/standard/templates/content/datatype/view/ezsurvey.tpl
+-'  215  21  ~/extension/ezsurvey/translations/esl-ES/translation.ts
+-'  1  0  ~/extension/ezsurvey/translations/esl-ES/translation.ts
+-'  135  1  ~/extension/utils/cronjobs/discounts.php
+-'  1  0  ~/extension/utils/cronjobs/discounts.php
+-'  50  22  ~/design/newhome/templates/page_footer.tpl
+-'  135  0  ~/design/newhome/templates/page_footer.tpl
+-'  1  0  ~/design/newhome/templates/page_footer.tpl
+-'  1  0  ~/design/newhome/javascript/home.js
+-'  205  28  ~/design/newhome/javascript/home.js
+-'  100  0  ~/design/newhome/javascript/home.js
+-'  36  57  ~/design/newhome/override/templates/block/promocionprimaria_related_objects.tpl
+-'  54  0  ~/design/newhome/override/templates/block/promocionprimaria_related_objects.tpl
+-'  1  0  ~/design/newhome/override/templates/block/promocionprimaria_related_objects.tpl
+-'  37  10  ~/design/newhome/override/templates/block/promocionprimaria_related_objects.tpl
+-'  119  0  ~/design/newhome/javascript/home.js
+-'  127  0  ~/design/newhome/override/templates/block/promocionprimaria_related_objects.tpl
+-'  106  40  ~/settings/override/site.ini.append.php
+-'  1  0  ~/extension/utils/modules/basket/csv-encuestas.php
+-'  19  36  ~/extension/utils/settings/site.ini.append.php
+-'  1  0  ~/extension/utils/settings/site.ini.append.php
+-'  248  4  ~/extension/utils/modules/basket/module.php
+-'  42  17  ~/extension/ezsurvey/settings/ezsurvey.ini.append.php
+-'  1  0  ~/extension/ezsurvey/settings/ezsurvey.ini.append.php
+-'  890  0  ~/extension/cjw_newsletter/design/standard/templates/newsletter/skin/efl/outputformat/html.tpl
+-'  1  0  ~/extension/cjw_newsletter/design/standard/templates/newsletter/skin/efl/outputformat/html.tpl
+-'  196  0  ~/extension/utils/settings/siteaccess/newhome/override.ini.append.php
+-'  1  0  ~/extension/utils/settings/siteaccess/newhome/override.ini.append.php
+-'  2  0  ~/extension/utils/settings/override.ini.append.php
+-'  1  0  ~/extension/utils/settings/override.ini.append.php
+-'  15  0  ~/extension/utils/settings/siteaccess/newhome/override.ini.append.php
+-'  3  1  ~/extension/utils/settings/siteaccess/newhome/override.ini.append.php
+-'  556  1  ~/settings/siteaccess/newhome/override.ini.append.php
+
+# Historia de las marcas en los ficheros (de la más reciente a la más antigua):
+
+> ~/kernel/classes/ezcontentobject.php
+	"	1391	16
+	.	1391	0
+	+	1393	0
+	+	1398	0
+	+	1391	0
+
+> ~/kernel/content/ezcontentoperationcollection.php
+	"	1	0
+
+> ~/design/site/templates/common/ficha_formacion/destacado_principal.tpl
+	"	46	36
+	^	46	158
+	.	46	0
+	+	46	155
+	+	46	44
+	+	46	2
+	+	46	34
+	+	46	152
+	+	46	0
+
+> ~/design/site/override/templates/full/detallecurso_distancia.tpl
+	"	1	0
+
+> ~/extension/efltwitter/classes/twitter/twitter.php
+	"	541	18
+
+> ~/.ssh/authorized_keys
+	"	3	424
+	^	3	425
+	.	3	406
+	+	3	406
+
+> ~/.ssh/known_hosts
+	"	10	0
+	.	11	0
+	+	11	406
+	+	11	0
+
+> ~/settings/override/site.ini.append.php
+	"	85	13
+	^	85	14
+	.	85	13
+	+	39	0
+	+	118	0
+	+	85	14
+	+	106	40
+	+	85	13
+
+> ~/design/newhome/templates/common/producto_nautis.tpl
+	"	200	31
+	^	200	32
+	.	200	31
+	+	184	2
+	+	190	52
+	+	231	1
+	+	236	52
+	+	265	56
+	+	281	1
+	+	285	52
+	+	304	56
+	+	332	168
+	+	336	52
+	+	160	5
+	+	183	40
+	+	200	31
+	+	242	40
+	+	200	30
+	+	242	40
+	+	236	51
+	+	200	31
+
+> ~/design/newhome/templates/common/producto_nautis
+	"	1	0
+
+> ~/design/newhome/templates/node/view/relacionadoonline.tpl
+	"	29	3
+	^	29	4
+	.	29	3
+	+	28	0
+	+	26	37
+	+	29	3
+
+> ~/design/newhome/templates/common/producto.tpl
+	"	1230	0
+
+> ~/design/newhome/override/templates/relacionado/producto_nautis.tpl
+	"	35	1
+	^	35	2
+	.	35	1
+	+	30	1
+	+	35	1
+
+> ~/design/newhome/override/templates/block/destacado.tpl
+	"	48	64
+	.	48	64
+	+	48	64
+
+> ~/design/newhome/override/templates/line/producto_nautis.tpl
+	"	51	156
+	^	51	157
+	.	51	156
+	+	37	0
+	+	36	18
+	+	37	94
+	+	36	38
+	+	39	42
+	+	51	116
+	+	36	16
+	+	49	0
+	+	50	0
+	+	51	156
+
+> ~/design/newhome/override/templates/block/pruebagratis.tpl
+	"	57	0
+	^	57	19
+	.	57	18
+	+	54	50
+	+	57	0
+	+	54	58
+	+	55	46
+	+	56	43
+	+	57	18
+
+> ~/design/newhome/override/templates/block/sabe_lo_que_quiere.tpl
+	"	1	1
+
+> ~/design/newhome/templates/content/collectedinfomail/prueba_producto_form.tpl
+	"	1	95
+	^	1	96
+	.	1	95
+	+	1	95
+
+> ~/design/newhome/override/templates/full/listadoproductos.tpl
+	"	167	39
+
+> ~/extension/utils/modules/basket/module.php
+	"	237	29
+	^	237	30
+	.	237	30
+	+	249	58
+	+	240	23
+	+	248	30
+	+	248	0
+	+	240	0
+	+	244	58
+	+	241	24
+	+	243	20
+	+	239	0
+	+	238	29
+	+	236	23
+	+	237	39
+	+	246	37
+	+	247	27
+	+	237	30

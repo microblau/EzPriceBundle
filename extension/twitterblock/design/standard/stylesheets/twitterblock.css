@@ -1,0 +1,187 @@
+/** Style the tweets */
+
+/*nuevos*/
+.twitter-block{
+/*margin:auto;*/
+height:30px;
+margin-left:41px;
+position:relative;
+top:7px;
+width:665px;
+background:url(../images/twitterpost_balloon_bg2.gif) no-repeat scroll 0 0 transparent;
+}
+
+.twitter-block #twitterpost ul {
+list-style-type:none;
+margin:0;
+padding-left:0;
+}
+.twitter-block #twitterpost ul li .post {
+font-size:11px;
+position:absolute;
+top:4px;
+white-space:nowrap;
+}
+
+.twitter-block  ul li .post {
+/*position:relative;*/
+padding:0px;
+margin:0px;
+position:absolute;
+top:4px;
+white-space:nowrap;
+}
+
+.twitterPrefix{
+padding:0px;
+margin:0px;
+}
+.twitter-block .balloon div {
+font-family:"lucida grande",tahoma,arial,sans-serif;
+font-size:11px;
+
+}
+
+.twitter-block  .end.right {
+background-position:100% 0;
+right:0;
+width:6px;
+}
+
+.twitter-block  .balloon div {
+font-family:"lucida grande",tahoma,arial,sans-serif;
+font-size:11px;
+}
+
+.twitter-block  .end {
+background:url("images/header/twitterpost_balloon_bg.gif") no-repeat scroll 0 0 transparent;
+height:23px;
+position:absolute;
+top:0;
+z-index:1;
+}
+.twitter-block  .balloon div ul {
+padding:0px;
+
+}
+#twitterpost .end.right {
+background-position:100% 0;
+right:0;
+width:6px;
+}
+.twitter-block.twitterStatus{
+border:solid 1px blue;	
+}
+/* fin nuevos*/
+.twitter-block   .attribute-header {
+	background-image:url(../images/twitter_bird_normal.jpg);
+	background-repeat:no-repeat;
+	height:45px;
+
+
+}
+.pollo {
+float:left;
+/*left:100px;*/
+position:relative;
+top:0px;
+}
+.twitter-block   .balloon {
+float:left;
+font-family:"lucida grande",tahoma,arial,sans-serif;
+height:30px;
+left:16px;
+overflow:hidden;
+position:relative;
+width:576px;
+
+}
+
+.twitter-block   .balloon ul{
+margin:0;	
+}
+
+
+.twitter-block   .balloon a{
+	color:#00528D;
+	padding:2px;
+	}
+	
+.twitter-block   .balloon a:hover{
+	color:#fff;
+	background-color:#00528D;
+	text-decoration:none;
+	}	
+
+.twitter-block .attribute-header h2{
+	font-size:2em;
+	padding-top:7px;
+}
+
+.twitters {
+	background-color:#F2FCFF;
+	border: 1px solid #5AA5BC;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 0.9em;
+	margin-top:10px;
+	padding: 10px 5px;
+
+
+}
+
+.twitters ul {
+  background-image:none;
+  padding: 0;
+  margin:0;
+}
+
+.twitters ul li {
+	color: #0C93BA;
+	list-style: none;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #A1E8F7;
+	margin:0;
+	background-image:none;
+	/*padding:3px 5px;*/
+}
+
+.twitters ul li a {
+	text-decoration: none;
+	color: #DDA84E;
+}
+ 
+.twitters ul li a:hover {
+	text-decoration: none;
+	color: #D78E42;
+}
+ 
+.twitters p {
+	text-align: right;
+	padding-right: 6px;
+	padding-bottom: 10px;
+}
+
+
+.twitters span.prefix {
+  font-weight: bold;
+}
+
+.twitters span.time {
+  font-style: italic;
+  color: #c5c5c5;
+}
+
+.twitters span.status {
+  font-style: italic;
+}
+
+.twitter-follow{
+	text-align:right;
+	padding:0 10px;
+
+}
+
+.twitter-follow a.twitter-logo{
+	vertical-align:-1px;
+}

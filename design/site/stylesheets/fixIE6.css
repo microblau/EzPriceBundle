@@ -1,0 +1,113 @@
+.png { behavior:url("htc/iepngfix.htc") }
+#wrapSections, #modFormacion .grid, #modFormacion .description li, #modAbonados li, #subNavBar li, #listadoAreas .wrap, #cestaCompra, .precioIva, .modType4 .descripcion .tabs li, #modMiMementix ul, #datosUsuario form .datos li, #cestaPaso1 #gridType3 .inner ul.ezsr-star-rating { zoom:1  }
+#wrapSections .fix, #modFormacion .grid .fix { bottom: -4px; }
+#wrapSections li { width: 82px;}
+
+.colDatos1 .forgotPass, #modTab li, #finCompraForm .datos fieldset ul, .consultenosMod .wrapConsulta, #header #logo, div.calendars .listCalendar li, .package, .modType4 .boxProduct .cont, .integrado, .modType4 .descripcion div.clear { height:1%;}
+
+
+#home #modFormacion .description { height: 133px }
+#modDestacado .wrap span { margin-left:120px  }
+#modActum #categoriesTabs .wrap { height: 97px;  }
+#modActum .oferta { right:-6px;  }
+
+#categoriesTabs .tabs li .cLeft, #categoriesTabs .tabs li .cRight, #categoriesTabs .tabs li.sel .cLeft, #categoriesTabs .tabs li.sel .cRight { background:none }
+
+#modActum { height: 207px;}
+
+#modAccesoAbonados form { padding: 0 13px  }
+
+
+#listadoValores .inner  { height: 154px }
+#listadoNotas .inner { height: 100px  }
+#moduloDestacadoContenido { height: 284px  }
+
+/*#subNavBar li a, #subNavBar li strong, #subNavBar h1, #subNavBar li.sel span { height: 37px; }	
+#subNavBar li li, #subNavBar li li.sel { height: 1px; }*/
+ 
+#listadoAreas .inner { height: 302px; }
+
+#listadoAreas .area {margin-bottom: 0;   }
+#listadoAreas .verMas { padding: 10px 0 0 10px;  }
+
+#cestaCompra .options { bottom: -8px; }
+
+.precioIva .cBotL { bottom: -5px; }
+	.precioIva .cBotR { bottom: -5px;}
+	
+#finCompraForm .datos fieldset ul li, #modColectivos .description .listColectivos ul li, .otherQuery ul li, .consultenos .listFaq li, .modType4 .descripcion .tabs li, .modType4.cursos .cont ul li, div.calendars .listCalendar li { display:inline;}
+
+#modMiMementix { padding:0; margin-bottom:52px}
+	#modMiMementix ul { margin:-2px 8px 0px 9px;/* padding:0 10px 0px 8px*/}
+	
+#novedades .precioIva .cTopR { top: -2px; right: -3px}
+#novedades .precioIva .cBotR { bottom: -5px; right: -3px}
+
+#gridType7 .columnType1 .inner, #gridType7 .columnType2 .inner { height:175px}	
+
+.modType5 .cursosRel .description ul li { height:50px}
+
+.fichas #gridType3 .inner li { height:90px} 
+
+#navBar li.buscador .verMas { width:135px; }
+#navBar li.buscador .busy { left:-699px;}
+
+.jcarousel-next-horizontal { right: 10px; }
+
+#modNovedades { height:315px;}
+#promocionPrimaria .columnType1 .wrapAjaxContent { height:190px;}
+#modActum #categoriesTabs .wrap ul.wrapAjaxContent { height:86px}
+
+#modNovedades .multim { height:160px;}
+
+.fichas #gridType3.wide .columnType1 .inner li { display:inline}
+
+#gridWide .columnType1 .mapaWeb { height:545px}
+
+#cestaPaso1 #modType2 .description .fix { margin-left: 0}
+
+#navBar li.buscador #buscadorSimple .btn { float:left; border:none; width:5em; height:1.8em; margin:0 !important;}
+
+
+
+
+
+
+
+
+
+
+
+#gridWide.casosExito .inner { height:1%}
+
+#casos #gridType2 .inner li { border-bottom: 2px solid #C6E7FF;float: left;padding: 12px 0 18px;width: auto}
+#casos #gridType2 .wrap { padding: 0 10px 0 10px}
+
+#modType2 #guias ul {margin-left: 10px; margin-right: 36px}
+
+.pagination .prev.reset { background: url(../images/btn_carrou-disab.gif) no-repeat scroll 0 -15px transparent}
+
+#presentacionRecursos .columnType1 .novedades li { margin: 0 8px 0 0}
+
+#home_recursos #gridHome1 #listadoRecursos.listadoProfundidad .wrap {height: 131px}
+#home_recursos #gridHome1 .columnType2 #modExperiencia .wrap .content {height: 220px}	
+#home_recursos #gridHome1 #listadoRecursos .fix {bottom: -3px;position: relative;width: 100%}
+
+#formInscripcion .camposObligatorios { right:50px  }
+
+
+/*******Nuevos estilos***********/
+
+#modFichasPrecio .opinion .modValoraciones h4 { width:235px}
+#modFichasPrecio .opinion .modValoraciones div { zoom:1}
+
+
+
+
+
+
+
+
+
+
+
