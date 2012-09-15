@@ -396,7 +396,7 @@ class eZBasket extends eZPersistentObject
             {         
                 $item = $itemArray['item_object'];
                 $productContentObject = $item->attribute( 'contentobject' );
-                if( ( $productContentObject->attribute( 'contentclass_id' ) == 98 ) or ( $productContentObject->attribute( 'contentclass_id' ) == 101 ) )
+                if( ( $productContentObject->attribute( 'contentclass_id' ) == 98 ) or ( $productContentObject->attribute( 'contentclass_id' ) == 101 ) or ( $productContentObject->attribute( 'contentclass_id' ) == eZINI::instance( 'imemento.ini' )->variable( 'iMemento', 'Class' ) ) )
                 {
                     $data = $productContentObject->dataMap();
                     $priceObj = $data['precio']->content();
