@@ -574,6 +574,7 @@ class CjwNewsletterUser extends eZPersistentObject
               $emailSenderName = $tpl->variable( 'emailsendername' ) ;
         else
               $emailSenderName = $cjwNewsletterIni->variable( 'NewsletterMailSettings', 'EmailSenderName' );        
+        
         $emailReceiver = $newsletterUser->attribute('email');
 
         // TODO Namen extrahieren

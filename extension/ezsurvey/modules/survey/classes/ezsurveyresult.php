@@ -554,7 +554,7 @@ class eZSurveyResult extends eZPersistentObject
             if ( !isset( $answers['user_id'] ) and
                  $showHeadlineUserName === true )
             {
-                $answers['user_id'] = 'a'.$row['user_id'];
+                $answers['user_id'] = $row['user_id'];
             }
 
             $dbaux = eZDB::instance();
