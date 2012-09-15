@@ -27,8 +27,7 @@
 
 									<select id="sepro" name="ContentObjectAttribute_ezselect_selected_array_10807[]">
 										<option selected="selected" value=""></option>
-										{*
-										<option value="0">QMementix</option>
+                                        <option value="0">QMementix</option>
                                         <option value="1">Qmemento 4</option>
                                         <option value="2">Qmemento Fiscal</option>
                                         <option value="3">Qmemento Social</option>

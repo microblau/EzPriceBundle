@@ -813,8 +813,7 @@
                                                 'class_filter_array', array( 'ventajas_producto' )
  )).0.url_alias|ezurl(no)}#producttext">{/if}Ventajas{if array( 'producto_mementix', 'ventajas_producto' )|contains( $clase )}</h2>{else}</a>{/if}
                                 </li>
-
-                                {*<li><a href={"basket/mementix"|ezurl}>Mementos disponibles</a></li>*}
+                                <li><a href={"basket/mementix"|ezurl}>Mementos disponibles</a></li>
                                
                                 <li {if $clase|eq('condiciones_producto') }class="sel"{/if}>
                                 	{if $clase|eq('condiciones_producto') }<h2>{else}<a href="{fetch( 'content', 'list', hash( 'parent_node_id', $node.node_id,
