@@ -191,8 +191,8 @@
 					<li>
 						<a href="http://www.facebook.com/sharer.php?u=http://{ezsys( 'hostname' )}/{$node.url_alias}&t={$node.name}"><img src={"btn_f.gif"|ezimage} alt="me gusta" /></a>
 					</li>
-                    <li>
-                     <span class="compartelo"><a href="#bmarks-10" class="bmarks-btn">En otras webs</a></span>
+                    <li  class="compartelo">
+                     <span><a href="#bmarks-10" class="bmarks-btn">En otras webs</a></span>
                         <div id="bmarks-10" class="bmarks">
 											<div class="inner">
 												<ul class="clear">

@@ -110,3 +110,21 @@
 
 .fichas #gridWide.imemento .cursoDet {border-radius: 0 0 10px 10px;}	
 	
+#iMementoDest .footerTools span a {color:#fff;}
+
+.imemento .bmarks {
+    left: -170px;
+    top: 15px;
+}
+.imemento .bmarks .inner {
+    background: none repeat scroll 0 0 transparent;
+    border: 2px solid #C7E7FF;
+    margin: 0;
+}
+
+.imemento #iMementoDest .footerTools .inner ul li{
+    float: left;
+    margin-bottom: 10px;
+    width: 130px;
+    padding-left: 3px;
+}
