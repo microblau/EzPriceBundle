@@ -154,7 +154,7 @@
 					<div class="confPromo">
 						<strong class="dest">Desde: {$node.data_map.precio.content.price|l10n(clean_currency)} € <span>+ IVA</span></strong>
 						<a href={"basket/imemento"|ezurl} class="conf"><span>Configure su <strong>iMemento</strong> a la carta</span></a>
-						<a href="#" class="conf"><span>Configure su <strong>iMemento</strong> por rama del derecho</span></a>
+						<a href={"basket/imementorama"|ezurl} class="conf"><span>Configure su <strong>iMemento</strong> por rama del derecho</span></a>
 						<!--div class="moreInfo">
 							<span>¿Necesita más <strong>información</strong>?</span>
 							<a href="">Nosotros nos ponemos en contacto con usted</a>

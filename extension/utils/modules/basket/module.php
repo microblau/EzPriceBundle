@@ -161,6 +161,21 @@ $ViewList["imemento"] = array(
     "script" => "imemento.php",
     "default_navigation_part" => 'ezshopnavigationpart' );
 
+$ViewList["imementorama"] = array(
+    'functions' => array( 'imemento' ),
+    "script" => "imementorama.php",
+    "default_navigation_part" => 'ezshopnavigationpart' );
+
+$ViewList["imementocheckprice"] = array(
+    'functions' => array( 'imemento' ),
+    "script" => "imementocheckprice.php",
+    "default_navigation_part" => 'ezshopnavigationpart' );
+
+$ViewList["addimemento"] = array(
+    'functions' => array( 'imemento' ),
+    "script" => "addimemento.php",
+    "default_navigation_part" => 'ezshopnavigationpart' );
+
 $ViewList['que-es-un-codigo-promocional'] = array(
     'functions' => array( 'buy' ),
     'script' => 'codigopromocional.php',

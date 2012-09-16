@@ -8,7 +8,6 @@
 
 {def $order_info = fetch( 'basket', 'get_order_info', hash( 'productcollection_id', $basket.productcollection_id ))}
 
-
 {section name=Basket show=$basket.items}
 
 
@@ -90,7 +89,9 @@
 															<input type="hidden" name="ProductItemIDList[]" value="{$product.id}" />
 															<input type="image" name="RemoveProductItemDeleteList_{$product.id}" value="{$product.id}" src={"ico_eliminar.png"|ezimage} alt="Eliminar de la cesta" title="Eliminar de la cesta"/></td>
 															<td>
-                                                            {if $product.item_object.contentobject.contentclass_id|eq(100)}
+                                                                                                                            
+                                                           {if $product.item_object.contentobject.contentclass_id|eq( ezini( 'iMemento', 'Class', 'imemento.ini') )}
+ {elseif $product.item_object.contentobject.contentclass_id|eq(100)}
                                                                 {if $product.item_object.contentobject.main_node.parent.data_map.imagen.has_content}
                                                             	{def $imagen = fetch( 'content', 'object', hash( 'object_id', $product.item_object.contentobject.main_node.parent.data_map.imagen.content.relation_browse.0.contentobject_id ))}
                                                             
@@ -131,6 +132,11 @@
                                                                     <a href={$product.item_object.contentobject.main_node.url_alias|ezurl}>{$product.object_name}</a><br />                                      
                                                                     <span class="mementos">{$order_info.has_mementix.mementos}. 
                                                                     <strong>{$order_info.has_mementix.accesos}</strong></span>
+                                                               {elseif $product.item_object.contentobject.contentclass_id|eq( ezini( 'iMemento', 'Class', 'imemento.ini' ) )}
+                                                                    <a href={$product.item_object.contentobject.main_node.url_alias|ezurl}>{$product.object_name}</a><br />
+                                                                    <span class="mementos">{$order_info.has_imemento.mementos}.
+                                                                    </span>
+
                                                                 {elseif $product.item_object.contentobject.contentclass_id|eq(100)}
                                                                 	<a href={$product.item_object.contentobject.main_node.parent.url_alias|ezurl}>{$product.object_name}</a>                                      {else}
 																<a href={$product.item_object.contentobject.main_node.url_alias|ezurl}>{$product.object_name}</a>{/if}

@@ -21,6 +21,7 @@
 						<fieldset>
 							<ul>
 								{def $mementos = $object.data_map.imemento_productos.content}
+                                                             
                                                         {foreach $mementos.relation_browse as $el}
                                                             {def $memento = fetch( 'content', 'object', hash( 'object_id', $el.contentobject_id))}
                                                                 <li>
