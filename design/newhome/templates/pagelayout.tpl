@@ -27,6 +27,7 @@
 
 </head>
 <body {if or( $module_result.node_id|eq(2) )}id="home"{/if} {if or( 
+$module_result.content_info.parent_class_identifier|eq( 'producto_imemento' ),
 $module_result.uri|eq('/basket/imemento'), 
 $module_result.uri|eq('/basket/imementorama'),
 $module_result.content_info.class_identifier|eq('producto_imemento') )}class="imemento"{/if}>
