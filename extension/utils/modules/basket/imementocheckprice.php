@@ -23,7 +23,7 @@ if( ( $mementos > 0 ))
 	{
 
 		$pData = eZContentObject::fetch( $product )->dataMap();
-		$precio += $pData['precio']->content()->attribute( 'ex_vat_price' );
+		$precio += $pData['precio_imemento']->content()->attribute( 'ex_vat_price' );
 	}
 
         

@@ -9,7 +9,10 @@ foreach( $http->postVariable( 'mementos' ) as $id )
     $memento = eZContentObject::fetch( $id );
     
     $datamemento = $memento->dataMap();
-    $mementosnames[] = $datamemento['nombre_mementix']->content();
+    if( $datamemento['nombre_mementix']->content() != '' )
+        $mementosnames[] = $datamemento['nombre_mementix']->content();
+    else
+        $mementosnames[] = $memento->attribute( 'name' );
     $refs[] = $datamemento['referencia']->content();
 }
 
