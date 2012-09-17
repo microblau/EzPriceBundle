@@ -62,7 +62,8 @@
  {if $clase|eq('valoraciones_producto')}
 <div id="gridWide" class="imemento">
 {/if}
-<div id="iMementoDest">
+<div id="iMementoDest" class="clearFix">
+<div class="clearFix">
 				<h2 class="logo"><img src={"logo_iMemento.png"|ezimage} alt="iMemento"/></h2>
 <div id="mycarousel">
 <div class="jcarousel-control">
@@ -168,15 +169,11 @@
 					</div>
 					<a href="#" class="appStore"><img src={"i_appStore.png"|ezimage} alt="Disponible en el AppStore" width="159" height="55" /></a>
 				</div>
-				<ul class="footerTools">
+</div>
+				<ul class="footerTools"> 
 					<li>
 						<span>Compártalo:</span>
-					</li>
-               
-													
-
-	        	    	                          	 									
-													
+                    </li>							
 					<li>
 						 <script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
     	    	                                	<script type="IN/Share"></script>
