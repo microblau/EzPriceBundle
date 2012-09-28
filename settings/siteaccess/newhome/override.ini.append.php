@@ -136,7 +136,7 @@ Match[class_identifier]=producto_mementix
 
 [producto_qmementix]
 Source=node/view/full.tpl
-MatchFile=full/producto_qementix.tpl
+MatchFile=full/producto_qmementix.tpl
 Subdir=templates
 Match[class_identifier]=producto_qmementix
 
