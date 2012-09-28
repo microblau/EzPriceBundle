@@ -134,6 +134,12 @@ MatchFile=full/producto_mementix.tpl
 Subdir=templates
 Match[class_identifier]=producto_mementix
 
+[producto_qementix]
+Source=node/view/full.tpl
+MatchFile=full/producto_qementix.tpl
+Subdir=templates
+Match[class_identifier]=producto_qementix
+
 [provincia_a_medida_colect]
 Source=content/datatype/collect/ezstring.tpl
 MatchFile=content/datatype/collect/provincia_formulario_a_medida.tpl
