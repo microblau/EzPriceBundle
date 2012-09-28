@@ -134,11 +134,11 @@ MatchFile=full/producto_mementix.tpl
 Subdir=templates
 Match[class_identifier]=producto_mementix
 
-[producto_qementix]
+[producto_qmementix]
 Source=node/view/full.tpl
 MatchFile=full/producto_qementix.tpl
 Subdir=templates
-Match[class_identifier]=producto_qementix
+Match[class_identifier]=producto_qmementix
 
 [provincia_a_medida_colect]
 Source=content/datatype/collect/ezstring.tpl
