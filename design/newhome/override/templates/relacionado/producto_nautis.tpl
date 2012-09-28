@@ -27,11 +27,9 @@
                                                                                                     array( 'attribute', true(), 851  )
                                                                                                 )
                                                                                     ))}
-{*
 
     <span class="precio">Desde {if $versiones.0.data_map.precio.content.has_discount}<s>{/if}{$versiones.0.data_map.precio.content.price|l10n(clean_currency)} €{if $versiones.0.data_map.precio.content.has_discount}</s>{/if}
     {if $versiones.0.data_map.precio.content.has_discount}<span class="preciooferta">{$versiones.0.data_map.precio.content.discount_price_ex_vat|l10n('clean_currency')} €</span>{/if}
     </span>
-*}
 
 </div>

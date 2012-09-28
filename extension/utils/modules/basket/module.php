@@ -156,6 +156,26 @@ $ViewList['que-es-un-acceso-nautis4'] = array(
     'default_navigation_part' => 'ezmynavigationpart',
     'params' => array( ) );
 
+$ViewList["imemento"] = array(
+    'functions' => array( 'imemento' ),
+    "script" => "imemento.php",
+    "default_navigation_part" => 'ezshopnavigationpart' );
+
+$ViewList["imementorama"] = array(
+    'functions' => array( 'imemento' ),
+    "script" => "imementorama.php",
+    "default_navigation_part" => 'ezshopnavigationpart' );
+
+$ViewList["imementocheckprice"] = array(
+    'functions' => array( 'imemento' ),
+    "script" => "imementocheckprice.php",
+    "default_navigation_part" => 'ezshopnavigationpart' );
+
+$ViewList["addimemento"] = array(
+    'functions' => array( 'imemento' ),
+    "script" => "addimemento.php",
+    "default_navigation_part" => 'ezshopnavigationpart' );
+
 $ViewList['que-es-un-codigo-promocional'] = array(
     'functions' => array( 'buy' ),
     'script' => 'codigopromocional.php',
@@ -245,4 +265,5 @@ $FunctionList['setup'] = array( );
 $FunctionList['kelkoo'] = array( );
 $FunctionList['encuesta'] = array( );
 $FunctionList['csvencuestas'] = array( );
+$FunctionList['imemento'] = array( );
 ?>

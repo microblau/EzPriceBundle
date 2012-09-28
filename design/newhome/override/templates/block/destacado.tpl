@@ -45,7 +45,7 @@
                                                     
                                                     {if $block.valid_nodes.0.object.contentclass_id|eq(98)}
                                                      <a href={concat( "/basket/mementix")|ezurl} class="ejemplar"><img src={"quiero_tenerlo.gif"|ezimage} alt="Quiero tenerlo" /></a>
-                                                    {elseif or( $block.valid_nodes.0.object.contentclass_id|eq(101))}
+                                                    {elseif or( $block.valid_nodes.0.object.contentclass_id|eq(99),  $block.valid_nodes.0.object.contentclass_id|eq(101))}
                                                         <a href={$block.valid_nodes.0.url_alias|ezurl} class="ejemplar"><img src={"quiero_tenerlo.gif"|ezimage} alt="Quiero tenerlo" /></a>
                                                     {else}
                                                     <a href={concat( "/basket/add/",$block.valid_nodes.0.object.id, "/1")|ezurl} class="ejemplar"><img src={"btn_quieroEjemplar.gif"|ezimage} alt="Quiero un ejemplar" /></a>

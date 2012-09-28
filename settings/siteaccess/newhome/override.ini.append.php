@@ -110,6 +110,12 @@ MatchFile=full/pagina_texto.tpl
 Subdir=templates
 Match[class_identifier]=pagina_texto
 
+[producto_imemento]
+Source=node/view/full.tpl
+MatchFile=full/producto_imemento.tpl
+Subdir=templates
+Match[class_identifier]=producto_imemento
+
 [producto_nautis_4]
 Source=node/view/full.tpl
 MatchFile=full/producto_nautis_4.tpl
@@ -127,6 +133,12 @@ Source=node/view/full.tpl
 MatchFile=full/producto_mementix.tpl
 Subdir=templates
 Match[class_identifier]=producto_mementix
+
+[producto_qementix]
+Source=node/view/full.tpl
+MatchFile=full/producto_qementix.tpl
+Subdir=templates
+Match[class_identifier]=producto_qementix
 
 [provincia_a_medida_colect]
 Source=content/datatype/collect/ezstring.tpl

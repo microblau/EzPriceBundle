@@ -1388,6 +1388,7 @@ class eZContentObject extends eZPersistentObject
                 }
 
                 $contentObjectAttributes = $contentObjectTranslation->objectAttributes();
+
                 foreach ( $contentObjectAttributes as $attribute )
                 {
                     

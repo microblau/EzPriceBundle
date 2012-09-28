@@ -23,8 +23,7 @@ $rules = eZPersistentObject::fetchObjectList( eZDiscountSubRule::definition(), n
                                               array ( 'discountrule_id' => 82 ) );
 
 eZPersistentObject::removeObject( eZDiscountSubRule::definition(), array ( 'discountrule_id' => 82 ) );
-//die();
-//eZPersistentObject::removeObject( eZDiscountSubRuleValue::definition(), array( 'discountrule_id' => 82 ) );
+eZPersistentObject::removeObject( eZDiscountSubRuleValue::definition(), array( 'discountrule_id' => 82 ) );
 
 foreach( $nodes as $node )
 {

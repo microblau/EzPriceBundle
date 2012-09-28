@@ -241,7 +241,8 @@ class tantaBasketFunctionCollection
 																    
 															 ),
 															 array( 'ezcontentobject' ),
-															 ' AND ezcontentobject.id = ezproductcollection_item.contentobject_id AND (  ezcontentobject.contentclass_id = 48 OR ezcontentobject.contentclass_id = 98 OR ezcontentobject.contentclass_id = 101 OR ezcontentobject.contentclass_id = 100 ) '
+															 ' AND ezcontentobject.id = ezproductcollection_item.contentobject_id AND (  ezcontentobject.contentclass_id = 48 OR ezcontentobject.contentclass_id = 98 OR ezcontentobject.contentclass_id = 101 OR ezcontentobject.contentclass_id = 100
+                                                                                                                              OR ezcontentobject.contentclass_id = ' . eZINI::instance( 'imemento.ini' )->variable( 'iMemento', 'Class' ) . ' ) '
                                                              );       
         $addedProducts = array();
 
@@ -255,7 +256,9 @@ class tantaBasketFunctionCollection
 
             if ( $contentObject !== null )
             {
-                if( ( $contentObject->attribute( 'contentclass_id' ) == 98 ) or ( $contentObject->attribute( 'contentclass_id' ) == 101 ) )
+                if( ( $contentObject->attribute( 'contentclass_id' ) == 98 ) or ( $contentObject->attribute( 'contentclass_id' ) == 101 )
+                        or ( $contentObject->attribute( 'contentclass_id' ) == eZINI::instance( 'imemento.ini' )->variable( 'iMemento', 'Class' ) )
+                        )
                 {
                     $vatValue = $productItem->attribute( 'vat_value' );
                      // If VAT is unknown yet then we use zero VAT percentage for price calculation.

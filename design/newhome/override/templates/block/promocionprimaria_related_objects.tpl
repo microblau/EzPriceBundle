@@ -38,7 +38,7 @@ $(".btnOpinion").fancybox({
                                        {elseif $node.data_map.video.has_content}
 
         	{def $video = fetch( 'content', 'object', hash( 'object_id', $node.data_map.video.content.relation_browse.0.contentobject_id ))}   
-{$video.data_map.video.content|attribute(show)}
+
 
                                              {attribute_view_gui attribute=$video.data_map.video width=633 height=304 autostart=0}
                                         {else}
