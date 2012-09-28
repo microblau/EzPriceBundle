@@ -57,7 +57,7 @@
 									</select>
 								</li>
 								<li class="acepto">
-									<label for="acep"> <input type="checkbox"id="acep" name="ContentObjectAttribute_data_boolean_10812" /> Acepto las <a href={'lightbox/ver/1451'|ezurl}>condiciones legales</a></label>
+									<label for="acep"> <input type="checkbox"id="acep" name="ContentObjectAttribute_data_boolean_10812" /> Acepto las <a id="condicionesligthBox" href={'lightbox/ver/1451'|ezurl}>condiciones legales</a></label>
 								</li>
 							</ul>
 							<span class="submit"><input name="ActionCollectInformation" type="image" src={"btn_enviarSoli.png"|ezimage} alt="enviar solicitud" /></span>

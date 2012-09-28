@@ -139,7 +139,7 @@
 
 									
 							
-									<label class="check" for="legal"> <input type="checkbox"id="legal" name="ContentObjectAttribute_data_boolean_10812" /> Acepto las <a href={'lightbox/ver/1451'|ezurl}>condiciones legales</a></label>
+									<label class="check" for="legal"> <input type="checkbox"id="legal" name="ContentObjectAttribute_data_boolean_10812" /> Acepto las <a id="condicionesligthBox" href={'lightbox/ver/1451'|ezurl}>condiciones legales</a></label>
 								
 							<input name="ActionCollectInformation" type="submit" value="Enviar solicitud" id="trySend" />
 	{def $currentusuario = fetch( 'user', 'current_user') }				
@@ -167,7 +167,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="#" class="appStore"><img src={"i_appStore.png"|ezimage} alt="Disponible en el AppStore" width="159" height="55" /></a>
+					<a href="http://itunes.apple.com/es/app/imemento/id509177093?mt=8" class="appStore"><img src={"i_appStore.png"|ezimage} alt="Disponible en el AppStore" width="159" height="55" /></a>
 				</div>
 </div>
 				<ul class="footerTools"> 
@@ -809,7 +809,7 @@
                     	{if $node.data_map.novedades.has_content}{set $tabscount = $tabscount|inc()}{/if}
                     	{if $cuantasvaloraciones|gt(0)}{set $tabscount = $tabscount|inc()}{/if}
                     	{if $node.data_map.sumario.has_content}{set $tabscount = $tabscount|inc()}{/if}                  
-                    	<span class="volver imprimir frt"><a href="">Imprimir ficha</a></span>
+                    	<span class="volver imprimir frt"><a href="#" onclick="window.print()">Imprimir ficha</a></span>
 
                     	<div class="descripcion" id="producttext">
                             <ul class="tabs" style="float:none">
