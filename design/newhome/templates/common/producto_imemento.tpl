@@ -835,6 +835,16 @@
  )).0.url_alias|ezurl(no)}#producttext">{/if}Novedades{if $clase|eq('novedades_producto')}</h2>{else}</a>{/if}
                                 </li>
                                 {/if}
+								
+								{if $node.data_map.faqs_producto.has_content}
+                                <li {if $clase|eq('faqs_producto')}class="sel"{/if}>
+                                	{if $clase|eq('faqs_producto')}<h2>{else}<a href="{fetch( 'content', 'list', hash( 'parent_node_id', $node.node_id,
+                                                'class_filter_type', 'include',
+                                                'class_filter_array', array( 'faqs_producto' )
+ )).0.url_alias|ezurl(no)}#producttext">{/if}Preguntas frecuentes{if $clase|eq('faqs_producto')}</h2>{else}</a>{/if}
+                                </li>                           
+                                {/if}
+								
                                 {if $cuantasvaloraciones|gt(0)}
                                 <li {if $clase|eq('opiniones_clientes')}class="sel"{/if}>
                                 	{if $clase|eq('opiniones_clientes')}<h2>{else}<a href="{fetch( 'content', 'list', hash( 'parent_node_id', $node.node_id,
