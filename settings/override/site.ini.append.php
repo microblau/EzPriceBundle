@@ -1,7 +1,7 @@
 <?php /* #?ini charset="utf-8"?
 [DatabaseSettings]
 DatabaseImplementation=ezmysqli
-Server=localhost
+Server=desta01
 User=lefebvre
 Password=lyXyv3Jq
 Database=lefebvre

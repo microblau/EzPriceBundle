@@ -2597,6 +2597,15 @@ var lightbox = {
 			'padding':0,
 			'type':'iframe'
         });        
+    },
+	vercondiciones:function(){
+        var enlace = $("#condicionesligthBox");
+        $(enlace).fancybox({
+			'width':568, 
+			'height':500,
+			'padding':0,
+			'type':'iframe'
+        });        
     }
     
 
@@ -3103,6 +3112,10 @@ jQuery(document).ready(function() {
         lightbox.vervideo();
     }
      
+	if( $("#condicionesligthBox").length != 0 ) {
+        lightbox.vercondiciones();
+    } 
+	 
 	
 	if($("#opinionForm").length != 0) {				
 		jQuery("#opinionForm").submit(function(){return formsValidations.validaOpinionForm( jQuery(this)) })	
