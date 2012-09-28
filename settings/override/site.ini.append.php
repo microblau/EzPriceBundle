@@ -90,7 +90,7 @@ DebugIPList[]=212.0.126.46
 DebugIPList[]=88.12.15.142
 #DebugIPList[]=192.168.1.56
 #DebugIPList[]=192.168.1.80
-DebugIPList[]=127.0.0.1
+#DebugIPList[]=127.0.0.1
 DebugIPList[]=212.4.112.90
 
 
