@@ -1,4 +1,4 @@
-{ezcss_require( 'imemento.css' )}
+{ezcss_require( 'qmementix.css' )}
 {ezscript_require( 'imemento.js' ))}
 {ezpagedata_set( 'bodyclass', 'fichas')}
 {ezpagedata_set( 'menuoption', 2 )}    
@@ -64,7 +64,7 @@
 {/if}
 <div id="iMementoDest" class="clearFix">
 <div class="clearFix">
-				<h2 class="logo"><img src={"logo_iMemento.png"|ezimage} alt="iMemento"/></h2>
+				<h2 class="logo"><img src={"logo_Qmementix.png"|ezimage} alt="Qmementix"/></h2>
 <div id="mycarousel">
 <div class="jcarousel-control">
 						<a href="#" class="sel"><span>1</span></a>
@@ -107,7 +107,7 @@
 </div>
 				<div class="infoDest">
 					<div class="tryPromo">
-						<a href="#" class="tryProd"><span>Pruebe gratis <strong>iMemento</strong> 15 días </span></a>
+						<a href="#" class="tryProd"><span>Pruebe <strong>GRATIS</strong> Qmementix 15 días </span></a>
 
                         <form id="frm_tryImemento" action={"content/action"|ezurl} method="post">
 							<fieldset>
@@ -133,7 +133,7 @@
 
 									<select id="prod" name="ContentObjectAttribute_ezselect_selected_array_10807[]">
 										
-<option value="13">iMemento</option>
+<option value="13">Qmementix</option>
 									</select>
 								</label>
 
@@ -154,8 +154,7 @@
 					</div>
 					<div class="confPromo">
 						<strong class="dest">Desde: {$node.data_map.precio.content.price|l10n(clean_currency)} € <span>+ IVA</span></strong>
-						<a href={"basket/imemento"|ezurl} class="conf"><span>Configure su <strong>iMemento</strong> a la carta</span></a>
-						<a href={"basket/imementorama"|ezurl} class="conf"><span>Configure su <strong>iMemento</strong> por rama del derecho</span></a>
+						<a href={"basket/qmenentix"|ezurl} class="conf"><span>Configure sus <strong>Qmementix</strong></span></a>
 						<!--div class="moreInfo">
 							<span>¿Necesita más <strong>información</strong>?</span>
 							<a href="">Nosotros nos ponemos en contacto con usted</a>
@@ -167,7 +166,6 @@
 							</div>
 						</div>
 					</div>
-					<a href="#" class="appStore"><img src={"i_appStore.png"|ezimage} alt="Disponible en el AppStore" width="159" height="55" /></a>
 				</div>
 </div>
 				<ul class="footerTools"> 
