@@ -33,7 +33,7 @@ $module_result.uri|eq('/basket/imementorama'),
 $module_result.content_info.class_identifier|eq('producto_imemento') )}class="imemento"{/if}
 {if or( 
 $module_result.content_info.parent_class_identifier|eq( 'producto_qmementix' ),
-$module_result.uri|eq('/basket/qmenentix'), 
+$module_result.uri|eq('/basket/qmementix'), 
 $module_result.content_info.class_identifier|eq('producto_qmementix') )}class="qmementix"{/if}>
 
     <div id="wrapper">

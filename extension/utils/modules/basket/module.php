@@ -161,6 +161,11 @@ $ViewList["imemento"] = array(
     "script" => "imemento.php",
     "default_navigation_part" => 'ezshopnavigationpart' );
 
+$ViewList["qmementix"] = array(
+    'functions' => array( 'qmementix' ),
+    "script" => "qmementix.php",
+    "default_navigation_part" => 'ezshopnavigationpart' );	
+	
 $ViewList["imementorama"] = array(
     'functions' => array( 'imemento' ),
     "script" => "imementorama.php",
@@ -266,4 +271,5 @@ $FunctionList['kelkoo'] = array( );
 $FunctionList['encuesta'] = array( );
 $FunctionList['csvencuestas'] = array( );
 $FunctionList['imemento'] = array( );
+$FunctionList['qmementix'] = array( );
 ?>
