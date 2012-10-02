@@ -765,7 +765,7 @@
                {else}
                
           <div id="modFichasPrecio">
-                    	<h2 class="subTitle">Profesionales que ya conocen sus ventajas...</h2>
+                    	<h2 class="subTitle">Si ya conoce sus ventajas...</h2>
                     	<div class="wrap">
                         	<div class="botonOpine">
                              {def $current_user=fetch( 'user', 'current_user' )}  
