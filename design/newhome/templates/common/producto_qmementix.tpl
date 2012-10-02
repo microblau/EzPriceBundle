@@ -154,7 +154,7 @@
 					</div>
 					<div class="confPromo">
 						<strong class="dest">Desde: {$node.data_map.precio.content.price|l10n(clean_currency)} € <span>+ IVA</span></strong>
-						<a href={"basket/qmenentix"|ezurl} class="conf"><span>Configure sus <strong>Qmementix</strong></span></a>
+						<a href={"basket/qmementix"|ezurl} class="conf"><span>Configure sus <strong>Qmementix</strong></span></a>
 						<!--div class="moreInfo">
 							<span>¿Necesita más <strong>información</strong>?</span>
 							<a href="">Nosotros nos ponemos en contacto con usted</a>

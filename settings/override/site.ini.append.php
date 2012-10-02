@@ -1,7 +1,7 @@
 <?php /* #?ini charset="utf-8"?
 [DatabaseSettings]
 DatabaseImplementation=ezmysqli
-Server=desta01
+Server=localhost
 User=lefebvre
 Password=lyXyv3Jq
 Database=lefebvre
@@ -101,7 +101,7 @@ RedirectAfterAddToBasket=reload
 LogoutRedirect=/
 
 [SSLZoneSettings]
-SSLZones=enabled
+SSLZones=disabled
 ModuleViewAccessMode[basket/ajaxadd]=keep
 ModuleViewAccessMode[basket/csv-encuestas]=keep
 ModuleViewAccessMode[basket/mementixcheckprice]=keep
