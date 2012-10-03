@@ -157,19 +157,14 @@
 						</form>
 						
 					</div>
-					<div class="confPromo">
-						<strong class="dest">Desde: {$node.data_map.precio.content.price|l10n(clean_currency)} € <span>+ IVA</span></strong>
-						<a href={"basket/qmementix"|ezurl} class="conf"><span>Configure sus <strong>Qmementix</strong></span></a>
-						<!--div class="moreInfo">
-							<span>¿Necesita más <strong>información</strong>?</span>
-							<a href="">Nosotros nos ponemos en contacto con usted</a>
-						</div-->
-						<div id="modInformacion">
-							<h2><img alt="¿Necesita información?" src={"bck_modInformacionTit.gif"|ezimage}></h2>
-							<div>
-								<span class="verMas"><a href={"contacto"|ezurl}>Nosotros nos ponemos en contacto con usted</a></span>
-							</div>
-						</div>
+					<div class="myQMementix">
+                        <span class="tit">Mi QMementix</span>
+                        <div class="resume">
+                            <p><strong><span class="flt">Ha añadido</span> <span class="cant">5 mementos</span></strong></p>
+                            <del>570,00 € + IVA</del>
+                            <ins>420,00 € + IVA</ins>
+                            <a href=""><img src={"btn_aniadir-compra.gif"|ezimage()} alt="Añadir a la cesta" /></a>
+                        </div>
 					</div>
 				</div>
 </div>
@@ -804,187 +799,46 @@
 
                 <div class="columnType2 frt">
                 	<div class="modType4">
-{def $tabscount = 1}
-						{if $node.data_map.sumario.has_content}{set $tabscount = $tabscount|inc()}{/if}
-                    	{if $node.data_map.contenido.has_content}{set $tabscount = $tabscount|inc()}{/if}
-                    	{if $node.data_map.novedades.has_content}{set $tabscount = $tabscount|inc()}{/if}
-                    	{if $cuantasvaloraciones|gt(0)}{set $tabscount = $tabscount|inc()}{/if}
-                    	{if $node.data_map.sumario.has_content}{set $tabscount = $tabscount|inc()}{/if}                  
-                    	<span class="volver imprimir frt"><a href="#" onclick="window.print()">Imprimir ficha</a></span>
-
-                    	<div class="descripcion" id="producttext">
-                            <ul class="tabs" style="float:none">
-                            	<li {if and( array( 'producto_qmementix', 'ventajas_producto' )|contains( $clase ), is_set( $view_parameters.v)|not )}class="sel"{/if}>
-                              {if and( array( 'producto_qmementix', 'ventajas_producto' )|contains( $clase ), is_set( $view_parameters.v)|not )}<h2>{else}<a href="{fetch( 'content', 'list', hash( 'parent_node_id', $node.node_id,
-                                                'class_filter_type', 'include',
-                                                'class_filter_array', array( 'ventajas_producto' )
- )).0.url_alias|ezurl(no)}#producttext">{/if}Ventajas{if and( array( 'producto_qmementix', 'ventajas_producto' )|contains( $clase ), is_set( $view_parameters.v)|not )}</h2>{else}</a>{/if}
-                                </li>
-                                {if $node.data_map.contenido.has_content}
-                                <li {if $clase|eq('condiciones_producto')}class="sel"{/if}>
-                                	{if $clase|eq('condiciones_producto')}<h2>{else}<a href="{fetch( 'content', 'list', hash( 'parent_node_id', $node.node_id,
-                                                'class_filter_type', 'include',
-                                                'class_filter_array', array( 'condiciones_producto' )
- )).0.url_alias|ezurl(no)}#producttext">{/if}{cond( $node.parent_node_id|eq( 1485 ),  'Contenido', 'Condiciones' )}{if $clase|eq('condiciones_producto')}</h2>{else}</a>{/if}
-                                </li>
-                                {/if}
-                                {if $node.data_map.novedades.has_content}
-                                <li {if $clase|eq('novedades_producto')}class="sel"{/if}>
-                                	{if $clase|eq('novedades_producto')}<h2>{else}<a href="{fetch( 'content', 'list', hash( 'parent_node_id', $node.node_id,
-                                                'class_filter_type', 'include',
-                                                'class_filter_array', array( 'novedades_producto' )
- )).0.url_alias|ezurl(no)}#producttext">{/if}Novedades{if $clase|eq('novedades_producto')}</h2>{else}</a>{/if}
-                                </li>
-								{/if}
-								
-								{if $node.data_map.faqs_producto.has_content}
-                                <li {if $clase|eq('faqs_producto')}class="sel"{/if}>
-                                	{if $clase|eq('faqs_producto')}<h2>{else}<a href="{fetch( 'content', 'list', hash( 'parent_node_id', $node.node_id,
-                                                'class_filter_type', 'include',
-                                                'class_filter_array', array( 'faqs_producto' )
- )).0.url_alias|ezurl(no)}#producttext">{/if}Preguntas frecuentes{if $clase|eq('faqs_producto')}</h2>{else}</a>{/if}
-                                </li>                           
-                                {/if}
-								
-                                {/if}
-                                {if $cuantasvaloraciones|gt(0)}
-                                <li {if $clase|eq('opiniones_clientes')}class="sel"{/if}>
-                                	{if $clase|eq('opiniones_clientes')}<h2>{else}<a href="{fetch( 'content', 'list', hash( 'parent_node_id', $node.node_id,
-                                                'class_filter_type', 'include',
-                                                'class_filter_array', array( 'opiniones_clientes' )
- )).0.url_alias|ezurl(no)}#producttext">{/if}Opinión de los clientes{if $clase|eq('opiniones_clientes')}</h2>{else}</a>{/if}
-                                </li>
-                                {/if}
-                            </ul>
-
-                            <div class="cont cursoDet clearFix">
-                            	
-                                	{if $clase|eq( 'opiniones_clientes' )}
-                            		{*llamamos a una plantilla aparte *}
-                                    {*testimonios:{$testimonios|attribute(show,1)}*}
-                            		{*include uri="design:common/ficha/testimonios.tpl" testimonios=$testimonios*}
-                                    
-                                   {include uri="design:common/ficha/testimonios.tpl" testimonios=$muestraultimas cuantas=$cuantasvaloracionestotales}
-                            	{elseif $clase|eq( 'faqs_producto' )}
-                            	   {*llamamos a una plantilla aparte *}
-                            	   {*include uri="design:common/ficha/faqs.tpl"*} 
-                            	   <div class="column1 colUnica">
-                            	       <div id="faq">
-                            	           <h2>Preguntas Frecuentes</h2>
-                            	           <div class="preguntas clearFix">
-                            	               <div class="flt">
-                            	                   <div>
-                            	                       <ul>
-                            	                           {foreach $node.data_map.faqs_producto.content.relation_browse as $index => $faq}
-                            	                               {let $nodo = fetch( 'content', 'node', hash('node_id', $faq.node_id ) )}
-                            	                              <li>
-                            	                                   <a href="{$node.url_alias|ezurl(no)}/(ver)/faqs#p_{$nodo.node_id}">
-                            	                                       {$nodo.data_map.texto_pregunta.content.output.output_text|strip_tags()}
-                            	                                   </a>
-                            	                               </li>
-                            	                               {/let}
-                            	                           {/foreach}
-                            	                           
-                            	                       </ul>              
-                            	                   </div>
-                            	               </div>
-                            	               
-                            	                {include uri="design:common/ficha/modVentajas.tpl"}
-                            	               
-                            	           </div>
-                        	           
-                            	            <div class="respuestas clr">
-                                                <ul>
-                                                    {foreach $node.data_map.faqs_producto.content.relation_browse as $index => $faq}
-                                                       {let $nodo = fetch( 'content', 'node', hash('node_id', $faq.node_id ) )}
-                                                       <li id="p_{$nodo.node_id}">
-                                                            <h3>
-                                                                <a name="faq{$index}">
-                                                                    {$nodo.data_map.texto_pregunta.content.output.output_text|strip_tags()}
-                                                                </a>
-                                                            </h3>
-                                                            <div class="wysiwyg">
-                                                                {$nodo.data_map.texto_respuesta.content.output.output_text}
-                                                            </div>
-                                                            <span class="ancla"><a href="#gridTwoColumnsFichas">Subir</a></span>
-                                                       </li>
-                                                       {/let}
-                                                    {/foreach}
-                                                
-                                                </ul>
-                                            </div>
-                            	       </div>
-                            	   </div>
-                            	   
-                            	{else}
-                                <div class="column1">
-
-                                    {if and( is_set( $view_parameters.v ), $view_parameters.v|eq( 'blog' ) )}
-                                    <h2>Post del blog relacionados con el producto</h2>
-                                    <ul>
-                                    {foreach $related_blog_post as $post}
-                                            <li><a href="{$post.guid}">{$post.post_title}</a></li>
-                                    {/foreach}
-                                    </ul>
-
-                                    
-									{elseif array( 'producto_qmementix', 'ventajas_producto' )|contains( $clase )}
-                                    <h2>Ventajas de tenerlo</h2>
-                                    {$node.data_map.ventajas.content.output.output_text}
-                                    {else}
-                                    	{switch match=$clase}
-                                    		{case match='sumario_producto'}
-                                    			{$node.data_map.sumario.content.output.output_text}
-                                    		{/case}
-                                            {case match='actualizaciones_producto'}
-                                    			{$node.data_map.actualizaciones.content.output.output_text}
-                                    		{/case}
-                                    		{case match='condiciones_producto'}
-                                    			{$node.data_map.contenido.content.output.output_text}
-                                    		{/case}
-                                    		{case match='novedades_producto'}
-                                    		    {if $node.parent_node_id|eq(66)}
-                                    		    <div id="faq">
-                                    		      <h2>Últimas noticias</h2>
-                                    		      <div class="preguntas clearFix">
-                            	                       <div class="flt">
-                            	                       <div>
-                                    		            <ul>
-                                    		     {def $canal = fetch( 'content', 'tree', hash( 'parent_node_id', 2,
-                                                                                               'class_filter_type', 'include',
-                                                                                               'class_filter_array', array( 81 ),
-                                                                                               'extended_attribute_filter', hash( 'id', 'ObjectRelationFilter',
-                                                                                                                                  'params', array( 632 ,$node.data_map.area.content.relation_browse[0].contentobject_id ) 
-                                                                                                )
-                                                                                                
-                                                  ))}
-                                                  {def $items = fetch('content', 'list', hash('parent_node_id', $canal[0].node_id,
-                                                                          'sort_by', array( 'published', false() ),
-                                                                           'limit', 3
-                                                        ))}
-                                                        {foreach $items as $item}                                
-                                                       	 <li><a target="_blank" href="{$item.data_map.url.content}">{$item.name} - {$item.object.published|datetime('custom', '%d/%m/%Y')}</a></li>
-                                                        {/foreach}
-                                                            <li style="font-size:10px"><a target="_blank" href="http://www.rssactum.es">ver más noticias</a></li>
-                                                        </ul>
-                                                    </div>
-                                                    </div></div> </div>
-                                    		    {else}
-                                    			{$node.data_map.novedades.content.output.output_text}
-                                    			{/if}
-                                    		{/case}
-                                    	{/switch}
-                                    {/if}                                    
-                                </div>
-                                {*incluimos el template del modulo de Ventajas*}
-                                {include uri="design:common/ficha/modVentajas.tpl"}
-                                
-                                {/if}
-
+					<span class="volver frt"><a href={"catalogo/qmementix/qmementix"|ezurl()}>Volver</a></span>
+					
+					<div class="listado" id="productlist">
+                            <h2>Seleccione sus Mementos</h2>
+                            <form action={"basket/addqmementix"|ezurl} method="post" id="mementosForm" name="mementosForm">
+								<table>
+									<thead>
+										<tr>
+											<th class="name" width=""><span class="hide">MEMENTO</span></th>
+											<th class="pvp">PVP</th>
+											<th class="pvp-offer">PVP OFERTA</th>
+										</tr>
+									</thead>
+									<tbody>
+									{def $mementos = $object.data_map.imemento_productos.content}
+										{foreach $mementos.relation_browse as $index => $el}
+											{def $memento = fetch( 'content', 'object', hash( 'object_id', $el.contentobject_id))}
+											
+											{if ne($memento.data_map.precio_qmementix.content.price,0)}
+												<tr>
+													<td>
+														<label for="hacienda_0{$memento.id}">
+															<input type="checkbox" id="hacienda_0{$memento.id}" name="mementos[]" value="{$memento.id}" class="pretty" />
+															{if $memento.data_map.nombre_mementix.content|ne('')}{$memento.data_map.nombre_mementix.content}{else}{$memento.name}{/if}
+														</label>
+													</td>
+													
+													<td class="pvp"><del>{$memento.data_map.precio_qmementix.content.ex_vat_price|l10n('clean_currency)} € + IVA</del></td>
+													<td class="pvp-offer"><ins>{$memento.data_map.oferta_qmementix.content.ex_vat_price|l10n('clean_currency)} € + IVA</ins></td>
+												</tr>
+											{/if}
+											{undef $memento}
+										{/foreach}
+										
+									</tbody>
+								</table>
+							</form>
                             
                         </div>
-
-                    </div>
+					
                 </div>
             </div>
 {/if}
