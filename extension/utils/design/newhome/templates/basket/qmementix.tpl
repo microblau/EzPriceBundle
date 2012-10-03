@@ -216,6 +216,23 @@
 				</ul>
 			</div>
 
+			{*		
+			<form action={"basket/addqmemetix"|ezurl} method="post" id="mementosForm" name="mementosForm">
+							<fieldset>
+							<ul>
+								{def $mementos = $object.data_map.imemento_productos.content}
+                                    {foreach $mementos.relation_browse as $el}
+										{def $memento = fetch( 'content', 'object', hash( 'object_id', $el.contentobject_id))}
+                                        <li>
+											<input type="checkbox" id="memento_{$memento.id}" name="mementos[]" value="{$memento.id}" />
+											<label for="memento_{$memento.id}">{if $emmento.data_map.nombre_mementix.content|ne('')}{$memento.data_map.nombre_mementix.content}{else}{$memento.name}{/if}</label>
+										</li>
+									{undef $memento}
+                                    {/foreach}														
+							</ul>
+							</fieldset>
+						</form>
+			*}
               {*valoraciones del producto nuevas*}
            {if $clase|eq('valoraciones_producto')}
 			<div class="modType4"  id="valCont">
@@ -803,7 +820,8 @@
                 </div>
 
                 <div class="columnType2 frt">
-                	<div class="modType4">
+				<div class="modType4">
+					
 {def $tabscount = 1}
 						{if $node.data_map.sumario.has_content}{set $tabscount = $tabscount|inc()}{/if}
                     	{if $node.data_map.contenido.has_content}{set $tabscount = $tabscount|inc()}{/if}
@@ -811,7 +829,7 @@
                     	{if $cuantasvaloraciones|gt(0)}{set $tabscount = $tabscount|inc()}{/if}
                     	{if $node.data_map.sumario.has_content}{set $tabscount = $tabscount|inc()}{/if}                  
                     	<span class="volver imprimir frt"><a href="#" onclick="window.print()">Imprimir ficha</a></span>
-
+						
                     	<div class="descripcion" id="producttext">
                             <ul class="tabs" style="float:none">
                             	<li {if and( array( 'producto_qmementix', 'ventajas_producto' )|contains( $clase ), is_set( $view_parameters.v)|not )}class="sel"{/if}>
