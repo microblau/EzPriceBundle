@@ -687,6 +687,12 @@ h2.titleOpinion { color:#000}
 .homeMementos #modTambien p { line-height: 18px;  color: #828282;}
 .homeMementos #modTambien a { color: #00528D; font-weight: normal; }
 
+	/* listado mementos */
+	#gridTwoColumnsFichas #productlist h2 { color:#FFF; font: normal 22px 'Arial', helvetica, sans-serif; }
+	#gridTwoColumnsFichas #productlist th { color:#fff; font-weight: normal;}
+	#gridTwoColumnsFichas #productlist td { font-size:16px; font-weight: bold; }
+		#gridTwoColumnsFichas #productlist td label {color:#005490; }
+
 /**************/
 
 
