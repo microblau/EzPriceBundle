@@ -1,5 +1,5 @@
 {ezcss_require( 'qmementix.css' )}
-{ezscript_require( 'imemento.js' ))}
+{ezscript_require( array('imemento.js','qmementixcarta.js' ))}
 {ezpagedata_set( 'bodyclass', 'fichas')}
 {ezpagedata_set( 'menuoption', 2 )}    
 {ezpagedata_set( 'metadescription', $node.data_map.subtitulo.content )}    
@@ -157,17 +157,19 @@
 						</form>
 						
 					</div>
+		<form action={"basket/addqmementix"|ezurl} method="post" id="mementosForm" name="mementosForm">
 					<div class="myQMementix">
                         <span class="tit">Mi QMementix</span>
                         <div class="resume">
-                            <p><strong><span class="flt">Ha añadido</span> <span class="cant">5 mementos</span></strong></p>
-                            <del>570,00 € + IVA</del>
-                            <ins>420,00 € + IVA</ins>
-                            <a href=""><img src={"btn_aniadir-compra.gif"|ezimage()} alt="Añadir a la cesta" /></a>
-                        </div>
+                            <p><strong><span class="flt">Ha añadido</span> <span class="cant" id="modMiImemento">0 Mementos</span></strong></p>
+							<del><span id="partial"></span></del>
+                            <ins><span id="ptotal"></ins>
+							<img src={"ajax-loader.gif"|ezimage} id="preload" />
+							<input type="image" id ="addToBasket" src={"btn_aniadir-compra.gif"|ezimage} alt="Añadir a la cesta" name="AddToBasket" />
+						</div>
 					</div>
 				</div>
-</div>
+	</div>
 				<ul class="footerTools"> 
 					<li>
 						<span>Compártalo:</span>
@@ -803,8 +805,7 @@
 					
 					<div class="listado" id="productlist">
                             <h2>Seleccione sus Mementos</h2>
-                            <form action={"basket/addqmementix"|ezurl} method="post" id="mementosForm" name="mementosForm">
-								<table>
+                            	<table>
 									<thead>
 										<tr>
 											<th class="name" width=""><span class="hide">MEMENTO</span></th>
@@ -817,6 +818,8 @@
 										{foreach $mementos.relation_browse as $index => $el}
 											{def $memento = fetch( 'content', 'object', hash( 'object_id', $el.contentobject_id))}
 											
+											
+											
 											{if ne($memento.data_map.precio_qmementix.content.price,0)}
 												<tr>
 													<td>
@@ -825,9 +828,14 @@
 															{if $memento.data_map.nombre_mementix.content|ne('')}{$memento.data_map.nombre_mementix.content}{else}{$memento.name}{/if}
 														</label>
 													</td>
-													
+													{if eq($memento.data_map.oferta_qmementix.content.price,0)}
+													<td class="pvp-offer"><ins>{$memento.data_map.precio_qmementix.content.ex_vat_price|l10n('clean_currency)} € + IVA</ins></td>
+													<td class="pvp"></td>
+													{else}
 													<td class="pvp"><del>{$memento.data_map.precio_qmementix.content.ex_vat_price|l10n('clean_currency)} € + IVA</del></td>
 													<td class="pvp-offer"><ins>{$memento.data_map.oferta_qmementix.content.ex_vat_price|l10n('clean_currency)} € + IVA</ins></td>
+													{/if}	
+													
 												</tr>
 											{/if}
 											{undef $memento}
@@ -835,7 +843,10 @@
 										
 									</tbody>
 								</table>
-							</form>
+								<input type="hidden" name="discount" id="discountfield" value="" />
+								<input type="hidden" name="total" id="totalfield" value="" />
+								<input type="hidden" name="object" id="object" value="{ezini( 'Qmementix', 'Object', 'qmementix.ini' )}" />
+		</form>
                             
                         </div>
 					
