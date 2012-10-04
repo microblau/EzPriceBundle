@@ -13,17 +13,22 @@
 		#iMementoDest .carrusel{margin:0 0 15px;padding:0;list-style-type:none;}
 		.qmementix .jcarousel-clip{margin:0;width:auto}
 		.qmementix .jcarousel-control{display:none;float:right;margin-top:-35px}
-			.qmementix .jcarousel-control a{float:left;display:block;width:20px;height:20px;margin-left:10px;border-radius:50%;background-color:#FFFFFF}
-			.qmementix .jcarousel-control a.sel{background-color:#0087c0}
+			.qmementix .jcarousel-control a{float:left;display:block;width:14px;height:14px;margin-top:4px;margin-left:10px;border-radius:50%;background-color:#FFFFFF}
+			.qmementix .jcarousel-control a.sel{width:21px;height:21px;border:1px solid #80B2D5;margin-top:0;background-color:#00528d}
 				.qmementix .jcarousel-control span{display:none;text-indent:-9999px;}
 			#iMementoDest .carrusel li{margin:0;padding:0;width:640px;height:auto}
 				#iMementoDest .carrusel .multimedia{margin-bottom:10px;}
 				#iMementoDest .carrusel h3{margin-bottom:10px;font-size:20px;font-weight:bold;color:#000;}
 				#iMementoDest .carrusel p{font-size:14px;color:#000;}
 		#iMementoDest .infoDest{float:right;width:260px;margin:-45px 0 15px}
-			#iMementoDest .tryPromo{margin-bottom:5px;border:3px solid #0a649c;border-radius:13px;color:#fff;background-color:#0087c0;}
-				#iMementoDest .tryProd{display:block;border:2px solid #fff;border-radius:13px;font-size:14px;text-align:center;color:#fff;background:#0065a1 url(../images/b_tryProd.png) 0 0 repeat-x;}
+
+			#iMementoDest .tryPromo{position:relative; width:285px; margin-bottom:15px;border:3px solid #0a649c;border-right:none;border-radius:13px 0 0 13px;color:#fff;background-color:#0087c0;}
+		#iMementoDest .tryPromo .shadow { position:absolute; right:0; top:-18px; width:10px; height:70px; background:url(../images/bck_tryProd.png) right 0 no-repeat; }
+		#iMementoDest .tryPromo.sel .shadow { position:absolute; right:0; top:-18px; width:10px; height:465px; background:url(../images/bck_tryProd_b.png) right 0 no-repeat; }
+				#iMementoDest .tryProd{display:block;border:2px solid #fff;border-right:none;border-radius:11px 0 0 11px;font-size:14px;text-align:left;color:#fff;}
+				#iMementoDest .tryProd span {padding-left:25px; background:url(../images/bck_info.png) 5px 0 no-repeat; }
 				#iMementoDest .tryProd.sel{background:none;border:0;padding-top:10px;background:url(../images/tab-close.gif) 97% 80% no-repeat;}
+				#iMementoDest .tryProd.sel span { padding-left:20px; background-image:none; }
 					#iMementoDest .tryProd strong{font-size:18px;}
 					#iMementoDest .tryProd.sel strong{font-size:14px;font-weight:normal;}
 				#frm_tryImemento{margin:15px 15px 0;border-top:1px solid #006490;background-color:#0087c0;}
@@ -31,7 +36,7 @@
 						#frm_tryImemento .requiredText{display:block;text-align:right;}
 						#frm_tryImemento label{margin-bottom:10px;font-size:13px;font-weight:bold;color:#fff;}
 							#frm_tryImemento label input{display:block;width:100%;height:23px;margin-top:2px;border:1px solid #93cce4;border-width:0 0 1px;}
-						#frm_tryImemento .check{font-weight:normal;}
+						#frm_tryImemento .check{margin-top:10px; font-weight:normal;}
 							#frm_tryImemento .check input{display:inline;width:auto;height:auto;margin:0 5px 0 0;border:0;}
 							#frm_tryImemento .check a{font-weight:bold;color:#fff;text-decoration:underline;}
 							#frm_tryImemento .check a:hover{text-decoration:none;}
@@ -43,6 +48,16 @@
 					#iMementoDest .confPromo .conf span{display:block;padding-left:40px;background:url(../images/b_conf.png) 0 50% no-repeat;}
 						#iMementoDest .confPromo .conf strong{font-weight:bold;font-size:18px;}
 				#iMementoDest .confPromo .moreInfo{width:150px;margin:0 auto;padding:10px 5px;border:2px solid #d8d8d8;border-radius:10px;}
+			
+			#iMementoDest .myQMementix {padding:20px 20px 30px 20px; border:1px solid #FFF; border-radius:8px; background:#8BB7DE url(../images/curve_modType4Fichas-top.png) 0 0 no-repeat; }
+				.myQMementix .tit { display:inline-block; margin-bottom:15px; color:#FFF; font:normal 24px 'Arial', helvetica, sans-serif; }
+				.myQMementix .resume { border:2px solid #d8d8d8; border-radius:8px; padding:20px; background-color:#FFF; text-align: center;}
+				.myQMementix .resume p { float:left; border-bottom:1px solid #ccc; margin-bottom:15px; padding-bottom:15px; color:#7d7d7d; font:normal 15px 'Arial', Helvetica, sans-serif; text-align: left;}
+				.myQMementix .resume p .cant { float:left; color:#00528d; font-size:18px; }
+				.myQMementix .resume del, .myQMementix .resume ins {display:inline-block; width:100%; margin-bottom:10px; border-bottom:none; font:bold 20px 'Arial', helvetica, sans-serif;}
+					.myQMementix .resume del, .myQMementix .resume del:hover { color:#006000; }
+					.myQMementix .resume ins, .myQMementix .resume ins:hover { color:#852C25; font-size:26px; }
+
 			#iMementoDest .appStore{display:block;width:159px;margin:35px auto 0;}
 				.qmementix #modInformacion{float:none;margin:10px auto 0;}
 					.qmementix #iMementoDest #modInformacion div{padding:10px 0 10px 10px;}
@@ -52,6 +67,7 @@
 				#iMementoDest .footerTools span{font-size:12px;color:#8e8e8e;}
 
 .qmementix .columnType1{float:left;width:680px;margin:15px 0;}
+	#modFichasPrecio { margin-top:-15px; }
 	.confImemento{padding:15px;border-radius:10px;background-color:#4f4f4f;box-shadow:0 1px 3px rgba(0,0,0,0.25);color:#fff;}
 		.confImemento .entry{margin:25px 0 10px;padding-bottom:10px;border-bottom:1px solid #6b6b6b;}
 			.confImemento .entry h3,

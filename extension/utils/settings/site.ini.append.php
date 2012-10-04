@@ -19,6 +19,7 @@ PolicyOmitList[]=basket/addimemento
 PolicyOmitList[]=basket/imementocheckprice
 PolicyOmitList[]=basket/qmementix
 PolicyOmitList[]=basket/addqmementix
+PolicyOmitList[]=basket/qmementixcheckprice
 PolicyOmitList[]=basket/que-es-un-acceso-nautis4
 PolicyOmitList[]=basket/que-es-un-acceso-mementix
 PolicyOmitList[]=basket/que-es-un-codigo-promocional

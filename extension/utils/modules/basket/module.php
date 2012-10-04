@@ -138,6 +138,12 @@ $ViewList['mementixcheckprice'] = array(
     'default_navigation_part' => 'ezmynavigationpart',
     'params' => array( ) );
 
+$ViewList['qmementixcheckprice'] = array(
+    'functions' => array( 'buy' ),
+    'script' => 'qmementixcheckprice.php',
+    'default_navigation_part' => 'ezmynavigationpart',
+    'params' => array( ) );	
+		
 $ViewList['addmementix'] = array(
     'functions' => array( 'buy' ),
     'script' => 'addmementix.php',

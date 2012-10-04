@@ -390,6 +390,35 @@ span.searchTerm	{ display: block; margin-top:21px; padding: 6px 30px; border-top
 	#gridTwoColumnsFichas #producttext .cursoDet .column1 #faq li { background-image:none;}
 	#gridTwoColumnsFichas #modVentajas li, #gridTwoColumnsFichas #producttext .cursoDet .column1 #faq #modVentajas li { background-image:url(../images/bullet_modVentajas.gif); background-repeat:no-repeat; background-position:0 3px;}
 
+	/* Product List (Seleccione Mementos) */
+	#gridTwoColumnsFichas .listado { padding:0 10px; }
+	#productlist table {width:100%; border-spacing: 0;}
+	
+	#productlist thead th {padding:0 10px 5px;}
+	
+	#productlist tbody .pvp, #productlist tbody .pvp del { color:#006000; }
+	#productlist tbody .pvp-offer, #productlist tbody .pvp-offer ins { color:#852C25; }
+	#productlist del, #productlist ins {border-bottom:none;}
+
+	#productlist .name { width:350px; }
+
+	#productlist .pvp, #productlist .pvp-offer {width:155px; text-align: center;}
+
+	
+
+	
+		#productlist tbody td { height:60px; padding:0 10px; border-bottom: solid 6px #8bb7de; vertical-align: middle; background-color:#FFF;}
+			#productlist tbody td:first-child, #productlist tbody td:last-child { background:#fff url(../images/bck_td.gif) 0 100% no-repeat; }
+				#productlist tbody td:first-child { border-radius:7px 0 0 0; }
+				#productlist tbody td:last-child { border-radius:0 7px 0 0; background-position:100% 100%; }
+	/* Pretty Checkbox */
+	#productlist label { white-space:normal; }
+		#productlist label:hover {cursor: pointer;}
+		#productlist label.c_on, #productlist label.c_off {padding:11px 35px 7px; }
+		#productlist label.c_on { background:url(../images/b_checkOk.png) 0 45% no-repeat;}
+		#productlist label.c_off { background:url(../images/b_check.png) 0 45% no-repeat;}
+		
+
 #cestaPaso1 #modType2 h1 { background:transparent url(../images/curve_supModType2-ces1.gif) no-repeat scroll 0 0;  }
 #cestaPaso1 #modType2 .wrap { width:740px; padding: 0 9px 0 11px; background: #fff  }
 	#cestaPaso1 #modType2 .description { background: #fff  }
