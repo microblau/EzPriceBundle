@@ -12,6 +12,7 @@
                
 				$("#addToBasket").hide();
 				$("#preload").show();
+				disableChecks(this);
 	           	checkImementoPrice( $("#valor").val() );
 				
     	})};    	
@@ -24,6 +25,23 @@
         });
     });
     
+	function disableChecks(valor)
+	{
+		
+		$('input[type=checkbox]').each(function () {
+				$(this).attr("disabled", true);
+			});
+	}
+	
+	function enableChecks(valor)
+	{
+		
+		$('input[type=checkbox]').each(function () {
+				$(this).attr("disabled", false);
+			});
+	}
+	
+	
     function checkImementoPrice( accesos )
     {
     var n = $("#productlist input:checked").length;
@@ -52,6 +70,7 @@
 				$("#totalfield").val( data.total );
 				$("#preload").hide();
 				$("#addToBasket").show();
+				enableChecks();
 			}, 'json');
 }
 

@@ -150,6 +150,12 @@ $ViewList['addmementix'] = array(
     'default_navigation_part' => 'ezmynavigationpart',
     'params' => array( ) );
 
+$ViewList['addqmementix'] = array(
+    'functions' => array( 'buy' ),
+    'script' => 'addqmementix.php',
+    'default_navigation_part' => 'ezmynavigationpart',
+    'params' => array( ) );	
+	
 $ViewList['addnautis4'] = array(
     'functions' => array( 'buy' ),
     'script' => 'addnautis4.php',
