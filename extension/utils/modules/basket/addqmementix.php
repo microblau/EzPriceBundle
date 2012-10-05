@@ -30,11 +30,11 @@ $collection->setAttribute( 'currency_code', $currency );
 $collection->store();
 $collectionItems = $collection->itemList( false );
 
-
 $orderInfo = eZPersistentObject::fetchObject( eflOrders::definition(), 
                                                             null, 
                                                             array( 'productcollection_id' => $basket->attribute( 'productcollection_id' ) )  
                                                             );
+
 
 															
 if( $orderInfo )
@@ -50,6 +50,7 @@ else
     $orderInfo->store();
     $info = array();
 }
+
 
 $info['has_imemento'] = array();
          
@@ -100,11 +101,8 @@ else
         $item->store();  
     
     }
-    
-
-
-
-//$module->redirectTo( "/basket/basket/" );
+	
+$module->redirectTo( "/basket/basket/" );
 
 ?>
 
