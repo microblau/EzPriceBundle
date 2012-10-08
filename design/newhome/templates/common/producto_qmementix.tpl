@@ -983,12 +983,3 @@
                 </div>
             </div>
 {/if}
-{literal}<script type="text/javascript">
-
-	$("#formOpinion").fancybox({
-			'width':624, 
-			'height':438,
-			'padding':0,
-			'type':'iframe'
-	});
-</script>{/literal}
