@@ -136,7 +136,11 @@
                                                                     <a href={$product.item_object.contentobject.main_node.url_alias|ezurl}>{$product.object_name}</a><br />
                                                                     <span class="mementos">{$order_info.has_imemento.mementos}.
                                                                     </span>
-
+																{elseif $product.item_object.contentobject.contentclass_id|eq( ezini( 'Qmementix', 'Class', 'qmementix.ini' ) )}
+                                                                    <a href={$product.item_object.contentobject.main_node.url_alias|ezurl}>{$product.object_name}</a><br />
+                                                                    <span class="mementos">{$order_info.has_imemento.mementos}.
+                                                                    </span>
+																
                                                                 {elseif $product.item_object.contentobject.contentclass_id|eq(100)}
                                                                 	<a href={$product.item_object.contentobject.main_node.parent.url_alias|ezurl}>{$product.object_name}</a>                                      {else}
 																<a href={$product.item_object.contentobject.main_node.url_alias|ezurl}>{$product.object_name}</a>{/if}
