@@ -97,6 +97,19 @@ $cursos = tantaBasketFunctionCollection::getTrainingInBasket( $order->attribute(
                                 'iva' => $product['vat_value']
                             );
                         }
+					elseif ( $product['item_object']->attribute( 'contentobject' )->attribute( 'contentclass_id' ) == eZINI::instance( 'qmementix.ini' )->variable( 'Qmementix', 'Class' ) )
+                        {
+                            $data = $product['item_object']->attribute( 'contentobject' )->dataMap();
+                            
+                            $products_to_ws[] = array(
+                                'orden' => $i,
+                                'ref' => $data['referencia']->content(),
+                                'nombre' => $product['object_name'] . ': '. $info['has_imemento']['refs'],
+                                'cantidad' => $product['item_count'],
+                                'precio' =>  str_replace( ',', '.', round( $product['total_price_ex_vat'] / $product['item_count'] , 2 ) ),
+                                'iva' => $product['vat_value']
+                            );
+                        }	
                     else
                     {   
                     $data = $product['item_object']->attribute( 'contentobject' )->dataMap();

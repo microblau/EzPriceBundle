@@ -100,7 +100,8 @@ $basket->updatePrices(); // Update the prices. Transaction not necessary.
 
 if ( $http->hasPostVariable( "ActionAddToBasket" ) )
 {
-    $objectID = $http->postVariable( "ContentObjectID" );
+    
+	$objectID = $http->postVariable( "ContentObjectID" );
 
     if ( $http->hasPostVariable( "Quantity" ) )
     {
