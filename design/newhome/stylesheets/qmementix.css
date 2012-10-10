@@ -55,8 +55,8 @@
 				.myQMementix .resume p { float:left; border-bottom:1px solid #ccc; margin-bottom:15px; padding-bottom:15px; color:#7d7d7d; font:normal 15px 'Arial', Helvetica, sans-serif; text-align: left;}
 				.myQMementix .resume p .cant { float:left; color:#00528d; font-size:18px; }
 				.myQMementix .resume del, .myQMementix .resume ins {display:inline-block; width:100%; margin-bottom:10px; border-bottom:none; font:bold 20px 'Arial', helvetica, sans-serif;}
-					.myQMementix .resume del, .myQMementix .resume del:hover { color:#006000; }
-					.myQMementix .resume ins, .myQMementix .resume ins:hover { color:#852C25; font-size:26px; }
+					.myQMementix .resume del, .myQMementix .resume del:hover { color:#852C25; }
+					.myQMementix .resume ins, .myQMementix .resume ins:hover { color:#006000; font-size:26px; }
 
 			#iMementoDest .appStore{display:block;width:159px;margin:35px auto 0;}
 				.qmementix #modInformacion{float:none;margin:10px auto 0;}
@@ -165,3 +165,6 @@ display:block;
 #iMementoDest .footerTools {
     padding:0;
 }
+
+#productlist tbody .pvp, #productlist tbody .pvp del { color:#006000; }
+	#productlist tbody .pvp-offer, #productlist tbody .pvp-offer ins { color:#852C25; }
