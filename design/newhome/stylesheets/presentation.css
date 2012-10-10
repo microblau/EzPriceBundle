@@ -970,8 +970,8 @@ span.searchTerm	{ display: block; margin-top:21px; padding: 6px 30px; border-top
 		.modType4 .descripcion .tabs { margin:0;}
 			.modType4 .descripcion .tabs li { display:inline-block; position:relative; margin:0 2px 0 0; padding:0; vertical-align:top;}
 			/*#cursoDetalle .type2 .descripcion .tabs li { top:5px}*/
-				.modType4 .descripcion .tabs li h2 { padding:5px 13px}
-				.modType4 .descripcion .tabs li a { display:block; padding:5px 13px; background-color:#C6E7FF;}
+				.modType4 .descripcion .tabs li h2 { padding:5px 8px}
+				.modType4 .descripcion .tabs li a { display:block; padding:5px 8px; background-color:#C6E7FF;}
 				.modType4 .descripcion .tabs li .cL, .modType4 .descripcion .tabs li .cR, .modType4 .descripcion .tabs li.sel .cL, .modType4 .descripcion .tabs li .cR { position:absolute; width:8px; height:8px; top:0}
 				.modType4 .descripcion .tabs li .cL { left:0; background:url(../images/curve_type1-left.gif) no-repeat 0 0;}
 				.modType4 .descripcion .tabs li .cR { right:0; background:url(../images/curve_type1-right.gif) no-repeat 0 0;}
