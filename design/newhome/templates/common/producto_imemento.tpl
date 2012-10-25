@@ -129,12 +129,19 @@
 									
 
 									<label for="prod">Seleccione producto  <span>*</span></label>
-<input type="hidden" name="ContentObjectAttribute_ezselect_selected_array_10807" value="" />
-
-									<select id="prod" name="ContentObjectAttribute_ezselect_selected_array_10807[]">
-										
-<option value="13">iMemento</option>
+									<input type="hidden" id="prod" name="ContentObjectAttribute_ezselect_selected_array_10807" value="13" />
+									
+									<select id="prodQI" name="ContentObjectAttribute_ezstring_data_text_329708">
+										{def $mementos = $node.data_map.imemento_productos.content}	
+										{foreach $mementos.relation_browse as $el}
+											{def $memento = fetch( 'content', 'object', hash( 'object_id', $el.contentobject_id))}
+											{if ne($memento.data_map.precio_qmementix.content.price,0)}
+												<option value="{$memento.name}">{$memento.name}</option>
+											{/if}
+										{undef $memento}
+										{/foreach}
 									</select>
+									
 								</label>
 
 									

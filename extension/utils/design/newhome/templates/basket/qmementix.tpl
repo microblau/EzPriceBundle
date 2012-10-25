@@ -65,8 +65,9 @@
 {def $muestraaleatorio=fetch('producto','muestraaleatorio' , hash( 'node_id', $node.node_id ))} 
 {def $calculaestrellas=fetch('producto','calculaestrellas' , hash( 'node_id', $node.node_id, 'categoria' , 'calidad', 'n_estrellas' ,5 ))} 
  {if $clase|eq('valoraciones_producto')}
-<div id="gridWide" class="imemento">
+	<div id="gridWide" class="imemento">
 {/if}
+{def $mementos = $object.data_map.imemento_productos.content}
 <div id="iMementoDest" class="clearFix">
 <div class="clearFix">
 				<h2 class="logo"><img src={"logo_Qmementix.png"|ezimage} alt="Qmementix"/></h2>
@@ -134,11 +135,16 @@
 									
 
 									<label for="prod">Seleccione producto  <span>*</span></label>
-<input type="hidden" name="ContentObjectAttribute_ezselect_selected_array_10807" value="" />
+									<input type="hidden" name="ContentObjectAttribute_ezselect_selected_array_10807" value="0" />
 
-									<select id="prod" name="ContentObjectAttribute_ezselect_selected_array_10807[]">
-										
-<option value="13">Qmementix</option>
+									<select id="prodQI" name="ContentObjectAttribute_ezstring_data_text_329708">
+										{foreach $mementos.relation_browse as $index => $el}
+											{def $memento = fetch( 'content', 'object', hash( 'object_id', $el.contentobject_id))}
+												{if ne($memento.data_map.precio_qmementix.content.price,0)}
+													<option value="{$memento.name}">{$memento.name}</option>
+												{/if}	
+											{undef $memento}	
+										{/foreach}
 									</select>
 								</label>
 
@@ -814,12 +820,8 @@
 										</tr>
 									</thead>
 									<tbody>
-									{def $mementos = $object.data_map.imemento_productos.content}
 										{foreach $mementos.relation_browse as $index => $el}
 											{def $memento = fetch( 'content', 'object', hash( 'object_id', $el.contentobject_id))}
-											
-											
-											
 											{if ne($memento.data_map.precio_qmementix.content.price,0)}
 												<tr>
 													<td>
