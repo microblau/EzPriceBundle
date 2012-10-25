@@ -166,8 +166,12 @@ var google_conversion_value = 0;
                                                         
 							{attribute_view_gui attribute=$node.data_map.telefono}
                                                     </li>                                                  
-
-						  	
+							
+						  	<li>
+                               <label for="telefono">Producto Qmementix</label>
+									{*attribute_view_gui attribute=$node.data_map.telefono*}
+									
+                            </li>                                               
                                                      
                                                     
                                                 </ul>
