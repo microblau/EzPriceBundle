@@ -45,13 +45,14 @@
     function checkImementoPrice( accesos )
     {
     var n = $("#productlist input:checked").length;
-        if (n == 1){
+	
+	
+		if (n == 1){
                 $("#modMiImemento").text(n + ' ' + literal["mementos"][0]);
         }else{
                 $("#modMiImemento").text(n + ' ' + literal["mementos"][1]);
         }
-		
-		
+				
 		var values = new Array();
 		$.each($("input[name='mementos[]']:checked"), function() {
 		  values.push($(this).val());
@@ -62,6 +63,7 @@
 			$.get( '/basket/qmementixcheckprice',
 				{ mementos: n, id : $("#object").val(), products : values.join(',') },
 				function(data){
+				(data.pintarojo == 0) ? $("#partial").hide() : $("#partial").show() ;
 				$("#partial").html( data.pricenorm + "+ IVA");
 				$("#ptotal").html( data.total + "+ IVA");
 				$("#partialfield").val( data.price );
@@ -72,6 +74,6 @@
 				$("#addToBasket").show();
 				enableChecks();
 			}, 'json');
-}
+	}
 
 })(jQuery);

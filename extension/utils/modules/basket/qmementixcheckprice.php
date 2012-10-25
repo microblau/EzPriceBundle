@@ -19,6 +19,7 @@ if( ( $mementos > 0 ))
                                                             'contentobjectattribute_id' => $datatabla['tabla_precios']->attribute( 'id' ),
                                                             'contentobjectattribute_version' => $datatabla['tabla_precios']->attribute( 'version' ) ) );
 	$precio = 0;
+	$pintarojo = 0;
 	foreach( $products as $product )
 	{
 
@@ -28,11 +29,14 @@ if( ( $mementos > 0 ))
 		{
 			$precio += $pData['oferta_qmementix']->content()->attribute( 'ex_vat_price' );
 			$precionormal += $pData['precio_qmementix']->content()->attribute( 'ex_vat_price' );
+			$pintarojo += $pData['oferta_qmementix']->content()->attribute( 'ex_vat_price' );	
 		}
 		else
 		{
 			$precio += $pData['precio_qmementix']->content()->attribute( 'ex_vat_price' );
 			$precionormal += $pData['precio_qmementix']->content()->attribute( 'ex_vat_price' );
+			$pintarojo += $pData['oferta_qmementix']->content()->attribute( 'ex_vat_price' );	
+			
 		}	
 	}
 
@@ -48,7 +52,7 @@ else
     $total = 0;
 }
 
-$result = array( 'pricenorm' => number_format( $precionormal, 2, '.', '' ) . ' €','price' => number_format( $precio, 2, '.', '' ) . ' €', 'discount' =>  $discountpercent . '%', 'total' => number_format( $total, 2, '.', '' ) . ' €');
+$result = array( 'pintarojo' => $pintarojo,'pricenorm' => number_format( $precionormal, 2, '.', '' ) . ' €','price' => number_format( $precio, 2, '.', '' ) . ' €', 'discount' =>  $discountpercent . '%', 'total' => number_format( $total, 2, '.', '' ) . ' €');
 echo json_encode( $result );
 eZExecution::cleanExit();
 ?>
