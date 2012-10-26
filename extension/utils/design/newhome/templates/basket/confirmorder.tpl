@@ -47,22 +47,6 @@
                                                 </thead>
                                                 {def $basket = fetch( 'shop', 'basket')}  
 												
-                                                 {def $products = fetch( 'basket', 'get_products_in_basket', hash( 'productcollection_id', $basket.productcollection_id ))}
-												 {def $order_info = fetch( 'basket', 'get_order_info', hash( 'productcollection_id', $basket.productcollection_id ))}
-												<td>
-												{if $product.item_object.contentobject.contentclass_id|eq( ezini( 'iMemento', 'Class', 'imemento.ini' ) )}
-													<a href={$product.item_object.contentobject.main_node.url_alias|ezurl}>{$product.object_name}</a><br />
-                                                    <span class="mementos">{$order_info.has_imemento.mementos}.
-                                                    </span>
-												{elseif $product.item_object.contentobject.contentclass_id|eq( ezini( 'Qmementix', 'Class', 'qmementix.ini' ) )}
-													<a href={$product.item_object.contentobject.main_node.url_alias|ezurl}>{$product.object_name}</a><br />
-                                                    <span class="mementos">{$order_info.has_imemento.mementos}.
-                                                    </span>
-												{/if}
-												
-												</td>
-												{undef $products $order_info}
-												
                                                 <tfoot>
                                                     <tr class="totalNoIva">
                                                         <th colspan="4">TOTAL (sin IVA)</th>
@@ -81,7 +65,8 @@
 {def $training = fetch( 'basket', 'get_training_in_basket', hash( 'productcollection_id', $basket.productcollection_id ))}
 {def $order_info = fetch( 'basket', 'get_order_info', hash( 'productcollection_id', $basket.productcollection_id ))}
                                                 
-                                                    {foreach $products|sortbasketitems() as $index => $item}             
+                                                    {foreach $products|sortbasketitems() as $index => $item}
+
                                                     <tr {if eq($index,0)}class="first"{/if}>
                                                         <td class="producto">
 {if $item.item_object.contentobject.contentclass_id|eq(98)}
@@ -96,6 +81,9 @@
 {$item.item_object.name}
 {/if}
 
+	{if ne($order_info.has_imemento.mementos,'')}
+		<span class="mementos">{$order_info.has_imemento.mementos}.</span>
+	{/if}
 </td>
                                                         <td>{$item.item_count}</td>
                                                         <td colspan="2" class="price">
