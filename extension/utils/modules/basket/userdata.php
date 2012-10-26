@@ -458,6 +458,10 @@ else
                 {
                     $order['has_mementix'] = $unserialized_order['has_mementix'];                
                 }
+				if( $unserialized_order['has_imemento'] )
+                {
+                    $order['has_imemento'] = $unserialized_order['has_imemento'];                
+                }
                 $order['codigopromocional'] = $unserialized_order['codigopromocional'];
                 $order['productos_bono'] = $unserialized_order['productos_bono'];
                 $order['descuento'] = $unserialized_order['descuento'];
