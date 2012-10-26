@@ -46,7 +46,23 @@
                                                     </tr>
                                                 </thead>
                                                 {def $basket = fetch( 'shop', 'basket')}  
-                                                                                 
+												
+                                                 {def $products = fetch( 'basket', 'get_products_in_basket', hash( 'productcollection_id', $basket.productcollection_id ))}
+												 {def $order_info = fetch( 'basket', 'get_order_info', hash( 'productcollection_id', $basket.productcollection_id ))}
+												<td>
+												{if $product.item_object.contentobject.contentclass_id|eq( ezini( 'iMemento', 'Class', 'imemento.ini' ) )}
+													<a href={$product.item_object.contentobject.main_node.url_alias|ezurl}>{$product.object_name}</a><br />
+                                                    <span class="mementos">{$order_info.has_imemento.mementos}.
+                                                    </span>
+												{elseif $product.item_object.contentobject.contentclass_id|eq( ezini( 'Qmementix', 'Class', 'qmementix.ini' ) )}
+													<a href={$product.item_object.contentobject.main_node.url_alias|ezurl}>{$product.object_name}</a><br />
+                                                    <span class="mementos">{$order_info.has_imemento.mementos}.
+                                                    </span>
+												{/if}
+												
+												</td>
+												{undef $products $order_info}
+												
                                                 <tfoot>
                                                     <tr class="totalNoIva">
                                                         <th colspan="4">TOTAL (sin IVA)</th>
