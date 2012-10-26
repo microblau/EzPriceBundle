@@ -39,7 +39,7 @@ else
 	$tpl->setVariable( 'confianza_pago', $confianza_pago );
 	$tpl->setVariable( 'aplazado', $aplazado );
 	$basket = eZBasket::currentBasket();
-	$training = tantaBasketFunctionCollection::getTrainingInBasket( $basket->attribute( 'productcollection_id') );
+	//$training = tantaBasketFunctionCollection::getTrainingInBasket( $basket->attribute( 'productcollection_id') );
 	if( count( $training['result'] ) > 0 )
 	{
 		$tpl->setVariable( 'aplazado', 0 );
