@@ -45,7 +45,7 @@
 <p>El contenido de su pedido es el siguiente:</p>
 
 <p>{foreach $products as $product}
-{$product.object_name}, {$product.item_count} unidad(es)<br />
+{$product.object_name}<span class="mementos">{$order_info.has_imemento.mementos}.</span>, {$product.item_count} unidad(es)<br />
 {/foreach}
 {foreach $cursos as $product}
 {$product.object_name}, {$product.item_count} unidad(es)<br />
