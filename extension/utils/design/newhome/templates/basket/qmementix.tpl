@@ -135,7 +135,7 @@
 									
 
 									<label for="prod">Seleccione producto  <span>*</span></label>
-									<input type="hidden" name="ContentObjectAttribute_ezselect_selected_array_10807" value="0" />
+									<input type="hidden" id="prod" name="ContentObjectAttribute_ezselect_selected_array_10807[]" value="0" />
 
 									<select id="prodQI" name="ContentObjectAttribute_ezstring_data_text_329708">
 										{foreach $mementos.relation_browse as $index => $el}
