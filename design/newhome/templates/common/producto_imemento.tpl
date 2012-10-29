@@ -129,7 +129,7 @@
 									
 
 									<label for="prod">Seleccione producto  <span>*</span></label>
-									<input type="hidden" id="prod" name="ContentObjectAttribute_ezselect_selected_array_10807" value="13" />
+									<input type="hidden" id="prod" name="ContentObjectAttribute_ezselect_selected_array_10807[]" value="13" />
 									
 									<select id="prodQI" name="ContentObjectAttribute_ezstring_data_text_329708">
 										{def $mementos = $node.data_map.imemento_productos.content}	
