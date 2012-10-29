@@ -113,7 +113,7 @@
 </div>
 				<div class="infoDest">
 					<div class="tryPromo">
-						<a href="#" class="tryProd"><span>Pruebe <strong>GRATIS</strong> QMementix 15 días </span></a>
+						<a href="#" class="tryProd"><span>Pruébelo <strong>GRATIS</strong> 15 días </span></a>
 
                         <form id="frm_tryImemento" action={"content/action"|ezurl} method="post">
 							<fieldset>
