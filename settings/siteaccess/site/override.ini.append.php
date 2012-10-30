@@ -433,7 +433,7 @@ Subdir=templates
 
 [formulario_prueba_producto_resultado_qmementix]
 Source=content/collectedinfo/prueba_producto_qmementix_form.tpl
-MatchFile=full/formulario_prueba_producto.tpl
+MatchFile=full/formulario_prueba_producto_qmementix.tpl
 Subdir=templates
 
 [formulario_formacion_nautis_mementix]
