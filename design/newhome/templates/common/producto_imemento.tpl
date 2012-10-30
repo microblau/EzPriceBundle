@@ -136,7 +136,7 @@
 										{foreach $mementos.relation_browse as $el}
 											{def $memento = fetch( 'content', 'object', hash( 'object_id', $el.contentobject_id))}
 											{if ne($memento.data_map.precio_qmementix.content.price,0)}
-												<option value="{$memento.name}">{$memento.name}</option>
+												<option value="{$memento.data_map.nombre_mementix.data_text}">{$memento.data_map.nombre_mementix.data_text}</option>
 											{/if}
 										{undef $memento}
 										{/foreach}
