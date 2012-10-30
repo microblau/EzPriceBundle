@@ -431,6 +431,11 @@ Source=content/collectedinfo/prueba_producto_form.tpl
 MatchFile=full/formulario_prueba_producto.tpl
 Subdir=templates
 
+[formulario_prueba_producto_resultado_qmementix]
+Source=content/collectedinfo/prueba_producto_qmementix_form.tpl
+MatchFile=full/formulario_prueba_producto.tpl
+Subdir=templates
+
 [formulario_formacion_nautis_mementix]
 Source=node/view/full.tpl
 MatchFile=full/formulario_formacion_nautis_mementix.tpl

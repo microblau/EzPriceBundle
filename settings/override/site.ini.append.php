@@ -114,7 +114,8 @@ ModuleViewAccessMode[transferencia/*]=ssl
 ModuleViewAccessMode[domiciliacion/*]=ssl
 
 [MailSettings]
-Transport=SMTP
+Transport=file
+#Transport=SMTP
 AdminEmail=clientes@efl.es
 EmailSender=clientes@efl.es
 TransportServer=localhost
