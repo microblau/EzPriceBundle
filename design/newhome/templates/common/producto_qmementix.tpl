@@ -1,5 +1,5 @@
 {ezcss_require( 'qmementix.css' )}
-{ezscript_require( 'imemento.js' ))}
+{ezscript_require( 'imemento.js' )}
 {ezpagedata_set( 'bodyclass', 'fichas')}
 {ezpagedata_set( 'menuoption', 2 )}    
 {ezpagedata_set( 'metadescription', $node.data_map.subtitulo.content )}    
@@ -70,9 +70,9 @@
 				<h2 class="logo"><img src={"logo_Qmementix.png"|ezimage} alt="Qmementix"/></h2>
 <div id="mycarousel">
 <div class="jcarousel-control">
-						<a href="#" class="sel"><span>1</span></a>
-						<a href="#"><span>2</span></a>
-						<a href="#"><span>3</span></a>
+						{foreach $node.data_map.carrusel.content.relation_browse as $index => $item}
+							<a href="#" class="sel"><span>{$index|inc}</span></a>
+						{/foreach}
 					</div>
 				<ul class="carrusel">
                     {foreach $node.data_map.carrusel.content.relation_browse as $index => $item}
@@ -83,25 +83,25 @@
 	   
                 		                   	{eflyoutube( $promo.data_map.youtube_url.content, 640, 350 )}
     	                	        	 
-{else}
-		{if $promo.data_map.video.has_content}
-        	{def $video = fetch( 'content', 'object', hash( 'object_id', $promo.data_map.video.content.relation_browse.0.contentobject_id ))}                         
-                               {attribute_view_gui attribute=$video.data_map.video width=640 height=350 autostart=0}
-                                                   
-                            
-        
-        {else}
-        	{if $promo.data_map.imagen.has_content}
-        	      {def $imagen = fetch( 'content', 'object', hash( 'object_id', $promo.data_map.imagen.content.relation_browse.0.contentobject_id ))}
-                                        <div class="media">
-                                        <img src={$imagen.data_map.image.content.original.url|ezroot()} width="{$imagen.data_map.image.content.original.width}" height="{$imagen.data_map.image.content.original.height}" alt="{$imagen.data_map.image.content.alternative_text}" />
-                                        </div>       
-        	{/if}
-        {/if}
+							{else}
+								{if $promo.data_map.video.has_content}
+									{def $video = fetch( 'content', 'object', hash( 'object_id', $promo.data_map.video.content.relation_browse.0.contentobject_id ))}                         
+													   {attribute_view_gui attribute=$video.data_map.video width=640 height=350 autostart=0}
+																		   
+													
+								
+								{else}
+									{if $promo.data_map.imagen.has_content}
+										  {def $imagen = fetch( 'content', 'object', hash( 'object_id', $promo.data_map.imagen.content.relation_browse.0.contentobject_id ))}
+																<div class="media">
+																<img src={$imagen.data_map.image.content.original.url|ezroot()} width="{$imagen.data_map.image.content.original.width}" height="{$imagen.data_map.image.content.original.height}" alt="{$imagen.data_map.image.content.alternative_text}" />
+																</div>       
+									{/if}
+								{/if}
 
-{/if}
+						{/if}
 						</div>
-						<h3>{$index|sum(1)} {$promo.name}</h3>
+						<h3>{$promo.name}</h3>
 						{$promo.data_map.texto.content.output.output_text}
 					</li>
                     {undef  $promo}
@@ -118,20 +118,20 @@
 							<span class="requiredText">* Datos obligatorios</span>
 							
 									<label for="nombre">Su nombre <span>*</span>
-									<input type="text" id="nombre" name="ContentObjectAttribute_ezstring_data_text_329713" class="text" /></label>
+									<input type="text" id="nombre" name="ContentObjectAttribute_ezstring_data_text_243190" class="text" /></label>
 								
 									<label for="apellidos">Sus apellidos <span>*</span>
-									<input type="text" id="apellidos" name="ContentObjectAttribute_ezstring_data_text_329714" class="text" /></label>
+									<input type="text" id="apellidos" name="ContentObjectAttribute_ezstring_data_text_243191" class="text" /></label>
 								
 									<label for="telefono">Su teléfono <span>*</span>
-									<input type="text" id="telefono" name="ContentObjectAttribute_ezstring_data_text_329716" class="text" /></label>
+									<input type="text" id="telefono" name="ContentObjectAttribute_ezstring_data_text_243193" class="text" /></label>
 								
 									<label for="email">Su email <span>*</span>
-									<input type="text" id="email" name="ContentObjectAttribute_data_text_329715" class="text" /></label>
+									<input type="text" id="email" name="ContentObjectAttribute_data_text_243192" class="text" /></label>
 									<label for="prod">Seleccione producto  <span>*</span></label>
-									<input type="hidden" id="prod" name="ContentObjectAttribute_ezselect_selected_array_329711[]" value="0" />
+									<input type="hidden" id="prod" name="ContentObjectAttribute_ezselect_selected_array_243188[]" value="0" />
 									
-									<select id="prodQI" name="ContentObjectAttribute_ezstring_data_text_329712">
+									<select id="prodQI" name="ContentObjectAttribute_ezstring_data_text_243189">
 										{def $mementos = $node.data_map.imemento_productos.content}
 										{foreach $mementos.relation_browse as $index => $el}
 											{def $memento = fetch( 'content', 'object', hash( 'object_id', $el.contentobject_id))}
@@ -146,13 +146,13 @@
 
 									
 							
-									<label class="check" for="legal"> <input type="checkbox"id="legal" name="ContentObjectAttribute_data_boolean_329717" /> Acepto las <a id="condicionesligthBox" href={'lightbox/ver/1451'|ezurl}>condiciones legales</a></label>
+									<label class="check" for="legal"> <input type="checkbox"id="legal" name="ContentObjectAttribute_data_boolean_243194" /> Acepto las <a id="condicionesligthBox" href={'lightbox/ver/1451'|ezurl}>condiciones legales</a></label>
 								
 							<input name="ActionCollectInformation" type="submit" value="Enviar solicitud" id="trySend" />
 	{def $currentusuario = fetch( 'user', 'current_user') }				
-						 <input class="box" type="hidden" size="70" name="ContentObjectAttribute_ezstring_data_text_329718" value="" id="colectivo" value="{cond( $currentusuario.is_logged_in, $currentusuario.contentobject.main_node.parent.name, '')}
-" />						   <input type="hidden" name="ContentNodeID" value="14159" />
-						   <input type="hidden" name="ContentObjectID" value="22360" />
+						 <input class="box" type="hidden" size="70" name="ContentObjectAttribute_ezstring_data_text_243195" value="" id="colectivo" value="{cond( $currentusuario.is_logged_in, $currentusuario.contentobject.main_node.parent.name, '')}
+" />						   <input type="hidden" name="ContentNodeID" value="14864" />
+						   <input type="hidden" name="ContentObjectID" value="20038" />
 						   <input type="hidden" name="ViewMode" value="full" />
                             </fieldset>
 						
@@ -989,4 +989,3 @@
                     </div>
                 </div>
             </div>
-{/if}

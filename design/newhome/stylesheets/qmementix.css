@@ -125,7 +125,7 @@
 
 .fichas #gridWide.qmementix .cursoDet {border-radius: 0 0 10px 10px;}	
 	
-#iMementoDest .footerTools span a {color:#fff;}
+#iMementoDest .footerTools span a {font-weight:bold;}
 
 .qmementix .bmarks {
     left: -170px;
