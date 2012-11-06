@@ -95,7 +95,8 @@ var imemento = {
 
 var prettyChecks = {
 		init:function(){
-			
+			var $input = $("input[type='checkbox'].pretty"),
+				$label = $input.parent();
 			$("input[type='checkbox'].pretty").each(function(){
 				var $that = $(this),
 					$parent = $that.parent(),
@@ -110,20 +111,17 @@ var prettyChecks = {
 					}
 
 					$parent.addClass(clase)
+			})
 			
+			$label.click(function(){
+				var $that = $(this);
 
-				
-			}).click(function(){
-				var $that = $(this),
-					$parent = $that.parent(),
-					clase;
-
-				if($parent.hasClass("c_on")){
-					$that.removeAttr("checked");
-					$parent.removeClass("c_on").addClass("c_off");
+				if($that.hasClass("c_on")){
+					$that.find("input").removeAttr("checked");
+					$that.removeClass("c_on").addClass("c_off");
 				}else{
-					$that.attr("checked","checked");
-					$parent.removeClass("c_off").addClass("c_on");
+					$that.find("input").attr("checked","checked");
+					$that.removeClass("c_off").addClass("c_on");
 				}
 			})
 
