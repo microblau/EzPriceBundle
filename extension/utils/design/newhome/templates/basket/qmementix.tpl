@@ -1,3 +1,4 @@
+{set-block scope=root variable=cache_ttl}0{/set-block}
 {ezcss_require( 'qmementix.css' )}
 {ezscript_require( array('imemento.js','qmementixcarta.js' ))}
 {ezpagedata_set( 'bodyclass', 'fichas')}
@@ -168,7 +169,7 @@
                         <div class="resume">
                             <p><strong><span class="flt">Ha añadido</span> <span class="cant" id="modMiImemento">0 Mementos</span></strong></p>
 							<del><span id="partial"></span></del>
-                            <ins><span id="ptotal"></ins>
+                            <ins><span id="ptotal"></span></ins>
 							<img src={"ajax-loader.gif"|ezimage} id="preload" />
 							<input type="image" id ="addToBasket" src={"btn_aniadir-compra.gif"|ezimage} alt="Añadir a la cesta" name="AddToBasket" />
 						</div>
