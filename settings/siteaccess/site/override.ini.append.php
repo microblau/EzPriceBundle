@@ -179,6 +179,14 @@ MatchFile=full/colectivos.tpl
 Subdir=templates
 Match[node]=166
 
+[listado_productos_qmementix]
+Source=node/view/full.tpl
+MatchFile=full/listadoproductosqmementix.tpl
+Subdir=templates
+Match[node]=69
+Match[class_identifier]=folder
+Match[depth]=3
+
 [listado_productos]
 Source=node/view/full.tpl
 MatchFile=full/listadoproductos.tpl
@@ -227,6 +235,12 @@ Source=node/view/line.tpl
 MatchFile=line/producto_nautis.tpl
 Subdir=templates
 Match[class_identifier]=producto_nautis
+
+[producto_qmementix_line]
+Source=node/view/line.tpl
+MatchFile=line/producto_qmementix.tpl
+Subdir=templates
+Match[class_identifier]=producto_qmementix
 
 [producto_nautis_relacionado_online]
 Source=node/view/relacionadoonline.tpl
