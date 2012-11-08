@@ -14,10 +14,28 @@ $preciomonopuesto = $data['precio']->content()->exVATPrice();
 
 if( ( $mementos > 0 ))
 {
-       $discount = eZPersistentObject::fetchObject( eflImementoDiscountRule::definition(), null, 
+       
+	
+	$mayor = $datatabla['tabla_precios']->content()->Matrix["rows"]["sequential"];
+	
+	if ($mementos <= count($mayor))
+	{
+		$discount = eZPersistentObject::fetchObject( eflImementoDiscountRule::definition(), null, 
                                                      array( 'qte_mem' => array( '>=', $mementos ),
                                                             'contentobjectattribute_id' => $datatabla['tabla_precios']->attribute( 'id' ),
                                                             'contentobjectattribute_version' => $datatabla['tabla_precios']->attribute( 'version' ) ) );
+	}
+	else
+	{
+		$discount = eZPersistentObject::fetchObject( eflImementoDiscountRule::definition(), null, 
+                                                     array( 'qte_mem' => array( '>=', ($mementos-1) ),
+                                                            'contentobjectattribute_id' => $datatabla['tabla_precios']->attribute( 'id' ),
+                                                            'contentobjectattribute_version' => $datatabla['tabla_precios']->attribute( 'version' ) ) );
+	}
+	
+	
+	
+	
 	$precio = 0;
 	foreach( $products as $product )
 	{
@@ -28,7 +46,7 @@ if( ( $mementos > 0 ))
 
         
         $discountpercent = $discount->Discount;
-        $total = $precio - ( $discount->Discount / 100 * $precio );
+		$total = $precio - ( $discount->Discount / 100 * $precio );
 
 }
 else

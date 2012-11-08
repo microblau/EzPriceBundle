@@ -42,7 +42,7 @@
 					<h2>Mi iMemento</h2>
 					<ul class="cesta">
 						<li class="listMem"><span class="listaMem">0 Mementos</span></li>
-						<li class="total"><span class="precio" id="partial">{$object.data_map.precio.content.ex_vat_price|l10n('clean_currency)} €</span></li>
+						<li class="total"><span class="precio" id="partial">{*$object.data_map.precio.content.ex_vat_price|l10n('clean_currency)} €*}</span></li>
 						<li class="descuento"><span><span id="discount">0%</span> descuento</span></li>
 						<li class="total"><span class="productoTotal">TOTAL</span><span class="precioTotal" id="ptotal">0 €</span></li>
 						<li class="reset"><input type="image" id ="addToBasket" src={"btn_aniadir-compra.gif"|ezimage} alt="Añadir a la cesta" name="AddToBasket" /></li>
