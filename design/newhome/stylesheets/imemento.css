@@ -153,3 +153,19 @@ display:block;
 .modType4 .descripcion .tabs li h2 { padding:5px 8px}
 				.modType4 .descripcion .tabs li a { display:block; padding:5px 8px; background-color:#C6E7FF;}
 #prodQI {width:220px;}
+td:first-child {border-left: 1px solid #FFFFFF;border-top: 1px solid #FFFFFF;}
+table.renderedtable th, table.renderedtable td {
+    border-bottom: 1px solid #FFFFFF;
+    border-right: 1px solid #FFFFFF;
+    border-top: 1px solid #FFFFFF;
+    padding: 0.5em;
+    vertical-align: top;
+}
+table.renderedtable tr.bglight, div.bglight {
+    background-color: #4F4F4F;
+}
+table.renderedtable tr.bgdark, div.bgdark {
+    background-color: #4F4F4F;
+}
+table.renderedtable tr:first-child {background-color:#000;}
+td.text-right  {text-align:center;}

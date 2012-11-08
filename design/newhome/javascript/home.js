@@ -198,7 +198,8 @@ jQuery(document).ready(function() {
 
     function initCarousel( carousel )
     {
-        $(".youtube-player").tubeplayer({
+        
+		$(".youtube-player").tubeplayer({
 	width: 633, // the width of the player
 	height: 304, // the height of the player
 	allowFullScreen: "false", // true by default, allow user to go full screen
