@@ -1,17 +1,3 @@
-
 User-agent: *
-Disallow: /administracion/
-Disallow: /Administracion/
-Disallow: /var/
-Disallow: /UserFiles/
-Disallow: /promo/
-Disallow: /bin/
-Disallow: /kernel/
-Disallow: /lib/
-Disallow: /settings/
-Disallow: /update/
-Disallow: /support/
-Disallow: /schemas/
-Disallow: /extension/
-sitemap: /sitemap.xml
+Disallow: /
 
