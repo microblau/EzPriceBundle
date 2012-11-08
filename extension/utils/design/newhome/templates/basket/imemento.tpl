@@ -24,11 +24,12 @@
                                                              
                                                         {foreach $mementos.relation_browse as $el}
                                                             {def $memento = fetch( 'content', 'object', hash( 'object_id', $el.contentobject_id))}
-                                                                <li>
-															<input type="checkbox" id="memento_{$memento.id}" name="mementos[]" value="{$memento.id}" />
-															<label for="memento_{$memento.id}">{if $emmento.data_map.nombre_mementix.content|ne('')}{$memento.data_map.nombre_mementix.content}{else}{$memento.name}{/if}</label>
-
-														</li>
+															{if ne($memento.data_map.precio_imemento.content.price,0)}
+                                                             <li>
+																<input type="checkbox" id="memento_{$memento.id}" name="mementos[]" value="{$memento.id}" />
+																<label for="memento_{$memento.id}">{if $memento.data_map.nombre_mementix.content|ne('')}{$memento.data_map.nombre_mementix.content}{else}{$memento.name}{/if}</label>
+															</li>
+															{/if}
                                                             {undef $memento}
                                                         {/foreach}														
 							</ul>
