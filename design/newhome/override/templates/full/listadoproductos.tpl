@@ -99,6 +99,12 @@
                                         {/switch}
 					{/if}
                                         {*$filtro|attribute(show)*}
+										
+										{*quitamos todos los productos que no tengan precio [EFL-16]*}
+										{set $filtro=array('and')}
+										{set $filtro=$filtro|append('subattr_precio___precio_f:[1 TO *]' )}
+										
+										
                                         {def $results = fetch( 'ezfind', 'search', hash( 'query', '',
                                                                                          'subtree_array', array( $node.node_id ),
                                                                                          'class_id', array( 48, 98, 99, 101 ),
