@@ -45,7 +45,7 @@
                                             {def $results = fetch( ezfind, search, hash( 
                                                             query, ezhttp( 'SearchText', 'get'),
                                                             'limit', ezhttp( 'numItems', 'get'),
- 'class_id', array( 48, 101, 99, 98, 66, 49, 61, 94, 64, 28 ),
+ 'class_id', array( 48, 101, 99, 98, 66, 49, 61, 94, 64, 28 ,147 ,142 ),
                                                             'offset', $view_parameters.offset,
                                                             'subtree_array', cond( ezhttp_hasvariable( 'obras', 'get' ), ezhttp( 'obras', 'get') , array( 2 ) ),                                                           
                                                        'filter', $filter     
@@ -217,6 +217,10 @@
                              	  <a href={concat( 'basket/add/', $resultado.object.id, '/1')|ezurl} class="boton {if $resultado.class_identifier|eq('producto_mementix')|not}loQuiero{/if}" style="padding-left:15px;"><img src={"btn_lo-quiero.png"|ezimage} alt="Lo quiero" /></a>
                                {/if}
                                 
+								{if $objects.0.main_node.class_identifier|eq('producto_qmementix')}
+                             	  <a href={concat( 'basket/qmementix')|ezurl} class="boton {if $resultado.class_identifier|eq('producto_qmementix')|not}loQuiero{/if}" style="padding-left:15px;"><img src={"btn_lo-quiero.png"|ezimage} alt="Lo quiero" /></a>
+                               {/if}
+								
                                <!--fin lo quiero-->  
                               
                                                         </h2>
@@ -258,6 +262,9 @@
                                {/if}
                                  {if $resultado.class_identifier|eq('curso_blended')}
                              	  <a href={concat( 'basket/add/', $resultado.object.id, '/1')|ezurl} class="boton {if $resultado.class_identifier|eq('producto_mementix')|not}loQuiero{/if}" style="padding-left:15px;"><img src={"btn_lo-quiero.png"|ezimage} alt="Lo quiero" /></a>
+                               {/if}
+							   {if $resultado.class_identifier|eq('producto_qmementix')}
+                             	  <a href={concat( 'basket/qmementix')|ezurl} class="boton {if $resultado.class_identifier|eq('producto_qmementix')|not}loQuiero{/if}" style="padding-left:15px;"><img src={"btn_lo-quiero.png"|ezimage} alt="Lo quiero" /></a>
                                {/if}
                                 
                                <!--fin lo quiero-->  
