@@ -92,7 +92,7 @@
                                         	
                                         
                                             {case}
-                                              {def $sort_array = hash( 'attr_fecha_aparicion_dt', 'desc', 'attr_orden_si', 'asc', 'attr_nombre_s', 'asc' )}                                      
+                                              {def $sort_array = hash( 'attr_fecha_aparicion_dt', 'asc', 'attr_orden_si', 'asc', 'attr_nombre_s', 'asc' )}                                      
                                                 {set $filtro=array('or')}
                                                 {set $filtro=$filtro|append(concat( 'submeta_', 'area', '___id_si:', $order_by))}
                                             {/case}
@@ -104,10 +104,9 @@
 										{set $filtro=array('and')}
 										{set $filtro=$filtro|append('subattr_precio___precio_f:[1 TO *]' )}
 										
-										
                                         {def $results = fetch( 'ezfind', 'search', hash( 'query', '',
                                                                                          'subtree_array', array( $node.node_id ),
-                                                                                         'class_id', array( 48, 98, 99, 101 ),
+                                                                                         'class_id', array( 48, 98, 99, 101,149 ),
                                                                                          'limit', $number_of_items,
                                                                                          'sort_by', $sort_array,
                                                             							 'filter', $filtro,
