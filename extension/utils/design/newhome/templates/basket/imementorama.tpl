@@ -8,7 +8,7 @@
 						<h3>Configure su iMemento</h3>
 					{$object.data_map.texto_configure_su_imemento.content.output.output_text}
 					</div>
-					<div class="sub_entry">
+					<div class="sub_entry" id="tblint">
 						<h4>Configuración de packs:</h4>
                  
 						{$object.data_map.texto_configuracion_packs.content.output.output_text}
