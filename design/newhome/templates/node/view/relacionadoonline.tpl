@@ -2,17 +2,23 @@
 
 {if $node.object.contentclass_id|eq(100)}
 {def $imagen = fetch( 'content', 'object', hash( 'object_id', $node.data_map.parent.imagen.content.relation_browse.0.contentobject_id ))}                                    
-	<img src={$imagen.data_map.parent.image.content.otraspublicaciones.url|ezroot()} alt="" />
+	<div class="image">
+		<img src={$imagen.data_map.parent.image.content.otraspublicaciones.url|ezroot()} alt="" />
+	</div>
 {undef $imagen}
 {else}
 {def $imagen = fetch( 'content', 'object', hash( 'object_id', $node.data_map.imagen.content.relation_browse.0.contentobject_id ))}                                    
-	<img src={$imagen.data_map.image.content.otraspublicaciones.url|ezroot()} alt="" />
+	<div class="image">
+		<img src={$imagen.data_map.image.content.otraspublicaciones.url|ezroot()} alt="" />
+	</div>
 {undef $imagen}
 {/if}
 {else}
 
 {def $imagen = fetch( 'content', 'object', hash( 'object_id', 2084 ))}                                    
-	<img src={$imagen.data_map.image.content.otraspublicaciones.url|ezroot()} alt="" />
+	<div class="image">
+		<img src={$imagen.data_map.image.content.otraspublicaciones.url|ezroot()} alt="" />
+	</div>	
 {undef $imagen}
 
 {/if}
