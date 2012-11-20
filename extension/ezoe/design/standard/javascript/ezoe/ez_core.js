@@ -2,7 +2,7 @@
     eZ Core : tiny javascript library for ajax and stuff
     Created on: <28-Feb-2007 00:00:00 ar>
     
-    Copyright (c) 1999-2010 eZ Systems
+    Copyright (c) 1999-2012 eZ Systems
     Licensed under the MIT License:
     http://www.opensource.org/licenses/mit-license.php
 
@@ -844,7 +844,7 @@ if ( window.detachEvent && !window.opera && /MSIE [56]/.test( navigator.userAgen
 // XMLHttpRequest wrapper for IE 5 / 6
 if (!window.XMLHttpRequest && window.ActiveXObject) var XMLHttpRequest = function(){
     // XMLHttpRequest wrapper for ie browsers that do not support XMLHttpRequest natively
-    return ez.activeX(['MSXML2.XMLHTTP.6.0', 'MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP']);
+    return ez.activeX(['MSXML2.XMLHTTP.6.0', 'MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP']);
 };
 
 }//if ( window.ez === undefined )

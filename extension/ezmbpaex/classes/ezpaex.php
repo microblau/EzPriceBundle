@@ -2,8 +2,8 @@
 /**
  * File containing the eZPaEx class
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPLv2
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
  * @package ezmbpaex
  */
 
@@ -52,10 +52,10 @@ class eZPaEx extends eZPersistentObject
                       'keys' => array( 'contentobject_id' ),
                       'function_attributes' => array( 'contentobject' => 'contentObject',
                                                       'is_expired' => 'isExpired',
-													  'is_user' => 'isUser',
-													  'has_regexp' => 'hasRegexp',
-													  'has_lifetime' => 'hasLifeTime',
-													  'has_notification' => 'hasNotification',
+                                                                                                          'is_user' => 'isUser',
+                                                                                                          'has_regexp' => 'hasRegexp',
+                                                                                                          'has_lifetime' => 'hasLifeTime',
+                                                                                                          'has_notification' => 'hasNotification',
                                                       'can_edit' => 'canEdit',
                                                       'is_updatechildrenpending' => 'isUpdateChildrenPending' ),
                       'relations' => array( 'contentobject_id' => array( 'class' => 'ezcontentobject',
@@ -65,20 +65,20 @@ class eZPaEx extends eZPersistentObject
     }
 
     /**
-	 * Creates a default ezpaex object for the corresponding contentobject_id
+         * Creates a default ezpaex object for the corresponding contentobject_id
      *
-	 * @param $contentObjectID contentobject id of the ezpaex object
-	 * @return eZPaEx object
-	 */
-	static function create( $contentObjectID )
+         * @param int $contentObjectID contentobject id of the ezpaex object
+         * @return eZPaEx object
+         */
+        static function create( $contentObjectID )
     {
         // Still missing data for paex, try to complete it from user groups
         $ini = eZINI::instance( 'mbpaex.ini' );
 
         // Get default values from ini
         $iniPasswordValidationRegexp = $ini->variable( 'mbpaexSettings', 'PasswordValidationRegexp' );
-        $iniDefaultPasswordLifeTime = $ini->variable( 'mbpaexSettings', 'DefaultPasswordLifeTime' );
-        $iniExpirationNotification = $ini->variable( 'mbpaexSettings', 'ExpirationNotification' );
+        $iniDefaultPasswordLifeTime  = $ini->variable( 'mbpaexSettings', 'DefaultPasswordLifeTime' );
+        $iniExpirationNotification   = $ini->variable( 'mbpaexSettings', 'ExpirationNotification' );
 
         $row = array(
             'contentobject_id' => $contentObjectID,
@@ -97,12 +97,12 @@ class eZPaEx extends eZPersistentObject
      * Fills in the $id, $passwordvalidationregexp, $passwordlifetime
      * and $expirationnotification $password_last_updated for the paex
      *
-     * @param $id ID of the contentobject this paex belongs to
-     * @param $passwordvalidationregexp Regexp to use in password validation
-     * @param $passwordlifetime Max password life time
-     * @param $expirationnotification Time before expiration to send a notification
-     * @param $password_last_updated Time the password for the contentobject this paex belongs to was updated
-     * @param $updatechildren 1 if the children of the main node have to be updated, 0 if not
+     * @param int $id ID of the contentobject this paex belongs to
+     * @param string $passwordvalidationregexp Regexp to use in password validation
+     * @param int $passwordlifetime Max password life time
+     * @param int $expirationnotification Time before expiration to send a notification
+     * @param int $password_last_updated Time the password for the contentobject this paex belongs to was updated
+     * @param int $updatechildren 1 if the children of the main node have to be updated, 0 if not
      */
     function setInformation( $id, $passwordvalidationregexp, $passwordlifetime,
                              $expirationnotification, $password_last_updated = 0,
@@ -117,10 +117,10 @@ class eZPaEx extends eZPersistentObject
         $this->setAttribute( "expirationnotification_sent", $expirationnotification_sent );
     }
 
-	/**
-	 * Store the content of the ezpaex object in the database
-	 */
-	function store( $fieldFilters = null )
+        /**
+         * Store the content of the ezpaex object in the database
+         */
+        function store( $fieldFilters = null )
     {
         eZPersistentObject::store();
     }
@@ -128,7 +128,7 @@ class eZPaEx extends eZPersistentObject
     /**
      * Removes the ezpaex data from the mbpaex table.
      *
-     * @param $paexID ID of the paex object to remove
+     * @param int $paexID ID of the paex object to remove
      */
     static function removePaex( $paexID )
     {
@@ -136,15 +136,15 @@ class eZPaEx extends eZPersistentObject
                                           array( 'contentobject_id' => $paexID ) );
     }
 
-	/**
-	 *	Fetch the eZPaEx persitentobject
+        /**
+         *      Fetch the eZPaEx persitentobject
      *
-	 * @param $id contentobject_id to fetch
-	 * @param $asObject	return the PO as an object or as an array
+         * @param int $id contentobject_id to fetch
+         * @param bool $asObject        return the PO as an object or as an array
      *
-	 * @return eZPaEx as PO or array
-	 */
-	static function fetch( $id, $asObject = true )
+         * @return eZPaEx as PO or array
+         */
+        static function fetch( $id, $asObject = true )
     {
         if ( !$id )
             return null;
@@ -155,14 +155,14 @@ class eZPaEx extends eZPersistentObject
                                                 $asObject );
     }
 
-	/**
-	 * Check if the password in the current paex object is expired
+        /**
+         * Check if the password in the current paex object is expired
      *
      * @return true if the difference between today and password_last_updated date is
      *         greater than the value set in passwordlifetime
-	 */
-	function isExpired()
-	{
+         */
+        function isExpired()
+        {
         eZDebug::writeDebug( 'Check expiration', __METHOD__ );
 
         // If passwordlifetime is not defined or 0 (zero, infinite lifetime) passwords never expire.
@@ -183,78 +183,78 @@ class eZPaEx extends eZPersistentObject
             return true;
         }
 
-		return false;
-	}
+                return false;
+        }
 
-	/**
-	 * Check if the object that contains the ezpaex attribute is an user
+        /**
+         * Check if the object that contains the ezpaex attribute is an user
      *
-	 * @return bool if the contentobject is a user or not
-	 */
-	function isUser()
-	{
-		$ezpo = eZPersistentObject::fetchObject( eZContentObject::definition(),
+         * @return bool if the contentobject is a user or not
+         */
+        function isUser()
+        {
+                $ezpo = eZPersistentObject::fetchObject( eZContentObject::definition(),
                                                 null,
                                                 array( 'id' => $this->attribute('contentobject_id') ),
                                                 true );
-		return eZUser::isUserObject( $ezpo );
-	}
+                return eZUser::isUserObject( $ezpo );
+        }
 
-	/**
-	 * Check if validation regexp is defined or not
+        /**
+         * Check if validation regexp is defined or not
      *
-	 * @return true/false
-  	 */
-	function hasRegexp()
-	{
-		if ( !is_null( $this->attribute('passwordvalidationregexp' ) ) &&
-			( $this->attribute( 'passwordvalidationregexp' ) != self::NOT_DEFINED ) &&
-			( $this->attribute( 'passwordvalidationregexp' ) != '' ) )
-		{
-			return true;
-		}
-		else
-		{
-		    return false;
-		}
-	}
+         * @return true/false
+         */
+        function hasRegexp()
+        {
+                if ( !is_null( $this->attribute('passwordvalidationregexp' ) ) &&
+                        ( $this->attribute( 'passwordvalidationregexp' ) != self::NOT_DEFINED ) &&
+                        ( $this->attribute( 'passwordvalidationregexp' ) != '' ) )
+                {
+                        return true;
+                }
+                else
+                {
+                    return false;
+                }
+        }
 
-	/**
-	 * Check if default password lifetime is defined or not
+        /**
+         * Check if default password lifetime is defined or not
      *
-	 * @return bool
-	 */
-	function hasLifeTime()
-	{
-		if ( !is_null($this->attribute( 'passwordlifetime' ) ) &&
-			( $this->attribute( 'passwordlifetime' ) != self::NOT_DEFINED ) &&
-			( $this->attribute( 'passwordlifetime' ) != '' ) )
-			return true;
-		else
-			return false;
-	}
+         * @return bool
+         */
+        function hasLifeTime()
+        {
+                if ( !is_null($this->attribute( 'passwordlifetime' ) ) &&
+                        ( $this->attribute( 'passwordlifetime' ) != self::NOT_DEFINED ) &&
+                        ( $this->attribute( 'passwordlifetime' ) != '' ) )
+                        return true;
+                else
+                        return false;
+        }
 
-	/**
-	 * Check if expiration notification is defined or not
+        /**
+         * Check if expiration notification is defined or not
      *
-	 * @return bool
-	 */
-	function hasNotification()
-	{
-		if (!is_null( $this->attribute( 'expirationnotification' ) ) &&
-			( $this->attribute( 'expirationnotification' ) != self::NOT_DEFINED ) &&
-			( $this->attribute( 'expirationnotification' ) != '' ) )
-			return true;
-		else
-			return false;
-	}
+         * @return bool
+         */
+        function hasNotification()
+        {
+                if (!is_null( $this->attribute( 'expirationnotification' ) ) &&
+                        ( $this->attribute( 'expirationnotification' ) != self::NOT_DEFINED ) &&
+                        ( $this->attribute( 'expirationnotification' ) != '' ) )
+                        return true;
+                else
+                        return false;
+        }
 
-	/**
-	 * Check if password matches regexp validation
+        /**
+         * Check if password matches regexp validation
      *
-     * @param $password Actual password to check
-	 * @return bool
-	*/
+     * @param string $password Actual password to check
+         * @return bool
+        */
     function validatePassword( $password )
     {
         eZDebug::writeDebug( 'Validate Password Start','eZPaEx::validatePassword' );
@@ -276,26 +276,40 @@ class eZPaEx extends eZPersistentObject
      * Get actual values for PaEx data for the given contentobject id.
      * If not defined for the given coID, use defaults.
      *
-     * @param  $ezcoid contentobject_id to get PaEx for
-     * @return actual PaEx applicable data
+     * @param int $ezcoid Contentobject id (user id) to get PaEx for
+     * @param bool $checkIfUserHasDatatype See if user has paex datatype, default false
+     * @return eZPaEx|null Actual PaEx applicable data, null if $checkIfUserHasDatatype = true
+     *                     and object does not have ezpaex datatype
     */
-    static function getPaEx( $ezcoid )
+    static function getPaEx( $ezcoid, $checkIfUserHasDatatype = false )
     {
-        eZDebug::writeDebug( 'Start', 'eZPaEx::getPaEx' );
-
         $currentPaex = eZPaEx::fetch( $ezcoid );
 
-        // If we don't have paex object for the current object id (this usually
-        // means that there is no ezpaex attribute in the class of the ezcoid),
-        // create a default one
-        if ( !is_object( $currentPaex ) )
-            $currentPaex = eZPaEx::create( $ezcoid );
+        // If we don't have paex object for the current object id, create a default one
+        if ( !$currentPaex instanceof eZPaEx )
+        {
+            // unless user does not have paex datatype
+            if ( $checkIfUserHasDatatype )
+            {
+                //eZContentObject::fetch( $ezcoid );
+                $paexDataTypeCount = eZPersistentObject::count( eZContentObjectAttribute::definition(),
+                                                array( 'contentobject_id' => $ezcoid,
+                                                       'data_type_string' => ezpaextype::DATA_TYPE_STRING ),
+                                                'id' );
+                if ( !$paexDataTypeCount )
+                {
+                    eZDebug::writeDebug( "User id {$ezcoid} does not have paex datatype", __METHOD__ );
+                    return null;
+                }
+            }
+            return eZPaEx::create( $ezcoid );
+        }
 
         // Get default paex values from ini to use in case there is anyone missing in the object
         $ini = eZINI::instance( 'mbpaex.ini' );
         $iniPasswordValidationRegexp = $ini->variable( 'mbpaexSettings', 'PasswordValidationRegexp' );
-        $iniDefaultPasswordLifeTime = $ini->variable( 'mbpaexSettings', 'DefaultPasswordLifeTime' );
-        $iniExpirationNotification = $ini->variable( 'mbpaexSettings', 'ExpirationNotification' );
+        $iniDefaultPasswordLifeTime  = $ini->variable( 'mbpaexSettings', 'DefaultPasswordLifeTime' );
+        $iniExpirationNotification   = $ini->variable( 'mbpaexSettings', 'ExpirationNotification' );
 
         // If still any empty values in the paex object, set defaults from ini
         if ( !$currentPaex->hasRegexp() )
@@ -316,8 +330,6 @@ class eZPaEx extends eZPersistentObject
 
         eZDebug::writeDebug( 'PasswordLastUpdated value: "' . $currentPaex->attribute( 'password_last_updated' ) . '"', 'eZPaEx::getPaEx' );
 
-        eZDebug::writeDebug('End','eZPaEx::getPaEx');
-
         return $currentPaex;
     }
 
@@ -328,11 +340,11 @@ class eZPaEx extends eZPersistentObject
      */
     public static function canEdit()
     {
-		// Get current user
-		$user = eZUser::currentUser();
-		$user_has_access = $user->hasAccessTo( 'userpaex', 'editpaex' );
+                // Get current user
+                $user = eZUser::currentUser();
+                $user_has_access = $user->hasAccessTo( 'userpaex', 'editpaex' );
 
-		if ( $user_has_access['accessWord'] == "yes" )
+                if ( $user_has_access['accessWord'] == "yes" )
             return true;
 
         return false;
@@ -341,7 +353,7 @@ class eZPaEx extends eZPersistentObject
     /**
      * Generate array of paex objects to update based on updatechildren status
      *
-     * @param  $paex_to_update     Array of already updated paex objects
+     * @param array $paex_to_update     Array of already updated paex objects
      * @return array of paex objects to update, with final values set.
      */
     function generateUpdateChildren( $paexToUpdate = array() )
@@ -372,8 +384,8 @@ class eZPaEx extends eZPersistentObject
                 // Fetch the paex for each node
                 $addPaexToUpdate = eZPaEx::fetch( $node["contentobject_id"] );
                 // If the paex is not marked to updatechildren, update the paex object
-                if ( ( get_class( $addPaexToUpdate ) == "eZPaEx" ) &&
-                     ( $addPaexToUpdate->attribute( 'updatechildren' ) !=1 ) )
+                if ( $addPaexToUpdate instanceof eZPaEx  &&
+                     $addPaexToUpdate->attribute( 'updatechildren' ) != 1 )
                 {
                     $addPaexToUpdate->setAttribute('passwordvalidationregexp', $newPasswordvalidationregexp );
                     $addPaexToUpdate->setAttribute('passwordlifetime', $newPasswordlifetime );
@@ -408,6 +420,7 @@ class eZPaEx extends eZPersistentObject
      * Update current empty paex fields with values get from paex object of
      * parent of current main node.
      *
+     * @param bool $forceUpdate
      * @return true
     */
     function updateFromParent( $forceUpdate = false )
@@ -422,7 +435,7 @@ class eZPaEx extends eZPersistentObject
             $parentMainNodeID = $mainNode->attribute('parent_node_id');
             $parentContentObject = eZContentObject::fetchByNodeID( $parentMainNodeID );
             $parentPaex = eZPaEx::getPaEx($parentContentObject->attribute('id'));
-            if ( is_object( $parentPaex ) && get_class( $parentPaex ) == "eZPaEx" )
+            if ( $parentPaex instanceof eZPaEx )
             {
                 $paexUpdated = false;
 
@@ -458,15 +471,27 @@ class eZPaEx extends eZPersistentObject
     /**
      * Fetch the eZPaEx objects that have their password about to expire
      *
-     * @return array of contentobject_id's corresponding to users that have to be notified
+     * @return array of eZPaEx objects corresponding to users that have to be notified
      */
-    static function fetchExpiryNotificationPendingList( )
+    static function fetchExpiryNotificationPendingList()
     {
         $currentTime = time();
         $conds = array( 'expirationnotification_sent' => 0,
-                        'passwordlifetime' => array('>', 0 ) );
+                        'passwordlifetime' => array( '>', 0 ) );
 
         $customConds = ' AND (passwordlifetime *86400 - (' . $currentTime . ' - password_last_updated ) ) < expirationnotification ';
+
+        $userClassIDs = array();
+        foreach ( eZUser::fetchUserClassList( true ) as $userClass )
+        {
+            $userClassIDs[] = $userClass->attribute( 'id' );
+        }
+        if ( empty( $userClassIDs ) )
+        {
+            return array();
+        }
+        $customConds .= ' AND ezcontentobject.id = contentobject_id ';
+        $customConds .= ' AND ' . eZDB::instance()->generateSQLINStatement( $userClassIDs, 'ezcontentobject.contentclass_id' );
 
         return eZPersistentObject::fetchObjectList( eZPaEx::definition(),
                                                     null,
@@ -476,14 +501,14 @@ class eZPaEx extends eZPersistentObject
                                                     true,
                                                     false,
                                                     null,
-                                                    null,
+                                                    array( 'ezcontentobject' ),
                                                     $customConds );
     }
 
     /**
      * Send password expiry notification to user
      *
-     * @param $user ezuser object that contains the destination email address
+     * @param eZUser $user ezuser object that contains the destination email address
      * @return true if notification sent correctly, false if not.
      */
     function sendExpiryNotification( $user )
@@ -514,7 +539,7 @@ class eZPaEx extends eZPersistentObject
         $mail->setSender( $emailSender );
         $mail->setReceiver( $receiver );
 
-        $subject = ezi18n( 'mbpaex/userpaex', 'Your password is about to expire' );
+        $subject = ezpI18n::tr( 'mbpaex/userpaex', 'Your password is about to expire' );
         if ( $tpl->hasVariable( 'subject' ) )
             $subject = $tpl->variable( 'subject' );
 
@@ -549,6 +574,7 @@ class eZPaEx extends eZPersistentObject
     /**
      * Fetch the eZPaEx objects that have updatechildren flag set to 1
      *
+     * @param bool $asObject
      * @return array of contentobject_id's corresponding to users that have to be notified
      */
     static function fetchUpdateChildrenPendingList( $asObject = true )
@@ -575,9 +601,13 @@ class eZPaEx extends eZPersistentObject
     }
 
     /**
-    * Checks if the database schema has been created, in order to prevent the
-    * datatype from being registered if it hasn't
-    **/
+     * DEPRECATED since querying a non-existent table will always trigger a fatal error
+     *
+     * Checks if the database schema has been created, in order to prevent the
+     * datatype from being registered if it hasn't
+     *
+     * @deprecated
+     */
     static function schemaCreated()
     {
         $db = eZDB::instance();

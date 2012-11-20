@@ -1,21 +1,23 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>extension/ezodf</name>
     <message>
         <source>Import</source>
-        <translation>Importar</translation>
+        <translation type="obsolete">Importar</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation>Exportar</translation>
+        <translation type="obsolete">Exportar</translation>
     </message>
     <message>
         <source>Replace</source>
-        <translation>Substituir</translation>
+        <translation type="obsolete">Substituir</translation>
     </message>
     <message>
         <source>Choose document placement</source>
-        <translation>Escolha o local do documento</translation>
+        <translation type="obsolete">Escolha o local do documento</translation>
     </message>
     <message>
         <source>Upload file</source>
@@ -87,28 +89,9 @@ Você escolhe onde colocar o documento e o eZ Publish fará o resto. O documento
 o tipo de conteúdo apropriado durante a importação, você receberá um aviso sobre isto depois de concluída a importação
 As imagens serão colocadas na biblioteca e você poderá reutilizá-las em outros artigos.</translation>
     </message>
-</context>
-<context>
-    <name>extension/ezodf/popupmenu</name>
     <message>
-        <source>Export OpenOffice</source>
-        <translation>Exportar OpenOffice</translation>
-    </message>
-    <message>
-        <source>Export PDF</source>
-        <translation>Exportar PDF</translation>
-    </message>
-    <message>
-        <source>Export Word</source>
-        <translation>Exportar Word</translation>
-    </message>
-    <message>
-        <source>Import OpenOffice</source>
-        <translation>Importar OpenOffice</translation>
-    </message>
-    <message>
-        <source>Replace OpenOffice</source>
-        <translation>Substituir OpenOffice</translation>
+        <source>The imported document is waiting for an approbation to be published.</source>
+        <translation>O documento importado está esperando uma aprovação para ser publicado.</translation>
     </message>
 </context>
 <context>
@@ -123,9 +106,9 @@ As imagens serão colocadas na biblioteca e você poderá reutilizá-las em outr
     Select the placements and click the %buttonname button.
     Using the recent and bookmark items for quick placement is also possible.
     Click on placement names to change the browse listing.</source>
-       <translation>Escolha onde você deseja colocar o objeto OpenOffice.org / BrOffice.org.
+        <translation>Escolha onde você deseja colocar o objeto OpenOffice.org / BrOffice.org.
 
-     Selecione os locais, em seguida, clique no botão "%buttonname"
+     Selecione os locais, em seguida, clique no botão &quot;%buttonname&quot;
      Usar os itens recentes e os favoritos para um posicionamento rápido também é possível. 
      Clique nos nomes dos locais para navegar pela lista de locais.</translation>
     </message>
@@ -150,7 +133,7 @@ As imagens serão colocadas na biblioteca e você poderá reutilizá-las em outr
     </message>
     <message>
         <source>Unable to fetch node, or no read access</source>
-        <translation>Incapaz de alcançar nó desejado, ou não há permissão de acesso para leitura</translation>
+        <translation>Não foi possível buscar o nó, ou não há permissão de acesso para leitura</translation>
     </message>
     <message>
         <source>Unable to open file %1 on server side</source>
@@ -177,11 +160,11 @@ As imagens serão colocadas na biblioteca e você poderá reutilizá-las em outr
     </message>
     <message>
         <source>Unable to call daemon. Fork can not create child process.</source>
-        <translation>Não foi possível comunicar-se com o serviço, portanto nenhum processo de conversão pôde ser iniciado.</translation>
+        <translation>Não foi possível chamar o daemon. Fork não pode criar processos filhos.</translation>
     </message>
     <message>
         <source>Daemon reported error.</source>
-        <translation>O Serviço reportou um erro.</translation>
+        <translation>Daemon reportou um erro.</translation>
     </message>
     <message>
         <source>Unknown node.</source>
@@ -209,7 +192,7 @@ As imagens serão colocadas na biblioteca e você poderá reutilizá-las em outr
     </message>
     <message>
         <source>Unable to fetch node with id  </source>
-        <translation>Não foi possível carregar o nó com o id  </translation>
+        <translation type="obsolete">Não foi possível carregar o nó com o id  </translation>
     </message>
     <message>
         <source>Folder for images could not be created, access denied.</source>
@@ -217,11 +200,11 @@ As imagens serão colocadas na biblioteca e você poderá reutilizá-las em outr
     </message>
     <message>
         <source>Document is not suported.</source>
-        <translation>O documento não é suportado.</translation>
+        <translation type="obsolete">O documento não é suportado.</translation>
     </message>
     <message>
         <source>Cannot import. File not found. Already imported?</source>
-        <translation>Não foi possível realizar a importação. O arquivo não foi encontrado. Este arquivo já foi importado?</translation>
+        <translation>Não foi possível importar. O arquivo não foi encontrado. Este arquivo já foi importado?</translation>
     </message>
     <message>
         <source>Cannot import document, supplied placement nodeID is not valid.</source>
@@ -230,6 +213,41 @@ As imagens serão colocadas na biblioteca e você poderá reutilizá-las em outr
     <message>
         <source>Cannot store uploaded file, cannot import.</source>
         <translation>Não foi possível armazenar o documento enviado, importação cancelada.</translation>
+    </message>
+    <message>
+        <source>Unable to fetch node with id </source>
+        <translation>Não foi possível encontrar o nó com o id </translation>
+    </message>
+    <message>
+        <source>Document is not supported.</source>
+        <translation>Documento não é suportado.</translation>
+    </message>
+</context>
+<context>
+    <name>extension/ezodf/popupmenu</name>
+    <message>
+        <source>Export OpenOffice</source>
+        <translation>Exportar OpenOffice</translation>
+    </message>
+    <message>
+        <source>Export PDF</source>
+        <translation>Exportar PDF</translation>
+    </message>
+    <message>
+        <source>Export Word</source>
+        <translation>Exportar Word</translation>
+    </message>
+    <message>
+        <source>Import OpenOffice</source>
+        <translation>Importar OpenOffice</translation>
+    </message>
+    <message>
+        <source>Replace OpenOffice</source>
+        <translation>Substituir OpenOffice</translation>
+    </message>
+    <message>
+        <source>OpenOffice.org</source>
+        <translation>OpenOffice.org</translation>
     </message>
 </context>
 </TS>

@@ -2381,6 +2381,3 @@ body.sage_home_recursos {background-image:url(../images/bck_body2.gif); backgrou
     padding-left: 0;
 }
 
-input.pretty.off { position:absolute; left:-1000em; }
-.ie7 input.pretty.off { position:absolute; left:-1000em; }
-.ie8 input.pretty.off { position:absolute; left:-1000em; }

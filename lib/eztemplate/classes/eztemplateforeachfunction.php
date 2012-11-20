@@ -1,32 +1,12 @@
 <?php
-//
-// Definition of eZTemplateForeachFunction class
-//
-// Created on: <24-Feb-2005 15:47:35 vs>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZTemplateForeachFunction class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package lib
+ */
 
 /*!
   \class eZTemplateForeachFunction eztemplateforeachfunction.php
@@ -69,7 +49,7 @@ class eZTemplateForeachFunction
     /*!
      * Returns an array of the function names, required for eZTemplate::registerFunctions().
      */
-    function &functionList()
+    function functionList()
     {
         $functionList = array( eZTemplateForeachFunction::FUNCTION_NAME );
         return $functionList;
@@ -176,7 +156,7 @@ class eZTemplateForeachFunction
         $newNodes[] = eZTemplateNodeTool::createCodePieceNode( "if ( \$$offset < 0 || \$$offset >= \$$nItems )\n{\n".
                                                                "    \$$offset = ( \$$offset < 0 ) ? 0 : \$$nItems;\n".
                                                                "    if ( \$$nItems || \$$offset < 0 )\n {\n".
-                                                               "        eZDebug::writeWarning(\"Invalid 'offset' parameter specified. Array count: \$$nItems\");   \n}\n}" );
+                                                               "        eZDebug::writeWarning(\"Invalid 'offset' parameter specified: '\$$offset'. Array count: \$$nItems\");   \n}\n}" );
         // fix definitely incorrect max
         $newNodes[] = eZTemplateNodeTool::createCodePieceNode( "if ( \$$max < 0 || \$$offset + \$$max > \$$nItems )\n{\n".
                                                                "    if ( \$$max < 0 )\n eZDebug::writeWarning(\"Invalid 'max' parameter specified: \$$max\");\n".

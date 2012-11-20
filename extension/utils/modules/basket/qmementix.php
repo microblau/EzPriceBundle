@@ -1,6 +1,6 @@
 <?php
 require( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $Result['content'] = $tpl->fetch( 'design:basket/qmementix.tpl' );
 $Result['path'] = array( 

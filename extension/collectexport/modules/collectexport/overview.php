@@ -34,7 +34,7 @@ if( $module->isCurrentAction( 'RemoveObjectCollection' ) && $http->hasPostVariab
     $Result = array();
     $Result['content'] = $tpl->fetch( 'design:infocollector/confirmremoval.tpl' );
     $Result['path'] = array( array( 'url' => false,
-                                    'text' => ezi18n( 'kernel/infocollector', 'Collected information' ) ) );
+                                    'text' => ezpI18n::tr( 'kernel/infocollector', 'Collected information' ) ) );
     return;
 }
 
@@ -142,6 +142,6 @@ $Result = array();
 $Result['content'] = $tpl->fetch( 'design:collectexport/overview.tpl' );
 $Result['left_menu'] = 'design:collectexport/export_menu.tpl';
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'extension/collectexport', 'Collected information export' ) ) );
+                                'text' => ezpI18n::tr( 'extension/collectexport', 'Collected information export' ) ) );
 
 ?>

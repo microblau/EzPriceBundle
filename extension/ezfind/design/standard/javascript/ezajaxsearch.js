@@ -14,12 +14,12 @@ var eZAJAXSearch = function()
                 {
                     var itemCount = response.content.SearchResult.length;
 
-                    var resultsTarget = Y.get(ret.cfg.searchresults);
+                    var resultsTarget = Y.one(ret.cfg.searchresults);
                     resultsTarget.set('innerHTML', '');
                     resultsTarget.addClass('loading');
 
                     var spellCheck = response.content.SearchExtras.spellcheck;
-                    // A spellcheck proposal was made, display it : 
+                    // A spellcheck proposal was made, display it :
                     if ( spellCheck && spellCheck.collation )
                     {
                         var scTemplate = ret.cfg.spellchecktemplate;
@@ -30,18 +30,18 @@ var eZAJAXSearch = function()
                     }
 
                     var facets = response.content.SearchExtras.facets;
-                    // Facets were returned, display them : 
+                    // Facets were returned, display them :
                     if ( facets && facets.length != 0 )
                     {
-                        var facetMainList = ret.cfg.facetsmainlisttemplate;                        
+                        var facetMainList = ret.cfg.facetsmainlisttemplate;
                         for( var i = 0; i < facets.length; i++ )
                         {
                             var facet = facets[i];
                             // Name of the facet :
                             var facetName = facet['name'];
-                            var facetInnerList = ret.cfg.facetsinnerlisttemplate;                            
-                            facetInnerList = facetInnerList.replace( /\{+facet_name+\}/g, facetName );                                                        
-                            
+                            var facetInnerList = ret.cfg.facetsinnerlisttemplate;
+                            facetInnerList = facetInnerList.replace( /\{+facet_name+\}/g, facetName );
+
                             if ( facet['list'].length > 0 )
                             {
                                 for( var j = 0; j < facet['list'].length; j++ )
@@ -53,7 +53,7 @@ var eZAJAXSearch = function()
                                     facetElement = facetElement.replace( /\{+link+\}/g, link );
                                     facetElement = facetElement.replace( /\{+value+\}/g, value );
                                     facetElement = facetElement.replace( /\{+count+\}/g, count );
-                                    facetInnerList = facetInnerList.replace( /\{+facet_element+\}/g, facetElement + "{facet_element}" );                                
+                                    facetInnerList = facetInnerList.replace( /\{+facet_element+\}/g, facetElement + "{facet_element}" );
                                 }
                                 facetInnerList = facetInnerList.replace( /\{+facet_element+\}/g, '' );
                                 facetMainList = facetMainList.replace( /\{+inner_facet_list+\}/g, facetInnerList + "{inner_facet_list}" );
@@ -63,29 +63,29 @@ var eZAJAXSearch = function()
                         // Only display the "Refine with facets" block if actual facets were returned.
                         if ( facetMainList != ret.cfg.facetsmainlisttemplate )
                         {
-                            facetMainList = facetMainList.replace( /\{+inner_facet_list+\}/g, "" );                            
+                            facetMainList = facetMainList.replace( /\{+inner_facet_list+\}/g, "" );
                             var facetsDiv = Y.Node.create( facetMainList );
-                            
-                            resultsTarget.appendChild( facetsDiv );                            
+
+                            resultsTarget.appendChild( facetsDiv );
                             var id = facetsDiv.get( 'id' );
                             //var width = facetsDiv.get( 'clientWidth' ) - 10; // removing horizontal padding in order to have the actual element's width
                             //var height = facetsDiv.get( 'clientHeight' ) - 10; // idem.
-                            
+
                             var myAnim = function ( Y )
                             {
                                 var anim = new Y.Anim({
                                     node: '#' + id,
                                     easing: Y.Easing.backIn,
                                     duration: 0.5,
-                                    
-                                    from: 
+
+                                    from:
                                     {
                                         /*height: 0,
                                         width: 0*/
                                         opacity: 0
                                     },
-    
-                                    to: 
+
+                                    to:
                                     {
                                         /*width: width,
                                         height: height*/
@@ -95,7 +95,7 @@ var eZAJAXSearch = function()
                                 anim.run();
                             }
                             YUI().use( 'animation', 'anim', myAnim );
-                            
+
                         }
                     }
 
@@ -205,7 +205,7 @@ var eZAJAXSearch = function()
             {
                 for ( var i = 0, l = ret.cfg.customSearchAttributes.length; i < l; i++ )
                 {
-                    data += '&' + Y.get( ret.cfg.customSearchAttributes[i] ).get('name') + '=' + Y.get( ret.cfg.customSearchAttributes[i] ).get('value'); 
+                    data += '&' + Y.one( ret.cfg.customSearchAttributes[i] ).get('name') + '=' + Y.one( ret.cfg.customSearchAttributes[i] ).get('value');
                 }
             }
 
@@ -225,23 +225,21 @@ var eZAJAXSearch = function()
 
         var handleClickFromSpellcheck = function(e)
         {
-            Y.get(ret.cfg.searchstring).set( 'value', Y.get(ret.cfg.spellcheck).get('innerHTML') );
+            Y.one(ret.cfg.searchstring).set( 'value', Y.one(ret.cfg.spellcheck).get('innerHTML') );
             handleClick( e );
         }
 
         var handleKeyPress = function(e)
         {
-            var key = e.which || e.keyCode;
-            if (key === 13)
+            if (e.keyCode == 13)
             {
                 performSearch();
-                e.halt();
-                return false;
+                e.preventDefault();
             }
         }
 
-        Y.get(ret.cfg.searchbutton).on('click', handleClick);
-        Y.get(ret.cfg.searchstring).on('keypress', handleKeyPress);
+        Y.one(ret.cfg.searchbutton).on('click', handleClick);
+        Y.one(ret.cfg.searchstring).on('keypress', handleKeyPress);
     }
     ret.cfg = {};
 
@@ -249,6 +247,6 @@ var eZAJAXSearch = function()
     {
         var ins = YUI(YUI3_config).use('node', 'event', 'io-ez', yCallback);
     }
-    
+
     return ret;
 }();

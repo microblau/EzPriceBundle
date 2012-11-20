@@ -68,8 +68,8 @@ class selectTarget extends eZWizardBase
         $result['content'] = $this->TPL->fetch( 'design:dbattributeconverter/select_target.tpl' );
         $result['left_menu'] = 'design:parts/content/dbattributeconverter_menu.tpl';
         $result['path'] = array(
-            array( 'url' => false, 'text' => ezi18n( 'dbattributeconverter/wizard', 'DB Attribute Converter - select target datatype' ) ),
-           // array( 'url' => false, 'text' => ezi18n( 'quotation/online', 'Content upload' ) )
+            array( 'url' => false, 'text' => ezpI18n::tr( 'dbattributeconverter/wizard', 'DB Attribute Converter - select target datatype' ) ),
+           // array( 'url' => false, 'text' => ezpI18n::tr( 'quotation/online', 'Content upload' ) )
         );
 
         return $result;
@@ -102,7 +102,7 @@ class selectTarget extends eZWizardBase
         }
         else if ( $this->HTTP->hasPostVariable( 'NextButton' ) )
         {
-            $this->WarningList[] = ezi18n( 'dbattributeconverter/wizard','You have to specify new target datatype.' );
+            $this->WarningList[] = ezpI18n::tr( 'dbattributeconverter/wizard','You have to specify new target datatype.' );
         }
 
 

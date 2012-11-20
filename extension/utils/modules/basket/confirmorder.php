@@ -143,5 +143,5 @@ if( $http->hasPostVariable( 'formPago' ) )
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:basket/confirmorder.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
 ?>

@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>extension/ezodf</name>
     <message>
@@ -68,6 +70,10 @@ the appropriate class during the import, you get a notice about this after the i
 Images are placed in the media library so you can re-use them in other articles.</source>
         <translation>Můžete importovat dokumenty OpenOffice.org Writer přímo do eZ Publish z této stránky. Jste optáni kam umístit dokument a eZ Publish se postará o zbytek. Dokument je  převeden do odpovídající třídy během importu, poté co je import hotový, obdržíte o tom zprávu. Obrázky jsou umístěny v mediální knihovně, tudíž je můžete znovu použít v dalších článcích.</translation>
     </message>
+    <message>
+        <source>The imported document is waiting for an approbation to be published.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>extension/ezodf/browse</name>
@@ -96,95 +102,95 @@ Klikněte na uspořádání jmen pro změnu prohlížení seznamu.
     <name>extension/ezodf/export/error</name>
     <message>
         <source>Destination file format not supported</source>
-        <translation>Není podporován cílový formát souboru
+        <translation type="unfinished">Není podporován cílový formát souboru
 </translation>
     </message>
     <message>
         <source>PDF conversion failed</source>
-        <translation>PDF konverze selhala</translation>
+        <translation type="unfinished">PDF konverze selhala</translation>
     </message>
     <message>
         <source>Word conversion failed</source>
-        <translation>Word konverze selhala</translation>
+        <translation type="unfinished">Word konverze selhala</translation>
     </message>
     <message>
         <source>Unable to fetch node, or no read access</source>
-        <translation>Není možné dosáhnout uzlu nebo přečíst přístup</translation>
+        <translation type="unfinished">Není možné dosáhnout uzlu nebo přečíst přístup</translation>
     </message>
     <message>
         <source>Unable to open file %1 on server side</source>
-        <translation>Není možné otevřít file %1 na straně serveru</translation>
+        <translation type="unfinished">Není možné otevřít file %1 na straně serveru</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf/import/error</name>
     <message>
         <source>File extension or type is not allowed.</source>
-        <translation>Není povolen typ nebo přípona souboru.</translation>
+        <translation type="unfinished">Není povolen typ nebo přípona souboru.</translation>
     </message>
     <message>
         <source>Could not parse XML.</source>
-        <translation>Není možné analyzovat XML.</translation>
+        <translation type="unfinished">Není možné analyzovat XML.</translation>
     </message>
     <message>
         <source>Can not open socket. Please check if extension/ezodf/daemon.php is running.</source>
-        <translation>Nemůže otevřít port. Prosím zkontrolujte, zda funguje extension/ezodf/daemon.php.</translation>
+        <translation type="unfinished">Nemůže otevřít port. Prosím zkontrolujte, zda funguje extension/ezodf/daemon.php.</translation>
     </message>
     <message>
         <source>Can not convert the given document.</source>
-        <translation>Nemůže konvertovat daný dokument.</translation>
+        <translation type="unfinished">Nemůže konvertovat daný dokument.</translation>
     </message>
     <message>
         <source>Unable to call daemon. Fork can not create child process.</source>
-        <translation>Není možné se spojit s daemon. Fork nemůže vytvořit podřízený proces.</translation>
+        <translation type="unfinished">Není možné se spojit s daemon. Fork nemůže vytvořit podřízený proces.</translation>
     </message>
     <message>
         <source>Daemon reported error.</source>
-        <translation>Daemon nahlásil chybu.</translation>
+        <translation type="unfinished">Daemon nahlásil chybu.</translation>
     </message>
     <message>
         <source>Unknown node.</source>
-        <translation>Neznámý uzel.</translation>
+        <translation type="unfinished">Neznámý uzel.</translation>
     </message>
     <message>
         <source>Access denied.</source>
-        <translation>Přístup odmítnut.</translation>
+        <translation type="unfinished">Přístup odmítnut.</translation>
     </message>
     <message>
         <source>Error during import.</source>
-        <translation>Chyba během importu.</translation>
+        <translation type="unfinished">Chyba během importu.</translation>
     </message>
     <message>
         <source>Unknown content class specified in odf.ini:</source>
-        <translation>Neznámá kvalita obsahu specifikovaná v odf. ini:</translation>
+        <translation type="unfinished">Neznámá kvalita obsahu specifikovaná v odf. ini:</translation>
     </message>
     <message>
         <source>Unknown error.</source>
-        <translation>Neznámá chyba.</translation>
+        <translation type="unfinished">Neznámá chyba.</translation>
     </message>
     <message>
         <source>Filetype: </source>
-        <translation>Tip souboru:</translation>
+        <translation type="unfinished">Tip souboru:</translation>
     </message>
     <message>
         <source>Folder for images could not be created, access denied.</source>
-        <translation>Složka pro obrázky nemůže být vytvořena, přístup byl odmítnut.</translation>
+        <translation type="unfinished">Složka pro obrázky nemůže být vytvořena, přístup byl odmítnut.</translation>
     </message>
     <message>
         <source>Document is not supported.</source>
-        <translation>Dokument není podporován.</translation>
+        <translation type="unfinished">Dokument není podporován.</translation>
     </message>
     <message>
         <source>Cannot import. File not found. Already imported?</source>
-        <translation>Nemůže importovat. Soubor nenalezen. Již importováno?</translation>
+        <translation type="unfinished">Nemůže importovat. Soubor nenalezen. Již importováno?</translation>
     </message>
     <message>
         <source>Cannot import document, supplied placement nodeID is not valid.</source>
-        <translation>Nemůže importovat dokument, podporované umístění uzluID není platné.</translation>
+        <translation type="unfinished">Nemůže importovat dokument, podporované umístění uzluID není platné.</translation>
     </message>
     <message>
         <source>Cannot store uploaded file, cannot import.</source>
-        <translation>Nemůže uložit nahraný soubor, nemůže importovat.</translation>
+        <translation type="unfinished">Nemůže uložit nahraný soubor, nemůže importovat.</translation>
     </message>
     <message>
         <source>Unable to fetch node with id </source>

@@ -3,7 +3,7 @@
 //
 // Created on: <07-Jul-2005 10:14:34 bf>
 //
-// Copyright (C) 1999-2005 eZ systems as. All rights reserved.
+// Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
 //
 // This source file is part of the eZ Publish (tm) Open Source Content
 // Management System.
@@ -44,46 +44,51 @@ Needs the following in PHP Configuration
 
 */
 
-$homeDir = "/lhome/odfdaemon";
-$displayNum = ':1';
+$homeDir = "/tmp";
 #$ooexecutable = "openoffice.org-2.0";
 $ooexecutable = "/usr/bin/ooffice";
 
 set_time_limit( 0 );
 
-function convert_to( $sourceFileName, $convertCommand, $destinationFileName )
+/**
+ * Performs document conversion using OpenOffice.org in command line mode.
+ *
+ * @param string $sourceFileName Source filename.
+ * @param string $convertCommand Conversion to perform.
+ * @param string $destinationFileName Destination filename.
+ * @param string $executable OpenOffice.org executable.
+ * @param string $homeDir Home directory.
+ *
+ * @throws Exception
+ */
+function convertTo( $sourceFileName, $convertCommand, $destinationFileName, $executable, $homeDir )
 {
-    global $ooexecutable;
-    global $homeDir;
-    global $displayNum;
-
     switch ( $convertCommand )
     {
         case "convertToPDF":
         case "convertToOOo":
         case "convertToDoc":
         {
-            $envVarStr ="export HOME=\"$homeDir\"\n";
-            $convertShellCommand = $envVarStr . $ooexecutable . " -writer -invisible -display " . $displayNum . " 'macro:///eZconversion.Module1." . $convertCommand . "(\"$sourceFileName\", \"$destinationFileName\")'" . "  2>&1 ";
+            $convertShellCommand = "export HOME=\"$homeDir\"\n" . escapeshellcmd( $executable . " -writer -invisible -headless -nofirststartwizard -norestore" ) . " " . 
+            escapeshellarg( "macro:///eZconversion.Module1.$convertCommand(\"$sourceFileName\", \"$destinationFileName\")" ) . " 2>&1 ";
+
             $result = shell_exec( $convertShellCommand );
         }break;
 
         default:
         {
-            return "(1)-Unknown command $convertCommand";
+            throw new Exception( "Unknown command $convertCommand", 1 );
         }break;
     }
 
     if ( !file_exists( $destinationFileName ) )
     {
-        return "(3) - Unknown failure converting document \n command was: '$convertShellCommand' \nresult: $result";
+        throw new Exception( "Unknown failure converting document \n command was: '$convertShellCommand' \nresult: $result", 3 );
     }
-
-    return true;
 }
 
 
-print( "eZ Publish document conversion daemon\n");
+echo "eZ Publish document conversion daemon\n";
 // Parse input
 $input = fread( STDIN, 1024 );
 
@@ -93,25 +98,22 @@ $command = trim( $inputParts[0] );
 $fileName = trim( $inputParts[1] );
 $destName = trim( $inputParts[2] );
 
-
-if ( file_exists( $fileName ) )
+try
 {
-    sleep(10);
-    $result = convert_to( $fileName, $command, $destName );
-    if ( !( $result === true ) )
+    if ( !file_exists( $fileName ) )
     {
-        print( "Error: $result" );
+        throw new Exception( "File not found: $fileName", 2 );
     }
-    else
-    {
-        echo( "FilePath: $destName" );
-    }
+
+    sleep( 10 );
+    convertTo( $fileName, $command, $destName, $ooexecutable, $homeDir );
+    echo "FilePath: $destName\n";
+
 }
-else
+catch ( Exception $e )
 {
-    echo( "Error: (2)-File not found" );
+    echo "Error: (", $e->getCode() , ") - ", $e->getMessage(), "\n";
+    die( $e->getCode() );
 }
-
-
 
 ?>

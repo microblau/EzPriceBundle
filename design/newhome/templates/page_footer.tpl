@@ -105,6 +105,7 @@
                                 {foreach $children as $child}
                                 <li><a href={$child.url_alias|ezurl()}>{$child.name}</a></li>
                                 {/foreach}
+								{undef $children}
                             </ul>
                         </li>
                         <li>
@@ -117,6 +118,7 @@
                                 {foreach $children as $child}
                                 <li><a href={$child.url_alias|ezurl_formacion()}>{$child.name}</a></li>
                                 {/foreach}
+								{undef $children}
                             </ul>
                         </li>
                         <li>

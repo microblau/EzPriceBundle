@@ -2,8 +2,8 @@
 /**
  * File containing the forgotpassword view
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPLv2
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
  * @package ezmbpaex
  */
 
@@ -83,7 +83,7 @@ if ( $module->isCurrentAction( "Generate" ) )
                                                        null,
                                                        true );
         }
-        if ( count($users) > 0 )
+        if ( !empty( $users ) )
         {
             $user = $users[0];
             $time = time();
@@ -123,7 +123,7 @@ if ( $module->isCurrentAction( "Generate" ) )
                 $emailSender = $ini->variable( 'MailSettings', 'AdminEmail' );
             $mail->setSender( $emailSender );
             $mail->setReceiver( $receiver );
-            $subject = ezi18n( 'kernel/user/register', 'Registration info' );
+            $subject = ezpI18n::tr( 'kernel/user/register', 'Registration info' );
             if ( $tpl->hasVariable( 'subject' ) )
                 $subject = $tpl->variable( 'subject' );
             $mail->setSubject( $subject );
@@ -228,9 +228,9 @@ else if ( $module->isCurrentAction( "ChangePassword" ) && $hashKeyValidated )
 
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:userpaex/forgotpassword.tpl' );
-$Result['path'] = array( array( 'text' => ezi18n( 'kernel/user', 'User' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/user', 'User' ),
                                 'url' => false ),
-                         array( 'text' => ezi18n( 'kernel/user', 'Forgot password' ),
+                         array( 'text' => ezpI18n::tr( 'kernel/user', 'Forgot password' ),
                                 'url' => false ) );
 
 if ( $ini->variable( 'SiteSettings', 'LoginPage' ) == 'custom' )

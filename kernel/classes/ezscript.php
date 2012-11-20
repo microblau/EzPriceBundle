@@ -1,35 +1,12 @@
 <?php
-//
-// Definition of eZScript class
-//
-// Created on: <06-Aug-2003 11:06:35 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZScript class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 /*!
   \class eZScript ezscript.php
@@ -68,10 +45,6 @@ $script->shutdown(); // Finish execution
 \endcode
 
 */
-
-require_once( 'access.php' );
-require_once( 'kernel/common/i18n.php' );
-
 class eZScript
 {
     /*!
@@ -86,7 +59,7 @@ class eZScript
                                         'debug-accumulator' => false,
                                         'debug-timing' => false,
                                         'use-session' => false,
-                                        'use-extensions' => false,
+                                        'use-extensions' => true,
                                         'use-modules' => false,
                                         'user' => false,
                                         'description' => 'eZ Publish script',
@@ -227,7 +200,6 @@ class eZScript
                                                  'dir_permission'  => octdec( $iniDirPermission ),
                                                  'var_directory'   => $iniVarDirectory ) );
 
-
         eZExecution::addCleanupHandler( 'eZDBCleanup' );
         eZExecution::addFatalErrorHandler( 'eZFatalError' );
 
@@ -236,28 +208,30 @@ class eZScript
         if ( $this->UseExtensions )
         {
             // Check for extension
-            require_once( 'kernel/common/ezincludefunctions.php' );
             eZExtension::activateExtensions( 'default' );
             // Extension check end
         }
+        else if ( !$this->isQuiet() )
+        {
+            $cli = eZCLI::instance();
+            $cli->output( "Notice: This script uses 'use-extensions' => false, meaning extension settings are not loaded!" );
+        }
 
-        require_once( "access.php" );
         $siteaccess = $this->SiteAccess;
         if ( $siteaccess )
         {
             $access = array( 'name' => $siteaccess,
-                             'type' => EZ_ACCESS_TYPE_STATIC );
+                             'type' => eZSiteAccess::TYPE_STATIC );
         }
         else
         {
             $ini = eZINI::instance();
             $siteaccess = $ini->variable( 'SiteSettings', 'DefaultAccess' );
             $access = array( 'name' => $siteaccess,
-                             'type' => EZ_ACCESS_TYPE_DEFAULT );
+                             'type' => eZSiteAccess::TYPE_DEFAULT );
         }
 
-        $access = changeAccess( $access );
-        
+        $access = eZSiteAccess::change( $access );
 
         if ( $this->UseExtensions )
         {
@@ -265,6 +239,10 @@ class eZScript
             eZExtension::activateExtensions( 'access' );
             // Extension check end
         }
+
+        // Now that all extensions are activated and siteaccess has been changed, reset
+        // all eZINI instances as they may not take into account siteaccess specific settings.
+        eZINI::resetAllInstances( false );
 
         // Set the global setting which is read by the session lib
         $GLOBALS['eZSiteBasics']['session-required'] = $this->UseSession;
@@ -1021,7 +999,7 @@ class eZScript
                     else if ( $level == 'notice' )
                         $level = eZDebug::LEVEL_NOTICE;
                     else if ( $level == 'timing' )
-                        $level = eZDebug::EZ_LEVEL_TIMING;
+                        $level = eZDebug::LEVEL_TIMING_POINT;
                     $allowedDebugLevels[] = $level;
                 }
                 $this->setUseDebugOutput( true );
@@ -1035,6 +1013,10 @@ class eZScript
             {
                 $this->setShowVerboseOutput( count( $options['verbose'] ) );
             }
+
+            if ( isset( $options['siteaccess'] ) and $options['siteaccess'] )
+                $this->setUseSiteAccess( $options['siteaccess'] );
+
             if ( $options['help'] )
             {
                 if ( !$this->IsInitialized )
@@ -1042,8 +1024,6 @@ class eZScript
                 $this->showHelp();
                 $this->shutdown( 0 );
             }
-            if ( isset( $options['siteaccess'] ) and $options['siteaccess'] )
-                $this->setUseSiteAccess( $options['siteaccess'] );
 
             if ( isset( $options['login'] ) and $options['login'] )
                 $this->setUser( $options['login'], isset( $options['password'] ) ? $options['password'] : false );
@@ -1054,7 +1034,7 @@ class eZScript
     /**
      * Returns a shared instance of the eZScript class.
      *
-     * @param $settings array Used by the first generated instance, but ignored for subsequent calls.
+     * @param array $settings Used by the first generated instance, but ignored for subsequent calls.
      * @return eZScript
      */
     static function instance( $settings = array() )
@@ -1142,7 +1122,6 @@ function eZDBCleanup()
         $db = eZDB::instance();
         $db->setIsSQLOutputEnabled( false );
     }
-//     session_write_close();
 }
 
 function eZFatalError()

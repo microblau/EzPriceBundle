@@ -2,16 +2,16 @@
 /**
  * File containing the eZContentObjectStateGroup class.
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
- * @version 4.3.0
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
  * @package kernel
  */
 
 /**
  * Class respresenting a content object state group
  *
- * @version 4.3.0
+ * @version 4.7.0
  * @package kernel
  */
 class eZContentObjectStateGroup extends eZPersistentObject
@@ -542,7 +542,7 @@ class eZContentObjectStateGroup extends eZPersistentObject
         {
             if ( $newDefaultStateID )
             {
-                $contentObjectStateIDCondition = $removeIDListCount > 1 ? $db->generateSQLInStatement( $removeIDList, 'contentobject_state_id' ) :
+                $contentObjectStateIDCondition = $removeIDListCount > 1 ? $db->generateSQLINStatement( $removeIDList, 'contentobject_state_id' ) :
                                                                           "contentobject_state_id=$removeIDList[0]";
                 $db->query( "UPDATE ezcobj_state_link
                              SET contentobject_state_id=$newDefaultStateID
@@ -609,6 +609,10 @@ class eZContentObjectStateGroup extends eZPersistentObject
             }
         }
         $db->commit();
+
+        // re-order states in the same group
+        $this->states( true );
+
         return true;
     }
 
@@ -675,8 +679,6 @@ class eZContentObjectStateGroup extends eZPersistentObject
                     $limitations[$name] = array(
                         'name'   => $name,
                         'values' => array(),
-                        'path'   => 'private/classes/',
-                        'file'   => 'ezcontentobjectstategroup.php',
                         'class' => __CLASS__,
                         'function' => 'limitationValues',
                         'parameter' => array( $group->attribute( 'id' ) )

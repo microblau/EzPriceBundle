@@ -1,10 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$site.http_equiv.Content-language|wash}" lang="{$site.http_equiv.Content-language|wash}">
+<!DOCTYPE html>
+<html lang="{$site.http_equiv.Content-language|wash}">
 <head>
-
 {* Do some uncacheable left + right menu stuff before cache-block's *}
 {def $ui_context_edit      = eq( $ui_context, 'edit' )
      $content_edit         = and( $ui_context_edit, eq( $ui_component, 'content' ) )
+     $hide_left_menu       = first_set( $module_result.content_info.persistent_variable.left_menu, $content_edit|not )|not
      $hide_right_menu      = first_set( $module_result.content_info.persistent_variable.extra_menu, $ui_context_edit|not )|not
      $collapse_right_menu  = ezpreference( 'admin_right_menu_show' )|not
      $admin_left_size      = ezpreference( 'admin_left_menu_size' )
@@ -12,12 +12,9 @@
      $left_size_hash       = 0
      $user_hash = concat( $current_user.role_id_list|implode( ',' ), ',', $current_user.limited_assignment_value_list|implode( ',' ) )
 }
-
 {if $hide_right_menu}
-    {set $collapse_right_menu = false()}
+{set $collapse_right_menu = false()}
 {/if}
-
-{def $left_menu_vista = ezpagedata().persistent_variable.vistawidth}
 
 {if and( $ui_context_edit|not, or( $collapse_right_menu, $admin_left_size ))}
 <style type="text/css">
@@ -37,15 +34,12 @@
     {/if}
     {undef $left_menu_widths}
 {/if}
-{if $left_menu_vista|eq('no') }	
-			div#page div#leftmenu   {ldelim} width: 0; {rdelim}
-	        div#page div#maincontent {ldelim} margin-left: 0; {rdelim}
-{/if}
 </style>
 {/if}
 
-{* Pr uri header cache *}
-{cache-block keys=array( $module_result.uri, $user_hash, $admin_theme ) ignore_content_expiry}
+{* Pr uri header cache
+ Need navigation part for cases like content/browse where node id is taken from caller params *}
+{cache-block keys=array( $module_result.uri, $user_hash, $admin_theme, $access_type, first_set( $module_result.navigation_part, $navigation_part.identifier ) ) ignore_content_expiry}
 
 {include uri='design:page_head.tpl'}
 
@@ -53,7 +47,7 @@
 {include uri='design:page_head_script.tpl'}
 
 {* Pr tab header cache *}
-{cache-block keys=array( $navigation_part.identifier, $module_result.navigation_part, $ui_context, $ui_component, $user_hash ) ignore_content_expiry}
+{cache-block keys=array( $ui_context, $ui_component, $user_hash, $access_type, first_set( $module_result.navigation_part, $navigation_part.identifier ) ) ignore_content_expiry}
 
 </head>
 <body>
@@ -63,11 +57,11 @@
 <div id="header">
 <div id="header-design" class="float-break">
 
-    {* HEADER ( SEARCH, LOGO AND USERMENU ) *}
-    {include uri='design:page_header.tpl'}
+{* HEADER ( SEARCH, LOGO AND USERMENU ) *}
+{include uri='design:page_header.tpl'}
 
-    {* TOP MENU / TABS *}
-    {include uri='design:page_topmenu.tpl'}
+{* TOP MENU / TABS *}
+{include uri='design:page_topmenu.tpl'}
 
 </div>
 </div>
@@ -85,13 +79,42 @@
     <div id="rightmenu-design"></div>
 {else}
     <a id="rightmenu-showhide" class="show-hide-control" title="{'Hide / Show rightmenu'|i18n( 'design/admin/pagelayout/rightmenu' )}" href={'/user/preferences/set/admin_right_menu_show/0'|ezurl}>&raquo;</a>
-        <div id="rightmenu-design">
-            {tool_bar name='admin_right' view='full'}
-            {tool_bar name='admin_developer' view='full'}
-        </div>
-    <!-- script type="text/javascript" src={"javascript/rightmenu_widthcontrol.js"|ezdesign} charset="utf-8"></script -->
+    <div id="rightmenu-design">
+        {tool_bar name='admin_right' view='full'}
+        {tool_bar name='admin_developer' view='full'}
+    </div>
     <script type="text/javascript">
-        rightMenuWidthControl();
+    {literal}
+
+    YUI(YUI3_config).use('ezcollapsiblemenu', 'event', 'io-ez', function (Y) {
+
+        Y.on('domready', function () {
+            var rightmenu = new Y.eZ.CollapsibleMenu({
+                link: '#rightmenu-showhide',
+                content: ['&raquo;', '&laquo;'],
+                collapsed: 0,
+                elements:[{
+                    selector: '#rightmenu',
+                    duration: 0.4,
+                    fullStyle: {width: '181px'},
+                    collapsedStyle: {width: '18px'}
+                },{
+                    selector: '#maincolumn',
+                    duration: 0.4,
+                    fullStyle: {marginRight: '180px'},
+                    collapsedStyle: {marginRight: '17px'}
+                }],
+                callback: function () {
+                    var p = 1;
+                    if ( this.conf.collapsed )
+                        p = 0;
+                    Y.io.ez.setPreference('admin_right_menu_show', p);
+                }
+            });
+        });
+    });
+
+    {/literal}
     </script>
 {/if}
 </div>
@@ -100,7 +123,7 @@
 <div id="maincolumn">
 
 {* Pr uri Path/Left menu cache (dosn't use ignore_content_expiry because of content structure menu  ) *}
-{cache-block keys=array( $module_result.uri, $user_hash, $left_size_hash )}
+{cache-block keys=array( $module_result.uri, $user_hash, $left_size_hash, $access_type, first_set( $module_result.navigation_part, $navigation_part.identifier ) )}
 
 <div id="path">
 <div id="path-design">
@@ -111,7 +134,7 @@
 <hr class="hide" />
 
 {* LEFT MENU / CONTENT STRUCTURE MENU *}
-{if $content_edit}
+{if $hide_left_menu}
 {else}
     {include uri='design:page_leftmenu.tpl'}
 {/if}
@@ -119,7 +142,7 @@
 {/cache-block}{* /Pr uri cache *}
 
 {* Main area START *}
-{if $content_edit}
+{if $hide_left_menu}
     {include uri='design:page_mainarea.tpl'}
 {else}
     <div id="maincontent">
@@ -141,7 +164,7 @@
 <hr class="hide" />
 
 
-{cache-block ignore_content_expiry}
+{cache-block keys=array( $access_type ) ignore_content_expiry}
 <div id="footer" class="float-break">
 <div id="footer-design">
     {include uri='design:page_copyright.tpl'}
@@ -156,40 +179,40 @@
 {/cache-block}
 
 <script type="text/javascript">
-<!--
-
 document.getElementById('header-usermenu-logout').innerHTML += '<span class="header-usermenu-name">{$current_user.login|wash}<\/span>';
 
 {literal}
 (function( $ )
 {
     var searchtext = document.getElementById('searchtext');
-    if ( searchtext && !searchtext.disabled )
-    {
-        jQuery( searchtext ).val( searchtext.title
-        ).addClass('passive'
-        ).focus(function(){
-                if ( this.value === this.title )
-                {
-                    jQuery( this ).removeClass('passive').val('');
-                }
-        }).blur(function(){
-            if ( this.value === '' )
-            {
-                jQuery( this ).addClass('passive').val( this.title );
-            }
-        });
-        
-    }
+    if ( !searchtext || searchtext.disabled )
+        return;
+
+    jQuery( searchtext ).val( searchtext.title
+    ).addClass('passive'
+    ).focus(function(){
+        if ( this.value === this.title )
+        {
+            jQuery( this ).removeClass('passive').val('');
+        }
+    }).blur(function(){
+        if ( this.value === '' )
+        {
+            jQuery( this ).addClass('passive').val( this.title );
+        }
+    });
 })( jQuery );
 {/literal}
-
-// -->
 </script>
 
 {* This comment will be replaced with actual debug report (if debug is on). *}
 <!--DEBUG_REPORT-->
 </div><!-- div id="page" -->
+
+{* modal window and AJAX stuff *}
+<div id="overlay-mask" style="display:none;"></div>
+<img src={'2/loader.gif'|ezimage()} id="ajaxuploader-loader" style="display:none;" alt="{'Loading...'|i18n( 'design/admin/pagelayout' )}" />
+
 
 </body>
 </html>

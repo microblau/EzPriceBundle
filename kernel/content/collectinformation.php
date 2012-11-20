@@ -1,32 +1,10 @@
 <?php
-//
-// Created on: <21-Nov-2002 18:27:06 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-
+/**
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 $Module = $Params['Module'];
 $http = eZHTTPTool::instance();
@@ -195,6 +173,14 @@ if ( $Module->isCurrentAction( 'CollectInformation' ) )
                                                       'name' => $validationName,
                                                       'description' => $description );
                 }
+                else
+                {
+                    $validationName = $contentClassAttribute->attribute( 'name' );
+                    $unvalidatedAttributes[] = array( 'id' => $contentObjectAttribute->attribute( 'id' ),
+                                                      'identifier' => $contentClassAttribute->attribute( 'identifier' ),
+                                                      'name' => $validationName,
+                                                      'description' => 'Attribute did not validate as it seems to missing in form.' );
+                }
             }
             else if ( $status == eZInputValidator::STATE_ACCEPTED )
             {
@@ -202,29 +188,6 @@ if ( $Module->isCurrentAction( 'CollectInformation' ) )
         }
     }
     $collectionAttributes = array();
-
-	//PARCHE CAPTCHAR	
-   
-   $capchar_error = false; 	
-    if( $http->hasPostVariable( 'eZHumanCAPTCHACode' ) )
-    {
-   include_once( 'extension/ezhumancaptcha/classes/ezhumancaptchatools.php' );
-	$eZHumanCAPTCHAValidation = eZHumanCAPTCHATools::validateHTTPInput();
-	if ( count( $eZHumanCAPTCHAValidation ) )
-	{
-		
-		$canCollect = false;
-		$capchar_error = true;
-		
-	}
-	else
-	{
-		
-	}
-}
-	// END
-
-
 
     $db = eZDB::instance();
     $db->begin();
@@ -304,12 +267,10 @@ if ( $Module->isCurrentAction( 'CollectInformation' ) )
 
             $tpl->setVariable( 'collection', $collection );
             $tpl->setVariable( 'object', $object );
-
             $templateResult = $tpl->fetch( 'design:content/collectedinfomail/' . $informationCollectionTemplate . '.tpl' );
 
             $subject = $tpl->variable( 'subject' );
             $receiver = $tpl->variable( 'email_receiver' );
-            $receivers = $tpl->variable( 'receivers' );     
             $ccReceivers = $tpl->variable( 'email_cc_receivers' );
             $bccReceivers = $tpl->variable( 'email_bcc_receivers' );
             $sender = $tpl->variable( 'email_sender' );
@@ -322,25 +283,14 @@ if ( $Module->isCurrentAction( 'CollectInformation' ) )
             if ( $tpl->hasVariable( 'content_type' ) )
                 $mail->setContentType( $tpl->variable( 'content_type' ) );
 
-           /* if ( !$mail->validate( $receiver ) )
+            if ( !$mail->validate( $receiver ) )
             {
                 $receiver = $ini->variable( "InformationCollectionSettings", "EmailReceiver" );
                 if ( !$receiver )
                     $receiver = $ini->variable( "MailSettings", "AdminEmail" );
             }
-            $mail->setReceiver( $receiver );*/
-          
-            if ( $receivers )
-            {
-                if ( !is_array( $receivers ) )
-                    $receivers = array( $receivers );
-                foreach ( $receivers as $receiver )
-                {
-                    if ( $mail->validate( $receiver ) )
-                        $mail->addReceiver( $receiver );
-                }
-            }
-            
+            $mail->setReceiver( $receiver );
+
             if ( !$mail->validate( $sender ) )
             {
                 $sender = $ini->variable( "MailSettings", "EmailSender" );
@@ -419,21 +369,6 @@ if ( $Module->isCurrentAction( 'CollectInformation' ) )
     }
     else
     {
-
-	//PARCHE CAPTCHAR
-	if($capchar_error){
-
-		
-		$error_to_template = array('id'=>'captchar','identifier' => 'captchar','name'=>'captchar','description'=>$eZHumanCAPTCHAValidation[0]);
-
-		$unvalidatedAttributes[] = $error_to_template;	
-
-
-	}
-
-
-
-	
         $collection->remove();
 
         return $Module->run( 'view', array( $ViewMode, $NodeID ),

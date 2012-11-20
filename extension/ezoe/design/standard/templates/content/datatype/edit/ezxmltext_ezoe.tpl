@@ -14,7 +14,7 @@
     {run-once}
     {* code that only run once (common for all xml blocks) *}
 
-    {def $plugin_list = ezini('EditorSettings', 'Plugins', 'ezoe.ini',,true()  )
+    {def $plugin_list = ezini('EditorSettings', 'Plugins', 'ezoe.ini',,true() )
          $skin        = ezini('EditorSettings', 'Skin', 'ezoe.ini',,true() )
          $skin_variant = ''
          $content_css_list_temp = ezini('StylesheetSettings', 'EditorCSSFileList', 'design.ini',,true())
@@ -24,13 +24,17 @@
          $language         = '-'|concat( $ez_locale )
          $dependency_js_list   = array( 'ezoe::i18n::'|concat( $language ) )
          $spell_languages = '+English=en'
-         $directionality = 'ltr'
+         $directionality    = 'ltr'
+         $toolbar_alignment = 'left'
     }
     {if ezini_hasvariable( 'EditorSettings', 'SkinVariant', 'ezoe.ini',,true() )}
         {set $skin_variant = ezini('EditorSettings', 'SkinVariant', 'ezoe.ini',,true() )}
     {/if}
     {if ezini_hasvariable( 'EditorSettings', 'Directionality', 'ezoe.ini',,true() )}
         {set $directionality = ezini('EditorSettings', 'Directionality', 'ezoe.ini',,true() )}
+    {/if}
+    {if ezini_hasvariable( 'EditorSettings', 'ToolbarAlign', 'ezoe.ini',,true() )}
+        {set $toolbar_alignment = ezini('EditorSettings', 'ToolbarAlign', 'ezoe.ini',,true() )}
     {/if}
     {if $attribute.language_code|eq( $ez_locale )}
         {def $cur_locale = fetch( 'content', 'locale' )}
@@ -47,7 +51,7 @@
     {if $skin_variant}
         {set $editor_css_list = $editor_css_list|append( concat('skins/', $skin, '/ui_', $skin_variant, '.css') )}
     {/if}
-    
+
     {foreach $content_css_list_temp as $css}
         {set $content_css_list = $content_css_list|append( $css|explode( '<skin>' )|implode( $skin ) )}
     {/foreach}
@@ -62,8 +66,6 @@
     {ezscript( $dependency_js_list )}
     <!-- Init TinyMCE script -->
     <script type="text/javascript">
-    <!--
-
     var eZOeAttributeSettings, eZOeGlobalSettings = {ldelim}
         mode : "none",
         theme : "ez",
@@ -75,19 +77,20 @@
         directionality : '{$directionality}',
         theme_advanced_buttons2 : "",
         theme_advanced_buttons3 : "",
-        theme_advanced_blockformats : "p,pre,h1,h2,h3,h4,h5,h6",
-        theme_advanced_path_location : "bottom",
-        theme_advanced_statusbar_location: "bottom",
-        theme_advanced_toolbar_location : "top",
-        theme_advanced_toolbar_align : "left",
+        theme_advanced_blockformats : "p,pre,h1,h2,h3,h4,h5,h6",// removes address tag, not suppored by ezxml
+        theme_advanced_path_location : false,// ignore, use theme_advanced_statusbar_location
+        theme_advanced_statusbar_location : "bottom",// correct value set by layout code bellow pr attribute
+        theme_advanced_toolbar_location : "top",// correct value set by layout code bellow pr attribute
+        theme_advanced_toolbar_align : "{$toolbar_alignment}",
         theme_advanced_toolbar_floating : true,
         theme_advanced_resize_horizontal : false,
         theme_advanced_resizing : true,
-        valid_elements: "-strong/-b/-bold[class|customattributes],-em/-i/-emphasize[class|customattributes],span[id|type|class|title|customattributes|align],sub[class|customattributes|align],sup[class|customattributes|align],pre[class|title|customattributes],ol[class|customattributes],ul[class|customattributes],li[class|customattributes],a[href|name|target|view|title|class|id|customattributes],p[class|customattributes|align],img[src|class|alt|align|inline|id|customattributes|type],table[class|border|width|id|title|customattributes|ezborder|bordercolor|align],tr,th[class|width|rowspan|colspan|customattributes|align],td[class|width|rowspan|colspan|customattributes|align],div[id|type|class|title|customattributes|align],h1[class|customattributes|align],h2[class|customattributes|align],h3[class|customattributes|align],h4[class|customattributes|align],h5[class|customattributes|align],h6[class|customattributes|align],br",
-        valid_child_elements: "a[%itrans_na],table[tr],tr[td|th],ol/ul[li],h1/h2/h3/h4/h5/h6/pre/strong/b/p/em/i/u/span/sub/sup/li[%itrans|#text]div/pre/td/th[%btrans|%itrans|#text]",
+        valid_elements : "-strong/-b/-bold[class|customattributes],-em/-i/-emphasize[class|customattributes],span[id|type|class|title|customattributes|align|style|view|inline|alt],sub[class|type|customattributes|align],sup[class|type|customattributes|align],u[class|type|customattributes|align],pre[class|title|customattributes],ol[class|customattributes],ul[class|customattributes],li[class|customattributes],a[href|name|target|view|title|class|id|customattributes],p[class|customattributes|align|style],img[id|type|class|title|customattributes|align|style|view|inline|alt|src],table[class|border|width|id|title|customattributes|ezborder|bordercolor|align|style],tr[class|customattributes],th[class|width|rowspan|colspan|customattributes|align|style],td[class|width|rowspan|colspan|customattributes|align|style],div[id|type|class|title|customattributes|align|style|view|inline|alt],h1[class|customattributes|align|style],h2[class|customattributes|align|style],h3[class|customattributes|align|style],h4[class|customattributes|align|style],h5[class|customattributes|align|style],h6[class|customattributes|align|style],br",
+        valid_child_elements : "a[%itrans_na],table[tr],tr[td|th],ol/ul[li],h1/h2/h3/h4/h5/h6/pre/strong/b/p/em/i/u/span/sub/sup/li[%itrans|#text]div/pre/td/th[%btrans|%itrans|#text]",
         // cleanup : false,
-        // cleanup_serializer : 'xml',    
+        // cleanup_serializer : 'xml',
         // entity_encoding : 'raw',
+        entities : '160,nbsp', // We need to transform nonbreaking white space to encoded form, all other charthers as stored in raw unicode form.
         // remove_linebreaks : false,
         // apply_source_formatting : false,
         fix_list_elements : true,
@@ -101,8 +104,8 @@
         theme_ez_statusbar_open_dialog : {cond( ezini('EditorSettings', 'TagPathOpenDialog', 'ezoe.ini',,true())|eq('enabled'), 'true', 'false' )},
         popup_css : {concat("stylesheets/skins/", $skin, "/dialog.css")|ezdesign},
         //popup_css_add : {"stylesheets/core.css"|ezdesign},
-        save_callback : "eZOeSaveCallback",
         gecko_spellcheck : true,
+        object_resizing : false,//disable firefox inline image/table resizing
         table_inline_editing : true, // table edit controlls in gecko
         save_enablewhendirty : true,
         ez_root_url : {'/'|ezroot},
@@ -117,14 +120,25 @@
         atd_rpc_url : {'/ezoe/atd_rpc?url='|ezurl},
         atd_rpc_id  : "your API key here",
         /* this list contains the categories of errors we want to show */
-        atd_show_types              : "Bias Language,Cliches,Complex Expression,Double Negatives,Hidden Verbs,Jargon Language,Passive voice,Phrases to Avoid,Redundant Expression, Diacritical Marks",
+        atd_show_types              : "Bias Language,Cliches,Complex Expression,Diacritical Marks,Double Negatives,Hidden Verbs,Jargon Language,Passive voice,Phrases to Avoid,Redundant Expression",
         /* strings this plugin should ignore */
         atd_ignore_strings          : "AtD,rsmudge",
         /* enable "Ignore Always" menu item, uses cookies by default. Set atd_ignore_rpc_url to a URL AtD should send ignore requests to. */
         atd_ignore_enable           : "true",
         /* the URL to the button image to display */
         //atd_button_url              : "atdbuttontr.gif",
-        atd_css_url : {'javascript/plugins/AtD/css/content.css'|ezdesign}
+        atd_css_url : {'javascript/plugins/AtD/css/content.css'|ezdesign},
+        paste_preprocess : function(pl, o) {ldelim}
+            // Strip <a> HTML tags from clipboard content (Happens on Internet Explorer)
+            o.content = o.content.replace( /(\s[a-z]+=")<a\s[^>]+>([^<]+)<\/a>/gi, '$1$2' );
+        {rdelim},
+        paste_postprocess: function(pl, o) {ldelim}
+            // removes \n after <br />, this is for paste of text
+            // with soft carriage return from Word in Firefox
+            // see issue http://issues.ez.no/18702
+            o.node.innerHTML = o.node.innerHTML.replace(/<br\s?.*\/?>\n/gi,'<br>'); 
+        {rdelim}
+
     {rdelim};
 
     {literal}
@@ -156,48 +170,34 @@
         }
     }
 
-    // @LS: 10/03/2010
-    // Workaround for issue #16373
-    // If save_callback function is not defined then it is
-    // causing problems with nested ul/ol lists
-    // Might be Tiny MCE bug
-    function eZOeSaveCallback( element_id, html, body )
-    {
-        return body.innerHTML;
-    }
-
     {/literal}
-    //-->
     </script>
     {/run-once}
-    
-    
-    
+
+
+
     <div class="oe-window">
         <textarea class="box" id="{$attribute_base}_data_text_{$attribute.id}" name="{$attribute_base}_data_text_{$attribute.id}" cols="88" rows="{$editorRow}">{$input_handler.input_xml}</textarea>
     </div>
-    
+
     <div class="block">
         {if $input_handler.can_disable}
             <input class="button{if $layout_settings['buttons']|contains('disable')} hide{/if}" type="submit" name="CustomActionButton[{$attribute.id}_disable_editor]" value="{'Disable editor'|i18n('design/standard/content/datatype')}" />
         {/if}
         <script type="text/javascript">
-        <!--
-        
         eZOeAttributeSettings = eZOeGlobalSettings;
         eZOeAttributeSettings['ez_attribute_id'] = {$attribute.id};
         eZOeAttributeSettings['theme_advanced_buttons1'] = "{$layout_settings['buttons']|implode(',')}";
-        eZOeAttributeSettings['theme_advanced_path_location'] = "{$layout_settings['path_location']}";
         eZOeAttributeSettings['theme_advanced_statusbar_location'] = "{$layout_settings['path_location']}";
         eZOeAttributeSettings['theme_advanced_toolbar_location'] = "{$layout_settings['toolbar_location']}";
 
         eZOeToggleEditor( '{$attribute_base}_data_text_{$attribute.id}', eZOeAttributeSettings );
-
-        -->
         </script>
     </div>
 <!-- End editor -->
 {else}
+    {* Require jQuery even when disabled to make sure user don't get cache issues when they enable editor *}
+    {ezscript_require( 'ezjsc::jquery' )}
     {let aliased_handler=$input_handler.aliased_handler}
     {include uri=concat("design:content/datatype/edit/",$aliased_handler.edit_template_name,".tpl") input_handler=$aliased_handler}
     <input class="button" type="submit" name="CustomActionButton[{$attribute.id}_enable_editor]" value="{'Enable editor'|i18n('design/standard/content/datatype')}" /><br />

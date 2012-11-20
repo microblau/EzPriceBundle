@@ -203,7 +203,7 @@ jQuery(document).ready(function() {
 	width: 633, // the width of the player
 	height: 304, // the height of the player
 	allowFullScreen: "false", // true by default, allow user to go full screen
-	initialVideo: "ryjZdc1eHEc", // the video that is loaded into the player
+	initialVideo: $('.youtube-player').attr('idvideo'), // the video that is loaded into the player
 	preferredQuality: "default",// preferred quality: default, small, medium, large, hd720
 	
     onPlayerPlaying: function(){ carousel.stopAuto() },

@@ -1,48 +1,26 @@
 <?php
-//
-// Definition of eZTSTranslator class
-//
-// Created on: <07-Jun-2002 12:40:42 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
-
-/*!
-  \class eZTSTranslator eztstranslator.php
-  \ingroup eZTranslation
-  \brief This provides internationalization using XML (.ts) files
-
-*/
-
+/**
+ * File containing the eZTSTranslator class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package lib
+ * @subpackage i18n
+ */
+/**
+ * Provides internationalization using XML (.ts) files
+ * @package lib
+ * @subpackage i18n
+ */
 class eZTSTranslator extends eZTranslatorHandler
 {
-    /*!
-     Construct the translator and loads the translation file $file if it is set and exists.
-    */
+    /**
+     * Constructs the translator and loads the translation file $file if it is set and exists.
+     * @param string $locale
+     * @param string $filename
+     * @param bool $useCache
+     */
     function eZTSTranslator( $locale, $filename = null, $useCache = true )
     {
         $this->UseCache = $useCache;
@@ -63,10 +41,15 @@ class eZTSTranslator extends eZTranslatorHandler
         $this->RootCache = false;
     }
 
-    /*!
-     \static
-     Initialize the ts translator and context if this is not already done.
-    */
+    /**
+     * Initialize the ts translator and context if this is not already done
+     *
+     * @param string $context
+     * @param string $locale
+     * @param string $filename
+     * @param bool $useCache
+     * @return eZTSTranslator
+     */
     static function initialize( $context, $locale, $filename, $useCache = true )
     {
         $instance = false;
@@ -94,24 +77,40 @@ class eZTSTranslator extends eZTranslatorHandler
         return $instance;
     }
 
-    /*!
-     \return true if the context \a $context is already initialized.
-    */
+    /**
+     * Checks if a context has been initialized (cached)
+     *
+     * @param string $context
+     * @return bool True if the context was initialized before, false if it wasn't
+     */
     function hasInitializedContext( $context )
     {
         return isset( $this->CachedMessages[$context] );
     }
 
-    /*!
-     Tries to load the context \a $requestedContext for the translation and returns true if was successful.
-    */
+    /**
+     * Tries to load the context $requestedContext for the translation and returns true if was successful.
+     *
+     * @param string $requestedContext
+     * @return bool True if load was successful, false otherwise
+     */
     function load( $requestedContext )
     {
         return $this->loadTranslationFile( $this->Locale, $this->File, $requestedContext );
     }
 
-    /*!
-     \private
+    /**
+     * Loads a translation file
+     * Will load from cache if possible, or generate cache if needed
+     *
+     * Also checks for translation files expiry based on mtime if RegionalSettings.TranslationCheckMTime is enabled
+     *
+     * @access private
+     * @param string $locale
+     * @param string $filename
+     * @param string $requestedContext
+     *
+     * @return bool The operation status, true or false
     */
     function loadTranslationFile( $locale, $filename, $requestedContext )
     {
@@ -147,30 +146,40 @@ class eZTSTranslator extends eZTranslatorHandler
         // Load cached translations if possible
         if ( $this->UseCache == true )
         {
-            if ( !$tsTimeStamp && $checkMTime )
+            if ( !$tsTimeStamp )
             {
-                foreach ( $roots as $root )
+                $expiry = eZExpiryHandler::instance();
+                $globalTsTimeStamp = $expiry->getTimestamp( self::EXPIRY_KEY, 0 );
+                $localeTsTimeStamp = $expiry->getTimestamp( self::EXPIRY_KEY . '-' . $locale, 0 );
+                $tsTimeStamp = max( $globalTsTimeStamp, $localeTsTimeStamp );
+                if ( $checkMTime && $tsTimeStamp < time() )// no need if ts == time()
                 {
-                    $path = eZDir::path( array( $root, $locale, $charset, $filename ) );
-                    if ( file_exists( $path ) )
+                    // iterate over each known TS file, and get the highest timestamp
+                    // this value will be used to check for cache validity
+                    foreach ( $roots as $root )
                     {
-                        $timestamp = filemtime( $path );
-                        if ( $timestamp > $tsTimeStamp )
-                            $tsTimeStamp = $timestamp;
-                    }
-                    else
-                    {
-                        $path = eZDir::path( array( $root, $locale, $filename ) );
+                        $path = eZDir::path( array( $root, $locale, $charset, $filename ) );
                         if ( file_exists( $path ) )
                         {
                             $timestamp = filemtime( $path );
                             if ( $timestamp > $tsTimeStamp )
                                 $tsTimeStamp = $timestamp;
                         }
+                        else
+                        {
+                            $path = eZDir::path( array( $root, $locale, $filename ) );
+                            if ( file_exists( $path ) )
+                            {
+                                $timestamp = filemtime( $path );
+                                if ( $timestamp > $tsTimeStamp )
+                                    $tsTimeStamp = $timestamp;
+                            }
+                        }
                     }
                 }
                 $this->RootCache['timestamp'] = $tsTimeStamp;
             }
+
             $key = 'cachecontexts';
             if ( $this->HasRestoredCache or
                  eZTranslationCache::canRestoreCache( $key, $tsTimeStamp ) )
@@ -212,7 +221,7 @@ class eZTSTranslator extends eZTranslatorHandler
                         eZDebug::accumulatorStop( 'tstranslator_context_load' );
                     }
                 }
-                eZDebugSetting::writeNotice( 'i18n-tstranslator', "Loading cached translation", "eZTSTranslator::loadTranslationFile" );
+                eZDebugSetting::writeNotice( 'i18n-tstranslator', "Loading cached translation", __METHOD__ );
                 eZDebug::accumulatorStop( 'tstranslator_cache_load' );
                 if ( !$this->BuildCache )
                 {
@@ -221,7 +230,7 @@ class eZTSTranslator extends eZTranslatorHandler
             }
             eZDebugSetting::writeNotice( 'i18n-tstranslator',
                                          "Translation cache has expired. Will rebuild it from source.",
-                                         "eZTSTranslator::loadTranslationFile" );
+                                         __METHOD__ );
             $this->BuildCache = true;
         }
 
@@ -247,8 +256,12 @@ class eZTSTranslator extends eZTranslatorHandler
                 array( $localeCodeToProcess, $filename ),
             );
 
-            if ( array_key_exists( $localeCodeToProcess,  $fallbacks ) and $fallbacks[$localeCodeToProcess] )
+            if ( isset( $fallbacks[$localeCodeToProcess] ) && $fallbacks[$localeCodeToProcess] )
             {
+                if ( $fallbacks[$localeCodeToProcess] === 'eng-GB' ) // Consider eng-GB fallback as "untranslated" since eng-GB does not provide any ts file
+                {
+                    $fallbacks[$localeCodeToProcess] = 'untranslated';
+                }
                 $alternatives[] = array( $fallbacks[$localeCodeToProcess], $charset, $filename );
                 $alternatives[] = array( $fallbacks[$localeCodeToProcess], $filename );
             }
@@ -288,13 +301,13 @@ class eZTSTranslator extends eZTranslatorHandler
 
                 if ( !$success )
                 {
-                    eZDebug::writeWarning( "Unable to load XML from file $path", 'eZTSTranslator::loadTranslationFile' );
+                    eZDebug::writeWarning( "Unable to load XML from file $path", __METHOD__ );
                     continue;
                 }
 
                 if ( !$this->validateDOMTree( $doc ) )
                 {
-                    eZDebug::writeWarning( "XML text for file $path did not validate", 'eZTSTranslator::loadTranslationFile' );
+                    eZDebug::writeWarning( "XML text for file $path did not validate", __METHOD__ );
                     continue;
                 }
 
@@ -320,8 +333,8 @@ class eZTSTranslator extends eZTranslatorHandler
             }
         }
 
-        eZDebug::writeDebug( implode( PHP_EOL, $triedPaths ), __METHOD__ . ': tried paths' );
-        eZDebug::writeDebug( implode( PHP_EOL, $loadedPaths ), __METHOD__ . ': loaded paths' );
+        eZDebugSetting::writeDebug( 'i18n-tstranslator', implode( PHP_EOL, $triedPaths ), __METHOD__ . ': tried paths' );
+        eZDebugSetting::writeDebug( 'i18n-tstranslator', implode( PHP_EOL, $loadedPaths ), __METHOD__ . ': loaded paths' );
 
         // Save translation cache
         if ( $this->UseCache == true && $this->BuildCache == true )
@@ -342,6 +355,7 @@ class eZTSTranslator extends eZTranslatorHandler
                     eZTranslationCache::setContextCache( $contextName, $context );
                 eZTranslationCache::storeCache( $contextName );
             }
+
             $this->BuildCache = false;
             eZDebug::accumulatorStop( 'tstranslator_store_cache' );
         }
@@ -349,10 +363,11 @@ class eZTSTranslator extends eZTranslatorHandler
         return $status;
     }
 
-    /*!
-     \static
-     Validates the DOM tree \a $tree and returns true if it is correct.
-    */
+    /**
+     * Validates the DOM tree $tree and returns true if it is correct
+     * @param DOMDocument $tree
+     * @return bool True if the DOMDocument is valid, false otherwise
+     */
     static function validateDOMTree( $tree )
     {
         if ( !is_object( $tree ) )
@@ -363,6 +378,11 @@ class eZTSTranslator extends eZTranslatorHandler
         return $isValid;
     }
 
+    /**
+     * Handles a DOM Context node and the messages it contains
+     * @param DOMNode $context
+     * @return bool
+     */
     function handleContextNode( $context )
     {
         $contextName = null;
@@ -387,8 +407,7 @@ class eZTSTranslator extends eZTranslatorHandler
         }
         if ( !$contextName )
         {
-            eZDebug::writeError( "No context name found, skipping context",
-                                 "eZTSTranslator::handleContextNode" );
+            eZDebug::writeError( "No context name found, skipping context", __METHOD__ );
             return false;
         }
         foreach( $context_children as $context_child )
@@ -406,15 +425,13 @@ class eZTSTranslator extends eZTranslatorHandler
                 }
                 else
                 {
-                    eZDebug::writeError( "Unknown element name: $childName",
-                                         "eZTSTranslator::handleContextNode" );
+                    eZDebug::writeError( "Unknown element name: $childName", __METHOD__ );
                 }
             }
         }
         if ( $contextName === null )
         {
-            eZDebug::writeError( "No context name found, skipping context",
-                                 "eZTSTranslator::handleContextNode" );
+            eZDebug::writeError( "No context name found, skipping context", __METHOD__ );
             return false;
         }
         if ( !isset( $this->CachedMessages[$contextName] ) )
@@ -423,6 +440,11 @@ class eZTSTranslator extends eZTranslatorHandler
         return true;
     }
 
+    /**
+     * Handles a translation message DOM node
+     * @param string $contextName
+     * @param DOMNode $message
+     */
     function handleMessageNode( $contextName, $message )
     {
         $source = null;
@@ -485,20 +507,18 @@ class eZTSTranslator extends eZTranslatorHandler
                     //Handle location element. No functionality yet.
                 }
                 else
-                    eZDebug::writeError( "Unknown element name: " . $childName,
-                                         "eZTSTranslator::handleMessageNode" );
+                    eZDebug::writeError( "Unknown element name: " . $childName, __METHOD__ );
             }
         }
         if ( $source === null )
         {
-            eZDebug::writeError( "No source name found, skipping message",
-                                 "eZTSTranslator::handleMessageNode" );
+            eZDebug::writeError( "No source name found, skipping message in context '{$contextName}'", __METHOD__ );
             return false;
         }
-        if ( $translation === null )
+        if ( $translation === null ) // No translation provided, then take the source as a reference
         {
-//             eZDebug::writeError( "No translation, skipping message", "eZTSTranslator::messageNode" );
-            return false;
+//             eZDebug::writeError( "No translation, skipping message", __METHOD__ );
+            $translation = $source;
         }
         /* we need to convert ourselves if we're using libxml stuff here */
         if ( $message instanceof DOMElement )
@@ -513,6 +533,11 @@ class eZTSTranslator extends eZTranslatorHandler
         return true;
     }
 
+    /**
+     * Returns the message that matches a translation md5 key
+     * @param string $key
+     * @return array|false The message, as an array, or false if not found
+     */
     function findKey( $key )
     {
         $msg = null;
@@ -523,6 +548,13 @@ class eZTSTranslator extends eZTranslatorHandler
         return $msg;
     }
 
+    /**
+     * Returns the message that matches a context / source / comment
+     * @param string $context
+     * @param string $source
+     * @param string $comment
+     * @return array|false The message, as an array, or false if not found
+     */
     function findMessage( $context, $source, $comment = null )
     {
         // First try with comment,
@@ -538,6 +570,11 @@ class eZTSTranslator extends eZTranslatorHandler
         return $this->findKey( $key );
     }
 
+    /**
+     * Returns the translation for a translation md5 key
+     * @param string $key
+     * @return string|false
+     */
     function keyTranslate( $key )
     {
         $msg = $this->findKey( $key );
@@ -549,6 +586,13 @@ class eZTSTranslator extends eZTranslatorHandler
         }
     }
 
+    /**
+     * Translates a context + source + comment
+     * @param string $context
+     * @param string $source
+     * @param string $comment
+     * @return string|false
+     */
     function translate( $context, $source, $comment = null )
     {
         $msg = $this->findMessage( $context, $source, $comment );
@@ -560,24 +604,29 @@ class eZTSTranslator extends eZTranslatorHandler
         return null;
     }
 
-    /*!
-     Inserts the \a $translation for the \a $context and \a $source as a translation message
-     and returns the key for the message. If $comment is non-null it will be included in the message.
-
-     If the translation message exists no new message is created and the existing key is returned.
+    /**
+     * Inserts the translation $translation for the context $context and source $source as a translation message.
+     * Returns the key for the message. If $comment is non-null it will be included in the message.
+     *
+     * If the translation message exists no new message is created and the existing key is returned.
+     *
+     * @param string $context
+     * @param string $source
+     * @param string $translation
+     * @param string $comment
+     *
+     * @return string The translation (md5) key
     */
     function insert( $context, $source, $translation, $comment = null )
     {
-//         eZDebug::writeDebug( "context=$context" );
         if ( $context == "" )
             $context = "default";
         $man = eZTranslatorManager::instance();
         $key = $man->createKey( $context, $source, $comment );
-//         if ( isset( $this->Messages[$key] ) )
-//             return $key;
         $msg = $man->createMessage( $context, $source, $comment, $translation );
         $msg["key"] = $key;
         $this->Messages[$key] = $msg;
+
         // Set array of messages to be cached
         if ( $this->UseCache == true && $this->BuildCache == true )
         {
@@ -588,12 +637,17 @@ class eZTSTranslator extends eZTranslatorHandler
         return $key;
     }
 
-    /*!
-     Removes the translation message with \a $context and \a $source.
-     Returns true if the message was removed, false otherwise.
-
-     If you have the translation key use removeKey() instead.
-    */
+    /**
+     * Removes the translation message with context $context and source $source.
+     *
+     * If you have the translation key use removeKey() instead.
+     *
+     * @param string $context
+     * @param string $source
+     * @param string $message
+     *
+     * @return bool true if the message was removed, false otherwise
+     */
     function remove( $context, $source, $message = null )
     {
         if ( $context == "" )
@@ -604,20 +658,25 @@ class eZTSTranslator extends eZTranslatorHandler
             unset( $this->Messages[$key] );
     }
 
-    /*!
-     Removes the translation message with \a $key.
-     Returns true if the message was removed, false otherwise.
-    */
+    /**
+     * Removes the translation message with the key $key.
+     *
+     * @param string $key The translation md5 key
+     *
+     * @return bool true if the message was removed, false otherwise
+     */
     function removeKey( $key )
     {
         if ( isset( $this->Messages[$key] ) )
             unset( $this->Messages[$key] );
     }
 
-    /*!
-     \static
-     Fetche list of available translations, create eZTrnslator for each translations.
-     \return list of eZTranslator objects representing available translations.
+    /**
+     * Fetches the list of available translations, as an eZTSTranslator for each translation.
+     *
+     * @param array $localList
+     *
+     * @return array( eZTSTranslator ) list of eZTranslator objects representing available translations
     */
     static function fetchList( $localeList = array() )
     {
@@ -653,21 +712,54 @@ class eZTSTranslator extends eZTranslatorHandler
         return $translationList;
     }
 
-    /*!
-     \static
-    */
+    /**
+     * Resets the in-memory translations table
+     * @return void
+     */
     static function resetGlobals()
     {
-        unset( $GLOBALS["eZTSTranslationTables"] );
+        unset( $GLOBALS['eZTSTranslationTables'] );
+        unset( $GLOBALS['eZTranslationCacheTable'] );
     }
 
-    /// \privatesection
-    /// Contains the hash table with message translations
+    /**
+     * Expires the translation cache
+     *
+     * @param int $timestamp An optional timestamp cache should be exired from. Current timestamp used by default
+     * @param string $locale Optional translation's locale to expire specifically. Expires global ts cache by default.
+     *
+     * @return void
+     */
+    public static function expireCache( $timestamp = false, $locale = null )
+    {
+        eZExpiryHandler::registerShutdownFunction();
+
+        if ( $timestamp === false )
+            $timestamp = time();
+
+        $handler = eZExpiryHandler::instance();
+        if ( $locale )
+            $handler->setTimestamp( self::EXPIRY_KEY . '-' . $locale, $timestamp );
+        else
+            $handler->setTimestamp( self::EXPIRY_KEY, $timestamp );
+        $handler->store();
+        self::resetGlobals();
+    }
+
+    /**
+     * Contains the hash table with message translations
+     * @var array
+     */
     public $Messages;
     public $File;
     public $UseCache;
     public $BuildCache;
     public $CachedMessages;
+
+    /**
+     * Translation expiry key used by eZExpiryHandler to manage translation caches
+     */
+    const EXPIRY_KEY = 'ts-translation-cache';
 }
 
 ?>

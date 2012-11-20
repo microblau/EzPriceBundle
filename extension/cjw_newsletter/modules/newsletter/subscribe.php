@@ -166,24 +166,24 @@ if ( $module->isCurrentAction( 'Subscribe' ) )
 		$subscriptionDataArr['Acepto'] = trim( $http->postVariable( 'Acepto' ) );
 	}
 
-    $messageArray['list_array'] = array( 'field_key'   => ezi18n( 'cjw_newsletter/subscription', 'Newsletter'),
-                                         'message'     => ezi18n( 'cjw_newsletter/subscription', 'You must choose a list for subsription.' ) );
-    $messageArray['first_name'] = array( 'field_key'   => ezi18n( 'cjw_newsletter/subscription', 'First name'),
-                                         'message'     => ezi18n( 'cjw_newsletter/subscription', 'You must enter a first name.' ) );
-    $messageArray['last_name']  = array( 'field_key'   => ezi18n( 'cjw_newsletter/subscription', 'Last name'),
-                                         'message'     => ezi18n( 'cjw_newsletter/subscription', 'You must enter a last name.' ) );
-   	$messageArray['organisation']  = array( 'field_key'   => ezi18n( 'cjw_newsletter/subscription', 'Actividad'),
-                                         'message'     => ezi18n( 'cjw_newsletter/subscription', 'Entrada obligatoria.' ) );											 					    $messageArray['about_info']  = array( 'field_key'   => ezi18n( 'cjw_newsletter/subscription', 'about_info'),
-                                         'message'     => ezi18n( 'cjw_newsletter/subscription', 'Entrada obligatoria.' ) );	
-	$messageArray['about_materia']  = array( 'field_key'   => ezi18n( 'cjw_newsletter/subscription', 'about_materia'),
-                                         'message'     => ezi18n( 'cjw_newsletter/subscription', 'Entrada obligatoria.' ) );
+    $messageArray['list_array'] = array( 'field_key'   => ezpI18n::tr( 'cjw_newsletter/subscription', 'Newsletter'),
+                                         'message'     => ezpI18n::tr( 'cjw_newsletter/subscription', 'You must choose a list for subsription.' ) );
+    $messageArray['first_name'] = array( 'field_key'   => ezpI18n::tr( 'cjw_newsletter/subscription', 'First name'),
+                                         'message'     => ezpI18n::tr( 'cjw_newsletter/subscription', 'You must enter a first name.' ) );
+    $messageArray['last_name']  = array( 'field_key'   => ezpI18n::tr( 'cjw_newsletter/subscription', 'Last name'),
+                                         'message'     => ezpI18n::tr( 'cjw_newsletter/subscription', 'You must enter a last name.' ) );
+   	$messageArray['organisation']  = array( 'field_key'   => ezpI18n::tr( 'cjw_newsletter/subscription', 'Actividad'),
+                                         'message'     => ezpI18n::tr( 'cjw_newsletter/subscription', 'Entrada obligatoria.' ) );											 					    $messageArray['about_info']  = array( 'field_key'   => ezpI18n::tr( 'cjw_newsletter/subscription', 'about_info'),
+                                         'message'     => ezpI18n::tr( 'cjw_newsletter/subscription', 'Entrada obligatoria.' ) );	
+	$messageArray['about_materia']  = array( 'field_key'   => ezpI18n::tr( 'cjw_newsletter/subscription', 'about_materia'),
+                                         'message'     => ezpI18n::tr( 'cjw_newsletter/subscription', 'Entrada obligatoria.' ) );
    
-    $messageArray['email']      = array( 'field_key'   => ezi18n( 'cjw_newsletter/subscription', 'Email'),
-                                         'message'     => ezi18n( 'cjw_newsletter/subscription', 'You must provide a valid email address.' ) );
-	$messageArray['captcha'] = array( 'field_key'   => ezi18n( 'cjw_newsletter/subscription', 'Captcha'),
-                                         'message'     => ezi18n( 'cjw_newsletter/subscription', 'El código CAPTCHA no es válido' ) );
-    $messageArray['acepto'] = array( 'field_key'   => ezi18n( 'cjw_newsletter/subscription', 'Acepto'),
-                                         'message'     => ezi18n( 'cjw_newsletter/subscription', 'Debe aceptar las condiciones legales' ) );										 
+    $messageArray['email']      = array( 'field_key'   => ezpI18n::tr( 'cjw_newsletter/subscription', 'Email'),
+                                         'message'     => ezpI18n::tr( 'cjw_newsletter/subscription', 'You must provide a valid email address.' ) );
+	$messageArray['captcha'] = array( 'field_key'   => ezpI18n::tr( 'cjw_newsletter/subscription', 'Captcha'),
+                                         'message'     => ezpI18n::tr( 'cjw_newsletter/subscription', 'El código CAPTCHA no es válido' ) );
+    $messageArray['acepto'] = array( 'field_key'   => ezpI18n::tr( 'cjw_newsletter/subscription', 'Acepto'),
+                                         'message'     => ezpI18n::tr( 'cjw_newsletter/subscription', 'Debe aceptar las condiciones legales' ) );										 
 
 
     $requiredSubscriptionFields = array(  'list_array', 'email' ,'first_name' ,'last_name','organisation','captcha', 'acepto' );
@@ -374,7 +374,7 @@ $Result = array();
 $Result['content'] = $tpl->fetch( $templateFile );
 
 $Result['path'] =  array( array( 'url'  => false,
-                                 'text' => ezi18n( 'cjw_newsletter/path', 'Newsletter' ) ),
+                                 'text' => ezpI18n::tr( 'cjw_newsletter/path', 'Newsletter' ) ),
                           array( 'url'  => false,
-                                 'text' => ezi18n( 'cjw_newsletter/subscribe', 'Formulario de inscripción en newsletter' ) ) );
+                                 'text' => ezpI18n::tr( 'cjw_newsletter/subscribe', 'Formulario de inscripción en newsletter' ) ) );
 ?>

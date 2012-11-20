@@ -1,32 +1,12 @@
 <?php
-//
-// Definition of eZXMLInputParser class
-//
-// Created on: <27-Mar-2006 15:28:39 ks>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZXMLInputParser class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 /*
     Base class for the input parser.
@@ -237,6 +217,18 @@ class eZXMLInputParser
     {
         $text = str_replace( "\r", '', $text);
         $text = str_replace( "\t", ' ', $text);
+        // replace unicode chars that will break the XML validity
+        // see http://www.w3.org/TR/REC-xml/#charsets
+        $text = preg_replace( '/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u', ' ', $text, -1, $count );
+        if ( $count > 0 )
+        {
+            $this->Messages[] = ezpI18n::tr(
+                'kernel/classes/datatypes/ezxmltext',
+                "%count invalid character(s) have been found and replaced by a space",
+                false,
+                array( '%count' => $count )
+            );
+        }
         if ( !$this->ParseLineBreaks )
         {
             $text = str_replace( "\n", '', $text);
@@ -254,7 +246,11 @@ class eZXMLInputParser
         $this->performPass1( $text );
 
         //$this->Document->formatOutput = true;
-        eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', $this->Document->saveXML(), 'XML after pass 1' );
+        $debug = eZDebugSetting::isConditionTrue( 'kernel-datatype-ezxmltext', eZDebug::LEVEL_DEBUG );
+        if ( $debug )
+        {
+            eZDebug::writeDebug( $this->Document->saveXML(), eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext', 'XML after pass 1' ) );
+        }
 
         if ( $this->QuitProcess )
         {
@@ -265,7 +261,10 @@ class eZXMLInputParser
         $this->performPass2();
 
         //$this->Document->formatOutput = true;
-        eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', $this->Document->saveXML(), 'XML after pass 2' );
+        if ( $debug )
+        {
+            eZDebug::writeDebug( $this->Document->saveXML(), eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext', 'XML after pass 2' ) );
+        }
 
         if ( $this->QuitProcess )
         {
@@ -586,38 +585,28 @@ class eZXMLInputParser
 
     function parseAttributes( $attributeString )
     {
-        // Convert single quotes to double quotes
-        $attributeString = preg_replace( "/ +([a-zA-Z0-9:-_#\-]+) *\='(.*?)'/e", "' \\1'.'=\"'.'\\2'.'\"'", ' ' . $attributeString );
-
-        // Convert no quotes to double quotes and remove extra spaces
-        $attributeString = preg_replace( "/ +([a-zA-Z0-9:-_#\-]+) *\= *([^\s'\"]+)/e", "' \\1'.'=\"'.'\\2'.'\" '", $attributeString );
-
-        // Split by quotes followed by spaces
-        $attributeArray = preg_split( "#(?<=\") +#", $attributeString );
-
         $attributes = array();
-        foreach( $attributeArray as $attrStr )
-        {
-            if ( !$attrStr || strlen( $attrStr ) < 4 )
+        // Valid characters for XML attributes
+        // @see http://www.w3.org/TR/xml/#NT-Name
+        $nameStartChar = ':A-Z_a-z\\xC0-\\xD6\\xD8-\\xF6\\xF8-\\x{2FF}\\x{370}-\\x{37D}\\x{37F}-\\x{1FFF}\\x{200C}-\\x{200D}\\x{2070}-\\x{218F}\\x{2C00}-\\x{2FEF}\\x{3001}-\\x{D7FF}\\x{F900}-\\x{FDCF}\\x{FDF0}-\\x{FFFD}\\x{10000}-\\x{EFFFF}';
+        if (
+            preg_match_all(
+                "/\s+([$nameStartChar][$nameStartChar\-.0-9\\xB7\\x{0300}-\\x{036F}\\x{203F}-\\x{2040}]*)\s*=\s*(?:(?:\"([^\"]+?)\")|(?:'([^']+?)')|(?: *([^\"'\s]+)\s*))/u",
+                " " . $attributeString,
+                $attributeArray,
+                PREG_SET_ORDER
+            )
+        ) {
+            foreach ( $attributeArray as $attribute )
             {
-                continue;
+                // Value will always be at the last position
+                $value = trim( array_pop( $attribute ) );
+                // Value of '0' is valid ( eg. border='0' )
+                if ( $value !== '' && $value !== false && $value !== null )
+                {
+                    $attributes[strtolower( $attribute[1] )] = $value;
+                }
             }
-
-            list( $attrName, $attrValue ) = preg_split( "/ *= *\"/", $attrStr );
-
-            $attrName = strtolower( trim( $attrName ) );
-            if ( !$attrName )
-            {
-                continue;
-            }
-
-            $attrValue = substr( $attrValue, 0, -1 );
-            if ( $attrValue === '' || $attrValue === false )
-            {
-                continue;
-            }
-
-            $attributes[$attrName] = $attrValue;
         }
 
         return $attributes;
@@ -726,7 +715,6 @@ class eZXMLInputParser
         $text = str_replace( '&apos;', "'", $text );
         $text = str_replace( '&quot;', '"', $text );
         $text = str_replace( '&amp;', '&', $text );
-        $text = str_replace( '&nbsp;&nbsp;', '&nbsp;', $text );
         return $text;
     }
 
@@ -822,6 +810,8 @@ class eZXMLInputParser
         // Call "Init handler"
         $this->callOutputHandler( 'initHandler', $element, $tmp );
 
+        $debug = eZDebugSetting::isConditionTrue( 'kernel-datatype-ezxmltext', eZDebug::LEVEL_DEBUG );
+
         // Process children
         if ( $element->hasChildNodes() )
         {
@@ -840,13 +830,21 @@ class eZXMLInputParser
             $newElements = array();
             foreach ( $children as $child )
             {
-                eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', 'processing children, current child: ' . $child->nodeName );
+                if ( $debug )
+                {
+                    eZDebug::writeDebug( 'processing children, current child: ' . $child->nodeName, eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext', __METHOD__ ) );
+                }
+
                 $childReturn = $this->processSubtree( $child, $lastResult );
 
                 unset( $lastResult );
                 if ( isset( $childReturn['result'] ) )
                 {
-                    eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', 'return result is set for child ' . $child->nodeName );
+                    if ( $debug )
+                    {
+                        eZDebug::writeDebug( 'return result is set for child ' . $child->nodeName, eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext', __METHOD__ ) );
+                    }
+
                     $lastResult = $childReturn['result'];
                 }
 
@@ -861,35 +859,81 @@ class eZXMLInputParser
                 }
             }
 
-            eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', $this->Document->saveXML(), 'XML before processNewElements for element ' . $element->nodeName );
+            if ( $debug )
+            {
+                eZDebug::writeDebug( $this->Document->saveXML(),
+                                     eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext',
+                                                                  'XML before processNewElements for element ' . $element->nodeName ) );
+            }
+
             // process elements created in children handlers
             $this->processNewElements( $newElements );
-            eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', $this->Document->saveXML(), 'XML after processNewElements for element ' . $element->nodeName );
+
+            if ( $debug )
+            {
+                eZDebug::writeDebug( $this->Document->saveXML(),
+                                     eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext',
+                                                                  'XML after processNewElements for element ' . $element->nodeName ) );
+            }
         }
 
         // Call "Structure handler"
-        eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', $this->Document->saveXML(), 'XML before callOutputHandler structHandler for element ' . $element->nodeName );
+        if ( $debug )
+        {
+            eZDebug::writeDebug( $this->Document->saveXML(),
+                                 eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext',
+                                                              'XML before callOutputHandler structHandler for element ' . $element->nodeName ) );
+        }
+
         $ret = $this->callOutputHandler( 'structHandler', $element, $lastHandlerResult );
-        eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', $this->Document->saveXML(), 'XML after callOutputHandler structHandler for element ' . $element->nodeName );
-        eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', $ret, 'return value of callOutputHandler structHandler for element ' . $element->nodeName );
+
+        if ( $debug )
+        {
+            eZDebug::writeDebug( $this->Document->saveXML(),
+                                 eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext',
+                                                              'XML after callOutputHandler structHandler for element ' . $element->nodeName ) );
+            eZDebug::writeDebug( $ret,
+                                 eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext',
+                                                              'return value of callOutputHandler structHandler for element ' . $element->nodeName ) );
+        }
 
         // Process by schema (check if element is allowed to exist)
         if ( !$this->processBySchemaPresence( $element ) )
         {
-            eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', $this->Document->saveXML(), 'XML after processBySchemaPresence for element ' . $element->nodeName );
+            if ( $debug )
+            {
+                eZDebug::writeDebug( $this->Document->saveXML(),
+                                     eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext',
+                                                                  'XML after failed processBySchemaPresence for element ' . $element->nodeName ) );
+            }
             return $ret;
         }
 
-        eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', $this->Document->saveXML(), 'XML after processBySchemaPresence for element ' . $element->nodeName );
+        if ( $debug )
+        {
+            eZDebug::writeDebug( $this->Document->saveXML(),
+                                 eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext',
+                                                              'XML after processBySchemaPresence for element ' . $element->nodeName ) );
+        }
 
         // Process by schema (check place in the tree)
         if ( !$this->processBySchemaTree( $element ) )
         {
-            eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', $this->Document->saveXML(), 'XML after processBySchemaTree for element ' . $element->nodeName );
+            if ( $debug )
+            {
+                eZDebug::writeDebug( $this->Document->saveXML(),
+                                     eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext',
+                                                                  'XML after failed processBySchemaTree for element ' . $element->nodeName ) );
+            }
             return $ret;
         }
 
-        eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', $this->Document->saveXML(), 'XML after processBySchemaTree for element ' . $element->nodeName );
+        if ( $debug )
+        {
+            eZDebug::writeDebug( $this->Document->saveXML(),
+                                 eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext',
+                                                              'XML after processBySchemaTree for element ' . $element->nodeName ) );
+        }
 
 
         $tmp = null;
@@ -1149,18 +1193,33 @@ class eZXMLInputParser
 
     function processNewElements( $createdElements )
     {
+        $debug = eZDebugSetting::isConditionTrue( 'kernel-datatype-ezxmltext', eZDebug::LEVEL_DEBUG );
         // Call handlers for newly created elements
         foreach ( $createdElements as $element )
         {
-            eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', 'processing new element ' . $element->nodeName );
-            $tmp = null;
+            if ( $debug )
+            {
+                eZDebug::writeDebug( 'processing new element ' . $element->nodeName, eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext' ) );
+            }
 
+            $tmp = null;
             if ( !$this->processBySchemaPresence( $element ) )
             {
-                eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', $this->Document->saveXML(), 'xml string after processBySchemaPresence for new element ' . $element->nodeName );
+                if ( $debug )
+                {
+                    eZDebug::writeDebug( $this->Document->saveXML(),
+                                         eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext',
+                                                                      'xml string after failed processBySchemaPresence for new element ' . $element->nodeName ) );
+                }
                 continue;
             }
-            eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', $this->Document->saveXML(), 'xml string after processBySchemaPresence for new element ' . $element->nodeName );
+
+            if ( $debug )
+            {
+                eZDebug::writeDebug( $this->Document->saveXML(),
+                                     eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext',
+                                                                  'xml string after processBySchemaPresence for new element ' . $element->nodeName ) );
+            }
 
 
             // Call "Structure handler"
@@ -1168,16 +1227,33 @@ class eZXMLInputParser
 
             if ( !$this->processBySchemaTree( $element ) )
             {
-                eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', $this->Document->saveXML(), 'xml string after processBySchemaTree for new element ' . $element->nodeName );
+                if ( $debug )
+                {
+                    eZDebug::writeDebug( $this->Document->saveXML(),
+                                         eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext',
+                                                                      'xml string after failed processBySchemaTree for new element ' . $element->nodeName ) );
+                }
                 continue;
             }
-            eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', $this->Document->saveXML(), 'xml string after processBySchemaTree for new element ' . $element->nodeName );
+
+            if ( $debug )
+            {
+                eZDebug::writeDebug( $this->Document->saveXML(),
+                                     eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext',
+                                                                  'xml string after processBySchemaTree for new element ' . $element->nodeName ) );
+            }
 
 
             $tmp2 = null;
             // Call "Publish handler"
             $this->callOutputHandler( 'publishHandler', $element, $tmp2 );
-            eZDebugSetting::writeDebug( 'kernel-datatype-ezxmltext', $this->Document->saveXML(), 'xml string after callOutputHandler publishHandler for new element ' . $element->nodeName );
+
+            if ( $debug )
+            {
+                eZDebug::writeDebug( $this->Document->saveXML(),
+                                     eZDebugSetting::changeLabel( 'kernel-datatype-ezxmltext',
+                                                                  'xml string after callOutputHandler publishHandler for new element ' . $element->nodeName ) );
+            }
 
             // Process attributes according to the schema
             if( $element->hasAttributes() )
@@ -1224,7 +1300,7 @@ class eZXMLInputParser
         }
     }
 
-    public $DOMDocumentClass = 'DOMDOcument';
+    public $DOMDocumentClass = 'DOMDocument';
 
     public $XMLSchema;
     public $Document = null;

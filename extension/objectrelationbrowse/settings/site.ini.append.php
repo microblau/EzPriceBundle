@@ -2,6 +2,6 @@
 
 # A list of directories to look for eztemplateautoload.php files
 [TemplateSettings]
-AutoloadPathList[]=extension/objectrelationbrowse/kernel/common/
+#AutoloadPathList[]=extension/objectrelationbrowse/kernel/common/
 
 */ ?>

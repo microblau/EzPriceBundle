@@ -7,8 +7,6 @@
                                            )}
 
 <script type="text/javascript">
-<!--
-
 eZOEPopupUtils.embedObject = {$embed_data};
 eZOEPopupUtils.settings.customAttributeStyleMap = {$custom_attribute_style_map};
 eZOEPopupUtils.settings.tagEditTitleText = "{'Edit %tag_name tag'|i18n('design/standard/ezoe', '', hash( '%tag_name', concat('&lt;', $tag_name_alias, '&gt;') ))|wash('javascript')}";
@@ -21,7 +19,6 @@ tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {
     tagName: 'embed',
     form: 'EditForm',
     cancelButton: 'CancelButton',
-    cssClass: '',
     onInitDone: function( el, tag, ed )
     {        
         var selectors = ez.$('embed_size_source', 'embed_align_source', 'embed_class_source', 'embed_view_source', 'embed_inline_source');
@@ -42,7 +39,7 @@ tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {
     },
     tagGenerator: function( tag, customTag )
     {
-        return '<img id="__mce_tmp" src="javascript:void(0);" />';
+        return '<img id="__mce_tmp" src="JavaScript:void(0);" />';
     },
     tagAttributeEditor: function( ed, el, args )
     {
@@ -62,8 +59,14 @@ tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {
            args['title']  = eZOEPopupUtils.safeHtml( imageAtr['alternative_text'] || eZOEPopupUtils.embedObject['name'] );
            args['width']  = imageSizeObj['width'];
            args['height'] = imageSizeObj['height'];
+           if ( args['align'] )
+           {
+               // adding a class based on the align to force the alignment in the editor
+               args['class']  = 'ezoeAlign' + args['align'];
+           }
         }
         ed.dom.setAttribs( el, args );
+        return el;
     }
 }));
 
@@ -87,7 +90,7 @@ function inlineSelectorChange( e, el )
     if ( editorEl )
     {
         var viewValue = editorEl.getAttribute('view');
-        var classValue = jQuery.trim( editorEl.className.replace(/(webkit-[\w\-]+|Apple-[\w\-]+|mceItem\w+|mceVisualAid|mceNonEditable)/g, '') );
+        var classValue = jQuery.trim( editorEl.className.replace(/(webkit-[\w\-]+|Apple-[\w\-]+|mceItem\w+|ezoeItem\w+|mceVisualAid)/g, '') );
     }
 
     if ( viewValue && viewListData[ tag ].join !== undefined && (' ' + viewListData[ tag ].join(' ') + ' ').indexOf( ' ' + viewValue + ' ' ) !== -1 )
@@ -104,13 +107,16 @@ function inlineSelectorChange( e, el )
 
 function setEmbedAlign( e, el )
 {
+    var cssAlign = el.value;
+    if ( cssAlign === 'middle' )
+        cssAlign = 'center';
+    jQuery('#embed_preview').css( 'text-align', cssAlign );
     jQuery('#embed_preview_image').attr( 'align', el.value );
 }
 
 function loadImageSize( e, el )
 {
     // Dynamically loads image sizes as they are requested
-    // global objects: ez
     var imageAttributes = eZOEPopupUtils.embedObject['image_attributes'], previewImageNode = jQuery('#embed_preview_image'), eds = tinyMCEPopup.editor.settings;
     if ( !imageAttributes || !eZOEPopupUtils.embedObject['data_map'][ imageAttributes[0] ] )
     {
@@ -130,20 +136,17 @@ function loadImageSize( e, el )
     else
     {
         var url = eds.ez_extension_url + '/load/' + eZOEPopupUtils.embedObject['contentobject_id'];
-        eZOEPopupUtils.ajax.load( url, 'imagePreGenerateSizes=' + size, function(r){
-            ez.script( 'eZOEPopupUtils.ajaxLoadResponse=' + r.responseText );
-            if ( eZOEPopupUtils.ajaxLoadResponse )
+        jQuery.ez( 'ezjscnode::load::ezobject_' + eZOEPopupUtils.embedObject['contentobject_id'] + '::0::' + size, 0, function( data )
+        {
+            if ( data['content'] )
             {
                 var size = jQuery('#embed_size_source').val(), imageAttributes = eZOEPopupUtils.embedObject['image_attributes'];
-                eZOEPopupUtils.embedObject['data_map'][ imageAttributes[0] ]['content'][ size ] = eZOEPopupUtils.ajaxLoadResponse['data_map'][ imageAttributes[0] ]['content'][ size ];
+                eZOEPopupUtils.embedObject['data_map'][ imageAttributes[0] ]['content'][ size ] = data['content']['data_map'][ imageAttributes[0] ]['content'][ size ];
                 previewImageNode.attr( 'src', eds.ez_root_url + eZOEPopupUtils.embedObject['data_map'][ imageAttributes[0] ]['content'][ size ]['url'] );
             }
         });
     }
 }
-
-
-// -->
 </script>
 {/literal}
 

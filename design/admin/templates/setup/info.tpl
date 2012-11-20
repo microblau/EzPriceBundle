@@ -29,11 +29,6 @@
     </div>
 
     <div class="block">
-        <label>{'SVN revision'|i18n( 'design/admin/setup/info', 'eZ Publish version' )}:</label>
-        {$ezpublish_revision}
-    </div>
-
-    <div class="block">
         <label>{'Extensions'|i18n( 'design/admin/setup/info', 'eZ Publish extensions' )}:</label>
         {if $ezpublish_extensions}
             {foreach $ezpublish_extensions as $extension}
@@ -147,7 +142,11 @@
     <ol>
     {foreach $autoload_functions as $key => $function}
         {if is_array( $function )}
-            {set $function=$function|implode( '::' )}
+            {if $function[0]|is_object()}
+                {set $function = concat( $function[0]|get_class(), '::', $function[1] )}
+            {else}
+                {set $function=$function|implode( '::' )}
+            {/if}
         {/if}
         <li>{$function}</li>
     {/foreach}

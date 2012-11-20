@@ -1,30 +1,10 @@
 <?php
-//
-// Created on: <17-Jan-2004 12:36:36 oh>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 $settingTypeArray = array( 'array' => 'Array',
                            'true/false' => 'True/False',
@@ -86,7 +66,7 @@ if ( $http->hasPostVariable( 'WriteSetting' ) )
     elseif ( $settingPlacement != 'override' )
         $path = "extension/$settingPlacement/settings";
 
-    $ini = eZINI::instance( $iniFile . '.append', $path, null, null, null, true, true );
+    $ini = new eZINI( $iniFile . '.append', $path, null, null, null, true, true );
 
     $hasValidationError = false;
     require 'kernel/settings/validation.php';
@@ -193,20 +173,13 @@ function parseArrayToStr( $value, $separator )
 
 function getVariable( $block, $settingName, $iniFile, $path )
 {
-    $ini = eZINI::instance( $iniFile, $path, null, null, null, true, true );
+    $ini = new eZINI( $iniFile, $path, null, null, null, true, true );
     $result = $ini->hasVariable( $block, $settingName ) ? $ini->variable( $block, $settingName ) : false;
     $result = parseArrayToStr( $result, '<br>' );
     return $result;
 }
 
-$ini = eZINI::instance( $iniFile, 'settings', null, null, false );
-
-if ( isset( $settingPlacement ) and $settingPlacement == 'siteaccess' )
-{
-    $ini->prependOverrideDir( "siteaccess/$siteAccess", false, 'siteaccess' );
-    $ini->loadCache();
-}
-
+$ini = eZSiteAccess::getIni( $siteAccess, $iniFile );
 $value = $settingName != '' ? $ini->variable( $block, $settingName ) : '';
 
 // Do modifications to the value before it's sent to the template

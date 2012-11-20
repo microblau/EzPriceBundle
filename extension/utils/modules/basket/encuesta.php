@@ -16,5 +16,5 @@ $tpl->setVariable( 'encuesta_id', $unserialized_cache['encuesta'] ) ;
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:encuesta/config.tpl" );
 $Result['path'] = array( array( 'url' => false,
-	                                'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+	                                'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
 ?>

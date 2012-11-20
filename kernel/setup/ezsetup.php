@@ -1,32 +1,12 @@
 <?php
 //
 // eZSetup
-//
-// Created on: <08-Nov-2002 11:00:54 kd>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 $GLOBALS['eZSiteBasics']['no-cache-adviced'] = false;
 
@@ -74,7 +54,7 @@ if ( file_exists( $stepDataFile ) )
 if ( $stepData == null )
 {
     print "<h1>Setup step data file not found. Setup is exiting...</h1>"; //TODO : i18n translate
-    eZDisplayResult( $templateResult, eZDisplayDebug() );
+    eZDisplayResult( $templateResult );
     eZExecution::cleanExit();
 }
 
@@ -178,7 +158,7 @@ while( !$done && $step != null )
 
     if ( $persistenceList === null )
         $persistenceList = eZSetupFetchPersistenceList();
-    $tpl->setVariableRef( 'persistence_list', $persistenceList );
+    $tpl->setVariable( 'persistence_list', $persistenceList );
 
     // Try to include the relevant file
     $includeFile = $baseDir . 'steps/ezstep_'.$step['file'].'.php';
@@ -218,7 +198,7 @@ while( !$done && $step != null )
     else
     {
         print( '<h1>Step '.$step['class'].' is not valid, no such file '.$includeFile.'. I\'m exiting...</h1>' ); //TODO : i18n
-        eZDisplayResult( $templateResult, eZDisplayDebug() );
+        eZDisplayResult( $templateResult );
         eZExecution::cleanExit();
     }
 }
@@ -235,7 +215,7 @@ eZDebug::addTimingPoint( "End" );
 
 return $result;
 
-//eZDisplayResult( $templateResult, eZDisplayDebug() );
+//eZDisplayResult( $templateResult );
 
 //eZExecution::cleanExit();
 ?>

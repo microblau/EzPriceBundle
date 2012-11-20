@@ -25,11 +25,9 @@
 {/if}
 </select>
 <script type="text/javascript">
-<!--
-
 eZOEPopupUtils.settings.customAttributeInitHandler['{$custom_attribute_id}_source'] = {literal} function( el, value )
 {
-    el.value = ez.num( value, 0, 'int' );
+    el.value = eZOEPopupUtils.Int( value );
     var selid = el.id.replace('_source', '_sizetype'), size = document.getElementById( selid );
     size.selectedIndex = jQuery.inArray( value.replace( el.value, '' ), jQuery('#' + selid + ' option').map(function( i, n )
     {
@@ -42,6 +40,4 @@ eZOEPopupUtils.settings.customAttributeSaveHandler['{$custom_attribute_id}_sourc
     var sel = document.getElementById( el.id.replace('_source', '_sizetype') );
     return value !== '' ? (value + ( sel.selectedIndex !== -1 ? sel.options[sel.selectedIndex].value : '' )) : '';
 };{/literal}
-
-//-->
 </script>

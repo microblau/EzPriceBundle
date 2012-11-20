@@ -2,26 +2,24 @@
 //
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Find
-// SOFTWARE RELEASE: 2.0.x
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE NAME: eZ Publish Community Project
+// SOFTWARE RELEASE:  2012.8
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -199,7 +197,7 @@ class eZFindElevateConfiguration extends eZPersistentObject
         else
         {
             $rows = parent::fetchObjectList( self::definition(), $fieldFilters, $conds, $sortClause, $limit, $asObject, false, $custom );
-            foreach( $rows as $row )
+            foreach ( $rows as $row )
             {
                 if ( $groupByLanguage )
                 {
@@ -246,6 +244,7 @@ class eZFindElevateConfiguration extends eZPersistentObject
 
         $fieldFilters = $custom = null;
         $objects = array();
+        $conds = array();
         $sortClause = $groupByLanguage ? array( 'language_code' => 'asc' ) : null;
 
         if ( !is_array( $queryString ) )
@@ -260,24 +259,14 @@ class eZFindElevateConfiguration extends eZPersistentObject
         if ( $languageCode and $languageCode !== '' )
             $conds['language_code'] = array( array( $languageCode, self::WILDCARD ) );
 
-
         if ( $countOnly )
         {
-            $limit = null;
-            $fieldFilters = array();
-            $custom = array( array( 'operation' => 'count( * )',
-                                    'name' => 'count' ) );
-        }
-
-        $rows = parent::fetchObjectList( self::definition(), $fieldFilters, $conds, $sortClause, $limit, false, false, $custom );
-
-        if ( $countOnly and $rows )
-        {
-            return $rows[0]['count'];
+            return parent::count( self::definition(), $conds );
         }
         else
         {
-            foreach( $rows as $row )
+            $rows = parent::fetchObjectList( self::definition(), $fieldFilters, $conds, $sortClause, $limit, false, false, $custom );
+            foreach ( $rows as $row )
             {
                 if ( ( $obj = eZContentObject::fetch( $row['contentobject_id'] ) ) !== null )
                 {
@@ -376,7 +365,7 @@ class eZFindElevateConfiguration extends eZPersistentObject
         }
         else
         {
-            $message = ezi18n( 'extension/ezfind/elevate', "Error while generating the configuration XML" );
+            $message = ezpI18n::tr( 'extension/ezfind/elevate', "Error while generating the configuration XML" );
             self::$lastSynchronizationError = $message;
             eZDebug::writeError( $message, __METHOD__ );
             return false;
@@ -420,15 +409,15 @@ class eZFindElevateConfiguration extends eZPersistentObject
             //    <doc id="3" />
             // </query>
             $xml = new SimpleXMLElement( self::$configurationXML );
-            foreach( $rows as $row )
+            foreach ( $rows as $row )
             {
                 $searchQuery = $xml->addChild( 'query' );
                 $searchQuery->addAttribute( 'text', $row['search_query'] );
 
                 $results = self::fetchObjectsForQueryString( $row['search_query'] );
-                foreach( $results as $languageCode => $objects )
+                foreach ( $results as $languageCode => $objects )
                 {
-                    foreach( $objects as $object )
+                    foreach ( $objects as $object )
                     {
                         if ( $languageCode === self::WILDCARD )
                         {
@@ -486,12 +475,12 @@ class eZFindElevateConfiguration extends eZPersistentObject
         {
             $shard = new eZSolrBase();
         }
-        
+
         $result = $shard->pushElevateConfiguration( $params );
 
         if ( ! $result )
         {
-            $message = ezi18n( 'extension/ezfind/elevate', 'An unknown error occured in updating Solr\'s elevate configuration.' );
+            $message = ezpI18n::tr( 'extension/ezfind/elevate', 'An unknown error occured in updating Solr\'s elevate configuration.' );
             eZDebug::writeError( $message, __METHOD__ );
             throw new Exception( $message );
         }

@@ -2,8 +2,8 @@
 /**
  * File containing the ezpaextype class
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPLv2
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
  * @package ezmbpaex
  */
 
@@ -21,7 +21,7 @@ class ezpaextype extends eZDataType
      */
     function ezpaextype()
     {
-        $this->eZDataType( self::DATA_TYPE_STRING, ezi18n( 'mbpaex/classes/datatypes', "Password Expiration", 'Datatype name' ),
+        $this->eZDataType( self::DATA_TYPE_STRING, ezpI18n::tr( 'mbpaex/classes/datatypes', "Password Expiration", 'Datatype name' ),
                            array( 'translation_allowed' => false,
                                   'serialize_supported' => true ) );
     }
@@ -43,7 +43,7 @@ class ezpaextype extends eZDataType
         }
     }
 
-	/**
+        /**
      * Validates input on content object level
      *
      * @return eZInputValidator::STATE_ACCEPTED or eZInputValidator::STATE_INVALID if
@@ -70,7 +70,7 @@ class ezpaextype extends eZDataType
         $statusPasswordlifetime = $integerValidator->validate( $passwordlifetime );
         if ( $statusPasswordlifetime != eZInputValidator::STATE_ACCEPTED && trim( $passwordlifetime ) )
         {
-            $contentObjectAttribute->setValidationError( ezi18n( 'mbpaex/classes/datatypes',
+            $contentObjectAttribute->setValidationError( ezpI18n::tr( 'mbpaex/classes/datatypes',
                                                                  'The password lifetime must be an integer >= 0' ) );
             return eZInputValidator::STATE_INVALID;
         }
@@ -80,7 +80,7 @@ class ezpaextype extends eZDataType
         $statusExpirationnotification = $integerValidator->validate( $expirationnotification );
         if ( $statusExpirationnotification != eZInputValidator::STATE_ACCEPTED && trim( $expirationnotification ) )
         {
-            $contentObjectAttribute->setValidationError( ezi18n( 'mbpaex/classes/datatypes',
+            $contentObjectAttribute->setValidationError( ezpI18n::tr( 'mbpaex/classes/datatypes',
                                                                  'The expiration notification time must be an integer >= 86400' ) );
             return eZInputValidator::STATE_INVALID;
         }
@@ -119,7 +119,7 @@ class ezpaextype extends eZDataType
                 }
                 if (!$paex->validatePassword($newPassword))
                 {
-                    $contentObjectAttribute->setValidationError( ezi18n( 'mbpaex/classes/datatypes',
+                    $contentObjectAttribute->setValidationError( ezpI18n::tr( 'mbpaex/classes/datatypes',
                                                                          "The password doesn't match the validation rule.
                                                                          Previous password will be preserved if there is any." ) );
                     return eZInputValidator::STATE_INVALID;
@@ -137,7 +137,7 @@ class ezpaextype extends eZDataType
             $statusUpdatechildren = $integerValidator->validate($updatechildren);
             if ( $statusUpdatechildren != eZInputValidator::STATE_ACCEPTED && trim($updatechildren) )
             {
-                $contentObjectAttribute->setValidationError( ezi18n( 'mbpaex/classes/datatypes',
+                $contentObjectAttribute->setValidationError( ezpI18n::tr( 'mbpaex/classes/datatypes',
                                                                      'Wrong value in updatechildren field' ) );
                 return eZInputValidator::STATE_INVALID;
             }
@@ -212,13 +212,19 @@ class ezpaextype extends eZDataType
             // Check if the password has changed
             if ( trim( $newPassword ) && ( $newPassword != "_ezpassword" ) )
             {
-                if ( eZUser::currentUserID() == $contentObjectID )
+                $currentUserID = eZUser::currentUserID();
+                if ( $currentUserID == $contentObjectID )
                 {
                     // If self editing, set last_updated to current time
                     $passwordLastUpdated = time();
 
                     // if audit is enabled password changes should be logged
                     eZAudit::writeAudit( 'user-password-change-self', array( ) );
+                }
+                else if ( $currentUserID == eZUser::anonymousId() )
+                {
+                    // register, @see http://issues.ez.no/15391
+                    $passwordLastUpdated = time();
                 }
                 else
                 {
@@ -247,7 +253,7 @@ class ezpaextype extends eZDataType
             }
         }
 
-		if ( $paex->canEdit() )
+                if ( $paex->canEdit() )
         {
             // If user has permission, update full paex object with possible new values
             $paex->setInformation( $contentObjectID, $passwordvalidationregexp, $passwordlifetime, $expirationnotification, $passwordLastUpdated, $updatechildren, $expirationnotificationSent );
@@ -263,15 +269,15 @@ class ezpaextype extends eZDataType
         return true;
     }
 
-	/**
+        /**
      * Store the content.
      */
     function storeObjectAttribute( $contentObjectAttribute )
     {
         $paex = $contentObjectAttribute->content();
-        if ( get_class( $paex ) != "eZPaEx" )
+        if ( !$paex instanceof eZPaEx )
         {
-			// create a default paex object
+                        // create a default paex object
             $paex = eZPaEx::create( $contentObjectAttribute->attribute( "contentobject_id" ) );
         }
         $paex->store();
@@ -287,7 +293,7 @@ class ezpaextype extends eZDataType
     {
         eZDebug::writeDebug( 'Start', __METHOD__ );
         $paex = $contentObjectAttribute->content();
-        if ( get_class( $paex ) != "eZPaEx" )
+        if ( !$paex instanceof eZPaEx )
         {
             return true;
         }
@@ -316,7 +322,7 @@ class ezpaextype extends eZDataType
         return false;
     }
 
-	/**
+        /**
      * Returns the content.
      */
     function objectAttributeContent( $contentObjectAttribute )
@@ -331,16 +337,16 @@ class ezpaextype extends eZDataType
      */
     function metaData( $contentObjectAttribute )
     {
-		return $contentObjectAttribute->attribute('id');
-	}
+                return $contentObjectAttribute->attribute('id');
+        }
 
     /**
      * Returns the value as it will be shown if this attribute is used in the
-	 * object name pattern.
+         * object name pattern.
      */
     function title( $contentObjectAttribute, $name = null )
     {
-		return $contentObjectAttribute->attribute('id');
+                return $contentObjectAttribute->attribute('id');
     }
 
     /**
@@ -350,16 +356,7 @@ class ezpaextype extends eZDataType
     {
         return true;
     }
-
 }
 
-if ( eZPaEx::schemaCreated() )
-{
-    eZDataType::register( ezpaextype::DATA_TYPE_STRING, "ezpaextype" );
-}
-else
-{
-    eZDebug::writeError( "The database schema for ezmbpaex hasn't been imported to the database.", 'ezpaextype' );
-}
-
+eZDataType::register( ezpaextype::DATA_TYPE_STRING, "ezpaextype" );
 ?>

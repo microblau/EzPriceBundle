@@ -321,9 +321,9 @@ $tpl->setVariable( 'max_num_of_failed_login', $maxNumOfFailedLogin );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:basket/login.tpl' );
-$Result['path'] = array( array( 'text' => ezi18n( 'kernel/user', 'User' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/user', 'User' ),
                                 'url' => false ),
-                         array( 'text' => ezi18n( 'kernel/user', 'Login' ),
+                         array( 'text' => ezpI18n::tr( 'kernel/user', 'Login' ),
                                 'url' => false ) );
 if ( $ini->variable( 'SiteSettings', 'LoginPage' ) == 'custom' )
     $Result['pagelayout'] = 'loginpagelayout.tpl';

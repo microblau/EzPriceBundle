@@ -2,26 +2,24 @@
 //
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Find
-// SOFTWARE RELEASE: 1.0.x
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE NAME: eZ Publish Community Project
+// SOFTWARE RELEASE:  2012.8
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -81,7 +79,7 @@ class ezfSolrDocumentFieldObjectRelation extends ezfSolrDocumentFieldBase
             case 'ezobjectrelationlist':
             {
                 $content = $this->ContentObjectAttribute->content();
-                foreach( $content['relation_list'] as $relationItem )
+                foreach ( $content['relation_list'] as $relationItem )
                 {
                     $subObjectID = $relationItem['contentobject_id'];
                     if ( !$subObjectID )
@@ -109,9 +107,9 @@ class ezfSolrDocumentFieldObjectRelation extends ezfSolrDocumentFieldBase
     {
         switch ( $classAttribute->attribute( 'data_type_string' ) )
         {
-        	case 'ezobjectrelation' :
-        	{
-        	    // Optimistic name generation here : assume the $subAttribute value actually matches
+                case 'ezobjectrelation' :
+                {
+                    // Optimistic name generation here : assume the $subAttribute value actually matches
                 // one of the related object's attributes name. Hence the commented out line in the first "if" below.
                 if ( $subAttribute and
                      $subAttribute !== '' and
@@ -130,15 +128,15 @@ class ezfSolrDocumentFieldObjectRelation extends ezfSolrDocumentFieldBase
                     return parent::generateAttributeFieldName( $classAttribute,
                                                                self::$subattributesDefinition[self::DEFAULT_SUBATTRIBUTE] );
                 }
-        	} break;
+                } break;
 
-        	case 'ezobjectrelationlist' :
-    	    {
+                case 'ezobjectrelationlist' :
+            {
 
-    	    } break;
+            } break;
 
-        	default:
-        	{} break;
+                default:
+                {} break;
         }
     }
 
@@ -214,10 +212,10 @@ class ezfSolrDocumentFieldObjectRelation extends ezfSolrDocumentFieldBase
         {
             $metaDataArray = $contentObjectAttribute->metaData();
 
-            if( !is_array( $metaDataArray ) )
+            if ( !is_array( $metaDataArray ) )
                 $metaDataArray = array( $metaDataArray );
 
-            foreach( $metaDataArray as $item )
+            foreach ( $metaDataArray as $item )
             {
                 $metaData .= $item['text'] . ' ';
             }
@@ -263,12 +261,12 @@ class ezfSolrDocumentFieldObjectRelation extends ezfSolrDocumentFieldBase
                 $returnArray[$defaultFieldName] = $this->getPlainTextRepresentation();
                 $relatedObject = $this->ContentObjectAttribute->content();
 
-                if ( $relatedObject )
+                if ( $relatedObject && $relatedObject->attribute( 'status' ) == eZContentObject::STATUS_PUBLISHED )
                 {
                     // 1st, add content fields of the related object.
                     $baseList = $this->getBaseList( $relatedObject->attribute( 'current' ) );
 
-                    foreach( $baseList as $field )
+                    foreach ( $baseList as $field )
                     {
                         $tmpClassAttribute = $field->ContentObjectAttribute->attribute( 'contentclass_attribute' );
                         $fieldName = $field->ContentObjectAttribute->attribute( 'contentclass_attribute_identifier' );
@@ -317,13 +315,13 @@ class ezfSolrDocumentFieldObjectRelation extends ezfSolrDocumentFieldBase
                 $returnArray = array();
                 $content = $this->ContentObjectAttribute->content();
 
-                foreach( $content['relation_list'] as $relationItem )
+                foreach ( $content['relation_list'] as $relationItem )
                 {
                     $subObjectID = $relationItem['contentobject_id'];
                     if ( !$subObjectID )
                         continue;
                     $subObject = eZContentObjectVersion::fetchVersion( $relationItem['contentobject_version'], $subObjectID );
-                    if ( !$subObject )
+                    if ( !$subObject || $relationItem['in_trash'] )
                         continue;
 
                     // 1st create aggregated metadata fields
@@ -346,7 +344,7 @@ class ezfSolrDocumentFieldObjectRelation extends ezfSolrDocumentFieldBase
                                                                         self::$subattributesDefinition[self::DEFAULT_SUBATTRIBUTE] );
                 $returnArray[$defaultFieldName] = $this->getPlainTextRepresentation();
                 return $returnArray;
-            };
+            }
                 break;
             default:
             {
@@ -367,7 +365,7 @@ class ezfSolrDocumentFieldObjectRelation extends ezfSolrDocumentFieldBase
         // Get ezfSolrDocumentFieldBase instance for all attributes in related object
         if ( eZContentObject::recursionProtect( $this->ContentObjectAttribute->attribute( 'contentobject_id' ) ) )
         {
-            foreach( $objectVersion->contentObjectAttributes( $this->ContentObjectAttribute->attribute( 'language_code' ) ) as $attribute )
+            foreach ( $objectVersion->contentObjectAttributes( $this->ContentObjectAttribute->attribute( 'language_code' ) ) as $attribute )
             {
                 if ( $attribute->attribute( 'contentclass_attribute' )->attribute( 'is_searchable' ) )
                 {

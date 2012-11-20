@@ -4,8 +4,8 @@ DatabaseImplementation=ezmysqli
 Server=desta01
 User=lefebvre
 Password=lyXyv3Jq
-Database=lefebvre
-SQLOutput=enabled
+Database=lefebvre47
+SQLOutput=disabled
 
 [DesignSettings]
 AdditionalSiteDesignList[]=googlesitemapgenerator

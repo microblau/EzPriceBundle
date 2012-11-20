@@ -13,10 +13,19 @@
 {/section}
 {/section}
 
+{if $scheduled_script_id|gt(0)}
+    <div class="message-warning">
+        <h2><span class="time">[{currentdate()|l10n( shortdatetime )}]</span> {'Class storing deferred'|i18n( 'design/admin/class/view' )}</h2>
+        <p>
+            {'The storing of the class has been deferred because existing objects need to be updated. The process has been scheduled to run in the background and will be started automatically. Please do not edit the class again until the process has finished. You can monitor the progress of the background process here:'|i18n( 'design/admin/class/view' )}<br />
+            <b><a href={concat('scriptmonitor/view/',$scheduled_script_id)|ezurl}>{'Background process monitor'|i18n( 'design/admin/class/view' )}</a></b>
+        </p>
+    </div>
+{/if}
 
 <div class="context-block">
 {* DESIGN: Header START *}<div class="box-header">
-<h1 class="context-title" title="{'Class name and number of objects'|i18n( 'design/admin/class/view' )}">{$class.identifier|class_icon( 'normal', $class.nameList[$language_code]|wash )}&nbsp;{$class.nameList[$language_code]|wash} [{$class.object_count}]</h1>
+<h1 class="context-title" title="{'Class name and number of objects'|i18n( 'design/admin/class/view' )}">{$class.identifier|class_icon( 'normal', $class.nameList[$language_code]|wash )}&nbsp;{$class.nameList[$language_code]|wash} [{$class.object_count} objects]</h1>
 
 {* DESIGN: Mainline *}<div class="header-mainline"></div>
 
@@ -27,7 +36,7 @@
 <div class="context-information">
 <p class="left modified">{'Last modified: %time, %username'|i18n( 'design/admin/class/view',, hash( '%username',$class.modifier.contentobject.name, '%time', $class.modified|l10n( shortdatetime ) ) )|wash}</p>
 {def $locale = fetch( 'content', 'locale', hash( 'locale_code', $language_code ) )}
-<p class="right translation">{$locale.intl_language_name}&nbsp;<img src="{$language_code|flag_icon}" alt="{$language_code}" style="vertical-align: middle;" /></p>
+<p class="right translation">{$locale.intl_language_name}&nbsp;<img src="{$language_code|flag_icon}" width="18" height="12" alt="{$language_code}" style="vertical-align: middle;" /></p>
 {undef $locale}
 <div class="break"></div>
 </div>
@@ -129,9 +138,9 @@
     <td class="{$Attributes.sequence}">
         <div class="block">
             <h6>{'Category'|i18n( 'design/admin/class/view' )}:</h6>
-                {if $Attributes.item.category|not}
-                    <p>{'Default'|i18n( 'design/admin/class/edit' )} ({$attribute_categorys[ $attribute_default_category ]|wash})</p>
-                {elseif is_set( $attribute_categorys[ $Attributes.item.category ] )}
+	        {if $Attributes.item.category|not}
+	            <p>{'Default'|i18n( 'design/admin/class/edit' )} ({$attribute_categorys[ $attribute_default_category ]|wash})</p>
+	        {elseif is_set( $attribute_categorys[ $Attributes.item.category ] )}
                 <p>{$attribute_categorys[ $Attributes.item.category ]|wash}</p>
             {else}
                 <p>{$attribute_categorys[ $attribute_default_category ]|wash}</p>
@@ -148,9 +157,9 @@
 
     <td rowspan="2">
 
-                <div class="block">
-                  <h6>{'Flags'|i18n( 'design/admin/class/view' )}:</h6>
-                </div>
+		<div class="block">
+		  <h6>{'Flags'|i18n( 'design/admin/class/view' )}:</h6>
+		</div>
 
         <div class="block">
             <p>{if $Attributes.item.is_required}{'Is required'|i18n( 'design/admin/class/view' )}{else}{'Is not required'|i18n( 'design/admin/class/view' )}{/if}</p>

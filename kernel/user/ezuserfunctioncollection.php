@@ -1,35 +1,12 @@
 <?php
-//
-// Definition of eZUserFunctionCollection class
-//
-// Created on: <06-Oct-2002 16:19:31 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZUserFunctionCollection class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 /*!
   \class eZUserFunctionCollection ezuserfunctioncollection.php
@@ -91,17 +68,20 @@ class eZUserFunctionCollection
         return array( 'result' => $list );
     }
 
-    function fetchUserRole( $userID )
+    /**
+     * Fetch policy list
+     * Used by fetch( 'user', 'user_role', hash( 'user_id', $id ) ) template function.
+     *
+     * @param int $id User id or normal content object id in case of none user object (user group)
+     * @return array(string=>array)
+     */
+    function fetchUserRole( $id )
     {
-        $user = eZUser::fetch( $userID );
-        $userGroupObjects = $user ? $user->groups( true ) : array();
-        $userGroupArray = array();
-        foreach ( $userGroupObjects as $userGroupObject )
-        {
-            $userGroupArray[] = $userGroupObject->attribute( 'id' );
-        }
-        $userGroupArray[] = $userID;
-        $roleList = eZRole::fetchByUser( $userGroupArray );
+        $user = eZUser::fetch( $id );
+        if ( $user instanceof eZUser )
+            $roleList = $user->roles();
+        else // user group or other non user classes:
+            $roleList = eZRole::fetchByUser( array( $id ), true );
 
         $accessArray = array();
         foreach ( array_keys ( $roleList ) as $roleKey )
@@ -143,7 +123,7 @@ class eZUserFunctionCollection
                                     {
                                         $policyID = substr( $policyID, 0, $userRoleIdSeperator );
                                     }
-                                    
+
                                     $limitationValue = eZPolicyLimitation::fetchByPolicyID( $policyID );
                                     $resultArray[] = array( 'moduleName' => $moduleName, 'functionName' => $functionName, 'limitation' =>  $limitationValue );
                                 }
@@ -174,9 +154,22 @@ class eZUserFunctionCollection
         return array( 'result' => $resultArray );
     }
 
+    /**
+     * Fetch role list
+     * Used by fetch( 'user', 'member_of', hash( 'id', $id ) ) template function.
+     *
+     * @param int $id User id or normal content object id in case of none user object (user group)
+     * @return array(string=>array)
+     */
     function fetchMemberOf( $id )
     {
-        return array( 'result' => eZRole::fetchByUser( array( $id ), true ) );
+        $user = eZUser::fetch( $id );
+        if ( $user instanceof eZUser )
+            $roleList = $user->roles();
+        else // user group or other non user classes:
+            $roleList = eZRole::fetchByUser( array( $id ), true );
+
+        return array( 'result' => $roleList );
     }
 
     function hasAccessTo( $module, $view, $userID )

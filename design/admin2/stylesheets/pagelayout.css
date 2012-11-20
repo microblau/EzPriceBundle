@@ -22,6 +22,18 @@ span.vertical-seperator
 
 label.inline { padding-right: 0.1em; }
 
+#leftmenu a.show-hide-control
+{
+    display:none;
+    float:right;
+    margin-top:1.5em;
+}
+
+.yui3-js-enabled #leftmenu a.show-hide-control
+{
+    display:block;
+}
+
 a.show-hide-control
 {
     float: left;
@@ -72,12 +84,12 @@ a.image-text:hover > span
 #header-logo a, #header-logo span
 {
     float: left;
-    width: 110px;
+    width: 108px;
     height: 45px;
     display: block;
     text-align: left;
     text-decoration: none;
-    background: transparent url('../images/2/ez-logo-white.png') no-repeat 8px 8px scroll;
+    background: transparent url('../images/2/ez-logo-white.png') no-repeat 7px 7px scroll;
 }
 
 #header-search
@@ -133,10 +145,10 @@ ul.tabs
 ul.tabs li a, ul.tabs li span.disabled
 {
     min-height: 16px;
-    min-width: 85px;
+    min-width: 80px;
 }
 
-#header-topmenu ul li.selected a, #header-topmenu ul li a:hover,
+#header-topmenu ul li.selected a, #header-topmenu ul li a:hover, #header-topmenu ul li.active a,
 ul.tabs li.selected a, ul.tabs li a:hover
 {
     margin-top: 0;
@@ -154,7 +166,7 @@ ul.tabs li.selected a, ul.tabs li a:hover
     margin-bottom: -1px;
 }
 
-#header-topmenu ul li span.disabled, span.disabled
+#header-topmenu ul li span.disabled, span.disabled, ul.tabs.disabled li a
 {
     color: #888;
 }
@@ -174,6 +186,11 @@ div.tab-content
     height: 20em;
     overflow-y: scroll;
     padding: 1em;
+}
+
+div.tabs-content.disabled div.tab-content
+{
+    display: none;
 }
 
 
@@ -232,7 +249,7 @@ div.tab-content
     margin-top: 5px;
 }
 
-div#columns.hide-rightmenu div#rightmenu    { display: none; }
+div#columns.hide-rightmenu div#rightmenu  { display: none; }
 div#columns.hide-rightmenu div#maincolumn { margin-right: 0; }
 
 
@@ -241,7 +258,7 @@ div#columns.hide-rightmenu div#maincolumn { margin-right: 0; }
 
 #rightmenu-design
 {
-    margin: 3.5em 1em 0 1.2em;
+    margin: 3.5em 1em 0 1.5em;
     position: relative;
 }
 
@@ -254,14 +271,9 @@ div#columns.hide-rightmenu div#maincolumn { margin-right: 0; }
 
 #rightmenu-design ul
 {
-    color: #aaa;
     margin-left: 1.5em;
 }
 
-#rightmenu-design #currentuserperferences ul li
-{
-    color: #333;
-}
 #rightmenu label { font-weight:normal; }
 
 
@@ -338,7 +350,7 @@ ul.leftmenu-items li.current a
 
 div#contentstructure
 {
-    overflow-x: auto;
+    overflow: hidden;
     padding-top: 0.5em;
 }
 
@@ -402,7 +414,6 @@ div#contentstructure li span.node-name-normal
 
 div#contentstructure li.currentnode > a.image-text span.node-name-normal, div#contentstructure li.currentnode > a.image-text span.node-name-hidden, div#contentstructure li.currentnode > a.image-text span.node-name-hiddenbyparent /* Highlighting of current node */
 {
-    font-weight: bold;
     color: #E24602;
     padding: 0 0.25em 0 0.2em;
 }
@@ -474,6 +485,26 @@ div#contentstructure ul#content_tree_menu ul a.openclose-busy
 div#contentstructure ul#content_tree_menu div.loaded
 {
     display: block;
+}
+
+div#contentstructure ul#content_tree_menu div.error
+{
+    white-space: normal;
+    color: grey;
+    margin: 10px 0;
+    padding: 4px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+div#contentstructure ul#content_tree_menu div.error > span
+{
+    display: inline-block;
+    height: 9px;
+    width: 9px;
+    border-radius: 9px;
+    margin-right: 6px;
+    background: Red;
 }
 
 div#contentstructure ul#content_tree_menu div.hidden
@@ -598,13 +629,18 @@ div.popupmenu hr
 #controlbar-top .box-bc
 {
     margin-top: 0.5em;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
 }
 
 #controlbar-top .box-bc .box-ml
 {
     margin: 0px 3px 0px 3px;
     padding: 0.5em;
+}
+
+#controlbar-top .block
+{
+    margin:0;
 }
 
 h1.context-title
@@ -629,7 +665,6 @@ span.classattribute-description, p.class-description
 {
     font-weight: normal;
     white-space: normal;
-    padding-left: 1em;
     min-height: 15px;
 }
 
@@ -676,8 +711,8 @@ div.context-block
 
 div.context-block h1.context-title img, div.context-block h2.context-title img
 {
-    vertical-align: bottom;
-    margin: -13px 8px 2px 0;
+    vertical-align: middle;
+    margin: -4px 8px 2px 0;
 }
 
 /* MENU-BLOCK */
@@ -752,27 +787,33 @@ input.button, input.defaultbutton, input.button-disabled
 {
     width: auto;
     overflow: visible;
-    padding: 0em 0.5em;;
+    padding: 0.26em 0.7em;
 }
 
 /* SEARCH */
+
+.searchblock
+{
+    position: relative;
+}
+
 #searchtext
 {
     height: 18px;
-    padding: 4px 20px 0 5px;
+    padding: 4px 20px 0 25px;
 }
 
 #searchtext.passive
 {
-        color: #888;
+    color: #888;
 }
 
 .searchbuttonfield
 {
     height: 17px;
     position: absolute;
-    right: 8px;
-    top: 22px;
+    right: 3px;
+    top: 3px;
     width: 17px;
 }
 
@@ -781,59 +822,123 @@ input.button, input.defaultbutton, input.button-disabled
     cursor: pointer;
 }
 
-/* FULL EDIT VIEW ( main-column-only class toggle ) */
+.searchscope
+{
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    top: 5px;
+    left: 6px;
+    background-image: url(../images/search-scope.png);
+}
 
-#page.main-column-only #header, #page.main-column-only #path,
-#page.main-column-only #leftmenu, #page.main-column-only #rightmenu,
-#page.main-column-only #footer, #page.main-column-only #debug
+.searchscope:hover
+{
+    cursor: pointer;
+}
+
+.searchscope-menu-container .searchscope-pane
 {
     display: none;
 }
 
-div#page.main-column-only div#maincontent
+.searchscope-pane
 {
-    margin: 0;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #C1C1C1;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 0 13px rgba(0, 0, 0, 0.31);
+    margin-top: 6px;
+    position: absolute;
+    left: -80px;
+    width: 250px;
+    z-index: 21;
+    text-align: left;
 }
 
-div#page.main-column-only #controlbar-top
+.searchscope-pane.active,
+.searchscope-menu-container.active .searchscope-pane
 {
-    position: fixed;
-    min-width: 49%;
-    right: 0;
-    top: 0;
-}
-
-a.controlbar-top-full-screen-toggle
-{
-    height: 16px;
-    width: 16px;
     display: block;
-    text-decoration: none;
-    background-image: url('../images/view-fullscreen.png');
-    background-repeat: no-repeat;
-    background-position: left top;
 }
 
-div#page.main-column-only a.controlbar-top-full-screen-toggle
+.searchscope-pane,
+.searchscope-pane > .searchscope-body
 {
-    background-image: url('../images/2/exit-fullscreen.png');
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 
-
-/* CLASS ATTRIBUTE GROUPING */
-
-fieldset.ezcca-collapsible legend a
+.searchscope-pane > .searchscope-body
 {
-    text-decoration: none;
+    border-top: 1px solid #DDDDDD;
+    display: block;
+    padding: 8px 10px;
+    position: relative;
 }
 
-fieldset.ezcca-collapsible.ezcca-collapsed
+.searchscope-pane > .searchscope-title
 {
-    border-width: 1px 0 0 0;
-    height: 1em;
+    font-weight: bold;
+    font-size: 12px;
+    color: #111111;
+    text-shadow: 1px 1px 0 white;
+    padding: 8px 10px 5px 10px;
+    background: #f5f5f5;
+    background: -moz-linear-gradient(#f4f4f4, #f5f5f5);
+    background: -webkit-linear-gradient(#f4f4f4, #f5f5f5);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#f4f4f4', endColorstr='#f5f5f5')";
+    border-bottom: 1px solid #f0f3f3;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px
 }
 
-fieldset.ezcca-collapsible.ezcca-collapsed legend
+.searchscope-pane .close
 {
-    margin-left: 1px;
+    display: block;
+    float: right;
+    margin-right: 8px;
+    margin-top: 7px;
+    width: 16px;
+    height: 16px;
+    background: url(../images/close.gif) no-repeat center center;
+}
+
+.searchscope-pane .close .mini-icon-remove-close
+{
+    line-height: 16px;
+    height: 16px;
+    color: #CCC;
+}
+
+/* FIXED CONTROLBAR DEPENDING ON SCROLL */
+.yui3-js-enabled .controlbar-fixed
+{
+    position:fixed;
+    width:100%;
+    top: -0.6em;
+    left:0;
+    border-radius:0;
+}
+
+.scroll-to-top
+{
+    position:fixed;
+    bottom:0;
+    right:0;
+    background:#000;
+    opacity:0;
+    padding:0.5em;
+    border-top-left-radius:5px;
+    color:#fff;
+    text-decoration:none;
+    display:none;
+}
+.yui3-js-enabled .scroll-to-top
+{
+    display:block;
+}
+.scroll-to-top:hover
+{
+color:#fff;
 }

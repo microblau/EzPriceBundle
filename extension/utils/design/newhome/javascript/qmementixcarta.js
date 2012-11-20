@@ -1,53 +1,10 @@
 (function ($) {
-	var prettyChecks = {
-		init:function(){
-			
-			$("input[type='checkbox'].pretty").each(function(){
-				var $that = $(this),
-					$parent = $that.parent(),
-					clase;
-					
-					$that.addClass("off");
 
-					if($that.is(":checked")){
-						clase="c_on";
-					}else{
-						clase="c_off";
-					}
-
-					$parent.addClass(clase)
-			
-
-				
-			}).click(function(){
-				var $that = $(this),
-					$parent = $that.parent(),
-					clase;
-
-				if($parent.hasClass("c_on")){
-					$that.removeAttr("checked");
-					$parent.removeClass("c_on").addClass("c_off");
-				}else{
-					$that.attr("checked","checked");
-					$parent.removeClass("c_off").addClass("c_on");
-				}
-			})
-
-		}
-
-	}
 
 
 	$(document).ready( function()
 	{
 
-		
-	
-		if($("input.pretty").length)
-		{
-			prettyChecks.init();
-		}
-	
 		if($("#preload").length != 0) $("#preload").hide();
 			
         if($("#productlist input").length != 0){		
