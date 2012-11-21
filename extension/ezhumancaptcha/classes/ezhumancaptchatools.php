@@ -221,7 +221,7 @@ class eZHumanCAPTCHATools
                 {
                     self::cleanupPrevious( $encryptedToken );
                     $http->setSessionVariable( $tokenSessionVariableName, '' );
-                    $result[] = ezi18n( 'extension/ezhumancaptcha', 'The CAPTCHA code is empty' );
+                    $result[] = ezpI18n::tr( 'extension/ezhumancaptcha', 'The CAPTCHA code is empty' );
                 }
                 else
                 {
@@ -232,7 +232,7 @@ class eZHumanCAPTCHATools
                     {
                         self::cleanupPrevious( $encryptedToken );
                         $http->setSessionVariable( $tokenSessionVariableName, '' );
-                        $result[] = ezi18n( 'extension/ezhumancaptcha', 'The CAPTCHA code is not valid' );
+                        $result[] = ezpI18n::tr( 'extension/ezhumancaptcha', 'The CAPTCHA code is not valid' );
                     }
                 }
                 self::cleanupPrevious( $encryptedToken );
@@ -240,12 +240,12 @@ class eZHumanCAPTCHATools
             }
             else
             {
-                $result[] = ezi18n( 'extension/ezhumancaptcha', 'The CAPTCHA code is not set' );
+                $result[] = ezpI18n::tr( 'extension/ezhumancaptcha', 'The CAPTCHA code is not set' );
             }
         }
         else
         {
-            $result[] = ezi18n( 'extension/ezhumancaptcha', 'The CAPTCHA code is not set' );
+            $result[] = ezpI18n::tr( 'extension/ezhumancaptcha', 'The CAPTCHA code is not set' );
         }
 
         return $result;

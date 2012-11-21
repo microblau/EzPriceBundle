@@ -1,35 +1,12 @@
 <?php
-//
-// Definition of eZContentFunctionCollection class
-//
-// Created on: <06-Oct-2002 16:19:31 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZContentFunctionCollection class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 /*!
   \class eZContentFunctionCollection ezcontentfunctioncollection.php
@@ -946,9 +923,18 @@ class eZContentFunctionCollection
                 {
                     $sortingString = '';
                     if ( $sortBy[0] == 'name' )
+                    {
                         $sortingString = 'ezcontentobject.name';
+                        $sortingInfo['attributeTargetSQL'] = ', ' . $sortingString;
+                    }
                     elseif ( $sortBy[0] == 'keyword' )
-                        $sortingString = 'ezkeyword.keyword';
+                    {
+                        if ( $includeDuplicates )
+                            $sortingString = 'ezkeyword.keyword';
+                        else
+                            $sortingString = 'keyword';
+                        $sortingInfo['attributeTargetSQL'] = '';
+                    }
 
                     $sortOrder = true; // true is ascending
                     if ( isset( $sortBy[1] ) )
@@ -968,10 +954,17 @@ class eZContentFunctionCollection
                         $sqlTarget = 'DISTINCT ezcontentobject_tree.node_id, '.$sqlKeyword;
                     }
                     else // for unique declaration
+                    {
+                        $sortByArray = explode( ' ', $sortingInfo['sortingFields'] );
+                        $sortingInfo['attributeTargetSQL'] .= ', ' . $sortByArray[0];
+
                         $sortingInfo['attributeFromSQL']  .= ', ezcontentobject_attribute a1';
+                    }
 
                 } break;
             }
+
+            $sqlTarget .= $sortingInfo['attributeTargetSQL'];
         }
         else
         {
@@ -1140,7 +1133,7 @@ class eZContentFunctionCollection
                 }
                 else
                 {
-                    eZDebug::writeWarning( "Unknown relation type: '$relationType'.", "eZContentFunctionCollection::contentobjectRelationTypeMask()" );
+                    eZDebug::writeWarning( "Unknown relation type: '$relationType'.", __METHOD__ );
                 }
             }
         }
@@ -1221,8 +1214,24 @@ class eZContentFunctionCollection
         return array( 'result' =>$relatedObjectsTypedIDArray );
     }
 
-    // Fetches reverse related objects
-    static public function fetchRelatedObjects( $objectID, $attributeID, $allRelations, $groupByAttribute, $sortBy, $limit = false, $offset = false, $asObject = true, $loadDataMap = false, $ignoreVisibility = null )
+
+    /**
+     * Fetches related object for $objectID
+     *
+     * @param int $objectID
+     * @param int $attributeID Relation attribute id
+     * @param int $allRelations Accepted elation bitmask
+     * @param mixed $groupByAttribute
+     * @param array $sortBy
+     * @param int $limit
+     * @param int $offset
+     * @param bool $asObject
+     * @param bool $loadDataMap
+     * @param bool $ignoreVisibility
+     * @param array $relatedClassIdentifiers Array of related class identifiers that will be accepted
+     * @return array ANn array of eZContentObject
+     */
+    static public function fetchRelatedObjects( $objectID, $attributeID, $allRelations, $groupByAttribute, $sortBy, $limit = false, $offset = false, $asObject = true, $loadDataMap = false, $ignoreVisibility = null, array $relatedClassIdentifiers = null )
     {
         if ( !is_numeric( $objectID ) )
         {
@@ -1279,6 +1288,11 @@ class eZContentFunctionCollection
             {
                 $params['AllRelations'] = eZContentFunctionCollection::contentobjectRelationTypeMask( $allRelations );
             }
+        }
+
+        if ( $relatedClassIdentifiers !== null )
+        {
+            $params['RelatedClassIdentifiers'] = $relatedClassIdentifiers;
         }
 
         if ( $attributeID && !is_numeric( $attributeID ) && !is_bool( $attributeID ) )

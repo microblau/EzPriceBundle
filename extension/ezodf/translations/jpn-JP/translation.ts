@@ -1,5 +1,6 @@
-<!DOCTYPE TS><TS>
-<defaultcodec></defaultcodec>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>extension/ezodf</name>
     <message>
@@ -70,6 +71,10 @@ Images are placed in the media library so you can re-use them in other articles.
         <translation>OpenOffice.org WriterドキュメントをeZ Publishへインポートします。ドキュメントの配置先を指定して下さい。
 インポート完了後に通知が表示されます。画像はメディアリソースに保存されますので、後に再利用が可能です。</translation>
     </message>
+    <message>
+        <source>The imported document is waiting for an approbation to be published.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>extension/ezodf/browse</name>
@@ -97,98 +102,98 @@ Images are placed in the media library so you can re-use them in other articles.
     <name>extension/ezodf/export/error</name>
     <message>
         <source>Destination file format not supported</source>
-        <translation>フォーマットがサポートされていません</translation>
+        <translation type="unfinished">フォーマットがサポートされていません</translation>
     </message>
     <message>
         <source>PDF conversion failed</source>
-        <translation>PDFのコンバージョンに失敗しました</translation>
+        <translation type="unfinished">PDFのコンバージョンに失敗しました</translation>
     </message>
     <message>
         <source>Word conversion failed</source>
-        <translation>Wordのコンバージョンに失敗しました</translation>
+        <translation type="unfinished">Wordのコンバージョンに失敗しました</translation>
     </message>
     <message>
         <source>Unable to fetch node, or no read access</source>
-        <translation>ノードが見つからないか、アクセスがありません。</translation>
+        <translation type="unfinished">ノードが見つからないか、アクセスがありません。</translation>
     </message>
     <message>
         <source>Unable to open file %1 on server side</source>
-        <translation>ファイル%1を開けません。</translation>
+        <translation type="unfinished">ファイル%1を開けません。</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf/import/error</name>
     <message>
         <source>File extension or type is not allowed.</source>
-        <translation>ファイルエクステンション又はタイプが無効です。</translation>
+        <translation type="unfinished">ファイルエクステンション又はタイプが無効です。</translation>
     </message>
     <message>
         <source>Could not parse XML.</source>
-        <translation>XMLを分析できませんでした</translation>
+        <translation type="unfinished">XMLを分析できませんでした</translation>
     </message>
     <message>
         <source>Can not open socket. Please check if extension/ezodf/daemon.php is running.</source>
-        <translation>ソケットを開けません。extension/ezodf/daemon.phpが起動しているか確認して下さい。</translation>
+        <translation type="unfinished">ソケットを開けません。extension/ezodf/daemon.phpが起動しているか確認して下さい。</translation>
     </message>
     <message>
         <source>Can not convert the given document.</source>
-        <translation>このドキュメントを変換できません。</translation>
+        <translation type="unfinished">このドキュメントを変換できません。</translation>
     </message>
     <message>
         <source>Unable to call daemon. Fork can not create child process.</source>
-        <translation>デーモンへアクセスできません。フォークがチャイルドプロセスを作成できません。</translation>
+        <translation type="unfinished">デーモンへアクセスできません。フォークがチャイルドプロセスを作成できません。</translation>
     </message>
     <message>
         <source>Daemon reported error.</source>
-        <translation>デーモンがエラーを起こしています。</translation>
+        <translation type="unfinished">デーモンがエラーを起こしています。</translation>
     </message>
     <message>
         <source>Unknown node.</source>
-        <translation>不明なノード</translation>
+        <translation type="unfinished">不明なノード</translation>
     </message>
     <message>
         <source>Access denied.</source>
-        <translation>アクセスが拒否されました</translation>
+        <translation type="unfinished">アクセスが拒否されました</translation>
     </message>
     <message>
         <source>Error during import.</source>
-        <translation>インポート中にエラーが起きました</translation>
+        <translation type="unfinished">インポート中にエラーが起きました</translation>
     </message>
     <message>
         <source>Unknown content class specified in odf.ini:</source>
-        <translation>odf.iniに不明なコンテンツクラスが見つかりました:</translation>
+        <translation type="unfinished">odf.iniに不明なコンテンツクラスが見つかりました:</translation>
     </message>
     <message>
         <source>Unknown error.</source>
-        <translation>不明なエラー</translation>
+        <translation type="unfinished">不明なエラー</translation>
     </message>
     <message>
         <source>Filetype: </source>
-        <translation>ファイルタイプ:</translation>
+        <translation type="unfinished">ファイルタイプ:</translation>
     </message>
     <message>
         <source>Folder for images could not be created, access denied.</source>
-        <translation>アクセスが拒否されました。画像フォルダーが作成できませんでした。</translation>
+        <translation type="unfinished">アクセスが拒否されました。画像フォルダーが作成できませんでした。</translation>
     </message>
     <message>
         <source>Cannot import. File not found. Already imported?</source>
-        <translation>インポートできません。ファイルが見つかりませんでした。既にインポートしていますか?</translation>
+        <translation type="unfinished">インポートできません。ファイルが見つかりませんでした。既にインポートしていますか?</translation>
     </message>
     <message>
         <source>Cannot import document, supplied placement nodeID is not valid.</source>
-        <translation>ドキュメントをインポートできません。ノードIDが無効です。</translation>
+        <translation type="unfinished">ドキュメントをインポートできません。ノードIDが無効です。</translation>
     </message>
     <message>
         <source>Cannot store uploaded file, cannot import.</source>
-        <translation>アップロードしたファイルを保存できません。</translation>
+        <translation type="unfinished">アップロードしたファイルを保存できません。</translation>
     </message>
     <message>
         <source>Unable to fetch node with id </source>
-        <translation>ノードが見つかりません</translation>
+        <translation type="unfinished">ノードが見つかりません</translation>
     </message>
     <message>
         <source>Document is not supported.</source>
-        <translation>ドキュメントはサポートされていません。</translation>
+        <translation type="unfinished">ドキュメントはサポートされていません。</translation>
     </message>
 </context>
 <context>

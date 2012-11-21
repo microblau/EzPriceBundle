@@ -26,7 +26,7 @@ if( $http->hasPostVariable( 'btnContinuar' ) )
     $Result = array();
     $Result['content'] = $tpl->fetch( "design:paypal/finproceso.tpl" );
     $Result['path'] = array( array( 'url' => false,
-                                    'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+                                    'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
     return;
 }
 $basket->remove();
@@ -49,7 +49,7 @@ if( $encuesta != 0 )
                 $Result = array();
             	$Result['content'] = $tpl->fetch( "design:transferencia/complete.tpl" );
 	            $Result['path'] = array( array( 'url' => false,
-	                                        'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+	                                        'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
         } 
         elseif( $http->hasPostVariable                               ( 'ContentObjectAttribute_ezsurvey_store_button'  ) )
         {
@@ -60,7 +60,7 @@ if( $encuesta != 0 )
                 $Result = array();
             	$Result['content'] = $tpl->fetch( "design:transferencia/complete.tpl" );
 	            $Result['path'] = array( array( 'url' => false,
-	                                        'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+	                                        'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
         }
     }
 }
@@ -92,6 +92,6 @@ else
 	$Result = array();
 	$Result['content'] = $tpl->fetch( "design:paypal/complete.tpl" );
 	$Result['path'] = array( array( 'url' => false,
-	                                'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+	                                'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
 }
 ?>

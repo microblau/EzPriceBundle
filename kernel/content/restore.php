@@ -1,33 +1,10 @@
 <?php
-//
-// Created on: <03-May-2002 15:17:01 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-
-
+/**
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 $objectID = $Params['ObjectID'];
 $module = $Params['Module'];
@@ -35,7 +12,7 @@ $module = $Params['Module'];
 $object = eZContentObject::fetch( $objectID );
 if ( !is_object( $object ) )
 {
-    return $Module->handleError( EZ_ERROR_KERNEL_NOT_AVAILABLE, 'kernel' );
+    return $Module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
 }
 if ( $object->attribute( 'status' ) != eZContentObject::STATUS_ARCHIVED )
 {
@@ -194,6 +171,8 @@ if ( $module->isCurrentAction( 'AddLocation' ) )
     $version->setAttribute( 'status', eZContentObjectVersion::STATUS_DRAFT );
     $version->store();
 
+    $object->restoreObjectAttributes();
+
     $user = eZUser::currentUser();
     $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $objectID,
                                                                                  'version' => $version->attribute( 'version' ) ) );
@@ -218,7 +197,7 @@ if ( $module->isCurrentAction( 'AddLocation' ) )
     {
         if ( $object->attribute( 'contentclass_id' ) == $userClassID )
         {
-            eZUser::cleanupCache();
+            eZUser::purgeUserCacheByUserId( $object->attribute( 'id' ) );
         }
     }
 

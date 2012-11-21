@@ -136,16 +136,14 @@
 									<input type="hidden" id="prod" name="ContentObjectAttribute_ezselect_selected_array_243188[]" value="0" />
 									
 									<select id="prodQI" name="ContentObjectAttribute_ezstring_data_text_243189">
-										{def $mementos = $node.data_map.imemento_productos.content}
 										{foreach $mementos.relation_browse as $index => $el}
 											{def $memento = fetch( 'content', 'object', hash( 'object_id', $el.contentobject_id))}
 												{if ne($memento.data_map.precio_qmementix.content.price,0)}
 													<option value="{$memento.data_map.nombre_mementix.data_text}">{$memento.data_map.nombre_mementix.data_text}</option>
 												{/if}
-											{undef $memento}	
+											{undef $memento}
 										{/foreach}
 									</select>
-									
 								</label>
 
 									
@@ -831,11 +829,11 @@
 														</label>
 													</td>
 													{if eq($memento.data_map.oferta_qmementix.content.price,0)}
-													<td class="pvp-offer"><ins>{$memento.data_map.precio_qmementix.content.ex_vat_price|l10n('clean_currency)} € + IVA</ins></td>
+													<td class="pvp-offer"><ins>{$memento.data_map.precio_qmementix.content.ex_vat_price|l10n('clean_currency')} € + IVA</ins></td>
 													<td class="pvp"></td>
 													{else}
-													<td class="pvp"><del>{$memento.data_map.precio_qmementix.content.ex_vat_price|l10n('clean_currency)} € + IVA</del></td>
-													<td class="pvp-offer"><ins>{$memento.data_map.oferta_qmementix.content.ex_vat_price|l10n('clean_currency)} € + IVA</ins></td>
+													<td class="pvp"><del>{$memento.data_map.precio_qmementix.content.ex_vat_price|l10n('clean_currency')} € + IVA</del></td>
+													<td class="pvp-offer"><ins>{$memento.data_map.oferta_qmementix.content.ex_vat_price|l10n('clean_currency')} € + IVA</ins></td>
 													{/if}	
 													
 												</tr>

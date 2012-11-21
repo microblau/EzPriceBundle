@@ -1,29 +1,13 @@
 #!/usr/bin/env php
 <?php
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the ezpgenerateautoloads.php script.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 if ( file_exists( "config.php" ) )
 {
@@ -50,16 +34,14 @@ else
     }
 }
 
+spl_autoload_register( array( 'ezcBase', 'autoload' ) );
+
 require 'kernel/private/classes/ezautoloadgenerator.php';
 require 'kernel/private/interfaces/ezpautoloadoutput.php';
 require 'kernel/private/classes/ezpautoloadclioutput.php';
 require 'kernel/private/options/ezpautoloadgeneratoroptions.php';
 require 'kernel/private/structs/ezpautoloadfilefindcontext.php';
 
-function __autoload( $className )
-{
-    ezcBase::autoload( $className );
-}
 //}
 
 // Setup console parameters
@@ -190,6 +172,7 @@ $autoloadGenerator->setOutputCallback( array( $autoloadCliOutput, 'outputCli') )
 try
 {
     $autoloadGenerator->buildAutoloadArrays();
+    $autoloadGenerator->buildPHPUnitConfigurationFile();
 
     // If we are showing progress output, let's print the list of warnings at
     // the end.

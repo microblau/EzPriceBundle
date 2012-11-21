@@ -1,29 +1,11 @@
 #!/usr/bin/env php
 <?php
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 if ( !function_exists( 'readline' ) )
 {
@@ -42,7 +24,7 @@ $scriptSettings = array();
 $scriptSettings['description'] = 'Fix non-unique usage of content object remote ID\'s';
 $scriptSettings['use-session'] = false;
 $scriptSettings['use-modules'] = false;
-$scriptSettings['use-extensions'] = false;
+$scriptSettings['use-extensions'] = true;
 
 $script = eZScript::instance( $scriptSettings );
 $script->startup();
@@ -72,8 +54,14 @@ else
 
 $db = eZDB::instance();
 
-$nonUniqueRemoteIDDataList = $db->arrayQuery( 'SELECT remote_id, COUNT(*) AS cnt FROM ezcontentobject GROUP BY remote_id HAVING COUNT(*) > 1' );
-
+if(  $db->databaseName() == 'oracle' )
+{
+    $nonUniqueRemoteIDDataList = $db->arrayQuery( 'SELECT remote_id, COUNT(*) AS cnt FROM ezcontentobject WHERE remote_id IS NOT NULL GROUP BY remote_id HAVING COUNT(*) > 1' );
+}
+else
+{
+    $nonUniqueRemoteIDDataList = $db->arrayQuery( 'SELECT remote_id, COUNT(*) AS cnt FROM ezcontentobject GROUP BY remote_id HAVING COUNT(*) > 1' );
+}
 $nonUniqueRemoteIDDataListCount = count( $nonUniqueRemoteIDDataList );
 
 $cli->output( '' );
@@ -170,8 +158,7 @@ foreach ( $nonUniqueRemoteIDDataList as $nonUniqueRemoteIDData )
             continue;
         }
 
-        $newRemoteID = md5( (string)mt_rand() . (string)time() );
-        $contentObject->setAttribute( 'remote_id', $newRemoteID );
+        $contentObject->setAttribute( 'remote_id', eZRemoteIdUtility::generate( 'object' ) );
         $contentObject->store();
     }
 
@@ -181,7 +168,14 @@ foreach ( $nonUniqueRemoteIDDataList as $nonUniqueRemoteIDData )
     $cli->output( '' );
 }
 
-$nonUniqueRemoteIDDataList = $db->arrayQuery( "SELECT id FROM ezcontentobject WHERE remote_id = ''" );
+if( $db->databaseName() == 'oracle' )
+{
+    $nonUniqueRemoteIDDataList = $db->arrayQuery( "SELECT id FROM ezcontentobject WHERE remote_id IS NULL" );
+}
+else
+{
+    $nonUniqueRemoteIDDataList = $db->arrayQuery( "SELECT id FROM ezcontentobject WHERE remote_id = ''" );
+}
 
 $nonUniqueRemoteIDDataListCount = count( $nonUniqueRemoteIDDataList );
 
@@ -202,11 +196,10 @@ if ( $nonUniqueRemoteIDDataListCount )
                                                                array( 'status' => 'desc', 'published' => 'asc' ) );
         foreach ( $contentObjects as $i => $contentObject )
         {
-            $newRemoteID = md5( (string)mt_rand() . (string)time() );
-            $contentObject->setAttribute( 'remote_id', $newRemoteID );
+            $contentObject->setAttribute( 'remote_id', eZRemoteIdUtility::generate( 'object' ) );
             $contentObject->store();
         }
-    
+
         ++$totalCount;
         $cli->output( '.', false );
     }

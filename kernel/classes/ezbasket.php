@@ -1,32 +1,12 @@
 <?php
-//
-// Definition of eZBasket class
-//
-// Created on: <04-Jul-2002 15:28:58 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZBasket class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 /*!
   \class eZBasket ezbasket.php
@@ -76,6 +56,7 @@ class eZBasket extends eZPersistentObject
                                                               'foreign_attribute' => 'id',
                                                               'multiplicity' => '1..*') ),
                       'function_attributes' => array( 'items' => 'items',
+                                                      'items_ordered' => 'itemsOrdered',
                                                       'total_ex_vat' => 'totalExVAT',
                                                       'total_inc_vat' => 'totalIncVAT',
                                                       'is_empty' => 'isEmpty',
@@ -88,12 +69,18 @@ class eZBasket extends eZPersistentObject
         return $definition;
     }
 
-    function items( $asObject = true )
+    /**
+     * Fetch basket items (ordered by object id by default)
+     *
+     * @param bool $asObject
+     * @param array|null $sorts Array with sort data sent directly to {@link eZPersistentObject::fetchObjectList()}
+     */
+    function items( $asObject = true, $sorts = array( 'contentobject_id' => 'desc' ) )
     {
         $productItems = eZPersistentObject::fetchObjectList( eZProductCollectionItem::definition(),
                                                              null,
                                                              array( 'productcollection_id' => $this->ProductCollectionID ),
-                                                             array( 'contentobject_id' => 'desc' ),
+                                                             $sorts,
                                                              null,
                                                              $asObject );
         $addedProducts = array();
@@ -152,6 +139,18 @@ class eZBasket extends eZPersistentObject
         }
         return $addedProducts;
     }
+
+    /**
+     * Fetch basket items ordered by id ( the order they are added to basket )
+     *
+     * @param bool $asObject
+     * @param bool $order True (default) for ascending[0->9] and false for decending[9->0]
+     */
+    function itemsOrdered( $asObject = true, $order = true )
+    {
+        return $this->items( $asObject, array( 'id' => ( $order ? 'asc' : 'desc' )) );
+    }
+
     /*!
      Fetching calculated information about the product items.
     */
@@ -384,7 +383,6 @@ class eZBasket extends eZPersistentObject
     function updatePrices()
     {
         $productCollection = $this->attribute( 'productcollection' );
-       
         if ( $productCollection )
         {
             $currencyCode = '';
@@ -393,79 +391,43 @@ class eZBasket extends eZPersistentObject
             $db = eZDB::instance();
             $db->begin();
             foreach( $items as $itemArray )
-            {         
+            {
                 $item = $itemArray['item_object'];
                 $productContentObject = $item->attribute( 'contentobject' );
-                if( ( $productContentObject->attribute( 'contentclass_id' ) == 98 ) or ( $productContentObject->attribute( 'contentclass_id' ) == 101 ) or ( $productContentObject->attribute( 'contentclass_id' ) == eZINI::instance( 'imemento.ini' )->variable( 'iMemento', 'Class' ) ) or ( $productContentObject->attribute( 'contentclass_id' ) == eZINI::instance( 'qmementix.ini' )->variable( 'Qmementix', 'Class' ) ))
+                $priceObj = null;
+                $price = 0.0;
+                $attributes = $productContentObject->contentObjectAttributes();
+                foreach ( $attributes as $attribute )
                 {
-                    $data = $productContentObject->dataMap();
-                    $priceObj = $data['precio']->content();
-                    $price = 0.0;                    
+                    $dataType = $attribute->dataType();
+                    if ( eZShopFunctions::isProductDatatype( $dataType->isA() ) )
+                    {
+                        $priceObj = $attribute->content();
+                        $price += $priceObj->attribute( 'price' );
+                        break;
+                    }
+                }
+                if ( !is_object( $priceObj ) )
+                    break;
 
-                    $currency = $priceObj->attribute( 'currency' );
-                    
+                $currency = $priceObj->attribute( 'currency' );
+                $optionsPrice = $item->calculatePriceWithOptions( $currency );
 
-                    $price += $optionsPrice;
-                    $item->setAttribute( "price", $itemArray['price_ex_vat'] );           
-                    $item->setAttribute( "is_vat_inc", '0' );                   
-                    
-                    $item->setAttribute( "vat_value", $priceObj->VATPercent( $productContentObject ) );                   
-                    $item->setAttribute( "discount_percent", 15 );
-                    $item->store();
-
-                    $currencyCode = $priceObj->attribute( 'currency' );
+                $price += $optionsPrice;
+                $item->setAttribute( "price", $price );
+                if ( $priceObj->attribute( 'is_vat_included' ) )
+                {
+                    $item->setAttribute( "is_vat_inc", '1' );
                 }
                 else
                 {
-                    $priceObj = null;
-                    $price = 0.0;
-                    $attributes = $productContentObject->contentObjectAttributes();
-                    foreach ( $attributes as $attribute )
-                    {
-                        $dataType = $attribute->dataType();
-                        if ( eZShopFunctions::isProductDatatype( $dataType->isA() ) )
-                        {
-                            $priceObj = $attribute->content();
-                            $price += $priceObj->attribute( 'price' );
-                            break;
-                        }
-                    }
-                    if ( !is_object( $priceObj ) )
-                        break;
-
-                    $currency = $priceObj->attribute( 'currency' );
-                    $optionsPrice = $item->calculatePriceWithOptions( $currency );
-
-                    $price += $optionsPrice;
-                    $item->setAttribute( "price", $price );
-                    if ( $priceObj->attribute( 'is_vat_included' ) )
-                    {
-                        $item->setAttribute( "is_vat_inc", '1' );
-                    }
-                    else
-                    {
-                        $item->setAttribute( "is_vat_inc", '0' );
-                    }
-                    
-                    $item->setAttribute( "vat_value", $priceObj->VATPercent( $productContentObject ) );
-                    /****HACK PARA EFL *****/
-                   
-                    $infoOrder = eZPersistentObject::fetchObject( eflOrders::definition(), null, array( 'productcollection_id' => $this->attribute( 'productcollection_id') ) );
-                    
-                    $unserialized_order = unserialize($infoOrder->Order);
-                   
-                    $productos_bono = $unserialized_order['productos_bono'];
-                 
-                    $item->setAttribute( "discount", $priceObj->attribute( 'discount_percent' ) );
-                    if( ( $priceObj->attribute( 'discount_percent' ) == 0 ) and ( in_array( $itemArray['item_object']->ContentObjectID, $productos_bono ) ) )
-                    {
-                        $item->setAttribute( "discount", $unserialized_order['descuento'] );
-                    }
-                    
-                    $item->store();
-
-                    $currencyCode = $priceObj->attribute( 'currency' );
+                    $item->setAttribute( "is_vat_inc", '0' );
                 }
+                $item->setAttribute( "vat_value", $priceObj->VATPercent( $productContentObject ) );
+                $item->setAttribute( "discount", $priceObj->attribute( 'discount_percent' ) );
+                $item->store();
+
+                $currencyCode = $priceObj->attribute( 'currency' );
             }
 
             $productCollection->setAttribute( 'currency_code', $currencyCode );

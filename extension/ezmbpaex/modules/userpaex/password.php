@@ -2,8 +2,8 @@
 /**
  * File containing the password view
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPLv2
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
  * @package ezmbpaex
  */
 
@@ -67,7 +67,7 @@ if ( $http->hasPostVariable( "OKButton" ) && $user)
 
     if ( $user->authenticateHash( $login, $oldPassword, $site, $type, $hash ) ) // Old password is correct
     {
-        if (  $newPassword ==  $confirmPassword )
+        if (  $newPassword == $confirmPassword )
         {
             if ( !$user->validatePassword($newPassword) )
             {
@@ -80,7 +80,7 @@ if ( $http->hasPostVariable( "OKButton" ) && $user)
             else
             {
                 // Patch for use mbpaex::validatePassword
-                $paex = eZPaEx::getPaEx($UserID);
+                $paex = eZPaEx::getPaEx( $UserID );
                 if (!$paex->validatePassword($newPassword))
                 {
                     // if audit is enabled password changes should be logged
@@ -108,6 +108,15 @@ if ( $http->hasPostVariable( "OKButton" ) && $user)
                         $user->store();
                         $paex->resetPasswordLastUpdated();
                         $oldPassword = '';
+
+                        eZUser::setCurrentlyLoggedInUser( $user, $UserID );
+
+                        if ( $http->hasPostVariable( "RedirectOnChange" ) )
+                        {
+                            return $Module->redirectTo( $http->postVariable( "RedirectOnChange" ) );
+                        }
+                        eZRedirectManager::redirectTo( $Module, $redirectionURI );
+                        return;
                     }
                 }
             }
@@ -166,9 +175,9 @@ $tpl->setVariable( "newPasswordMustDiffer", $newPasswordMustDiffer );
 $tpl->setVariable( "message", $message );
 
 $Result = array();
-$Result['path'] = array( array( 'text' => ezi18n( 'kernel/user', 'User' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/user', 'User' ),
                                 'url' => false ),
-                         array( 'text' => ezi18n( 'kernel/user', 'Change password' ),
+                         array( 'text' => ezpI18n::tr( 'kernel/user', 'Change password' ),
                                 'url' => false ) );
 $Result['content'] = $tpl->fetch( "design:userpaex/password.tpl" );
 

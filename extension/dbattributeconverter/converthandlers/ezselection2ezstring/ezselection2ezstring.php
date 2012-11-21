@@ -46,7 +46,7 @@ class ezselection2ezstring extends convertHandler
 			$settings[] = array( 'type'  => 'text',
 								 'name'  => 'Separator',
 								 'default' => ', ',
-								 'label' => ezi18n( 'attributeconverter/common', 'Separator' ) );
+								 'label' => ezpI18n::tr( 'attributeconverter/common', 'Separator' ) );
 			return $settings;			
 		}
 		return false;		
@@ -56,7 +56,7 @@ class ezselection2ezstring extends convertHandler
 	{
 		if ( $this->isMultiselect( $wizard ) )
 		{
-			$warnings = array( ezi18n( 'attributeconverter/common', 'Specify separator for multioption attributes' ) );
+			$warnings = array( ezpI18n::tr( 'attributeconverter/common', 'Specify separator for multioption attributes' ) );
 			return $warnings;
 		}
 				

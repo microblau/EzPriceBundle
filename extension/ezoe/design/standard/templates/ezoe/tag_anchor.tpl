@@ -7,30 +7,31 @@
                                            )}
 
 <script type="text/javascript">
-<!--
-
 tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {ldelim}
     tagName: '{$tag_name|wash}',
     form: 'EditForm',
     cancelButton: 'CancelButton',
     customAttributeStyleMap: {$custom_attribute_style_map},
-    cssClass: 'mceItemAnchor',
+    cssClass: 'mceItemAnchor',// this is the internal anchor class used by tinymce, we reuse it
     tagEditTitleText: "{'Edit %tag_name tag'|i18n('design/standard/ezoe', '', hash( '%tag_name', concat('&lt;', $tag_name_alias, '&gt;') ))|wash('javascript')}",
 {literal}
     onInit: function( el, tag, ed )
     {
         if ( el === false && this.settings.editorSelectedText !== false )
-            document.getElementById('anchor_id_source').value = this.settings.editorSelectedText;
+            document.getElementById('anchor_name_source').value = this.settings.editorSelectedText;
     },
     tagAttributeEditor: function( ed, el, args )
     {
         el.innerHTML = '';
         ed.dom.setAttribs( el, args );
+        return el;
+    },
+    tagCreator: function( ed, tag, customTag, selectedHtml )
+    {
+        return eZOEPopupUtils.insertHTMLCleanly( ed, '<a id="__mce_tmp" class="mceItemAnchor"><\/a>', '__mce_tmp' );
     }
 {/literal}
 {rdelim} ) );
-
-// -->
 </script>
 
 
@@ -53,8 +54,7 @@ tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {ldel
         {* Anchor attribute name is mapped to id internally to workaround a ie issue.. *}
         {include uri="design:ezoe/generalattributes.tpl"
                  tag_name=$tag_name
-                 attributes=hash('id', '' )
-                 attribute_mapping=hash('id', 'name')
+                 attributes=hash('name', '' )
                  attribute_defaults=hash('name', 'Anchor')}
 
         {include uri="design:ezoe/customattributes.tpl" tag_name=$tag_name}

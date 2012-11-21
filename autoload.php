@@ -2,9 +2,10 @@
 /**
  * Autoloader definition for eZ Publish
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPLv2
- *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
  */
 
 // config.php can set the components path like:
@@ -21,7 +22,7 @@ if ( file_exists( 'config.php' ) )
 $useBundledComponents = defined( 'EZP_USE_BUNDLED_COMPONENTS' ) ? EZP_USE_BUNDLED_COMPONENTS === true : file_exists( 'lib/ezc' );
 if ( $useBundledComponents )
 {
-    set_include_path( './lib/ezc' . PATH_SEPARATOR . get_include_path() );
+    set_include_path( '.' . PATH_SEPARATOR . './lib/ezc' . PATH_SEPARATOR . get_include_path() );
     require 'Base/src/base.php';
     $baseEnabled = true;
 }
@@ -70,15 +71,15 @@ class ezpAutoloader
 
             if ( $ezpExtensionClasses and $ezpTestClasses )
             {
-                self::$ezpClasses = array_merge( $ezpKernelClasses, $ezpExtensionClasses, $ezpTestClasses );
+                self::$ezpClasses = $ezpTestClasses + $ezpExtensionClasses + $ezpKernelClasses;
             }
             else if ( $ezpExtensionClasses )
             {
-                self::$ezpClasses = array_merge( $ezpKernelClasses, $ezpExtensionClasses );
+                self::$ezpClasses = $ezpExtensionClasses + $ezpKernelClasses;
             }
             else if ( $ezpTestClasses )
             {
-                self::$ezpClasses = array_merge( $ezpKernelClasses, $ezpTestClasses );
+                self::$ezpClasses = $ezpTestClasses + $ezpKernelClasses;
             }
             else
             {
@@ -96,7 +97,7 @@ class ezpAutoloader
             }
         }
 
-        if ( array_key_exists( $className, self::$ezpClasses ) )
+        if ( isset( self::$ezpClasses[$className] ) )
         {
             require( self::$ezpClasses[$className] );
         }

@@ -132,23 +132,30 @@ MatchFile=thumbnail/image.tpl
 Subdir=templates
 Match[class_identifier]=image
 
-[window_controls]
-Source=window_controls.tpl
-MatchFile=window_controls_user.tpl
-Subdir=templates
-Match[navigation_part_identifier]=ezusernavigationpart
+#[window_controls]
+#Source=window_controls.tpl
+#MatchFile=window_controls_user.tpl
+#Subdir=templates
+#Match[navigation_part_identifier]=ezusernavigationpart
 
-[windows]
-Source=windows.tpl
-MatchFile=windows_user.tpl
-Subdir=templates
-Match[navigation_part_identifier]=ezusernavigationpart
+#[windows]
+#Source=windows.tpl
+#MatchFile=windows_user.tpl
+#Subdir=templates
+#Match[navigation_part_identifier]=ezusernavigationpart
 
 [edit_frontpage]
 Source=content/edit.tpl
 MatchFile=edit/frontpage.tpl
 Subdir=templates
 Match[class_identifier]=frontpage
+
+#[add_to_block_frontpage]
+#Source=content/parts/add_to_block.tpl
+#MatchFile=content/parts/add_to_block_frontpage.tpl
+#Subdir=templates
+#Match[class_identifier]=frontpage
+
 
 [embed_image]
 Source=content/view/embed.tpl

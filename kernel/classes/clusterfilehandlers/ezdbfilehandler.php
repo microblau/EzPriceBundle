@@ -1,39 +1,18 @@
 <?php
-//
-// Definition of eZDBFileHandler class
-//
-// Created on: <19-Apr-2006 16:01:30 vs>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZDBFileHandler class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
-/*! \file
-
+/*!
   Note: Not all code is using this class for cluster access, see index_image_mysql.php and index_image_pgsql.php for more custom code.
 */
 
-class eZDBFileHandler
+class eZDBFileHandler implements ezpDatabaseBasedClusterFileHandler
 {
     /*!
      Controls whether file data from database is cached on the local filesystem.
@@ -52,25 +31,27 @@ class eZDBFileHandler
      *
      * $filePath File path. If specified, file metadata is fetched in the constructor.
      */
-    function eZDBFileHandler( $filePath = false )
+    function __construct( $filePath = false )
     {
         $filePath = eZDBFileHandler::cleanPath( $filePath );
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::ctor( '$filePath' )" );
 
-        $optionArray = array( 'iniFile'     => 'file.ini',
-                              'iniSection'  => 'ClusteringSettings',
-                              'iniVariable' => 'DBBackend' );
+        if ( self::$dbbackend === null )
+        {
+            $optionArray = array( 'iniFile'     => 'file.ini',
+                                  'iniSection'  => 'ClusteringSettings',
+                                  'iniVariable' => 'DBBackend' );
 
-        $options = new ezpExtensionOptions( $optionArray );
+            $options = new ezpExtensionOptions( $optionArray );
 
-        $this->backend = eZExtension::getHandlerClass( $options );
-        $this->backend->_connect( false );
+            self::$dbbackend = eZExtension::getHandlerClass( $options );
+            self::$dbbackend->_connect( false );
 
-        // connection failed
-        if( $this->backend->db === false )
-            throw new eZDBNoConnectionException( $this->backend->dbparams['host'] );
+            // connection failed
+            if( self::$dbbackend->db === false )
+                throw new eZClusterHandlerDBNoConnectionException( self::$dbbackend->dbparams['host'], self::$dbbackend->dbparams['user'], self::$dbbackend->dbparams['pass'] );
+        }
 
-        $this->backendVerify = null;
         $this->filePath = $filePath;
 
         if ( !isset( $GLOBALS['eZDBFileHandler_Settings'] ) )
@@ -80,14 +61,22 @@ class eZDBFileHandler
             unset( $fileINI );
         }
         $this->nonExistantStaleCacheHandling = $GLOBALS['eZDBFileHandler_Settings']['NonExistantStaleCacheHandling'];
+        $this->filePermissionMask = octdec( eZINI::instance()->variable( 'FileSettings', 'StorageFilePermissions' ) );
     }
 
-    /*!
-     \public
-     Load file meta information.
+    /**
+     * Disconnects the cluster handler from the database
+     */
+    public function disconnect()
+    {
+        self::$dbbackend->_disconnect();
+        self::$dbbackend = null;
+    }
 
-     \param $force File stats will be refreshed if true
-    */
+    /**
+     * Load file meta information from the database
+     * @param bool $force File stats will be refreshed if true
+     */
     function loadMetaData( $force = false )
     {
         // Fetch metadata.
@@ -96,10 +85,10 @@ class eZDBFileHandler
 
         // we don't fetch metaData if self::metaData === false, since this means
         // we already tried and got no results, unless $force == true
-        if ( ( $this->metaData === false ) && ( $force !== true ) )
+        if ( ( $this->_metaData === false ) && ( $force !== true ) )
             return;
 
-        if ( $force && isset( $GLOBALS['eZClusterInfo'][$this->filePath] ) )
+        if ( ( $force === true ) && isset( $GLOBALS['eZClusterInfo'][$this->filePath] ) )
             unset( $GLOBALS['eZClusterInfo'][$this->filePath] );
 
         // Checks for metadata stored in memory, useful for repeated access
@@ -108,35 +97,40 @@ class eZDBFileHandler
         if ( isset( $GLOBALS['eZClusterInfo'][$this->filePath] ) )
         {
             $GLOBALS['eZClusterInfo'][$this->filePath]['cnt'] += 1;
-            $this->metaData = $GLOBALS['eZClusterInfo'][$this->filePath]['data'];
+            $this->_metaData = $GLOBALS['eZClusterInfo'][$this->filePath]['data'];
             return;
         }
 
-        $metaData = $this->backend->_fetchMetadata( $this->filePath );
+        $metaData = self::$dbbackend->_fetchMetadata( $this->filePath );
         if ( $metaData )
-            $this->metaData = $metaData;
+            $this->_metaData = $metaData;
         else
-            $this->metaData = false;
+            $this->_metaData = false;
 
         // Clean up old entries if the maximum count is reached
         if ( isset( $GLOBALS['eZClusterInfo'] ) &&
              count( $GLOBALS['eZClusterInfo'] ) >= self::INFOCACHE_MAX )
         {
-            usort( $GLOBALS['eZClusterInfo'],
+            uasort( $GLOBALS['eZClusterInfo'],
                    create_function( '$a, $b',
                                     '$a=$a["cnt"]; $b=$b["cnt"]; if ( $a > $b ) return -1; else if ( $a == $b ) return 0; else return 1;' ) );
             array_pop( $GLOBALS['eZClusterInfo'] );
         }
+        if ( !isset( $GLOBALS['eZClusterInfo'] ) )
+            $GLOBALS['eZClusterInfo'] = array();
         $GLOBALS['eZClusterInfo'][$this->filePath] = array( 'cnt' => 1,
                                                             'data' => $metaData );
     }
 
     /**
-     * \public
-     * \static
-     * \param $filePath Path to the file being stored.
-     * \param $scope    Means something like "file category". May be used to clean caches of a certain type.
-     * \param $delete   true if the file should be deleted after storing.
+     * Stores a local file to the cluster
+     *
+     * @param string $filePath Path to the file being stored.
+     * @param string $scope    File scope. Used to group similar files together. Examples: image, template-block...
+     * @param string $delete   true if the file should be deleted after storing.
+     * @param string $datatype File mime type
+     *
+     * @return void
      */
     function fileStore( $filePath, $scope = false, $delete = false, $datatype = false )
     {
@@ -149,7 +143,7 @@ class eZDBFileHandler
         if ( $datatype === false )
             $datatype = 'misc';
 
-        $this->backend->_store( $filePath, $datatype, $scope );
+        self::$dbbackend->_store( $filePath, $datatype, $scope );
 
         if ( $delete )
             @unlink( $filePath );
@@ -158,8 +152,12 @@ class eZDBFileHandler
     /**
      * Store file contents.
      *
-     * \public
-     * \static
+     * @param string $filePath
+     * @param mixed $contents
+     * @param string $scope
+     * @param string $datatype
+     *
+     * @return void
      */
     function fileStoreContents( $filePath, $contents, $scope = false, $datatype = false )
     {
@@ -172,7 +170,7 @@ class eZDBFileHandler
         if ( $datatype === false )
             $datatype = 'misc';
 
-        $this->backend->_storeContents( $filePath, $contents, $scope, $datatype );
+        self::$dbbackend->_storeContents( $filePath, $contents, $scope, $datatype );
     }
 
     /**
@@ -192,7 +190,7 @@ class eZDBFileHandler
 
         $filePath = $this->filePath;
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::storeContents( '$filePath' )" );
-        $this->backend->_storeContents( $filePath, $contents, $scope, $datatype );
+        self::$dbbackend->_storeContents( $filePath, $contents, $scope, $datatype );
         if ( $storeLocally )
         {
             eZFile::create( basename( $filePath ), dirname( $filePath ), $contents, true );
@@ -210,53 +208,62 @@ class eZDBFileHandler
         $filePath = eZDBFileHandler::cleanPath( $filePath );
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::fileFetch( '$filePath' )" );
 
-        return $this->backend->_fetch( $filePath );
+        $fetchReturn = self::$dbbackend->_fetch( $filePath );
+
+        $this->fixPermissions( $filePath );
+
+        return $fetchReturn;
     }
 
-    /*!
-     Creates a single transaction out of the typical file operations for accessing caches.
-     Caches are normally ready from the database or local file, if the entry does not exist
-     or is expired then it generates the new cache data and stores it.
-     This method takes care of these operations and handles the custom code by performing
-     callbacks when needed.
-
-     The $retrieveCallback is used when the file contents can be used (ie. not re-generation) and
-     is called when the file is ready locally.
-     The function will be called with the file path as the first parameter, the mtime as the second
-     and optionally $extraData as the third.
-     The function must return the file contents or an instance of eZClusterFileFailure which can
-     be used to tell the system that the retrieve data cannot be used after all.
-     $retrieveCallback can be set to null which makes the system go directly to the generation.
-
-     The $generateCallback is used when the file content is expired or does not exist, in this
-     case the content must be re-generated and stored.
-     The function will be called with the file path as the first parameter and optionally $extraData
-     as the second.
-     The function must return an array with information on the contents, the array consists of:
-     - scope    - The current scope of the file, is optional.
-     - datatype - The current datatype of the file, is optional.
-     - content  - The file content, this can be any type except null.
-     - binarydata - The binary data which is written to the file.
-     - store      - Whether *content* or *binarydata* should be stored to the file, if false it will simply return the data. Optional, by default it is true.
-     Note: Set $generateCallback to false to disable generation callback.
-     Note: Set $generateCallback to null to tell the function to perform a write lock but not do any generation, the generation must done be done by the caller by calling storeCache().
-
-     Either *content* or *binarydata* must be supplied, if not an error is issued and it returns null.
-     If *content* is set it will be used as the return value of this function, if not it will return the binary data.
-     If *binarydata* is set it will be used as the binary data for the file, if not it will perform a var_export on *content* and use that as the binary data.
-
-     For convenience the $generateCallback function can return a string which will be considered as the
-     binary data for the file and returned as the content.
-
-     For controlling how long a cache entry can be used the parameters $expiry and $ttl is used.
-     $expiry can be set to a timestamp which controls the absolute max time for the cache, after this
-     time/date the cache will never be used. If the value is set to a negative value or null there the
-     expiration check is disabled.
-
-     $ttl (time to live) tells how many seconds the cache can live from the time it was stored. If the
-     value is set to negative or null there is no limit for the lifetime of the cache. A value of 0 means
-     that the cache will always expire and practically disables caching.
-     For the cache to be used both the $expiry and $ttl check must hold.
+    /**
+     * Creates a single transaction out of the typical file operations for accessing caches.
+     * Caches are normally ready from the database or local file, if the entry does not exist
+     * or is expired then it generates the new cache data and stores it.
+     * This method takes care of these operations and handles the custom code by performing
+     * callbacks when needed.
+     *
+     * Either *content* or *binarydata* must be supplied, if not an error is issued and it returns null.
+     * If *content* is set it will be used as the return value of this function, if not it will return the binary data.
+     * If *binarydata* is set it will be used as the binary data for the file, if not it will perform a var_export on
+     * *content* and use that as the binary data.
+     *
+     * For controlling how long a cache entry can be used the parameters $expiry and $ttl is used.
+     *
+     * @param mixed $retrieveCallback
+     *        The $retrieveCallback is used when the file contents can be used (ie. not re-generation) and
+     *        is called when the file is ready locally.
+     *        The function will be called with the file path as the first parameter, the mtime as the second
+     *        and optionally $extraData as the third.
+     *        The function must return the file contents or an instance of eZClusterFileFailure which can
+     *        be used to tell the system that the retrieve data cannot be used after all.
+     *        $retrieveCallback can be set to null which makes the system go directly to the generation.
+     *        Set to null to tell the function to perform a write lock but not do any generation, the generation must
+     *        done be done by the caller by calling storeCache().
+     * @param mixed $generateCallback
+     *        used when the file content is expired or does not exist, in this case the content must be re-generated and
+     *        stored. The function will be called with the file path as the first parameter and optionally $extraData
+     *        as the second.
+     *        Set to false to disable generation callback.
+     *        For convenience the $generateCallback function can return a string which will be considered as the
+     *        binary data for the file and returned as the content.
+     * @param mixed $ttl
+     *        (time to live) tells how many seconds the cache can live from the time it was stored. If the
+     *        value is set to negative or null there is no limit for the lifetime of the cache. A value of 0 means
+     *        that the cache will always expire and practically disables caching.
+     *        For the cache to be used both the $expiry and $ttl check must hold.
+     * @param mixed $expiry
+     *        $expiry can be set to a timestamp which controls the absolute max time for the cache, after this
+     *        time/date the cache will never be used. If the value is set to a negative value or null there the
+     *        expiration check is disabled.
+     * @param mixed $extraData Extra parameters to be sent to {@link $generateCallback} and {@link $retrieveCallback}
+     *
+     * @return array an array with information on the contents, the array consists of:
+     *         - scope:      The current scope of the file, is optional.
+     *         - datatype:   The current datatype of the file, is optional.
+     *         - content:    The file content, this can be any type except null.
+     *         - binarydata: The binary data which is written to the file.
+     *         - store:      Whether *content* or *binarydata* should be stored to the file, if false it will simply
+     *                       return the data. Optional, by default it is true.
      */
     function processCache( $retrieveCallback, $generateCallback = null, $ttl = null, $expiry = null, $extraData = null )
     {
@@ -290,6 +297,7 @@ class eZDBFileHandler
                 {
                     if ( $this->isLocalFileExpired( $expiry, $curtime, $ttl ) )
                     {
+
                         // if we are in stale cache mode, we only forceDB if the
                         // file does not exist at all
                         if ( $this->useStaleCache )
@@ -601,7 +609,7 @@ class eZDBFileHandler
      * @param int    $curtime The current time to check against.
      * @param int    $ttl Number of seconds the data can live, set to null to disable TTL.
      * @return bool
-     **/
+     */
     public function isExpired( $expiry, $curtime, $ttl )
     {
         if ( $this->metaData === null )
@@ -616,7 +624,7 @@ class eZDBFileHandler
      * @param int    $curtime The current time to check against.
      * @param int    $ttl Number of seconds the data can live, set to null to disable TTL.
      * @return bool
-     **/
+     */
     public function isLocalFileExpired( $expiry, $curtime, $ttl )
     {
         return self::isFileExpired( $this->filePath, @filemtime( $this->filePath ), $expiry, $curtime, $ttl );
@@ -628,20 +636,21 @@ class eZDBFileHandler
      * @param int    $curtime The current time to check against.
      * @param int    $ttl Number of seconds the data can live, set to null to disable TTL.
      * @return bool
-     **/
+     */
     public function isDBFileExpired( $expiry, $curtime, $ttl )
     {
         $mtime = isset( $this->metaData['mtime'] ) ? $this->metaData['mtime'] : 0;
         return self::isFileExpired( $this->filePath, $mtime, $expiry, $curtime, $ttl );
     }
 
-    /*!
-     \private
-     Stores the data in $fileData to the remote and local file and commits the transaction.
-
-     The parameter $fileData must contain the same as information as the $generateCallback returns as explained in processCache().
-
-     \note This method is just a continuation of the code in processCache() and is not meant to be called alone since it relies on specific state in the database.
+    /**
+     * Stores the data in $fileData to the remote and local file and commits the transaction.
+     *
+     * This method is just a continuation of the code in processCache() and is not meant to be called alone since it
+     * relies on specific state in the database.
+     *
+     * The parameter $fileData must contain the same as information as the $generateCallback returns as explained
+     * in processCache().
      */
     function storeCache( $fileData )
     {
@@ -697,6 +706,7 @@ class eZDBFileHandler
         // no store advice, we just return the result
         if ( !$storeCache )
         {
+            $this->abortCacheGeneration();
             return $result;
         }
 
@@ -727,7 +737,7 @@ class eZDBFileHandler
 
         // we end the cache generation process, so that the .generating file
         // is renamed to its final name
-        $this->endCacheGeneration( strlen( $binaryData ), $scope, $datatype );
+        $this->endCacheGeneration();
 
         // the generated file is written to disk
         if ( self::LOCAL_CACHE )
@@ -764,16 +774,14 @@ class eZDBFileHandler
     /**
      * Fetches file from db and saves it in FS under unique name.
      *
-     * \public
-     * \static
-     * \return filename with path of a saved file. You can use this filename to get contents of file from filesystem.
+     * @return string filename with path of a saved file. You can use this filename to get contents of file from filesystem.
      */
     function fetchUnique( )
     {
         $filePath = $this->filePath;
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::fetchUnique( '$filePath' )" );
 
-        $fetchedFilePath = $this->backend->_fetch( $filePath, true );
+        $fetchedFilePath = self::$dbbackend->_fetch( $filePath, true );
         $this->uniqueName = $fetchedFilePath;
         return $fetchedFilePath;
     }
@@ -786,7 +794,7 @@ class eZDBFileHandler
     function fetch( $noLocalCache = false )
     {
         $filePath = $this->filePath;
-        $metaData = $this->backend->_fetchMetadata( $filePath );
+        $metaData = self::$dbbackend->_fetchMetadata( $filePath );
         $mtime = @filemtime( $filePath );
         if ( !$noLocalCache ||
              $metaData === false ||
@@ -796,8 +804,10 @@ class eZDBFileHandler
              !is_readable( $filePath ) )
         {
             eZDebugSetting::writeDebug( 'kernel-clustering', "db::fetch( '$filePath' )" );
-            $this->backend->_fetch( $filePath );
+            self::$dbbackend->_fetch( $filePath );
         }
+
+        $this->fixPermissions( $filePath );
     }
 
     /**
@@ -812,7 +822,7 @@ class eZDBFileHandler
         $filePath = eZDBFileHandler::cleanPath( $filePath );
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::fileFetchContents( '$filePath' )" );
 
-        $contents = $this->backend->_fetchContents( $filePath );
+        $contents = self::$dbbackend->_fetchContents( $filePath );
         return $contents;
     }
 
@@ -826,7 +836,7 @@ class eZDBFileHandler
     {
         $filePath = $this->filePath;
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::fileFetchContents( '$filePath' )" );
-        $contents = $this->backend->_fetchContents( $filePath );
+        $contents = self::$dbbackend->_fetchContents( $filePath );
         return $contents;
     }
 
@@ -868,7 +878,7 @@ class eZDBFileHandler
 
         if ( $this->metaData === null )
             $this->loadMetaData();
-        return isset( $this->metaData['mtime'] ) ? $this->metaData['mtime'] : null;
+        return isset( $this->metaData['mtime'] ) ? (int)$this->metaData['mtime'] : null;
     }
 
     /**
@@ -896,7 +906,7 @@ class eZDBFileHandler
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::fileDeleteByRegex( '$dir', '$fileRegex' )" );
 
         $regex = '^' . ( $dir ? $dir . '/' : '' ) . $fileRegex;
-        $this->backend->_deleteByRegex( $regex );
+        self::$dbbackend->_deleteByRegex( $regex );
     }
 
     /**
@@ -910,7 +920,7 @@ class eZDBFileHandler
         eZDebug::writeWarning( "Using eZDBFileHandler::fileDeleteByWildcard is not recommended since it has some severe performance issues" );
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::fileDeleteByWildcard( '$wildcard' )" );
 
-        $this->backend->_deleteByWildcard( $wildcard );
+        self::$dbbackend->_deleteByWildcard( $wildcard );
     }
 
     /**
@@ -928,7 +938,7 @@ class eZDBFileHandler
         $commonSuffix = eZDBFileHandler::cleanPath( $commonSuffix );
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::fileDeleteByDirList( '$dirList', '$commonPath', '$commonSuffix' )" );
 
-        $this->backend->_deleteByDirList( $dirList, $commonPath, $commonSuffix );
+        self::$dbbackend->_deleteByDirList( $dirList, $commonPath, $commonSuffix );
     }
 
     /**
@@ -946,12 +956,14 @@ class eZDBFileHandler
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::fileDelete( '$path' )" );
 
         if ( $fnamePart === false )
-            $this->backend->_delete( $path );
-        if ( $fnamePart !== false )
-            $pattern = $path . '/' . $fnamePart . '%';
+        {
+            self::$dbbackend->_delete( $path );
+        }
         else
-            $pattern = $path . '/%';
-        $this->backend->_deleteByLike( $pattern );
+        {
+            $pattern = $path . '/' . $fnamePart . '%';
+            self::$dbbackend->_deleteByLike( $pattern );
+        }
     }
 
     /**
@@ -967,10 +979,9 @@ class eZDBFileHandler
         $path = $this->filePath;
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::delete( '$path' )" );
 
-        $this->backend->_delete( $path );
-        $this->backend->_deleteByLike( $path . '/%' );
+        self::$dbbackend->_delete( $path );
 
-        $this->metaData = null;
+        $this->_metaData = null;
     }
 
     /**
@@ -985,6 +996,8 @@ class eZDBFileHandler
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::fileDeleteLocal( '$path' )" );
 
         @unlink( $path );
+
+        eZClusterFileHandler::cleanupEmptyDirectories( $path );
     }
 
     /**
@@ -997,6 +1010,8 @@ class eZDBFileHandler
         $path = $this->filePath;
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::deleteLocal( '$path' )" );
         @unlink( $path );
+
+        eZClusterFileHandler::cleanupEmptyDirectories( $path );
     }
 
     /*!
@@ -1012,8 +1027,8 @@ class eZDBFileHandler
         {
             if ( $count > 0 && $microsleep )
                 usleep( $microsleep ); // Sleep a bit to make the database happier
-            $count = $this->backend->_purgeByLike( $file . "/%", true, $max, $expiry, 'purge' );
-            $this->backend->_purge( $file, true, $expiry, 'purge' );
+            $count = self::$dbbackend->_purgeByLike( $file . "/%", true, $max, $expiry, 'purge' );
+            self::$dbbackend->_purge( $file, true, $expiry, 'purge' );
             if ( $printCallback )
                 call_user_func_array( $printCallback,
                                       array( $file, $count ) );
@@ -1027,6 +1042,8 @@ class eZDBFileHandler
         {
             eZDir::recursiveDelete( $file );
         }
+
+        eZClusterFileHandler::cleanupEmptyDirectories( $file );
     }
 
     /**
@@ -1040,7 +1057,7 @@ class eZDBFileHandler
         $path = eZDBFileHandler::cleanPath( $path );
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::fileExists( '$path' )" );
 
-        $rc = $this->backend->_exists( $path );
+        $rc = self::$dbbackend->_exists( $path );
         return $rc;
     }
 
@@ -1056,37 +1073,26 @@ class eZDBFileHandler
     {
         $path = $this->filePath;
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::exists( '$path' )" );
-        $rc = $this->backend->_exists( $path );
+        $rc = self::$dbbackend->_exists( $path );
         return $rc;
     }
 
     /**
      * Outputs file contents prepending them with appropriate HTTP headers.
      *
-     * \public
-     * \deprecated This function should not be used since it cannot handle reading errors.
-     *             For the PHP 5 port this should be removed.
+     * @param int $offset Transfer start offset
+     * @param int $length Transfer length
+     *
+     * @return void
      */
-    function passthrough()
+    function passthrough( $offset = 0, $length = false )
     {
-        $path = $this->filePath;
-        eZDebugSetting::writeDebug( 'kernel-clustering', "db::passthrough( '$path' )" );
+        $fname = "db::passthrough( '{$this->filePath}' )";
+        eZDebugSetting::writeDebug( 'kernel-clustering', $fname );
         if ( $this->metaData === null )
             $this->loadMetaData();
-        $size = $this->metaData['size'];
-        $mimeType = $this->metaData['datatype'];
-        $mtime = $this->metaData['mtime'];
-        $mdate = gmdate( 'D, d M Y H:i:s T', $mtime );
 
-        header( "Content-Length: $size" );
-        header( "Content-Type: $mimeType" );
-        header( "Last-Modified: $mdate GMT" );
-        header( "Expires: ". gmdate('D, d M Y H:i:s', time() + 6000) . ' GMT');
-        header( "Connection: close" );
-        header( "X-Powered-By: eZ Publish" );
-        header( "Accept-Ranges: bytes" );
-
-        $this->backend->_passThrough( $path );
+        self::$dbbackend->_passThrough( $this->filePath, $offset, $length, $fname );
     }
 
     /**
@@ -1101,7 +1107,7 @@ class eZDBFileHandler
         $dstPath = eZDBFileHandler::cleanPath( $dstPath );
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::fileCopy( '$srcPath', '$dstPath' )" );
 
-        $this->backend->_copy( $srcPath, $dstPath );
+        self::$dbbackend->_copy( $srcPath, $dstPath );
     }
 
     /**
@@ -1116,7 +1122,7 @@ class eZDBFileHandler
         $dstPath = eZDBFileHandler::cleanPath( $dstPath );
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::fileLinkCopy( '$srcPath', '$dstPath' )" );
 
-        $this->backend->_linkCopy( $srcPath, $dstPath );
+        self::$dbbackend->_linkCopy( $srcPath, $dstPath );
     }
 
     /**
@@ -1131,9 +1137,9 @@ class eZDBFileHandler
         $dstPath = eZDBFileHandler::cleanPath( $dstPath );
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::fileMove( '$srcPath', '$dstPath' )" );
 
-        $this->backend->_rename( $srcPath, $dstPath );
+        self::$dbbackend->_rename( $srcPath, $dstPath );
 
-        $this->metaData = null;
+        $this->_metaData = null;
     }
 
     /**
@@ -1148,9 +1154,9 @@ class eZDBFileHandler
 
         eZDebugSetting::writeDebug( 'kernel-clustering', "db::fileMove( '$srcPath', '$dstPath' )" );
 
-        $this->backend->_rename( $srcPath, $dstPath );
+        self::$dbbackend->_rename( $srcPath, $dstPath );
 
-        $this->metaData = null;
+        $this->_metaData = null;
     }
 
     /**
@@ -1167,21 +1173,20 @@ class eZDBFileHandler
         eZDebugSetting::writeDebug( 'kernel-clustering',
                                     sprintf( "db::getFileList( array( %s ), %d )",
                                              implode( ', ', $scopes ), (int) $excludeScopes ) );
-        return $this->backend->_getFileList( $scopes, $excludeScopes );
+        return self::$dbbackend->_getFileList( $scopes, $excludeScopes );
     }
 
-    /*!
-     \static
-     Returns a clean version of input $path.
-
-     - Backslashes are turned into slashes.
-     - Multiple consecutive slashes are turned into one slash.
-     - Ending slashes are removed.
-
-     Examples:
-     - my\windows\path => my/windows/path
-     - extra//slashes/\are/fixed => extra/slashes/are/fixed
-     - ending/slashes/ => ending/slashes
+    /**
+     * Returns a clean version of input $path.
+     *
+     * - Backslashes are turned into slashes.
+     * - Multiple consecutive slashes are turned into one slash.
+     * - Ending slashes are removed.
+     *
+     * Examples:
+     * - my\windows\path => my/windows/path
+     * - extra//slashes/\are/fixed => extra/slashes/are/fixed
+     * - ending/slashes/ => ending/slashes
      */
     static function cleanPath( $path )
     {
@@ -1193,21 +1198,22 @@ class eZDBFileHandler
     }
 
     /**
-    * Starts cache generation for the current file.
-    *
-    * This is done by creating a file named by the original file name, prefixed
-    * with '.generating'.
-    *
-    * @return bool false if the file is being generated, true if it is not
-    **/
+     * Starts cache generation for the current file.
+     *
+     * This is done by creating a file named by the original file name, prefixed
+     * with '.generating'.
+     *
+     * @return bool false if the file is being generated, true if it is not
+     */
     public function startCacheGeneration()
     {
         $generatingFilePath = $this->filePath . '.generating';
-        $ret = $this->backend->_startCacheGeneration( $this->filePath, $generatingFilePath );
+        $ret = self::$dbbackend->_startCacheGeneration( $this->filePath, $generatingFilePath );
 
         // generation granted
         if ( $ret['result'] == 'ok' )
         {
+            eZClusterFileHandler::addGeneratingFile( $this );
             $this->realFilePath = $this->filePath;
             $this->filePath = $generatingFilePath;
             $this->generationStartTimestamp = $ret['mtime'];
@@ -1227,14 +1233,15 @@ class eZDBFileHandler
     }
 
     /**
-    * Ends the cache generation started by startCacheGeneration().
-    **/
+     * Ends the cache generation started by startCacheGeneration().
+     */
     public function endCacheGeneration( $rename = true )
     {
-        if ( $this->backend->_endCacheGeneration( $this->realFilePath, $this->filePath, $rename ) )
+        if ( self::$dbbackend->_endCacheGeneration( $this->realFilePath, $this->filePath, $rename ) )
         {
             $this->filePath = $this->realFilePath;
             $this->realFilePath = null;
+            eZClusterFileHandler::removeGeneratingFile( $this );
             return true;
         }
         else
@@ -1244,37 +1251,38 @@ class eZDBFileHandler
     }
 
     /**
-    * Aborts the current cache generation process.
-    *
-    * Does so by rolling back the current transaction, which should be the
-    * .generating file lock
-    **/
+     * Aborts the current cache generation process.
+     *
+     * Does so by rolling back the current transaction, which should be the
+     * .generating file lock
+     */
     public function abortCacheGeneration()
     {
-        $this->backend->_abortCacheGeneration( $this->filePath );
+        self::$dbbackend->_abortCacheGeneration( $this->filePath );
         $this->filePath = $this->realFilePath;
         $this->realFilePath = null;
+        eZClusterFileHandler::removeGeneratingFile( $this );
     }
 
     /**
      * Checks if the .generating file was changed, which would mean that generation
      * timed out. If not timed out, refreshes the timestamp so that storage won't
      * be stolen
-     **/
+     */
     public function checkCacheGenerationTimeout()
     {
-        return $this->backend->_checkCacheGenerationTimeout( $this->filePath, $this->generationStartTimestamp );
+        return self::$dbbackend->_checkCacheGenerationTimeout( $this->filePath, $this->generationStartTimestamp );
     }
 
     /**
      * Determines the cache type based on the path
      * @return string viewcache, cacheblock or misc
-     **/
-    private function _cacheType()
+     */
+    protected function computeCacheType()
     {
-        if ( strstr( $this->filePath, 'cache/content' ) !== false )
+        if ( strpos( $this->filePath, 'cache/content' ) !== false )
             return 'viewcache';
-        elseif ( strstr( $this->filePath, 'cache/template-block' ) !== false )
+        elseif ( strpos( $this->filePath, 'cache/template-block' ) !== false )
             return 'cacheblock';
         else
             return 'misc';
@@ -1282,7 +1290,7 @@ class eZDBFileHandler
 
     /**
      * Magic getter
-     **/
+     */
     function __get( $propertyName )
     {
         switch ( $propertyName )
@@ -1290,115 +1298,171 @@ class eZDBFileHandler
             case 'cacheType':
             {
                 static $cacheType = null;
-                if ( $cacheType == null )
-                    $cacheType = $this->_cacheType();
-                return $cacheType;
+                if ( $this->_cacheType == null )
+                    $this->_cacheType = $this->computeCacheType();
+                return $this->_cacheType;
             } break;
+
+            case 'metaData':
+            {
+                if ( $this->_metaData === null )
+                {
+                    $this->loadMetaData();
+                }
+                return $this->_metaData;
+            }
         }
     }
 
     /**
      * Since eZDB uses the database, running clusterize.php is required
      * @return bool
-     **/
+     */
     public function requiresClusterizing()
     {
         return true;
     }
 
     /**
-     * eZDFS does require binary purge.
+     * eZDB does require binary purge.
      * It does store files in DB and therefore doesn't remove files in real time
-     * 
+     *
      * @since 4.3.0
+     * @deprecated Deprecated as of 4.5, use {@link eZDBFileHandler::requiresPurge()} instead.
+     * @return bool
      */
     public function requiresBinaryPurge()
     {
         return true;
     }
-    
+
+    /**
+     * eZDB does require binary purge.
+     * It does store files in DB and therefore doesn't remove files in real time
+     *
+     * @since 4.5.0
+     * @return bool
+     */
+    public function requiresPurge()
+    {
+        return true;
+    }
+
     /**
      * Fetches the first $limit expired binary items from the DB
-     * 
+     *
      * @param array $limit A 2 items array( offset, limit )
-     * 
+     *
      * @return array(eZClusterFileHandlerInterace)
      * @since 4.3.0
-     * 
+     * @deprecated Deprecated as of 4.5, use {@link eZDBFileHandler::fetchExpiredItems()} instead.
+     *
      * @todo handle output using $cli or something
      */
     public function fetchExpiredBinaryItems( $limit = array( 0, 100 ) )
     {
-        return $this->backend->expiredFilesList( array( 'image', 'binaryfile' ), $limit );
+        return self::$dbbackend->fetchExpiredItems( array( 'image', 'binaryfile' ), $limit );
     }
 
     /**
-    * Database backend class
-    * @var eZDBFileHandlerMysqlBackend
-    **/
-    public $backend;
+     * Fetches the first $limit expired files from the DB
+     *
+     * @param array $scopes Array of scopes to fetch from
+     * @param array $limit A 2 items array( offset, limit )
+     * @param int $expiry Number of seconds, only items older than this will be returned
+     *
+     * @return array(filepath)
+     * @since 4.5.0
+     */
+    public function fetchExpiredItems( $scopes, $limit = array( 0 , 100 ), $expiry = false )
+    {
+        return self::$dbbackend->expiredFilesList( $scopes, $limit, $expiry );
+    }
+
+    public function hasStaleCacheSupport()
+    {
+        return true;
+    }
+
+    protected function fixPermissions( $filePath )
+    {
+        if ( file_exists( $filePath ) )
+            chmod( $filePath, $this->filePermissionMask );
+    }
 
     /**
-     * Secondary database backend class, used to check for modifications outside
-     * of the main transaction scope
+     * Database backend class
      * @var eZDBFileHandlerMysqlBackend
-     **/
-    public $backendVerify;
+     */
+    public static $dbbackend;
 
     /**
-    * Path to the current file
-    * @var string
-    **/
+     * Path to the current file
+     * @var string
+     */
     public $filePath;
 
     /**
-    * holds the real file path. This is only used when we are generating a cache
-    * file, in which case $filePath holds the generating cache file name,
-    * and $realFilePath holds the real name
-    **/
+     * holds the real file path. This is only used when we are generating a cache
+     * file, in which case $filePath holds the generating cache file name,
+     * and $realFilePath holds the real name
+     */
     public $realFilePath = null;
 
     /**
-    * holds the file's metaData loaded from database
-    * The variable's type indicates the exact status:
-    *   - null: means that metaData have not been loaded yet
-    *   - false: means that metaData were loaded but the file was not found in DB
-    *   - array: metaData have been loaded and file exists
-    * @todo refactor to a magic property:
-    *   - when the property is requested, we check if it's null.
-    *   - if it is, we load the metadata from the database and cache them
-    *   - if it is not, we return the metaData
-    *   - then we add a reinitMetaData() method that resets the property to null
-    *     by erasing the cache
-    **/
-    public $metaData = null;
+     * holds the file's metaData loaded from database
+     * The variable's type indicates the exact status:
+     *   - null: means that metaData have not been loaded yet
+     *   - false: means that metaData were loaded but the file was not found in DB
+     *   - array: metaData have been loaded and file exists
+     * @todo refactor to a magic property:
+     *   - when the property is requested, we check if it's null.
+     *   - if it is, we load the metadata from the database and cache them
+     *   - if it is not, we return the metaData
+     *   - then we add a reinitMetaData() method that resets the property to null
+     *     by erasing the cache
+     */
+    public $_metaData = null;
 
     /**
      * Indicates that the current cache item is being generated and an old version
      * should be used
      * @var bool
-     **/
-    private $useStaleCache = false;
+     */
+    protected $useStaleCache = false;
 
     /**
- * Holds the preferences used when stale cache is activated and no expired
- * file is available.
- * This is loaded from file.ini, ClusteringSettings.NonExistantStaleCacheHandling
- **/
-    private $nonExistantStaleCacheHandling;
+     * Holds the preferences used when stale cache is activated and no expired
+     * file is available.
+     * This is loaded from file.ini, ClusteringSettings.NonExistantStaleCacheHandling
+     */
+    protected $nonExistantStaleCacheHandling;
 
     /**
- * Holds the number of seconds remaining before the generating cache times out
- * @var int
- **/
-    private $remainingCacheGenerationTime = false;
+     * Holds the number of seconds remaining before the generating cache times out
+     * @var int
+     */
+    protected $remainingCacheGenerationTime = false;
 
     /**
- * When the instance generates the cached version for a file, this property
- * holds the timestamp at which generation was started. This is used to control
- * a possible generation timeout
- * @var int
- **/
-    private $generationStartTimestamp = false;
+     * When the instance generates the cached version for a file, this property
+     * holds the timestamp at which generation was started. This is used to control
+     * a possible generation timeout
+     * @var int
+     */
+    protected $generationStartTimestamp = false;
+
+    /**
+     * Type of cache file, used by the nameTrunk feature to determine how nametrunk is computed
+     * @var string
+     */
+    protected $_cacheType;
+
+    /**
+     * Permission mask that must be applied to created files
+     * @var int
+     */
+    private $filePermissionMask;
+
 }
 ?>

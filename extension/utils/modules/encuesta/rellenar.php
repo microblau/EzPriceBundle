@@ -45,5 +45,5 @@ $tpl->setVariable( 'node', $encuesta->attribute( 'main_node' ) );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:encuesta/rellenar.tpl" );
 $Result['path'] = array( array( 'url' => false,
-	                                'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+	                                'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
 ?>

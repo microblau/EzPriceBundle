@@ -4,69 +4,63 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ JSCore extension for eZ Publish
-// SOFTWARE RELEASE: 1.x
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE RELEASE: 4.7.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: eZ Business Use License Agreement eZ BUL Version 2.1
 // NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
+//   This source file is part of the eZ Publish CMS and is
+//   licensed under the terms and conditions of the eZ Business Use
+//   License v2.1 (eZ BUL).
 // 
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
+//   A copy of the eZ BUL was included with the software. If the
+//   license is missing, request a copy of the license via email
+//   at license@ez.no or via postal mail at
+//  	Attn: Licensing Dept. eZ Systems AS, Klostergata 30, N-3732 Skien, Norway
 // 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// 
-// 
+//   IMPORTANT: THE SOFTWARE IS LICENSED, NOT SOLD. ADDITIONALLY, THE
+//   SOFTWARE IS LICENSED "AS IS," WITHOUT ANY WARRANTIES WHATSOEVER.
+//   READ THE eZ BUL BEFORE USING, INSTALLING OR MODIFYING THE SOFTWARE.
+
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /* 
  * Brief: ezjsc module run
- * A light redirector to be able to run other modules indirectly,
- * when this module has rewrite rules to run under index_ajax.php
- * Net effect is faster execution.
+ * A light redirector to be able to run other modules indirectly w/o having to use empty layout/set/*.
  */
 
 $uriParams = $Params['Parameters'];
 $userParams = $Params['UserParameters'];
 
-// These functions are only set if called via index_ajax.php
-if ( !function_exists( 'hasAccessToBySetting' ) )
+// Functions that earlier existed in index_ajax.php (now removed from ezjscore)
+function exitWithInternalError( $errorText )
 {
-    function exitWithInternalError( $errorText )
-    {
-        header( $_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error' );
-        //include_once( 'extension/ezjscore/classes/ezjscajaxcontent.php' );
-        $contentType = ezjscAjaxContent::getHttpAccept();
-    
-        // set headers
-        if ( $contentType === 'xml' )
-            header('Content-Type: text/xml; charset=utf-8');
-        else if ( $contentType === 'json' )
-            header('Content-Type: text/javascript; charset=utf-8');
-    
-        echo ezjscAjaxContent::autoEncode( array( 'error_text' => $errorText, 'content' => '' ), $contentType );
-        eZExecution::cleanExit();
-    }
+    header( $_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error' );
+    //include_once( 'extension/ezjscore/classes/ezjscajaxcontent.php' );
+    $contentType = ezjscAjaxContent::getHttpAccept();
 
-    function hasAccessToBySetting( $moduleName, $view = false, $policyAccessList = false )
+    // set headers
+    if ( $contentType === 'xml' )
+        header('Content-Type: text/xml; charset=utf-8');
+    else if ( $contentType === 'json' )
+        header('Content-Type: text/javascript; charset=utf-8');
+
+    echo ezjscAjaxContent::autoEncode( array( 'error_text' => $errorText, 'content' => '' ), $contentType );
+    eZExecution::cleanExit();
+}
+
+function hasAccessToBySetting( $moduleName, $view = false, $policyAccessList = false )
+{
+    if ( $policyAccessList !== false )
     {
-        if ( $policyAccessList !== false )
-        {
-            if ( in_array( $moduleName, $policyAccessList) )
-                return true;
-            if ( $view && in_array( $moduleName . '/' . $view, $policyAccessList) )
-                return true;
-        }
-        return false;
+        if ( in_array( $moduleName, $policyAccessList) )
+            return true;
+        if ( $view && in_array( $moduleName . '/' . $view, $policyAccessList) )
+            return true;
     }
-}// if ( !function_exists( 'hasAccessToModule' ) )
+    return false;
+}
+
 
 
 // look for module and view info in uri parameters
@@ -96,7 +90,7 @@ if ( !isset( $moduleViews[ $viewName ] ) )
 }
 
 // Check if module / view is disabled
-$moduleCheck = accessAllowed( $uri );
+$moduleCheck = eZModule::accessAllowed( $uri );
 if ( !$moduleCheck['result'] )
 {
     exitWithInternalError( '$moduleName/$viewName is disabled.' );
@@ -121,5 +115,5 @@ $moduleResult = $module->run( $viewName, $uri->elements( false ), false, $uri->u
 
 // ouput result and end exit cleanly
 eZDB::checkTransactionCounter();
-echo $moduleResult['content'];
+echo ezpEvent::getInstance()->filter( 'response/output', $moduleResult['content'] );
 eZExecution::cleanExit();

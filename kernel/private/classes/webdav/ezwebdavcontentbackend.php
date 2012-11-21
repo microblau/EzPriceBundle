@@ -1,33 +1,12 @@
 <?php
-//
-// This is the eZWebDAVContentBackend class. Manages WebDAV sessions.
-// Based on the eZ Components Webdav component.
-//
-// Created on: <14-Jul-2008 15:15:15 as>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZWebDAVContentBackend class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 /*!
   \class eZWebDAVContentBackend ezwebdavcontentbackend.php
@@ -161,9 +140,9 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
      * locking is successful. If $timeout is reached before a lock could be
      * acquired, an {@link ezcWebdavLockTimeoutException} is thrown. Waits
      * $waitTime microseconds between attempts to lock the backend.
-     * 
-     * @param int $waitTime 
-     * @param int $timeout 
+     *
+     * @param int $waitTime
+     * @param int $timeout
      * @return void
      */
     public function lock( $waitTime, $timeout )
@@ -173,7 +152,7 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
 
     /**
      * Removes the lock.
-     * 
+     *
      * @return void
      */
     public function unlock()
@@ -291,16 +270,18 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
      */
     protected function getResourceContents( $target )
     {
-        $result = array();
+        $result = array( 'data' => false, 'file' => false );
         $fullPath = $target;
         $target = $this->splitFirstPathElement( $fullPath, $currentSite );
 
         $data = $this->getVirtualFolderData( $result, $currentSite, $target, $fullPath );
-
-        if ( isset( $data['file'] ) )
+        if ( $data['file'] )
         {
-            return file_get_contents( $data['file'] );
+            $file = eZClusterFileHandler::instance( $data['file'] );
+            //$this->cachedProperties[ $data['file'] ]['size'] = $file->size();
+            return $file->fetchContents();
         }
+
         return false;
     }
 
@@ -431,14 +412,14 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
 
     /**
      * Returns a property of a resource.
-     * 
+     *
      * Returns the property with the given $propertyName, from the resource
      * identified by $path. You may optionally define a $namespace to receive
      * the property from.
      *
-     * @param string $path 
-     * @param string $propertyName 
-     * @param string $namespace 
+     * @param string $path
+     * @param string $propertyName
+     * @param string $namespace
      * @return ezcWebdavProperty
      */
     public function getProperty( $path, $propertyName, $namespace = 'DAV:' )
@@ -508,7 +489,7 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
                 $property = new ezcWebdavResourceTypeProperty();
                 $mimetype = isset( $item['mimetype'] ) ? $item['mimetype'] : self::DEFAULT_MIMETYPE;
                 $property->type = ( $mimetype === self::DIRECTORY_MIMETYPE ) ?
-                    ezcWebdavResourceTypeProperty::TYPE_COLLECTION : 
+                    ezcWebdavResourceTypeProperty::TYPE_COLLECTION :
                     ezcWebdavResourceTypeProperty::TYPE_RESOURCE;
                 break;
 
@@ -532,11 +513,11 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
 
     /**
      * Returns all properties for a resource.
-     * 
+     *
      * Returns all properties for the resource identified by $path as a {@link
      * ezcWebdavBasicPropertyStorage}.
      *
-     * @param string $path 
+     * @param string $path
      * @return ezcWebdavPropertyStorage
      */
     public function getAllProperties( $path )
@@ -559,8 +540,8 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
      *
      * Returns the {@link ezcWebdavPropertyStorage} instance containing the
      * properties for the resource identified by $path.
-     * 
-     * @param string $path 
+     *
+     * @param string $path
      * @return ezcWebdavBasicPropertyStorage
      */
     protected function getPropertyStorage( $path )
@@ -575,8 +556,8 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
      * Returns if a resource exists.
      *
      * Returns if a the resource identified by $path exists.
-     * 
-     * @param string $path 
+     *
+     * @param string $path
      * @return bool
      */
     protected function nodeExists( $path )
@@ -594,8 +575,8 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
      *
      * Returns if the resource identified by $path is a collection resource
      * (true) or a non-collection one (false).
-     * 
-     * @param string $path 
+     *
+     * @param string $path
      * @return bool
      */
     protected function isCollection( $path )
@@ -645,7 +626,7 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
      * This method acquires the internal lock of the backend, dispatches to
      * {@link ezcWebdavSimpleBackend} to perform the operation and releases the
      * lock afterwards.
-     * 
+     *
      * @param ezcWebdavHeadRequest $request
      * @return ezcWebdavResponse
      */
@@ -660,7 +641,7 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
 
     /**
      * Serves PROPFIND requests.
-     * 
+     *
      * The method receives a {@link ezcWebdavPropFindRequest} object containing
      * all relevant information obout the clients request and will either
      * return an instance of {@link ezcWebdavErrorResponse} to indicate an error
@@ -905,7 +886,7 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
             return false; // @as self::FAILED_FORBIDDEN;
         }
 
-        $result = $this->putVirtualFolderData( $currentSite, $target, $tempFile, $fullPath );
+        $result = $this->putVirtualFolderData( $currentSite, $target, $tempFile );
 
         unlink( $tempFile );
         eZDir::cleanupEmptyDirectories( dirname( $tempFile ) );
@@ -1023,7 +1004,7 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
         $fullPath = $target;
         $target = $this->splitFirstPathElement( $target, $currentSite );
 
-        $status = $this->deleteVirtualFolder( $currentSite, $target, $fullPath );
+        $status = $this->deleteVirtualFolder( $currentSite, $target );
         // @as @todo return based on $status
 
         // Return success
@@ -1317,7 +1298,7 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
 
     /**
      * Required method to serve OPTIONS requests.
-     * 
+     *
      * The method receives a {@link ezcWebdavOptionsRequest} object containing all
      * relevant information obout the clients request and should either return
      * an error by returning an {@link ezcWebdavErrorResponse} object, or any
@@ -1378,9 +1359,9 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
     {
         eZWebDAVContentBackend::appendLogEntry( __FUNCTION__ . '1:' . $site );
         $access = array( 'name' => $site,
-                         'type' => EZ_ACCESS_TYPE_STATIC );
+                         'type' => eZSiteAccess::TYPE_STATIC );
 
-        $access = changeAccess( $access );
+        $access = eZSiteAccess::change( $access );
         eZWebDAVContentBackend::appendLogEntry( __FUNCTION__ . '2:' . $site );
 
         eZDebugSetting::writeDebug( 'kernel-siteaccess', $access, 'current siteaccess' );
@@ -1449,6 +1430,7 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
         $classIdentifier = $node->attribute( 'class_identifier' );
 
         $object = $node->attribute( 'object' );
+        $urlAlias = $node->urlAlias();
 
         // By default, everything is displayed as a folder:
         // Trim the name of the node, it is in some cases whitespace in eZ Publish
@@ -1459,7 +1441,7 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
         $entry["name"] = ( $name !== '' && $name !== NULL ) ? $name : $node->attribute( 'node_id' );
         $entry["size"] = 0;
         $entry["mimetype"] = self::DIRECTORY_MIMETYPE;
-        eZWebDAVContentBackend::appendLogEntry( 'FetchNodeInfo:' . $node->attribute( 'name' ) . '/' . $node->urlAlias() );
+        eZWebDAVContentBackend::appendLogEntry( 'FetchNodeInfo:' . $node->attribute( 'name' ) . '/' . $urlAlias );
 
         // @todo handle articles as files
         // if ( $classIdentifier === 'article' )
@@ -1572,6 +1554,18 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
             {
                 $startURL = '/' . $siteAccess . '/' . $virtualFolder . '/';
             }
+            // Media folder is special since the virtual folder name is translated via ezpI18n (@see self::virtualMediaFolderName())
+            // but the URL Alias of this top node can vary (depends if content objects are available in the current siteaccess's language).
+            // So we need to replace the media folder URL Alias part by the one translated via ezpI18n, which never varies.
+            // Otherwise unexpected errors can occurred, depending on WebDAV client, especially when URL Alias from media child nodes
+            // doesn't match EXACTLY with the virtual media folder name.
+            // e.g. : having "Média" as virtual media folder name and a child node with Media/Images (without accent) as URL alias will break.
+            // See http://issues.ez.no/15035
+            else if ( $virtualFolder === self::virtualMediaFolderName() )
+            {
+                $startURL = '/' . $siteAccess . '/' . $virtualFolder . '/';
+                $urlAlias = substr( $urlAlias, strpos( $urlAlias, '/' ) + 1 );
+            }
             else
             {
                 $startURL = '/' . $siteAccess . '/';
@@ -1591,7 +1585,7 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
                 $suffix = '.' . $suffix;
             }
 
-            $entry["href"] = $startURL . $node->urlAlias() . $suffix;
+            $entry["href"] = $startURL . $urlAlias . $suffix;
         }
 
         // Return array of attributes/properties (name, size, mime, times, etc.).
@@ -1650,7 +1644,7 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
      * @param string $currentSite Eg. 'plain_site_user'
      * @param string $virtualFolder Eg. 'Content'
      * @param string $target Eg. 'Folder1/file1.txt'
-     * @param string $fullPath Eg. '/plain_site_user/Content/Folder1/file1.txt' 
+     * @param string $fullPath Eg. '/plain_site_user/Content/Folder1/file1.txt'
      * @return array(string=>mixed) Or false if an error appeared
      * @todo remove/replace eZContentUpload
      */
@@ -1870,7 +1864,7 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
         }
 
         // added by @ds 2008-12-07 to fix problems with IE6 SP2
-        $ini = eZIni::instance();
+        $ini = eZINI::instance();
         $prefixAdded = false;
         $prefix = $ini->hasVariable( 'SiteAccessSettings', 'PathPrefix' ) &&
                       $ini->variable( 'SiteAccessSettings', 'PathPrefix' ) != '' ? eZURLAliasML::cleanURL( $ini->variable( 'SiteAccessSettings', 'PathPrefix' ) ) : false;
@@ -2877,7 +2871,6 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
         }
         else
         {
-            //include_once( 'kernel/classes/ezcontentobjecttreenodeoperations.php' );
             if( !eZContentObjectTreeNodeOperations::move( $sourceNode->attribute( 'node_id' ), $destinationNode->attribute( 'node_id' ) ) )
             {
                 $this->appendLogEntry( "Unable to move the node '$sourceSite':'$nodePath' to '$destinationSite':'$destinationNodePath'", 'CS:moveContent' );
@@ -2893,7 +2886,6 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
                     $contentObjectAttributes[0]->setAttribute( 'data_text', basename( $destination ) );
                     $contentObjectAttributes[0]->store();
 
-                    //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
                     $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $contentObjectID, 'version' => 1 ) );
                     $object->store();
         */

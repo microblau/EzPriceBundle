@@ -88,17 +88,15 @@
 <tbody>
 </table>
 <script type="text/javascript">
-<!--
-
 eZOEPopupUtils.settings.customAttributeInitHandler['{$custom_attribute_id}_source'] = {literal} function( el, value )
 {
     if ( jQuery.trim( value ) === '' ) return;
     var valArr = (value +'').split(/\s/g), base_id = el.id.replace('_source', ''), inp, sel, tid, size;
-    for(var i = 0, l = ez.min( valArr.length, 4 ); i < l; i++)
+    for(var i = 0, l = eZOEPopupUtils.min( valArr.length, 4 ); i < l; i++)
     {
         tid = (i === 0 ? '' : '_' + i);
-        inp = ez.$( base_id + '_source' + tid ).el;
-        inp.value = ez.num( valArr[i], 0, 'int' );
+        inp = document.getElementById( base_id + '_source' + tid );
+        inp.value = eZOEPopupUtils.Int( valArr[i] );
         size = document.getElementById( base_id + '_sizetype' + tid );
         size.selectedIndex = jQuery.inArray( valArr[i].replace( inp.value, '' ), jQuery('#' + base_id + '_sizetype' + tid + ' option').map(function( i, n )
         {
@@ -119,6 +117,4 @@ eZOEPopupUtils.settings.customAttributeSaveHandler['{$custom_attribute_id}_sourc
     }
     return hasValue ? tempval.join(' ') : '';
 };{/literal}
-
-//-->
 </script>

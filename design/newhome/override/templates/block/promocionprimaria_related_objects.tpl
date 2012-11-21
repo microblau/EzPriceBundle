@@ -33,7 +33,7 @@ $(".btnOpinion").fancybox({
 									<div class="imgModuloDest">
                                        {if $node.data_map.url_youtube.has_content}
 {def $aux=$node.data_map.url_youtube.content|explode('v=')}
-                                            	<div class="youtube-player" id="{$aux.1}"></div>
+                                            	<div class="youtube-player" id="{$aux.1}" idvideo="{$aux.1}" ></div>
 {undef $aux}
                                        {elseif $node.data_map.video.has_content}
 
@@ -115,6 +115,7 @@ $(".btnOpinion").fancybox({
 								</div>		
 								{/if}
 								</li>
+								{undef $img}
                                 {/foreach}
 								
 							</ul>		

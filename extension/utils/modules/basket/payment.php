@@ -28,7 +28,7 @@ if ( $existeUsuario == 0 )
 	$Result = array();
     $Result['content'] = $tpl->fetch( "design:basket/payment.tpl" );
     $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
 }
 else
 {
@@ -55,6 +55,6 @@ else
 	$Result = array();
 	$Result['content'] = $tpl->fetch( "design:basket/payment.tpl" );
 	$Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
 }
 ?>

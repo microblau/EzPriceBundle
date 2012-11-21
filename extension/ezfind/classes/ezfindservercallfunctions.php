@@ -30,10 +30,16 @@ class eZFindServerCallFunctions
 
         if ( $searchLimit > 30 ) $searchLimit = 30;
 
+        if ( $http->hasPostVariable( 'SearchSubTreeArray' ) && $http->postVariable( 'SearchSubTreeArray' ) )
+        {
+            $search_sub_tree_array = explode( ',', $http->postVariable( 'SearchSubTreeArray' ) );
+        }
+
         //Prepare the search params
         $param = array( 'SearchOffset' => $searchOffset,
                         'SearchLimit' => $searchLimit+1,
-                        'SortArray' => array( 'score', 0 )
+                        'SortArray' => array( 'score', 0 ),
+                        'SearchSubTreeArray' => $search_sub_tree_array
                       );
 
         if ( $http->hasPostVariable( 'enable-spellcheck' ) and $http->postVariable( 'enable-spellcheck' ) == 1 )
@@ -47,7 +53,7 @@ class eZFindServerCallFunctions
             $param['facet'] = $defaultFacetFields;
         }
 
-        $solr= new eZSolr();
+        $solr = new eZSolr();
         $searchList = $solr->search( $searchStr, $param );
 
         $result = array();
@@ -69,7 +75,7 @@ class eZFindServerCallFunctions
 
             foreach ( $defaultFacetFields as $key => $defaultFacet )
             {
-                $facetData=$retrievedFacets[$key];
+                $facetData = $retrievedFacets[$key];
                 $facetInfo[$key] = array();
                 $facetInfo[$key][] = $defaultFacet['name'];
 
@@ -96,32 +102,69 @@ class eZFindServerCallFunctions
 
     /**
      * Returns autocomplete suggestions for given params
-     * 
+     *
      * @param mixed $args
      * @return array
      */
     public static function autocomplete( $args )
     {
         $result = array();
-        $ini = eZINI::instance( 'ezfind.ini' );
+        $findINI = eZINI::instance( 'ezfind.ini' );
 
-        $input = isset( $args[0] ) ? mb_strtolower( $args[0], 'UTF-8' ) : null;
-        $limit = isset( $args[1] ) ? (int)$args[1] : (int)$ini->variable( 'AutoCompleteSettings', 'Limit' );
+        // Only make calls if explicitely enabled
+        if ( $findINI->hasVariable( 'AutoCompleteSettings', 'AutoComplete' ) && $findINI->variable( 'AutoCompleteSettings', 'AutoComplete' ) === 'enabled' )
+        {
 
-        $facetField = $ini->variable( 'AutoCompleteSettings', 'FacetField' );
+            $solrINI = eZINI::instance( 'solr.ini' );
+            $siteINI = eZINI::instance();
+            $currentLanguage = $siteINI->variable( 'RegionalSettings', 'ContentObjectLocale' );
 
-        $params = array( 'q' => '*:*',
-                         'json.nl' => 'arrarr',
-                         'facet' => 'true',
-                         'facet.field' => $facetField,
-                         'facet.prefix' => $input,
-                         'facet.limit' => $limit );
+            $input = isset( $args[0] ) ? mb_strtolower( $args[0], 'UTF-8' ) : null;
+            $limit = isset( $args[1] ) ? (int)$args[1] : (int)$findINI->variable( 'AutoCompleteSettings', 'Limit' );
 
-        $solrBase = new eZSolrBase();
-        $result = $solrBase->rawSolrRequest( '/select', $params, 'json' );
-print_r( $result );
-        return $result['facet_counts']['facet_fields'][$facetField];
+            $facetField = $findINI->variable( 'AutoCompleteSettings', 'FacetField' );
+            $facetMethod = $findINI->variable( 'AutoCompleteSettings', 'FacetMethod' );
+
+            $params = array( 'q' => '*:*',
+                             'rows' => 0,
+                             'json.nl' => 'arrarr',
+                             'facet' => 'true',
+                             'facet.field' => $facetField,
+                             'facet.prefix' => $input,
+                             'facet.limit' => $limit,
+                             'facet.method' => $facetMethod,
+                             'facet.mincount' => 1 );
+
+            if ( $findINI->variable( 'LanguageSearch', 'MultiCore' ) == 'enabled' )
+            {
+               $languageMapping = $findINI->variable( 'LanguageSearch','LanguagesCoresMap' );
+               $shardMapping = $solrINI->variable( 'SolrBase', 'Shards' );
+               $fullSolrURI = $shardMapping[$languageMapping[$currentLanguage]];
+            }
+            else
+            {
+                $fullSolrURI = $solrINI->variable( 'SolrBase', 'SearchServerURI' );
+                // Autocomplete search should be done in current language and fallback languages
+                $validLanguages = array_unique(
+                    array_merge(
+                        $siteINI->variable( 'RegionalSettings', 'SiteLanguageList' ),
+                        array( $currentLanguage )
+                    )
+                );
+                $params['fq'] = 'meta_language_code_ms:(' . implode( ' OR ', $validLanguages ) . ')';
+            }
+
+            $solrBase = new eZSolrBase( $fullSolrURI );
+            $result = $solrBase->rawSolrRequest( '/select', $params, 'json' );
+
+            return $result['facet_counts']['facet_fields'][$facetField];
+        }
+        else
+        {
+            // not enabled, just return an empty array
+            return array();
+        }
+
     }
 }
-
 ?>

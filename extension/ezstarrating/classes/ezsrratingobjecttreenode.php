@@ -82,7 +82,7 @@ class ezsrRatingObjectTreeNode extends eZContentObjectTreeNode
             if( $node['node_id'] == 1 )
             {
                 if( !isset( $node['name'] ) || !$node['name'] )
-                    $node['name'] = ezi18n( 'kernel/content', 'Top Level Nodes' );
+                    $node['name'] = ezpI18n::tr( 'kernel/content', 'Top Level Nodes' );
             }
 
             $object = new self( $node );

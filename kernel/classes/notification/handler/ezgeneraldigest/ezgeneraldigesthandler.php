@@ -1,35 +1,12 @@
 <?php
-//
-// Definition of eZGeneralDigestHandler class
-//
-// Created on: <16-May-2003 10:55:24 sp>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZGeneralDigestHandler class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 /*!
   \class eZGeneralDigestHandler ezgeneraldigesthandler.php
@@ -134,20 +111,28 @@ class eZGeneralDigestHandler extends eZNotificationEventHandler
             $addressArray = $this->fetchUsersForDigest( $timestamp );
 
             $tpl = eZTemplate::factory();
+            $prevTplUsageStats = $tpl->setIsTemplatesUsageStatisticsEnabled( false );
 
+            $transport = eZNotificationTransport::instance( 'ezmail' );
             foreach ( $addressArray as $address )
             {
                 $tpl->setVariable( 'date', $date );
                 $tpl->setVariable( 'address', $address['address'] );
                 $result = $tpl->fetch( 'design:notification/handler/ezgeneraldigest/view/plain.tpl' );
                 $subject = $tpl->variable( 'subject' );
-                $transport = eZNotificationTransport::instance( 'ezmail' );
-                $transport->send( $address, $subject, $result);
+
+                $parameters = array();
+                if ( $tpl->hasVariable( 'content_type' ) )
+                    $parameters['content_type'] = $tpl->variable( 'content_type' );
+
+                $transport->send( $address, $subject, $result, null, $parameters );
                 eZDebugSetting::writeDebug( 'kernel-notification', $result, "digest result" );
             }
 
             $collectionItemIDList = $tpl->variable( 'collection_item_id_list' );
             eZDebugSetting::writeDebug( 'kernel-notification', $collectionItemIDList, "handled items" );
+
+            $tpl->setIsTemplatesUsageStatisticsEnabled( $prevTplUsageStats );
 
             if ( is_array( $collectionItemIDList ) && count( $collectionItemIDList ) > 0 )
             {
@@ -178,7 +163,7 @@ class eZGeneralDigestHandler extends eZNotificationEventHandler
 
     }
 
-    function fetchHandlersForUser( $time, $address )
+    static function fetchHandlersForUser( $time, $address )
     {
         $db = eZDB::instance();
 
@@ -202,7 +187,7 @@ class eZGeneralDigestHandler extends eZNotificationEventHandler
         return $handlers;
     }
 
-    function fetchItemsForUser( $time, $address, $handler )
+    static function fetchItemsForUser( $time, $address, $handler )
     {
         $db = eZDB::instance();
 

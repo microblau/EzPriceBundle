@@ -7,26 +7,23 @@
                                            )}
 
 <script type="text/javascript">
-<!--
-
 var ezTagName = '{$tag_name|wash}', customTagName = '{$custom_tag_name}', imageIcon = {"tango/image-x-generic22.png"|ezimage};
 eZOEPopupUtils.settings.customAttributeStyleMap = {$custom_attribute_style_map};
 eZOEPopupUtils.settings.tagEditTitleText = "{'Edit %tag_name tag'|i18n('design/standard/ezoe', '', hash( '%tag_name', concat('&lt;', $tag_name_alias, '.', $custom_tag_name, '&gt;') ))|wash('javascript')}";
-{literal} 
-
+{literal}
 
 tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {
     tagName: ezTagName,
     form: 'EditForm',
     cancelButton: 'CancelButton',
-    cssClass: 'mceItemCustomTag',
+    cssClass: 'ezoeItemCustomTag',
     tagSelector: 'custom_name_source',
     onInit: function( el, tag, ed )
     {
-        // custom block tags are not allowed inside custom inline tags
-        if ( el )
+    // custom block tags are not allowed inside custom inline tags and headers
+    if ( el )
         {
-            if ( eZOEPopupUtils.getParentByTag( el, 'span', 'mceItemCustomTag', 'custom' ) )
+            if ( eZOEPopupUtils.getParentByTag( el, 'span', 'ezoeItemCustomTag', 'custom' ) )
                 filterOutCustomBlockTags( );
             else if ( eZOEPopupUtils.getParentByTag( el, 'h1,h2,h3,h4,h5,h6' ) )
                 filterOutCustomBlockTags( );
@@ -36,7 +33,7 @@ tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {
             var currentNode = ed.selection.getNode();
             if ( currentNode && currentNode.nodeName !== 'DIV' && tinymce.DOM.getAttrib( currentNode, 'type' ) === 'custom' )
                 filterOutCustomBlockTags( );
-            else if ( eZOEPopupUtils.getParentByTag( currentNode, 'span', 'mceItemCustomTag', 'custom', true ) )
+            else if ( eZOEPopupUtils.getParentByTag( currentNode, 'span', 'ezoeItemCustomTag', 'custom', true ) )
                 filterOutCustomBlockTags( );
             else if ( eZOEPopupUtils.getParentByTag( currentNode, 'h1,h2,h3,h4,h5,h6', false, false, true ) )
                 filterOutCustomBlockTags( );
@@ -44,7 +41,12 @@ tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {
     },
     tagCreator: function( ed, tag, customTag, selectedHtml )
     {
-        if ( !selectedHtml ) selectedHtml = customTag;
+        var hasSelection = true;
+        if ( !selectedHtml )
+        {
+            selectedHtml = customTag;
+            hasSelection = false;
+        }
 
         if ( customTag === 'underline' )
         {
@@ -68,7 +70,33 @@ tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {
         }
         else
         {
-            return eZOEPopupUtils.insertTagCleanly( ed, 'div', '<p>' + selectedHtml + '<\/p>', {'type': 'custom' } );
+            var newEl;
+            if ( hasSelection
+                 && ed.selection.getNode().nodeName.toLowerCase() === 'body' )
+            {
+                // at least one descendant of body is fully selected
+                // so  we replace the selection with the HTML for the custom tag
+                // that will contain the whole initial selection
+                var id = ed.dom.uniqueId( 'ezoe' );
+
+                ed.selection.setContent(
+                    '<div type="custom" id="' + id + '">' + selectedHtml + '</div>'
+                );
+                newEl = ed.dom.get( id );
+                ed.dom.setAttrib( newEl, 'id', false );
+                eZOEPopupUtils.paragraphCleanup( ed, newEl );
+                return newEl;
+            }
+            newEl = eZOEPopupUtils.insertTagCleanly(
+                ed, 'div', '<p>' + selectedHtml + '<\/p>', { 'type': 'custom' }
+            );
+            if ( hasSelection )
+            {
+                // only a part of the content of a paragraph was selected,
+                // we remove the selected text since it was duplicated in the custom tag
+                ed.selection.setContent( '' );
+            }
+            return newEl;
         }
     },
     onTagGenerated:  function( el, ed, args )
@@ -142,8 +170,6 @@ function filterOutCustomBlockTags( n )
 }
 
 {/literal}
-
-// -->
 </script>
 
 
@@ -177,11 +203,11 @@ function filterOutCustomBlockTags( n )
         {include uri="design:ezoe/customattributes.tpl" tag_name=$custom_tag hide=$custom_tag_name|ne( $custom_tag ) extra_attribute=array('inline', $tag_is_inline, array('image', 'true')|contains( $tag_is_inline ))}
 {/foreach}
 
-        <div class="block"> 
+        <div class="block">
             <div class="left">
                 <input id="SaveButton" name="SaveButton" type="submit" value="{'OK'|i18n('design/standard/ezoe')}" />
                 <input id="CancelButton" name="CancelButton" type="reset" value="{'Cancel'|i18n('design/standard/ezoe')}" />
-            </div> 
+            </div>
         </div>
 
     </div>

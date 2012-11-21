@@ -60,7 +60,7 @@ if( $http->hasPostVariable( 'BtnPasswordRecover' ) )
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:common/forgotpasswordopinion.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/shop', 'Recuperar Contraseña | Tienda Online EFL' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/shop', 'Recuperar Contraseña | Tienda Online EFL' ) ) );
 $Result['pagelayout'] = false;
 
 ?>

@@ -21,4 +21,5 @@ $eZTemplateOperatorArray[] = array( 'script' => 'extension/web/autoloads/webyout
 $eZTemplateOperatorArray[] = array( 'script' => 'extension/web/autoloads/webvimeo.php',
                                     'class' => 'webVimeo',
                                     'operator_names' => array( 'webvimeo', 'webvimeo_preview' ) );
+
 ?>

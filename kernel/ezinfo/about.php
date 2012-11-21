@@ -1,30 +1,10 @@
 <?php
-//
-// Created on: <17-Apr-2002 11:05:08 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 define( 'EZ_ABOUT_CONTRIBUTORS_DIR', 'var/storage/contributors' );
 define( 'EZ_ABOUT_THIRDPARTY_SOFTWARE_FILE', 'var/storage/third_party_software.php' );
@@ -139,14 +119,13 @@ be accessed from anywhere you have an internet connection.';
 $license =
 ## BEGIN LICENSE INFO ##
 'This copy of eZ Publish is distributed under the terms and conditions of
-the GNU General Public License (GPL). Briefly summarized, the GPL gives
-you the right to use, modify and share this copy of eZ Publish. If you
-choose to share eZ Publish, you may only share it under the terms and
-conditions of the GPL. If you share a modified version of eZ Publish,
-these modifications must also be placed under the GPL. Read the
-complete legal terms and conditions of the GPL at
-http://www.gnu.org/licenses/gpl.txt or see the file named LICENSE in
-the root directory of this eZ Publish distribution.';
+the eZ Business Use License Agreement (eZ BUL). Briefly summarized, the
+eZ BUL allows you to run the subscribed number of eZ Publish site
+accesses or instances.  You may modify a copy of the software solely for
+your internal use. For the complete legal terms and conditions of your
+eZ BUL license, see the file named LICENSE in the root directory of this
+eZ Publish distribution.
+';
 ## END LICENSE INFO ##
 
 $contributors = getContributors( EZ_ABOUT_CONTRIBUTORS_DIR );

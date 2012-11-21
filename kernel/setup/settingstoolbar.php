@@ -1,30 +1,10 @@
 <?php
-//
-// Created on: <01-Mar-2005 15:47:23 ks>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 $http = eZHTTPTool::instance();
 $module = $Params['Module'];
@@ -59,7 +39,7 @@ $iniPath = ( $siteAccess == "global_override" ) ? "settings/override" : "setting
 
 foreach( $iniFiles as $fileName => $settings )
 {
-    $ini = eZINI::instance( $fileName . '.append', $iniPath, null, null, null, true, true );
+    $ini = new eZINI( $fileName . '.append', $iniPath, null, null, null, true, true );
     $baseIni = eZINI::instance( $fileName );
 
     foreach( $settings as $setting )
@@ -86,7 +66,7 @@ foreach( $iniFiles as $fileName => $settings )
     // Remove variable from the global override
     if ( $siteAccess != "global_override" )
     {
-        $ini = eZINI::instance( $fileName . '.append', "settings/override", null, null, null, true, true );
+        $ini = new eZINI( $fileName . '.append', "settings/override", null, null, null, true, true );
         foreach( $settings as $setting )
         {
             if ( $ini->hasVariable( $setting[0], $setting[1] ) )
@@ -101,7 +81,7 @@ foreach( $iniFiles as $fileName => $settings )
     }
 }
 
-$uri = $http->sessionVariable( "LastAccessedModifyingURI" );
+$uri = $http->postVariable( 'RedirectURI', $http->sessionVariable( 'LastAccessedModifyingURI', '/' ) );
 $module->redirectTo( $uri );
 
 ?>

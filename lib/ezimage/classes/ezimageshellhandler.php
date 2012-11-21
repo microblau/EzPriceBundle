@@ -1,35 +1,12 @@
 <?php
-//
-// Definition of eZImageShellHandler class
-//
-// Created on: <16-Oct-2003 14:22:43 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZImageShellHandler class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package lib
+ */
 
 /*!
   \class eZImageShellHandler ezimageshellhandler.php
@@ -120,8 +97,6 @@ class eZImageShellHandler extends eZImageHandler
             $argumentList[] = $this->PostParameters;
 
         $systemString = implode( ' ', $argumentList );
-        if ( eZSys::osType() == 'win32' )
-            $systemString = "\"$systemString\"";
 
         system( $systemString, $returnCode );
 
@@ -137,7 +112,7 @@ class eZImageShellHandler extends eZImageHandler
         }
         else
         {
-            eZDebug::writeWarning( "Failed executing: $systemString, Error code: $returnCode", 'eZImageShellHandler::convert' );
+            eZDebug::writeWarning( "Failed executing: $systemString, Error code: $returnCode", __METHOD__ );
             return false;
         }
 
@@ -157,8 +132,7 @@ class eZImageShellHandler extends eZImageHandler
         $ini = eZINI::instance( $iniFilename );
         if ( !$ini )
         {
-            eZDebug::writeError( "Failed loading ini file $iniFilename",
-                                 'eZImageShellHandler::createFromINI' );
+            eZDebug::writeError( "Failed loading ini file $iniFilename", __METHOD__ );
             return $handler;
         }
 
@@ -218,8 +192,7 @@ class eZImageShellHandler extends eZImageHandler
                 $path = $ini->variable( $iniGroup, 'ExecutablePath' );
             if ( !$ini->hasVariable( $iniGroup, 'Executable' ) )
             {
-                eZDebug::writeError( "No Executable setting for group $iniGroup in ini file $iniFilename",
-                                     'eZImageShellHandler::createFromINI' );
+                eZDebug::writeError( "No Executable setting for group $iniGroup in ini file $iniFilename", __METHOD__ );
                 return $handler;
             }
             $executable = $ini->variable( $iniGroup, 'Executable' );
@@ -230,8 +203,6 @@ class eZImageShellHandler extends eZImageHandler
             $ini->assign( $iniGroup, 'ExecutableMac', $executableMac );
             $ini->assign( $iniGroup, 'ExecutableUnix', $executableUnix );
 
-            if ( $ini->hasVariable( $iniGroup, 'ExecutablePath' ) )
-                $path = $ini->variable( $iniGroup, 'ExecutablePath' );
             if ( $ini->hasVariable( $iniGroup, 'ExecutablePath' ) )
                 $path = $ini->variable( $iniGroup, 'ExecutablePath' );
             if ( $ini->hasVariable( $iniGroup, 'PreParameters' ) )

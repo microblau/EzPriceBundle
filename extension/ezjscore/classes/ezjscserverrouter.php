@@ -6,30 +6,28 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ JSCore extension for eZ Publish
-// SOFTWARE RELEASE: 1.x
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE RELEASE: 4.7.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: eZ Business Use License Agreement eZ BUL Version 2.1
 // NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
+//   This source file is part of the eZ Publish CMS and is
+//   licensed under the terms and conditions of the eZ Business Use
+//   License v2.1 (eZ BUL).
+// 
+//   A copy of the eZ BUL was included with the software. If the
+//   license is missing, request a copy of the license via email
+//   at license@ez.no or via postal mail at
+//  	Attn: Licensing Dept. eZ Systems AS, Klostergata 30, N-3732 Skien, Norway
+// 
+//   IMPORTANT: THE SOFTWARE IS LICENSED, NOT SOLD. ADDITIONALLY, THE
+//   SOFTWARE IS LICENSED "AS IS," WITHOUT ANY WARRANTIES WHATSOEVER.
+//   READ THE eZ BUL BEFORE USING, INSTALLING OR MODIFYING THE SOFTWARE.
+
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*
-  Perfoms calls to custom functions or templates depending on arguments and ini settings 
+  Perfoms calls to custom functions or templates depending on arguments and ini settings
 */
 
 
@@ -40,7 +38,7 @@ class ezjscServerRouter
     protected $functionArguments = array();
     protected $isTemplateFunction = false;
 
-    protected function ezjscServerRouter( $className, $functionName = 'call', $functionArguments = array(), $isTemplateFunction = false )
+    protected function ezjscServerRouter( $className, $functionName = 'call', array $functionArguments = array(), $isTemplateFunction = false )
     {
         $this->className = $className;
         $this->functionName = $functionName;
@@ -73,7 +71,7 @@ class ezjscServerRouter
 
         if ( $ezjscoreIni->hasGroup( 'ezjscServer_' . $callClassName ) )
         {
-           // load file if defined, else use autoload 
+           // load file if defined, else use autoload
            if ( $ezjscoreIni->hasVariable( 'ezjscServer_' . $callClassName, 'File' ) )
                 include_once( $ezjscoreIni->variable( 'ezjscServer_' . $callClassName, 'File' ) );
 
@@ -171,7 +169,7 @@ class ezjscServerRouter
             }
             $limitationList[] = $permissionName;
         }
-        return ezjscAccessTemplateFunctions::hasAccessToLimitation( 'ezjscore', 'call', array( 'FunctionList', $limitationList ) );
+        return ezjscAccessTemplateFunctions::hasAccessToLimitation( 'ezjscore', 'call', array( 'FunctionList' => $limitationList ) );
     }
 
     /**
@@ -193,7 +191,7 @@ class ezjscServerRouter
     {
         if ( $isTemplateFunction )
         {
-            return true;//todo: find a way to look for templates
+            return true;//@todo: find a way to look for templates
         }
         else
         {
@@ -211,8 +209,7 @@ class ezjscServerRouter
     {
         if ( $this->isTemplateFunction )
         {
-            include_once( 'kernel/common/template.php' );
-            $tpl = templateInit();
+            $tpl = eZTemplate::factory();
             $tpl->setVariable( 'arguments', $this->functionArguments );
             $tpl->setVariable( 'environment', $environmentArguments );
             return $tpl->fetch( 'design:' . $this->className . '/' . $this->functionName . '.tpl' );
@@ -222,7 +219,7 @@ class ezjscServerRouter
             return call_user_func_array( array( $this->className, $this->functionName ), array( $this->functionArguments, &$environmentArguments, $isPackeStage ) );
         }
     }
-    
+
 }
 
 ?>

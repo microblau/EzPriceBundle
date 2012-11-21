@@ -50,8 +50,8 @@ class selectAttribute extends eZWizardBase
         $result['content'] = $this->TPL->fetch( 'design:dbattributeconverter/select_attribute.tpl' );
         $result['left_menu'] = 'design:parts/content/dbattributeconverter_menu.tpl';
         $result['path'] = array(
-            array( 'url' => false, 'text' => ezi18n( 'dbattributeconverter/wizard', 'Attribute converter - select class attribute' ) ),
-           // array( 'url' => false, 'text' => ezi18n( 'quotation/online', 'Content upload' ) )
+            array( 'url' => false, 'text' => ezpI18n::tr( 'dbattributeconverter/wizard', 'Attribute converter - select class attribute' ) ),
+           // array( 'url' => false, 'text' => ezpI18n::tr( 'quotation/online', 'Content upload' ) )
         );
 
         return $result;
@@ -65,7 +65,7 @@ class selectAttribute extends eZWizardBase
 			$attribute = eZContentClassAttribute::fetch( $this->variable( 'attribute_id' ) );
 			if ( !is_object( $attribute ) )
 			{
-				$this->WarningList[] = ezi18n( 'dbattributeconverter/wizard','Error - cannot find datatype by attribute!' );
+				$this->WarningList[] = ezpI18n::tr( 'dbattributeconverter/wizard','Error - cannot find datatype by attribute!' );
 				return false;
 			}
 			$this->setVariable( 'source_datatype_string', $attribute->attribute( 'data_type_string' ) );
@@ -74,7 +74,7 @@ class selectAttribute extends eZWizardBase
         }
         else if ( $this->HTTP->hasPostVariable( 'NextButton' ) )
         {
-            $this->WarningList[] = ezi18n( 'dbattributeconverter/wizard','You have to specify one attribute you want to convert.' );
+            $this->WarningList[] = ezpI18n::tr( 'dbattributeconverter/wizard','You have to specify one attribute you want to convert.' );
         }
 
 

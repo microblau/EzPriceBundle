@@ -1,31 +1,10 @@
 <?php
-//
-// Created on: <15-Apr-2004 11:25:31 bh>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
+/**
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 $tpl = eZTemplate::factory();
 $sessionsRemoved = false;
@@ -33,6 +12,18 @@ $gcSessionsCompleted = true;
 $http = eZHTTPTool::instance();
 
 $module = $Params['Module'];
+
+
+if ( !eZSession::getHandlerInstance()->hasBackendAccess() )
+{
+    $Result = array();
+    $Result['content'] = $tpl->fetch( "design:setup/session_no_db.tpl" );
+    $Result['path'] = array( array( 'url' => false,
+                                    'text' => ezpI18n::tr( 'kernel/setup', 'Session admin' ) ) );
+    return $Result;
+}
+
+
 $param['limit'] = 50;
 
 $filterType = 'registered';
@@ -87,7 +78,7 @@ else if ( $module->isCurrentAction( 'RemoveSelectedSessions' ) )
             $sessionKeyArray = $http->postVariable( 'SessionKeyArray' );
             foreach ( $sessionKeyArray as $sessionKeyItem )
             {
-                eZSession::destroy( $sessionKeyItem );
+                eZSession::getHandlerInstance()->destroy( $sessionKeyItem );
             }
         }
     }
@@ -98,13 +89,7 @@ else if ( $module->isCurrentAction( 'RemoveSelectedSessions' ) )
             $userIDArray = $http->postVariable( 'UserIDArray' );
             if ( count( $userIDArray ) > 0 )
             {
-                $db = eZDB::instance();
-                $userINString = $db->generateSQLINStatement( $userIDArray, 'user_id', false, false, 'int' );
-                $rows = $db->arrayQuery( "SELECT session_key FROM ezsession WHERE $userINString" );
-                foreach ( $rows as $row )
-                {
-                    eZSession::destroy( $row['session_key'] );
-                }
+                eZSession::getHandlerInstance()->deleteByUserIDs( $userIDArray );
             }
         }
     }
@@ -204,16 +189,17 @@ function eZFetchActiveSessions( $params = array() )
 
     $userID = $params['user_id'];
     $countField = '';
-    $countGroup = 'GROUP BY ezsession.user_id';
     if ( $userID )
     {
         $filterSQL = 'AND ezsession.user_id = ' .  (int)$userID;
         $expirationSQL = 'ezsession.expiration_time';
+        $countGroup = 'GROUP BY ezsession.session_key';
     }
     else
     {
         $countField = ', count( ezsession.user_id ) AS count';
         $expirationSQL = 'max( ezsession.expiration_time ) as expiration_time';
+        $countGroup = 'GROUP BY ezsession.user_id';
     }
 
     $db = eZDB::instance();
@@ -343,7 +329,7 @@ $param['expiration_filter'] = $expirationFilterType;
 $param['user_id'] = $userID;
 if ( isset( $viewParameters['sortby'] ) )
     $param['sortby'] = $viewParameters['sortby'];
-$sessionsActive = eZSession::countActive( $param );
+$sessionsActive = eZSession::countActive();
 $sessionsCount = eZFetchActiveSessionCount( $param );
 $sessionsList = eZFetchActiveSessions( $param );
 

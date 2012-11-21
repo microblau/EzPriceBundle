@@ -1,38 +1,12 @@
 <?php
-//
-// $Id$
-//
-// Definition of eZTranslationCache class
-//
-// Gunnstein Lye <gl@ez.no>
-// Created on: <23-Jan-2003 10:19:26 gl>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZTranslationCache class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package lib
+ */
 
 /*!
   \class eZTranslationCache eztranslationcache.php
@@ -85,8 +59,7 @@ class eZTranslationCache
         }
         if ( isset( $GLOBALS['eZTranslationCacheTable'][$contextName] ) )
         {
-            eZDebug::writeWarning( "Translation cache for context '$contextName' already exists",
-                                   'eZTranslationCache::setContextCache' );
+            eZDebug::writeWarning( "Translation cache for context '$contextName' already exists", __METHOD__ );
         }
         else
         {
@@ -127,8 +100,18 @@ class eZTranslationCache
         $translationExtensions = $ini->variable( 'RegionalSettings', 'TranslationExtensions' );
 
         $uniqueParts = array( $internalCharset, $translationRepository, implode( ';', $translationExtensions ) );
-        $rootCacheDirectory = eZDir::path( array( eZSys::cacheDirectory(), 'translation', md5( implode( '-', $uniqueParts ) ) ) );
 
+        $sharedTsCacheDir = $ini->hasVariable( 'RegionalSettings', 'SharedTranslationCacheDir' ) ?
+                            trim( $ini->variable( 'RegionalSettings', 'SharedTranslationCacheDir' ) ) :
+                            '';
+        if ( $sharedTsCacheDir !== '')
+        {
+            $rootCacheDirectory = eZDir::path( array( $sharedTsCacheDir, md5( implode( '-', $uniqueParts ) ) ) );
+        }
+        else
+        {
+            $rootCacheDirectory = eZDir::path( array( eZSys::cacheDirectory(), 'translation', md5( implode( '-', $uniqueParts ) ) ) );
+        }
         return $rootCacheDirectory;
     }
 
@@ -164,7 +147,7 @@ class eZTranslationCache
         $translationCache = eZTranslationCache::cacheTable();
         if ( isset( $translationCache[$key] ) )
         {
-            eZDebug::writeWarning( "Translation cache for key '$key' already exist, cannot restore cache", 'eZTranslationCache::restoreCache' );
+            eZDebug::writeWarning( "Translation cache for key '$key' already exist, cannot restore cache", __METHOD__ );
             return false;
         }
 //         $internalCharset = eZTextCodec::internalCharset();
@@ -176,7 +159,7 @@ class eZTranslationCache
         $variables = $php->restore( array( 'info' => 'TranslationInfo',
                                            'root' => 'TranslationRoot',
                                            'cache-date' => 'eZTranslationCacheCodeDate' ) );
-        if ( $variables['cache-date'] != self::CODE_DATE )
+        if ( !isset($variables['cache-date']) || $variables['cache-date'] != self::CODE_DATE )
             return false;
         eZTranslationCache::setContextCache( $key, $variables['root'] );
         return true;
@@ -192,7 +175,7 @@ class eZTranslationCache
         $translationCache = eZTranslationCache::cacheTable();
         if ( !isset( $translationCache[$key] ) )
         {
-            eZDebug::writeWarning( "Translation cache for key '$key' does not exist, cannot store cache", 'eZTranslationCache::storeCache' );
+            eZDebug::writeWarning( "Translation cache for key '$key' does not exist, cannot store cache", __METHOD__ );
             return;
         }
         $internalCharset = eZTextCodec::internalCharset();

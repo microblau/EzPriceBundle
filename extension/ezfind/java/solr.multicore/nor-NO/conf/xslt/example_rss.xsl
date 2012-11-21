@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!-- 
+<!--
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -17,7 +17,7 @@
  * limitations under the License.
  -->
 
-<!-- 
+<!--
   Simple transform of Solr query results to RSS
  -->
 
@@ -27,7 +27,7 @@
   <xsl:output
        method="xml"
        encoding="utf-8"
-       media-type="text/xml; charset=UTF-8"
+       media-type="application/xml"
   />
   <xsl:template match='/'>
     <rss version="2.0">
@@ -44,7 +44,7 @@
        </channel>
     </rss>
   </xsl:template>
-  
+
   <!-- search results xslt -->
   <xsl:template match="doc">
     <xsl:variable name="id" select="str[@name='id']"/>

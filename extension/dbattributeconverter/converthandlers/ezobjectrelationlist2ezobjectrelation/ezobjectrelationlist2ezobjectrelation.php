@@ -74,7 +74,7 @@ class ezobjectrelationlist2ezobjectrelation extends convertHandler
 		$settings = array();
 		$settings[] = array( 'type'  => 'select',
 							 'name'  => 'ObjectSelection',
-							 'label' => ezi18n( 'attributeconverter/common', 'Object selection if many' ),
+							 'label' => ezpI18n::tr( 'attributeconverter/common', 'Object selection if many' ),
 							 'options' => array( 'first' => 'First related object', 
 												 'last' => 'Last related object' ) );
 		return $settings;

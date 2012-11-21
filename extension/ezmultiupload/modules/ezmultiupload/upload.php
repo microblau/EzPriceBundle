@@ -2,16 +2,14 @@
 /**
  * File containing the eZ Publish upload view implementation.
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
  * @version 1.0.0
  * @package ezmultiupload
  */
 
-include_once( 'kernel/common/template.php' );
-
 $http = eZHTTPTool::instance();
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $module = $Params['Module'];
 $parentNodeID = $Params['ParentNodeID'];
 
@@ -24,7 +22,7 @@ if( $module->isCurrentAction( 'Upload' ) )
     eZMultiuploadHandler::exec( 'preUpload', $result );
 
     // Handle file upload only if there was no errors
-    if( count( $result['errors'] ) == 0 )
+    if( empty( $result['errors'] ) )
     {
         // Handle file upload. All checkes are performed by eZContentUpload::handleUpload()
         // and available in $result array
@@ -39,12 +37,12 @@ if( $module->isCurrentAction( 'Upload' ) )
     $tpl->setVariable( 'result', $result );
     $templateOutput = $tpl->fetch( 'design:ezmultiupload/thumbnail.tpl' );
 
-    // Strip all new lines from processed template and convert all applicable characters to 
+    // Strip all new lines from processed template and convert all applicable characters to
     // HTML entities output. Create upload ID
     $httpCharset = eZTextCodec::httpCharset();
     $data = htmlentities( str_replace( array( "\r\n", "\r", "\n" ), array(""), $templateOutput ) , ENT_QUOTES, $httpCharset );
     $id = md5( (string)mt_rand() . (string)microtime() );
- 
+
     $response = array( 'data' => $data, 'id' => $id );
 
     // Return server response in JSON format
@@ -61,7 +59,7 @@ else
 
     // Fetch parent node
     $parentNode = eZContentObjectTreeNode::fetch( $parentNodeID );
-    
+
     // Check if parent node object exists
     if( !$parentNode )
         return $module->handleError( eZError::KERNEL_NOT_FOUND, 'kernel' );
@@ -94,7 +92,7 @@ else
         $availableFileTypes = array_merge( $availableFileTypes, $uploadINI->variable( 'FileTypeSettings_' . $parentNodeClassIdentifier, 'FileType' ) );
 
     // Create string with available file types for GUI uploader
-    if ( count( $availableFileTypes ) > 0 )
+    if ( !empty( $availableFileTypes ) )
         $availableFileTypesStr = implode( ';', $availableFileTypes );
 
     // Pass variables to upload.tpl template
@@ -108,7 +106,7 @@ else
     $Result = array();
     $Result['content'] = $tpl->fetch( 'design:ezmultiupload/upload.tpl' );
     $Result['path'] = array( array( 'url' => false,
-                                    'text' => ezi18n( 'extension/ezmultiupload', 'Multiupload' ) ) );
+                                    'text' => ezpI18n::tr( 'extension/ezmultiupload', 'Multiupload' ) ) );
 }
 
 ?>

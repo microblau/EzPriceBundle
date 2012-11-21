@@ -16,8 +16,8 @@ Password Expiration Extension (v1.0RC1)
 0. Release Info
    ------------
 
-Current version: mbPaEx_1.0RC1
-Release Date: Feb 11, 2009.
+Current version: mbPaEx_1.4
+Release Date: March 29th 2011.
 
 Compatible with eZ Publish v4.x
 
@@ -94,7 +94,7 @@ Compatible with eZ Publish v4.x
 
 - Clear all caches
 
-- After installation, a new dataype would be available to add as an attribute in
+- After installation, a new datatype would be available to add as an attribute in
   the User and User Group classes, "Password Expiration". You must add this datatype
   to all your User group and User content classes if you want to use the extension.
 

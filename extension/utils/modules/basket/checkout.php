@@ -81,7 +81,7 @@ if ( $order instanceof eZOrder )
 
                     $Result['content'] = $tpl->fetch( "design:shop/cancelcheckout.tpl" ) ;
                     $Result['path'] = array( array( 'url' => false,
-                                                    'text' => ezi18n( 'kernel/shop', 'Checkout' ) ) );
+                                                    'text' => ezpI18n::tr( 'kernel/shop', 'Checkout' ) ) );
 
                     return;
                 }
@@ -117,7 +117,7 @@ if ( $order instanceof eZOrder )
                     $tpl->setVariable( 'orderID', $orderID );
                     $Result['content'] = $tpl->fetch( "design:shop/checkoutagain.tpl" ) ;
                     $Result['path'] = array( array( 'url' => false,
-                                                    'text' => ezi18n( 'kernel/shop', 'Checkout' ) ) );
+                                                    'text' => ezpI18n::tr( 'kernel/shop', 'Checkout' ) ) );
                     return;
                 }
                 else
@@ -133,7 +133,7 @@ if ( $order instanceof eZOrder )
 
                     $Result['content'] = $tpl->fetch( "design:shop/cancelcheckout.tpl" ) ;
                     $Result['path'] = array( array( 'url' => false,
-                                                    'text' => ezi18n( 'kernel/shop', 'Checkout' ) ) );
+                                                    'text' => ezpI18n::tr( 'kernel/shop', 'Checkout' ) ) );
                     return;
                 }
             }
@@ -146,5 +146,5 @@ if ( $order instanceof eZOrder )
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:basket/checkout.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
 ?>
