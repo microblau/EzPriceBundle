@@ -67,9 +67,9 @@
 				<h2 class="logo"><img src={"logo_iMemento.png"|ezimage} alt="iMemento"/></h2>
 <div id="mycarousel">
 <div class="jcarousel-control">
-						<a href="#" class="sel"><span>1</span></a>
-						<a href="#"><span>2</span></a>
-						<a href="#"><span>3</span></a>
+						{foreach $node.data_map.carrusel.content.relation_browse as $index => $item}
+							<a href="#" class="sel"><span>{$index|inc}</span></a>
+						{/foreach}
 					</div>
 				<ul class="carrusel">
                     {foreach $node.data_map.carrusel.content.relation_browse as $index => $item}
