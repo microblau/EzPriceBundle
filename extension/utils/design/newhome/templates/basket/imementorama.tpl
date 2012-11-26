@@ -25,7 +25,13 @@
 								<h5><a href="{$pack.main_node.url_alias|ezurl(no)}">{$pack.name}</a></h5>
 								{$pack.data_map.entradilla.content.output.output_text}
 								<a class="addCart" href={concat("basket/add/", $pack.id, '/1' )|ezurl}><img alt="Añadir a la cesta" src={"btn_aniadir-compra.gif"|ezimage} /></a>
-						    </li>
+								<div class="precio">
+									<span class="pvp"><del>{$pack.data_map.precio.content.ex_vat_price|l10n('clean_currency)} € + IVA</del></span>
+									{if eq($pack.data_map.oferta_qmementix.content.price,0)}
+										<span class="pvp-offer"><ins>{$pack.data_map.precio_oferta.content.ex_vat_price|l10n('clean_currency)} € + IVA</ins></span>
+									{/if}
+								</div>
+							</li>
                             {undef $pack}
                             {/foreach}
 						</ul>
