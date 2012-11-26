@@ -10,11 +10,11 @@
 												{$object.data_map.texto_configure_su_imemento.content.output.output_text}
 					</div>
 					<div class="sub_entry" id="tblint">
-						<h4>Configuración a la carta:</h4>
+						<h4>Descuentos disponibles:</h4>
 						{$object.data_map.texto_configuracion_a_la_carta.content.output.output_text}
 					</div>
 					<ul class="tabs">
-						<li class="sel"><a href={"basket/imemento"|ezurl}>Descuentos disponibles</a></li>
+						<li class="sel"><a href={"basket/imemento"|ezurl}>Configuración a la carta</a></li>
 						<li><a href={"basket/imementorama"|ezurl}>Configuración a la carta rama del derecho</a></li>
 					</ul>
 					<div class="tabContent" id="accesoMementos">
