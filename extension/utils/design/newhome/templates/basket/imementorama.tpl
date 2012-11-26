@@ -14,7 +14,7 @@
 						{$object.data_map.texto_configuracion_packs.content.output.output_text}
 					</div>
 					<ul class="tabs">
-						<li><a href={"basket/imemento"|ezurl}>Configuración a la carta</a></li>
+						<li><a href={"basket/imemento"|ezurl}>Descuentos disponibles</a></li>
 						<li class="sel"><a href={"basket/imementorama"|ezurl}>Configuración a la carta rama del derecho</a></li>
 					</ul>
 					<div class="tabContent">
