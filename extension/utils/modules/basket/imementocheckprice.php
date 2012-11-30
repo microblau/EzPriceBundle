@@ -51,9 +51,9 @@ if( ( $mementos > 0 ))
 }
 else
 {
-    $precio = $preciomonopuesto;
+    $precio = 0;
     $discountpercent = 0;
-    $total = $preciomonopuesto;
+    $total = 0;
 }
 
 $result = array( 'price' => number_format( $precio, 2, '.', '' ) . ' €', 'discount' =>  $discountpercent . '%', 'total' => number_format( $total, 2, '.', '' ) . ' €');
