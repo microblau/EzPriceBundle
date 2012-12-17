@@ -28,7 +28,7 @@ if( ( $mementos > 0 ))
 	else
 	{
 		$discount = eZPersistentObject::fetchObject( eflImementoDiscountRule::definition(), null, 
-                                                     array( 'qte_mem' => array( '>=', ($mementos-1) ),
+                                                     array( 'qte_mem' => array( '>=', (count($mayor)) ),
                                                             'contentobjectattribute_id' => $datatabla['tabla_precios']->attribute( 'id' ),
                                                             'contentobjectattribute_version' => $datatabla['tabla_precios']->attribute( 'version' ) ) );
 	}

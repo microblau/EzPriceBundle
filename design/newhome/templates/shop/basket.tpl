@@ -151,6 +151,11 @@
 															
 															<td colspan="2" class="precio">
 																<div class="precioIva">{$product.total_price_ex_vat|l10n(clean_currency)} € <span class="iva">+ {$product.vat_value}%</span></div>
+																{if $order_info.has_imemento.partial}
+																	<div class="precioAnterior">
+																		<s>{$order_info.has_imemento.partial|l10n(clean_currency)} €</s>
+																	</div>
+																{/if}
 																{if gt($product.discount_percent,0)}
 																<div class="precioAnterior">
 																    {def $discount_type = fetch( 'basket', 'get_discount_type', 
