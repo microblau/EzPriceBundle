@@ -56,6 +56,7 @@ $info['has_imemento'] = array();
          
 $info['has_imemento']['mementos'] = implode( $mementosnames, ', ' );
 $info['has_imemento']['refs'] = implode( $refs, ', ' );
+$info['has_imemento']['partial'] = $http->postVariable( 'partial' );
 $serialized_order = serialize( $info ); 
 $orderInfo->Order = $serialized_order;
 $orderInfo->store();
