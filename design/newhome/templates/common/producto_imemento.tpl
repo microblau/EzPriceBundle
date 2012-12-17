@@ -98,7 +98,7 @@
 
 {/if}
 						</div>
-						<h3>{$index|sum(1)} {$promo.name}</h3>
+						<h3>{$promo.name}</h3>
 						{$promo.data_map.texto.content.output.output_text}
 					</li>
                     {undef  $promo}
