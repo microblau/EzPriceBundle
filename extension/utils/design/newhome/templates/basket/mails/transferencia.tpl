@@ -121,10 +121,10 @@ Muchas gracias por confiar en nuestra documentación jurídica.
 {$product.object_name}<br />
  <span style="font-size:11px; font-weight:normal">{$info.has_nautis4.mementos}. 
   <strong>{$info.has_nautis4.accesos}</strong></span>
- {elseif $product.item_object.contentobject.contentclass_id|eq(142)}
+ {elseif $product.item_object.contentobject.contentclass_id|eq(149)}
 {$product.object_name}<br />
  <span style="font-size:11px; font-weight:normal">{$info.has_imemento.mementos}.</span> 
-{elseif $product.item_object.contentobject.contentclass_id|eq(147)}
+{elseif $product.item_object.contentobject.contentclass_id|eq(145)}
 {$product.object_name}<br />
  <span style="font-size:11px; font-weight:normal">{$info.has_imemento.mementos}.</span>  
 {else}

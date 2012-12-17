@@ -98,7 +98,7 @@
 
 {/if}
 						</div>
-						<h3>{$index|sum(1)} {$promo.name}</h3>
+						<h3>{$promo.name}</h3>
 						{$promo.data_map.texto.content.output.output_text}
 					</li>
                     {undef  $promo}
@@ -115,23 +115,23 @@
 							<span class="requiredText">* Datos obligatorios</span>
 							
 									<label for="nombre">Su nombre <span>*</span>
-									<input type="text" id="nombre" name="ContentObjectAttribute_ezstring_data_text_329723" class="text" /></label>
+									<input type="text" id="nombre" name="ContentObjectAttribute_ezstring_data_text_244856" class="text" /></label>
 								
 									<label for="apellidos">Sus apellidos <span>*</span>
-									<input type="text" id="apellidos" name="ContentObjectAttribute_ezstring_data_text_329724" class="text" /></label>
+									<input type="text" id="apellidos" name="ContentObjectAttribute_ezstring_data_text_244857" class="text" /></label>
 								
 									<label for="telefono">Su teléfono <span>*</span>
-									<input type="text" id="telefono" name="ContentObjectAttribute_ezstring_data_text_329726" class="text" /></label>
+									<input type="text" id="telefono" name="ContentObjectAttribute_ezstring_data_text_244859" class="text" /></label>
 								
 									<label for="email">Su email <span>*</span>
-									<input type="text" id="email" name="ContentObjectAttribute_ezstring_data_text_329726" class="text" /></label>
+									<input type="text" id="email" name="ContentObjectAttribute_data_text_244858" class="text" /></label>
 								
 									
 
 									<label for="prod">Seleccione producto  <span>*</span></label>
-									<input type="hidden" id="prod" name="ContentObjectAttribute_ezselect_selected_array_329721[]" value="13" />
+									<input type="hidden" id="prod" name="ContentObjectAttribute_ezselect_selected_array_244854[]" value="13" />
 									
-									<select id="prodQI" name="ContentObjectAttribute_ezstring_data_text_329722">
+									<select id="prodQI" name="ContentObjectAttribute_ezstring_data_text_244855">
 										{def $mementos = $node.data_map.imemento_productos.content}	
 										{foreach $mementos.relation_browse as $el}
 											{def $memento = fetch( 'content', 'object', hash( 'object_id', $el.contentobject_id))}
@@ -146,13 +146,13 @@
 
 									
 							
-									<label class="check" for="legal"> <input type="checkbox"id="legal" name="ContentObjectAttribute_data_boolean_329727" /> Acepto las <a id="condicionesligthBox" href={'lightbox/ver/1451'|ezurl}>condiciones legales</a></label>
+									<label class="check" for="legal"> <input type="checkbox"id="legal" name="ContentObjectAttribute_data_boolean_244860" /> Acepto las <a id="condicionesligthBox" href={'lightbox/ver/1451'|ezurl}>condiciones legales</a></label>
 								
 							<input name="ActionCollectInformation" type="submit" value="Enviar solicitud" id="trySend" />
 	{def $currentusuario = fetch( 'user', 'current_user') }				
-						 <input class="box" type="hidden" size="70" name="ContentObjectAttribute_ezstring_data_text_329728" value="" id="colectivo" value="{cond( $currentusuario.is_logged_in, $currentusuario.contentobject.main_node.parent.name, '')}
-" />						   <input type="hidden" name="ContentNodeID" value="14160" />
-						   <input type="hidden" name="ContentObjectID" value="22361" />
+						 <input class="box" type="hidden" size="70" name="ContentObjectAttribute_ezstring_data_text_244861" value="" id="colectivo" value="{cond( $currentusuario.is_logged_in, $currentusuario.contentobject.main_node.parent.name, '')}
+" />						   <input type="hidden" name="ContentNodeID" value="15258" />
+						   <input type="hidden" name="ContentObjectID" value="20432" />
 						   <input type="hidden" name="ViewMode" value="full" />
                             </fieldset>
 						

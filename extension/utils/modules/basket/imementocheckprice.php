@@ -28,7 +28,7 @@ if( ( $mementos > 0 ))
 	else
 	{
 		$discount = eZPersistentObject::fetchObject( eflImementoDiscountRule::definition(), null, 
-                                                     array( 'qte_mem' => array( '>=', ($mementos-1) ),
+                                                     array( 'qte_mem' => array( '>=', (count($mayor)) ),
                                                             'contentobjectattribute_id' => $datatabla['tabla_precios']->attribute( 'id' ),
                                                             'contentobjectattribute_version' => $datatabla['tabla_precios']->attribute( 'version' ) ) );
 	}
@@ -51,9 +51,9 @@ if( ( $mementos > 0 ))
 }
 else
 {
-    $precio = $preciomonopuesto;
+    $precio = 0;
     $discountpercent = 0;
-    $total = $preciomonopuesto;
+    $total = 0;
 }
 
 $result = array( 'price' => number_format( $precio, 2, '.', '' ) . ' €', 'discount' =>  $discountpercent . '%', 'total' => number_format( $total, 2, '.', '' ) . ' €');
