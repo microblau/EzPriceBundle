@@ -71,7 +71,7 @@
 			.confImemento .tabContent fieldset label { vertical-align:middle; white-space:normal;font-size: 12px;font-weight: normal;}
 			.confImemento .tabContent fieldset input { float:left; margin:0 5px 0 0; vertical-align: middle}
 				.confImemento .tabContent ul { width:auto; margin:25px 0 0 40px; padding:0}
-					.confImemento .tabContent li { display:inline-block; width:300px; padding:0; vertical-align:top}
+					.confImemento .tabContent li { display:inline-block; width:276px; padding:0; vertical-align:top}
 			.confImemento .tabContent .packs{margin:0;padding:20px;color:#000;}
 				.confImemento .tabContent .packs li{display:block;width:auto;position:relative;margin-bottom:30px;}
 				.confImemento .tabContent .packs li:after{clear:both;display:block;height:0;visibility:hidden;content:"."}
