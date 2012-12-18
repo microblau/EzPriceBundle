@@ -200,6 +200,14 @@ Match[node]=69
 Match[class_identifier]=folder
 Match[depth]=3
 
+[listado_productos_imemento]
+Source=node/view/full.tpl
+MatchFile=full/listadoproductosimemento.tpl
+Subdir=templates
+Match[node]=11152
+Match[class_identifier]=folder
+Match[depth]=3
+
 [listado_productos]
 Source=node/view/full.tpl
 MatchFile=full/listadoproductos.tpl
@@ -254,6 +262,12 @@ Source=node/view/line.tpl
 MatchFile=line/producto_qmementix.tpl
 Subdir=templates
 Match[class_identifier]=producto_qmementix
+
+[producto_imemento_line]
+Source=node/view/line.tpl
+MatchFile=line/producto_imemento.tpl
+Subdir=templates
+Match[class_identifier]=producto_imemento
 
 [producto_nautis_relacionadoonline]
 Source=node/view/relacionadoonline.tpl
