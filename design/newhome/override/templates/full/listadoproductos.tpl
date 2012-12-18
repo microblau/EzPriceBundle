@@ -106,7 +106,7 @@
 										
                                         {def $results = fetch( 'ezfind', 'search', hash( 'query', '',
                                                                                          'subtree_array', array( $node.node_id ),
-                                                                                         'class_id', array( 48, 98, 99, 101,149 ),
+                                                                                         'class_id', array( 48, 98, 99, 101,149, 145 ),
                                                                                          'limit', $number_of_items,
                                                                                          'sort_by', $sort_array,
                                                             							 'filter', $filtro,
@@ -208,7 +208,7 @@
 							</div>
 							  {def $object_ids_query = fetch( 'ezfind', 'search', hash( 'query', '',
                                                                                          'subtree_array', array( $node.node_id ),
-                                                                                         'class_id', array( 48, 98, 99, 101 ),
+                                                                                         'class_id', array( 48, 98, 99, 101,149, 145 ),
                                                                                          'limit', 3000,
                                                                                          'sort_by', $sort_array,
                                                                                          'as_objects', false()
