@@ -93,42 +93,6 @@ var imemento = {
 	}
 }
 
-var prettyChecks = {
-		init:function(){
-			var $input = $("input[type='checkbox'].pretty"),
-				$label = $input.parent();
-			$("input[type='checkbox'].pretty").each(function(){
-				var $that = $(this),
-					$parent = $that.parent(),
-					clase;
-					
-					$that.addClass("hide");
-
-					if($that.is(":checked")){
-						clase="c_on";
-					}else{
-						clase="c_off";
-					}
-
-					$parent.addClass(clase)
-			})
-			
-			$label.click(function(){
-				var $that = $(this);
-
-				if($that.hasClass("c_on")){
-					$that.find("input").removeAttr("checked");
-					$that.removeClass("c_on").addClass("c_off");
-				}else{
-					$that.find("input").attr("checked","checked");
-					$that.removeClass("c_off").addClass("c_on");
-				}
-			})
-
-		}
-
-}
-
 function mycarousel_initCallback(carousel) {
     jQuery(".jcarousel-control a").bind("click", function() {
 		$(".jcarousel-control a").removeClass("sel")
@@ -168,8 +132,5 @@ jQuery(document).ready(function() {
 			buttonNextHTML: null,
 			buttonPrevHTML: null
 		});
-	}
-	if($("input.pretty").length){
-		prettyChecks.init();
 	}
 })
