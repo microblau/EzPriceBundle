@@ -485,3 +485,7 @@ background-image:url("../images/bullet_fichas.gif");
 #bodyContent #promocionPrimaria .imgModuloDest #mediaspace {margin-left:0}
 #finProceso .encuesta label {font-weight:normal; float:left; white-space:normal}
 
+#sage_home_recursos.recursospsm_sage #gridHome1 #presentacionRecursos .columnType1 .description ul{
+    margin-left:0;
+}
+
