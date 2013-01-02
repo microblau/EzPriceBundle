@@ -1,6 +1,6 @@
 {def $node = fetch( 'content', 'object', hash( 'object_id', ezini( 'RPSM-SAGESettings',  'Destacados', 'rpsm.ini' )))}   
     
-    <div id="sage_home_recursos">
+    <div id="sage_home_recursos" class="recursospsm_sage">
         <div id="gridHome1" class="clearFix">
             <div class="columnType1" style="width:690px; float:left">
             
