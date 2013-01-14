@@ -95,7 +95,7 @@
                                         	
                                         
                                             {case}
-                                              {def $sort_array = hash( 'attr_fecha_aparicion_dt', 'asc', 'attr_orden_si', 'asc', 'attr_nombre_s', 'asc' )}                                      
+                                              {def $sort_array = hash( 'attr_fecha_aparicion_dt', 'asc', 'attr_orden_si', 'desc', 'attr_nombre_s', 'asc' )}                                      
                                                 {set $filtro=array('or')}
                                                 {set $filtro=$filtro|append(concat( 'submeta_', 'area', '___id_si:', $order_by))}
                                             {/case}
