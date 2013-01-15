@@ -198,18 +198,20 @@ jQuery(document).ready(function() {
 
     function initCarousel( carousel )
     {
-        
-		$(".youtube-player").tubeplayer({
+
+        $('.youtube-player').each( function(i,val){
+            $(val).tubeplayer({
 	width: 633, // the width of the player
 	height: 304, // the height of the player
 	allowFullScreen: "false", // true by default, allow user to go full screen
-	initialVideo: $('.youtube-player').attr('idvideo'), // the video that is loaded into the player
+	initialVideo: $(val).attr('id'), // the video that is loaded into the player
 	preferredQuality: "default",// preferred quality: default, small, medium, large, hd720
 	
     onPlayerPlaying: function(){ carousel.stopAuto() },
     onPlayerPaused: function(){ carousel.startAuto() },
     onPlayerEnded: function(){ carousel.startAuto() }
     });
+        });
     }
 
   
