@@ -2,7 +2,7 @@
 
 	<div id="sage_home_recursos">
 		<div id="gridHome1" class="clearFix">
-			<div class="columnType1">
+			<div class="columnType1" style="float:left; width:680px">
 			
 			
 				<div id="presentacionRecursos">

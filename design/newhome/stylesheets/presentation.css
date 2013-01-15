@@ -2384,3 +2384,5 @@ body.sage_home_recursos {background-image:url(../images/bck_body2.gif); backgrou
 input.pretty.off { position:absolute; left:-1000em; }
 .ie7 input.pretty.off { position:absolute; left:-1000em; }
 .ie8 input.pretty.off { position:absolute; left:-1000em; }
+.destacadoSage a {color:#00528D;font-weight:normal;}
+.destacadoIntSage {padding-top:0px !important;margin-top:85px}
