@@ -1,4 +1,10 @@
-{set-block scope=root variable=subject}{$collection.attributes[1].contentclass_attribute_name|wash()}{/set-block}
+{set-block scope=root variable=subject}
+{if and(is_set($object.data_map.asunto), $object.data_map.asunto.has_content)}
+	{$object.data_map.asunto.content}
+	{else}
+	 Solicitud de Demo QMementix -acción comercial 9569
+{/if}
+{/set-block}
 {set-block scope=root variable=email_sender}contacto@efl.es{/set-block}
 {append-block scope=root variable=receiver}mjizquierdo@efl.es{/append-block}
 {append-block scope=root variable=email_cc_receivers}mourelle@efl.es{/append-block}
