@@ -173,3 +173,8 @@ display:block;
 .precio {position:relative;bottom: 108px;left: 495px;}
 .pvp, .pvp-offer {font-size:16px;font-weight: bold;text-decoration: none;display:block;}
 .pvp-offer ins{border-bottom:none;}
+
+#tblint table.renderedtable tr.bglight:hover td, #tblint table.renderedtable tr.bgdark:hover td
+{
+    background-color: #4F4F4F;
+}
