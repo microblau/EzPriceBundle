@@ -42,12 +42,10 @@
                                         {/if}
                                     {/if}
                                 
-                                <div class="description">
-                                    <strong>
+                                <div class="description destacadoSage">
                                     {$node.data_map.texto.content.output.output_text}
-                                    </strong>
                                 </div>
-                                <div class="novedades">
+                                <div class="novedades destacadoIntSage">
                                     <ul>
                                         <li class="email"><a href={"recursospsm_sage/formularios/formulario-de-inscripcion-boletin-recursos-psm-sage"|ezurl} target="_blank">Novedades por email</a></li>
                                         <li class="rss"><a href={"recursospsm_sage/rss"|ezurl}>RSS</a></li>
