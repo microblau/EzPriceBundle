@@ -1,4 +1,4 @@
-{set-block scope=root variable=subject}Formulario de Prueba de Producto - acción comercial 8969{/set-block}
+{set-block scope=root variable=subject}{$collection.attributes[1].contentclass_attribute_name|wash()}{/set-block}
 {set-block scope=root variable=email_sender}contacto@efl.es{/set-block}
 {append-block scope=root variable=receiver}actum@efl.es{/append-block}
 {append-block scope=root variable=email_cc_receivers}mjizquierdo@efl.es{/append-block}
