@@ -10,7 +10,7 @@
 {append-block scope=root variable=email_cc_receivers}mourelle@efl.es{/append-block}
 {append-block scope=root variable=email_cc_receivers}iglesias@efl.es{/append-block}
 {append-block scope=root variable=email_cc_receivers}hurtado@efl.es{/append-block}
-{append-block scope=root variable=email_cc_receivers}bsimon@efl.es{/append-block}
+{append-block scope=root variable=email_cc_receivers}mjizquierdo@efl.es{/append-block}
 {append-block scope=root variable=email_cc_receivers}dentici@efl.es{/append-block}
 CAMPOS DEL FORMULARIO:
 
