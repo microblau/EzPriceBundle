@@ -103,7 +103,7 @@ class eZUtilsUser extends eZUser
 	            eZUser::updateLastVisit( $userID );	            
 	            eZUser::setCurrentlyLoggedInUser( $user, $userID );
                 $basket = eZBasket::currentBasket();
-                print_r( $basket );
+                //print_r( $basket );
                // die();
 	            
 	
