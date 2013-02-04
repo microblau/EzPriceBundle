@@ -66,7 +66,8 @@ ExtensionAutoloadPath[]=utils
 
 [EFLSettings]
 FormationSubdomain=formacion.efl.es
-WWWSubdomain=www.efl.es
+#WWWSubdomain=www.efl.es
+WWWSubdomain=efl47.tantacom.com
 
 [Cache]
 CacheItems[]=feeds
