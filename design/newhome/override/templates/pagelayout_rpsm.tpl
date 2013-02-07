@@ -32,13 +32,13 @@
 	<div id="wrapper">
 		<div id="sage_header" class="clearfix">
 			<div id="logo" class="flt" style="margin-right:150px">
-				<h1><a href="http://www.efl.es" target="_blank"><img src={"sage_logo_efl.gif"|ezimage} alt="Ediciones Francis Lefevre - La referencia en libros jurídicos" /></a></h1>
+				<h1><a href="http://www.efl.es" target="_blank"><img src={"sage_logo_efl.jpg"|ezimage} alt="Ediciones Francis Lefevre - La referencia en libros jurídicos" /></a></h1>
 			</div>
 			<div id="logoSage" class="flt">
 				<h1><a href="http://www.sage.es" target="_blank"><img src={"sage_logo_sage.gif"|ezimage} alt="Sage" /></a></h1>
 			</div>
 			<div id="imgHeader" class="frt">
-				<h1><img src={"sage_image_header.gif"|ezimage} alt="" /></h1>
+				<h1><img src={"sage_image_header.png"|ezimage} alt="" /></h1>
 			</div>
 		</div>
 		
