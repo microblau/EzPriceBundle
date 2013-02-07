@@ -176,7 +176,7 @@
                                             {include name=navigator
                                                  uri='design:navigator/google.tpl'
                                                  page_uri='/content/advancedsearch'
-                                                 page_uri_suffix=concat('?SearchText=',$search_text,'&numItems=',ezhttp( 'numItems', 'get'))
+                                                 page_uri_suffix=concat('?SearchText=',$search_text,'&numItems=',ezhttp( 'numItems', 'get'),'&SubTreeArray=',ezhttp( 'SubTreeArray', 'get'))
                                                  item_count=$results.SearchCount
                                                  view_parameters=$view_parameters
                                                  item_limit=cond( ezhttp_hasvariable( 'numItems', 'get'), ezhttp( 'numItems', 'get'), 10 )}
@@ -294,7 +294,7 @@
                                                 {include name=navigator
                                                  uri='design:navigator/google.tpl'
                                                  page_uri='/content/advancedsearch'
-                                                 page_uri_suffix=concat('?SearchText=',$search_text,'&numItems=',ezhttp( 'numItems', 'get'))
+                                                 page_uri_suffix=concat('?SearchText=',$search_text,'&numItems=',ezhttp( 'numItems', 'get'),'&SubTreeArray=',ezhttp( 'SubTreeArray', 'get'))
                                                  item_count=$results.SearchCount
                                                  view_parameters=$view_parameters
                                                  item_limit=10}

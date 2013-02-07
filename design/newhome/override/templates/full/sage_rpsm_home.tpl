@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="formacion">
                                         <h3>¿Necesita más Formación?</h3>
-                                        <p>Seminarios presenciales y Online.</p>
+                                        <p>Seminarios Online.</p>
                                         <div class="img_link">
                                             <a href={"recursospsm_sage/formularios/inscribase-en-los-cursos-de-formacion-memento-sage"|ezurl} target="_blank"><img src={"sage_btn_quieroInsc.gif"|ezimage} alt="Quiero inscribirme"/></a>
                                         </div>
@@ -103,7 +103,7 @@
                                         <h3>¿Quiere ampliar sus Mementos Sage?</h3>
                                         <p>Conozca nuestra gama de productos.</p>
                                         <div class="img_link">
-                                            <a href={"http://www.mementossage.com"|ezurl} target="_blank"><img src={"sage_btn_masInfo.gif"|ezimage} alt="Quiero ser experto"/></a>
+                                            <a href="http://www.distribuidorefl.es/formularios/lp_acuerdosageefl2.htm" target="_blank"><img src={"sage_btn_masInfo.gif"|ezimage} alt="Quiero ser experto"/></a>
                                         </div>
                                         <div class="img_bordeinf">
                                             <img src={"sage_curve_inf_inner_recursos.gif"|ezimage} alt=""/>
