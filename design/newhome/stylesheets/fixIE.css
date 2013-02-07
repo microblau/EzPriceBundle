@@ -209,3 +209,6 @@
 #search .submit { overflow: visible; width: 1; height: 22px; border: none;     }
 
 #gridHome1 .wrap, #home #modDestacado  { padding-bottom: 10px }
+
+.ie7 #sage_home_recursos #gridHome1 #presentacionRecursos .wrap {padding-bottom: 8px; background-color: #fff;}
+.ie7 #sage_home_recursos #gridHome1 #presentationRecursos .columnType1 .curveSup {padding-top: 0; background-image: none;}
