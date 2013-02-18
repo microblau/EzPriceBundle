@@ -10,9 +10,9 @@ IsEnabled=true
 # creates a command line and executes it with system().
 Handler=eZImageShellFactory
 # The path to the executable, can be empty for global path.
-ExecutablePath=C:\Program Files\ImageMagick-6.7.4-Q16
+ExecutablePath=/usr/bin/
 # Name of the executable
-Executable=convert.exe
+Executable=convert
 # Name of the executable for windows,
 # uncomment ExecutableMac for Mac specific converter and
 # ExecutableUnix for Unix/Linux specific converter

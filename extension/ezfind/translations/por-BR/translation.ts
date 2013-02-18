@@ -1,58 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0">
-<context>
-    <name>design/admin/content/search</name>
-    <message>
-        <source>Search</source>
-        <translation>Pesquisa</translation>
-    </message>
-    <message>
-        <source>All content</source>
-        <translation>Todo conteúdo</translation>
-    </message>
-    <message>
-        <source>The same location</source>
-        <translation>O mesmo local</translation>
-    </message>
-    <message>
-        <source>For more options try the %1Advanced search%2.</source>
-        <comment>The parameters are link start and end tags.</comment>
-        <translation>Para mais opções tente a %1Busca avançada%2. </translation>
-    </message>
-    <message>
-        <source>The following words were excluded from the search</source>
-        <translation>As seguintes palavras foram excluídas da pesquisa</translation>
-    </message>
-    <message>
-        <source>No results were found while searching for &lt;%1&gt;</source>
-        <translation>Nenhum resultado foi encontrado na pesquisa por &lt;%1&gt;</translation>
-    </message>
-    <message>
-        <source>Search tips</source>
-        <translation>Dicas de pesquisa</translation>
-    </message>
-    <message>
-        <source>Check spelling of keywords.</source>
-        <translation>Verifique a ortografia das palavras-chave.</translation>
-    </message>
-    <message>
-        <source>Try changing some keywords e.g. &amp;quot;car&amp;quot; instead of &amp;quot;cars&amp;quot;.</source>
-        <translation>Tente mudar algumas palavras-chave i.e. &amp;quot;carro&amp;quot; ao invés de  &amp;quot;carros&amp;quot;.</translation>
-    </message>
-    <message>
-        <source>Try more general keywords.</source>
-        <translation>Tente palavras-chave mais genéricas.</translation>
-    </message>
-    <message>
-        <source>Fewer keywords result in more matches. Try reducing keywords until you get a result.</source>
-        <translation>Menos palavras-chave resultam em mais resultados. Tente reduzir as palavras-chave até que consiga um resultado.</translation>
-    </message>
-    <message>
-        <source>Search for &lt;%1&gt; returned %2 matches</source>
-        <translation>A pesquisa por &lt;%1&gt; retornou %2 resultados</translation>
-    </message>
-</context>
+<!DOCTYPE TS><TS>
 <context>
     <name>design/admin/node/view/full</name>
     <message>
@@ -66,29 +13,6 @@
     <message>
         <source>Show 25 items per page.</source>
         <translation>Mostrar 25 itens por página.</translation>
-    </message>
-</context>
-<context>
-    <name>design/admin/pagelayout</name>
-    <message>
-        <source>Search in all content</source>
-        <translation>Pesquisar em todo conteúdo</translation>
-    </message>
-    <message>
-        <source>Search</source>
-        <translation>Pesquisa</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Avançada</translation>
-    </message>
-    <message>
-        <source>Search in &apos;%node&apos;</source>
-        <translation>Pesquisar em &apos;%node&apos;</translation>
-    </message>
-    <message>
-        <source>Advanced search.</source>
-        <translation>Pesquisa avançada.</translation>
     </message>
 </context>
 <context>
@@ -147,30 +71,11 @@
     </message>
     <message>
         <source>Phrase search can be achieved by using quotes, example: &quot;No TV and no beer make Homer go something something&quot;</source>
-        <translation type="obsolete">Pesquisa por frases pode ser conseguido através de citações, exemplo: &quot;Sem TV e sem cerveja faz o Homer fazer alguma coisa&quot; </translation>
+        <translation>Pesquisa por frases pode ser conseguido através de citações, exemplo: "Sem TV e sem cerveja faz o Homer fazer alguma coisa" </translation>
     </message>
     <message>
         <source>Words may be excluded by using a minus ( - ) character, example: free -beer</source>
-        <translation type="obsolete">Palavras podem ser excluídas usando um sinal de menos ( - ), exemplo: grátis -cerveja</translation>
-    </message>
-    <message>
-        <source>Spell check suggestion: did you mean</source>
-        <translation>Sugestão de verificação ortográfica: você quis dizer</translation>
-    </message>
-    <message>
-        <source>Phrase search can be achieved by using quotes, example: &quot;Quick brown fox jumps over the lazy dog&quot;</source>
-        <translation>Pesquisa por frase pode ser feita através da utilização de aspas, exemplo: &quot;Raposa marrom veloz pula sobre o cachorro preguiçoso&quot;</translation>
-    </message>
-    <message>
-        <source>Words may be excluded by using a minus ( - ) character, example: lazy -dog</source>
-        <translation>Palavras podem ser excluídas através da utilização do sinal de menos ( - ), exemplo: preguiçoso -cachorro</translation>
-    </message>
-</context>
-<context>
-    <name>design/ezflow/block/search</name>
-    <message>
-        <source>Search</source>
-        <translation>Pesquisa</translation>
+        <translation>Palavras podem ser excluídas usando um sinal de menos ( - ), exemplo: grátis -cerveja</translation>
     </message>
 </context>
 <context>
@@ -218,31 +123,27 @@
     </message>
     <message>
         <source>Facets</source>
-        <translation type="obsolete">Contexto</translation>
+        <translation>Contexto</translation>
     </message>
     <message>
         <source>Class</source>
-        <translation type="obsolete">Tipos</translation>
+        <translation>Tipos</translation>
     </message>
     <message>
         <source>Author</source>
-        <translation type="obsolete">Autor</translation>
+        <translation>Autor</translation>
     </message>
     <message>
         <source>Translation</source>
-        <translation type="obsolete">Idioma</translation>
+        <translation>Idioma</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation type="obsolete">Grupos</translation>
+        <translation>Grupos</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="obsolete">Todos</translation>
-    </message>
-    <message>
-        <source>Refine your search</source>
-        <translation>Limite sua pesquisa</translation>
+        <translation>Todos</translation>
     </message>
 </context>
 <context>
@@ -262,21 +163,6 @@
     <message>
         <source>Tip a friend</source>
         <translation>Enviar para um amigo</translation>
-    </message>
-    <message>
-        <source>Related content</source>
-        <translation>Conteúdo relacionado</translation>
-    </message>
-</context>
-<context>
-    <name>design/ezwebin/pagelayout</name>
-    <message>
-        <source>Search text:</source>
-        <translation>Texto de pesquisa:</translation>
-    </message>
-    <message>
-        <source>Search</source>
-        <translation>Pesquisa</translation>
     </message>
 </context>
 <context>
@@ -410,26 +296,11 @@
     </message>
     <message>
         <source>Elevation detail</source>
-        <translation type="obsolete">Detalhes da elevaçãp</translation>
+        <translation>Detalhes da elevaçãp</translation>
     </message>
     <message>
         <source>Remove Elevation</source>
         <translation>Remover elevação</translation>
-    </message>
-</context>
-<context>
-    <name>extension/ezfind/ajax-search</name>
-    <message>
-        <source>No search results...</source>
-        <translation>Nenhum resultado da pesquisa...</translation>
-    </message>
-    <message>
-        <source>Did you mean</source>
-        <translation>Você quis dizer</translation>
-    </message>
-    <message>
-        <source>Refine with facets</source>
-        <translation>Limite com contextos</translation>
     </message>
 </context>
 <context>
@@ -459,11 +330,11 @@
     </message>
     <message>
         <source>Unable to open &apos;%1&apos;. Write access is required on this file in order to flush Solr&apos;s elevate configuration.</source>
-        <translation type="obsolete">Não foi possível abrir &apos;%1&apos;. É necessário permissão de escrita para este arquivo, para atualizar a configuração de elevação do Solr&apos;s.</translation>
+        <translation>Não foi possível abrir &apos;%1&apos;. É necessário permissão de escrita para este arquivo, para atualizar a configuração de elevação do Solr&apos;s.</translation>
     </message>
     <message>
         <source>Unable to write Solr&apos;s elevate configuration in &apos;%1&apos;, although the file could be properly opened.</source>
-        <translation type="obsolete">Não foi possível gravar configuração de elevação do Solr&apos;s em &apos;%1&apos;, embora o arquivo pode ser aberto corretamente.</translation>
+        <translation>Não foi possível gravar configuração de elevação do Solr&apos;s em &apos;%1&apos;, embora o arquivo pode ser aberto corretamente.</translation>
     </message>
     <message>
         <source>Hide preview of existing elevate configurations.</source>
@@ -591,7 +462,7 @@
     </message>
     <message>
         <source>Find matching elevate configurations</source>
-        <translation type="obsolete">Encontrar configurações de elevação correspondentes.</translation>
+        <translation>Encontrar configurações de elevação correspondentes.</translation>
     </message>
     <message>
         <source>Find elevate configurations matching the search query entered.</source>
@@ -701,53 +572,6 @@
         <source>Cancel removal of the elevate configuration</source>
         <translation>Cancelar a remoção da configuração de elevação</translation>
     </message>
-    <message>
-        <source>Edit</source>
-        <translation>Editar</translation>
-    </message>
-    <message>
-        <source>Trash</source>
-        <translation>Lixeira</translation>
-    </message>
-    <message>
-        <source>Elevate %objectlink with:</source>
-        <translation>Elevar %objectlink com:</translation>
-    </message>
-    <message>
-        <source>for language:</source>
-        <translation>para idioma:</translation>
-    </message>
-    <message>
-        <source>An unknown error occured in updating Solr&apos;s elevate configuration.</source>
-        <translation>Um erro desconhecido ocorreu na atualização da elevação da configuração do Solr.</translation>
-    </message>
-</context>
-<context>
-    <name>extension/ezfind/facets</name>
-    <message>
-        <source>Creation time</source>
-        <translation>Data de criação</translation>
-    </message>
-    <message>
-        <source>Clear all</source>
-        <translation>Limpar tudo</translation>
-    </message>
-    <message>
-        <source>Content type</source>
-        <translation>Tipo de conteúdo</translation>
-    </message>
-    <message>
-        <source>Author</source>
-        <translation>Autor</translation>
-    </message>
-    <message>
-        <source>Keywords</source>
-        <translation>Palavras-chave</translation>
-    </message>
-    <message>
-        <source>Publication Year</source>
-        <translation>Ano de publicação</translation>
-    </message>
 </context>
 <context>
     <name>extension/ezfind/popupmenu</name>
@@ -768,7 +592,7 @@
     <name>ezfind</name>
     <message>
         <source>Search time: %1 msecs</source>
-        <translation type="obsolete">Tempo de pesquisa %1 ms</translation>
+        <translation>Tempo de pesquisa %1 ms</translation>
     </message>
     <message>
         <source>Core search time: %1 msecs</source>
@@ -780,19 +604,11 @@
     </message>
     <message>
         <source>Server not running</source>
-        <translation type="obsolete">O servidor não responde</translation>
+        <translation>O servidor não responde</translation>
     </message>
     <message>
         <source>eZ Find search plugin &amp;copy; 2007 eZ Systems AS, eZ Labs</source>
-        <translation type="obsolete">eZ Find search plugin &amp;copy; 2007 eZ Systems AS, eZ Labs</translation>
-    </message>
-    <message>
-        <source>Search took: %1 msecs, using </source>
-        <translation>Pesquisa demorou: %1 ms, utilizando </translation>
-    </message>
-    <message>
-        <source>eZ Find %version search plugin &amp;copy; 1999-2012 eZ Systems AS, powered by Apache Solr 3.1</source>
-        <translation>Plugin de pesquisa eZ Find %version &amp;copy; 1999-2012 eZ Systems AS, powered by Apache Solr 3.1</translation>
+        <translation>eZ Find search plugin &amp;copy; 2007 eZ Systems AS, eZ Labs</translation>
     </message>
 </context>
 </TS>

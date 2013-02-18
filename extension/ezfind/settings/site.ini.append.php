@@ -13,7 +13,4 @@ AllowEmptySearch=enabled
 [RegionalSettings]
 TranslationExtensions[]=ezfind
 
-[TemplateSettings]
-ExtensionAutoloadPath[]=ezfind
-
 */ ?>

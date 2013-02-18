@@ -2,24 +2,26 @@
 //
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish Community Project
-// SOFTWARE RELEASE:  2012.8
-// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2
+// SOFTWARE NAME: eZ Find
+// SOFTWARE RELEASE: 1.0.x
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-// 
+//
 //   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-// 
+//
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
+//
+//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -73,7 +75,7 @@ $FunctionList['search'] = array( 'name' => 'search',
                                                         array( 'name' => 'ignore_visibility',
                                                                'type' => 'bool',
                                                                'required' => false,
-                                                               'default' => null ),
+                                                               'default' => false ),
                                                         array( 'name' => 'limitation',
                                                                'type' => 'array',
                                                                'required' => false,
@@ -113,15 +115,7 @@ $FunctionList['search'] = array( 'name' => 'search',
                                                         array ( 'name'  => 'fields_to_return',
                                                                 'type' => 'array',
                                                                 'required' => false,
-                                                                'default' => null ),
-                                                        array ( 'name'  => 'search_result_clustering',
-                                                                'type' => 'array',
-                                                                'required' => false,
-                                                                'default' => null ),
-                                                        array ( 'name'  => 'extended_attribute_filter',
-                                                                'type' => 'array',
-                                                                'required' => false,
-                                                                'default' => array() )) );
+                                                                'default' => null )) );
 
 
 $FunctionList['getDefaultSearchFacets'] = array( 'name' => 'getDefaultSearchFacets',
@@ -217,11 +211,7 @@ $FunctionList['moreLikeThis'] = array( 'name' => 'moreLikeThis',
                                                         array( 'name' => 'as_objects',
                                                                'type' => 'boolean',
                                                                'required' => false,
-                                                               'default' => true ),
-                                                        array( 'name' => 'query_installation_id',
-                                                               'type' => 'string',
-                                                               'required' => false,
-                                                               'default' => null ) ) );
+                                                               'default' => true ) ) );
 
 $FunctionList['elevateConfiguration'] = array(   'name' => 'elevateConfiguration',
                                                  'operation_types' => 'read',

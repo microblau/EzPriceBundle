@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @author pb
- * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
- * @version 5.0.0-alpha1
+ * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
+ * @version //autogentag//
  * @package ezfind
  *
  */
@@ -13,26 +13,51 @@ class ezmatrixSolrStorage extends ezdatatypeSolrStorage
 {
 
     /**
-     * Returns the content of the matrix to be stored in Solr
      *
-     * @param eZContentObjectAttribute $contentObjectAttribute the attribute to serialize
-     * @param eZContentClassAttribute $contentClassAttribute the content class of the attribute to serialize
-     * @return array
      */
-    public static function getAttributeContent( eZContentObjectAttribute $contentObjectAttribute, eZContentClassAttribute $contentClassAttribute )
+
+    
+    function  __construct( )
     {
-        $rows = $contentObjectAttribute->content()->attribute( 'rows' );
-        $target = array(
-            'has_rendered_content' => false,
-            'rendered' => null,
-            'content' => array()
-        );
-        foreach( $rows['sequential'] as $elt )
+
+    }
+
+    /**
+     * @param eZContentObjectAttribute $contentObjectAttribute the attribute to serialize
+     * @return json encoded string for further processing
+     * required first level elements 'method', 'version_format', 'data_type_identifier', 'content'
+     * optional first level element is 'rendered' which should store (template) rendered xhtml snippets
+     */
+    public static function getAttributeContent(eZContentObjectAttribute $contentObjectAttribute, $contentClassAttribute)
+    {
+
+        
+
+        $attributeContents = $contentObjectAttribute->content();
+        $cellList          = $attributeContents->attribute( 'cells' );
+
+        $availableCells = array();
+
+        for( $i = 0; $i < count( $cellList ); $i++ )
         {
-            $target['content'][] = $elt['columns'];
+
+            $availableCells[] = array( $cellList[$i] => $cellList[++$i] );
         }
+
+        $target = array(
+                'content' => $availableCells,
+                'has_rendered_content' => false,
+                'rendered' => null
+                );
+
         return $target;
     }
+
+    /**
+     *
+     * @param string $jsonString
+     * @return mixed
+     */
 
 }
 

@@ -18,17 +18,17 @@ div#header .yui-ac-content li {
     display: block;
 }
 
-div#ezautocomplete .yui-ac, div#ezautocomplete .yui-ac-input {
+.yui-ac {
     position: relative;
 }
 
-div#ezautocomplete .yui-ac-container {
+.yui-ac-container {
     position: absolute;
     top: 1.6em;
     text-align:left;
 }
 
-div#ezautocomplete .yui-ac-content {
+.yui-ac-content {
     position: absolute;
     width: 100%;
     border: 1px solid #808080;
@@ -36,10 +36,10 @@ div#ezautocomplete .yui-ac-content {
     overflow:auto;
     overflow-y:hidden;
     z-index: 9050;
-    padding-bottom: 15px;
+    ^padding-bottom: 15px;
 }
 
-div#ezautocomplete .yui-ac-shadow {
+.yui-ac-shadow {
     position: absolute;
     margin: .3em;
     width: 100%;
@@ -50,20 +50,20 @@ div#ezautocomplete .yui-ac-shadow {
     z-index: 9049;
 }
 
-div#ezautocomplete .yui-ac iframe {
+.yui-ac iframe {
     opacity: 0;
     filter: alpha(opacity = 0);
     padding-right: .3em;
     padding-bottom: .3em;
 }
 
-div#ezautocomplete .yui-ac-content ul {
+.yui-ac-content ul {
     margin: 0;
     padding: 0;
     width: 100%;
 }
 
-div#ezautocomplete .yui-ac-content li {
+.yui-ac-content li {
     background-image: none;
     margin: 0;
     padding: 2px 5px;
@@ -74,11 +74,11 @@ div#ezautocomplete .yui-ac-content li {
     display: block;
 }
 
-div#ezautocomplete .yui-ac-content li.yui-ac-prehighlight {
+.yui-ac-content li.yui-ac-prehighlight {
     background: #BABABA;
 }
 
-div#ezautocomplete .yui-ac-content li.yui-ac-highlight {
+.yui-ac-content li.yui-ac-highlight {
     background: #B0B0B0;
     color: #FFF;
 }

@@ -83,7 +83,7 @@ ShowUsedTemplates=enabled
 
 [DebugSettings]
 DebugOutput=enabled
-DebugByIP=enabled
+DebugByIP=disabled
 DebugRedirection=disabled
 DebugIPList[]
 DebugIPList[]=212.0.126.46
@@ -116,12 +116,21 @@ ModuleViewAccessMode[domiciliacion/*]=ssl
 [MailSettings]
 Transport=file
 #Transport=SMTP
-AdminEmail=clientes@efl.es
-EmailSender=clientes@efl.es
-TransportServer=localhost
-TransportPort=25
+#AdminEmail=clientes@efl.es
+#EmailSender=clientes@efl.es
+#TransportServer=localhost
+#TransportPort=25
 #TransportUser=xxxx
 #TransportPassword=xxxx
+
+[MailSettings]
+Transport=SMTP
+TransportServer=smtp.desorden.net
+TransportPort=25
+TransportUser=smtp@desorden.net
+TransportPassword=smtp2011
+AdminEmail=lidia.valle@tantacom.com
+EmailSender=
 
 [EmbedViewModeSettings]
 AvailableViewModes[]=embed

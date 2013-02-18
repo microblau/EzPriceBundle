@@ -1,58 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0">
-<context>
-    <name>design/admin/content/search</name>
-    <message>
-        <source>Search</source>
-        <translation>Buscar</translation>
-    </message>
-    <message>
-        <source>All content</source>
-        <translation>Todo el contenido</translation>
-    </message>
-    <message>
-        <source>The same location</source>
-        <translation>En la misma ubicación</translation>
-    </message>
-    <message>
-        <source>For more options try the %1Advanced search%2.</source>
-        <comment>The parameters are link start and end tags.</comment>
-        <translation>Para más opciones usa la %1Búsqueda avanzada%2.</translation>
-    </message>
-    <message>
-        <source>The following words were excluded from the search</source>
-        <translation>Las siguientes palabras han sido excluidas de la búsqueda</translation>
-    </message>
-    <message>
-        <source>No results were found while searching for &lt;%1&gt;</source>
-        <translation>No se han encontrado resultados al buscar por &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Search tips</source>
-        <translation>Consejos de búsqueda</translation>
-    </message>
-    <message>
-        <source>Check spelling of keywords.</source>
-        <translation>Comprueba cómo has escrito las palabras clave.</translation>
-    </message>
-    <message>
-        <source>Try changing some keywords e.g. &amp;quot;car&amp;quot; instead of &amp;quot;cars&amp;quot;.</source>
-        <translation>Prueba cambiando algunas palabras clave (por ejemplo, &amp;quot;coche&amp;quot; en vez de &amp;quot;coches&amp;quot;).</translation>
-    </message>
-    <message>
-        <source>Try more general keywords.</source>
-        <translation>Prueba con palabras claves más comunes.</translation>
-    </message>
-    <message>
-        <source>Fewer keywords result in more matches. Try reducing keywords until you get a result.</source>
-        <translation>Reduce el número de palabras clave para obtener más resultados.</translation>
-    </message>
-    <message>
-        <source>Search for &lt;%1&gt; returned %2 matches</source>
-        <translation>La búsqueda por &quot;%1&quot; ha devuelto %2 coincidencias</translation>
-    </message>
-</context>
+<!DOCTYPE TS><TS>
 <context>
     <name>design/admin/node/view/full</name>
     <message>
@@ -69,70 +15,47 @@
     </message>
 </context>
 <context>
-    <name>design/admin/pagelayout</name>
-    <message>
-        <source>Search in all content</source>
-        <translation>Buscar en todo el contenido</translation>
-    </message>
-    <message>
-        <source>Search</source>
-        <translation>Buscar</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Avanzada</translation>
-    </message>
-    <message>
-        <source>Search in &apos;%node&apos;</source>
-        <translation>Buscar en &apos;%node&apos;</translation>
-    </message>
-    <message>
-        <source>Advanced search.</source>
-        <translation>Búsqueda avanzada.</translation>
-    </message>
-</context>
-<context>
     <name>design/base</name>
     <message>
         <source>The following words were excluded from the search</source>
-        <translation>Las siguientes palabras han sido excluidas de la búsqueda</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Buscar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>For more options try the %1Advanced search%2</source>
         <comment>The parameters are link start and end tags.</comment>
-        <translation>Para más opciones usa la %1Búsqueda avanzada%2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No results were found when searching for &quot;%1&quot;</source>
-        <translation>No se han encontrado resultados al buscar por &quot;%1&quot;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Search tips</source>
-        <translation>Consejos de búsqueda</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Check spelling of keywords.</source>
-        <translation>Comprueba cómo has escrito las palabras clave.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Try changing some keywords eg. car instead of cars.</source>
-        <translation>Prueba cambiando algunas palabras clave (por ejemplo, coche en vez de coches).</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Try more general keywords.</source>
-        <translation>Prueba con palabras claves más comunes.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Fewer keywords gives more results, try reducing keywords until you get a result.</source>
-        <translation>Reduce el número de palabras clave para obtener más resultados.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Search for &quot;%1&quot; returned %2 matches</source>
-        <translation>La búsqueda por &quot;%1&quot; ha devuelto %2 coincidencias</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -147,22 +70,10 @@
     </message>
     <message>
         <source>Phrase search can be achieved by using quotes, example: &quot;No TV and no beer make Homer go something something&quot;</source>
-        <translation type="obsolete">Se puede conseguir una búsqueda por frase usando comillas, ejemplo: &quot;Prueba de búsqueda&quot;</translation>
-    </message>
-    <message>
-        <source>Words may be excluded by using a minus ( - ) character, example: free -beer</source>
-        <translation type="obsolete">Se pueden excluir palabras usando el carácter menos ( - ), ejemplo: gratis -cerveza</translation>
-    </message>
-    <message>
-        <source>Spell check suggestion: did you mean</source>
-        <translation>Sugerencia: querías decir</translation>
-    </message>
-    <message>
-        <source>Phrase search can be achieved by using quotes, example: &quot;Quick brown fox jumps over the lazy dog&quot;</source>
         <translation>Se puede conseguir una búsqueda por frase usando comillas, ejemplo: &quot;Prueba de búsqueda&quot;</translation>
     </message>
     <message>
-        <source>Words may be excluded by using a minus ( - ) character, example: lazy -dog</source>
+        <source>Words may be excluded by using a minus ( - ) character, example: free -beer</source>
         <translation>Se pueden excluir palabras usando el carácter menos ( - ), ejemplo: gratis -cerveza</translation>
     </message>
 </context>
@@ -218,183 +129,168 @@
     </message>
     <message>
         <source>Refine with facets</source>
-        <translation type="obsolete">Refinar con características</translation>
-    </message>
-    <message>
-        <source>Refine your search</source>
-        <translation></translation>
+        <translation>Refinar con características</translation>
     </message>
 </context>
 <context>
     <name>design/ezwebin/full/article</name>
     <message>
         <source>Comments</source>
-        <translation>Comentarios</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>New comment</source>
-        <translation>Nuevo comentario</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%login_link_startLog in%login_link_end or %create_link_startcreate a user account%create_link_end to comment.</source>
-        <translation>%login_link_startConéctate%login_link_end o %create_link_startecrea una cuenta de usuario%create_link_end para poder hacer comentarios.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Tip a friend</source>
-        <translation>Enviar a un amigo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Related content</source>
-        <translation>Contenido relacionado</translation>
-    </message>
-</context>
-<context>
-    <name>design/ezwebin/pagelayout</name>
-    <message>
-        <source>Search text:</source>
-        <translation>Texto a buscar:</translation>
-    </message>
-    <message>
-        <source>Search</source>
-        <translation>Buscar</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>design/standard/content/search</name>
     <message>
         <source>Advanced search</source>
-        <translation>Búsqueda avanzada</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Search all the words</source>
-        <translation>Buscar todas las palabras</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Search the exact phrase</source>
-        <translation>Buscar la frase exacta</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Search with at least one of the words</source>
-        <translation>Buscar con al menos una de las palabras</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Class</source>
-        <translation>Clase</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Any class</source>
-        <translation>Cualquier clase</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Class attribute</source>
-        <translation>Atributo de clase</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Any attribute</source>
-        <translation>Cualquier atributo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Update attributes</source>
-        <translation>Actualizar atributos</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>In</source>
-        <translation>En</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Any section</source>
-        <translation>Cualquier sección</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Published</source>
-        <translation>Publicado</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Any time</source>
-        <translation>En cualquier momento</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Last day</source>
-        <translation>En el último día</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Last week</source>
-        <translation>En la última semana</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Last month</source>
-        <translation>En el último mes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Last three months</source>
-        <translation>En los últimos tres meses</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Last year</source>
-        <translation>En el último año</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Display per page</source>
-        <translation>Resultados por página</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>5 items</source>
-        <translation>5 elementos</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>10 items</source>
-        <translation>10 elementos</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>20 items</source>
-        <translation>20 elementos</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>30 items</source>
-        <translation>30 elementos</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>50 items</source>
-        <translation>50 elementos</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Buscar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No results were found when searching for &quot;%1&quot;</source>
-        <translation>No se han encontrado resultados al buscar por &quot;%1&quot;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Search for &quot;%1&quot; returned %2 matches</source>
-        <translation>La búsqueda por &quot;%1&quot; ha devuelto %2 coincidencias</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Score</source>
-        <translation>Relevancia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Nombre</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>extension/ezfind</name>
     <message>
         <source>eZFind</source>
-        <translation type="unfinished">eZFind</translation>
+        <translation>eZFind</translation>
     </message>
     <message>
         <source>Elevation</source>
-        <translation type="unfinished">Elevación</translation>
+        <translation>Elevación</translation>
     </message>
     <message>
         <source>Elevation detail</source>
-        <translation type="obsolete">Detalles de la elevación</translation>
+        <translation>Detalles de la elevación</translation>
     </message>
     <message>
         <source>Remove Elevation</source>
-        <translation type="unfinished">Eliminar Elevación</translation>
+        <translation>Eliminar Elevación</translation>
     </message>
 </context>
 <context>
@@ -406,10 +302,6 @@
     <message>
         <source>Refine with facets</source>
         <translation>Refinar con características</translation>
-    </message>
-    <message>
-        <source>No search results...</source>
-        <translation>No se han encontrado resultados...</translation>
     </message>
 </context>
 <context>
@@ -435,7 +327,7 @@
     <name>extension/ezfind/elevate</name>
     <message>
         <source>Error while generating the configuration XML</source>
-        <translation type="unfinished">Se ha producido un error al general la configuración XML</translation>
+        <translation>Se ha producido un error al general la configuración XML</translation>
     </message>
     <message>
         <source>Unable to open &apos;%1&apos;. Write access is required on this file in order to flush Solr&apos;s elevate configuration.</source>
@@ -567,11 +459,11 @@
     </message>
     <message>
         <source>Fuzzy match on the search query.</source>
-        <translation>Coincidencia borrosa en la petición de búsqueda.</translation>
+        <translation>Coincidencia borros en la petición de búsqueda.</translation>
     </message>
     <message>
         <source>Find matching elevate configurations</source>
-        <translation type="obsolete">Buscar configuraciones de elevación coincidentes</translation>
+        <translation>Buscar configuraciones de elevación coincidentes</translation>
     </message>
     <message>
         <source>Find elevate configurations matching the search query entered.</source>
@@ -683,38 +575,22 @@
     </message>
     <message>
         <source>An unknown error occured in updating Solr&apos;s elevate configuration.</source>
-        <translation type="unfinished">Se ha producido un error al actualizar la configuración de elevación del Solr.</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Editar</translation>
-    </message>
-    <message>
-        <source>Trash</source>
-        <translation>Papelera</translation>
-    </message>
-    <message>
-        <source>Elevate %objectlink with:</source>
-        <translation>Elevar %objectlink con:</translation>
-    </message>
-    <message>
-        <source>for language:</source>
-        <translation>para el idioma:</translation>
+        <translation>Se ha producido un error al actualizar la configuración de elevación del Solr.</translation>
     </message>
 </context>
 <context>
     <name>extension/ezfind/facets</name>
     <message>
         <source>Content type</source>
-        <translation type="unfinished">Tipo de contenido</translation>
+        <translation>Tipo de contenido</translation>
     </message>
     <message>
         <source>Author</source>
-        <translation type="unfinished">Autor</translation>
+        <translation>Autor</translation>
     </message>
     <message>
         <source>Keywords</source>
-        <translation type="unfinished">Palabras clave</translation>
+        <translation>Palabras clave</translation>
     </message>
     <message>
         <source>Creation time</source>
@@ -723,10 +599,6 @@
     <message>
         <source>Clear all</source>
         <translation>Limpiar todo</translation>
-    </message>
-    <message>
-        <source>Publication Year</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -768,15 +640,7 @@
     </message>
     <message>
         <source>eZ Find 2.2 search plugin &amp;copy; 2009 eZ Systems AS, powered by Apache Solr 1.4</source>
-        <translation type="obsolete">Extensión de búsqueda eZ Find 2.2 &amp;copy; 2009 eZ Systems AS, powered by Apache Solr 1.4</translation>
-    </message>
-    <message>
-        <source>eZ Find 2.3 search plugin &amp;copy; 1999-2012 eZ Systems AS, powered by Apache Solr 1.5-dev</source>
-        <translation type="obsolete">Extensión de búsqueda eZ Find 2.3 &amp;copy; 1999-2012 eZ Systems AS, powered by Apache Solr 1.5-dev</translation>
-    </message>
-    <message>
-        <source>eZ Find %version search plugin &amp;copy; 1999-2012 eZ Systems AS, powered by Apache Solr 3.1</source>
-        <translation type="unfinished"></translation>
+        <translation>Extensión de búsqueda eZ Find 2.2 &amp;copy; 2009 eZ Systems AS, powered by Apache Solr 1.4</translation>
     </message>
 </context>
 </TS>

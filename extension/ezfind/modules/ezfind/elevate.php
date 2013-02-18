@@ -2,24 +2,26 @@
 //
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish Community Project
-// SOFTWARE RELEASE:  2012.8
-// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2
+// SOFTWARE NAME: eZ Find
+// SOFTWARE RELEASE: 2.0.x
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-// 
+//
 //   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-// 
+//
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
+//
+//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -51,7 +53,7 @@ if ( $http->hasPostVariable( 'ObjectIDFromMenu' ) and is_numeric( $http->postVar
 }
 
 // back from browse
-else if (
+elseif(
     $http->hasPostVariable( 'BrowseActionName' ) and
     ( $http->postVariable( 'BrowseActionName' ) == ( 'ezfind-elevate-browseforobject' ) or $http->postVariable( 'BrowseActionName' ) == ( 'ezfind-searchelevateconfigurations-browse' ) ) and
     $http->hasPostVariable( "SelectedNodeIDArray" )
@@ -95,7 +97,7 @@ elseif ( $http->hasPostVariable( 'ezfind-elevate-browseforobject' ) or
 }
 
 // Store the actual Elevate configuration
-else if ( $http->hasPostVariable( 'ezfind-elevate-do' ) )
+elseif( $http->hasPostVariable( 'ezfind-elevate-do') )
 {
     $doStorage = true;
 
@@ -164,7 +166,7 @@ else if ( $http->hasPostVariable( 'ezfind-elevate-do' ) )
 }
 
 // Searching for elevate configurations, directly from clicking the action button, or from previous results' pagination links ( Next, Previous, 1, 2, 3 ... )
-else if ( $http->hasPostVariable( 'ezfind-searchelevateconfigurations-do' ) or
+elseif( $http->hasPostVariable( 'ezfind-searchelevateconfigurations-do' ) or
         $Params['SearchQuery'] !== false )
 {
     // Check for search query first
@@ -175,7 +177,7 @@ else if ( $http->hasPostVariable( 'ezfind-searchelevateconfigurations-do' ) or
         // Pass the search query on to the template, search will occur there.
         $viewParameters = array_merge( $viewParameters, array( 'search_query' => $searchQuery ) );
     }
-    else if ( $Params['SearchQuery'] != '' )
+    elseif( $Params['SearchQuery'] != '' )
     {
         $searchQuery = htmlspecialchars( $Params['SearchQuery'], ENT_QUOTES );
         // Pass the search query on to the template, search will occur there.
@@ -213,7 +215,7 @@ else if ( $http->hasPostVariable( 'ezfind-searchelevateconfigurations-do' ) or
 }
 
 // Synchronise Elevate configuration with Solr :
-else if ( $http->hasPostVariable( 'ezfind-elevate-synchronise' ) )
+elseif( $http->hasPostVariable( 'ezfind-elevate-synchronise' ) )
 {
     $solr = new eZSolr();
     //if ( eZFindElevateConfiguration::synchronizeWithSolr() )
@@ -241,8 +243,8 @@ $Result = array();
 $Result['content'] = $tpl->fetch( "design:ezfind/elevate.tpl" );
 $Result['left_menu'] = "design:ezfind/backoffice_left_menu.tpl";
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezpI18n::tr( 'extension/ezfind', 'eZFind' ) ),
+                                'text' => ezi18n( 'extension/ezfind', 'eZFind' ) ),
                          array( 'url' => false,
-                                'text' => ezpI18n::tr( 'extension/ezfind', 'Elevation' ) ) );
+                                'text' => ezi18n( 'extension/ezfind', 'Elevation' ) ) );
 
 ?>

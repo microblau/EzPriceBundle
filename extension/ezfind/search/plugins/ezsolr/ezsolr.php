@@ -1,29 +1,31 @@
 <?php
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish Community Project
-// SOFTWARE RELEASE:  2012.8
-// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE NAME: eZ Find
+// SOFTWARE RELEASE: 1.0.x
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // EXTENDED COPYRIGHT NOTICE :
 //      Part of this class was inspired from the following contributors' work :
 //      * Kristof Coomans <kristof[dot]coomans[at]telenet[dot]be>
 //      * Paul Borgermans <pb[at]ez[dot]no> ( when not employed yet by eZ Systems )
 //      * SCK-CEN as a legal entity <http://www.sckcen.be/>
-// SOFTWARE LICENSE: GNU General Public License v2
+// SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-// 
+//
 //   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-// 
+//
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
+//
+//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -32,7 +34,7 @@
 /**
  * Solr search plugin for eZ publish
  */
-class eZSolr implements ezpSearchEngine
+class eZSolr
 {
     /**
      * Constructor
@@ -61,15 +63,14 @@ class eZSolr implements ezpSearchEngine
     {
         return array(
             'id' => 'sint',
-            'class_name' => 'mstring',
+            'class_name' => 'string',
             'section_id' => 'sint',
             'owner_id' => 'sint',
             'contentclass_id' => 'sint',
             'current_version' => 'sint',
-            'remote_id' => 'mstring',
-            'class_identifier' => 'mstring',
+            'remote_id' => 'string',
+            'class_identifier' => 'string',
             'main_node_id' => 'sint',
-            'always_available' => 'boolean',
             'modified' => 'date',
             'published' => 'date',
             'main_parent_node_id' => 'sint' );
@@ -95,7 +96,7 @@ class eZSolr implements ezpSearchEngine
     public static function getMetaAttributesForObject( eZContentObject $object )
     {
         $metaAttributeValues = array();
-        foreach ( self::metaAttributes() as $attributeName => $fieldType )
+        foreach( self::metaAttributes() as $attributeName => $fieldType )
         {
             $metaAttributeValues[] = array( 'name' => $attributeName,
                                             'value' => $object->attribute( $attributeName ),
@@ -112,15 +113,12 @@ class eZSolr implements ezpSearchEngine
     static function nodeAttributes()
     {
         return array( 'node_id' => 'sint',
-                      'path_string' => 'mstring',
-                      'url_alias' => 'mstring',
+                      'path_string' => 'string',
+                      'url_alias' => 'string',
                       'is_hidden' => 'boolean',
                       'is_invisible' => 'boolean',
-                      'sort_field' => 'mstring',
-                      'sort_order' => 'mstring',
-                      'priority' => 'sint',
-                      'depth' => 'sint',
-                      'view_count' => 'sint' );
+                      'sort_field' => 'string',
+                      'sort_order' => 'string' );
     }
 
     /**
@@ -133,26 +131,24 @@ class eZSolr implements ezpSearchEngine
      */
     static function getMetaAttributeType( $name, $context = 'search' )
     {
+       
 
-
-        $attributeList = array( 'search' => array_merge( array( 'guid' => 'mstring',
-                                             'installation_id' => 'mstring',
-                                             'installation_url' => 'mstring',
+        $attributeList = array ('search' => array_merge( array( 'guid' => 'string',
+                                             'installation_id' => 'string',
+                                             'installation_url' => 'string',
                                              'name' => 'text',
-                                             'sort_name' => 'mstring',
                                              'anon_access' => 'boolean',
-                                             'language_code' => 'mstring',
-                                             'available_language_codes' => 'mstring',
-                                             'main_url_alias' => 'mstring',
-                                             'main_path_string' => 'mstring',
+                                             'language_code' => 'string',
+                                             'available_language_codes' => 'string',
+                                             'main_url_alias' => 'string',
                                              'owner_name' => 'text',
                                              'owner_group_id' => 'sint',
                                              'path' => 'sint',
-                                             'object_states' => 'sint'),
+                                             'object_states' => 'string'),
                                       self::metaAttributes(),
                                       self::nodeAttributes() ),
-                                'facet' =>  array(
-                                             'owner_name' => 'string' ),
+                                'facet' =>  array( 
+                                             'owner_name' => 'string'),
                                 'filter' => array(),
                                 'sort' => array() );
         if ( ! empty( $attributeList[$context][$name] ) )
@@ -203,11 +199,11 @@ class eZSolr implements ezpSearchEngine
             {
                 if ( count( $fieldDef ) == 1 )
                 {
-                    $contentClassAttributeID = $fieldDef[0];
+                    $contectClassAttributeID = $fieldDef[0];
                 }
                 else if ( count( $fieldDef ) == 2 )
                 {
-                    list( $contentClassAttributeID, $subattribute ) = $fieldDef;
+                    list( $contectClassAttributeID, $subattribute ) = $fieldDef;
                 }
             }
             else
@@ -232,20 +228,21 @@ class eZSolr implements ezpSearchEngine
                         list( $classIdentifier, $attributeIdentifier, $subattribute ) = $fieldDef;
                     } break;
                 }
-                $contentClassAttributeID = eZContentObjectTreeNode::classAttributeIDByIdentifier( $classIdentifier . '/' . $attributeIdentifier );
+                $contectClassAttributeID = eZContentObjectTreeNode::classAttributeIDByIdentifier( $classIdentifier . '/' . $attributeIdentifier );
             }
-            if ( !$contentClassAttributeID )
+            if ( !$contectClassAttributeID )
             {
-                eZDebug::writeNotice( 'Could not get content class from base name: ' . $baseName, __METHOD__ );
+                eZDebug::writeNotice( 'Could not get content class from base name: ' . $baseName,
+                                      'eZSolr::getFieldName()' );
                 return null;
             }
-            $contentClassAttribute = eZContentClassAttribute::fetch( $contentClassAttributeID );
-            $fieldName = ezfSolrDocumentFieldBase::getFieldName( $contentClassAttribute, $subattribute, $context );
+            $contectClassAttribute = eZContentClassAttribute::fetch( $contectClassAttributeID );
+            $fieldName = ezfSolrDocumentFieldBase::getFieldName( $contectClassAttribute, $subattribute, $context );
 
             if ( $includingClassID )
             {
                 return array( 'fieldName'      => $fieldName,
-                              'contentClassId' => $contentClassAttribute->attribute( 'contentclass_id' ) );
+                              'contentClassId' => $contectClassAttribute->attribute( 'contentclass_id' ) );
             }
             else
                 return $fieldName;
@@ -312,109 +309,36 @@ class eZSolr implements ezpSearchEngine
      */
     protected function getUrlAlias( $doc )
     {
-        $node = eZContentObjectTreeNode::fetch( $this->getNodeID( $doc ) );
-        if ( $node instanceof eZContentObjectTreeNode )
-            return $node->attribute( 'url_alias' );
+        if ( isset( $this->postSearchProcessingData['subtree_array'] ) and !empty( $this->postSearchProcessingData['subtree_array'] ) )
+        {
+            foreach ( $this->postSearchProcessingData['subtree_array'] as $subtree )
+            {
+                foreach ( $doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'path_string' )] as $pathString )
+                {
+                    if ( substr_count( $pathString, '/' . $subtree . '/' ) > 0 )
+                    {
+                        $nodeArray = explode( '/', rtrim( $pathString, '/' ));
+                        $nodeID = array_pop( $nodeArray );
 
+                        if ( ( $node = eZContentObjectTreeNode::fetch( $nodeID ) ) !== null )
+                            return $node->attribute( 'url_alias' );
+                    }
+                }
+            }
+        }
         return $doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_url_alias' )];
     }
 
     /**
-     * Returns the relative NodeID for a given search result,
-     * depending on whether a subtree filter was applied or not and limitations by user policy limitations.
+     * Adds a content object to the Solr search server.
      *
-     * Policy limitations (subtree/node) are aggregated by a logic OR (same for subtree filters).
-     * Subtree filters and policy limitations are aggregated together with a logic AND,
-     * so that valid locations must comply subtree filters (if any) AND subtree/node policy limitations (if any)
-     *
-     * @param array $doc The search result, directly received from Solr.
-     * @return int The NodeID corresponding the search result
-     */
-    protected function getNodeID( $doc )
-    {
-        $docPathStrings = $doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'path_string' )];
-        $locationFilter = isset( $this->postSearchProcessingData['subtree_array'] ) ? $this->postSearchProcessingData['subtree_array'] : array();
-        $subtreeLimitations = isset( $this->postSearchProcessingData['subtree_limitations'] ) ? $this->postSearchProcessingData['subtree_limitations'] : array();
-        $validSubtreeArray = $this->getValidPathStringsByLimitation(
-            $docPathStrings,
-            $locationFilter
-        );
-        $validSubtreeLimitations = $this->getValidPathStringsByLimitation(
-            $docPathStrings,
-            $subtreeLimitations
-        );
-
-        // Intersect between $validSubtreeArray (search location filter) and $validSubtreeLimitations (user policy limitations)
-        // indicates valid locations for $doc in current search query
-        // If this intersect is not empty, we take the first element to get the corresponding node ID
-        $validSubtrees = array_intersect( $validSubtreeArray, $validSubtreeLimitations );
-        if ( !empty( $validSubtrees ) )
-        {
-            $validSubtree = array_shift( $validSubtrees );
-            $nodeArray = explode( '/', rtrim( $validSubtree, '/' ) );
-            return (int)array_pop( $nodeArray );
-        }
-        else
-        {
-            $contentId = $doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'id' )];
-            $content = eZContentObject::fetch( $contentId );
-            if ( $content instanceof eZContentObject && !$content->canRead() )
-            {
-                eZDebug::writeError(
-                    "Could not find valid/granted locations for content #$contentId. Broken sync between eZPublish and Solr ?\n\n" .
-                    "Location filter : " . print_r( $locationFilter, true ) .
-                    "Subtree limitations for user : " . print_r( $subtreeLimitations, true ),
-                    __METHOD__
-                );
-            }
-        }
-
-        return (int)$doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_node_id' )];
-    }
-
-    /**
-     * Returns entries from $pathStrings that matches $subtreeLimitations
-     *
-     * @param array $pathStrings Array of path strings (i.e. locations for a content object)
-     * @param array $subtreeLimitations Array of NodeIds that are considered valid (i.e. policy limitations or location filters)
-     * @return array
-     */
-    private function getValidPathStringsByLimitation( array $pathStrings, array $subtreeLimitations )
-    {
-        $validPathStrings = array();
-        // If $subtreeLimitations is empty, then we consider all doc path strings as potentially valid
-        if ( !empty( $subtreeLimitations ) )
-        {
-            foreach ( $subtreeLimitations as $subtree )
-            {
-                foreach ( $pathStrings as $pathString )
-                {
-                    if ( strpos( $pathString, "/$subtree/" ) !== false )
-                    {
-                        $validPathStrings[] = $pathString;
-                    }
-                }
-            }
-
-        }
-        else
-        {
-            $validPathStrings = $pathStrings;
-        }
-
-        return $validPathStrings;
-    }
-
-    /**
-     * Adds object $contentObject to the search database.
-     *
-     * @param eZContentObject $contentObject Object to add to search engine
-     * @param bool $commit Whether to commit after adding the object.
-     *        If set, run optimize() as well every 1000nd time this function is run.
-     * @param $commitWithin Commit within delay (see Solr documentation)
-     * @return bool True if the operation succeed.
-     */
-    function addObject( $contentObject, $commit = true, $commitWithin = 0 )
+     * @param eZContentObject $contentObject object to add to search engine.
+     * @param boolean $commit commit flag. Set if commit should be run after
+     *        adding object. If commit flag is set, run optimize() as well every
+     *        1000nd time this function is run.
+     * @param bool
+    */
+    function addObject( $contentObject, $commit = true )
     {
         // Add all translations to the document list
         $docList = array();
@@ -428,17 +352,13 @@ class eZSolr implements ezpSearchEngine
         }
         // Get global object values
         $mainNode = $contentObject->attribute( 'main_node' );
-        if ( !$mainNode )
-        {
-            eZDebug::writeError( 'Unable to fetch main node for object: ' . $contentObject->attribute( 'id' ), __METHOD__ );
-            return false;
-        }
-
-        $mainNodePathArray = $mainNode->attribute( 'path_array' );
-        $mainNodeID = $mainNode->attribute( 'node_id' );
         // initialize array of parent node path ids, needed for multivalued path field and subtree filters
         $nodePathArray = array();
-
+        if ( !$mainNode )
+        {
+            eZDebug::writeError( 'Unable to fetch main node for object: ' . $contentObject->attribute( 'id' ), 'eZSolr::addObject()' );
+            return false;
+        }
         //included in $nodePathArray
         //$pathArray = $mainNode->attribute( 'path_array' );
         $currentVersion = $contentObject->currentVersion();
@@ -448,12 +368,11 @@ class eZSolr implements ezpSearchEngine
 
         // Get node attributes.
         $nodeAttributeValues = array();
-        foreach ( $contentObject->attribute( 'assigned_nodes' ) as $contentNode )
+        foreach( $contentObject->attribute( 'assigned_nodes' ) as $contentNode )
         {
-            $nodeID = $contentNode->attribute( 'node_id' );
-            foreach ( eZSolr::nodeAttributes() as $attributeName => $fieldType )
+            foreach( eZSolr::nodeAttributes() as $attributeName => $fieldType )
             {
-                $nodeAttributeValues[$nodeID][] = array( 'name' => $attributeName,
+                $nodeAttributeValues[] = array( 'name' => $attributeName,
                                                 'value' => $contentNode->attribute( $attributeName ),
                                                 'fieldType' => $fieldType );
             }
@@ -501,7 +420,7 @@ class eZSolr implements ezpSearchEngine
         $availableLanguages = $currentVersion->translationList( false, false );
 
         // Loop over each language version and create an eZSolrDoc for it
-        foreach ( $availableLanguages as $languageCode )
+        foreach( $availableLanguages as $languageCode )
         {
             $doc = new eZSolrDoc( $docBoost );
             // Set global unique object ID
@@ -514,8 +433,6 @@ class eZSolr implements ezpSearchEngine
 
             // Set Object attributes
             $doc->addField( ezfSolrDocumentFieldBase::generateMetaFieldName( 'name' ), $contentObject->name( false, $languageCode ) );
-            // Also add value to the "sort_name" field as "name" is unsortable, due to Solr limitation (tokenized field)
-            $doc->addField( ezfSolrDocumentFieldBase::generateMetaFieldName( 'sort_name' ), $contentObject->name( false, $languageCode ) );
             $doc->addField( ezfSolrDocumentFieldBase::generateMetaFieldName( 'anon_access' ), $anonymousAccess );
             $doc->addField( ezfSolrDocumentFieldBase::generateMetaFieldName( 'language_code' ), $languageCode );
             $doc->addField( ezfSolrDocumentFieldBase::generateMetaFieldName( 'available_language_codes' ), $availableLanguages );
@@ -527,7 +444,7 @@ class eZSolr implements ezpSearchEngine
                                 $owner->name( false, $languageCode ) );
 
                 // Set owner group ID
-                foreach ( $owner->attribute( 'parent_nodes' ) as $groupID )
+                foreach( $owner->attribute( 'parent_nodes' ) as $groupID )
                 {
                     $doc->addField( ezfSolrDocumentFieldBase::generateMetaFieldName( 'owner_group_id' ), $groupID );
                 }
@@ -535,7 +452,7 @@ class eZSolr implements ezpSearchEngine
 
             // from eZ Publish 4.1 only: object states
             // so let's check if the content object has it
-            if ( method_exists( $contentObject, 'stateIDArray' ) )
+            if (method_exists( $contentObject, 'stateIDArray'))
             {
                 $doc->addField( ezfSolrDocumentFieldBase::generateMetaFieldName( 'object_states' ),
                                 $contentObject->stateIDArray() );
@@ -549,30 +466,14 @@ class eZSolr implements ezpSearchEngine
             }
 
             // Set content node meta attribute values.
-            foreach ( $nodeAttributeValues as $nodeID => $metaInfoArray )
+            foreach ( $nodeAttributeValues as $metaInfo )
             {
-                foreach( $metaInfoArray as $metaInfo)
-                {
-                    $doc->addField( ezfSolrDocumentFieldBase::generateMetaFieldName( $metaInfo['name'] ),
+                $doc->addField( ezfSolrDocumentFieldBase::generateMetaFieldName( $metaInfo['name'] ),
                                 ezfSolrDocumentFieldBase::preProcessValue( $metaInfo['value'], $metaInfo['fieldType'] ) );
-                }
             }
-
-            // Main node gets single valued fields for sorting, using a dedicated prefix
-            foreach ( $nodeAttributeValues[$mainNodeID] as $metaInfo )
-            {
-                $fieldName = 'main_node_' . ezfSolrDocumentFieldBase::generateMetaFieldName( $metaInfo['name'] );
-                $doc->addField( $fieldName,
-                                    ezfSolrDocumentFieldBase::preProcessValue( $metaInfo['value'],
-                                    $metaInfo['fieldType'] ) );
-            }
-
 
             // Add main url_alias
             $doc->addField( ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_url_alias' ), $mainNode->attribute( 'url_alias' ) );
-
-            // Add main path_string
-            $doc->addField( ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_path_string' ), $mainNode->attribute( 'path_string' ) );
 
             // add nodeid of all parent nodes path elements
             foreach ( $nodePathArray as $pathArray )
@@ -583,22 +484,14 @@ class eZSolr implements ezpSearchEngine
                 }
             }
 
-            // Since eZ Fnd 2.3
-            // cannot call metafield field bame constructor as we are creating multiple fields
-            foreach ( $mainNodePathArray as $key => $pathNodeID )
-            {
-                $doc->addField( 'meta_main_path_element_' . $key . '_si', $pathNodeID );
-
-            }
-
             eZContentObject::recursionProtectionStart();
 
             // Loop through all eZContentObjectAttributes and add them to the Solr document.
             // @since eZ Find 2.3: look for the attribute storage setting
+            
+            $doAttributeStorage = (($this->FindINI->variable( 'IndexOptions', 'EnableSolrAttributeStorage')) === 'true') ? true : false;
 
-            $doAttributeStorage = ( ( $this->FindINI->variable( 'IndexOptions', 'EnableSolrAttributeStorage' ) ) === 'true' ) ? true : false;
-
-            if ( $doAttributeStorage )
+            if ($doAttributeStorage)
             {
                 $allAttributeData = array();
             }
@@ -623,18 +516,18 @@ class eZSolr implements ezpSearchEngine
                     $documentFieldBase = ezfSolrDocumentFieldBase::getInstance( $attribute );
                     $this->addFieldBaseToDoc( $documentFieldBase, $doc, $boostAttribute );
                 }
-
-                if ( $doAttributeStorage )
+                
+                if ($doAttributeStorage)
                 {
                     $storageFieldName = ezfSolrStorage::getSolrStorageFieldName( $attributeIdentifier );
-                    $attributeData = ezfSolrStorage::getAttributeData( $attribute );
+                    $attributeData = ezfSolrStorage::getAttributeData($attribute);
                     $allAttributeData['data_map'][$attributeIdentifier] = $attributeData;
                     $doc->addField( $storageFieldName, ezfSolrStorage::serializeData( $attributeData ) );
                 }
             }
             eZContentObject::recursionProtectionEnd();
 
-            if ( $doAttributeStorage )
+            if ($doAttributeStorage)
             {
                 $doc->addField( 'as_all_bst', ezfSolrStorage::serializeData( $allAttributeData ) );
             }
@@ -642,45 +535,13 @@ class eZSolr implements ezpSearchEngine
             $docList[$languageCode] = $doc;
         }
 
-        // Since eZFind 2.7: indexhooks
-        $generalPlugins = $this->FindINI->variable( 'IndexPlugins', 'General' );
-        $classPlugins   = $this->FindINI->variable( 'IndexPlugins', 'Class' );
-        if ( !empty( $generalPlugins ) )
-        {
-            foreach ( $generalPlugins as $pluginClassString )
-            {
-                if( !class_exists( $pluginClassString ) )
-                {
-                    eZDebug::writeError( "Unable to find the PHP class '$classname' defined for index time plugins for eZ Find", __METHOD__ );
-                    continue;
-                }
-                $plugin = new $pluginClassString;
-                if ( $plugin instanceof ezfIndexPlugin )
-                {
-                    $plugin->modify( $contentObject, $docList );
-                }
-            }
-        }
-
-        if (array_key_exists($contentObject->attribute( 'class_identifier' ), $classPlugins ) )
-        {
-            $pluginClassString = $classPlugins[$contentObject->attribute( 'class_identifier' )];
-            if ( class_exists( $pluginClassString ) )
-            {
-                $plugin = new $pluginClassString;
-                if ($plugin instanceof ezfIndexPlugin)
-                {
-                        $plugin->modify( $contentObject, $docList );
-                }
-            }
-        }
-
         $optimize = false;
         if ( $this->FindINI->variable( 'IndexOptions', 'DisableDirectCommits' ) === 'true' )
         {
             $commit = false;
         }
-        if ( $commitWithin === 0 && $this->FindINI->variable( 'IndexOptions', 'CommitWithin' ) > 0 )
+        $commitWithin = 0;
+        if ( $this->FindINI->variable( 'IndexOptions', 'CommitWithin' ) > 0 )
         {
             $commitWithin = $this->FindINI->variable( 'IndexOptions', 'CommitWithin' );
         }
@@ -688,25 +549,18 @@ class eZSolr implements ezpSearchEngine
         {
             $optimize = true;
         }
-
         if ( $this->UseMultiLanguageCores === true)
         {
-            $result = true;
-            foreach ( $availableLanguages as $languageCode )
+            foreach( $availableLanguages as $languageCode )
             {
-                $languageResult = $this->SolrLanguageShards[$languageCode]->addDocs( array( $docList[$languageCode] ), $commit, $optimize, $commitWithin );
-                if ( !$languageResult )
-                {
-                    $result = false;
-                }
+                $this->SolrLanguageShards[$languageCode]->addDocs( array( $docList[$languageCode] ), $commit, $optimize, $commitWithin );
             }
-            return $result;
         }
         else
         {
             return $this->Solr->addDocs( $docList, $commit, $optimize, $commitWithin );
         }
-
+        
 
     }
 
@@ -721,7 +575,7 @@ class eZSolr implements ezpSearchEngine
         $fieldBaseData = $fieldBase->getData();
         if ( empty( $fieldBaseData ) )
         {
-            if ( is_object( $fieldBase ) )
+            if (is_object($fieldBase) )
             {
                 $contentClassAttribute = $fieldBase->ContentObjectAttribute->attribute( 'contentclass_attribute' );
                 $fieldName = $fieldBase->getFieldName( $contentClassAttribute );
@@ -731,18 +585,14 @@ class eZSolr implements ezpSearchEngine
             {
                 $errorMessage = '$fieldBase not an object';
             }
-            eZDebug::writeNotice( $errorMessage , __METHOD__ );
+            eZDebug::writeNotice( $errorMessage , 'eZSolr::addFieldBaseToDoc' );
             return false;
         }
         else
         {
-           foreach ( $fieldBaseData as $key => $value )
+           foreach( $fieldBaseData as $key => $value )
            {
-               // since ezfind 2.3, a NULL value returned from $fieldBase in the $value elements is used as a flag not to index
-               if ( !is_null( $value ) )
-               {
-                   $doc->addField( $key, $value, $boost );
-               }
+                $doc->addField( $key, $value, $boost );
            }
            return true;
         }
@@ -755,18 +605,18 @@ class eZSolr implements ezpSearchEngine
     function commit()
     {
 
-        if ( $this->UseMultiLanguageCores === true )
+        if ( $this->UseMultiLanguageCores === true)
         {
-            foreach ( $this->SolrLanguageShards as $shard )
+            foreach ($this->SolrLanguageShards as $shard)
             {
-                $shard->commit();
+                $shard->Solr->commit();
             }
         }
         else
         {
             $this->Solr->commit();
         }
-
+        
     }
 
     /**
@@ -775,9 +625,9 @@ class eZSolr implements ezpSearchEngine
     function optimize( $withCommit = false )
     {
 
-        if ( $this->UseMultiLanguageCores === true )
+        if ( $this->UseMultiLanguageCores === true)
         {
-            foreach ( $this->SolrLanguageShards as $shard )
+            foreach ($this->SolrLanguageShards as $shard)
             {
                 $shard->optimize( $withCommit );
             }
@@ -789,11 +639,12 @@ class eZSolr implements ezpSearchEngine
     }
 
     /**
-     * Removes object $contentObject from the search database.
-     *
+     * Removes an object from the Solr search server
+     * 
      * @param eZContentObject $contentObject the content object to remove
-     * @param bool $commit Whether to commit after removing the object
-     * @return bool True if the operation succeed.
+     * @param bool $commit wether or not to commit after removing the object
+     * 
+     * @return bool true if removal was successful
      */
     function removeObject( $contentObject, $commit = null )
     {
@@ -802,11 +653,11 @@ class eZSolr implements ezpSearchEngine
          * the parameter $commit it is not set
          * Default behaviour is as before
          */
-        if ( !isset( $commit ) && ( $this->FindINI->variable( 'IndexOptions', 'DisableDeleteCommits' ) === 'true' ) )
+        if (!isset($commit) && ($this->FindINI->variable( 'IndexOptions', 'DisableDeleteCommits' ) === 'true'))
         {
             $commit = false;
         }
-        elseif ( !isset( $commit ) )
+        elseif ( !isset($commit) )
         {
             $commit = true;
         }
@@ -825,14 +676,14 @@ class eZSolr implements ezpSearchEngine
 
         // 2: create a delete array with all the required infos, groupable by language
         $languages = eZContentLanguage::fetchList();
-        foreach ( $languages as $language )
+        foreach( $languages as $language )
         {
             $languageCode = $language->attribute( 'locale' );
             $docs[$languageCode] = $this->guid( $contentObject, $languageCode );
         }
-        if ( $this->UseMultiLanguageCores === true )
+        if ( $this->UseMultiLanguageCores === true)
         {
-            foreach ( $docs as $languageCode => $doc )
+            foreach($docs as $languageCode => $doc)
             {
                 $this->SolrLanguageShards[$languageCode]->deleteDocs( array( $doc ), false, $commit, $optimize );
             }
@@ -863,32 +714,22 @@ class eZSolr implements ezpSearchEngine
 
         $asObjects = isset( $params['AsObjects'] ) ? $params['AsObjects'] : true;
 
-        //distributed search: fields to return can be specified in 2 parameters
-        $fieldsToReturn = isset( $params['FieldsToReturn'] ) ? $params['FieldsToReturn'] : array();
-        if ( isset( $params['DistributedSearch']['returnfields'] ) )
-        {
-            $fieldsToReturn = array_merge( $fieldsToReturn, $params['DistributedSearch']['returnfields'] );
-
-        }
-
-
-
         $coreToUse = null;
         $shardQueryPart = null;
         if ( $this->UseMultiLanguageCores === true )
         {
             $languages = $this->SiteINI->variable( 'RegionalSettings', 'SiteLanguageList' );
-            if ( array_key_exists ( $languages[0], $this->SolrLanguageShards ) )
+            if ( array_key_exists ($languages[0], $this->SolrLanguageShards ) )
             {
                 $coreToUse = $this->SolrLanguageShards[$languages[0]];
                 if ( $this->FindINI->variable( 'LanguageSearch', 'SearchMainLanguageOnly' ) <> 'enabled' )
                 {
-                    $shardQueryPart = array( 'shards' => implode( ',', $this->SolrLanguageShardURIs ) );
+                    $shardQueryPart = array( 'shards' => implode(',', $this->SolrLanguageShardURIs ));
                 }
             }
-            //eZDebug::writeNotice( $languages, __METHOD__ . ' languages' );
-            eZDebug::writeNotice( $shardQueryPart, __METHOD__ . ' shards' );
-            //eZDebug::writeNotice( $this->SolrLanguageShardURIs, __METHOD__ . ' this languagesharduris' );
+            //eZDebug::writeNotice( $languages, 'eZSolr::search() languages' );
+            eZDebug::writeNotice( $shardQueryPart, 'eZSolr::search() shards' );
+            //eZDebug::writeNotice( $this->SolrLanguageShardURIs, 'eZSolr::search() this languagesharduris' );
         }
         else
         {
@@ -900,19 +741,20 @@ class eZSolr implements ezpSearchEngine
              trim( $searchText ) == '' )
         {
             $error = 'Empty search is not allowed.';
-            eZDebug::writeNotice( $error, __METHOD__ );
+            eZDebug::writeNotice( $error,
+                                  'eZSolr::search()' );
             $resultArray = null;
         }
-
+        
         else
         {
             eZDebug::createAccumulator( 'Query build', 'eZ Find' );
             eZDebug::accumulatorStart( 'Query build' );
             $queryBuilder = new ezfeZPSolrQueryBuilder( $this );
             $queryParams = $queryBuilder->buildSearch( $searchText, $params, $searchTypes );
-            if ( !$shardQueryPart == null )
+            if (! $shardQueryPart == null )
             {
-                $queryParams = array_merge( $shardQueryPart, $queryParams );
+                $queryParams = array_merge($shardQueryPart, $queryParams);
             }
             eZDebug::accumulatorStop( 'Query build' );
             eZDebug::writeDebug( $queryParams, 'Final query parameters sent to Solr backend' );
@@ -923,14 +765,14 @@ class eZSolr implements ezpSearchEngine
             eZDebug::accumulatorStop( 'Engine time' );
         }
 
-        if ( !$resultArray )
+        if (! $resultArray )
         {
             eZDebug::accumulatorStop( 'Search' );
             return array(
                 'SearchResult' => false,
                 'SearchCount' => 0,
                 'StopWordArray' => array(),
-                'SearchExtras' => new ezfSearchResultInfo( array( 'error' => ezpI18n::tr( 'ezfind', $error ) ) ) );
+                'SearchExtras' => new ezfSearchResultInfo( array( 'error' => ezi18n( 'ezfind', $error ) ) ) );
         }
 
         $highLights = array();
@@ -941,15 +783,15 @@ class eZSolr implements ezpSearchEngine
                 $highLightStrings = array();
                 //implode apparently does not work on associative arrays that contain arrays
                 //$element being an array as well
-                foreach ( $highlight as $key => $element )
+                foreach ($highlight as $key => $element)
                 {
-                    $highLightStrings[] = implode( ' ', $element);
+                    $highLightStrings[] = implode(' ', $element);
                 }
-                $highLights[$id] = implode( ' ...  ', $highLightStrings);
+                $highLights[$id] = implode(' ...  ', $highLightStrings);
 
             }
         }
-        if ( !empty( $resultArray ) )
+        if ( count($resultArray) > 0 )
         {
             $result = $resultArray['response'];
             $searchCount = $result['numFound'];
@@ -964,11 +806,11 @@ class eZSolr implements ezpSearchEngine
             {
                 if ( $doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'installation_id' )] == self::installationID() )
                 {
-                    $localNodeIDList[] = $this->getNodeID( $doc );
+                    $localNodeIDList[] = $doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_node_id' )][0];
                 }
             }
 
-            if ( !empty( $localNodeIDList ) )
+            if ( count( $localNodeIDList ) )
             {
                 $tmpNodeRowList = eZContentObjectTreeNode::fetch( $localNodeIDList, false, false );
                 // Workaround for eZContentObjectTreeNode::fetch behaviour
@@ -978,7 +820,7 @@ class eZSolr implements ezpSearchEngine
                 }
                 if ( $tmpNodeRowList )
                 {
-                    foreach ( $tmpNodeRowList as $nodeRow )
+                    foreach( $tmpNodeRowList as $nodeRow )
                     {
                         $nodeRowList[$nodeRow['node_id']] = $nodeRow;
                     }
@@ -992,59 +834,38 @@ class eZSolr implements ezpSearchEngine
                 if ( !$asObjects )
                 {
                     $emit = array();
-                    foreach ( $doc as $fieldName => $fieldValue )
+                    foreach($doc as $fieldName => $fieldValue)
                     {
                         list($prefix, $rest) = explode ('_', $fieldName, 2);
-                        // get the identifier for meta, binary fields
-                        $inner = implode('_', explode('_', $rest, -1));
-
                         if ( $prefix === 'meta' )
                         {
-                            $emit[$inner] = $fieldValue;
+                            $emit[$rest] = $fieldValue;
                         }
-                        elseif ( $prefix === 'as' )
+                        elseif ($prefix === 'as')
                         {
-                            $emit['data_map'][$inner] = ezfSolrStorage::unserializeData( $fieldValue );
-                        }
-                        // it may be a field originating from the explicit fieldlist to return, so it should be added for template consumption
-                        // note that the fieldname will be kept verbatim in a substructure 'fields'
-                        elseif( in_array( $fieldName, $fieldsToReturn ) )
-                        {
-                            $emit['fields'][$fieldName] = $fieldValue;
+
+                            $emit['data_map'][substr($rest,0, -4)] = ezfSolrStorage::unserializeData($fieldValue);
                         }
 
                     }
                     $objectRes[] = $emit;
-                    unset( $emit );
+                    unset($emit);
                     continue;
 
-
+                    
                 }
 
-                elseif ( $doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'installation_id' )] == self::installationID() )
+                if ( $doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'installation_id' )] == self::installationID() )
                 {
                     // Search result document is from current installation
-                    $nodeID = $this->getNodeID( $doc );
-
-                    // Invalid $nodeID
-                    // This can happen if a content has been deleted while Solr was not running, provoking desynchronization
-                    if ( !isset( $nodeRowList[$nodeID] ) )
-                    {
-                        $searchCount--;
-                        eZDebug::writeError( "Node #{$nodeID} (/{$doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_url_alias' )]}) returned by Solr cannot be found in the database. Please consider reindexing your content", __METHOD__ );
-                        continue;
-                    }
-
-                    $resultTree = new eZFindResultNode( $nodeRowList[$nodeID] );
-                    $resultTree->setContentObject( new eZContentObject( $nodeRowList[$nodeID] ) );
+//                    var_dump( ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_node_id' ), $doc, $nodeRowList );die();
+                    $resultTree = new eZFindResultNode( $nodeRowList[$doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_node_id' )][0]] );
+                    $resultTree->setContentObject( new eZContentObject( $nodeRowList[$doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_node_id' )][0]] ) );
                     $resultTree->setAttribute( 'is_local_installation', true );
-                    // can_read permission must be checked as they could be out of sync in Solr, however, when called from template with:
-                    // limitation, hash( 'accessWord', ... ) this check should not be performed as it has precedence.
-                    // See: http://issues.ez.no/15978
-                    if ( !isset( $params['Limitation'], $params['Limitation']['accessWord'] ) && !$resultTree->attribute( 'object' )->attribute( 'can_read' ) )
+                    if ( !$resultTree->attribute( 'can_read' ) )
                     {
-                        $searchCount--;
-                        eZDebug::writeNotice( 'Access denied for eZ Find result, node_id: ' . $nodeID, __METHOD__ );
+                        eZDebug::writeNotice( 'Access denied for eZ Find result, node_id: ' . $doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_node_id' )][0],
+                                              'eZSolr::search()' );
                         continue;
                     }
 
@@ -1094,13 +915,13 @@ class eZSolr implements ezpSearchEngine
      * More like this is pretty similar to normal search, but usually only the object or node id are sent to Solr
      * However, streams or a search text body can also be passed .. Solr will extract the important terms and build a
      * query for us
-     *
+     * 
      * @param string $queryType is one of 'noid', 'oid', 'url', 'text'
      * @param $queryValue the node id, object id, url or text body to use
      * @param array parameters. @see ezfeZPSolrQueryBuilder::buildMoreLikeThis()
      *
      * @return array List of eZFindResultNode objects.
-     *
+     * 
      * @todo: add functionality not to call the DB to recreate objects : $asObjects == false
      */
     function moreLikeThis( $queryType, $queryValue, $params = array() )
@@ -1109,14 +930,14 @@ class eZSolr implements ezpSearchEngine
         eZDebug::accumulatorStart( 'MoreLikeThis' );
         $error = 'Server not running';
         $searchCount = 0;
-        //mlt does not support distributed search yet, so find out which is
+        //mlt does not support distributed search yet, so find out which is 
         //the language core to use and qyery only this one
         //search across languages does not make sense here
         $coreToUse = null;
         if ( $this->UseMultiLanguageCores == true )
         {
             $languages = $this->SiteINI->variable( 'RegionalSettings', 'SiteLanguageList' );
-            if ( array_key_exists ( $languages[0], $this->SolrLanguageShards ) )
+            if ( array_key_exists ($languages[0], $this->SolrLanguageShards ) )
             {
                 $coreToUse = $this->SolrLanguageShards[$languages[0]];
             }
@@ -1146,14 +967,14 @@ class eZSolr implements ezpSearchEngine
             eZDebug::accumulatorStop( 'Engine time' );
         }
 
-        if ( !$resultArray )
+        if (! $resultArray )
         {
             eZDebug::accumulatorStop( 'Search' );
             return array(
                 'SearchResult' => false,
                 'SearchCount' => 0,
                 'StopWordArray' => array(),
-                'SearchExtras' => new ezfSearchResultInfo( array( 'error' => ezpI18n::tr( 'ezfind', $error ) ) ) );
+                'SearchExtras' => new ezfSearchResultInfo( array( 'error' => ezi18n( 'ezfind', $error ) ) ) );
         }
         $objectRes = array();
         if ( isset( $resultArray['response'] ) && is_array( $resultArray['response'] ) )
@@ -1170,7 +991,7 @@ class eZSolr implements ezpSearchEngine
             {
                 if ( $doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'installation_id' )] == self::installationID() )
                 {
-                    $localNodeIDList[] = $doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_node_id' )];
+                    $localNodeIDList[] = $doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_node_id' )][0];
                 }
             }
 
@@ -1184,7 +1005,7 @@ class eZSolr implements ezpSearchEngine
                 }
                 if ( $tmpNodeRowList )
                 {
-                    foreach ( $tmpNodeRowList as $nodeRow )
+                    foreach( $tmpNodeRowList as $nodeRow )
                     {
                         $nodeRowList[$nodeRow['node_id']] = $nodeRow;
                     }
@@ -1198,18 +1019,16 @@ class eZSolr implements ezpSearchEngine
                 {
                     // Search result document is from current installation
 //                    var_dump( ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_node_id' ), $doc, $nodeRowList );die();
-                    $resultTree = new eZFindResultNode( $nodeRowList[$doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_node_id' )]] );
-                    $resultTree->setContentObject( new eZContentObject( $nodeRowList[$doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_node_id' )]] ) );
+                    $resultTree = new eZFindResultNode( $nodeRowList[$doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_node_id' )][0]] );
+                    $resultTree->setContentObject( new eZContentObject( $nodeRowList[$doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_node_id' )][0]] ) );
                     $resultTree->setAttribute( 'is_local_installation', true );
-                    // can_read permission must be checked as they could be out of sync in Solr, however, when called from template with:
-                    // limitation, hash( 'accessWord', ... ) this check should not be performed as it has precedence.
-                    // See: http://issues.ez.no/15978
-                    if ( !isset( $params['Limitation'], $params['Limitation']['accessWord'] ) && !$resultTree->attribute( 'object' )->attribute( 'can_read' ) )
+                    if ( !$resultTree->attribute( 'can_read' ) )
                     {
-                        $searchCount--;
-                        eZDebug::writeNotice( 'Access denied for eZ Find result, node_id: ' . $doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_node_id' )], __METHOD__ );
+                        eZDebug::writeNotice( 'Access denied for eZ Find result, node_id: ' . $doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_node_id' )][0],
+                                              'eZSolr::search()' );
                         continue;
                     }
+
 
                     $globalURL = $doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_url_alias' )] .
                         '/(language)/' . $doc[ezfSolrDocumentFieldBase::generateMetaFieldName( 'language_code' )];
@@ -1257,18 +1076,18 @@ class eZSolr implements ezpSearchEngine
     function initSpellChecker()
     {
 
-        if ( $this->UseMultiLanguageCores == true )
+        if ( $this->UseMultiLanguageCores == true)
         {
-            foreach ( $SolrLanguageShards as $shard )
+            foreach($SolrLanguageShards as $shard )
             {
-                $shard->rawSearch( array( 'q' => 'solr', 'qt' => 'spellchecker', 'wt' => 'php', 'cmd' => 'rebuild' ) );
+                $shard->rawSearch( array( 'q' => 'solr', 'qt' => 'spellchecker', 'wt' => 'php', 'cmd' => 'rebuild') );
                 //@TODO: process individual results, implement an ezfind error class or reuse ezp ones
                 return true;
             }
         }
         else
         {
-            $return = $this->Solr->rawSearch( array( 'q' => 'solr', 'qt' => 'spellchecker', 'wt' => 'php', 'cmd' => 'rebuild' ) );
+            $return = $this->Solr->rawSearch( array( 'q' => 'solr', 'qt' => 'spellchecker', 'wt' => 'php', 'cmd' => 'rebuild') );
         }
 
 
@@ -1283,9 +1102,9 @@ class eZSolr implements ezpSearchEngine
      * @todo: configure different spell check handlers and handle multicore configs (need a parameter for it)
      *
      */
-    function spellCheck ( $string, $onlyMorePopular = false, $suggestionCount = 1, $accuracy = 0.5 )
+    function spellCheck ( $string, $onlyMorePopular = false, $suggestionCount = 1, $accuracy=0.5 )
     {
-        if ( !$this->UseMultiLanguageCores )
+        if (! $this->UseMultiLanguageCores)
         {
             $onlyMorePopularString = $onlyMorePopular ? 'true' : 'false';
             return $this->Solr->rawSearch( array( 'q' => $string, 'qt' => 'spellchecker',
@@ -1350,9 +1169,9 @@ class eZSolr implements ezpSearchEngine
         {
             $deleteQuery = ezfSolrDocumentFieldBase::generateMetaFieldName( 'installation_id' ) . ':' . self::installationID();
         }
-        if ( $this->UseMultiLanguageCores == true )
+        if ($this->UseMultiLanguageCores == true)
         {
-            foreach ( $this->SolrLanguageShards as $shard )
+            foreach($this->SolrLanguageShards as $shard )
             {
                 $shard->deleteDocs( array(), $deleteQuery, true, $optimize );
             }
@@ -1400,7 +1219,7 @@ class eZSolr implements ezpSearchEngine
         $generalSearchFilter = array( array( 'type' => 'general',
                                              'subtype' => 'class',
                                              'params' => array( array( 'type' => 'array',
-                                                                       'value' => 'value' ),
+                                                                       'value' => 'value'),
                                                                 'operator' ) ),
                                       array( 'type' => 'general',
                                              'subtype' => 'publishdate',
@@ -1408,7 +1227,7 @@ class eZSolr implements ezpSearchEngine
                                       array( 'type' => 'general',
                                              'subtype' => 'subtree',
                                              'params'  => array( array( 'type' => 'array',
-                                                                        'value' => 'value' ),
+                                                                        'value' => 'value'),
                                                                  'operator' ) ) );
         return array( 'types' => $searchTypes,
                       'general_filter' => $generalSearchFilter );
@@ -1421,13 +1240,7 @@ class eZSolr implements ezpSearchEngine
      */
     static function engineText()
     {
-        $extensionInfo = ezpExtension::getInstance( 'ezfind' )->getInfo();
-        return ezpI18n::tr(
-            'ezfind',
-            'eZ Find %version search plugin &copy; 1999-2012 eZ Systems AS, powered by Apache Solr 3.5',
-            null,
-            array( '%version' => $extensionInfo['version'] )
-        );
+        return ezi18n( 'ezfind', 'eZ Find 2.3 search plugin &copy; 1999-2010 eZ Systems AS, powered by Apache Solr 1.5-dev' );
     }
 
     /**
@@ -1465,31 +1278,10 @@ class eZSolr implements ezpSearchEngine
     }
 
     /**
-     * Update the section in the search engine
-     *
-     * @param array $objectID
-     * @param int $sectionID
-     * @return void
-     * @see eZSearch::updateObjectsSection()
-     */
-    public function updateObjectsSection( array $objectIDs, $sectionID )
-    {
-        foreach( $objectIDs as $id )
-        {
-            $object = eZContentObject::fetch( $id );
-            // we may be inside a DB transaction running update queries for the
-            // section id or the content object may come from the memory cache
-            // make sure the section_id is the right one
-            $object->setAttribute( 'section_id', $sectionID );
-            $this->addObject( $object );
-        }
-    }
-
-    /**
      * Called when a node's visibility is modified.
-     * Will re-index content identified by $nodeID.
-     * If the node has children, they will be also re-indexed, but this action is deferred to ezfindexsubtree cronjob.
+     * Simply re-index for now.
      *
+     * @todo: defer to cron if there are children involved and re-index these too
      * @todo when Solr supports it: update fields only
      *
      * @param $nodeID
@@ -1499,19 +1291,8 @@ class eZSolr implements ezpSearchEngine
      */
     public function updateNodeVisibility( $nodeID, $action )
     {
-        $node = eZContentObjectTreeNode::fetch( $nodeID );
-        $this->addObject( $node->attribute( 'object' ) );
-        if ( $node->childrenCount( false ) )
-        {
-            $pendingAction = new eZPendingActions(
-                array(
-                    'action' => self::PENDING_ACTION_INDEX_SUBTREE,
-                    'created' => time(),
-                    'param' => $nodeID
-                )
-            );
-            $pendingAction->store();
-        }
+        $contentObject = eZContentObject::fetchByNodeID( $nodeID );
+        $this->addObject( $contentObject );
     }
 
     /**
@@ -1529,7 +1310,8 @@ class eZSolr implements ezpSearchEngine
      */
     public function addNodeAssignment( $mainNodeID, $objectID, $nodeAssignmentIDList )
     {
-        eZContentOperationCollection::registerSearchObject( $objectID );
+        $contentObject = eZContentObject::fetch( $objectID );
+        $this->addObject( $contentObject );
     }
 
     /**
@@ -1587,15 +1369,20 @@ class eZSolr implements ezpSearchEngine
         $this->SolrLanguageShards = array();
         if ( $this->UseMultiLanguageCores == true )
         {
-            $languageMappingList = $this->FindINI->variable( 'LanguageSearch','LanguagesCoresMap');
-            $shardMapping = $this->SolrINI->variable( 'SolrBase', 'Shards' );
-            foreach( $languageMappingList as $language => $languageMapping )
+            
+            $languages = $this->SiteINI->variable( 'RegionalSettings', 'SiteLanguageList' );
+            $languageMapping = $this->FindINI->variable( 'LanguageSearch','LanguagesCoresMap');
+            $shardMapping = $this->SolrINI->variable ('SolrBase', 'Shards');
+            foreach ($languages as $language)
             {
-                $fullURI = $shardMapping[$languageMapping];
-                $this->SolrLanguageShards[$language] = new eZSolrBase($shardMapping[$languageMapping]);
+                $fullURI=$shardMapping[$languageMapping[$language]];
+                $this->SolrLanguageShards[$language]=new eZSolrBase($shardMapping[$languageMapping[$language]]);
                 $parts = explode( '://', $fullURI );
-                $this->SolrLanguageShardURIs[$language] = $parts[1];
+                $this->SolrLanguageShardURIs[$language]= $parts[1];
             }
+
+
+
         }
         else
         //pre-2.2 behaviour
@@ -1606,7 +1393,7 @@ class eZSolr implements ezpSearchEngine
 
 
     }
-
+    
 
     /**
      * synchronises elevate configuration across language shards in case of
@@ -1618,7 +1405,7 @@ class eZSolr implements ezpSearchEngine
     {
         if ( $this->UseMultiLanguageCores == true )
         {
-            foreach ( $this->SolrLanguageShards as $shard )
+            foreach( $this->SolrLanguageShards as $shard )
             {
                 eZFindElevateConfiguration::synchronizeWithSolr( $shard );
             }
@@ -1675,9 +1462,8 @@ class eZSolr implements ezpSearchEngine
     static $InstallationID;
     static $SolrDocumentFieldName;
     // @since ezfind 2.2, information
-    public static $fieldTypeContexts = array( 'search' => 'DatatypeMap', 'facet' => 'DatatypeMapFacet', 'sort' => 'DatatypeMapSort', 'filter' => 'DatatypeMapFilter' );
+    public static $fieldTypeContexts = array ('search' => 'DatatypeMap', 'facet' => 'DatatypeMapFacet', 'sort' => 'DatatypeMapSort', 'filter' => 'DatatypeMapFilter');
 
-    const PENDING_ACTION_INDEX_SUBTREE = 'index_subtree';
 }
 
 eZSolr::$SolrDocumentFieldName = new ezfSolrDocumentFieldName();

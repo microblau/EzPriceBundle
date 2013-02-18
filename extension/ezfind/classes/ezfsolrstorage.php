@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @author pb
- * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
- * @version 5.0.0-alpha1
+ * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
+ * @version //autogentag//
  * @package ezfind
  *
  * @todo: see if we need to make this an abstract class to accomodate CouchDB, MongoDB, so API is not frozen
@@ -39,11 +39,11 @@ class ezfSolrStorage
      * @return array for further processing
      */
 
-    public static function getAttributeData ( eZContentObjectAttribute $contentObjectAttribute )
+    public static function getAttributeData (eZContentObjectAttribute $contentObjectAttribute)
     {
         $dataTypeIdentifier = $contentObjectAttribute->attribute( 'data_type_string' );
         $contentClassAttribute = eZContentClassAttribute::fetch( $contentObjectAttribute->attribute( 'contentclassattribute_id' ) );
-        $attributeHandler =  $dataTypeIdentifier . 'SolrStorage';
+        $atttributeHandler =  $dataTypeIdentifier . 'SolrStorage';
         // prefill the array with generic metadata first
         $target = array (
             'data_type_identifier' => $dataTypeIdentifier,
@@ -52,11 +52,11 @@ class ezfSolrStorage
             'has_content' => $contentObjectAttribute->hasContent(),
 
             );
-        if ( class_exists( $attributeHandler ) )
+        if ( class_exists ( $atttributeHandler ) )
         {
-            $attributeContent = call_user_func( array( $attributeHandler, 'getAttributeContent' ),
+            $attributeContent = call_user_func( $atttributeHandler . '::getAttributeContent',
                      $contentObjectAttribute, $contentClassAttribute );
-            return array_merge( $target, $attributeContent, array( 'content_method' => self::CONTENT_METHOD_CUSTOM_HANDLER ) );
+            return array_merge($target, $attributeContent, array('content_method' => self::CONTENT_METHOD_CUSTOM_HANDLER ));
 
         }
         else
@@ -86,7 +86,7 @@ class ezfSolrStorage
         // primitive for now, it does not return the content in a general usable form yet
         // could insert code to use fromString methods returning an array for the content part
         return json_decode( base64_decode( $storageString ) , true );
-
+        
     }
 
     /**
@@ -97,7 +97,7 @@ class ezfSolrStorage
     public static function getSolrStorageFieldName( $fieldNameBase )
     {
         return  self::STORAGE_ATTR_FIELD_PREFIX . $fieldNameBase . self::STORAGE_ATTR_FIELD_SUFFIX;
-    }
+    }  
 }
 
 ?>
