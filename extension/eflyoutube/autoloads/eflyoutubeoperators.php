@@ -30,7 +30,7 @@ class eflYoutube
     {
     	$jutjub = new YouTube();
 		$videoid = $jutjub->_GetVideoIdFromUrl( $videoid );
-		return '<object type="application/x-shockwave-flash" width="'.$width.'" height="'.$height.'" data="http://www.youtube.com/v/'.$videoid.'"><param name="wmode" value="transparent" /><param name="movie" value="http://www.youtube.com/v/'.$videoid.'" /></object>';
+		return '<object type="application/x-shockwave-flash" width="'.$width.'" height="'.$height.'" data="https://www.youtube.com/v/'.$videoid.'"><param name="wmode" value="transparent" /><param name="movie" value="https://www.youtube.com/v/'.$videoid.'" /></object>';
 	}
 
     function modify( $tpl, $operatorName, $operatorParameters, $rootNamespace,
