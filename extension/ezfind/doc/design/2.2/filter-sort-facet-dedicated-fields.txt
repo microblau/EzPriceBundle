@@ -4,8 +4,8 @@ Better filtering, faceting, sorting with dedicated fields
 
 :Author:   Paul Borgermans
 :Version: 1.0 draft
-:Revision: $Rev: 4368 $
-:Date: $Date: 2009-12-20 21:29:38 +0100 (dom 20 de dic de 2009) $
+:Revision: $Rev$
+:Date: $Date$
 
 .. sectnum::
 .. contents::

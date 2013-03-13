@@ -3,25 +3,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Find
-// SOFTWARE RELEASE: 1.0.x
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE RELEASE: 2.7.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: eZ Business Use License Agreement eZ BUL Version 2.1
 // NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
+//  This source file is part of the eZ Publish CMS and is
+//  licensed under the terms and conditions of the eZ Business Use
+//  License v2.1 (eZ BUL).
 //
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
+//  A copy of the eZ BUL was included with the software. If the
+//  license is missing, request a copy of the license via email
+//  at license@ez.no or via postal mail at
+// 	Attn: Licensing Dept. eZ Systems AS, Klostergata 30, N-3732 Skien, Norway
 //
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
+//  IMPORTANT: THE SOFTWARE IS LICENSED, NOT SOLD. ADDITIONALLY, THE
+//  SOFTWARE IS LICENSED "AS IS," WITHOUT ANY WARRANTIES WHATSOEVER.
+//  READ THE eZ BUL BEFORE USING, INSTALLING OR MODIFYING THE SOFTWARE.
+
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -51,7 +49,7 @@ class ezfModuleFunctionCollection
     public function getFacetParameters()
     {
         $facetArray = array();
-        foreach( $_GET as $name => $value )
+        foreach ( $_GET as $name => $value )
         {
             if ( strpos( $name, 'facet_' ) === 0 )
             {
@@ -77,9 +75,9 @@ class ezfModuleFunctionCollection
         $filterList = array();
         if ( $http->hasGetVariable( 'filter' ) )
         {
-            foreach( $http->getVariable( 'filter' ) as $filterCond )
+            foreach ( $http->getVariable( 'filter' ) as $filterCond )
             {
-                list( $name, $value ) = explode( ':', $filterCond );
+                list( $name, $value ) = explode( ':', $filterCond, 2 );
                 $filterList[$name] = $value;
             }
         }
@@ -106,7 +104,7 @@ class ezfModuleFunctionCollection
     public function search( $query, $offset = 0, $limit = 10, $facets = null,
                             $filters = null, $sortBy = null, $classID = null, $sectionID = null,
                             $subtreeArray = null, $ignoreVisibility = false, $limitation = null, $asObjects = true, $spellCheck = null, $boostFunctions = null, $queryHandler = 'ezpublish',
-                            $enableElevation = true, $forceElevation = false, $publishDate = null, $distributedSearch = null, $fieldsToReturn = null )
+                            $enableElevation = true, $forceElevation = false, $publishDate = null, $distributedSearch = null, $fieldsToReturn = null, $searchResultClustering = null )
     {
         $solrSearch = new eZSolr();
         $params = array( 'SearchOffset' => $offset,
@@ -127,7 +125,8 @@ class ezfModuleFunctionCollection
                          'ForceElevation' => $forceElevation,
                          'SearchDate' => $publishDate,
                          'DistributedSearch' => $distributedSearch,
-                         'FieldsToReturn' => $fieldsToReturn );
+                         'FieldsToReturn' => $fieldsToReturn,
+                         'SearchResultClustering' => $searchResultClustering );
         return array( 'result' => $solrSearch->search( $query, $params ) );
     }
 
@@ -153,7 +152,7 @@ class ezfModuleFunctionCollection
      *       if $queryType 'url' is to be used
      * @todo consider adding limitation and visibility parameters
      *
-     * @param string $queryType string ('nid' | 'oid' | 'text' | 'url' )
+     * @param string $queryType string ( 'nid' | 'oid' | 'text' | 'url' )
      * @param string $query value for QueryType
      * @param int Offset
      * @param int Limit
@@ -163,12 +162,14 @@ class ezfModuleFunctionCollection
      * @param mixed Content class ID or list of content class IDs
      * @param array list of subtree limitation node IDs
      * @param boolean asObjects return regular eZPublish objects if true, stored Solr content if false
+     * @param string|null $queryInstallationID the eZ Find installation id to
+     *        use when looking for the reference document in Solr
      *
      * @return array result as a PHP array
      */
     public function moreLikeThis( $queryType, $query, $offset = 0, $limit = 10, $facets = null,
                                   $filters = null, $sortBy = null, $classID = null, $sectionID = null,
-                                  $subtreeArray = null, $asObjects = true )
+                                  $subtreeArray = null, $asObjects = true, $queryInstallationID = null )
 
     {
         $solrSearch = new eZSolr();
@@ -180,6 +181,7 @@ class ezfModuleFunctionCollection
                          'SearchContentClassID' => $classID,
                          'SearchSectionID' => $sectionID,
                          'SearchSubTreeArray' => $subtreeArray,
+                         'QueryInstallationID' => $queryInstallationID,
                          'AsObjects' => $asObjects);
         return array( 'result' => $solrSearch->moreLikeThis( $queryType, $query, $params ) );
 
@@ -213,26 +215,26 @@ class ezfModuleFunctionCollection
         }
         else
         {
-            if ( $countOnly )
-            {
-                $limit = null;
-                $fieldFilters = array();
-                $custom = array( array( 'operation' => 'count( * )',
-                                        'name' => 'count' ) );
-            }
-
             if ( $languageCode )
                 $conds = array( 'language_code' => $languageCode );
 
-            $sorts = array( 'search_query' => 'asc' );
-            $results = eZPersistentObject::fetchObjectList( eZFindElevateConfiguration::definition(),
-                                                            $fieldFilters,
-                                                            $conds,
-                                                            $sorts,
-                                                            $limit,
-                                                            false,
-                                                            false,
-                                                            $custom );
+            if ( $countOnly )
+            {
+                $results = eZPersistentObject::count( eZFindElevateConfiguration::definition(),
+                                                                $conds );
+            }
+            else
+            {
+                $sorts = array( 'search_query' => 'asc' );
+                $results = eZPersistentObject::fetchObjectList( eZFindElevateConfiguration::definition(),
+                                                                $fieldFilters,
+                                                                $conds,
+                                                                $sorts,
+                                                                $limit,
+                                                                false,
+                                                                false,
+                                                                $custom );
+            }
         }
         // END polymorphic part
 
@@ -244,9 +246,6 @@ class ezfModuleFunctionCollection
         }
         else
         {
-            if ( $searchQuery === null and $countOnly )
-                return array( 'result' => $results[0]['count'] );
-
             return array( 'result' => $results );
         }
     }
@@ -272,31 +271,36 @@ class ezfModuleFunctionCollection
         $limit = 5;
         $facets = array();
         $facets[] = array( 'field' => 'class',
-                           'name'  => ezi18n( 'extension/ezfind/facets', 'Content type' ),
+                           'name'  => ezpI18n::tr( 'extension/ezfind/facets', 'Content type' ),
                            'limit' => $limit );
         $facets[] = array( 'field' => 'author',
-                           'name'  => ezi18n( 'extension/ezfind/facets', 'Author' ),
+                           'name'  => ezpI18n::tr( 'extension/ezfind/facets', 'Author' ),
                            'limit' => $limit );
-        /*$facets[] = array( 'field' => 'published',
-                           'name'  => ezi18n( 'extension/ezfind/facets', 'Creation time' ),
-                           'limit' => $limit );
-        $facets[] = array( 'field' => 'modified',
-                           'name'  => ezi18n( 'extension/ezfind/facets', 'Last modified' ),
+
+        /*$facets[] = array( 'field' => 'modified',
+                           'name'  => ezpI18n::tr( 'extension/ezfind/facets', 'Last modified' ),
                            'limit' => $limit );*/
         $facets[] = array( 'field' => 'article/tags',
-                           'name'  => ezi18n( 'extension/ezfind/facets', 'Keywords' ),
+                           'name'  => ezpI18n::tr( 'extension/ezfind/facets', 'Keywords' ),
                            'limit' => $limit );
+
+        $facets[] = array( 'range' => array( 'field' => 'published',
+                                             'start' => 'NOW/YEAR-3YEARS',
+                                             'end'   => 'NOW/YEAR+1YEAR',
+                                             'gap'   => '+1YEAR',
+                                             'other' => 'all'));
+
 
         // Date facets
         /*$facets[] = array( 'field' => 'published',
-                           'name'  => ezi18n( 'extension/ezfind/facets', 'Creation time' ),
+                           'name'  => ezpI18n::tr( 'extension/ezfind/facets', 'Creation time' ),
                            'limit' => $limit );
         */
         /*$facets[] = array( 'date' => 'modified',
                            'date.start' => 'NOW-1MONTH',
                            'date.end' => 'NOW',
                            'date.gap' => '%2B1DAY',
-                           'name'  => ezi18n( 'extension/ezfind/facets', 'Last modified' ),
+                           'name'  => ezpI18n::tr( 'extension/ezfind/facets', 'Last modified' ),
                            'limit' => $limit );*/
 
         // @TODO : location ( in the content tree )

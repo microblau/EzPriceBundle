@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
  * @author pb
- * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
- * @version //autogentag//
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 2.7.0
  * @package ezfind
  *
  */
@@ -33,10 +33,10 @@ class ezpFileArchiveFileSystem extends ezpFileArchive
     {
 
 
-        $archiveFileName = $this->getArchiveFileName($path, $seeds, $prefix, $realm);
-        if (eZFileHandler::copy($path, $archiveFileName))
+        $archiveFileName = $this->getArchiveFileName( $path, $seeds, $prefix, $realm );
+        if ( eZFileHandler::copy( $path, $archiveFileName ) )
         {
-            return array('archive_file_name' => $archiveFileName, 'seeds' => $seeds, 'prefix' => $prefix, 'realm' => $realm);
+            return array( 'archive_file_name' => $archiveFileName, 'seeds' => $seeds, 'prefix' => $prefix, 'realm' => $realm );
         }
         else
         {
@@ -50,27 +50,27 @@ class ezpFileArchiveFileSystem extends ezpFileArchive
 
     public function getArchiveFileName( $path, $seeds, $prefix = null, $realm = null )
     {
-        $dirElements=array();
-        $dirElements[]=$this->ArchiveDir;
-        if( isset($realm) )
+        $dirElements = array();
+        $dirElements[] = $this->ArchiveDir;
+        if ( isset( $realm ) )
         {
-            $dirElements[]=$realm;
+            $dirElements[]= $realm;
         }
         $seed = implode ( '', $seeds );
-        $hash = hash($this->hashAlgorithm, $seed);
-        $multiLevelDir = eZDir::createMultiLevelPath(substr($hash, 0 , $this->ArchiveDirLevels ), $this->ArchiveDirLevels );
-        $dirElements[]=$multiLevelDir;
-        $fileDirectory = implode('/', $dirElements);
-        if (! file_exists( $fileDirectory ) )
+        $hash = hash( $this->hashAlgorithm, $seed );
+        $multiLevelDir = eZDir::createMultiLevelPath( substr( $hash, 0 , $this->ArchiveDirLevels ), $this->ArchiveDirLevels );
+        $dirElements[] = $multiLevelDir;
+        $fileDirectory = implode( '/', $dirElements );
+        if ( !file_exists( $fileDirectory ) )
         {
             eZDir::mkdir( $fileDirectory, false, true );
         }
         $archiveFileName = $fileDirectory . '/';
-        if (isset ($prefix) )
+        if ( isset( $prefix ) )
         {
-            $archiveFileName.= $prefix . '-';
+            $archiveFileName .= $prefix . '-';
         }
-        $archiveFileName.=$hash;
+        $archiveFileName .= $hash;
 
         return $archiveFileName;
     }
