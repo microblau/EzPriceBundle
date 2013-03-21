@@ -11,14 +11,18 @@
                                                         
                                     <div class="description">
                                         <div id="resultadosBusquedaPage">
-                                       
+                                       {def $filterattrs = array('and')}
+									   {set $filterattrs = $filterattrs|append('-meta_is_invisible_b:1') }
+									   
                                         {if ezhttp_hasvariable( 'SearchText', 'get' )}
                                             {def $results = fetch( ezfind, search, hash( 
                                                             query, ezhttp( 'SearchText', 'get'),
-                                                            'class_id', array( 48, 101, 99, 98, 66, 49, 61, 94, 64, 28, 147, 142 ),
+                                                            'class_id', array( 48, 101, 99, 98, 66, 49, 61, 94, 64, 28, 147, 142,145,149 ),
                                                             'limit', ezhttp( 'numItems', 'get'),
                                                             'offset', $view_parameters.offset,
-                                                            subtree_array, cond( ezhttp_hasvariable( 'SubTreeArray', 'get' ), ezhttp( 'SubTreeArray', 'get') , array( 61, 43 ) ),
+                                                            'subtree_array', cond( ezhttp_hasvariable( 'SubTreeArray', 'get' ), ezhttp( 'SubTreeArray', 'get') , array( 61, 43 ) ),
+															'filter', $filterattrs,
+															'ignore_visibility', false()
                                                             
                                                     ) )}
                                                     
