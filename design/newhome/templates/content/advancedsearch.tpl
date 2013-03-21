@@ -41,6 +41,8 @@
 
 {def $subtree_array=cond( ezhttp_hasvariable( 'obras', 'get' ), ezhttp( 'obras', 'get') , array( 61, 43 ) )}
 {def $subtree = concat( '&', 'obras[]'|urlencode, '=', $subtree_array|implode( concat( '&', 'obras[]'|urlencode, '=' ) ) ) )}
+{set $filter = $filter|append('-meta_is_invisible_b:1') }
+
 
  {if ezhttp_hasvariable( 'SearchText', 'get' )}
                                             {def $results = fetch( ezfind, search, hash( 
@@ -49,7 +51,8 @@
  'class_id', array( 48, 101, 99, 98, 66, 49, 61, 94, 64, 28 ,147 ,142,145,149 ),
                                                             'offset', $view_parameters.offset,
                                                             'subtree_array', cond( ezhttp_hasvariable( 'obras', 'get' ), ezhttp( 'obras', 'get') , array( 2 ) ),                                                           
-                                                       'filter', $filter     
+                                                       'filter', $filter,
+														'ignore_visibility', false()													   
                                                     ) )}
                                                     
                                          
