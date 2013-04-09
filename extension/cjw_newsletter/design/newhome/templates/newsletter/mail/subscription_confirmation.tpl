@@ -20,6 +20,6 @@ Gracias
                                          hash( '%name', concat( $newsletter_user.first_name, ' ', $newsletter_user.last_name ),
                                                '%subscriptionList', $subscriptionListString,
                                                '%listName', $newsletter_list.name,
-                                               '%configureLink', concat( 'http://', $hostname, concat( '/newsletter/configure/', cond( $newsletter_user, $newsletter_user.hash, '#' ) )|ezurl(no) ),
+                                               '%configureLink', concat( 'http://', $hostname, concat( '/newsletter/configure/', cond( $newsletter_user, $newsletter_user.hash, '#' ),'?nooverride=1' )|ezurl(no) ),
                                                 ) )}
 {*include uri="design:newsletter/mail/footer.tpl"*}

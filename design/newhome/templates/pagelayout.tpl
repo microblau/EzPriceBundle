@@ -96,17 +96,33 @@ $module_result.content_info.class_identifier|eq('producto_qmementix') )}class="q
 
 <script type="text/javascript">
 {literal}
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-2627590-1']);
-  _gaq.push(['_setDomainName', '.efl.es']);
-  _gaq.push(['_setAllowHash', false]);
-  _gaq.push(['_trackPageview']); 
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+ var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-2627590-1']); 
+_gaq.push(['_setDomainName', 'efl.es']); 
+_gaq.push(['_addIgnoredRef', 'www.efl.es']); 
+_gaq.push(['_addIgnoredRef', 'formacion.efl.es']); 
+_gaq.push(['_addIgnoredRef', 'espacioclientes.efl.es']); 
+{/literal}
+{if $module_result.ui_component|eq('error')}
+_gaq.push(['_trackPageview','/error404/' + document.location.pathname+document.location.search]);
+{else}
+_gaq.push(['_trackPageview']);
+{/if}
+{literal}
+(function() {
+var ga = document.createElement('script'); ga.type =
+'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' :
+'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0];
+s.parentNode.insertBefore(ga, s);
   })();
+ 
+ 
+ 
+ 
+ 
+ 
 {/literal}
 </script>
 {literal}
