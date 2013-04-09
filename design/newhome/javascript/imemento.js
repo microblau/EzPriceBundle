@@ -93,7 +93,6 @@ var imemento = {
 	}
 }
 
-
 function mycarousel_initCallback(carousel) {
     jQuery(".jcarousel-control a").bind("click", function() {
 		$(".jcarousel-control a").removeClass("sel")
