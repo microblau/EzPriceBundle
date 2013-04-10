@@ -126,6 +126,12 @@ $ViewList['ajaxadd'] = array(
     'default_navigation_part' => 'ezmynavigationpart',
     'params' => array( 'ObjectID', 'Quantity' ) );
 
+$ViewList['ajaxremove'] = array(
+    'functions' => array( 'buy' ),
+    'script' => 'ajaxremove.php',
+    'default_navigation_part' => 'ezmynavigationpart',
+    'params' => array( 'ObjectID', 'Quantity' ) );		
+	
 /*$ViewList['mementix'] = array(
     'functions' => array( 'buy' ),
     'script' => 'mementix.php',
@@ -138,6 +144,12 @@ $ViewList['mementixcheckprice'] = array(
     'default_navigation_part' => 'ezmynavigationpart',
     'params' => array( ) );
 
+$ViewList['imementoramacheckprice'] = array(
+    'functions' => array( 'buy' ),
+    'script' => 'imementoramacheckprice.php',
+    'default_navigation_part' => 'ezmynavigationpart',
+    'params' => array( ) );		
+	
 $ViewList['qmementixcheckprice'] = array(
     'functions' => array( 'buy' ),
     'script' => 'qmementixcheckprice.php',
