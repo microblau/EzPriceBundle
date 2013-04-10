@@ -200,6 +200,8 @@ literal["acceso"] = [];
 literal["mementos"] = [];
 	literal["mementos"][0] = "Memento";
 	literal["mementos"][1] = "Mementos";
+	literal["mementos"][2] = "Pack";
+	literal["mementos"][3] = "Packs";
 	
 	
 literal["opinionForm"] = [];
