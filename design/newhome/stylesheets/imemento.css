@@ -25,25 +25,25 @@
 							#iMementoDest .boxes .text { padding-bottom:7px; }
 
 							/*Type1*/
-							#iMementoDest .boxes .type1 .title { background-color:#085a04; }
+							#iMementoDest .boxes .type1 .title { background-color:#142a33; }
 							#iMementoDest .boxes .type1 .desc { 
-								background: #c6e6ce; /* Old browsers */
-								background: -webkit-linear-gradient(#c6e6ce 1%, #8eb798 100%);
-								background: -o-linear-gradient(#c6e6ce 1%, #8eb798 100%);
-								background: -moz-linear-gradient(#c6e6ce 1%, #8eb798 100%);
-								background: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.01, #c6e6ce), to(#8eb798));
-								background: linear-gradient(#c6e6ce 1%, #8eb798 100%)
+								background: #d88e11; /* Old browsers */
+								background: -webkit-linear-gradient(#d88e11 1%, #a56c14 100%);
+								background: -o-linear-gradient(#d88e11 1%, #a56c14 100%);
+								background: -moz-linear-gradient(#d88e11 1%, #a56c14 100%);
+								background: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.01, #d88e11), to(#a56c14));
+								background: linear-gradient(#d88e11 1%, #a56c14 100%)
 							}
 
 							/*Type2*/
 							#iMementoDest .boxes .type2 .title { background-color:#142a33; }
 							#iMementoDest .boxes .type2 .desc { 
-								background: #c6dce6; /* Old browsers */
-								background: -webkit-linear-gradient(#c6dce6 1%, #8eabb7 100%);
-								background: -o-linear-gradient(#c6dce6 1%, #8eabb7 100%);
-								background: -moz-linear-gradient(#c6dce6 1%, #8eabb7 100%);
-								background: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.01, #c6dce6), to(#8eabb7));
-								background: linear-gradient(#c6dce6 1%, #8eabb7 100%)
+								background: #d88e11; /* Old browsers */
+								background: -webkit-linear-gradient(#d88e11 1%, #a56c14 100%);
+								background: -o-linear-gradient(#d88e11 1%, #a56c14 100%);
+								background: -moz-linear-gradient(#d88e11 1%, #a56c14 100%);
+								background: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.01, #d88e11), to(#a56c14));
+								background: linear-gradient(#d88e11 1%, #a56c14 100%)
 							}
 					
 					
@@ -59,12 +59,12 @@
 				#iMementoDest .carrusel h3{margin-bottom:10px;font-size:20px;font-weight:bold;color:#fff;}
 				#iMementoDest .carrusel p{font-size:14px;color:#fff;}
 		#iMementoDest .infoDest{float:right;width:245px;margin:-30px 0 15px}
-			#iMementoDest .contact { border:1px solid #888; border-radius:10px; margin-bottom:18px; padding:12px; background-color:#6c6c6c; color:#FFF; }
-				#iMementoDest .contact .tit { border-bottom:1px solid #7e7e7e;padding-bottom:15px; font-size:16px; font-weight:bold; }
+			#iMementoDest .contact { border:1px solid #ffcd4c; border-radius:10px; margin-bottom:18px; padding:12px; background-color:#ffedbd; color:#FFF; }
+				#iMementoDest .contact .tit { border-bottom:1px solid #7e7e7e;padding-bottom:15px; font-size:16px; font-weight:bold;color:#000 }
 				#iMementoDest .contact .link { display:inline-block; padding:12px 0; }
-					#iMementoDest .contact .link a { padding-left:15px; background:url(../images/bullet_flecha.gif) 0 3px no-repeat; font-weight:bold; color:#000; text-decoration:underline; }
+					#iMementoDest .contact .link a { padding-left:15px; background:url(../images/bullet_flecha.gif) 0 3px no-repeat; font-weight:bold; color:#115c90; text-decoration:underline; }
 					#iMementoDest .contact .link a:hover { text-decoration:none; }
-				#iMementoDest .contact .subtit { border-top:1px solid #7e7e7e; padding-top:12px; font-weight:bold; text-align:center; }
+				#iMementoDest .contact .subtit { border-top:1px solid #7e7e7e; padding-top:12px; font-weight:bold; text-align:center;color:#000 }
 					#iMementoDest .contact .subtit .tel { display:inline-block; margin-top:10px; font-size:27px; }
 			#iMementoDest .tryPromo{margin-bottom:5px;border:3px solid #0a649c;border-radius:13px;color:#fff;background-color:#0087c0;}
 				#iMementoDest .tryProd{display:block;border:2px solid #fff;border-radius:13px;font-size:14px;text-align:center;color:#fff;background:#0065a1 url(../images/b_tryProd.png) 0 0 repeat-x;}
