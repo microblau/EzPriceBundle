@@ -1,4 +1,4 @@
-﻿/*
+/*
 CSS Browser Selector v0.4.0 (Nov 02, 2010)
 Rafael Lima (http://rafael.adm.br)
 http://rafael.adm.br/css_browser_selector
@@ -396,6 +396,7 @@ var formsValidations = {
                         parent.addClass("error");
                 }else{
                         parent.removeClass("error");
+
                         if(!regularExpressions.isValidEmail(f.find("input#email").val())){
                                 errorTxt += literal["newsletter"][6];                  
                                 parent.addClass("error");
@@ -3152,3 +3153,62 @@ jQuery(document).ready(function() {
 		behaviours.controlHeight2($(".mediosPago"), $(".modTwitter"));
 	} 
 })
+
+
+/**
+* Outbound link tracking
+*
+* This code largely based on examples from
+* [Google Analytics Help](http://www.google.com/support/googleanalytics/bin/answer.py?answer=55527).
+*/
+//para enlaces externos a efl.es
+
+jQuery(function($){
+$('a:not([href*="' + document.domain + '"])').click(function(event){
+		// Just in case, be safe and don't do anything
+		if (typeof _gat == 'undefined') {
+			return;
+		}
+	
+		// Stop our browser-based redirect, we'll do that in a minute
+		event.preventDefault();
+		var link = $(this);
+		var href = link.attr('href');
+		var noProtocol = href.replace(/http[s]?:\/\//, '');
+		// Track the event
+		_gat._getTrackerByName()._trackEvent('Enlace saliente', noProtocol);
+ 
+		// Opening in a new window?
+		if (link.attr('target') == '_blank') {
+		/* If we are opening a new window, go ahead and open it now
+		instead of in a setTimeout callback, so that popup blockers
+		don't block it. */
+			window.open(href);
+		}
+		else {
+		/* If we're opening in the same window, we need to delay
+		for a brief moment to ensure the _trackEvent has had time
+		to fire */
+		setTimeout('document.location = "' + href + '";', 100);
+	}
+});
+});
+
+//para los pdfs
+jQuery(function(){
+	jQuery('a[href$=".pdf"]').click(function(){ 
+			_gaq.push(['_trackEvent', 'Descargas', 'Pdf', this.href]);
+	}) 
+});
+
+//para añadir a la cesta de la compra
+
+jQuery(function(){
+	jQuery('a[href*="'+ "basket/add" +'"]').click(function(){ 
+		var precio =$('.ofertaSus span.precioNuevo').text();
+		var nombreproducto = $(".subTit").parent().html().split("<")[0];	
+		_gaq.push(['_trackEvent', 'AddtoBasket', 'Click', nombreproducto,precio]);
+		
+	}) 
+});
+
