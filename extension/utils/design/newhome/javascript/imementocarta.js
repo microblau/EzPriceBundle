@@ -1,5 +1,3 @@
-(function ($) {
-
 $.fn.followTo = function () {
 	var $this = this,
         $window = $(window),
@@ -231,7 +229,8 @@ function checkImementoPrice( accesos )
 				disableChecks(this);
 				checkImementoPrice( $("#valor").val() );
 				
-    	})};    	
+    	})};    
+	
         $("#mementosForm").submit( function() {    
             var n = $("#productlist input:checked").length;            
             if(n == 0){
@@ -244,4 +243,4 @@ function checkImementoPrice( accesos )
 		if($(".filter").length){filter.init();}
 		
     });
-})(jQuery);
+
