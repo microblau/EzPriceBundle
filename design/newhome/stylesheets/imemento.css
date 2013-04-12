@@ -169,7 +169,7 @@
 
 			#gridTwoColumnsFichas #productlist td:first-child { border-left:solid 2px #c3c3c3; border-radius:10px 0 0 10px; }
 				#gridTwoColumnsFichas #productlist td.selection  { border-right:solid 2px #c3c3c3; border-radius:0 10px 10px 0; text-align:center; }
-				#gridTwoColumnsFichas #productlist tbody tr { background-color:#FFF;cursor:pointer; }
+				#gridTwoColumnsFichas #productlist tbody tr { background-color:#FFF;/*cursor:pointer; */}
 
 	/*For results in infinite Scroll*/
 	#gridTwoColumnsFichas #productlist .imementos thead th.hidden { display:none; visibility:hidden; height:0; padding:0; }

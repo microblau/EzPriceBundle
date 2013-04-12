@@ -87,7 +87,7 @@ la misma aplicación, como si fuera una biblioteca que configura usted mismo.</p
                             			<th class="selection">Su selección</th>
                             		</tr>
                             	</thead>
-								<tbody>
+								<tbody id="table-rows">
 								{foreach $object.data_map.packs.content.relation_browse as $index => $packobject}
 								{def $pack = fetch( 'content', 'object', hash( 'object_id', $packobject.contentobject_id))}
 										<tr {if eq($index,0)} id="iMBase" {/if}>

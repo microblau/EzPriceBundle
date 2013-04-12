@@ -58,8 +58,15 @@ var prettyChecks = {
 				}
 			})
 
+		},
+		enable:function(value)
+		{
+			if(value.hasClass("c_on")){
+				value.removeClass("c_on").addClass("c_off");
+			}else{
+				value.removeClass("c_off").addClass("c_on");
+			}
 		}
-
 	}
 
 var filter = {
@@ -230,6 +237,22 @@ function checkImementoPrice( accesos )
 				checkImementoPrice( $("#valor").val() );
 				
     	})};    
+		
+		/*
+			if($("#productlist input").length != 0){	
+			$("#table-rows > tr").click(function(){
+				check = $(this).find('input[type=checkbox]');
+				span = $(this).find('span');
+				check.attr("checked","checked");
+				prettyChecks.enable(span);
+				$("#addToBasket").hide();
+				$("#preload").show();
+				disableChecks(check);
+				checkImementoPrice( $("#valor").val() );
+		})};
+		*/
+		
+		
 	
         $("#mementosForm").submit( function() {    
             var n = $("#productlist input:checked").length;            
