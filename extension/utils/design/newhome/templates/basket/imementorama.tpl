@@ -88,8 +88,8 @@ la misma aplicación, como si fuera una biblioteca que configura usted mismo.</p
                             		</tr>
                             	</thead>
 								<tbody id="table-rows">
-								{foreach $object.data_map.packs.content.relation_browse as $index => $packobject}
-								{def $pack = fetch( 'content', 'object', hash( 'object_id', $packobject.contentobject_id))}
+								{foreach $idsRelations as $index => $idsRelation}
+								{def $pack = fetch( 'content', 'object', hash( 'object_id', $idsRelation))}
 										<tr {if eq($index,0)} id="iMBase" {/if}>
 										
 										<td>

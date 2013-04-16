@@ -8,6 +8,18 @@ $content = array();
 $removeitem = array();
 $productos = array();
 
+$ini = eZINI::instance('imemento.ini');
+$mData = eZContentObject::fetch( $ini->variable( 'iMemento', 'Object' ) );
+$mdatos = $mData->dataMap();
+$relationPack = $mdatos["packs"]->content();
+
+foreach ($relationPack["relation_browse"] as $relations)
+{
+	$idsRelations[] = $relations["contentobject_id"];
+}
+
+$tpl->setVariable( "idsRelations", $idsRelations );
+
 if ($basket->SessionID !="")
 {
 	foreach ($basket->items() as $item)
@@ -17,13 +29,13 @@ if ($basket->SessionID !="")
 			
 		$pData = eZContentObject::fetch( $item["item_object"]->ContentObject->ID );
 			
-		if ($pData) 
+		if (in_array($pData->ID,$idsRelations))
 		{
 			$datos = $pData->dataMap();
-			$precio = $datos['precio']->content()->attribute( 'ex_vat_price' );
-			$total =  $datos['precio_oferta']->content()->attribute( 'ex_vat_price' );
-			$discountpercent = $datos['descuento_pack']->content();
-			$name = $datos['nombre']->content();
+			if ( $datos['precio'] !="") $precio = $datos['precio']->content()->attribute( 'ex_vat_price' );
+			if ( $datos['precio_oferta'] !="") $total = $datos['precio_oferta']->content()->attribute( 'ex_vat_price' );
+			if ( $datos['descuento_pack'] !="") $discountpercent = $datos['descuento_pack']->content();
+			if ( $datos['nombre']->content() !="") $name = $datos['nombre']->content();
 			$productos[] = array('precio' => $precio, 'total' => $total, 'discountpercent'=> $discountpercent, 'name' => $name);
 		}
 	}
