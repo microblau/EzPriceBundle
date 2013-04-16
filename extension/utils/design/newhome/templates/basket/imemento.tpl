@@ -73,20 +73,20 @@ la misma aplicación, como si fuera una biblioteca que configura usted mismo.</p
 						<li><a href="/basket/imementorama">Configuración por área jurídica</a></li>
 					</ul>
 
-                	<div class="modType4_2">						                    	                    	                    	
+                	<div class="modType4_2" id="filterDiv">						                    	                    	                    	
                 		<div class="filter">
-                			<a href="" class="filter-link">Filtre por rama del derecho</a>
+                			<a href="#filterDiv" class="filter-link">Filtre por rama del derecho</a>
 
                 			<div class="filter-wrap">
 	                			<span class="tit">Todas las ramas</span>
-	                			<span class="filter-close"><a href="">Cerrar</a></span>
+	                			<span class="filter-close"><a href="#filterDiv">Cerrar</a></span>
 	                			<ul id="filterContainer">
 									{def $filtros = fetch('content', 'list', hash('parent_node_id', 143,
                                                                           'sort_by', array( 'priority', true())
 									))}
-										<li><a href="#" class="filter-select" style="text-decoration:none;" data-filter="0">Todas</a></li>
+										<li><a href="#filterDiv" class="filter-select" style="text-decoration:none;" data-filter="0">Todas</a></li>
 									{foreach $filtros as $filtro}
-										<li><a href="#" class="filter-select" data-filter="{$filtro.contentobject_id}">{$filtro.data_map.nombre.data_text}</a></li>	
+										<li><a href="#filterDiv" class="filter-select" data-filter="{$filtro.contentobject_id}">{$filtro.data_map.nombre.data_text}</a></li>	
 									{/foreach}
 									{undef $filtros}
 	                			</ul>
@@ -115,9 +115,15 @@ la misma aplicación, como si fuera una biblioteca que configura usted mismo.</p
 												<strong>{$memento.data_map.precio_imemento.content.ex_vat_price|l10n('clean_currency')} € + IVA</strong>
 											</td>
 											<td class="selection">
-												<span class="c_off">
-													<input type="checkbox" id="memento_{$memento.id}" name="mementos[]" value="{$memento.id}" class="pretty" />
-												</span>
+												{if $productos|contains($memento.id)}
+													<span class="c_on">
+														<input type="checkbox" id="memento_{$memento.id}" name="mementos[]" value="{$memento.id}" class="pretty" checked="checked" />
+													</span>
+												{else}
+													<span class="c_off">
+														<input type="checkbox" id="memento_{$memento.id}" name="mementos[]" value="{$memento.id}" class="pretty" />
+													</span>
+												{/if}
 											</td>
 										</tr>
 										<tr class="sep {$memento.data_map.area.content.relation_list[0].contentobject_id}"><td colspan="3"></td></tr>
@@ -138,7 +144,7 @@ la misma aplicación, como si fuera una biblioteca que configura usted mismo.</p
 	                            <p class="clearFix"><strong><span class="flt">Has seleccionado:</span> <span class="cant" id="modMiImementoInt">0 Mementos</span></strong></p>
 	                            <div class="basket">
 									<p>Precio: <del><span id="partial"></span></del></p>
-	                            	<p>Precio: <ins><span id="ptotal"></span></ins></p>
+	                            	<p>Precio oferta: <ins><span id="ptotal"></span></ins></p>
 	                            	<p class="discount">Descuento: <span id="dtotal"></span></p>
 								</div>
 								<img src={"ajax-loader.gif"|ezimage} id="preload" style="display: none;"/>

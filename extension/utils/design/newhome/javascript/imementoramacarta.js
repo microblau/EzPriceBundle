@@ -20,27 +20,19 @@ var prettyChecks = {
 			
 
 				
-			}).click(function(){
-				var $that = $(this),
-					$parent = $that.parent(),
-					clase;
-
-				if($parent.hasClass("c_on")){
-					$that.removeAttr("checked");
-					$parent.removeClass("c_on").addClass("c_off");
-				}else{
-					$that.attr("checked","checked");
-					$parent.removeClass("c_off").addClass("c_on");
-				}
 			})
-
 		},
 		enable:function(value)
 		{
 			if(value.hasClass("c_on")){
 				value.removeClass("c_on").addClass("c_off");
+				check = value.find('input[type=checkbox]');
+				removetoBasket(check);
+				check.attr('checked', false);
 			}else{
 				value.removeClass("c_off").addClass("c_on");
+				check = value.find('input[type=checkbox]');
+				check.attr('checked', true);
 			}
 		}
 	}
@@ -117,14 +109,15 @@ function checkImementoPrice( )
 function removetoBasket(object)
 {
 	
-	if (!(object.checked))
+		
+	if ($(object).is(':checked'))
 	{
-		product = $("#ProductItemIDList_"+ object.value);
+		product = $("#ProductItemIDList_"+ $(object).val());
+		
 		$.get('/basket/ajaxremove/'+product.val()+'/1', function(data) 
 				{
 					$("#infocesta").html( data.output );
                 }, 'json');
-		
 	}
 	
 } 
@@ -137,7 +130,7 @@ function pintaCesta(data)
 	var div = "";
 	$.each(data.row, function(index, value) 
 		{
-			div += '<p>Nombre: '+value.name+'</p><p>Precio: <del><span id="partial">'+value.price+'</span></del></p><p>Precio: <ins><span id="ptotal">'+value.total+'</span></ins></p><p class="discount">Descuento: <span id="dtotal">'+value.discount+'</span></p>';
+			div += '<p>Nombre: '+value.name+'</p><p>Precio: <del><span id="partial">'+value.price+'</span></del></p><p>Precio oferta: <ins><span id="ptotal">'+value.total+'</span></ins></p><p class="discount">Descuento: <span id="dtotal">'+value.discount+'</span></p>';
 			div += '<div class="sepBasket"></div>';	
 			product = $("#ProductItemIDList_"+ value.id);
 			product.attr("value",value.remove);
@@ -158,31 +151,21 @@ function pintaCesta(data)
         if($("#preload").length != 0) $("#preload").hide();
 		
 		
-		if($("#productlist input").length != 0){	
-      		$("#productlist input").click(function(){
+		$("#table-rows > tr > td > label").bind('click', function() {
+			return false;
+		});
+		
+		
+		$("#table-rows > tr > td.selection").bind('click', function() {
+			check = $(this).find('input[type=checkbox]');
+			span = $(this).find('span');
+			prettyChecks.enable(span);
+			$("#addToBasket").hide();
+			$("#preload").show();
+			disableChecks(check);
+			checkImementoPrice( $("#valor").val() );
+		});
 				
-				$("#addToBasket").hide();
-				$("#preload").show();
-				disableChecks(this);
-				checkImementoPrice();
-				removetoBasket(this);
-		})};    	
-		
-		/*
-		if($("#productlist input").length != 0){	
-			$("#table-rows > tr").click(function(){
-				check = $(this).find('input[type=checkbox]');
-				span = $(this).find('span');
-				check.attr("checked","checked");
-				prettyChecks.enable(span);
-				$("#addToBasket").hide();
-				$("#preload").show();
-				disableChecks(check);
-				checkImementoPrice( $("#valor").val() );
-				//removetoBasket(check);
-		})};
-		*/
-		
         $("#mementosForm").submit( function() {    
             var n = $("#productlist input:checked").length;            
             if(n == 0){

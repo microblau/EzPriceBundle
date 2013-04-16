@@ -41,30 +41,18 @@ var prettyChecks = {
 					}
 
 					$parent.addClass(clase)
-			
-
-				
-			}).click(function(){
-				var $that = $(this),
-					$parent = $that.parent(),
-					clase;
-
-				if($parent.hasClass("c_on")){
-					$that.removeAttr("checked");
-					$parent.removeClass("c_on").addClass("c_off");
-				}else{
-					$that.attr("checked","checked");
-					$parent.removeClass("c_off").addClass("c_on");
-				}
 			})
-
 		},
 		enable:function(value)
 		{
 			if(value.hasClass("c_on")){
 				value.removeClass("c_on").addClass("c_off");
+				check = value.find('input[type=checkbox]');
+				check.attr('checked', false);
 			}else{
 				value.removeClass("c_off").addClass("c_on");
+				check = value.find('input[type=checkbox]');
+				check.attr('checked', true);
 			}
 		}
 	}
@@ -143,10 +131,11 @@ $('#productlist').infinitescroll({
   
 
 function checkImementoPrice( accesos )
-    {
-    var n = $("#productlist input:checked").length;
-	
-		
+{
+	var n = $("#productlist input:checked").length;
+
+	//if (n>0)
+	//{
 		if (n == 1){
                 $("#modMiImementoInt").text(n + ' ' + literal["mementos"][0]);
         }else{
@@ -173,8 +162,8 @@ function checkImementoPrice( accesos )
 				$("#addToBasket").show();
 				enableChecks();
 			}, 'json');
-		
-	}
+	//}
+}
   
   
 
@@ -228,32 +217,20 @@ function checkImementoPrice( accesos )
 		});
 		
 		
+		$("#table-rows > tr > td > label").bind('click', function() {
+			return false;
+		});
 		
-		if($("#productlist input").length != 0){	
-      		$("#productlist input").click(function(){
-               $("#addToBasket").hide();
-				$("#preload").show();
-				disableChecks(this);
-				checkImementoPrice( $("#valor").val() );
-				
-    	})};    
+		$("#table-rows > tr > td.selection").bind('click', function() {
+			check = $(this).find('input[type=checkbox]');
+			span = $(this).find('span');
+			prettyChecks.enable(span);
+			$("#addToBasket").hide();
+			$("#preload").show();
+			disableChecks(check);
+			checkImementoPrice( $("#valor").val() );
+		});
 		
-		/*
-			if($("#productlist input").length != 0){	
-			$("#table-rows > tr").click(function(){
-				check = $(this).find('input[type=checkbox]');
-				span = $(this).find('span');
-				check.attr("checked","checked");
-				prettyChecks.enable(span);
-				$("#addToBasket").hide();
-				$("#preload").show();
-				disableChecks(check);
-				checkImementoPrice( $("#valor").val() );
-		})};
-		*/
-		
-		
-	
         $("#mementosForm").submit( function() {    
             var n = $("#productlist input:checked").length;            
             if(n == 0){
@@ -264,6 +241,7 @@ function checkImementoPrice( accesos )
 		
 		if($("input.pretty").length){prettyChecks.init();}
 		if($(".filter").length){filter.init();}
+		checkImementoPrice();
 		
     });
 

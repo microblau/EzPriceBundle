@@ -18,7 +18,7 @@ if ( version_compare( PHP_VERSION, '5.2' ) < 0 )
     exit;
 }
 ini_set( 'display_errors', 1 );
-ini_set('session.cookie_domain', 'efl47.tantacom.com');
+ini_set('session.cookie_domain', 'efl47');
 $scriptStartTime = microtime( true );
 
 // Set a default time zone if none is given to avoid "It is not safe to rely

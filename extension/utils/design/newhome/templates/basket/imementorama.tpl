@@ -95,7 +95,7 @@ la misma aplicación, como si fuera una biblioteca que configura usted mismo.</p
 										<td>
                             				
                             					<label for="memento_{$pack.id}">{$pack.name}</label>
-                            					<div class="desc">
+                            					<div class="descrama">
                             						{$pack.data_map.entradilla.content.output.output_text}
 													{if $pack.data_map.descuento_pack.has_content}	
 														<p class="discount">Descuento:{$pack.data_map.descuento_pack.data_text}%</p>
@@ -152,7 +152,7 @@ la misma aplicación, como si fuera una biblioteca que configura usted mismo.</p
 								{foreach $productos as $index => $producto}
 									<p>Nombre: {$producto.name}</p>
 									<p>Precio: <del><span id="partial">{$producto.precio}</span></del></p>
-	                            	<p>Precio: <ins><span id="ptotal">{$producto.total}</span></ins></p>
+	                            	<p>Precio oferta: <ins><span id="ptotal">{$producto.total}</span></ins></p>
 	                            	<p class="discount">Descuento: <span id="dtotal">{$producto.discountpercent}%</span></p>
 									{*if ge($index,1)*}<div class="sepBasket"></div>{*/if*}
 								{/foreach}

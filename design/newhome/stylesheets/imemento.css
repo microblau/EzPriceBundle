@@ -160,7 +160,7 @@
 		#gridTwoColumnsFichas #productlist .imementos td { border-top:solid 2px #c3c3c3; border-bottom:solid 2px #c3c3c3; height:auto; padding:10px 6px; font-size:14px; font-weight:normal; }
 			#gridTwoColumnsFichas #productlist .imementos td:first-child { padding-left:10px; }
 		#gridTwoColumnsFichas #productlist .imementos .sep td { border:none; height:0; padding:5px 0; }
-			#gridTwoColumnsFichas .imementos td label { font-size:15px; }
+			#gridTwoColumnsFichas .imementos td label { font-size:15px;cursor:default; }
 			#gridTwoColumnsFichas .imementos .desc { padding-left:10px; }
 			#gridTwoColumnsFichas .imementos .discount { color:#068100; font-size:16px; font-weight:bold; }
 			#gridTwoColumnsFichas #productlist .imementos .pvp del, #gridTwoColumnsFichas #productlist .pvp ins { color:#000; }
@@ -237,3 +237,5 @@
 	#basketAdd .discount {color:#068100;font-weight:bold;}
 #basketAdd .sepBasket {border-bottom:solid 3px #828282; margin:10px 0;}	
 #productlist tbody td:last-child { background:none; }
+
+.descrama ul { margin:0.75em 0 1em 0 }

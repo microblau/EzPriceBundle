@@ -5,6 +5,9 @@ $mementos = $http->getVariable( 'mementos' );
 $object = eZContentObject::fetch( $http->getVariable( 'id' ) );
 $products = explode( ',', $http->getVariable( 'products' ) );
 
+$http->setSessionVariable('productsImemento', "");
+
+
 $tabla = eZContentObject::fetch( eZINI::instance( 'imemento.ini' )->variable( 'iMemento', 'Tabla' ) );
 $datatabla = $tabla->dataMap();
 
@@ -55,6 +58,8 @@ else
     $discountpercent = 0;
     $total = 0;
 }
+
+$http->setSessionVariable('productsImemento', $products);
 
 $result = array( 'price' => number_format( $precio, 2, '.', '' ) . ' €', 'discount' =>  $discountpercent . '%', 'total' => number_format( $total, 2, '.', '' ) . ' €');
 echo json_encode( $result );
