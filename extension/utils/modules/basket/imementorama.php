@@ -8,21 +8,24 @@ $content = array();
 $removeitem = array();
 $productos = array();
 
-
-foreach ($basket->items() as $item)
+if ($basket->SessionID !="")
 {
-	$content[$item["item_object"]->ContentObject->ID] = $item["item_object"]->ContentObject->ID;
-	$removeitem[$item["item_object"]->ContentObject->ID] = $item["id"];
-		
-	$pData = eZContentObject::fetch( $item["item_object"]->ContentObject->ID );
-	if ($pData) 
+	foreach ($basket->items() as $item)
 	{
-		$datos = $pData->dataMap();
-		$precio = $datos['precio']->content()->attribute( 'ex_vat_price' );
-		$total =  $datos['precio_oferta']->content()->attribute( 'ex_vat_price' );
-		$discountpercent = $datos['descuento_pack']->content();
-		$name = $datos['nombre']->content();
-		$productos[] = array('precio' => $precio, 'total' => $total, 'discountpercent'=> $discountpercent, 'name' => $name);
+		$content[$item["item_object"]->ContentObject->ID] = $item["item_object"]->ContentObject->ID;
+		$removeitem[$item["item_object"]->ContentObject->ID] = $item["id"];
+			
+		$pData = eZContentObject::fetch( $item["item_object"]->ContentObject->ID );
+			
+		if ($pData) 
+		{
+			$datos = $pData->dataMap();
+			$precio = $datos['precio']->content()->attribute( 'ex_vat_price' );
+			$total =  $datos['precio_oferta']->content()->attribute( 'ex_vat_price' );
+			$discountpercent = $datos['descuento_pack']->content();
+			$name = $datos['nombre']->content();
+			$productos[] = array('precio' => $precio, 'total' => $total, 'discountpercent'=> $discountpercent, 'name' => $name);
+		}
 	}
 }
 
