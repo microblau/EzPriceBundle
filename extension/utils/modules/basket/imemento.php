@@ -2,6 +2,8 @@
 require( 'kernel/common/template.php' );
 $tpl = templateInit();
 
+$tpl->setVariable( "productos", $_SESSION['productsImemento'] );
+
 $Result['content'] = $tpl->fetch( 'design:basket/imemento.tpl' );
 $Result['path'] = array( 
     array( 
