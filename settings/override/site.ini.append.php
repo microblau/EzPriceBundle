@@ -1,9 +1,9 @@
 <?php /* #?ini charset="utf-8"?
 [DatabaseSettings]
 DatabaseImplementation=ezmysqli
-Server=desta01
-User=lefebvre
-Password=lyXyv3Jq
+Server=localhost
+User=root
+Password=pj963
 Database=lefebvre47
 SQLOutput=disabled
 
