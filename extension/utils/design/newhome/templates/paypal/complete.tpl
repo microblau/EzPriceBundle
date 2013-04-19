@@ -1,7 +1,14 @@
-    {def $products = fetch( 'basket', 'get_products_in_basket', hash( 'productcollection_id', $basket.productcollection_id ))}
+{def $products = fetch( 'basket', 'get_products_in_basket', hash( 'productcollection_id', $basket.productcollection_id ))}
 {def $training = fetch( 'basket', 'get_training_in_basket', hash( 'productcollection_id', $basket.productcollection_id ))}
 {def $order_info = fetch( 'basket', 'get_order_info', hash( 'productcollection_id', $basket.productcollection_id ))}
-{if sum( $products_ua|count, $training_ua|count )|gt(0)}
+
+
+
+
+{if sum( $products|count, $training|count )|gt(0)}
+	{def $aux1=$basket.total_inc_vat|mul(100)}
+	{def $aux2=$aux1|div($basket.total_ex_vat)}
+	{def $porcentaje=$aux2|sub(100)}
 <script type="text/javascript">
 {literal}
   var _gaq = _gaq || [];
@@ -10,8 +17,8 @@
   _gaq.push(['_addTrans',
     '{/literal}{$id_pedido_lfbv}{literal}',           // order ID - required
     'Ediciones Francis Lefebvre',  // affiliation or store name
-    '{/literal}{$basket.price_ex_vat|explode(',')|implode('.')}{literal}',          // total - required
-    '{/literal}{$basket.price_inc_vat|dec( $basket.price_ex_vat )|explode(',')|implode('.')}{literal}',           // tax
+    '{/literal}{$basket.total_inc_vat|mul(10)|round()|div(10)|l10n("number","eng-US")}{literal}',          // total - required
+    '{/literal}{$porcentaje|l10n("number","eng-US")}{literal}',           // tax
     '0',              // shipping
     'Madrid',       // city
     'Madrid',     // state or province
@@ -19,20 +26,45 @@
   ]);
 {/literal}
     {foreach $products as $product}
-
+    		{def $formato_gaq=""}
+ 		{foreach $product.item_object.contentobject.data_map.formato.content.relation_list as $k=>$forma}
+			{def $formato=fetch(content,object, hash(object_id, $forma.contentobject_id))}
+			{if $k|eq(0)}
+				{set $formato_gaq=concat($formato_gaq,$formato.name)}
+			{else}
+				{set $formato_gaq=concat($formato_gaq,',',$formato.name)}
+			{/if}	
+			{undef $formato}
+		{/foreach}
+		{def $areas_gaq=""}
+		{foreach $product.item_object.contentobject.data_map.area.content.relation_list as $k=>$area}
+			{def $areas=fetch(content,object, hash(object_id, $area.contentobject_id))}
+			{if $k|eq(0)}
+				{set $areas_gaq=concat($areas_gaq,$areas.name)}
+			{else}
+				{set $areas_gaq=concat($areas_gaq,',',$areas.name)}
+			{/if}	
+			{undef $areas}
+		{/foreach}
+		{def $combi_gaq=concat($areas_gaq,',',$formato_gaq)}
+		
+		{undef $formato_gaq $areas_gaq }
+		
+		
 {literal}
    // add item might be called for every item in the shopping cart
    // where your ecommerce engine loops through each item in the cart and
    // prints out _addItem for each
   _gaq.push(['_addItem',
     '{/literal}{$id_pedido_lfbv}{literal}',           // order ID - required
-    '{/literal}{$product.contentobject.data_map.referencia.content}{literal}',           // SKU/code - required
-    '{$product.name}',        // product name
-    '',   // category or variation
-    '{/literal}{$product.price_ex_vat|explode(',')|implode('.')}{literal}',          // unit price - required
+    '{/literal}{$product.item_object.contentobject.data_map.referencia.content}{literal}',           // SKU/code - required
+    '{/literal}{$product.object_name}{literal}',        // product name
+    '{/literal}{$combi_gaq}{literal}',   // category or variation
+    '{/literal}{$product.total_price_inc_vat|mul(100)|round()|div(100)|l10n("number","eng-US")}{literal}',          // unit price - required
     '{/literal}{$product.item_count}{literal}'               // quantity - required
   ]);
 {/literal}
+{undef $combi_gaq}
 {/foreach}
 {literal}
   _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
@@ -82,7 +114,16 @@ var google_conversion_value = 0;
 <img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/1053841085/?label=_xsRCIvRiAIQva3B9gM&amp;guid=ON&amp;script=0"/>
 </div>
 </noscript>
+
+{undef $aux1 $aux2 $porcentaje}
+ 
+
 {/if}
+
+ 
+
+
+
 {if $encuesta}
 
         
