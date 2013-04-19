@@ -1,3 +1,8 @@
+/*! jquery.infinitescroll.js | https://github.com/diy/jquery-infinitescroll | Apache License (v2) */
+(function(b){b.fn.infiniteScroll=function(){var d=b(this),c=b(window),j=b("body"),e="init",f=!1,i=!0,a={threshold:80,onBottom:function(){},onEnd:null,iScroll:null};arguments.length&&("string"===typeof arguments[0]?(e=arguments[0],1<arguments.length&&"object"===typeof arguments[1]&&(a=b.extend(a,arguments[1]))):"object"===typeof arguments[0]&&(a=b.extend(a,arguments[0])));if("init"===e){var g=function(){if(!f&&i&&(a.iScroll?-a.iScroll.maxScrollY+a.iScroll.y:j.outerHeight()-c.height()-c.scrollTop())<
+a.threshold){f=true;a.onBottom(function(b){if(b===false){i=false;if(typeof a.onEnd==="function")a.onEnd()}f=false})}};if(a.iScroll){var h=a.iScroll.options.onScrollMove||null;a.iScroll.options.onScrollMove=function(){h&&h();g()};a.iScroll_scrollMove=h}else c.on("scroll.infinite resize.infinite",g);d.data("infinite-scroll",a);b(g)}"reset"===e&&(a=d.data("infinite-scroll"),a.iScroll&&(a.iScroll_scrollMove&&(a.iScroll.options.onScrollMove=a.iScroll_scrollMove),a.iScroll.scrollTo(0,0,0,!1)),c.off("scroll.infinite resize.infinite"),
+d.infiniteScroll(a));return this}})(jQuery);
+
 (function ($) {
 
 var prettyChecks = {
@@ -50,17 +55,31 @@ var imemento = {
 	}
 }
 
-$('#productlist').infinitescroll({
+/*$('#productlist').infinitescroll({
 	 
     navSelector  : "div.pag",            
-                   // selector for the paged navigation (it will be hidden)
+                   
     nextSelector : "div.pag a",    
-                   // selector for the NEXT link (to page 2)
+                   
     contentSelector : "#table-rows",
     itemSelector : "#productlist > .imementos tbody tr"          
-                   // selector for all items you'll retrieve
-  });
-
+                   
+  });*/
+if($("#productlist > .imementos tbody").length != 0){
+	$("#productlist > .imementos tbody").infiniteScroll({
+		threshold: 400,
+		onEnd: function() {
+			$("#productlist").append('<div class="state"><p>No hay más contenido</p></div>');
+		},
+		onBottom: function(callback) {
+			$("#productlist").append('<div class="state"><p>Cargando...</p></div>');
+			// (load results & update views)
+			var moreResults = true;
+	
+			callback(moreResults);
+		}
+	});
+  }
 
 
  function disableChecks(valor)
