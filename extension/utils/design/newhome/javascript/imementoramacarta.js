@@ -65,22 +65,6 @@ var imemento = {
     itemSelector : "#productlist > .imementos tbody tr"          
                    
   });*/
-if($("#productlist > .imementos tbody").length != 0){
-	alert(1);
-	$("#productlist > .imementos tbody").infiniteScroll({
-		threshold: 400,
-		onEnd: function() {
-			$("#productlist").append('<div class="state"><p>No hay más contenido</p></div>');
-		},
-		onBottom: function(callback) {
-			$("#productlist").append('<div class="state"><p>Cargando...</p></div>');
-			// (load results & update views)
-			var moreResults = true;
-	
-			callback(moreResults);
-		}
-	});
-  }
 
 
  function disableChecks(valor)
@@ -196,6 +180,23 @@ function pintaCesta(data)
 		
 		if($("input.pretty").length){prettyChecks.init();}
 		if($(".filter").length){filter.init();}
+		
+		if($("#productlist > .imementos tbody").length != 0){
+			alert(1);
+			$("#productlist > .imementos tbody").infiniteScroll({
+				threshold: 400,
+				onEnd: function() {
+					$("#productlist").append('<div class="state"><p>No hay más contenido</p></div>');
+				},
+				onBottom: function(callback) {
+					$("#productlist").append('<div class="state"><p>Cargando...</p></div>');
+					// (load results & update views)
+					var moreResults = true;
+			
+					callback(moreResults);
+				}
+			});
+		  }
 		
     });
 })(jQuery);
