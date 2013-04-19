@@ -239,3 +239,5 @@
 #productlist tbody td:last-child { background:none; }
 
 .descrama ul { margin:0.75em 0 1em 0 }
+
+#modMiImemento.fixed { position:fixed; top:0;}
