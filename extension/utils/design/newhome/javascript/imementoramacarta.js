@@ -66,6 +66,7 @@ var imemento = {
                    
   });*/
 if($("#productlist > .imementos tbody").length != 0){
+	alert(1);
 	$("#productlist > .imementos tbody").infiniteScroll({
 		threshold: 400,
 		onEnd: function() {
