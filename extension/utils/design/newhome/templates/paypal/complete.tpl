@@ -4,27 +4,28 @@
 
 
 
-
 {if sum( $products|count, $training|count )|gt(0)}
 	{def $aux1=$basket.total_inc_vat|mul(100)}
 	{def $aux2=$aux1|div($basket.total_ex_vat)}
 	{def $porcentaje=$aux2|sub(100)}
-<script type="text/javascript">
-{literal}
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-2627590-1']);
-  _gaq.push(['_trackPageview']);
-  _gaq.push(['_addTrans',
-    '{/literal}{$id_pedido_lfbv}{literal}',           // order ID - required
-    'Ediciones Francis Lefebvre',  // affiliation or store name
-    '{/literal}{$basket.total_inc_vat|mul(10)|round()|div(10)|l10n("number","eng-US")}{literal}',          // total - required
-    '{/literal}{$porcentaje|l10n("number","eng-US")}{literal}',           // tax
-    '0',              // shipping
-    'Madrid',       // city
-    'Madrid',     // state or province
-    'Spain'             // country
-  ]);
-{/literal}
+	<script type="text/javascript">
+	{literal}
+  		var _gaq = _gaq || [];
+ 			 _gaq.push(['_setAccount', 'UA-2627590-1']);
+ 			 _gaq.push(['_trackPageview']);
+ 			 _gaq.push(['_addTrans',
+ 				   '{/literal}{$id_pedido_lfbv}{literal}',           // order ID - required
+ 				   'Ediciones Francis Lefebvre',  // affiliation or store name
+				   '{/literal}{$basket.total_inc_vat|mul(10)|round()|div(10)|l10n("number","eng-US")}{literal}',          // total - required
+  				   '{/literal}{$porcentaje|l10n("number","eng-US")}{literal}',           // tax
+   				   '0',              // shipping
+    			   'Madrid',       // city
+    			   'Madrid',     // state or province
+   				   'Spain'             // country
+ 			 ]);
+	{/literal}
+	
+	
     {foreach $products as $product}
     		{def $formato_gaq=""}
  		{foreach $product.item_object.contentobject.data_map.formato.content.relation_list as $k=>$forma}
@@ -51,21 +52,56 @@
 		{undef $formato_gaq $areas_gaq }
 		
 		
-{literal}
-   // add item might be called for every item in the shopping cart
-   // where your ecommerce engine loops through each item in the cart and
-   // prints out _addItem for each
-  _gaq.push(['_addItem',
-    '{/literal}{$id_pedido_lfbv}{literal}',           // order ID - required
-    '{/literal}{$product.item_object.contentobject.data_map.referencia.content}{literal}',           // SKU/code - required
-    '{/literal}{$product.object_name}{literal}',        // product name
-    '{/literal}{$combi_gaq}{literal}',   // category or variation
-    '{/literal}{$product.total_price_inc_vat|mul(100)|round()|div(100)|l10n("number","eng-US")}{literal}',          // unit price - required
-    '{/literal}{$product.item_count}{literal}'               // quantity - required
-  ]);
-{/literal}
-{undef $combi_gaq}
-{/foreach}
+			{literal}
+  				 // add item might be called for every item in the shopping cart
+  				 // where your ecommerce engine loops through each item in the cart and
+  				 // prints out _addItem for each
+			  _gaq.push(['_addItem',
+ 				   '{/literal}{$id_pedido_lfbv}{literal}',           // order ID - required
+ 				   '{/literal}{$product.item_object.contentobject.data_map.referencia.content}{literal}',           // SKU/code - required
+ 				   '{/literal}{$product.object_name}{literal}',        // product name
+ 				   '{/literal}{$combi_gaq}{literal}',   // category or variation
+ 				   '{/literal}{$product.total_price_inc_vat|mul(100)|round()|div(100)|l10n("number","eng-US")}{literal}',          // unit price - required
+ 				   '{/literal}{$product.item_count}{literal}'               // quantity - required
+ 				 ]);
+			{/literal}
+		{undef $combi_gaq}
+	{/foreach}
+	{foreach $training as $train}
+
+ 			{def $areas_gaq=""}
+			{foreach $train.item_object.contentobject.data_map.areas_interes.content.relation_list as $k=>$area}
+				{def $areas=fetch(content,object, hash(object_id, $area.contentobject_id))}
+				{if $k|eq(0)}
+					{set $areas_gaq=concat($areas_gaq,$areas.name)}
+				{else}
+					{set $areas_gaq=concat($areas_gaq,',',$areas.name)}
+				{/if}	
+			{undef $areas}
+			{/foreach}
+		{def $combi_gaq=concat($areas_gaq,',Curso Presencial')}
+		
+		{undef $areas_gaq}
+		
+		
+			{literal}
+					//para los cursos
+  				 // add item might be called for every item in the shopping cart
+  				 // where your ecommerce engine loops through each item in the cart and
+  				 // prints out _addItem for each
+			  _gaq.push(['_addItem',
+ 				   '{/literal}{$id_pedido_lfbv}{literal}',           // order ID - required
+ 				   '{/literal}{$train.node_id}{literal}',           // SKU/code - required
+ 				   '{/literal}{$train.object_name}{literal}',        // product name
+ 				   '{/literal}{$combi_gaq}{literal}',   // category or variation
+ 				   '{/literal}{$train.total_price_inc_vat|mul(100)|round()|div(100)|l10n("number","eng-US")}{literal}',          // unit price - required
+ 				   '{/literal}{$train.item_count}{literal}'               // quantity - required
+ 				 ]);
+			{/literal}
+		{undef $combi_gaq}
+	{/foreach}
+
+
 {literal}
   _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
 
@@ -117,7 +153,6 @@ var google_conversion_value = 0;
 
 {undef $aux1 $aux2 $porcentaje}
  
-
 {/if}
 
  

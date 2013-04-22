@@ -98,4 +98,5 @@ else
 	$Result['content'] = $tpl->fetch( "design:tpv/complete.tpl" );
 	$Result['path'] = array( array( 'url' => false,
 	                                'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
+}
 ?>

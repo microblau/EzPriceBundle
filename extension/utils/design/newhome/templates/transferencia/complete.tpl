@@ -1,89 +1,117 @@
-
 {if is_set( $donottrack )|not}
-{def $products_ua = fetch( 'basket', 'get_products_in_basket', hash( 'productcollection_id', $basket.productcollection_id ))}
+	{def $products_ua = fetch( 'basket', 'get_products_in_basket', hash( 'productcollection_id', $basket.productcollection_id ))}
+	{def $training_ua = fetch( 'basket', 'get_training_in_basket', hash( 'productcollection_id', $basket.productcollection_id ))}
+	{def $order_info_ua = fetch( 'basket', 'get_order_info', hash( 'productcollection_id', $basket.productcollection_id ))}
+		{if sum( $products_ua|count, $training_ua|count )|gt(0)}
+			{def $aux1=$basket.total_inc_vat|mul(100)}
+			{def $aux2=$aux1|div($basket.total_ex_vat)}
+			{def $porcentaje=$aux2|sub(100)}
+			<script type="text/javascript">
+			{literal}
+			  var _gaq = _gaq || [];
+			  _gaq.push(['_setAccount', 'UA-2627590-1']);
+			  _gaq.push(['_trackPageview']);
+			  _gaq.push(['_addTrans',
+				'{/literal}{$id}{literal}',           // order ID - required
+				'Ediciones Francis Lefebvre',  // affiliation or store name
+				'{/literal}{$basket.total_inc_vat|mul(10)|round()|div(10)|l10n("number","eng-US")}{literal}', // total - required
+				'{/literal}{$porcentaje|l10n("number","eng-US")}{literal}', // tax
+				'0',              // shipping
+				'Madrid',       // city
+				'Madrid',     // state or province
+				'Spain'             // country
+			  ]);
+			{/literal}
+    		{foreach $products_ua as $product}
+    			{def $formato_gaq=""}
+				{foreach $product.item_object.contentobject.data_map.formato.content.relation_list as $k=>$forma}
+					{def $formato=fetch(content,object, hash(object_id, $forma.contentobject_id))}
+					{if $k|eq(0)}
+						{set $formato_gaq=concat($formato_gaq,$formato.name)}
+					{else}
+						{set $formato_gaq=concat($formato_gaq,',',$formato.name)}
+					{/if}	
+					{undef $formato}
+				{/foreach}
+				{def $areas_gaq=""}
+				{foreach $product.item_object.contentobject.data_map.area.content.relation_list as $k=>$area}
+					{def $areas=fetch(content,object, hash(object_id, $area.contentobject_id))}
+					{if $k|eq(0)}
+						{set $areas_gaq=concat($areas_gaq,$areas.name)}
+					{else}
+						{set $areas_gaq=concat($areas_gaq,',',$areas.name)}
+					{/if}	
+					{undef $areas}
+				{/foreach}
+				{def $combi_gaq=concat($areas_gaq,',',$formato_gaq)}
+				
+				{undef $formato_gaq $areas_gaq }
+			{literal}
+			   // add item might be called for every item in the shopping cart
+			   // where your ecommerce engine loops through each item in the cart and
+			   // prints out _addItem for each
+			  _gaq.push(['_addItem',
+				'{/literal}{$id}{literal}',           // order ID - required
+				'{/literal}{$product.item_object.contentobject.data_map.referencia.content}{literal}',           // SKU/code - required
+ 				'{/literal}{$product.object_name}{literal}',        // product name
+ 				'{/literal}{$combi_gaq}{literal}',   // category or variation
+ 				'{/literal}{$product.total_price_inc_vat|mul(100)|round()|div(100)|l10n("number","eng-US")}{literal}',          // unit price - required
+ 				'{/literal}{$product.item_count}{literal}'               // quantity - required
+  			]);
+		{/literal}
+		{undef $combi_gaq}
+		{/foreach}
+		{foreach $training_ua as $train}
+					{def $areas_gaq=""}
+					{foreach $train.item_object.contentobject.data_map.areas_interes.content.relation_list as $k=>$area}
+						{def $areas=fetch(content,object, hash(object_id, $area.contentobject_id))}
+						{if $k|eq(0)}
+							{set $areas_gaq=concat($areas_gaq,$areas.name)}
+						{else}
+							{set $areas_gaq=concat($areas_gaq,',',$areas.name)}
+						{/if}	
+					{undef $areas}
+					{/foreach}
+				{def $combi_gaq=concat($areas_gaq,',Curso Presencial')}
+				
+				{undef $areas_gaq}
+		{literal}
+			//para los cursos
+		   // add item might be called for every item in the shopping cart
+		   // where your ecommerce engine loops through each item in the cart and
+		   // prints out _addItem for each
+		  _gaq.push(['_addItem',
+			'{/literal}{$id}{literal}',           // order ID - required
+			'{/literal}{$train.node_id}{literal}',           // SKU/code - required
+ 		 	'{/literal}{$train.object_name}{literal}',        // product name
+ 			'{/literal}{$combi_gaq}{literal}',   // category or variation
+ 			'{/literal}{$train.total_price_inc_vat|mul(100)|round()|div(100)|l10n("number","eng-US")}{literal}',          // unit price - required
+ 			'{/literal}{$train.item_count}{literal}'               // quantity - required
+ 				
+		  ]);
+		{/literal}
+		{undef $combi_gaq}
+		{/foreach}
+		{literal}
+ 		 _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
 
-{def $training_ua = fetch( 'basket', 'get_training_in_basket', hash( 'productcollection_id', $basket.productcollection_id ))}
-{def $order_info_ua = fetch( 'basket', 'get_order_info', hash( 'productcollection_id', $basket.productcollection_id ))}
-{if sum( $products_ua|count, $training_ua|count )|gt(0)}
-
-<script type="text/javascript">
-{literal}
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-2627590-1']);
-  _gaq.push(['_trackPageview']);
-  _gaq.push(['_addTrans',
-    '{/literal}{$id}{literal}',           // order ID - required
-    'Ediciones Francis Lefebvre',  // affiliation or store name
-    '{/literal}{$basket.total_ex_vat}{literal}',          // total - required
-    '{/literal}{$basket.total_inc_vat|sub( $basket.total_ex_vat )}{literal}',           // tax
-    '0',              // shipping
-    'Madrid',       // city
-    'Madrid',     // state or province
-    'Spain'             // country
-  ]);
-{/literal}
-    {foreach $products_ua as $product}
-
-{literal}
-   // add item might be called for every item in the shopping cart
-   // where your ecommerce engine loops through each item in the cart and
-   // prints out _addItem for each
-  _gaq.push(['_addItem',
-    '{/literal}{$id}{literal}',           // order ID - required
-    '{/literal}{$product.item_object.contentobject.data_map.referencia.content}{literal}',           // SKU/code - required
-    '{/literal}{$product.object_name}{/literal}',        // product name
-{/literal}
-{def $formato = $product.item_object.contentobject.data_map.formato.content.relation_list.0}
-
-{def $formatoobject= fetch('content', 'object', hash( 'object_id', $formato.contentobject_id))}
-
-{literal}
-    '{/literal}{$formatoobject.name}{literal}',   // category or variation
-{/literal}
-{undef $formato $formatoobject}
-{literal}
-    '{/literal}{$product.total_price_ex_vat}{literal}',          // unit price - required
-    '{/literal}{$product.item_count}{literal}'               // quantity - required
-  ]);
-{/literal}
-{/foreach}
-{foreach $training_ua as $product}
-
-{literal}
-   // add item might be called for every item in the shopping cart
-   // where your ecommerce engine loops through each item in the cart and
-   // prints out _addItem for each
-  _gaq.push(['_addItem',
-    '{/literal}{$id}{literal}',           // order ID - required
-    '{/literal}{literal}',           // SKU/code - required
-    '{/literal}{$product.object_name}{/literal}',        // product name
-{/literal}
-{def $formato = $product.item_object.contentobject.data_map.formato.content.relation_list.0}
-
-{def $formatoobject= fetch('content', 'object', hash( 'object_id', $formato.contentobject_id))}
-
-{literal}
-    '{/literal}''{literal}',   // category or variation
-{/literal}
-{undef $formato $formatoobject}
-{literal}
-    '{/literal}{$product.total_price_ex_vat}{literal}',          // unit price - required
-    '{/literal}{$product.item_count}{literal}'               // quantity - required
-  ]);
-{/literal}
-{/foreach}
-{literal}
-  _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-{/literal}
-</script>                                
+ 		 (function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		{/literal}
+		
+		</script>   
+		{undef $aux1 $aux2 $porcentaje}                             
+	{/if}
 {/if}
-{/if}
+
+
+
+
+
+
 {if $encuesta}
 
         
