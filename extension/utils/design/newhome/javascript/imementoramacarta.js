@@ -297,7 +297,7 @@ function pintaCesta(data)
 		
 		if($("#modMiImemento").length != 0){fixedBox.init();}
 		
-		if($(".imementos").length != 0){}
+		if($(".imementos #table-rows").length != 0){infiniteScroll.init();}
 		
 		
 		
