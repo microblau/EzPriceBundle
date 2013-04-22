@@ -207,7 +207,7 @@ var infiniteScroll = {
 		$("table.imementos tbody tr:lt(4)").addClass("show");
 		
 		$(window).endlessScroll({
-			bottomPixels: 1000,
+			bottomPixels: 600,
 			fireDelay: 10,
 			loader: '<div class="loading"><div>',
 			callback: function(i) {
