@@ -1,3 +1,83 @@
+$.fn.endlessScroll = function(options) {
+
+    var defaults = {
+      bottomPixels: 50,
+      fireOnce: true,
+      fireDelay: 150,
+      loader: "<br />Loading...<br />",
+      data: "",
+      insertAfter: "div:last",
+      resetCounter: function() { return false; },
+      callback: function() { return true; },
+      ceaseFire: function() { return false; }
+    };
+
+    var options = $.extend({}, defaults, options);
+
+    var firing       = true;
+    var fired        = false;
+    var fireSequence = 0;
+
+    if (options.ceaseFire.apply(this) === true) {
+      firing = false;
+    }
+
+    if (firing === true) {
+      $(this).scroll(function() {
+        if (options.ceaseFire.apply(this) === true) {
+          firing = false;
+          return; // Scroll will still get called, but nothing will happen
+        }
+
+        if (this == document || this == window) {
+          var is_scrollable = $(document).height() - $(window).height() <= $(window).scrollTop() + options.bottomPixels;
+        } else {
+          // calculates the actual height of the scrolling container
+          var inner_wrap = $(".endless_scroll_inner_wrap", this);
+          if (inner_wrap.length == 0) {
+            inner_wrap = $(this).wrapInner("<div class=\"endless_scroll_inner_wrap\" />").find(".endless_scroll_inner_wrap");
+          }
+          var is_scrollable = inner_wrap.length > 0 &&
+            (inner_wrap.height() - $(this).height() <= $(this).scrollTop() + options.bottomPixels);
+        }
+
+        if (is_scrollable && (options.fireOnce == false || (options.fireOnce == true && fired != true))) {
+          if (options.resetCounter.apply(this) === true) fireSequence = 0;
+
+          fired = true;
+          fireSequence++;
+
+          $(options.insertAfter).after("<div id=\"endless_scroll_loader\">" + options.loader + "</div>");
+
+          data = typeof options.data == 'function' ? options.data.apply(this, [fireSequence]) : options.data;
+
+          if (data !== false) {
+            $(options.insertAfter).after("<div id=\"endless_scroll_data\">" + data + "</div>");
+            $("div#endless_scroll_data").hide().fadeIn();
+            $("div#endless_scroll_data").removeAttr("id");
+
+            options.callback.apply(this, [fireSequence]);
+
+            if (options.fireDelay !== false || options.fireDelay !== 0) {
+              $("body").after("<div id=\"endless_scroll_marker\"></div>");
+              // slight delay for preventing event firing twice
+              $("div#endless_scroll_marker").fadeTo(options.fireDelay, 1, function() {
+                $(this).remove();
+                fired = false;
+              });
+            }
+            else {
+              fired = false;
+            }
+          }
+
+          $("div#endless_scroll_loader").remove();
+        }
+      });
+    }
+};
+
+
 $.fn.followTo = function () {
 	var $this = this,
         $window = $(window),
@@ -100,16 +180,54 @@ var imemento = {
 	}
 }
 
-$('#productlist').infinitescroll({
+var fixedBox = {
+	init:function(){
+		var top = $('#modMiImemento').offset().top - parseFloat($('#modMiImemento').css('marginTop').replace(/auto/, 0));
+		$(window).scroll(function (event) {
+			// what the y position of the scroll is
+			var y = $(this).scrollTop();
+			// whether that's below the form
+			if (y >= top) {
+				// if so, ad the fixed class
+				$('#modMiImemento').addClass('fixed');
+			}else{
+				// otherwise remove it
+				$('#modMiImemento').removeClass('fixed');
+			}
+		});
+		  
+		
+	}
+}
+
+var infiniteScroll = {
+	init:function(){
+		$("table.imementos tbody tr").addClass("hide").hide();
+		$("table.imementos tbody tr:lt(4)").show();
+		$("table.imementos tbody tr:lt(4)").addClass("show");
+		
+		$(window).endlessScroll({
+			bottomPixels: 500,
+			fireDelay: 10,
+			loader: '<div class="loading"><div>',
+			callback: function(i) {
+				//alert("test");
+				$("table.imementos tbody tr.hide:lt(4)").show().removeClass("hide");
+			}
+		  });
+	}
+}
+
+/*$('#productlist').infinitescroll({
 	 
     navSelector  : "div.pag",            
-                   // selector for the paged navigation (it will be hidden)
+                   
     nextSelector : "div.pag a",    
-                   // selector for the NEXT link (to page 2)
+                   
     contentSelector : "#table-rows",
     itemSelector : "#productlist > .imementos tbody tr"          
-                   // selector for all items you'll retrieve
-  });
+                  
+  });*/
 
 
 
@@ -242,6 +360,10 @@ function checkImementoPrice( accesos )
 		if($("input.pretty").length){prettyChecks.init();}
 		if($(".filter").length){filter.init();}
 		checkImementoPrice();
+		
+		if($("#modMiImemento").length != 0){fixedBox.init();}
+		
+		if($(".imementos #table-rows").length != 0){infiniteScroll.init();}
 		
     });
 
