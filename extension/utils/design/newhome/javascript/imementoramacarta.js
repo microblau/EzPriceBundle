@@ -1,5 +1,3 @@
-(function ($) {
-
 $.fn.endlessScroll = function(options) {
 
     var defaults = {
@@ -79,7 +77,7 @@ $.fn.endlessScroll = function(options) {
     }
   };
 
-
+(function ($) {
 
 var prettyChecks = {
 		init:function(){
