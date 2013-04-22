@@ -10,6 +10,22 @@
 {ezscript_require('ui.slider.js')}  
 {ezscript_require('langEs.js')}  
 {ezscript_require('common.js')}  
+{*analytics de ficha de producto categorías*}
+<script type="text/javascript">
+{foreach $node.data_map.area.content.relation_list as $k=>$area}
+	{def $areas=fetch(content,object, hash(object_id, $area.contentobject_id))}
+		{literal}
+		_gaq.push(['_setCustomVar',1,'categoria','{/literal}{$areas.name}{literal}',3]);
+		{/literal}
+	{undef $areas}
+{/foreach}
+	{literal}		
+		_gaq.push(['_trackEvent', 'PhantomEvent', 'GO', '-', 0, true]); //  este evento es el encargado de asegurar el envío de la variable personalizada
+	{/literal}
+</script>   
+
+{*fin analytics*}
+
 
 {def $limite=6}
 {def $offset=0}
