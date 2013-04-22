@@ -1492,7 +1492,19 @@ var formsValidations = {
                         formsValidations.setMsgError(errorTxt, f);
                         return false;
                         f.find("fieldset legend").css("position","absolute");
-                }else return true;     
+                }else{
+                	if($("input#transferencia:checked").length == 1){
+                		_gaq.push(['_trackEvent', 'Forma de pago', 'Click', 'Transferencia']);
+                	}
+                	if($("input#credito:checked").length == 1){
+                		_gaq.push(['_trackEvent', 'Forma de pago', 'Click', 'Tarjeta de crédito']);
+                	}
+                	if($("input#paypal:checked").length == 1){
+                		_gaq.push(['_trackEvent', 'Forma de pago', 'Click', ' Paypal']);
+                		
+                	}
+                	return true;     
+                }
                 return true;
        
         },
@@ -3153,3 +3165,83 @@ jQuery(document).ready(function() {
 		behaviours.controlHeight2($(".mediosPago"), $(".modTwitter"));
 	} 
 })
+
+
+/**
+* Outbound link tracking
+*
+* This code largely based on examples from
+* [Google Analytics Help](http://www.google.com/support/googleanalytics/bin/answer.py?answer=55527).
+*/
+//para enlaces externos a efl.es
+
+jQuery(function($){
+
+    //Recorre todos los enlaces
+    $("a").each(function(){
+        var $a = $(this),
+            hostname = $(this).prop('hostname'),
+            arrHostname = ["www.efl.es", "formacion.efl.es", "espacioclientes.efl.es"],
+            result = $.inArray(hostname,arrHostname);
+
+        //Si el hostname del enlace es igual que alguno de los del array.
+        //if (result != -1){ //<-- Descomentar para Produccion
+
+ 		if(hostname !== document.domain){ //Si el hostname (dominio) del enlace no es igual que el dominio, es externo
+           $a.addClass("externo")
+       }
+ 
+        
+        
+    })
+
+});
+
+//para los pdfs
+jQuery(function(){
+    jQuery('a[href$=".pdf"]').click(function(){ 
+            _gaq.push(['_trackEvent', 'Descargas', 'Pdf', this.href]);
+    }) 
+});
+
+//para añadir a la cesta de la compra
+
+jQuery(function(){
+    jQuery('a[href*="'+ "basket/add" +'"]').click(function(){ 
+        var precio =$('.ofertaSus span.precioNuevo').text();
+        var nombreproducto = $(".subTit").parent().html().split("<")[0];    
+        _gaq.push(['_trackEvent', 'AddtoBasket', 'Click', nombreproducto,precio]);
+        
+    }) 
+});
+
+
+
+$('a.externo').click(function(event){ //Trackea los externos
+		// Just in case, be safe and don't do anything
+		if (typeof _gat == 'undefined') {
+			return;
+		}
+	
+		// Stop our browser-based redirect, we'll do that in a minute
+		event.preventDefault();
+		var link = $(this);
+		var href = link.attr('href');
+		var noProtocol = href.replace(/http[s]?:\/\//, '');
+		// Track the event
+		_gat._getTrackerByName()._trackEvent('Enlace saliente', noProtocol);
+ 
+		// Opening in a new window?
+		if (link.attr('target') == '_blank') {
+		/* If we are opening a new window, go ahead and open it now
+		instead of in a setTimeout callback, so that popup blockers
+		don't block it. */
+			window.open(href);
+		}
+		else {
+		/* If we're opening in the same window, we need to delay
+		for a brief moment to ensure the _trackEvent has had time
+		to fire */
+		setTimeout('document.location = "' + href + '";', 100);
+	}
+});
