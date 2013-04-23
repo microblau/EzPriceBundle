@@ -204,7 +204,6 @@ var infiniteScroll = {
 	init:function(){
 		$("table.imementos tbody tr").addClass("hide").hide();
 		$("table.imementos tbody tr:lt(4)").show().removeClass("hide");
-		$("table.imementos tbody tr:lt(4)").addClass("show");
 		
 		$(window).endlessScroll({
 			bottomPixels: 400,
