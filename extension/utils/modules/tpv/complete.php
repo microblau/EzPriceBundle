@@ -4,6 +4,16 @@ $tpl = templateInit();
 $http = eZHTTPTool::instance();
 $basket = eZBasket::currentBasket();
 $tpl->setVariable( 'basket',  eZBasket::currentBasket() );
+$id_pro=$basket->ProductCollectionID;
+
+$orderInfo = eZPersistentObject::fetchObject( eflOrders::definition(), 
+                                                            null, 
+                                                            array( 'productcollection_id' => $id_pro )  
+                                                            );
+
+
+$info = unserialize( $orderInfo->Order );
+$tpl->setVariable( 'id_pedido_lfbv',  $info["id_pedido_lfbv"] );
 if( $http->hasPostVariable( 'btnContinuar' ) )
 {
     $tpl->setVariable( 'id', $Params['OrderID'] );

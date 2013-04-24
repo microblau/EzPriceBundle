@@ -5,6 +5,17 @@ $http = eZHTTPTool::instance();
 $basket = eZBasket::currentBasket();
 $tpl->setVariable( 'basket',  eZBasket::currentBasket() );
 $tpl->setVariable( 'order_id', $Params['OrderID'] );
+$id_pro=$basket->ProductCollectionID;
+
+$orderInfo = eZPersistentObject::fetchObject( eflOrders::definition(), 
+                                                            null, 
+                                                            array( 'productcollection_id' => $id_pro )  
+                                                            );
+
+
+$info = unserialize( $orderInfo->Order );
+$tpl->setVariable( 'id_pedido_lfbv',  $info["id_pedido_lfbv"] );
+
 if( $http->hasPostVariable( 'btnContinuar' ) )
 {
     $tpl->setVariable( 'id', $Params['OrderID'] );
@@ -87,7 +98,7 @@ if( $http->hasPostVariable( 'btnContinuar' ) )
 else
 {
     
-	$tpl->setVariable( 'id', $http->sessionVariable( 'id_pedido_lfbv' ) );
+	$tpl->setVariable( 'id_pedido_lfbv', $info["id_pedido_lfbv"] );
     
 	$Result = array();
 	$Result['content'] = $tpl->fetch( "design:paypal/complete.tpl" );
