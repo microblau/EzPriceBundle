@@ -142,8 +142,8 @@ var filter = {
 			
 			$(".filter").css({
 				"position":"absolute",
-				"left":366,
-				"top":694
+				"left":208,
+				"top":22
 			})
 			$(".filter-wrap").css({
 				"display":"none",

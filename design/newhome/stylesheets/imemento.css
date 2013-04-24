@@ -244,3 +244,4 @@
 #modMiImemento.fixed { position:fixed; top:0;}
 
 #gridTwoColumnsFichas .imementos .discount { margin-left: 2.5em; color:#009e0f;}
+#gridTwoColumnsFichas #filterDiv { position:relative;}
