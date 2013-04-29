@@ -34,16 +34,15 @@
 								background: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.01, #d88e11), to(#a56c14));
 								background: linear-gradient(#d88e11 1%, #a56c14 100%)
 							}
-
 							/*Type2*/
 							#iMementoDest .boxes .type2 .title { background-color:#142a33; }
 							#iMementoDest .boxes .type2 .desc { 
-								background: #d88e11; /* Old browsers */
-								background: -webkit-linear-gradient(#d88e11 1%, #a56c14 100%);
-								background: -o-linear-gradient(#d88e11 1%, #a56c14 100%);
-								background: -moz-linear-gradient(#d88e11 1%, #a56c14 100%);
-								background: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.01, #d88e11), to(#a56c14));
-								background: linear-gradient(#d88e11 1%, #a56c14 100%)
+								background: #C2D9E3; /* Old browsers */
+								background: -webkit-linear-gradient(#C2D9E3 1%, #90acb9 100%);
+								background: -o-linear-gradient(#C2D9E3 1%, #90acb9 100%);
+								background: -moz-linear-gradient(#C2D9E3 1%, #90acb9 100%);
+								background: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.01, #C2D9E3), to(#90acb9));
+								background: linear-gradient(#C2D9E3 1%, #90acb9 100%)
 							}
 					
 					
