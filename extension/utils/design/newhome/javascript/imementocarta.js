@@ -141,7 +141,7 @@ var filter = {
 		init:function(){
 			
 			$(".filter").css({
-				"position":"absolute",
+				"position":"relative",
 				"left":208,
 				"top":22
 			})
