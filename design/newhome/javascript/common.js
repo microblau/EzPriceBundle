@@ -3209,9 +3209,11 @@ jQuery(function(){
 
 //para añadir a la cesta de la compra
 
+
+
 jQuery(function(){
     jQuery('a[href*="'+ "basket/add" +'"]').click(function(){ 
-        var precio =$('.ofertaSus span.precioNuevo').text();
+        var precio =$('.ofertaSus span.precioNuevo').text().split("€")[0].replace(/,/g, ".");
         var nombreproducto = $(".subTit").parent().html().split("<")[0];    
         _gaq.push(['_trackEvent', 'AddtoBasket', 'Click', nombreproducto,precio]);
         
