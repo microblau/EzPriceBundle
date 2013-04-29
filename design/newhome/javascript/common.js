@@ -1503,6 +1503,9 @@ var formsValidations = {
                 		_gaq.push(['_trackEvent', 'Forma de pago', 'Click', ' Paypal']);
                 		
                 	}
+                	if($("input#domiciliacion:checked").length == 1){
+                		_gaq.push(['_trackEvent', 'Forma de pago', 'Click', 'Domiciliación']);
+                	}
                 	return true;     
                 }
                 return true;
