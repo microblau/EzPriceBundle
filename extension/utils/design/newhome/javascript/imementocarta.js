@@ -207,7 +207,7 @@ var infiniteScroll = {
 		$("table.imementos tbody tr").addClass("hide").hide();
 		$("table.imementos tbody tr:lt(10)").css("display", "table-row").removeClass("hide");
 		
-		if($("table.imementos #table-rows").hasClass("filtered") === true){
+		if($("table.imementos #table-rows").hasClass("filtered") === false){
 			alert(1);
 			$(window).endlessScroll({
 				bottomPixels: 400,
@@ -333,8 +333,8 @@ function checkImementoPrice( accesos )
 					$(this).hide();
 				});
 			
-		
-		return false;
+			infiniteScroll.init();
+			return false;
 			
 		});
 		
