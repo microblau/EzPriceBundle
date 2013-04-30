@@ -214,7 +214,6 @@ var infiniteScroll = {
 			callback: function(i) {
 				//alert("test");
 				if($("table.imementos #table-rows").hasClass("filtered") === false){
-					alert(1);
 					$("table.imementos tbody tr.hide:lt(4)").css("display", "table-row").removeClass("hide");
 				}
 			}
@@ -324,13 +323,13 @@ function checkImementoPrice( accesos )
 		
 			$('#table-rows > tr').each(function() {
 					
-					$(this).show();
+					$(this).css("display", "table-row").removeClass("hide");
 			});
 		
 			className = "."+$(this).attr('data-filter');
 			
 			$(className).each(function() {
-					$(this).hide();
+					$(this).hide().addClass("hide");
 				});
 			
 			return false;
