@@ -323,13 +323,13 @@ function checkImementoPrice( accesos )
 		
 			$('#table-rows > tr').each(function() {
 					
-					$(this).css("display", "table-row").removeClass("hide");
+					$(this).hide().addClass("hide");
 			});
 		
 			className = "."+$(this).attr('data-filter');
 			
 			$(className).each(function() {
-					$(this).hide().addClass("hide");
+					$(this).css("display", "table-row").removeClass("hide");
 				});
 			
 			return false;
