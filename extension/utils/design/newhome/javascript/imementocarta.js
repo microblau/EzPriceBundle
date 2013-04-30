@@ -320,17 +320,20 @@ function checkImementoPrice( accesos )
 			
 		
 			$(this).attr('style','text-decoration: none;');
-		
+			
 			$('#table-rows > tr').each(function() {
 					
 					$(this).hide().addClass("hide");
 			});
-		
-			className = "."+$(this).attr('data-filter');
-			
-			$(className).each(function() {
-					$(this).css("display", "table-row").removeClass("hide");
-				});
+			if($(this).attr('data-filter') == 0){
+				$("#table-rows > tr").css("display", "table-row").removeClass("hide");
+			}else{
+				className = "."+$(this).attr('data-filter');
+				
+				$(className).each(function() {
+						$(this).css("display", "table-row").removeClass("hide");
+					});
+			}
 			
 			return false;
 			
