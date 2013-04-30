@@ -207,15 +207,17 @@ var infiniteScroll = {
 		$("table.imementos tbody tr").addClass("hide").hide();
 		$("table.imementos tbody tr:lt(10)").css("display", "table-row").removeClass("hide");
 		
-		$(window).endlessScroll({
-			bottomPixels: 400,
-			fireDelay: 10,
-			loader: '<div class="loading"><div>',
-			callback: function(i) {
-				//alert("test");
-				$("table.imementos tbody tr.hide:lt(4)").css("display", "table-row").removeClass("hide");
-			}
-		  });
+		if(!$("table.imementos #table-rows").hasClass("filtered")){
+			$(window).endlessScroll({
+				bottomPixels: 400,
+				fireDelay: 10,
+				loader: '<div class="loading"><div>',
+				callback: function(i) {
+					//alert("test");
+					$("table.imementos tbody tr.hide:lt(4)").css("display", "table-row").removeClass("hide");
+				}
+			});
+		}
 	}
 }
 
@@ -310,7 +312,7 @@ function checkImementoPrice( accesos )
 		
 		$('.filter-select').bind('click', function() {
 		
-			
+			$("#table-rows").addClass("filtered");
 			
 			$('#filterContainer > li > a').each(function() {
 					$(this).attr('style','text-decoration: underline;');
@@ -325,7 +327,7 @@ function checkImementoPrice( accesos )
 			});
 		
 			className = "."+$(this).attr('data-filter');
-		
+			
 			$(className).each(function() {
 					$(this).hide();
 				});
