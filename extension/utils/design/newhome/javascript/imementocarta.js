@@ -207,7 +207,7 @@ var infiniteScroll = {
 		$("table.imementos tbody tr").addClass("hide").hide();
 		$("table.imementos tbody tr:lt(10)").css("display", "table-row").removeClass("hide");
 		
-		if($("table.imementos #table-rows").hasClass("filtered") === false){
+		if($("table.imementos #table-rows").hasClass("filtered") === true){
 			alert(1);
 			$(window).endlessScroll({
 				bottomPixels: 400,
