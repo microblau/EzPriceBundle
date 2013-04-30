@@ -207,18 +207,18 @@ var infiniteScroll = {
 		$("table.imementos tbody tr").addClass("hide").hide();
 		$("table.imementos tbody tr:lt(10)").css("display", "table-row").removeClass("hide");
 		
-		if($("table.imementos #table-rows").hasClass("filtered") === false){
-			alert(1);
-			$(window).endlessScroll({
-				bottomPixels: 400,
-				fireDelay: 10,
-				loader: '<div class="loading"><div>',
-				callback: function(i) {
-					//alert("test");
+		$(window).endlessScroll({
+			bottomPixels: 400,
+			fireDelay: 10,
+			loader: '<div class="loading"><div>',
+			callback: function(i) {
+				//alert("test");
+				if($("table.imementos #table-rows").hasClass("filtered") === false){
+					alert(1);
 					$("table.imementos tbody tr.hide:lt(4)").css("display", "table-row").removeClass("hide");
 				}
-			});
-		}
+			}
+		});
 	}
 }
 
@@ -333,7 +333,6 @@ function checkImementoPrice( accesos )
 					$(this).hide();
 				});
 			
-			infiniteScroll.init();
 			return false;
 			
 		});
