@@ -3214,8 +3214,9 @@ jQuery(function(){
 jQuery(function(){
     jQuery('a[href*="'+ "basket/add" +'"]').click(function(){ 
         var precio =$('.ofertaSus span.precioNuevo').text().split("€")[0].replace(/,/g, ".");
+		var productPrice = Math.round(precio.replace(/(?!\.)[\D\s]/g,"")); // 
         var nombreproducto = $(".subTit").parent().html().split("<")[0];    
-        _gaq.push(['_trackEvent', 'AddtoBasket', 'Click', nombreproducto,precio]);
+        _gaq.push(['_trackEvent', 'AddtoBasket', 'Click', nombreproducto,productPrice]);
         
     }) 
 });
