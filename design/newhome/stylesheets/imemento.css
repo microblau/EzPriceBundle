@@ -35,7 +35,7 @@
 								background: linear-gradient(#d88e11 1%, #a56c14 100%)
 							}
 							/*Type2*/
-							#iMementoDest .boxes .type2 .title { min-height:35px; background-color:#142a33; }
+							#iMementoDest .boxes .type2 .title { min-height:38px; background-color:#142a33; }
 							#iMementoDest .boxes .type2 .desc { 
 								background: #C2D9E3; /* Old browsers */
 								background: -webkit-linear-gradient(#C2D9E3 1%, #90acb9 100%);
