@@ -12,9 +12,9 @@
 		  _gaq.push(['_setAccount', 'UA-2627590-1']);
 		  _gaq.push(['_trackPageview']);
 		  _gaq.push(['_addTrans',
-			'{/literal}{$id}{literal}',           // order ID - required
+			'{/literal}{$id_pedido_lfbv}{literal}',           // order ID - required
 			'Ediciones Francis Lefebvre',  // affiliation or store name
-			'{/literal}{$basket.total_inc_vat|mul(10)|round()|div(10)|l10n("number","eng-US")}{literal}',          // total - required
+			'{/literal}{$basket.total_inc_vat|mul(100)|round()|div(100)|l10n("number","eng-US")}{literal}',          // total - required
   			'{/literal}{$porcentaje|l10n("number","eng-US")}{literal}',           // tax
    			'0',              // shipping
     		'Madrid',       // city
@@ -51,7 +51,7 @@
    // where your ecommerce engine loops through each item in the cart and
    // prints out _addItem for each
  	 _gaq.push(['_addItem',
-			'{/literal}{$id}{literal}',           // order ID - required
+			'{/literal}{$id_pedido_lfbv}{literal}',           // order ID - required
 			'{/literal}{$product.item_object.contentobject.data_map.referencia.content}{literal}',           // SKU/code - required
 			'{/literal}{$product.object_name}{literal}',        // product name
 			'{/literal}{$combi_gaq}{literal}',   // category or variation
@@ -84,7 +84,7 @@
   				 // where your ecommerce engine loops through each item in the cart and
   				 // prints out _addItem for each
 			  _gaq.push(['_addItem',
- 				   '{/literal}{$id}{literal}',           // order ID - required
+ 				   '{/literal}{$id_pedido_lfbv}{literal}',           // order ID - required
  				   '{/literal}{$train.node_id}{literal}',           // SKU/code - required
  				   '{/literal}{$train.object_name}{literal}',        // product name
  				   '{/literal}{$combi_gaq}{literal}',   // category or variation

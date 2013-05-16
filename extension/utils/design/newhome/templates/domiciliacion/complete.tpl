@@ -17,7 +17,7 @@
   _gaq.push(['_addTrans',
     '{/literal}{$id}{literal}',           // order ID - required
     'Ediciones Francis Lefebvre',  // affiliation or store name
-    '{/literal}{$basket.total_inc_vat|mul(10)|round()|div(10)|l10n("number","eng-US")}{literal}',          // total - required
+    '{/literal}{$basket.total_inc_vat|mul(100)|round()|div(100)|l10n("number","eng-US")}{literal}',          // total - required
   	'{/literal}{$porcentaje|l10n("number","eng-US")}{literal}',           // tax
     '0',              // shipping
     'Madrid',       // city
