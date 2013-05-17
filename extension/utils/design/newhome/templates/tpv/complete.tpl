@@ -14,7 +14,7 @@
 		  _gaq.push(['_addTrans',
 			'{/literal}{$id_pedido_lfbv}{literal}',           // order ID - required
 			'Ediciones Francis Lefebvre',  // affiliation or store name
-			'{/literal}{$basket.total_inc_vat|mul(100)|round()|div(100)|l10n("number","eng-US")}{literal}',          // total - required
+			'{/literal}{$basket.total_ex_vat|mul(100)|round()|div(100)|l10n("number","eng-US")}{literal}',          // total - required
   			'{/literal}{$porcentaje|l10n("number","eng-US")}{literal}',           // tax
    			'0',              // shipping
     		'Madrid',       // city
@@ -55,7 +55,7 @@
 			'{/literal}{$product.item_object.contentobject.data_map.referencia.content}{literal}',           // SKU/code - required
 			'{/literal}{$product.object_name}{literal}',        // product name
 			'{/literal}{$combi_gaq}{literal}',   // category or variation
-			'{/literal}{$product.total_price_inc_vat|mul(100)|round()|div(100)|l10n("number","eng-US")}{literal}',          // unit price - required
+			'{/literal}{$product.total_price_ex_vat|mul(100)|round()|div(100)|l10n("number","eng-US")}{literal}',          // unit price - required
 			'{/literal}{$product.item_count}{literal}'               // quantity - required
 			 ]);
 		{/literal}
@@ -88,7 +88,7 @@
  				   '{/literal}{$train.node_id}{literal}',           // SKU/code - required
  				   '{/literal}{$train.object_name}{literal}',        // product name
  				   '{/literal}{$combi_gaq}{literal}',   // category or variation
- 				   '{/literal}{$train.total_price_inc_vat|mul(100)|round()|div(100)|l10n("number","eng-US")}{literal}',          // unit price - required
+ 				   '{/literal}{$train.total_price_ex_vat|mul(100)|round()|div(100)|l10n("number","eng-US")}{literal}',          // unit price - required
  				   '{/literal}{$train.item_count}{literal}'               // quantity - required
  				 ]);
 			{/literal}
