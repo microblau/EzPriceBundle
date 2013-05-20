@@ -3,9 +3,7 @@
 	{def $training_ua = fetch( 'basket', 'get_training_in_basket', hash( 'productcollection_id', $basket.productcollection_id ))}
 	{def $order_info_ua = fetch( 'basket', 'get_order_info', hash( 'productcollection_id', $basket.productcollection_id ))}
 		{if sum( $products_ua|count, $training_ua|count )|gt(0)}
-			{def $aux1=$basket.total_inc_vat|mul(100)}
-			{def $aux2=$aux1|div($basket.total_ex_vat)}
-			{def $porcentaje=$aux2|sub(100)}
+			{def $tax=$basket.total_inc_vat|sub($basket.total_ex_vat)}
 			<script type="text/javascript">
 			{literal}
 			  var _gaq = _gaq || [];
@@ -15,7 +13,7 @@
 				'{/literal}{$id}{literal}',           // order ID - required
 				'Ediciones Francis Lefebvre',  // affiliation or store name
 				'{/literal}{$basket.total_ex_vat|mul(100)|round()|div(100)|l10n("number","eng-US")}{literal}', // total - required
-				'{/literal}{$porcentaje|l10n("number","eng-US")}{literal}', // tax
+				'{/literal}{$tax|l10n("number","eng-US")}{literal}', // tax
 				'0',              // shipping
 				'Madrid',       // city
 				'Madrid',     // state or province
@@ -103,7 +101,7 @@
 		{/literal}
 		
 		</script>   
-		{undef $aux1 $aux2 $porcentaje}                             
+		{undef $tax}                             
 	{/if}
 {/if}
 
