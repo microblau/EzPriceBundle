@@ -281,13 +281,14 @@ function pintaCesta(data)
 			checkImementoPrice( $("#valor").val() );
 			
 			var n = $("#productlist input:checked").length;
-			if($("modMiImemento").length != 0){
+			alert(n);
+			/*if($("modMiImemento").length != 0){
 				if(n > 2){
 					$("modMiImemento").removeClass("fixed");
 				}else{
 					$("modMiImemento").addClass("fixed");
 				}
-			}
+			}*/
 		});
 				
         $("#mementosForm").submit( function() {    
