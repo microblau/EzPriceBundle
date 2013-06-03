@@ -1,7 +1,7 @@
 <?php 
 require( 'kernel/common/template.php' );
 $tpl = eZTemplate::factory();
-$tplmail = templateInit();
+$tplmail = eZTemplate::factory();
 
 $http = eZHTTPTool::instance();
 $basket = eZBasket::currentBasket();
