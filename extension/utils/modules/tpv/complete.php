@@ -102,7 +102,7 @@ if( $http->hasPostVariable( 'btnContinuar' ) )
 else
 {
     
-	$tpl->setVariable( 'id', $http->sessionVariable( 'id_pedido_lfbv' ) );
+	$tpl->setVariable( 'id_pedido_lfbv', $http->sessionVariable( 'id_pedido_lfbv' ) );
     
 	$Result = array();
 	$Result['content'] = $tpl->fetch( "design:tpv/complete.tpl" );
