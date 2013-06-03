@@ -205,12 +205,6 @@ function checkImementoPrice( )
         }else{
                 $("#modMiImementoInt").text(n + ' ' + literal["mementos"][3]);
         }
-		
-		if($("#modMiImemento").lenght != 0){
-			if(n > 2){
-				$("#modMiImemento").removeClass("fixed");
-			}else $("#modMiImemento").addClass("fixed");
-		}
 				
 		var values = new Array();
 		$.each($("input[name='mementos[]']:checked"), function() {
