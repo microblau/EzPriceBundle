@@ -141,7 +141,7 @@ var filter = {
 		init:function(){
 			
 			$(".filter").css({
-				"position":"absolute",
+				"position":"relative",
 				"left":208,
 				"top":36,
 				"width":180
@@ -262,7 +262,7 @@ function checkImementoPrice( accesos )
         }else{
                 $("#modMiImementoInt").text(n + ' ' + literal["mementos"][1]);
         }
-		
+				
 		var values = new Array();
 		$.each($("input[name='mementos[]']:checked"), function() {
 		  values.push($(this).val());
@@ -352,7 +352,6 @@ function checkImementoPrice( accesos )
 			$("#preload").show();
 			disableChecks(check);
 			checkImementoPrice( $("#valor").val() );
-			
 		});
 		
         $("#mementosForm").submit( function() {    
