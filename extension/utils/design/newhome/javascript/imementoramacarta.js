@@ -138,7 +138,14 @@ var fixedBox = {
 			// whether that's below the form
 			if (y >= top) {
 				// if so, ad the fixed class
-				$('#modMiImemento').addClass('fixed');
+				var n = $("#productlist input:checked").length;
+				if($("#modMiImemento").length != 0){
+					if (n > 2){
+						$("#modMiImemento").removeClass("fixed");
+					}else{
+						$("#modMiImemento").addClass("fixed");
+					}
+				}
 			}else{
 				// otherwise remove it
 				$('#modMiImemento').removeClass('fixed');
@@ -272,23 +279,22 @@ function pintaCesta(data)
 		
 		
 		$("#table-rows > tr > td.selection").bind('click', function() {
-			alert(1111111);
 			check = $(this).find('input[type=checkbox]');
 			span = $(this).find('span');
 			prettyChecks.enable(span);
 			$("#addToBasket").hide();
 			$("#preload").show();
 			disableChecks(check);
-			//checkImementoPrice( $("#valor").val() );
-			checkImementoPrice();
+			checkImementoPrice( $("#valor").val() );
+			//checkImementoPrice();
 			
 			var n = $("#productlist input:checked").length;
 			if($("#modMiImemento").length != 0){
 				if (n > 2){
-					alert(1 + ":  " + n);
+					//alert(1 + ":  " + n);
 					$("#modMiImemento").removeClass("fixed");
 				}else{
-					alert(2 + ":  " + n);
+					//alert(2 + ":  " + n);
 					$("#modMiImemento").addClass("fixed");
 				}
 			}
