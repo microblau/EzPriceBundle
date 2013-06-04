@@ -353,12 +353,13 @@ function checkImementoPrice( accesos )
 			disableChecks(check);
 			checkImementoPrice( $("#valor").val() );
 			
+			var n = $("#productlist input:checked").length;
 			if($("#modMiImemento").length != 0){
 				if (n > 2){
-					alert(1);
+					alert(1 + ":  n");
 					//$("#modMiImemento").removeClass("fixed");
 				}else{
-					alert(2);
+					alert(2 + ":  n");
 					//$("#modMiImemento").addClass("fixed");
 				}
 			}
