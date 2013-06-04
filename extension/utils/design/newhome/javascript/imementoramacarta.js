@@ -278,7 +278,8 @@ function pintaCesta(data)
 			$("#addToBasket").hide();
 			$("#preload").show();
 			disableChecks(check);
-			checkImementoPrice( $("#valor").val() );
+			//checkImementoPrice( $("#valor").val() );
+			checkImementoPrice();
 			
 			var n = $("#productlist input:checked").length;
 			if($("#modMiImemento").length != 0){
