@@ -286,10 +286,10 @@ function pintaCesta(data)
 			if($("#modMiImemento").length != 0){
 				if (n > 2){
 					alert(1 + ":  " + n);
-					//$("#modMiImemento").removeClass("fixed");
+					$("#modMiImemento").removeClass("fixed");
 				}else{
 					alert(2 + ":  " + n);
-					//$("#modMiImemento").addClass("fixed");
+					$("#modMiImemento").addClass("fixed");
 				}
 			}
 			
