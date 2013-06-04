@@ -288,15 +288,25 @@ function pintaCesta(data)
 			checkImementoPrice( $("#valor").val() );
 			//checkImementoPrice();
 			
-			var n = $("#productlist input:checked").length;
-			if($("#modMiImemento").length != 0){
-				if (n > 2){
-					//alert(1 + ":  " + n);
-					$("#modMiImemento").removeClass("fixed");
-				}else{
-					//alert(2 + ":  " + n);
-					$("#modMiImemento").addClass("fixed");
+			
+			
+			var top = $('#modMiImemento').offset().top - parseFloat($('#modMiImemento').css('marginTop').replace(/auto/, 0));
+			// what the y position of the scroll is
+			var y = $("#mementosForm").scrollTop();
+			// whether that's below the form
+			if (y >= top) {
+				var n = $("#productlist input:checked").length;
+				if($("#modMiImemento").length != 0){
+					if (n > 2){
+						//alert(1 + ":  " + n);
+						$("#modMiImemento").removeClass("fixed");
+					}else{
+						//alert(2 + ":  " + n);
+						$("#modMiImemento").addClass("fixed");
+					}
 				}
+			}else{
+				$("#modMiImemento").removeClass("fixed");
 			}
 			
 		});
