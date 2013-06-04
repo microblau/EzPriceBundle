@@ -280,6 +280,16 @@ function pintaCesta(data)
 			disableChecks(check);
 			checkImementoPrice( $("#valor").val() );
 			
+			if($("#modMiImemento").length != 0){
+				if (n > 2){
+					alert(1);
+					//$("#modMiImemento").removeClass("fixed");
+				}else{
+					alert(2);
+					//$("#modMiImemento").addClass("fixed");
+				}
+			}
+			
 		});
 				
         $("#mementosForm").submit( function() {    
