@@ -272,6 +272,7 @@ function pintaCesta(data)
 		
 		
 		$("#table-rows > tr > td.selection").bind('click', function() {
+			alert(1111111);
 			check = $(this).find('input[type=checkbox]');
 			span = $(this).find('span');
 			prettyChecks.enable(span);
