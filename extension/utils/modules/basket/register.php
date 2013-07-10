@@ -198,6 +198,8 @@ if( $http->hasPostVariable( 'BtnRegister' ) )
 				$infoOrder = eZPersistentObject::fetchObject( eflOrders::definition(), null, array( 'productcollection_id' => $basket->attribute( 'productcollection_id') ) );
 
                 $unserialized_order = unserialize($infoOrder->Order);
+				
+								
                 if( $unserialized_order['has_nautis4'] )
                             {
                                 $order['has_nautis4'] = $unserialized_order['has_nautis4'];                
@@ -235,6 +237,7 @@ if( $http->hasPostVariable( 'BtnRegister' ) )
 			                                    'order_serialized' => serialize( $order )
         	        ) );        
 	    		$order_object->store();
+
                 
 				if( $http->postVariable( 'tipoCompra') == 1 )
 				{
@@ -675,6 +678,10 @@ elseif ( $http->hasPostVariable( 'BtnRegisterParticular' ) )
             if( $unserialized_order['has_mementix'] )
             {
                 $order['has_mementix'] = $unserialized_order['has_mementix'];                
+            }
+			if( $unserialized_order['has_imemento'] )
+			{
+				$order['has_imemento'] = $unserialized_order['has_imemento'];
             }
             $order['codigopromocional'] = $unserialized_order['codigopromocional'];
             $order['productos_bono'] = $unserialized_order['productos_bono'];
@@ -1153,6 +1160,10 @@ elseif ( $http->hasPostVariable( 'BtnRegisterEmpresa' ) )
             if( $unserialized_order['has_mementix'] )
             {
                 $order['has_mementix'] = $unserialized_order['has_mementix'];                
+            }
+			if( $unserialized_order['has_imemento'] )
+			{
+				$order['has_imemento'] = $unserialized_order['has_imemento'];
             }
             $order['codigopromocional'] = $unserialized_order['codigopromocional'];
             $order['productos_bono'] = $unserialized_order['productos_bono'];
