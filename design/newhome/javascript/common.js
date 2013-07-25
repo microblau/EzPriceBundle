@@ -1495,16 +1495,20 @@ var formsValidations = {
                 }else{
                 	if($("input#transferencia:checked").length == 1){
                 		_gaq.push(['_setCustomVar',2,'forma-de-pago','Transferencia',2]);
+                		_gaq.push(['_trackEvent', 'PhantomEvent', 'GO', '-', 0, true]);
                 	}
                 	if($("input#credito:checked").length == 1){
                 		_gaq.push(['_setCustomVar',2,'forma-de-pago','Tarjeta de crédito',2]);
+                		_gaq.push(['_trackEvent', 'PhantomEvent', 'GO', '-', 0, true]);
                 	}
                 	if($("input#paypal:checked").length == 1){
                 		_gaq.push(['_setCustomVar',2,'forma-de-pago','Paypal',2]);
+                		_gaq.push(['_trackEvent', 'PhantomEvent', 'GO', '-', 0, true]);
                 		
                 	}
                 	if($("input#domiciliacion:checked").length == 1){
                 		_gaq.push(['_setCustomVar',2,'forma-de-pago','Domiciliación',2]);
+                		_gaq.push(['_trackEvent', 'PhantomEvent', 'GO', '-', 0, true]);
                 	}
                 	return true;     
                 }

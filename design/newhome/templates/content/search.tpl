@@ -61,6 +61,7 @@
 - {cond( ezhttp_hasvariable( 'numItems', 'get' ),
          min( $view_parameters.offset|sum(ezhttp('numItems', 'get')), $results.SearchCount ), 
      max( 0, $results.SearchCount ) )}</strong> de <strong>{$results.SearchCount}</strong> para <strong>{ezhttp( 'SearchText', 'get')}</strong></span>
+
                                             {/if}
                                             
 
@@ -281,3 +282,23 @@
 
             </div>
                 {undef $subtree}
+
+{if $results.SearchCount|eq(0)} 
+{literal}
+<script type="text/javascript">
+       var _gaq = _gaq || [],
+             p = document.location.pathname,
+             s = document.location.search;
+
+       _gaq.push(['_setAccount', 'UA-2627590-1']);
+<? if (resultsCount == 0) { ?>
+       _gaq.push(['_trackPageview', p + s + '&tab=zero']);
+<? } else {?>
+       _gaq.push(['_trackPageview']);
+<? } ?>
+       (function() {
+             ........................
+       })();
+</script>
+{/literal}
+{/if}

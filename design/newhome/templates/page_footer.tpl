@@ -54,7 +54,7 @@
 		        	<div class="inner">
 		        	
 		        		<span class="cab"><img src={"txt_twitter.png"|ezimage} alt="síguenos en twitter" /></span>
-		        		{def $tweets = fetch( 'efltwitter', 'get_tweets', hash( 'limit', 2 ))}
+		        		{*def $tweets = fetch( 'efltwitter', 'get_tweets', hash( 'limit', 2 ))*}
                       
                         {foreach $tweets as $tweet}
 		        		<div class="twtr-tweet-wrap">                 

@@ -122,9 +122,12 @@
 															
 															<td>
 																{if $product.item_object.contentobject.class_identifier|contains( 'curso')}
+
 																	<a href={$product.item_object.contentobject.main_node.url_alias|ezurl_formacion()}>{$product.object_name}</a>
 																{else}
-                                                                {if $product.item_object.contentobject.contentclass_id|eq(101)}
+{if $product.item_object.contentobject.contentclass_id|eq(48)}
+<strong style="color:#00528d">{$product.object_name}</strong>
+                                                                {elseif $product.item_object.contentobject.contentclass_id|eq(101)}
                                                                     <a href={$product.item_object.contentobject.main_node.url_alias|ezurl}>{$product.object_name}</a><br />                                      
                                                                     <span class="mementos">{$order_info.has_nautis4.mementos}. 
                                                                     <strong>{$order_info.has_nautis4.accesos}</strong></span>
