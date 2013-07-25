@@ -15,10 +15,8 @@ $script->startup();
 $script->initialize();
 
 
-$db = eZDB::instance();
-$query = $db->arrayQuery( 'SELECT * FROM efl_orders where productcollection_id = 13158 ');
-$unserialized = $query[0]['order_serialized'];
-print_r( unserialize( $unserialized ) );
+$solr = new eZSolr();
+$solr->addObject( eZContentObject::fetch( 2179 ) );
 
 
 $script->shutdown();

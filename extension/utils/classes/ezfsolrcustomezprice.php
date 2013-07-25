@@ -26,8 +26,8 @@ class ezfSolrCustomEzPrice extends ezfSolrDocumentFieldBase
       'precio',
       self::DEFAULT_SUBATTRIBUTE_TYPE );
      
-    
-      $returnArray[$fieldName] = $value->attribute( 'has_discount' ) ? $value->attribute( 'discount_price_ex_vat' ) : $value->attribute( 'ex_vat_price' );
+
+      $returnArray[$fieldName] = $value->attribute( 'has_discount' ) ? str_replace( ',', '.', $value->attribute( 'discount_price_ex_vat' ) ) : str_replace( ',', '.',$value->attribute( 'ex_vat_price' ) ) ;
     
       // Generate the yearmonth subattribute filedName subattr_yearmonth_dt
       $fieldName = parent::generateSubattributeFieldName( $contentClassAttribute,
@@ -71,7 +71,7 @@ class ezfSolrCustomEzPrice extends ezfSolrDocumentFieldBase
          $fieldName = parent::generateSubattributeFieldName( $contentClassAttribute,
                 'precio_' . $group->attribute( 'node_id' ),
                 self::DEFAULT_SUBATTRIBUTE_TYPE );
-           $returnArray[$fieldName] = ( $discountPercent > 0 ) ? $value->attribute( 'ex_vat_price' ) - ( ( $discountPercent / 100 ) * $value->attribute( 'ex_vat_price' ) ) : $value->attribute( 'ex_vat_price' );
+           $returnArray[$fieldName] = ( $discountPercent > 0 ) ? str_replace( ',', '.', $value->attribute( 'ex_vat_price' ) - ( ( $discountPercent / 100 ) * $value->attribute( 'ex_vat_price' ) ) ) : str_replace( ',', '.', $value->attribute( 'ex_vat_price' ));
       }
       
       return $returnArray;
