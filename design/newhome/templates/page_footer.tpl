@@ -49,22 +49,25 @@
 		        
 {cache-block expiry=900}		        
 	<div class="modTwitter">
-		        
-		        
+		{literal}
+		<a class="twitter-timeline" height="90" width="255" href="https://twitter.com/agencia_sinc"  data-widget-id="345492919504998403">Tweets por @agencia_sinc</a>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+		{/literal}	        
+				
+				
+					{*
 		        	<div class="inner">
-		        	
 		        		<span class="cab"><img src={"txt_twitter.png"|ezimage} alt="síguenos en twitter" /></span>
-		        		{*def $tweets = fetch( 'efltwitter', 'get_tweets', hash( 'limit', 2 ))*}
-                      
-                        {foreach $tweets as $tweet}
+						{def $tweets = fetch( 'efltwitter', 'get_tweets', hash( 'limit', 2 ))}
+						{foreach $tweets as $tweet}
 		        		<div class="twtr-tweet-wrap">                 
 		        			<div class="twtr-tweet-text">           
 		        				<p>@<a class="twtr-user" href="http://twitter.com/intent/user?screen_name=EdicionesFL" target="_blank">EdicionesFL</a> {$tweet.text|parsetext()}           <em>            <a href="http://twitter.com/EdicionesFL/status/{$tweet.id_str}"><abbr class="timeago" title="{$tweet.created_at|strtotime()|datetime( 'custom', '%Y-%m-%dT%H:%i:%s+01:00' )}">{$tweet.created_at|parsetime}</abbr></a> ·            <a href="http://twitter.com/intent/tweet?in_reply_to={$tweet.id}" class="twtr-reply" target="_blank">responder</a> · <a href="http://twitter.com/intent/retweet?tweet_id=={$tweet.id}" class="twtr-rt" target="_blank">retweet</a> ·  <a href="http://twitter.com/intent/favorite?tweet_id=={$tweet.id}" class="twtr-fav" target="_blank">favorito</a> </em></p> 
 		        		   </div> 
 		        		 </div>
                        {/foreach}  		   
-		      
-		        	</div>
+					</div>
+					*}
 		        
 		        
 		        </div>
