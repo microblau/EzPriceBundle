@@ -50,7 +50,7 @@
 {cache-block expiry=900}		        
 	<div class="modTwitter">
 		{literal}
-		<a class="twitter-timeline" height="90" width="255" href="https://twitter.com/agencia_sinc"  data-widget-id="345492919504998403">Tweets por @agencia_sinc</a>
+		<a class="twitter-timeline"  height="90" width="255" href="https://twitter.com/EdicionesFL"  data-widget-id="360730103321350144">Tweets por @EdicionesFL</a>
 		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 		{/literal}	        
 				
