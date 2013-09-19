@@ -146,11 +146,13 @@ class eflPaymentMethods
 	 * 
 	 * @param int $order_id
 	 * @param float $importe
+         * @param int $gastosEnvio gastos Aplicados
 	 * @return array
 	 */
 	
-	function paypal( $order_id, $importe, $aplazado = 0 )
+	function paypal( $order_id, $importe, $aplazado = 0, $gastosEnvio )
 	{
+                print $importe;
 		$url = $this->PaymentINI->variable( 'Paypal', 'ServerName' );
 		$cgi = $this->PaymentINI->variable( 'Paypal', 'RequestURI' );
 		$business = $this->PaymentINI->variable( 'Paypal', 'Business' );
@@ -168,7 +170,8 @@ class eflPaymentMethods
 			$fields[] = array( 'name' => "cancel_return", 'value'=>"https://" . $_SERVER['HTTP_HOST'] .  "/paypal/cancel" );
 			$fields[] = array( 'name' => "no_note", 'value'=>"1" );
 			$fields[] = array( 'name' => "no_shipping", 'value'=>"1" );
-			$fields[] = array( 'name' => "currency_code", 'value'=>"EUR" );
+
+                        $fields[] = array( 'name' => "currency_code", 'value'=>"EUR" );
 			$fields[] = array( 'name' => "return", 'value'=>"https://" . $_SERVER['HTTP_HOST'] .  "/paypal/complete/" . $order_id );
 			$fields[] = array( 'name' => "rm", 'value'=>"2" );
 			$fields[] = array( 'name' => "invoice", 'value'=> $order_id );
@@ -183,6 +186,7 @@ class eflPaymentMethods
 			$fields[] = array( 'name' => "last_name", 'value'=>"Revillo" );
 			$fields[] = array( 'name' => "state", 'value'=>$order['result']['provincia']);
 			$fields[] = array( 'name' => "address_override", 'value'=>"1" );
+                        
 			$basket = eZBasket::currentBasket();
 			$products = tantaBasketFunctionCollection::getProductsInBasket( $basket->attribute( 'productcollection_id' ) );
             $items = $products['result'];
@@ -205,6 +209,7 @@ class eflPaymentMethods
 
             $products = tantaBasketFunctionCollection::getTrainingInBasket( $basket->attribute( 'productcollection_id' ) );
             $items = $products['result'];
+            $cursoscount = count( $items );
 		
             $j = 0;
 			for( $i = ( 1 + $productscount ); $i <= count( $items ) + $productscount ; $i++ )
@@ -225,6 +230,12 @@ class eflPaymentMethods
 			}
 			
 			$fields[] = array( 'name' => "tax_cart", 'value'=> number_format( $tax, 2 ) );
+                        
+                        $n =  $productscount + $cursoscount + 1;
+                        $fields[] = array( 'name' => "amount_$n", 'value'=> number_format( $gastosEnvio, 2 )   );
+                        $fields[] = array( 'name' => "item_name_$n", 'value'=> 'Gastos de Envío' );
+                        $fields[] = array( 'name' => "quantity_$n", 'value'=> 1 );
+				
 		}
 		else
 		{

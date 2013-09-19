@@ -1,5 +1,6 @@
 						{def $basket = fetch( 'shop', 'basket')}
 						{def $order_info = fetch( 'basket', 'get_order_info', hash( 'productcollection_id', $basket.productcollection_id ))}			
+                                                {def $gastos_envio = fetch( 'basket', 'gastos_envio', hash())}			
 
 						
                     	<h2>Estoy comprando...</h2>
@@ -14,5 +15,10 @@
 							{/if}
                         	{/foreach}                            
                             <li class="total"><span class="productoTotal">TOTAL</span><span class="precioTotal">{$basket.total_ex_vat|l10n( clean_currency )} €</span></li>
+                            {if $gastos_envio|gt(0)}
+                            <li class="total"><span class="productoTotal">Envío</span><span class="precioTotal">{$gastos_envio|l10n( clean_currency )} €</span></li>
+                            {else}
+                            <li class="total"><span class="productoTotal">Envío</span><span class="precioTotal" style="font-size: 11px">No se aplican</span></li>
+                            {/if}
                         </ul>
 						{undef $order_info}

@@ -445,7 +445,7 @@ class eZShopFunctions
             return $basketINI->variable( 'ShippingCosts',  'CostZone2' );
         }
 
-        if ( ( $amount < $basketINI->variable( 'ShippingCosts',  'Limit' ) ) &&
+        if ( ( $amount > $basketINI->variable( 'ShippingCosts',  'Limit' ) ) &&
              ( in_array( $provincia, $provincias_zone_1 ) ) )
         {
             return 0;

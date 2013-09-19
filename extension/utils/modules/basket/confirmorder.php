@@ -71,7 +71,7 @@ if( $http->hasPostVariable( 'formPago' ) )
             $infoOrder->store();
             $paymentObject = eflPaymentObject::createNew( $basket->OrderID, 'Domiciliación' );  
             $paymentObject->store();        
-            $datos = $payments->transferencia( $basket->OrderID, $http->postVariable( 'importe' ) );
+            $datos = $payments->transferencia( $basket->OrderID, $unserialized_order['total'] );
             $tpl->setVariable( 'datos', $datos );  
             break;
             
@@ -106,7 +106,7 @@ if( $http->hasPostVariable( 'formPago' ) )
     		$infoOrder->store();
     		$paymentObject = eflPaymentObject::createNew( $basket->OrderID, 'BBVA' );  
     		$paymentObject->store(); 		
-            $datos = $payments->bbva( $basket->OrderID, $http->postVariable( 'importe' ), $idtransaccion );
+            $datos = $payments->bbva( $basket->OrderID, $unserialized_order['total'], $idtransaccion );
             $tpl->setVariable( 'datos', $datos );  
             break;
             
@@ -122,7 +122,7 @@ if( $http->hasPostVariable( 'formPago' ) )
     		$infoOrder->store(); 
     		$paymentObject = eflPaymentObject::createNew( $basket->OrderID, 'Paypal'  );    		
     		$paymentObject->store();
-            $datos = $payments->paypal( $basket->OrderID,  $http->postVariable( 'importe' ), $http->postVariable( 'modPago' ) );
+            $datos = $payments->paypal( $basket->OrderID,  $unserialized_order['total'], $http->postVariable( 'modPago' ), $unserialized_order['gastosEnvio'] );
             $tpl->setVariable( 'datos', $datos );  
             break;
             
@@ -143,7 +143,7 @@ if( $http->hasPostVariable( 'formPago' ) )
             $infoOrder->store(); 
             $paymentObject = eflPaymentObject::createNew( $basket->OrderID, 'Domiciliación'  );            
             $paymentObject->store();
-            $datos = $payments->domiciliacion( $basket->OrderID,  $http->postVariable( 'importe' ) );
+            $datos = $payments->domiciliacion( $basket->OrderID, $unserialized_order['total'] );
             $tpl->setVariable( 'datos', $datos );  
             break;
             
