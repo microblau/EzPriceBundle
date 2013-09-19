@@ -3,7 +3,7 @@ $http = eZHTTPTool::instance();
 $module = $Params['Module'];
 
 require_once( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( "module_name", 'basket' );
 
 $orderID = $http->sessionVariable( 'MyTemporaryOrderID' );

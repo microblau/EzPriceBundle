@@ -3,7 +3,7 @@ $key = $Params['Key'];
 $temppassobject = eflTempPassObject::fetchByKey( $key );
 $efl = new eflWS();
 require( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 if( $temppassobject )
 {
 	if( $efl->cambiaPasswordDirecto( $temppassobject->Email, $temppassobject->Password ) )
@@ -17,7 +17,7 @@ if( $temppassobject )
 		$mail->setSender( $sender );
 	    $mail->setReceiver( $temppassobject->Email );
 	    $mail->setSubject( $subject );
-	    $templateMail = templateInit();
+	    $templateMail = eZTemplate::factory();
 	    $templateMail->setVariable( 'pass',  $temppassobject->Password );
 	    $mail->setBody(  $templateMail->fetch( 'design:basket/resetpassword_email.tpl' ) );
 	    $mailResult = eZMailTransport::send( $mail );

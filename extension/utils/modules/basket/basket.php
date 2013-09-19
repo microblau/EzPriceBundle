@@ -30,7 +30,7 @@ $module = $Params['Module'];
 require_once( "kernel/common/template.php" );
 $basket = eZBasket::currentBasket();
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 //comprabamos codigo
 if( $http->hasPostVariable( 'btnCodigo' ) )
 {

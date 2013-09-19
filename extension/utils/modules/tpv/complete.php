@@ -1,6 +1,6 @@
 <?php 
 require( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $http = eZHTTPTool::instance();
 $basket = eZBasket::currentBasket();
 $tpl->setVariable( 'basket',  eZBasket::currentBasket() );

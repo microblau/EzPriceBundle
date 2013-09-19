@@ -24,7 +24,7 @@
 //
 //
 require( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $http = eZHTTPTool::instance();
 

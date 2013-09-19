@@ -1,13 +1,13 @@
 <?php
 require( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $user = eZUser::currentUser();
 $email = $user->attribute( 'login' );
 
 $eflws = new eflWS();
 $existeUsuario = $eflws->existeUsuario( $email );
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $http = eZHTTPTool::instance();
 

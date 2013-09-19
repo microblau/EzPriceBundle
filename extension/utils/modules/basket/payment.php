@@ -1,7 +1,7 @@
 <?php 
 
 require( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $user = eZUser::currentUser();
 $email = $user->attribute( 'login' );

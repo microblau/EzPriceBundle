@@ -9,7 +9,7 @@ $order = eZOrder::fetch( $order_id );
 $n = $order->attribute( 'productcollection_id' );
 
 require( 'kernel/common/template.php' );
-$tplmail = templateInit();
+$tplmail = eZTemplate::factory();
 
 /*
 if (!$http->hasPostVariable( 'invoice')  ) 
