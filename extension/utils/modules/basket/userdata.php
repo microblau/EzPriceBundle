@@ -1,5 +1,4 @@
 <?php
-require( 'kernel/common/template.php' );
 $tpl = eZTemplate::factory();
 $user = eZUser::currentUser();
 $email = $user->attribute( 'login' );
