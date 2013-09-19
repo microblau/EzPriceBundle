@@ -15,7 +15,7 @@
 	{/literal}
 </script>   
 
-{*fin analytics*}		
+{*fin analytics*}			
 			<div id="gridWide">
             	
                 <div id="moduloDestacadoContenido" class="type1">								

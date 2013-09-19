@@ -224,7 +224,7 @@ body#formacion #logo {  padding: 0}
 			#footer .mediosPago .logos li { display: inline; text-align: left }
 		#footer .logos img { vertical-align: middle } 
 			
-	#footer .modTwitter { float: right; width: 236px; margin: 0 0 20px; padding: 10px; background-color:#dcdcdc; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;  } 
+	#footer .modTwitter { float: right; /*width: 236px;*/ margin: 0 0 20px; /*padding: 10px; background-color:#dcdcdc; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;  */} 
 		#footer .modTwitter .inner { background: #fff; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; }
 		#footer .modTwitter .inner .cab img { padding: 9px 9px 0  }
 		.modTwitter .twtr-tweet-wrap { padding: 6px;  border-top: 1px dotted #DDD;}

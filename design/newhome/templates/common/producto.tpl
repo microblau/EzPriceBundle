@@ -26,7 +26,6 @@
 
 {*fin analytics*}
 
-
 {def $limite=6}
 {def $offset=0}
 {def $cuantasvaloracionestotales = fetch('producto','cuantasvaloraciones' , hash( 'node_id', $node.node_id ))} 

@@ -1,4 +1,4 @@
-/*
+﻿/*
 CSS Browser Selector v0.4.0 (Nov 02, 2010)
 Rafael Lima (http://rafael.adm.br)
 http://rafael.adm.br/css_browser_selector
@@ -396,7 +396,6 @@ var formsValidations = {
                         parent.addClass("error");
                 }else{
                         parent.removeClass("error");
-
                         if(!regularExpressions.isValidEmail(f.find("input#email").val())){
                                 errorTxt += literal["newsletter"][6];                  
                                 parent.addClass("error");
@@ -1504,14 +1503,13 @@ var formsValidations = {
                 	if($("input#paypal:checked").length == 1){
                 		_gaq.push(['_setCustomVar',2,'forma-de-pago','Paypal',2]);
                 		_gaq.push(['_trackEvent', 'PhantomEvent', 'GO', '-', 0, true]);
-                		
                 	}
                 	if($("input#domiciliacion:checked").length == 1){
                 		_gaq.push(['_setCustomVar',2,'forma-de-pago','Domiciliación',2]);
                 		_gaq.push(['_trackEvent', 'PhantomEvent', 'GO', '-', 0, true]);
                 	}
                 	return true;     
-                }
+                }    
                 return true;
        
         },
@@ -3192,13 +3190,13 @@ jQuery(function($){
             result = $.inArray(hostname,arrHostname);
 
         //Si el hostname del enlace es igual que alguno de los del array.
-        //if (result != -1){ //<-- Descomentar para Produccion
+        if (result != -1){ //<-- Descomentar para Produccion
 
  		if(hostname !== document.domain){ //Si el hostname (dominio) del enlace no es igual que el dominio, es externo
            $a.addClass("externo")
        }
  
-        
+        }
         
     })
 
@@ -3213,12 +3211,10 @@ jQuery(function(){
 
 //para añadir a la cesta de la compra
 
-
-
 jQuery(function(){
     jQuery('a[href*="'+ "basket/add" +'"]').click(function(){ 
-        var precio =$('.ofertaSus span.precioNuevo').text().split("€")[0].replace(/,/g, ".");
-		var productPrice = Math.round(precio.replace(/(?!\.)[\D\s]/g,"")); // 
+       var precio =$('.ofertaSus span.precioNuevo').text().split("€")[0].replace(/,/g, ".");
+       var productPrice = Math.round(precio.replace(/(?!\.)[\D\s]/g,"")); // 
         var nombreproducto = $(".subTit").parent().html().split("<")[0];    
         _gaq.push(['_trackEvent', 'AddtoBasket', 'Click', nombreproducto,productPrice]);
         

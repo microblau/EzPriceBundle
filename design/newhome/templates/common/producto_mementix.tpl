@@ -53,7 +53,7 @@
 {def $muestraaleatorio=fetch('producto','muestraaleatorio' , hash( 'node_id', $node.node_id ))} 
 {def $calculaestrellas=fetch('producto','calculaestrellas' , hash( 'node_id', $node.node_id, 'categoria' , 'calidad', 'n_estrellas' ,5 ))} 
 
-  {*analytics de ficha de producto categorías*}
+   {*analytics de ficha de producto categorías*}
 <script type="text/javascript">
 {foreach $node.data_map.area.content.relation_list as $k=>$area}
 	{def $areas=fetch(content,object, hash(object_id, $area.contentobject_id))}

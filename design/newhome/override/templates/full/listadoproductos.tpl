@@ -81,11 +81,11 @@
                                     {def $filtro=array()}
 {*quitamos todos los productos que no tengan precio [EFL-16]*}
 										{set $filtro=array('and')}
-										{set $filtro=$filtro|append('subattr_precio___precio_f:[1 TO *]' )}
+										{set $filtro=$filtro|append('attr_precio_f:[1 TO *]' )}
 				    {if $order_by|ne('')}
                                     {switch match=$order_by}
                                             {case match='precio'}
-                                                {def $sort_array = hash( 'subattr_precio___precio_f', 'asc' )}
+                                                {def $sort_array = hash( 'attr_precio_f', 'asc' )}
                                                 {def $filtro=array()}
                                             {/case}
                                             {case match='fechapublicacion'}
@@ -100,11 +100,15 @@
                                                 {set $filtro=$filtro|append(concat( 'submeta_', 'area', '___id_si:', $order_by))}
                                             {/case}
                                         {/switch}
+{else}
+ {def $sort_array = hash( 'attr_fecha_aparicion_dt', 'desc', 'attr_orden_si', 'desc', 'attr_nombre_s', 'asc' )}                                      
+                                               
 					{/if}
+
                                         {*$filtro|attribute(show)*}
 										
 										
-										
+									
                                         {def $results = fetch( 'ezfind', 'search', hash( 'query', '',
                                                                                          'subtree_array', array( $node.node_id ),
                                                                                          'class_id', array( 48, 98, 99, 101,149, 145 ),

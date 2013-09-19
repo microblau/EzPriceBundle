@@ -93,7 +93,7 @@
                                                     ))}
                   
                   			
-                           {$filterattrs|attribute(show,3)}
+                           {*$filterattrs|attribute(show,3)*}
                              
                          
                              {def $filter = fetch( 'catalogo', 'get_filter', hash( 'param1', $urlexplode.1, 'param2', $urlexplode.2 ))}

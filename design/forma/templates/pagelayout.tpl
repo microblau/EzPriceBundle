@@ -19,6 +19,22 @@
 {include uri='design:page_head.tpl'}
 {include uri='design:page_head_style.tpl'}
 {include uri='design:page_head_script.tpl'}
+{literal}
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-2627590-1']);
+  _gaq.push(['_setDomainName', 'efl.es']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+{/literal}
 
 </head>
 <body id="formacion">
@@ -73,21 +89,6 @@
 
 {* This comment will be replaced with actual debug report (if debug is on). *}
 <!--DEBUG_REPORT-->
-<script type="text/javascript">
-{literal}
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-2627590-1']);
-  _gaq.push(['_setDomainName', '.efl.es']);
-  _gaq.push(['_setAllowHash', false]);
-  _gaq.push(['_trackPageview']); 
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-{/literal}
-</script>
 
 </body>
 </html>

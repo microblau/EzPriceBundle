@@ -24,6 +24,14 @@
 {include uri='design:page_head.tpl'}
 {include uri='design:page_head_style.tpl'}
 {include uri='design:page_head_script.tpl'}
+{literal}
+<script type="text/javascript">
+setTimeout(function(){var a=document.createElement("script");
+var b=document.getElementsByTagName("script")[0];
+a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0013/9487.js?"+Math.floor(new Date().getTime()/3600000);
+a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+</script>
+{/literal}
 
 <script type="text/javascript">
 	{literal}
@@ -51,7 +59,6 @@
  
 {/literal}
 </script>
-
 
 </head>
 <body {if or( $module_result.node_id|eq(2) )}id="home"{/if} {if or( 
@@ -121,16 +128,6 @@ $module_result.content_info.class_identifier|eq('producto_qmementix') )}class="q
 </div>
 
 {include uri='design:page_footer_script.tpl'}
-
-
-{literal}
-<script type="text/javascript">
-setTimeout(function(){var a=document.createElement("script");
-var b=document.getElementsByTagName("script")[0];
-a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0013/9487.js?"+Math.floor(new Date().getTime()/3600000);
-a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
-</script>
-{/literal}
 {/cache-block}
 
 {* This comment will be replaced with actual debug report (if debug is on). *}

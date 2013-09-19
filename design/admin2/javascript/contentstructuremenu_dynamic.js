@@ -6,6 +6,13 @@ function ContentStructureMenu( params, i18n )
     this.open           = ( this.cookie )? this.cookie.split( '/' ): [];
     this.autoOpenPath   = params.path;
 
+    // hashes in ez template doesn't handle numeric keys correctly
+    // an underscore has been prepended in keys and is removed here
+    for ( var j in params.classes )
+    {
+        params.classes[j.replace(/^_/, '')] = params.classes[j];
+        delete params.classes[j];
+    }
 
     this.updateCookie = function()
     {
@@ -173,13 +180,13 @@ function ContentStructureMenu( params, i18n )
                 + '"';
         }
 
-        html += '><span class="node-name-'
-            + ( ( item.is_hidden )? 'hidden':
-                                    ( item.is_invisible )? 'hiddenbyparent':
-                                                           'normal' )
-            + '">'
-            + item.name
-            + '<\/span>';
+        html += '>';
+        var span = document.createElement( 'span' );
+        span.setAttribute( 'class', 'node-name-' + ( ( item.is_hidden ) ? 'hidden': ( item.is_invisible ) ? 'hiddenbyparent' : 'normal' ) );
+        span.appendChild( document.createTextNode( item.name ) );
+        var div = document.createElement( 'div' );
+        div.appendChild( span );
+        html += div.innerHTML;
 
         if ( item.is_hidden )
         {

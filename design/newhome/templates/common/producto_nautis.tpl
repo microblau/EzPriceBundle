@@ -1,7 +1,7 @@
 {ezpagedata_set( 'bodyclass', 'fichas' )}
 {ezpagedata_set( 'menuoption', 2 )}        
 {ezpagedata_set( 'metadescription', $node.data_map.subtitulo.content )}                 
-	{*analytics de ficha de producto categorías*}
+{*analytics de ficha de producto categorías*}
 <script type="text/javascript">
 {foreach $node.data_map.area.content.relation_list as $k=>$area}
 	{def $areas=fetch(content,object, hash(object_id, $area.contentobject_id))}
@@ -15,7 +15,7 @@
 	{/literal}
 </script>   
 
-{*fin analytics*}	
+{*fin analytics*}			
 		
 			<div id="gridWide">
             	

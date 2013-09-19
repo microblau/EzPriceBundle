@@ -122,7 +122,6 @@
 															
 															<td>
 																{if $product.item_object.contentobject.class_identifier|contains( 'curso')}
-
 																	<a href={$product.item_object.contentobject.main_node.url_alias|ezurl_formacion()}>{$product.object_name}</a>
 																{else}
 {if $product.item_object.contentobject.contentclass_id|eq(48)}
