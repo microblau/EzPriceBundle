@@ -26,16 +26,37 @@ Configuración gastos de envío.
 
     <table class="list" cellspacing="0">
         <tr>
-            <td >Precio a partir del cual no se aplican gastos de envío</td>
-            <td><input type="text" name="shipping_cost_limit" value="{$currency_data['code']}" /> Válido para provincias zona 1</td>
+            <td width="40%">Importe en euros a partir del cual no se aplican gastos de envío</td>
+            <td><input type="text" name="shipping_cost_limit" value="{$shipping_cost_limit}" /> Válido para provincias zona 1</td>
         </tr>
         <tr>
             <td>Gastos de envío para zona 1</td>
-            <td><input type="text" name="shipping_cost_zone1" value="{$currency_data['code']}" /></td>
+            <td><input type="text" name="shipping_cost_zone1" value="{$shipping_cost_zone1}" /></td>
         </tr>
         <tr>
             <td>Gastos de envío para zona 2</td>
-            <td><input type="text" name="shipping_cost_zone2" value="{$currency_data['code']}" /></td>        
+            <td><input type="text" name="shipping_cost_zone2" value="{$shipping_cost_zone2}" /></td>        
+        </tr>
+         <tr>
+            <td>Provincias Zona 1</td>
+            <td>
+                <select name="provincias_zona_1" multiple="multiple" size="20">
+                    {foreach $provincias as $provincia}
+                        <option value="{$provincia}" {if $provincias_zone_1|contains($provincia)}selected="selected"{/if}>{$provincia}</option>
+                    {/foreach}
+                </select>
+            </td>        
+        </tr>
+        
+        <tr>
+            <td>Provincias Zona 2</td>
+            <td>
+                <select name="provincias_zona_2" multiple="multiple" size="20">
+                    {foreach $provincias as $provincia}
+                        <option value="{$provincia}" {if $provincias_zone_2|contains($provincia)}selected="selected"{/if}>{$provincia}</option>
+                    {/foreach}
+                </select>
+            </td>        
         </tr>
 
     </table>
