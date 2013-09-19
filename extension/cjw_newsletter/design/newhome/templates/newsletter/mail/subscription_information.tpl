@@ -16,7 +16,7 @@ Para confirmar su suscripción por favor pulse en el siguiente enlace:
 %configureLink
 '|i18n( 'cjw_newsletter/mail/subscription_information',,
                                          hash( '%name', concat( $newsletter_user.first_name, ' ', $newsletter_user.last_name ),
-                                               '%configureLink', concat( 'http://', $hostname, concat( '/newsletter/configure/', cond( $newsletter_user, $newsletter_user.hash, '#' ) ),'?nooverride=1')|ezurl(no) ),
+                                               '%configureLink', concat( 'http://', $hostname, concat( '/newsletter/configure/', cond( $newsletter_user, $newsletter_user.hash, '#' ),'?nooverride=1' )|ezurl(no) ),
                                                '%subscriptionList', $subscriptionListString,
                                                 ) )}
 {include uri="design:newsletter/mail/footer.tpl"}

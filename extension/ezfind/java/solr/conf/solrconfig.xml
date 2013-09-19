@@ -1519,7 +1519,7 @@
 
       <!-- Configure the standard formatter -->
       <formatter name="html"
-                 default="false"
+                 default="true"
                  class="solr.highlight.HtmlFormatter">
         <lst name="defaults">
           <str name="hl.simple.pre"><![CDATA[<em>]]></str>

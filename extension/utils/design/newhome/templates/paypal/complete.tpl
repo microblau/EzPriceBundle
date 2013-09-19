@@ -152,11 +152,6 @@ var google_conversion_value = 0;
 {undef $tax}
  
 {/if}
-
- 
-
-
-
 {if $encuesta}
 
         

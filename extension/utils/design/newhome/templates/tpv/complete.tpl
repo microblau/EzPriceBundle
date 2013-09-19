@@ -159,8 +159,6 @@ var google_conversion_value = 0;
 
 
 
-
-
 {if $encuesta}
 
         

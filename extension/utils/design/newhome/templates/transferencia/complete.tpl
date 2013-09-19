@@ -108,8 +108,6 @@
 
 
 
-
-
 {if $encuesta}
 
         

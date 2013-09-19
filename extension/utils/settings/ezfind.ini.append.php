@@ -9,8 +9,7 @@ CustomMap[customezprice]=ezfSolrCustomEzPrice
 
 ClassIdentifierList[]
 ClassIdentifierList[]=sumario_producto
-ClassIdentifierList[]=folder
-ClassIdentifierList[]=formato
+#ClassIdentifierList[]=folder
 #ClassIdentifierList[]=secret
 
 */?>

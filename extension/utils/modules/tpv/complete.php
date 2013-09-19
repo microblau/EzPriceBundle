@@ -13,6 +13,7 @@ $orderInfo = eZPersistentObject::fetchObject( eflOrders::definition(),
 
 
 $info = unserialize( $orderInfo->Order );
+$id_pedido_ws=$info["id_pedido_lfbv"];
 $tpl->setVariable( 'id_pedido_lfbv',  $info["id_pedido_lfbv"] );
 if( $http->hasPostVariable( 'btnContinuar' ) )
 {
@@ -102,7 +103,7 @@ if( $http->hasPostVariable( 'btnContinuar' ) )
 else
 {
     
-	$tpl->setVariable( 'id_pedido_lfbv', $http->sessionVariable( 'id_pedido_lfbv' ) );
+	$tpl->setVariable( 'id_pedido_lfbv', $id_pedido_ws );
     
 	$Result = array();
 	$Result['content'] = $tpl->fetch( "design:tpv/complete.tpl" );

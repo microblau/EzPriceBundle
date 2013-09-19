@@ -16,7 +16,6 @@ class calendarFunctions
     
 	$day_names = array(); #generate all the day names according to the current locale
 	$month_names = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'); #generate all the month names according to the current locale
-	
 	for($n=0,$t=(3+$first_day)*86400; $n<7; $n++,$t+=86400) #January 4, 1970 was a Sunday
 		$day_names[$n] = ucfirst(gmstrftime('%A',$t)); #%A means full textual day name
 
@@ -24,7 +23,7 @@ class calendarFunctions
 	$weekday = ($weekday + 7 - $first_day) % 7; #adjust for $first_day
 	$title   = htmlentities(ucfirst($month_name));  #note that some locales don't capitalize month and day names
 	$title = htmlentities(ucfirst($month_names[$month-1]));
-
+	
 	#Begin calendar. Uses a real <caption>. See http://diveintomark.org/archives/2002/07/03
 	@list($p, $pl) = each($pn); @list($n, $nl) = each($pn); #previous and next links, if applicable
 	if($p) $p = '<span class="calendar-prev">'.($pl ? '<a href="'.htmlspecialchars($pl).'">'.$p.'</a>' : $p).'</span>&nbsp;';

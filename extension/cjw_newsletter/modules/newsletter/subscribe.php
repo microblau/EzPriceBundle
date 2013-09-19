@@ -235,15 +235,17 @@ if ( $module->isCurrentAction( 'Subscribe' ) )
                 }
             } break;
 			
-			/* case 'captcha':
+			 case 'captcha':
             {
+              
               include_once( 'extension/ezhumancaptcha/classes/ezhumancaptchatools.php' );
 				$eZHumanCAPTCHAValidation = eZHumanCAPTCHATools::validateHTTPInput();
+
 					if ( count( $eZHumanCAPTCHAValidation ) )
                 {
                     $warningArr['captcha'] = $messageArray['captcha'];
                 }
-            } break;*/
+            } break;
 			 case 'acepto':
             {
              if ( !$subscriptionDataArr['Acepto'] )
@@ -286,6 +288,7 @@ if ( $module->isCurrentAction( 'Subscribe' ) )
 
             $templateFile = 'design:newsletter/subscribe_success_ez_user.tpl';
         }
+        
     }
     else
     {
@@ -293,27 +296,31 @@ if ( $module->isCurrentAction( 'Subscribe' ) )
 
         // email exists but subscription for email is done again
         // => email send with configure link
-        if ( is_object( $existingNewsletterUserObject) )
+        if ( is_object( $existingNewsletterUserObject) && ( count($warningArr ) == 0 ) )
         {
+
+  
             $tpl->setVariable( 'user_email_already_exists', $subscriptionDataArr['email'] );
 
             // $existingNewsletterUserObject->sendSubriptionInfoMail();
-            $mailSendResult = $existingNewsletterUserObject->sendSubcriptionInformationMail();
+
+//            $mailSendResult = $existingNewsletterUserObject->sendSubcriptionInformationMail();
 
             $tpl->setVariable( 'newsletter_user', $existingNewsletterUserObject );
             $tpl->setVariable( 'mail_send_result', $mailSendResult );
             $tpl->setVariable( 'subscription_result_array', false );
             $tpl->setVariable( 'back_url_input', $backUrl );
 
-            if ( $mailSendResult['send_result'] === true )
+/*            if ( $mailSendResult['send_result'] === true )
             {
                 $templateFile = "design:newsletter/subscribe_success.tpl";
             }
             // errors
             else
-            {
-                $templateFile = "design:newsletter/subscribe_success_not.tpl";
-            }
+            {*/
+
+                $templateFile = "design:newsletter/subscribe_already_done.tpl";
+            /*}*/
         }
         // all is ok -> send confirmation email
         else if ( count( $warningArr ) == 0 )
@@ -370,6 +377,8 @@ $tpl->setVariable( 'available_saluation_array', $salutationArray );
 
 $Result = array();
 //$Result['content'] = $tpl->fetch( "design:newsletter/subscribe.tpl" );
+
+
 
 $Result['content'] = $tpl->fetch( $templateFile );
 

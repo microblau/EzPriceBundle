@@ -352,17 +352,6 @@ function checkImementoPrice( accesos )
 			$("#preload").show();
 			disableChecks(check);
 			checkImementoPrice( $("#valor").val() );
-			
-			/*var n = $("#productlist input:checked").length;
-			if($("#modMiImemento").length != 0){
-				if (n > 2){
-					alert(12 + ":  " + n);
-					//$("#modMiImemento").removeClass("fixed");
-				}else{
-					alert(22 + ":  " + n);
-					//$("#modMiImemento").addClass("fixed");
-				}
-			}*/
 		});
 		
         $("#mementosForm").submit( function() {    

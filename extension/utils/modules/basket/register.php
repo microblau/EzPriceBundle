@@ -198,8 +198,6 @@ if( $http->hasPostVariable( 'BtnRegister' ) )
 				$infoOrder = eZPersistentObject::fetchObject( eflOrders::definition(), null, array( 'productcollection_id' => $basket->attribute( 'productcollection_id') ) );
 
                 $unserialized_order = unserialize($infoOrder->Order);
-				
-								
                 if( $unserialized_order['has_nautis4'] )
                             {
                                 $order['has_nautis4'] = $unserialized_order['has_nautis4'];                
@@ -237,7 +235,6 @@ if( $http->hasPostVariable( 'BtnRegister' ) )
 			                                    'order_serialized' => serialize( $order )
         	        ) );        
 	    		$order_object->store();
-
                 
 				if( $http->postVariable( 'tipoCompra') == 1 )
 				{
@@ -409,8 +406,9 @@ elseif ( $http->hasPostVariable( 'BtnRegisterParticular' ) )
 		{
 			$errors['telefono2'] = "El campo 'Teléfono' de 'Datos de Envío' es obligatorio";		
 		}	
-		elseif( strlen( $http->postVariable( 'telefono2' ) >  16 ) )
+		elseif( strlen( $http->postVariable( 'telefono2' ) ) > 16 )
 		{
+
 			$errors['telefono2'] = "El campo 'Teléfono' de 'Datos de Envío' no puede tener más de 16 caracteres";					
 		}
         $tpl->setVariable( 'telefono2', $http->postVariable( 'telefono2' ) );

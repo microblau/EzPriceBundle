@@ -6,10 +6,11 @@ function jsonSuggestSelect_callback(item) {
   //alert(JSON.stringify(item));
   return false;
 }
-/*
+
 jQuery('.ngsuggestfield').jsonSuggest(
   function(text, searchId, wildCard, caseSensitive, notCharacter) {
     var JSONData = '';
+    /*var success = false;*/
     function processJSONData(data) {
       for (var f in data.facet_counts.facet_fields) {
         for (var i in data.facet_counts.facet_fields[f]) {
@@ -35,7 +36,7 @@ jQuery('.ngsuggestfield').jsonSuggest(
     return JSON.parse('[' + JSONData + ']');
   }, {ajaxResults:true, maxResults:9, minCharacters:1, onSelect:jsonSuggestSelect_callback}
 );
-*/
+
 //////
 });
 //////

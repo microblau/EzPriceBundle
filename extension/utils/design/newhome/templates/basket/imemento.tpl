@@ -21,7 +21,7 @@ la misma aplicación, como si fuera una biblioteca que configura usted mismo.</p
 				{foreach $tabla.current.data_map.tabla_precios.content.rows.sequential as $index=>$rows}
 					<li class="type1">
 					
-								{if eq($tabla.current.data_map.tabla_precios.content.rows.sequential|count,$index|inc)}<strong class="title">>={$index|inc} <br />iMementos</strong>{else}<strong class="title">{$index|inc}  <br /> iMemento{if gt($index,0)}s{/if}</strong>{/if}
+								{if eq($tabla.current.data_map.tabla_precios.content.rows.sequential|count,$index|inc)}<strong class="title">>={$index|inc} <br />iMementos</strong>{else}<strong class="title">{$index|inc} <br />iMemento{if gt($index,0)}s{/if}</strong>{/if}
 								<span class="desc">
 									<strong class="percent">
 									{$tabla.current.data_map.tabla_precios.content.matrix.cells[$index|sum($impar)]}

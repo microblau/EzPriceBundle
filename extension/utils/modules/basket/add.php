@@ -24,7 +24,7 @@ else
 if( $_SERVER['HTTP_HOST'] == 'formacion.efl.es')
 {
   
-    header( 'Location: http://www2.efl.es/basket/add/' . $objectID . "/" . $quantity );
+    header( 'Location: http://www.efl.es/basket/add/' . $objectID . "/" . $quantity );
 }
 
 //$http->setSessionVariable( "FromPage", $_SERVER['HTTP_REFERER'] );

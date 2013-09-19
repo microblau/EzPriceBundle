@@ -740,10 +740,6 @@ class eZSolr implements ezpSearchEngine
                // since ezfind 2.3, a NULL value returned from $fieldBase in the $value elements is used as a flag not to index
                if ( !is_null( $value ) )
                {
-                   print $key;
-                   print "===================== \n";
-                   print_r ($value );
-                   print '\n ============================' . "\n";
                    $doc->addField( $key, $value, $boost );
                }
            }
