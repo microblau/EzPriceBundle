@@ -1,6 +1,6 @@
 <?php
 include( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $http = eZHTTPTool::instance();
 if( $http->hasPostVariable( 'Send' ) )
 {

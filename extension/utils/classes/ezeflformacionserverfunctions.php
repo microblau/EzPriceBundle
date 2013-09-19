@@ -50,7 +50,7 @@ class ezEflFormacionServerFunctions extends ezjscServerFunctions
         if ( isset ($args[0]))
         {
             include_once ("kernel/common/template.php");
-            $tpl = templateInit();
+            $tpl = eZTemplate::factory();
             if ($args[0] != "-1")
             {
                 $node = eZContentObjectTreeNode::fetch($args[0]);

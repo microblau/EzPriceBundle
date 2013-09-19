@@ -287,6 +287,11 @@ $ViewList["csv-encuestas"] = array(
     "script" => "csv-encuestas.php",
     "default_navigation_part" => 'ezshopnavigationpart' );
 
+$ViewList["envios"] = array(
+    'functions' => array( 'envios' ),
+    "script" => "envios.php",
+    "default_navigation_part" => 'ezshopnavigationpart' );
+
 $FunctionList = array();
 $FunctionList['buy'] = array( );
 $FunctionList['checkout'] = array( );
@@ -296,4 +301,5 @@ $FunctionList['encuesta'] = array( );
 $FunctionList['csvencuestas'] = array( );
 $FunctionList['imemento'] = array( );
 $FunctionList['qmementix'] = array( );
+$FunctionList['envios'] = array( );
 ?>

@@ -2,8 +2,7 @@
 $http = eZHTTPTool::instance();
 $module = $Params['Module'];
 
-require_once( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( "module_name", 'basket' );
 
 $orderID = $http->sessionVariable( 'MyTemporaryOrderID' );
@@ -42,27 +41,37 @@ $basket->updatePrices();
 
 if( $http->hasPostVariable( 'formPago' ) )
 {
-	$basket = eZBasket::currentBasket();
-	$infoOrder = eZPersistentObject::fetchObject( eflOrders::definition(), null, array( 'productcollection_id' => $basket->attribute( 'productcollection_id') ) );
-	
-	$unserialized_order = unserialize($infoOrder->Order);
-	$payments = new eflPaymentMethods();
+    $basket = eZBasket::currentBasket();
+    $infoOrder = eZPersistentObject::fetchObject( eflOrders::definition(), null, array( 'productcollection_id' => $basket->attribute( 'productcollection_id') ) );
+
+    $unserialized_order = unserialize($infoOrder->Order);
+
     
-	switch( $http->postVariable( 'formPago' ) )
+    // cálculo gastos envío
+    $provincia_envio = $unserialized_order['provincia2'];
+    $total = $http->postVariable( 'total' );
+    // usar este si no hay que contar iva 
+    //$total = $basket->attribute( 'total_ex_vat' );
+    
+    $gastosEnvio = eZShopFunctions::getShippingCost( $provincia_envio, $total );
+
+    $payments = new eflPaymentMethods();
+    
+    switch( $http->postVariable( 'formPago' ) )
     {
         case 1:  // Transferencia
-        	
             $unserialized_order['tipopago'] = 1;
             if( $http->postVariable( 'plazos' ) > 0 )
                 $unserialized_order['plazos'] = $http->postVariable( 'plazos' );
-            $unserialized_order['total'] = $http->postVariable( 'total' );
+            $unserialized_order['total'] = $http->postVariable( 'total' ) + $gastosEnvio;
+            $unserialized_order['gastosEnvio'] = $gastosEnvio;
             $unserialized_order['aplazado'] = $http->postVariable( 'modPago' );
             $serialized_order = serialize( $unserialized_order ); 
             $infoOrder->Order = $serialized_order;
             $infoOrder->store();
             $paymentObject = eflPaymentObject::createNew( $basket->OrderID, 'Domiciliación' );  
             $paymentObject->store();        
-            $datos = $payments->transferencia( $basket->OrderID, $http->postVariable( 'importe' ) );
+            $datos = $payments->transferencia( $basket->OrderID, $unserialized_order['total'] );
             $tpl->setVariable( 'datos', $datos );  
             break;
             
@@ -70,7 +79,8 @@ if( $http->hasPostVariable( 'formPago' ) )
     		$unserialized_order['tipopago'] = 2;
     		if( $http->postVariable( 'plazos' ) > 0 )
     		  $unserialized_order['plazos'] = $http->postVariable( 'plazos' );
-    		$unserialized_order['total'] = $http->postVariable( 'total' );
+    		$unserialized_order['total'] = $http->postVariable( 'total' ) + $gastosEnvio;
+                $unserialized_order['gastosEnvio'] = $gastosEnvio;
     		$unserialized_order['aplazado'] = $http->postVariable( 'modPago' );
     		/*calculo id_transaccion */
     		$y = substr( date( 'Y' ), 3, 1 );
@@ -96,7 +106,7 @@ if( $http->hasPostVariable( 'formPago' ) )
     		$infoOrder->store();
     		$paymentObject = eflPaymentObject::createNew( $basket->OrderID, 'BBVA' );  
     		$paymentObject->store(); 		
-            $datos = $payments->bbva( $basket->OrderID, $http->postVariable( 'importe' ), $idtransaccion );
+            $datos = $payments->bbva( $basket->OrderID, $unserialized_order['total'], $idtransaccion );
             $tpl->setVariable( 'datos', $datos );  
             break;
             
@@ -104,14 +114,15 @@ if( $http->hasPostVariable( 'formPago' ) )
     		$unserialized_order['tipopago'] = 3;
     		if( $http->postVariable( 'plazos' ) > 0 )
     		  $unserialized_order['plazos'] = $http->postVariable( 'plazos' );
-    		$unserialized_order['total'] = $http->postVariable( 'total' );
+    		$unserialized_order['total'] = $http->postVariable( 'total' ) + $gastosEnvio;
+                $unserialized_order['gastosEnvio'] = $gastosEnvio;
     		$unserialized_order['aplazado'] = $http->postVariable( 'modPago' );
     		$serialized_order = serialize( $unserialized_order ); 
     		$infoOrder->Order = $serialized_order;
     		$infoOrder->store(); 
     		$paymentObject = eflPaymentObject::createNew( $basket->OrderID, 'Paypal'  );    		
     		$paymentObject->store();
-            $datos = $payments->paypal( $basket->OrderID,  $http->postVariable( 'importe' ), $http->postVariable( 'modPago' ) );
+            $datos = $payments->paypal( $basket->OrderID,  $unserialized_order['total'], $http->postVariable( 'modPago' ), $unserialized_order['gastosEnvio'] );
             $tpl->setVariable( 'datos', $datos );  
             break;
             
@@ -119,7 +130,8 @@ if( $http->hasPostVariable( 'formPago' ) )
             $unserialized_order['tipopago'] = 4;
             if( $http->postVariable( 'plazos' ) > 0 )
               $unserialized_order['plazos'] = $http->postVariable( 'plazos' );
-            $unserialized_order['total'] = $http->postVariable( 'total' );
+            $unserialized_order['total'] = $http->postVariable( 'total' ) + $gastosEnvio;
+            $unserialized_order['gastosEnvio'] = $gastosEnvio;
             $unserialized_order['aplazado'] = $http->postVariable( 'modPago' );
             $unserialized_order['titular_cuenta'] = $http->postVariable( 'titular' );
             $unserialized_order['banco'] = $http->postVariable( 'banco' );
@@ -131,7 +143,7 @@ if( $http->hasPostVariable( 'formPago' ) )
             $infoOrder->store(); 
             $paymentObject = eflPaymentObject::createNew( $basket->OrderID, 'Domiciliación'  );            
             $paymentObject->store();
-            $datos = $payments->domiciliacion( $basket->OrderID,  $http->postVariable( 'importe' ) );
+            $datos = $payments->domiciliacion( $basket->OrderID, $unserialized_order['total'] );
             $tpl->setVariable( 'datos', $datos );  
             break;
             

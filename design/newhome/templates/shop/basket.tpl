@@ -71,12 +71,41 @@
 														<tr class="totalNoIva">
 															<th colspan="7">TOTAL (sin IVA)</th>
 															<td>{$basket.total_ex_vat|l10n( clean_currency )} €</td>
+														</tr>     
+                                                                                                                {if is_set($gastos_envio)}
+                                                                                                                <tr class="totalNoIva">
+
+															<th colspan="7">TOTAL COMPRA</th>
+															<td class="precio">{$basket.total_inc_vat|l10n( clean_currency ), $basket.total_inc_vat|l10n( clean_currency ))} €</td>
 														</tr>
-														<tr class="total">
+                                                                                                                <tr class="totalNoIva">
+															<th colspan="7">Gastos de Envío</th>
+															<td>{$gastos_envio|l10n( clean_currency )} €</td>
+														</tr>
+                                                                                                                <tr class="total">
 
 															<th colspan="7">TOTAL</th>
-															<td class="precio">{$basket.total_inc_vat|l10n( clean_currency )} €</td>
+															<td class="precio">{cond( is_set( $gastos_envio ), $basket.total_inc_vat|sum($gastos_envio)|l10n( clean_currency ), $basket.total_inc_vat|l10n( clean_currency ))} €</td>
 														</tr>
+                                                                                                                {else}
+                                                                                                                   
+
+                                                                                                                <tr class="totalNoIva">
+
+															<th colspan="7">TOTAL COMPRA</th>
+															<td class="precio">{$basket.total_inc_vat|l10n( clean_currency ), $basket.total_inc_vat|l10n( clean_currency ))} €</td>
+														</tr>
+                                                                                                                <tr class="totalNoIva">
+															<th colspan="7">Gastos de Envío</th>
+															<td style="font-size:10px; font-weight:normal">Se calcularán en función de dónde se realice el envío</td>
+														</tr>
+                                                                                                                <tr class="total">
+
+															<th colspan="7">TOTAL PARCIAL</th>
+															<td class="precio">{cond( is_set( $gastos_envio ), $basket.total_inc_vat|sum($gastos_envio)|l10n( clean_currency ), $basket.total_inc_vat|l10n( clean_currency ))} €</td>
+														</tr>
+                                                                                                                {/if}
+														
 													</tfoot>
 													<tbody>
 														

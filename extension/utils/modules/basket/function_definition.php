@@ -230,4 +230,12 @@ $FunctionList['nautis4_price'] = array( 'name' => 'nautis4_price',
                                                                        'type' => 'string',
                                                                        'required' => true ) )
 );
+ 
+$FunctionList['gastos_envio'] = array( 'name' => 'gastos_envio',
+										'operation_types' => array( 'read'),
+										'call_method' => array( 'class' => 'ezEflUtils',
+																'method' => 'getGastosEnvio' ),
+										'parameter_type' => 'standard',
+										'parameters' => array( )
+);
 ?>

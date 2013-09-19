@@ -426,6 +426,33 @@ class eZShopFunctions
 
         return $error;
     }
+    
+    /**
+     * Calcula gastos de envío en función de la provincia de envío escogida
+     * 
+     * @param string $provincia
+     * @param float $amount
+     * @return int;
+     */
+    static function getShippingCost( $provincia, $amount )
+    {
+        $basketINI = eZINI::instance( 'basket.ini' );
+        $provincias_zone_2 = $basketINI->variable( 'ShippingCosts', 'ProvinciasZone2' );
+        $provincias_zone_1 = $basketINI->variable( 'ShippingCosts', 'ProvinciasZone1' );
+        
+        if ( in_array( $provincia, $provincias_zone_2 ) )
+        {
+            return $basketINI->variable( 'ShippingCosts',  'CostZone2' );
+        }
+
+        if ( ( $amount > $basketINI->variable( 'ShippingCosts',  'Limit' ) ) &&
+             ( in_array( $provincia, $provincias_zone_1 ) ) )
+        {
+            return 0;
+        }
+        
+        return $basketINI->variable( 'ShippingCosts',  'CostZone1' );        
+    }
 }
 
 ?>

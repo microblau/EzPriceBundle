@@ -1,6 +1,6 @@
 <?php
 include( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $contents = eZClusterFileHandler::instance( 'var/cache/encuesta.txt' )->fetchContents();
 $unserialized_cache = unserialize( $contents );
 $encuesta = eZContentObject::fetch( $unserialized_cache['encuesta'] );

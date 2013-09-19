@@ -46,16 +46,25 @@
                                                     </tr>
                                                 </thead>
                                                 {def $basket = fetch( 'shop', 'basket')}  
-												
+							{def $order_info = fetch( 'basket', 'get_order_info', hash( 'productcollection_id', $basket.productcollection_id ))}					
                                                 <tfoot>
                                                     <tr class="totalNoIva">
                                                         <th colspan="4">TOTAL (sin IVA)</th>
 
                                                         <td>{$basket.total_ex_vat|l10n( 'clean_currency' )} €</td>
                                                     </tr>
+                                                    
                                                     <tr class="total">
-                                                        <th colspan="4">TOTAL</th>
+                                                        <th colspan="4">TOTAL COMPRA</th>
                                                         <td class="precio">{$basket.total_inc_vat|l10n( 'clean_currency' )} €</td>
+                                                    </tr>
+                                                    <tr class="total">
+                                                        <th colspan="4">GASTOS DE ENVÍO</th>
+                                                        <td class="precio">{$order_info.gastosEnvio|l10n( 'clean_currency' )} €</td>
+                                                    </tr>
+                                                     <tr class="total">
+                                                        <th colspan="4">TOTAL</th>
+                                                        <td class="precio">{$basket.total_inc_vat|sum($order_info.gastosEnvio)|l10n( 'clean_currency' )} €</td>
                                                     </tr>
                                                 </tfoot>
 
@@ -63,8 +72,8 @@
                                                 <tbody>
                                                     {def $products = fetch( 'basket', 'get_products_in_basket', hash( 'productcollection_id', $basket.productcollection_id ))}
 {def $training = fetch( 'basket', 'get_training_in_basket', hash( 'productcollection_id', $basket.productcollection_id ))}
-{def $order_info = fetch( 'basket', 'get_order_info', hash( 'productcollection_id', $basket.productcollection_id ))}
-                                                
+
+                                    
                                                     {foreach $products|sortbasketitems() as $index => $item}
 
                                                     <tr {if eq($index,0)}class="first"{/if}>

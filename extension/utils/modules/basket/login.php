@@ -305,7 +305,7 @@ if ( $loginWarning and isset( $GLOBALS['eZFailedLoginAttemptUserID'] ) )
         $userIsNotAllowedToLogin = true;
 }
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( 'login', $userLogin );
 $tpl->setVariable( 'post_data', $postData );
 $tpl->setVariable( 'password', $userPassword );

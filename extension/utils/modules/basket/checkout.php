@@ -1,6 +1,6 @@
 <?php 
 require( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $http = eZHTTPTool::instance();
 $module = $Params['Module'];
@@ -75,7 +75,7 @@ if ( $order instanceof eZOrder )
                 {
                     $Result = array();
                     require_once( "kernel/common/template.php" );
-                    $tpl = templateInit();
+                    $tpl = eZTemplate::factory();
 
                     $tpl->setVariable( 'operation_result', $operationResult );
 
@@ -112,7 +112,7 @@ if ( $order instanceof eZOrder )
                 {
                     $Result = array();
                     require_once( "kernel/common/template.php" );
-                    $tpl = templateInit();
+                    $tpl = eZTemplate::factory();
                     $tpl->setVariable( 'attempt', $attempt );
                     $tpl->setVariable( 'orderID', $orderID );
                     $Result['content'] = $tpl->fetch( "design:shop/checkoutagain.tpl" ) ;
@@ -127,7 +127,7 @@ if ( $order instanceof eZOrder )
 
                     $Result = array();
                     require_once( "kernel/common/template.php" );
-                    $tpl = templateInit();
+                    $tpl = eZTemplate::factory();
                     $tpl->setVariable ("ErrorCode", "NO_CALLBACK");
                     $tpl->setVariable ("OrderID", $orderID);
 
