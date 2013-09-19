@@ -1,14 +1,18 @@
 <?php
 require 'autoload.php';
 $cli = eZCLI::instance();
-$script = eZScript::instance( array( 'description' => ( "eZ Publish (un)clusterize\n" .
-                                                        "Script for moving var_dir files from " .
-                                                        "filesystem to database and vice versa\n" .
-                                                        "\n" .
-                                                        "./bin/php/clusterize.php" ),
-                                     'use-session'    => false,
-                                     'use-modules'    => false,
-                                     'use-extensions' => true ) );
+$script = eZScript::instance( 
+    array( 
+        'description' => ( "eZ Publish (un)clusterize\n" .
+                           "Script for moving var_dir files from " .
+                           "filesystem to database and vice versa\n" .
+                           "\n" .
+                           "./bin/php/clusterize.php" ),
+        'use-session'    => false,
+        'use-modules'    => false,
+        'use-extensions' => true 
+    ) 
+);
 
 $script->startup();
 
@@ -26,19 +30,20 @@ if ( !$user )
 eZUser::setCurrentlyLoggedInUser( $user, $userCreatorID );
 
 $nodes = eZContentObjectTreeNode::subTreeByNodeID( 
-				array( 'ClassFilterType' => 'include', 
-					   'ClassFilterArray' => array( 48, 98, 99, 100, 101, 49, 66, 61, 94 )
-				)
-, 61);
+    array( 
+        'ClassFilterType' => 'include', 
+	'ClassFilterArray' => array( 
+            48, 98, 99, 100, 101, 49, 66, 61, 94 
+        )
+    ), 61);
 
 foreach( $nodes as $node )
 {
-	$data = $node->dataMap();
-	if( $data['isbn'] )
-	{
-	//print_r( $data['isbn']->content() );
-		$cli->output( $data['isbn']->content()->attribute( 'value_without_hyphens' );
-	}
+    $data = $node->dataMap();
+    if( $data['isbn'] )
+    {
+        $cli->output( $data['isbn']->content()->attribute( 'value_without_hyphens' ) );
+    }
 }
 
 
