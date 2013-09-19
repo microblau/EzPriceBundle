@@ -44,10 +44,10 @@ ShowUsedTemplates=disabled
 SQLOutput=disabled
 
 [MailSettings]
-AdminEmail=victor.aranda@tantacom.com
+AdminEmail=clientes@efl.es
 EmailSender=
 
 [InformationCollectionSettings]
-EmailReceiver=victor.aranda@tantacom.com
+EmailReceiver=clientes@efl.es
 
 */ ?>

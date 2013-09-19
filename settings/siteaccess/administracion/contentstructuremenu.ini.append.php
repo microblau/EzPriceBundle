@@ -13,6 +13,7 @@ ShowClasses[]=subhome
 ShowClasses[]=producto
 ShowClasses[]=producto_mementix
 ShowClasses[]=producto_qmementix
+ShowClasses[]=producto_imemento
 ShowClasses[]=pagina_acceso
 ShowClasses[]=contacto
 ShowClasses[]=fechas

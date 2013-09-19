@@ -2,9 +2,9 @@
 [DatabaseSettings]
 DatabaseImplementation=ezmysqli
 Server=localhost
-User=root
-Password=pj963
-Database=lefebvre47
+User=lefebvre
+Password=lyXyv3Jq
+Database=lefebvre
 SQLOutput=disabled
 
 [DesignSettings]
@@ -34,11 +34,12 @@ ActiveExtensions[]=collectexport
 ActiveExtensions[]=novenutils
 ActiveExtensions[]=ngsuggest
 ActiveExtensions[]=twitterblock
-ActiveExtensions[]=efltwitter
+#ActiveExtensions[]=efltwitter
 ActiveExtensions[]=eflyoutube
 ActiveExtensions[]=cjw_newsletter
 ActiveExtensions[]=eflvaloraciones
 ActiveExtensions[]=googlesitemapgenerator
+ActiveExtensions[]=ez_network
 #ActiveExtensions[]=ezpaypal
 
 [Session]
@@ -74,6 +75,7 @@ ForceVirtualHost=true
 RemoveSiteAccessIfDefaultAccess=enabled
 
 HostMatchMapItems[]=eflweb;site;
+HostMatchMapItems[]=www.efl.es;newhome;
 HostMatchMapItems[]=formacion.efl.es;forma
 HostMatchMapItems[]=formacion.eflweb.local;forma
 HostMatchMapItems[]=eflweb.local;site
@@ -83,7 +85,7 @@ ShowUsedTemplates=enabled
 
 [DebugSettings]
 DebugOutput=enabled
-DebugByIP=disabled
+DebugByIP=enabled
 DebugRedirection=disabled
 DebugIPList[]
 DebugIPList[]=212.0.126.46
@@ -101,7 +103,7 @@ RedirectAfterAddToBasket=reload
 LogoutRedirect=/
 
 [SSLZoneSettings]
-SSLZones=disabled
+SSLZones=enabled
 ModuleViewAccessMode[basket/ajaxadd]=keep
 ModuleViewAccessMode[basket/csv-encuestas]=keep
 ModuleViewAccessMode[basket/mementixcheckprice]=keep
@@ -136,7 +138,7 @@ EmailSender=
 AvailableViewModes[]=embed
 AvailableViewModes[]=embed-inline
 InlineViewModes[]=embed-inline
-EmailReceiver=victor.aranda@tantacom.com
+EmailReceiver=asistenciaclientes@efl.es
 
 [SiteAccessRules]
 Rules[]=Access;disable
