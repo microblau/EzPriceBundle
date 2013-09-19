@@ -112,7 +112,8 @@ class eZShopFunctions
     */
     static function productDatatypeStringList()
     {
-        return array( 'ezprice',
+        return array( 'customezprice',
+                      'ezprice',
                       'ezmultiprice' );
     }
 
@@ -168,6 +169,7 @@ class eZShopFunctions
             $ini = eZINI::instance( 'shop.ini' );
             $currencyCode = $ini->variable( 'CurrencySettings', 'PreferredCurrency' );
         }
+
         return $currencyCode;
     }
 

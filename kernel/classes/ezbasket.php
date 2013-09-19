@@ -18,7 +18,7 @@
 
 class eZBasket extends eZPersistentObject
 {
-    /*!
+   /*!
      Controls the default value for how many items are cleaned in one batch operation.
     */
     const ITEM_LIMIT = 3000;
@@ -121,6 +121,7 @@ class eZBasket extends eZPersistentObject
                     $priceIncVAT = $price * ( 100 + $vatValue ) / 100;
                     $totalPriceExVAT = $count * $priceExVAT  * ( 100 - $discountPercent ) / 100;
                     $totalPriceIncVAT = $count * $priceIncVAT * ( 100 - $discountPercent ) / 100 ;
+    
                 }
 
                 $addedProduct = array( "id" => $id,
