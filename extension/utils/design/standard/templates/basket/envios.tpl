@@ -40,7 +40,7 @@ Configuración gastos de envío.
          <tr>
             <td>Provincias Zona 1</td>
             <td>
-                <select name="provincias_zona_1" multiple="multiple" size="20">
+                <select name="provincias_zona_1[]" multiple="multiple" size="20">
                     {foreach $provincias as $provincia}
                         <option value="{$provincia}" {if $provincias_zone_1|contains($provincia)}selected="selected"{/if}>{$provincia}</option>
                     {/foreach}
@@ -51,7 +51,7 @@ Configuración gastos de envío.
         <tr>
             <td>Provincias Zona 2</td>
             <td>
-                <select name="provincias_zona_2" multiple="multiple" size="20">
+                <select name="provincias_zona_2[]" multiple="multiple" size="20">
                     {foreach $provincias as $provincia}
                         <option value="{$provincia}" {if $provincias_zone_2|contains($provincia)}selected="selected"{/if}>{$provincia}</option>
                     {/foreach}

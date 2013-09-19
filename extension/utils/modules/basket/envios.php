@@ -1,7 +1,50 @@
 <?php
+$http = eZHTTPTool::instance();
+$basketINI = eZINI::instance( 'basket.ini' );
+
+if( $http->hasPostVariable( 'StoreChangesButton') )
+{
+    $basketINI->setVariable( 
+        'ShippingCosts', 
+        'Limit', 
+        $http->postVariable( 'shipping_cost_limit' ) 
+    );
+
+    $basketINI->setVariable( 
+        'ShippingCosts', 
+        'CostZone1', 
+        $http->postVariable( 'shipping_cost_zone1' ) 
+    );
+    
+    $basketINI->setVariable( 
+        'ShippingCosts', 
+        'CostZone2', 
+        $http->postVariable( 'shipping_cost_zone2' ) 
+    );
+
+    $basketINI->setVariable( 
+        'ShippingCosts', 
+        'ProvinciasZone1', 
+        $http->postVariable( 'provincias_zona_1' ) 
+    );
+    
+    $basketINI->setVariable( 
+        'ShippingCosts', 
+        'ProvinciasZone2', 
+        $http->postVariable( 'provincias_zona_2' ) 
+    );
+    
+    $basketINI->save( 
+        'extension/utils/settings/basket.ini',
+        false,
+        false,
+        false,
+        false
+     );
+    $basketINI->resetCache();
+}
 
 $tpl = eZTemplate::factory();
-$basketINI = eZINI::instance( 'basket.ini' );
 $tpl->setVariable( 'shipping_cost_limit', $basketINI->variable( 'ShippingCosts',  'Limit' ) );
 $tpl->setVariable( 'shipping_cost_zone1', $basketINI->variable( 'ShippingCosts',  'CostZone1' ) );
 $tpl->setVariable( 'shipping_cost_zone2', $basketINI->variable( 'ShippingCosts',  'CostZone2' ) );
