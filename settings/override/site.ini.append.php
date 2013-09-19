@@ -1,10 +1,10 @@
 <?php /* #?ini charset="utf-8"?
 [DatabaseSettings]
 DatabaseImplementation=ezmysqli
-Server=localhost
-User=lefebvre
-Password=lyXyv3Jq
-Database=lefebvre
+Server=desta01
+User=root
+Password=pj963
+Database=lefebvre47
 SQLOutput=disabled
 
 [DesignSettings]
