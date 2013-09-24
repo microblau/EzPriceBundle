@@ -1,6 +1,7 @@
 {*?template charset=utf8?*}
 {def $products = fetch( 'basket', 'get_products_in_basket', hash( 'productcollection_id', $order.productcollection_id ))}
 {def $training = fetch( 'basket', 'get_training_in_basket', hash( 'productcollection_id', $order.productcollection_id ))}
+{def $order_info = $info}
 
 <table bgcolor="#ffffff" width="100%">
     <tr>
@@ -187,12 +188,22 @@
                                                                                                         <tr>
                                                                                                             <td bgcolor="#ffffff" style="font-family:Arial, Helvetica, sans-serif; font-size:1px; line-height:1px;">&nbsp;</td>
                                                                                                             <td colspan="2" bgcolor="#ffffff" align="right" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333333;">TOTAL (sin IVA)</td>
-                                                                                                            <td colspan="2" bgcolor="#ffffff" align="right" style="font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#333333; font-weight:bold">{$order.total_ex_vat|l10n( clean_currency )} €</td>
+                                                                                                            <td colspan="2" bgcolor="#ffffff" align="right" style="font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#333333; font-weight:bold">{$basket.total_ex_vat|l10n( clean_currency )} €</td>
+                                                                                                        </tr>
+                                                                                                        <tr>
+                                                                                                            <td bgcolor="#ffffff" style="font-family:Arial, Helvetica, sans-serif; font-size:1px; line-height:1px;">&nbsp;</td>
+                                                                                                            <td colspan="2" bgcolor="#ffffff" align="right" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333333; font-weight:bold;">TOTAL PARCIAL</td>
+                                                                                                            <td colspan="2" bgcolor="#ffffff" align="right" style="font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#00674E; font-weight:bold;">{$basket.total_inc_vat|l10n( clean_currency )} €</td>
+                                                                                                        </tr>
+                                                                                                                                                                                                                <tr>
+                                                                                                            <td bgcolor="#ffffff" style="font-family:Arial, Helvetica, sans-serif; font-size:1px; line-height:1px;">&nbsp;</td>
+                                                                                                            <td colspan="2" bgcolor="#ffffff" align="right" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333333; font-weight:bold;">GASTOS ENVÍO</td>
+                                                                                                            <td colspan="2" bgcolor="#ffffff" align="right" style="font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#00674E; font-weight:bold;">{$order_info.gastosEnvio|l10n( clean_currency )} €</td>
                                                                                                         </tr>
                                                                                                         <tr>
                                                                                                             <td bgcolor="#ffffff" style="font-family:Arial, Helvetica, sans-serif; font-size:1px; line-height:1px;">&nbsp;</td>
                                                                                                             <td colspan="2" bgcolor="#ffffff" align="right" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333333; font-weight:bold;">TOTAL</td>
-                                                                                                            <td colspan="2" bgcolor="#ffffff" align="right" style="font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#00674E; font-weight:bold;">{$order.total_inc_vat|l10n( clean_currency )} €</td>
+                                                                                                            <td colspan="2" bgcolor="#ffffff" align="right" style="font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#00674E; font-weight:bold;">{$basket.total_inc_vat|sum($order_info.gastosEnvio)|l10n( clean_currency )} €</td>
                                                                                                         </tr>
                                                                                                     </tbody>
                                                                                                     
