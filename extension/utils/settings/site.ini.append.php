@@ -6,6 +6,7 @@ PolicyOmitList[]=basket/register
 PolicyOmitList[]=basket/basket
 PolicyOmitList[]=basket/payment
 PolicyOmitList[]=basket/confirmorder
+PolicyOmitList[]=basket/gastosenvio
 PolicyOmitList[]=basket/checkout
 PolicyOmitList[]=basket/outside
 PolicyOmitList[]=basket/ajaxadd

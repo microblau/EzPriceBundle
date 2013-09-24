@@ -97,7 +97,7 @@
 														</tr>
                                                                                                                 <tr class="totalNoIva">
 															<th colspan="7">Gastos de Envío</th>
-															<td style="font-size:10px; font-weight:normal">Se calcularán en función de dónde se realice el envío</td>
+															<td style="font-size:10px; font-weight:normal"><a class="ajax" href={"basket/gastosenvio"|ezurl}>Más información</a></td>
 														</tr>
                                                                                                                 <tr class="total">
 
@@ -457,6 +457,16 @@
 			
 		
 			
-{ezscript_require( array( 'jquery.fancybox-1.3.0.pack.js') )}
+{ezscript_require( array( 'jquery.fancybox-1.3.0.pack.js',  'colorbox/jquery.colorbox-min.js') )}
 {ezcss_require( array( 'jquery.fancybox-1.3.0.css') )}
+{literal}
+    <script type="text/javascript">
+    $(document).ready(function(){
+    $(".ajax").colorbox();
+    });
+    </script>
+    <style>
+       #colorbox{background-color:#fff; z-index:10000}
+    </style>
+{/literal}
 		
