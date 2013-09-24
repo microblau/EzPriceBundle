@@ -1501,7 +1501,7 @@ class eflWS
        $param1->appendChild( $doc->createCDATASection( $p_idusuario ) );      
        
        $param2 = $doc->createElement( 'param' );
-       $param2->appendChild( $doc->createCDATASection( $p_total ) );
+       $param2->appendChild( $doc->createCDATASection( number_format( $p_total, 2, '.', '' ) ) );
        
 		$param4 = $doc->createElement( 'param' );
 		$param4->appendChild( $doc->createCDATASection( $p_observaciones ) );
@@ -1569,9 +1569,9 @@ class eflWS
        
        $param18 = $doc->createElement( 'param' );
        $param18->appendChild( $doc->createCDATASection( $p_pago_num_plazos ) );
-       
+
        $param19 = $doc->createElement( 'param' );
-       $param19->appendChild( $doc->createCDATASection( $p_pago_importe1 ) );
+       $param19->appendChild( $doc->createCDATASection( number_format( $p_pago_importe1, 2, '.', '' ) ) );
 	   
 	   $param300 = $doc->createElement( 'param' );
        $param300->appendChild( $doc->createCDATASection( $idtransaccion ) );
@@ -1621,6 +1621,7 @@ class eflWS
        }         
        
        $doc->appendChild( $root ); 
+
       
        $dom = simplexml_load_file( $this->UrlWS . 'nuevaCompra?p_sParam=' . str_replace( '&', '%26', $doc->saveXML() ) );
 	
@@ -1632,8 +1633,11 @@ class eflWS
 	   {
 	   		//eZDebug::writeError( 'Envio correcto dom' );
 	   		$element = $dom->xpath( '//ns:return' );
-            
+
+
 	   		$result = simplexml_load_string( (string)$element[0] );
+
+
 	   		$errores = $result->xpath( '//error' );
 	   		if( count( $errores ) )
 	   		{

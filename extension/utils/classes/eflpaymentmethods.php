@@ -152,7 +152,6 @@ class eflPaymentMethods
 	
 	function paypal( $order_id, $importe, $aplazado = 0, $gastosEnvio )
 	{
-                print $importe;
 		$url = $this->PaymentINI->variable( 'Paypal', 'ServerName' );
 		$cgi = $this->PaymentINI->variable( 'Paypal', 'RequestURI' );
 		$business = $this->PaymentINI->variable( 'Paypal', 'Business' );
