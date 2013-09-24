@@ -287,10 +287,12 @@ $ViewList["csv-encuestas"] = array(
     "script" => "csv-encuestas.php",
     "default_navigation_part" => 'ezshopnavigationpart' );
 
-$ViewList["envios"] = array(
-    'functions' => array( 'envios' ),
-    "script" => "envios.php",
-    "default_navigation_part" => 'ezshopnavigationpart' );
+
+$ViewList["gastosenvio"] = array(
+    "script" => "gastosenvio.php",
+    "default_navigation_part" => 'ezmynavigationpart',
+    'unordered_params' => array( 'error' => 'Error' ),
+    "params" => array(  ) );
 
 $FunctionList = array();
 $FunctionList['buy'] = array( );
