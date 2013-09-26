@@ -466,7 +466,19 @@
     });
     </script>
     <style>
-       #colorbox{background-color:#fff; z-index:10000}
+       #colorbox{background-color:#fff; z-index:100000; border: 1px solid #000}
+       #colorbox div {padding:0}
+       #cboxClose {
+position: absolute;
+top: 0px;
+right: 0px;
+display: block;
+background: url(/design/newhome/images/cerrar.png) no-repeat top center;
+width: 32px;
+height: 36px;
+text-indent: -9999px;
+border: none;
+}
     </style>
 {/literal}
 		
