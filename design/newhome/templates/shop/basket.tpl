@@ -97,7 +97,7 @@
 														</tr>
                                                                                                                 <tr class="totalNoIva">
 															<th colspan="7">Gastos de Envío</th>
-															<td style="font-size:10px; font-weight:normal"><a class="ajax" href={"basket/gastosenvio"|ezurl}>Más información</a></td>
+															<td style="font-size:10px; font-weight:normal"><a style="font-size:11px" class="ajax" href={"basket/gastosenvio"|ezurl}>Más información</a></td>
 														</tr>
                                                                                                                 <tr class="total">
 
