@@ -45,11 +45,17 @@ if( $http->hasPostVariable( 'formPago' ) )
     $infoOrder = eZPersistentObject::fetchObject( eflOrders::definition(), null, array( 'productcollection_id' => $basket->attribute( 'productcollection_id') ) );
 
     $unserialized_order = unserialize($infoOrder->Order);
+$user = eZUser::currentUser();
+$email = $user->attribute( 'login' );
+
+$eflws = new eflWS();
+$existeUsuario = $eflws->existeUsuario( $email );
 
     
-    // cálculo gastos envío
-    $provincia_envio = $unserialized_order['provincia2'];
-   // inicializamos total
+ $usuario_empresa = $eflws->getUsuarioCompleto( $existeUsuario );
+    $usuario = $usuario_empresa->xpath( '//usuario' );
+    $provincia = (string)$usuario[0]->direnvio_provincia;
+      // inicializamos total
             $total = 0;
             // recorremos cesta e incrementamos total si el producto es de categoría 
             // editorial
@@ -65,7 +71,8 @@ if( $data['categoria']->content()->attribute('name') == 'Editorial' ){
    $productos_editorial++;
    }
 }
-    $gastosEnvio = eZShopFunctions::getShippingCost( $provincia_envio, $total, $productos_editorial );
+
+    $gastosEnvio = eZShopFunctions::getShippingCost( $provincia, $total, $productos_editorial );
 
     $payments = new eflPaymentMethods();
     
