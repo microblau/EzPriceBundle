@@ -6,12 +6,13 @@
 {/if}
 {/set-block}
 {set-block scope=root variable=email_sender}contacto@efl.es{/set-block}
-{append-block scope=root variable=receiver}mjizquierdo@efl.es{/append-block}
-{append-block scope=root variable=receiver}msandin@efl.es{/append-block}
-{append-block scope=root variable=receiver}gaguiar@elderecho.com{/append-block}
+{append-block scope=root variable=email_receiver}mjizquierdo@efl.es{/append-block}
+{append-block scope=root variable=email_receiver}msandin@efl.es{/append-block}
+{append-block scope=root variable=email_receiver}gaguiar@elderecho.com{/append-block}
 {append-block scope=root variable=email_cc_receivers}mourelle@efl.es{/append-block}
 {append-block scope=root variable=email_cc_receivers}iglesias@efl.es{/append-block}
 {append-block scope=root variable=email_cc_receivers}hurtado@efl.es{/append-block}
+{append-block scope=root variable=email_cc_receivers}carlos.revillo@tantacom.com{/append-block}
 CAMPOS DEL FORMULARIO:
 
 {foreach $collection.attributes as $attribute}

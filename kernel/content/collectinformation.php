@@ -270,7 +270,7 @@ if ( $Module->isCurrentAction( 'CollectInformation' ) )
             $templateResult = $tpl->fetch( 'design:content/collectedinfomail/' . $informationCollectionTemplate . '.tpl' );
 
             $subject = $tpl->variable( 'subject' );
-            $receiver = $tpl->variable( 'email_receiver' );
+            $receivers = $tpl->variable( 'email_receiver' );
             $ccReceivers = $tpl->variable( 'email_cc_receivers' );
             $bccReceivers = $tpl->variable( 'email_bcc_receivers' );
             $sender = $tpl->variable( 'email_sender' );
@@ -282,14 +282,25 @@ if ( $Module->isCurrentAction( 'CollectInformation' ) )
 
             if ( $tpl->hasVariable( 'content_type' ) )
                 $mail->setContentType( $tpl->variable( 'content_type' ) );
-
+/*
             if ( !$mail->validate( $receiver ) )
             {
                 $receiver = $ini->variable( "InformationCollectionSettings", "EmailReceiver" );
                 if ( !$receiver )
                     $receiver = $ini->variable( "MailSettings", "AdminEmail" );
             }
-            $mail->setReceiver( $receiver );
+            $mail->setReceiver( $receiver );*/
+            
+            if ( $receivers )
+            {
+                if ( !is_array( $receivers ) )
+                    $receivers = array( $receivers );
+                foreach ( $receivers as $receiver )
+                {
+                    if ( $mail->validate( $receiver ) )
+                        $mail->addReceiver( $receiver );
+                }
+            }
 
             if ( !$mail->validate( $sender ) )
             {
