@@ -15,7 +15,11 @@
 							{/if}
                         	{/foreach}                            
                             <li class="total"><span class="productoTotal">TOTAL</span><span class="precioTotal">{$basket.total_ex_vat|l10n( clean_currency )} €</span></li>
-                            {if $gastos_envio|gt(0)}
+                                                        {if $gastos_envio|eq(-1)}
+                            <li class="total"><span class="productoTotal">Envío</span><br/>
+                            <span style="display:block; text-align:right"><a class="ajax" href={"basket/gastosenvio"|ezurl}>Más información</a></span></li>
+                            
+                            {elseif $gastos_envio|gt(0)}
                             <li class="total"><span class="productoTotal">Envío</span><span class="precioTotal">{$gastos_envio|l10n( clean_currency )} €</span><br/>
                             <span style="display:block; text-align:right"><a class="ajax" href={"basket/gastosenvio"|ezurl}>Más información</a></span></li>
                             {else}

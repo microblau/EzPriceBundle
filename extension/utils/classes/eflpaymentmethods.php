@@ -103,7 +103,7 @@ class eflPaymentMethods
         
         $cad .= '<idtransaccion>' . "$idtransaccion"  . '</idtransaccion>';
         $cad .= '<moneda>978</moneda>';
-        $cad .= '<importe>' . $importe . '</importe>';
+        $cad .= '<importe>' .  $importe  . '</importe>';
         $cad .= '<urlcomercio>http://' . $_SERVER['HTTP_HOST'] . '/tpv/notification/' . $order_id . '/' . $cd_camp . '</urlcomercio>';  
         $cad .= '<idioma>es</idioma>';  
         $cad .= '<pais>ES</pais>';  

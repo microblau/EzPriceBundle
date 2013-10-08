@@ -320,15 +320,34 @@ on ezco2.id = t.contentobject_id AND ezco2.current_version = t.version';
             $basket = eZBasket::currentBasket();
             $eflws = new eflWS();
             $user = eZUser::currentUser();
+            if( $user->isLoggedIn() ){
             $email = $user->attribute( 'login' );
 
             $existeUsuario = $eflws->existeUsuario( $email );
             $usuario_empresa = $eflws->getUsuarioCompleto( $existeUsuario );
             $usuario = $usuario_empresa->xpath( '//usuario' );
             $provincia = (string)$usuario[0]->direnvio_provincia;
-            $total = $basket->attribute( 'total_ex_vat' );
-            $gastosEnvio = eZShopFunctions::getShippingCost( $provincia, $total );
+           // inicializamos total
+            $total = 0;
+            // recorremos cesta e incrementamos total si el producto es de categoría 
+            // editorial
+            // empezamos descartando los cursos
+
+            $products = tantaBasketFunctionCollection::getProductsInBasket($basket->attribute( 'productcollection_id' ) );
+$productos_editorial = 0;
+foreach( $products['result'] as $product ){
+
+$data = eZContentObject::fetch( $product['item_object']->attribute( 'contentobject' )->attribute( 'id' ) )->dataMap() ;
+if( $data['categoria']->content()->attribute('name') == 'Editorial' ){
+   $total += $product['total_price_ex_vat'];
+   $productos_editorial++;
+   }
+}
+            $gastosEnvio = eZShopFunctions::getShippingCost( $provincia, $total, $productos_editorial++ );
             return array( 'result' => $gastosEnvio );
+            }
+            else return array( 'result' => -1 );
+    
         }
 }
 ?>

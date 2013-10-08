@@ -434,8 +434,11 @@ class eZShopFunctions
      * @param float $amount
      * @return int;
      */
-    static function getShippingCost( $provincia, $amount )
+    static function getShippingCost( $provincia, $amount, $productos_editorial = 0 )
     {
+        if( $productos_editorial == 0 ){
+            return 0;
+        }
         $basketINI = eZINI::instance( 'basket.ini' );
         $provincias_zone_2 = $basketINI->variable( 'ShippingCosts', 'ProvinciasZone2' );
         $provincias_zone_1 = $basketINI->variable( 'ShippingCosts', 'ProvinciasZone1' );

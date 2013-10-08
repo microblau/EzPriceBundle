@@ -69,7 +69,7 @@ ExtensionAutoloadPath[]=utils
 
 [EFLSettings]
 FormationSubdomain=formacion.efl.es
-WWWSubdomain=local.efl
+WWWSubdomain=www.efl.es
 #WWWSubdomain=www.testefl.es
 
 [Cache]
