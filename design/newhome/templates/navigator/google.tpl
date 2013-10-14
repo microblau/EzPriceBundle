@@ -36,7 +36,9 @@
 
      {switch match=$:item_previous|lt(0) }
        {case match=0}
-      <li class="prev"><a href={concat($page_uri,$:item_previous|gt(0)|choose('',concat($:offset_text,$:item_previous)),$:view_parameter_text,$page_uri_suffix)|ezurl}>{"Previous"|i18n("design/standard/navigator")}</a></li>
+           {def $previous_page_url = concat($page_uri,$:item_previous|gt(0)|choose('',concat($:offset_text,$:item_previous)),$:view_parameter_text,$page_uri_suffix)}
+           {ezpagedata_set( 'previous_page', $previous_page_url|ezurl() )}
+      <li class="prev"><a href={$previous_page_url|ezurl}>{"Previous"|i18n("design/standard/navigator")}</a></li>
        {/case}
        {case match=1}
        {/case}
@@ -75,7 +77,9 @@
 
 	{switch match=$:item_next|lt($item_count)}
       {case match=1}
-        <li class="next"><a href={concat($page_uri,$:offset_text,$:item_next,$:view_parameter_text,$page_uri_suffix)|ezurl}>{"Next"|i18n("design/standard/navigator")}</a></li>
+        {def $next_page_url = concat($page_uri,$:offset_text,$:item_next,$:view_parameter_text,$page_uri_suffix)}
+        {ezpagedata_set( 'next_page', $next_page_url|ezurl() )}
+        <li class="next"><a href={$next_page_url|ezurl}>{"Next"|i18n("design/standard/navigator")}</a></li>
       {/case}
       {case}
       {/case}
