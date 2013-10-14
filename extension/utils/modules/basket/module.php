@@ -297,6 +297,7 @@ $ViewList["gastosenvio"] = array(
     "default_navigation_part" => 'ezmynavigationpart',
     'unordered_params' => array( 'error' => 'Error' ),
     "params" => array(  ) );
+    
 
 $FunctionList = array();
 $FunctionList['buy'] = array( );
