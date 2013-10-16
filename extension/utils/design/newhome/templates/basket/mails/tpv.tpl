@@ -1,6 +1,7 @@
 {*?template charset=utf8?*}
 {def $products = fetch( 'basket', 'get_products_in_basket', hash( 'productcollection_id', $order.productcollection_id ))}
 {def $training = fetch( 'basket', 'get_training_in_basket', hash( 'productcollection_id', $order.productcollection_id ))}
+{def $order_info = $info}
 
 <table bgcolor="#ffffff" width="100%">
     <tr>
