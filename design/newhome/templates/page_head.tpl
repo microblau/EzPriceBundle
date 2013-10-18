@@ -45,10 +45,15 @@
     <meta name="{$key|wash}" content="{$item|wash}" />
     {/foreach}
     
-    {if is_set( $pagedata.persistent_variable.previous_page )}
+    {def $canonical=false}
+    {if or( is_set( $module_result.view_parameters.offset ), is_set( $module_result.view_parameters.mode ) )}
+            {set $canonical = true} 
+    {/if}
+    {if $canonical}
+        <link rel="canonical" href="http://{ezsys( 'hostname' )}/{$requested_uri_string}" />
+    {/if}{if is_set( $pagedata.persistent_variable.previous_page )}
           <link rel="prev" href={$pagedata.persistent_variable.previous_page} />
-    {/if} 
-    {if is_set( $pagedata.persistent_variable.next_page )}     
+    {/if}{if is_set( $pagedata.persistent_variable.next_page )}     
         <link rel="next" href={$pagedata.persistent_variable.next_page} />
     {/if} 
     {*
