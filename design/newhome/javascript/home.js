@@ -15,6 +15,7 @@ literal["modActualidad"] = [];
 	literal["modActualidad"][0] = "El campo 'Email' es obligatorio|";	
 	literal["modActualidad"][1] = "El formato del campo 'Email' no es correcto|";
 	literal["modActualidad"][2] = "El campo 'Tema de la alerta' es obligatorio|";
+        literal["modActualidad"][3] = "Debe aceptar la política de privacidad y el aviso legal|";
 	
 literal["modBoletin"] = [];	
 	literal["modBoletin"][0] = "El campo 'Email' es obligatorio|";	
@@ -90,7 +91,7 @@ var formsValidationsHome = {
 		     parent.addClass("error");
                 }
                 
-                aux = f.find("select#sepro");
+          
 		parent = aux.parent();		
 			alert(aux.val());									
 		if(aux.val() == ""){		
@@ -134,6 +135,12 @@ var formsValidationsHome = {
 		
 		if(aux.val() == -1){		
 			errorTxt += literal["modActualidad"][2];			
+			parent.addClass("error");
+		}else parent.removeClass("error");
+                
+                parent = f.find(".check");	
+		if(!f.find(":checkbox").is(":checked")){
+			errorTxt += literal["modActualidad"][3];			
 			parent.addClass("error");
 		}else parent.removeClass("error");
 		
