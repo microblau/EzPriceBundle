@@ -494,9 +494,12 @@ select#prodQI, select#prodQI option{
  margin-bottom: 10px;
 }
 
-#formPrueba label, #frm_tryImemento label{
+#formPrueba label, #frm_tryImemento label, #modMemGrat label{
     white-space:normal
 }
 #datosUsuario form .datos li.condiciones label{
     width:auto;
+}
+#modMemGrat a{
+    text-decoration:underline;
 }

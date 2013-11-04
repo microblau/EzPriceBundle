@@ -47,6 +47,9 @@
 
 										</select>
 									</li>
+                                                                        <li>
+                                                                            <label class="check" for="juridicas_legal"> <input type="checkbox" id="juridicas_legal" name="ContentObjectAttribute_data_boolean_243194" /> He leído y acepto las condiciones de la <a class="lb" style="white-space: normal" id="politicaligthBox" href={'lightbox/ver/19526'|ezurl}>Política de Privacidad</a> y el <a class="lb" id="avisoLightbox" href={'lightbox/ver/292'|ezurl}>Aviso Legal</a></label>
+                                                                        </li>
 								</ul>
                                    <input type="hidden" value="" name="uri"  id="uri"/>
                                 <input type="hidden" name="loc" value="es_ES"/>
