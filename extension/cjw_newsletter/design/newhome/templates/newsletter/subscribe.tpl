@@ -19,6 +19,8 @@ var google_conversion_value = 0;
 </div>
 </noscript>
         {/literal}      
+        {ezcss_require( 'jquery.fancybox-1.3.0.css')} 
+
 				<div class="columnType1">
 					<div id="modType2">
 
@@ -264,7 +266,7 @@ var google_conversion_value = 0;
             {*acepto condiciones*}
                <li class="condiciones" >
                     <label for="condiciones" {if is_set( $Acepto)}class="error"{/if}>
-                    <input name="Acepto" type="checkbox"> Acepto las condiciones legales *
+                    <input name="Acepto" type="checkbox"> He leído y acepto las condiciones de la <a class="lb" id="politicaligthBox" href={'lightbox/ver/19526'|ezurl}>Política de Privacidad</a> y el <a class="lb" id="avisoLightbox" href={'lightbox/ver/292'|ezurl}>Aviso Legal</a>
                      </label>
                             <div>                                                    		
                                     {fetch('content', 'node', hash( 'node_id', 1451)).data_map.texto.content.output.output_text}
