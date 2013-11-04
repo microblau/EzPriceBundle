@@ -493,3 +493,10 @@ select#prodQI, select#prodQI option{
  width: 200px;
  margin-bottom: 10px;
 }
+
+#formPrueba label, #frm_tryImemento label{
+    white-space:normal
+}
+#datosUsuario form .datos li.condiciones label{
+    width:auto;
+}

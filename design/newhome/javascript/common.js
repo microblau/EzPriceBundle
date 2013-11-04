@@ -2607,6 +2607,18 @@ var lightbox = {
 		});
 	
 	},
+        links: function(){
+            var links = $("a.lb");
+            for( var i=0; i<links.length;i++){
+              
+            $(links[i]).fancybox({
+			'width':568, 
+			'height':512,
+			'padding':0,
+			'type':'iframe'
+		});
+            }
+        },
     vervideo:function(){
         var enlace = $("#video");
         $(enlace).fancybox({
@@ -3134,6 +3146,8 @@ jQuery(document).ready(function() {
 	if($("#home_recursos #gridHome1 .listadoProfundidad #inscribirme").length != 0) {	
 		lightbox.inscribirme();
 	}
+        
+        lightbox.links()
 	
     if( $("#video").length != 0 ) {
         lightbox.vervideo();

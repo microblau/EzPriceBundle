@@ -161,7 +161,7 @@
 
 									
 							
-									<label class="check" for="legal"> <input type="checkbox"id="legal" name="ContentObjectAttribute_data_boolean_244860" /> Acepto las <a id="condicionesligthBox" href={'lightbox/ver/1451'|ezurl}>condiciones legales</a></label>
+									<label class="check" for="legal"> <input type="checkbox"id="legal" name="ContentObjectAttribute_data_boolean_244860" /> He leído y acepto las condiciones de la <a class="lb" style="white-space: normal" id="politicaligthBox" href={'lightbox/ver/19526'|ezurl}>Política de Privacidad</a> y el <a class="lb" id="avisoLightbox" href={'lightbox/ver/292'|ezurl}>Aviso Legal</a></label>
 								
 							<input name="ActionCollectInformation" type="submit" value="Enviar solicitud" id="trySend" />
 	{def $currentusuario = fetch( 'user', 'current_user') }				
