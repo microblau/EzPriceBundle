@@ -93,7 +93,7 @@ var formsValidationsHome = {
                 
           
 		parent = aux.parent();		
-			alert(aux.val());									
+												
 		if(aux.val() == ""){		
 			
                     errorTxt += literal["modGratis"][6];
