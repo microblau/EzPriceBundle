@@ -410,6 +410,12 @@ else
 		{
 			$errors['condiciones'] = 'Debe aceptar las condiciones legales';
 		}
+                
+                if( !$http->hasPostVariable( 'avisolegal') )
+		{
+			$errors['avisolegal'] = 'Debe aceptar la política de privacidad y el aviso legal';
+		}
+		
 		
 		$tpl->setVariable( 'observaciones', $http->postVariable( 'observaciones' ) );
 		$order['observaciones'] = $http->postVariable( 'observaciones' );

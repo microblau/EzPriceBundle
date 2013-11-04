@@ -1,6 +1,6 @@
 
 
-        
+        {ezcss_require( 'jquery.fancybox-1.3.0.css')} 
             
         
             <div id="gridTwoColumnsTypeB" class="clearFix">
@@ -311,8 +311,12 @@
                                                         </div>
                                                     </li> *}
                                                     
+                                                    <li style="margin-left:250px">
+                                                        <label style="white-space: normal" for="avisolegal"><input type="checkbox" id="avisolegal" name="avisolegal" /> He leído y acepto las condiciones de la <a class="lb" style="white-space: normal" id="politicaligthBox" href={'lightbox/ver/19526'|ezurl}>Política de Privacidad</a> y el <a class="lb" id="avisoLightbox" href={'lightbox/ver/292'|ezurl}>Aviso Legal</a></label>                                                       
+                                                    </li>
+                                                    
                                                     <li class="condiciones">
-                                                        <label for="condiciones"><input type="checkbox" id="condiciones" name="condiciones" /> Acepto las condiciones</label>
+                                                        <label for="condiciones"><input type="checkbox" id="condiciones" name="condiciones" /> Acepto las condiciones de contratación</label>
                                                         <div>                                                           
                                                             {fetch('content', 'node', hash( 'node_id', 1321)).data_map.texto.content.output.output_text}
                                                         </div>
