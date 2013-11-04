@@ -6,7 +6,9 @@ literal["modGratis"] = [];
 	literal["modGratis"][2] = "El campo 'Su teléfono' es obligatorio|";	
 	literal["modGratis"][3] = "El formato del campo 'Su teléfono' no es correcto|";	
 	literal["modGratis"][4] = "El formato del campo 'Email' no es correcto|";
-	literal["modGratis"][5] = "Debe aceptar las condiciones legales|";
+	literal["modGratis"][5] = "Debe aceptar la política de privacidad y el aviso legal|";
+        literal["modGratis"][6] = "Debe seleccionar un producto|";
+        literal["modGratis"][7] = "El campo 'E-mail' es obligatorio|";
 	
 
 literal["modActualidad"] = [];	
@@ -83,6 +85,20 @@ var formsValidationsHome = {
 				parent.addClass("error");
 			}else parent.removeClass("error");
 		}
+                else{
+                    errorTxt += literal["modGratis"][7];
+		     parent.addClass("error");
+                }
+                
+                aux = f.find("select#sepro");
+		parent = aux.parent();		
+			alert(aux.val());									
+		if(aux.val() == ""){		
+			
+                    errorTxt += literal["modGratis"][6];
+		     parent.addClass("error");
+                }
+                
 		
 		parent = f.find(".acepto");	
 		if(!f.find(":checkbox").is(":checked")){
