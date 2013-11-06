@@ -268,9 +268,7 @@ var google_conversion_value = 0;
                     <label for="condiciones" {if is_set( $Acepto)}class="error"{/if}>
                     <input name="Acepto" type="checkbox"> He leído y acepto las condiciones de la <a class="lb" id="politicaligthBox" href={'lightbox/ver/19526'|ezurl}>Política de Privacidad</a> y el <a class="lb" id="avisoLightbox" href={'lightbox/ver/292'|ezurl}>Aviso Legal</a>
                      </label>
-                            <div>                                                    		
-                                    {fetch('content', 'node', hash( 'node_id', 1451)).data_map.texto.content.output.output_text}
-                            </div>
+                           
                </li>
             {*fin acepto condiciones*}
 
