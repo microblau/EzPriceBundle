@@ -562,6 +562,11 @@ elseif ( $http->hasPostVariable( 'BtnRegisterParticular' ) )
 	
 	$tpl->setVariable( 'observaciones', $http->postVariable( 'observaciones' ) );
 	$order['observaciones'] = $http->postVariable( 'observaciones' );
+        
+        if( !( $http->hasPostVariable( 'condiciones' ) ) )
+	{
+            $errors['condiciones'] = 'Debe aceptar las condiciones de contratación';
+        }
 	
 	if( count( $errors) )
 	{
@@ -1022,6 +1027,11 @@ elseif ( $http->hasPostVariable( 'BtnRegisterEmpresa' ) )
 	$tpl->setVariable( 'observaciones', $http->postVariable( 'observaciones' ) );
 	$order['observaciones'] = $http->postVariable( 'observaciones' );
 	
+        if( !( $http->hasPostVariable( 'condiciones' ) ) )
+	{
+            $errors['condiciones'] = 'Debe aceptar las condiciones de contratación';
+        }
+        
 	if( count( $errors) )
 	{
 		$tpl->setVariable( 'errors', $errors );
@@ -1243,10 +1253,10 @@ elseif( $http->hasPostVariable( 'BtnRegisterOutside') )
 	$tpl->setVariable( 'observaciones', $http->postVariable( 'observaciones' ) );
 	$order['observaciones'] = $http->postVariable( 'observaciones' );
 	
-	/*if( !$http->hasPostVariable( 'condiciones') )
+	if( !$http->hasPostVariable( 'condiciones') )
 	{
 		$errors['condiciones'] = 'Debe aceptar las condiciones legales';
-	}*/
+	}
 	
 	if( count( $errors) )
 	{

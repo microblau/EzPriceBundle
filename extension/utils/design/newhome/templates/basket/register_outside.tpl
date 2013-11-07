@@ -95,6 +95,14 @@
                                                     	<label for="observaciones">Observaciones</label>
                                                         <textarea id="observaciones" name="observaciones" class="text" rows="5" cols="5">{$observaciones}</textarea>
                                                     </li>
+                                                    
+                                                   <li class="condiciones">
+                                                    	<label for="condiciones" {if is_set( $errors['condiciones'] )}class="error"{/if}><input type="checkbox" id="condiciones" name="condiciones" /> Acepto las condiciones de contratación</label>
+                                                    	<div>                                                    		
+                                                    		{fetch('content', 'node', hash( 'node_id', 1321)).data_map.texto.content.output.output_text}
+                                                    	</div>
+
+                                                    </li>
                                                     {*<li class="condiciones">
 
                                                     	<label for="condiciones"><input type="checkbox" id="condiciones" name="condiciones" /> Acepto las condiciones</label>
