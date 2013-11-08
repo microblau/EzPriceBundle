@@ -609,7 +609,7 @@ span.searchTerm	{ display: block; margin-top:21px; padding: 6px 30px; border-top
 	#datosUsuario select.halfbox {width: 48%} 
 	#datosUsuario .ebook select { width:247px}
 	#datosUsuario img { margin-left:146px;}
-	#datosUsuario #datosUsuarioColectivo { margin-left:0;}
+	#datosUsuario #datosUsuarioColectivo img { margin-left:0;}
 	#datosUsuario fieldset legend  {display: block; visibility: visible;   }
 		#datosUsuario form .datos li legend span { position: absolute; margin-left: 0  }
 		#datosUsuario fieldset ul { margin-left: 115px  }
