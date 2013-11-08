@@ -494,6 +494,7 @@ select#prodQI{
  width: 249px;
  margin-bottom: 10px;
 }
+select#prodQI option {  width: 240px;}
 
 #formPrueba label, #frm_tryImemento label, #modMemGrat label{
     white-space:normal
