@@ -3,7 +3,7 @@
 .clearFix, .instruccionesTransferencia, .fichas .columnType1 #modFichasPrecio ul li, #producttext .cursoDet .column2 #modVentajas li, #cestaPaso1 #gridType3 .inner ul.ezsr-star-rating, .formacion ul li, #navBar li.buscador #buscadorSimple, #navBar li.buscador, #modActum, #tabsNov { zoom:1}
 
 #navBar ul ul { height: auto  }
-#wrapSections li, .modTambien #modCatalogo li, #modResultados form ul li, #modPuedes ul li, #modNovedades .carrousel ul li, #modNovedades .noCar ul li, #modNovedades .consulta ul li { display: inline; }
+#wrapSections li, .modTambien #modCatalogo li, #modResultados form ul li, #modPuedes ul li, #modNovedades .carrousel ul li, #modNovedades .noCar ul li, #modNovedades .consulta ul li, #datosUsuario .volver, #datosUsuario .submit { display: inline; }
 
 #home .btn { padding:3px 10px 4px}
 	#home .btn .cL { top:12px}
