@@ -600,13 +600,16 @@ span.searchTerm	{ display: block; margin-top:21px; padding: 6px 30px; border-top
 			#datosUsuario form .datos li label {float:left; width:132px; /*width:200px;*/ margin-right:7px; text-align:left; white-space:normal;}					
 			#datosUsuario form .datos li span { margin-left:10px}
 				#datosUsuario form .datos li span.select-box { margin-left:0  }
-#datosUsuario .clearFix { width: 155px; margin-left: 315px; margin-top: 10px  }			
-	#datosUsuario .volver { float:left; margin-right: 20px; padding-top: 3px }
+#datosUsuario .clearFix { margin-top: 10px; text-align:center;  }			
+	#datosUsuario .volver { display:inline-block; vertical-align:middle; margin-right: 20px; padding-top: 3px }
 		#datosUsuario .volver a { background-position:0 2px}
-	#datosUsuario .submit { float:right;  }
+	#datosUsuario .submit { display:inline-block; vertical-align:middle;  }
 	#datosUsuario input.text { width: 146px !important;}
 	#datosUsuario select { width: 148px}
 	#datosUsuario select.halfbox {width: 48%} 
+	#datosUsuario .ebook select { width:247px}
+	#datosUsuario img { margin-left:146px;}
+	#datosUsuario #datosUsuarioColectivo { margin-left:0;}
 	#datosUsuario fieldset legend  {display: block; visibility: visible;   }
 		#datosUsuario form .datos li legend span { position: absolute; margin-left: 0  }
 		#datosUsuario fieldset ul { margin-left: 115px  }
