@@ -490,7 +490,7 @@ background-image:url("../images/bullet_fichas.gif");
     margin-left:0;
 }
 
-select#prodQI, select#prodQI option{
+select#prodQI{
  width: 249px;
  margin-bottom: 10px;
 }
