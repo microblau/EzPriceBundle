@@ -186,6 +186,7 @@ div.object-left
 
 #header li
 {
+
 	color: #D9EFFF;
 }
 
@@ -499,6 +500,7 @@ select#prodQI, select#prodQI option{
 }
 #datosUsuario form .datos li.condiciones label{
     width:auto;
+	margin:1.5em 0;
 }
 #modMemGrat a{
     text-decoration:underline;

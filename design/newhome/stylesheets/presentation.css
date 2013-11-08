@@ -597,14 +597,14 @@ span.searchTerm	{ display: block; margin-top:21px; padding: 6px 30px; border-top
 	#datosUsuario h2 { border-bottom:1px solid #c6e7ff; margin-bottom:20px; padding-bottom:5px}			
 	#datosUsuario form ul.datos { width:530px; /*width: 476px;*/ margin:0; padding:0 0 0 130px; /*padding:0 0 0 160px*/}
 		#datosUsuario form .datos li { width:auto}
-			#datosUsuario form .datos li label {float:left; width:200px; /*width:121px;*/ margin-right:7px; text-align:right; white-space:normal;}					
+			#datosUsuario form .datos li label {float:left; width:132px; /*width:200px;*/ margin-right:7px; text-align:left; white-space:normal;}					
 			#datosUsuario form .datos li span { margin-left:10px}
 				#datosUsuario form .datos li span.select-box { margin-left:0  }
 #datosUsuario .clearFix { width: 155px; margin-left: 315px; margin-top: 10px  }			
 	#datosUsuario .volver { float:left; margin-right: 20px; padding-top: 3px }
 		#datosUsuario .volver a { background-position:0 2px}
 	#datosUsuario .submit { float:right;  }
-	#datosUsuario input.text { width: 120px !important;}
+	#datosUsuario input.text { width: 146px !important;}
 	#datosUsuario select { width: 148px}
 	#datosUsuario select.halfbox {width: 48%} 
 	#datosUsuario fieldset legend  {display: block; visibility: visible;   }
