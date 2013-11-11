@@ -143,7 +143,7 @@ var google_conversion_value = 0;
                                                     <li>
 														<label for="capchar" {if is_set( $errors.captchar)}class="error"{/if}>Introduzca los caracteres que visualiza en la imagen inferior *:</label>
 														<input type="text" id="eZHumanCAPTCHACode" name="eZHumanCAPTCHACode" class="text" value="" />
-														<br><br><br>
+														<br><br>
 															<img src={ezhumancaptcha_image()|ezroot()} alt="eZHumanCAPTCHA" />
 														<br><br/>
 													</li>                                           

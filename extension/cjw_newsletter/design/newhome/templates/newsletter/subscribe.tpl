@@ -286,7 +286,7 @@ var google_conversion_value = 0;
 
             {*fin captcha*}            
 
-            <li>
+            <li class="clearFix">
                 <input type="hidden" name="BackUrlInput" value="{cond( ezhttp_hasvariable('BackUrlInput'), ezhttp('BackUrlInput'), 'newsletter/subscribe'|ezurl('no'))}" />
               
                <span class="volver"><a href={"Colectivos"|ezurl}>Volver</a></span>
