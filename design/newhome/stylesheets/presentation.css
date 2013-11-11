@@ -617,8 +617,8 @@ span.searchTerm	{ display: block; margin-top:21px; padding: 6px 30px; border-top
 	#datosUsuario fieldset input { vertical-align: middle  }
 
 .formulario .datos { width: 476px; margin:0; padding:0 0 0 160px}
-		.formulario .datos li { width:auto}
-			.formulario .datos li label, .formulario .datos li .etiqueta {float:left; width:115px; margin-right:7px; text-align:right}					
+		.formulario .datos li { width:auto; margin-left:0 !important;}
+			.formulario .datos li label, .formulario .datos li .etiqueta {float:left; width:115px; margin-right:7px; text-align:left}					
 			.formulario .datos li span { margin-left:10px}
 				.formulario .datos li .etiqueta { margin-left: 0  }
 			.formulario li select { width:146px  }
@@ -635,11 +635,11 @@ span.searchTerm	{ display: block; margin-top:21px; padding: 6px 30px; border-top
 
 	#datosFacturacion .camposObligatorios { position: absolute; right: 10px; top: -35px  }	
 	#datosFacturacion h2 { border-bottom:1px solid #c6e7ff; margin-bottom:20px; padding-bottom:5px}			
-	#datosFacturacion .datos { width:599px; padding-left: 37px  }
-		#datosFacturacion form.empresa .datos { width: 660px  }
+	#datosFacturacion .datos { width:599px; padding-left:130px  }
+		#datosFacturacion form.empresa .datos { width: auto;  }
 		#datosFacturacion form.contactoEmpresa .datos { width: 697px; padding-left: 0  }
-	#datosFacturacion label, #datosFacturacion .etiqueta { width:149px  }
-	#datosFacturacion form.empresa label, #datosFacturacion form.empresa .etiqueta { width:234px  }
+	#datosFacturacion label, #datosFacturacion .etiqueta { width:149px; white-space:normal;  }
+	#datosFacturacion form.empresa label, #datosFacturacion form.empresa .etiqueta { width:132px  }
 	#datosFacturacion form.contactoEmpresa label, #datosFacturacion form.contactoEmpresa .etiqueta { width:262px  }
 	#datosFacturacion #empresa { width:344px  }
 		#datosFacturacion form.empresa #empresa { width: 300px  }
@@ -656,7 +656,7 @@ span.searchTerm	{ display: block; margin-top:21px; padding: 6px 30px; border-top
 	#datosFacturacion .submit { float:right;  }
 	#datosFacturacion input.text { width: 120px   }
 	#datosFacturacion .condiciones label { margin-left: 158px  }
-	#datosFacturacion .condiciones div { margin-left: 162px; margin-top: 6px  }
+	#datosFacturacion .condiciones div { margin-top: 6px  }
 	
 		#datosFacturacion .empresa .condiciones div{ margin-left: 250px  }
 		
@@ -664,13 +664,13 @@ span.searchTerm	{ display: block; margin-top:21px; padding: 6px 30px; border-top
 
 	#datosFacturacion .direccion fieldset { margin-bottom: 0  }
 	#datosFacturacion .direccion legend  {display: block; visibility: visible;   }
-		#datosFacturacion form .datos li.direccion legend span { position: absolute; display: block; width: 148px; margin-left: 0; padding-top: 3px; text-align: right  }						
-		#datosFacturacion form.empresa .datos li.direccion legend span { width:236px  }
+		#datosFacturacion form .datos li.direccion legend span { position: absolute; display: block; width: 148px; margin-left: 0; padding-top: 3px; text-align:left;  }						
+		#datosFacturacion form.empresa .datos li.direccion legend span { width:132px  }
 		
 		#datosFacturacion form.contactoEmpresa .datos li.direccion legend span { width:263px  }
 		
 		#datosFacturacion .direccion div { padding-left: 162px  }
-			#datosFacturacion form.empresa .direccion div { padding-left:247px  }
+			#datosFacturacion form.empresa .direccion div { padding-left:145px  }
 			#datosFacturacion form.contactoEmpresa .direccion div { padding-left:275px  }			
 	#datosFacturacion form .datos li.direccion fieldset label, #datosFacturacion form .datos li.direccion fieldset input { float:none; text-align: left; width:auto; margin-right:0  }
 	#datosFacturacion .direccion input, #datosFacturacion .direccion select { vertical-align: middle  }
