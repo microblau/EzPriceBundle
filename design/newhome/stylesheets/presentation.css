@@ -637,6 +637,8 @@ span.searchTerm	{ display: block; margin-top:21px; padding: 6px 30px; border-top
 	#datosFacturacion h2 { border-bottom:1px solid #c6e7ff; margin-bottom:20px; padding-bottom:5px}			
 	#datosFacturacion .datos { width:599px; padding-left:130px  }
 		#datosFacturacion form.empresa .datos { width: auto;  }
+	#datosFacturacion .datos li.condiciones { margin-top:15px;}
+	#datosFacturacion .datos li.condiciones { margin-bottom:15px;}
 		#datosFacturacion form.contactoEmpresa .datos { width: 697px; padding-left: 0  }
 	#datosFacturacion label, #datosFacturacion .etiqueta { width:149px; white-space:normal;  }
 	#datosFacturacion form.empresa label, #datosFacturacion form.empresa .etiqueta { width:132px  }
@@ -648,17 +650,17 @@ span.searchTerm	{ display: block; margin-top:21px; padding: 6px 30px; border-top
 		#datosFacturacion fieldset label { display: inline; width: auto; padding-right: 20px  }
 		#datosFacturacion fieldset input { vertical-align: middle  }
 	
-#datosFacturacion .clearFix { width: 155px; margin-left: 218px; margin-top: 10px  }			
-	#datosFacturacion .empresa .clearFix  { margin-left: 305px;  }
+#datosFacturacion .clearFix { margin-top: 20px; text-align:center;  }			
 	#datosFacturacion .contactoEmpresa .clearFix  { margin-left: 295px;  }
 	#datosFacturacion .volver { float:left; margin-right: 20px; padding-top: 3px }
 		#datosFacturacion .volver a { background-position:0 2px}
-	#datosFacturacion .submit { float:right;  }
+	/*#datosFacturacion .submit { float:right;  }*/
 	#datosFacturacion input.text { width: 120px   }
-	#datosFacturacion .condiciones label { margin-left: 158px  }
+	/*#datosFacturacion .condiciones label { margin-left: 158px  }*/
+	#datosFacturacion form.empresa  .condiciones label { width:auto;}
 	#datosFacturacion .condiciones div { margin-top: 6px  }
 	
-		#datosFacturacion .empresa .condiciones div{ margin-left: 250px  }
+		/*#datosFacturacion .empresa .condiciones div{ margin-left: 250px  }*/
 		
 		#datosFacturacion .contactoEmpresa .condiciones div { margin-left: 275px  }
 
@@ -726,10 +728,9 @@ span.searchTerm	{ display: block; margin-top:21px; padding: 6px 30px; border-top
 		#datosPago td { padding: 2px 5px  }
 			#datosPago tfoot td {padding-top: 9px; border-top: 1px solid #C0C0C0  }
 	
-	#datosPago .clearFix { width: 155px; margin-left: 218px; margin-top: 10px  }			
+	#datosPago .clearFix { margin-top: 10px; text-align:center;  }			
 	#datosPago .volver { float:left; margin-right: 20px; padding-top: 3px }
 		#datosPago .volver a { background-position:0 2px}
-	#datosPago .submit { float:right;  }
 	
 	#datosPago table { padding-top: 20px; border: 0; clear: both }
 	
