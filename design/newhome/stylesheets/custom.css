@@ -490,11 +490,20 @@ background-image:url("../images/bullet_fichas.gif");
     margin-left:0;
 }
 
+
+
 select#prodQI{
  width: 249px;
  margin-bottom: 10px;
 }
+
+#iMementoDest select#prodQI{
+ width: 200px;
+ margin-bottom: 10px;
+}
+
 select#prodQI option {  width: 240px;}
+#iMementoDest select#prodQI option {  width: 190px;}
 
 #formPrueba label, #frm_tryImemento label, #modMemGrat label{
     white-space:normal
