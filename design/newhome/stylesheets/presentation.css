@@ -636,7 +636,7 @@ span.searchTerm	{ display: block; margin-top:21px; padding: 6px 30px; border-top
 	#datosFacturacion .camposObligatorios { position: absolute; right: 10px; top: -35px  }	
 	#datosFacturacion h2 { border-bottom:1px solid #c6e7ff; margin-bottom:20px; padding-bottom:5px}			
 	#datosFacturacion .datos { width:599px; padding-left:130px  }
-		#datosFacturacion form.empresa .datos { width: auto;  }
+		#datosFacturacion form.empresa .datos, #datosFacturacion .datos li.reset, .formulario .datos li.reset { width: auto;  }
 	#datosFacturacion .datos li.condiciones { margin-top:15px;}
 	#datosFacturacion .datos li.condiciones { margin-bottom:15px;}
 		#datosFacturacion form.contactoEmpresa .datos { width: 697px; padding-left: 0  }
