@@ -306,7 +306,7 @@
                                                     	<label for="observaciones">Observaciones</label>
                                                         <textarea id="observaciones" name="observaciones" class="text" rows="5" cols="5">{$observaciones}</textarea>
                                                     </li>
-                                                     <li style="margin-left:250px">
+                                                     <li style="margin-left:250px"  class="reset">
                                                         <label style="white-space: normal" for="avisolegal"><input type="checkbox" id="avisolegal" name="avisolegal" /> He leído y acepto las condiciones de la <a class="lb" style="white-space: normal" id="politicaligthBox" href={'lightbox/ver/19526'|ezurl}>Política de Privacidad</a> y el <a class="lb" id="avisoLightbox" href={'lightbox/ver/292'|ezurl}>Aviso Legal</a> *</label>                                                       
                                                     </li>
                                                     <li class="condiciones">
