@@ -13,5 +13,18 @@ Disallow: /support/
 Disallow: /schemas/
 Disallow: /extension/
 Disallow: /auxiliar/
+Disallow: /acceso-abonados
+Disallow: /acceso-portal-soluciones-memento
+Disallow: /agentes
+Disallow: /aviso-legal
+Disallow: /basket/
+Disallow: /content/
+Disallow: /colectivos/
+Disallow: /design/
+Disallow: /ezjscore/
+Disallow: /fechas-de-edicion
+Disallow: /lightbox/
+Disallow: /newsletter/
+Disallow: /producto/
+Disallow: /recursospsm
 sitemap: /sitemap.xml
-
