@@ -497,9 +497,13 @@ select#prodQI{
  margin-bottom: 10px;
 }
 
-#iMementoDest select#prodQI{
+#iMementoDest select#prodQI, {
  width: 200px;
  margin-bottom: 10px;
+}
+
+#iMementoDest .tryPromo {
+    width:auto !important;
 }
 
 select#prodQI option {  width: 240px;}
