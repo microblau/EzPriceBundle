@@ -153,17 +153,9 @@
 
                                                     </li>
 
-							<li>
-								<label for="capchar" {if is_set( $error_captchar)}class="error"{/if}>Introduzca los caracteres que visualiza en la imagen inferior *:</label><br>
-<div>
-<input class="box" type="text" size="4" name="eZHumanCAPTCHACode" value="" />
-</div>
-<br>
-<img src={ezhumancaptcha_image()|ezroot()} alt="eZHumanCAPTCHA" /><br>
-
-
- <br/>
-							</li>
+							 <li>
+                                                        {attribute_view_gui attribute=$node.data_map.captcha}
+                                                    </li>
                                                                                                     
                                                 </ul>
 

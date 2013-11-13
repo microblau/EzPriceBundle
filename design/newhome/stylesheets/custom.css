@@ -503,7 +503,7 @@ select#prodQI{
 }
 
 #iMementoDest .tryPromo {
-    width:auto;
+    width:auto !important;
 }
 
 select#prodQI option {  width: 240px;}
