@@ -149,7 +149,7 @@ function AdminSiteaccessCheckbox( val )
 </div>
 
 <div id="logohispassl" style="text-align:left; padding-left: 380px">
-                                <script type="text/javascript">TrustLogo("https://www.hispassl.com/entorno_seguro.gif", "HispS", "none");</script>
+                                {include uri="design:shop/logo.tpl"}
                             </div>
                 
                     </div>
