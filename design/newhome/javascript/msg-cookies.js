@@ -28,7 +28,7 @@
 			  msghtml += '<div class="msg-cookie" id="msg-cookie">';
 			  msghtml += '<div class="wrap">';
 			  msghtml += '<p><strong>Política de cookies</strong></p>';
-			  msghtml += '<p>Utilizamos cookies tanto propias como de terceros para evaluar la actividad general y el uso que se hace de nuestras Plataformas Online, mejorar su experiencia de navegación y ofrecerle información comercial personalizada.Si usted continua navegando, consideramos que acepta su uso. Puede cambiar la configuración y obtener más información haciendo clic </p>';
+			  msghtml += '<p>Utilizamos cookies tanto propias como de terceros para evaluar la actividad general y el uso que se hace de nuestras Plataformas Online, mejorar su experiencia de navegación y ofrecerle información comercial personalizada.Si usted continua navegando, consideramos que acepta su uso. Puede cambiar la configuración y obtener más información haciendo clic';
 			  msghtml +='<a class="a2" id="hide-msg-cookie" href="/politica-de-cookies">aquí</a></p>';
 			  //msghtml += '<ul>';
 			  //msghtml += '<li><a class="a2 fancybox" id="hide-msg-cookie" href="'+literal['cookies'][1]+'" target="_blank">'+literal['cookies'][2]+'</a></li>';
