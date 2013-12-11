@@ -28,3 +28,4 @@
         
     {ezscript_require( array( 'filtros.js' ) )}
 {/if}
+{ezscript_require( array( 'msg-cookies.js' ) )}

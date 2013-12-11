@@ -241,5 +241,56 @@ body#formacion #logo {  padding: 0}
 	
 	.none{position:absolute;left:-99999px; visibility:hidden}
 	
-	
-	
+/*msg cookies*/
+.msg-cookie {
+    background-color: #E4E4E4;
+    min-width: 972px;
+}
+.msg-cookie {
+    bottom: 0;
+    position: fixed;
+    text-align: left;
+    width: 100%;
+    z-index: 99999;
+}
+.msg-cookie .wrap {
+    /*height: 40px;*/
+    margin: 0 auto;
+    position: relative;
+    width: 972px;
+}
+.msg-cookie {
+    text-align: left;
+}
+
+.msg-cookie .wrap p {
+    color: #575757;
+    font: 12px Arial,Helvetica,sans-serif;
+    margin: 0 !important;
+    padding: 5px 0;
+    width: 800px;
+}
+
+.msg-cookie .wrap ul {
+    bottom: 6px;
+    margin: 0 !important;
+    position: absolute;
+    right: 0;
+}
+
+.msg-cookie .wrap ul li {
+    display: block;
+    float: left;
+    margin-left: 8px;
+    width: auto;
+}
+
+.msg-cookie .wrap ul li a {
+    background-color: #333333;
+    color: #FFFFFF;
+    display: block;
+    font: bold 12px Arial,Helvetica,sans-serif;
+    padding: 3px 5px;
+    text-align: center;
+    text-decoration: none;
+}
