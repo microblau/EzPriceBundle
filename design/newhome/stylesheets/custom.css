@@ -376,7 +376,7 @@ display:block;
 #datosPago fieldset .datos #paypalitem input {margin-top:10px;}
 .formulario .datos li span#textpaypal {margin-top:5px; font-size:12px; margin-left:3px; display:block; float:left; width: 320px}
 
-#logohispassl{text-align:center}
+#logohispassl{text-align:center;margin-left:19px;}
 
 .button{ display:inline-block; width: 71px; cursor:pointer; padding:2px 0px 4px; background:#2770ab url(../images/bck_btn.gif) repeat-x 0 0; vertical-align:middle; text-align:center; font-size:11px;  }
 
@@ -502,12 +502,15 @@ select#prodQI{
  margin-bottom: 10px;
 }
 
+
+
 #iMementoDest .tryPromo {
     width:auto !important;
 }
 
 select#prodQI option {  width: 240px;}
 #iMementoDest select#prodQI option {  width: 190px;}
+#iMementoDest select#prodQI {width:98%}
 
 #formPrueba label, #frm_tryImemento label, #modMemGrat label{
     white-space:normal
