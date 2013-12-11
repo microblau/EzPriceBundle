@@ -346,7 +346,7 @@
 					</div>
 
                     <div id="logohispassl">
-					   <script type="text/javascript">TrustLogo("https://www.hispassl.com/entorno_seguro.gif", "HispS", "none");</script>
+					   {include uri="design:shop/logo.tpl"}
 					</div>
                     
 				</div>
