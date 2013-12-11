@@ -18,19 +18,17 @@
     <option value="%"{if $custom_attribute_default_type|eq('%')} selected="selected"{/if}>%</option>
 </select>
 <script type="text/javascript">
-<!--
-
 eZOEPopupUtils.settings.customAttributeInitHandler['{$custom_attribute_id}_source'] = {literal} function( el, value )
 {
-    el.value = ez.num( value, 0, 'int' );
+    el.value = eZOEPopupUtils.Int( value );
     document.getElementById( el.id.replace('_source', '_sizetype') ).selectedIndex = (value.indexOf('%') !== -1 ? 1 : 0 );
 };{/literal}
 
 eZOEPopupUtils.settings.customAttributeSaveHandler['{$custom_attribute_id}_source'] = {literal} function( el, value )
 {
     var sizetype = document.getElementById( el.id.replace('_source', '_sizetype') );
+    if ( value === '0' )
+        return '0';// Ignore % if 0 so TinyMCE shows a dotted border
     return value !== '' ? (value + sizetype.options[sizetype.selectedIndex].value) : '';
 };{/literal}
-
-//-->
 </script>

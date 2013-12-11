@@ -51,7 +51,7 @@ class ezEflStatsServerFunctions extends ezjscServerFunctions
 	static function bestsell( $args )
 	{
 		include_once( "kernel/common/template.php" );
-		$tpl = templateInit();
+		$tpl = eZTemplate::factory();
         $start = time() - 86400 * 7;
         $products = array();
         $query = eZShopFunctionCollection::fetchBestSellList( 61, 8, 0, $start, time() );
@@ -67,7 +67,7 @@ class ezEflStatsServerFunctions extends ezjscServerFunctions
     static function bestviewed( $args )
 	{
 		include_once( "kernel/common/template.php" );
-		$tpl = templateInit();
+		$tpl = eZTemplate::factory();
         $start = time() - 86400 * 7;
         $products = array();
         $query = tantaStatsFunctionCollection::fetchMostViewedTopList( 48, false, false, false, false, 8 );
@@ -83,7 +83,7 @@ class ezEflStatsServerFunctions extends ezjscServerFunctions
     static function news( $args )
 	{
 		include_once( "kernel/common/template.php" );
-		$tpl = templateInit();
+		$tpl = eZTemplate::factory();
         $start = time() - 86400 * 290;
         $products = array();
         $data = eZContentObjectTreeNode::fetch( 2 )->dataMap();

@@ -18,11 +18,11 @@
 									<input type="text" id="sut" name="ContentObjectAttribute_ezstring_data_text_10811" class="text" />
 								</li>
 								<li>
-									<label for="sue">Su email</label>
+									<label for="sue">Su email*</label>
 									<input type="text" id="sue" name="ContentObjectAttribute_data_text_10810" class="text" />
 								</li>
 								<li>
-									<label for="sepro">Seleccione producto</label>
+									<label for="sepro">Seleccione producto*</label>
 <input type="hidden" name="ContentObjectAttribute_ezselect_selected_array_10807" value="" />
 
 									<select id="sepro" name="ContentObjectAttribute_ezselect_selected_array_10807[]">
@@ -57,7 +57,7 @@
 									</select>
 								</li>
 								<li class="acepto">
-									<label for="acep"> <input type="checkbox"id="acep" name="ContentObjectAttribute_data_boolean_10812" /> Acepto las <a id="condicionesligthBox" href={'lightbox/ver/1451'|ezurl}>condiciones legales</a></label>
+                                                                    <label for="acep"> <input type="checkbox"id="acep" name="ContentObjectAttribute_data_boolean_10812" /> He leído y acepto las condiciones de la <a id="politicaligthBox" href={'lightbox/ver/19526'|ezurl}>Política de Privacidad</a> y el <a id="avisoLightbox" href={'lightbox/ver/292'|ezurl}>Aviso Legal</a></label>
 								</li>
 							</ul>
 							<span class="submit"><input name="ActionCollectInformation" type="image" src={"btn_enviarSoli.png"|ezimage} alt="enviar solicitud" /></span>

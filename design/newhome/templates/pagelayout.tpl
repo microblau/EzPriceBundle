@@ -24,6 +24,41 @@
 {include uri='design:page_head.tpl'}
 {include uri='design:page_head_style.tpl'}
 {include uri='design:page_head_script.tpl'}
+{literal}
+<script type="text/javascript">
+setTimeout(function(){var a=document.createElement("script");
+var b=document.getElementsByTagName("script")[0];
+a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0013/9487.js?"+Math.floor(new Date().getTime()/3600000);
+a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+</script>
+{/literal}
+
+<script type="text/javascript">
+	{literal}
+		 var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2627590-1']); 
+		_gaq.push(['_setDomainName', 'efl.es']); 
+		_gaq.push(['_addIgnoredRef', 'www.efl.es']); 
+		_gaq.push(['_addIgnoredRef', 'formacion.efl.es']); 
+		_gaq.push(['_addIgnoredRef', 'espacioclientes.efl.es']); 
+	{/literal}
+	{if $module_result.ui_component|eq('error')}
+		_gaq.push(['_trackPageview','/error404/' + document.location.pathname+document.location.search]);
+	{else}
+		_gaq.push(['_trackPageview']);
+	{/if}
+	{literal}
+		(function() {
+		var ga = document.createElement('script'); 
+		ga.type ='text/javascript'; 
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' :'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+  })();
+ 
+{/literal}
+</script>
 
 </head>
 <body {if or( $module_result.node_id|eq(2) )}id="home"{/if} {if or( 
@@ -93,46 +128,6 @@ $module_result.content_info.class_identifier|eq('producto_qmementix') )}class="q
 </div>
 
 {include uri='design:page_footer_script.tpl'}
-
-<script type="text/javascript">
-{literal}
- var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-2627590-1']); 
-_gaq.push(['_setDomainName', 'efl.es']); 
-_gaq.push(['_addIgnoredRef', 'www.efl.es']); 
-_gaq.push(['_addIgnoredRef', 'formacion.efl.es']); 
-_gaq.push(['_addIgnoredRef', 'espacioclientes.efl.es']); 
-{/literal}
-{if $module_result.ui_component|eq('error')}
-_gaq.push(['_trackPageview','/error404/' + document.location.pathname+document.location.search]);
-{else}
-_gaq.push(['_trackPageview']);
-{/if}
-{literal}
-(function() {
-var ga = document.createElement('script'); ga.type =
-'text/javascript'; ga.async = true;
-ga.src = ('https:' == document.location.protocol ? 'https://ssl' :
-'http://www') + '.google-analytics.com/ga.js';
-var s = document.getElementsByTagName('script')[0];
-s.parentNode.insertBefore(ga, s);
-  })();
- 
- 
- 
- 
- 
- 
-{/literal}
-</script>
-{literal}
-<script type="text/javascript">
-setTimeout(function(){var a=document.createElement("script");
-var b=document.getElementsByTagName("script")[0];
-a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0013/9487.js?"+Math.floor(new Date().getTime()/3600000);
-a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
-</script>
-{/literal}
 {/cache-block}
 
 {* This comment will be replaced with actual debug report (if debug is on). *}

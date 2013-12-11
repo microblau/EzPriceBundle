@@ -4,24 +4,22 @@
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
 // SOFTWARE RELEASE: 4.1.x
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: eZ Business Use License Agreement eZ BUL Version 2.1
 // NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
+//   This source file is part of the eZ Publish CMS and is
+//   licensed under the terms and conditions of the eZ Business Use
+//   License v2.1 (eZ BUL).
+// 
+//   A copy of the eZ BUL was included with the software. If the
+//   license is missing, request a copy of the license via email
+//   at license@ez.no or via postal mail at
+//  	Attn: Licensing Dept. eZ Systems AS, Klostergata 30, N-3732 Skien, Norway
+// 
+//   IMPORTANT: THE SOFTWARE IS LICENSED, NOT SOLD. ADDITIONALLY, THE
+//   SOFTWARE IS LICENSED "AS IS," WITHOUT ANY WARRANTIES WHATSOEVER.
+//   READ THE eZ BUL BEFORE USING, INSTALLING OR MODIFYING THE SOFTWARE.
+
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -71,7 +69,7 @@ function validate_options( event )
     var wrongValue;
     var formOptionsSelectedIndex;
     var validated = true;
-    for( var i = 0; i < selectBoxList.length; i++ )
+    for ( var i = 0; i < selectBoxList.length; i++ )
     {
         selectedValue = selectBoxList[i].value;
          formOptionsSelectedIndex = selectBoxList[i].options.selectedIndex;
@@ -82,7 +80,7 @@ function validate_options( event )
         }
     }
     imageOptions = getAllImageOptions();
-    for( var j = 0; j < imageOptions.length; j++ )
+    for ( var j = 0; j < imageOptions.length; j++ )
     {
         if ( imageOptions[j].checked && imageOptions[j].disabled )
         {
@@ -107,7 +105,7 @@ function init_options( rules, attributeID1 )
 
     this.onload = connect_validate_options_handler;
 
-    for( var i = 0; i < selectBoxList.length; i++ )
+    for ( var i = 0; i < selectBoxList.length; i++ )
     {
         selectedValue = selectBoxList[i].value;
         checkOptionsToDisable( rules, selectedValue, attributeID, selectBoxList[i] );
@@ -136,43 +134,43 @@ function checkOptionsToEnable( rules, value, attributeID, node )
     {
        splitArray = node.name.split( "][");
        moptionid = splitArray[1].slice(0,-1);
-    } 
+    }
     else
     {
          moptionid =  nodeInfoArray[2];
     }
     var optionidlist;
 
-    for(  var i = 0; i < rules.length; i++ )
+    for ( var i = 0; i < rules.length; i++ )
     {
-        for (  var j = 0; j < rules[i][1].      length; j++ )
+        for ( var j = 0; j < rules[i][1].length; j++ )
         {
             moption = rules[i][1][j][0];
             if ( moptionid == moption )
             {
                optionidlist = rules[i][1][j][1];
 
-               if (!optionidlist.inArray( value ))               
+               if (!optionidlist.inArray( value ))
                {
                    enableOption( rules[i][0], attributeID );
                }
-         
+
             }
 
         }
     }
 }
- 
+
 
 function enableOption( optionID, attributeID )
 {
      idstr = attributeID + "_" + optionID;
-     if( DisabledOptions[idstr] > 1 )
+     if ( DisabledOptions[idstr] > 1 )
      {
           DisabledOptions[idstr]--;
      }
      else
-     { 
+     {
          if ( this.document.getElementById( idstr ) != null && DisabledOptions[idstr] != null )
          {
              this.document.getElementById( idstr ).disabled = false;
@@ -204,14 +202,14 @@ function checkOptionsToDisable( rules, selectedValue, attributeID, node )
     {
        splitArray = node.name.split( "][");
        moptionid = splitArray[1].slice(0,-1);
-    } 
+    }
     else
     {
          moptionid =  nodeInfoArray[2];
     }
     var optionidlist;
 
-    for(  var i = 0; i < rules.length; i++ )
+    for (  var i = 0; i < rules.length; i++ )
     {
         for (  var j = 0; j < rules[i][1].length; j++ )
         {
@@ -220,11 +218,11 @@ function checkOptionsToDisable( rules, selectedValue, attributeID, node )
             {
                optionidlist = rules[i][1][j][1];
 
-               if (!optionidlist.inArray( selectedValue ))               
+               if (!optionidlist.inArray( selectedValue ))
                {
                    disableOption( rules[i][0], attributeID );
                }
-              
+
             }
 
         }
@@ -265,7 +263,7 @@ function ezmultioption_check_option( node, rules, attributeID )
     }
     else
     {
-        if( /MSIE [567]/.test( navigator.appVersion ) )
+        if ( /MSIE [567]/.test( navigator.appVersion ) )
         {
             disableOptions( node );
         }
@@ -276,10 +274,10 @@ function ezmultioption_check_option( node, rules, attributeID )
 
 function initSelects()
 {
-    if( /MSIE [567]/.test( navigator.appVersion ) )
+    if ( /MSIE [567]/.test( navigator.appVersion ) )
     {
         var sa = document.getElementsByTagName('select');
-    
+
         for ( var sc = 0; sc < sa.length; sc++ )
         {
             disableOptions( sa[sc] );
@@ -297,11 +295,11 @@ function disableOptions( se )
         {
             se.options[oc].className = 'disabled';
             se.options[oc].selected = false;
-            od = true;            
+            od = true;
         }
         else if ( se.options[oc].selected )
         {
-            os = true;            
+            os = true;
         }
     }
 
@@ -345,14 +343,15 @@ function resetOptions( se )
     }
 }
 
-Array.prototype.inArray = function (value)
+if ( !Array.inArray ) Array.prototype.inArray = function (value)
 // Returns true if the passed value is found in the
 // array.  Returns false if it is not.
 {
-    var i;
-    for (i=0; i < this.length; i++) {
+    for (var i = 0, l = this.length; i < l; i++)
+    {
         // Matches identical (===), not just similar (==).
-        if (this[i] === value) {
+        if (this[i] === value)
+        {
             return true;
         }
     }

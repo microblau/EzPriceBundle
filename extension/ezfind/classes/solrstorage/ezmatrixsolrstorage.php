@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
  * @author pb
- * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
- * @version //autogentag//
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 2.7.0
  * @package ezfind
  *
  */
@@ -13,51 +13,26 @@ class ezmatrixSolrStorage extends ezdatatypeSolrStorage
 {
 
     /**
+     * Returns the content of the matrix to be stored in Solr
      *
-     */
-
-    
-    function  __construct( )
-    {
-
-    }
-
-    /**
      * @param eZContentObjectAttribute $contentObjectAttribute the attribute to serialize
-     * @return json encoded string for further processing
-     * required first level elements 'method', 'version_format', 'data_type_identifier', 'content'
-     * optional first level element is 'rendered' which should store (template) rendered xhtml snippets
+     * @param eZContentClassAttribute $contentClassAttribute the content class of the attribute to serialize
+     * @return array
      */
-    public static function getAttributeContent(eZContentObjectAttribute $contentObjectAttribute, $contentClassAttribute)
+    public static function getAttributeContent( eZContentObjectAttribute $contentObjectAttribute, eZContentClassAttribute $contentClassAttribute )
     {
-
-        
-
-        $attributeContents = $contentObjectAttribute->content();
-        $cellList          = $attributeContents->attribute( 'cells' );
-
-        $availableCells = array();
-
-        for( $i = 0; $i < count( $cellList ); $i++ )
-        {
-
-            $availableCells[] = array( $cellList[$i] => $cellList[++$i] );
-        }
-
+        $rows = $contentObjectAttribute->content()->attribute( 'rows' );
         $target = array(
-                'content' => $availableCells,
-                'has_rendered_content' => false,
-                'rendered' => null
-                );
-
+            'has_rendered_content' => false,
+            'rendered' => null,
+            'content' => array()
+        );
+        foreach( $rows['sequential'] as $elt )
+        {
+            $target['content'][] = $elt['columns'];
+        }
         return $target;
     }
-
-    /**
-     *
-     * @param string $jsonString
-     * @return mixed
-     */
 
 }
 

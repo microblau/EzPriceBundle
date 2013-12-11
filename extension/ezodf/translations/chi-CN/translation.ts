@@ -1,5 +1,6 @@
-<!DOCTYPE TS><TS>
-<defaultcodec></defaultcodec>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>extension/ezodf</name>
     <message>
@@ -69,6 +70,10 @@ the appropriate class during the import, you get a notice about this after the i
 Images are placed in the media library so you can re-use them in other articles.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The imported document is waiting for an approbation to be published.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>extension/ezodf/browse</name>
@@ -97,97 +102,97 @@ Images are placed in the media library so you can re-use them in other articles.
     <name>extension/ezodf/export/error</name>
     <message>
         <source>Destination file format not supported</source>
-        <translation>目标文件格式不支持</translation>
+        <translation type="unfinished">目标文件格式不支持</translation>
     </message>
     <message>
         <source>PDF conversion failed</source>
-        <translation>PDF转换失败</translation>
+        <translation type="unfinished">PDF转换失败</translation>
     </message>
     <message>
         <source>Word conversion failed</source>
-        <translation>单词转换失败</translation>
+        <translation type="unfinished">单词转换失败</translation>
     </message>
     <message>
         <source>Unable to fetch node, or no read access</source>
-        <translation>无法提取节点，或者没有读权限</translation>
+        <translation type="unfinished">无法提取节点，或者没有读权限</translation>
     </message>
     <message>
         <source>Unable to open file %1 on server side</source>
-        <translation>无法打开服务器端文件%1</translation>
+        <translation type="unfinished">无法打开服务器端文件%1</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf/import/error</name>
     <message>
         <source>File extension or type is not allowed.</source>
-        <translation>文件扩展名或类型不支持。</translation>
+        <translation type="unfinished">文件扩展名或类型不支持。</translation>
     </message>
     <message>
         <source>Could not parse XML.</source>
-        <translation>无法解析XML。</translation>
+        <translation type="unfinished">无法解析XML。</translation>
     </message>
     <message>
         <source>Can not open socket. Please check if extension/ezodf/daemon.php is running.</source>
-        <translation>无法打开套接字。请检查extension/ezodf/daemon.php是否启动。</translation>
+        <translation type="unfinished">无法打开套接字。请检查extension/ezodf/daemon.php是否启动。</translation>
     </message>
     <message>
         <source>Can not convert the given document.</source>
-        <translation>无法转换指定的文档。</translation>
+        <translation type="unfinished">无法转换指定的文档。</translation>
     </message>
     <message>
         <source>Unable to call daemon. Fork can not create child process.</source>
-        <translation>无法调用后台进程。无法生成子进程。</translation>
+        <translation type="unfinished">无法调用后台进程。无法生成子进程。</translation>
     </message>
     <message>
         <source>Daemon reported error.</source>
-        <translation>后台进程报错。</translation>
+        <translation type="unfinished">后台进程报错。</translation>
     </message>
     <message>
         <source>Unknown node.</source>
-        <translation>未知节点。</translation>
+        <translation type="unfinished">未知节点。</translation>
     </message>
     <message>
         <source>Access denied.</source>
-        <translation>拒绝访问。</translation>
+        <translation type="unfinished">拒绝访问。</translation>
     </message>
     <message>
         <source>Error during import.</source>
-        <translation>导入过程中出错。</translation>
+        <translation type="unfinished">导入过程中出错。</translation>
     </message>
     <message>
         <source>Unknown content class specified in odf.ini:</source>
-        <translation>odf.ini中指定的类未知:</translation>
+        <translation type="unfinished">odf.ini中指定的类未知:</translation>
     </message>
     <message>
         <source>Unknown error.</source>
-        <translation>未知错误。</translation>
+        <translation type="unfinished">未知错误。</translation>
     </message>
     <message>
         <source>Filetype: </source>
-        <translation>文件类型: </translation>
+        <translation type="unfinished">文件类型: </translation>
     </message>
     <message>
         <source>Folder for images could not be created, access denied.</source>
-        <translation>无法创建图片文件夹，拒绝访问。</translation>
+        <translation type="unfinished">无法创建图片文件夹，拒绝访问。</translation>
     </message>
     <message>
         <source>Cannot import. File not found. Already imported?</source>
-        <translation>无法导入。没找到文件。已经导入?</translation>
+        <translation type="unfinished">无法导入。没找到文件。已经导入?</translation>
     </message>
     <message>
         <source>Cannot import document, supplied placement nodeID is not valid.</source>
-        <translation>无法导入文档，提供的位置nodeID不合法。</translation>
+        <translation type="unfinished">无法导入文档，提供的位置nodeID不合法。</translation>
     </message>
     <message>
         <source>Cannot store uploaded file, cannot import.</source>
-        <translation>无法保存上传的文件，无法导入。</translation>
-    </message>
-    <message>
-        <source>Document is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">无法保存上传的文件，无法导入。</translation>
     </message>
     <message>
         <source>Unable to fetch node with id </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Document is not supported.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

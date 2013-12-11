@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
  * @author pb
- * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
- * @version //autogentag//
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 2.7.0
  * @package ezfind
  *
  */
@@ -15,9 +15,9 @@ class ezfSolrDocumentFieldGmapLocation extends ezfSolrDocumentFieldBase
                                                     'coordinates' => 'geopoint',
                                                     'geohash' => 'geohash',
                                                     'latitude' => 'float',
-                                                    'longitude' => 'float');
+                                                    'longitude' => 'float' );
 
-    
+
     const DEFAULT_SUBATTRIBUTE = 'address';
 
     function __construct( eZContentObjectAttribute $attribute )
@@ -25,20 +25,29 @@ class ezfSolrDocumentFieldGmapLocation extends ezfSolrDocumentFieldBase
         parent::__construct( $attribute );
     }
 
- 
+
     public function getData()
     {
         $data = array();
         $contentClassAttribute = $this->ContentObjectAttribute->attribute( 'contentclass_attribute' );
         $data[self::getFieldName( $contentClassAttribute, self::DEFAULT_SUBATTRIBUTE )] = $this->ContentObjectAttribute->attribute( 'content' )->attribute( 'address' );
         $longitude = $this->ContentObjectAttribute->attribute( 'content' )->attribute( 'longitude' );
+        if ( !empty( $longitude) )
+        {
+            $data[self::getFieldName( $contentClassAttribute, 'longitude' )] = $longitude;
+        }
         $latitude = $this->ContentObjectAttribute->attribute( 'content' )->attribute( 'latitude' );
-        $data[self::getFieldName( $contentClassAttribute, 'longitude' )] = $longitude;
-        $data[self::getFieldName( $contentClassAttribute, 'latitude' )] = $latitude;
-        $data[self::getFieldName( $contentClassAttribute, 'coordinates' )] = $longitude . ',' . $latitude;
-        //almost the same input format, Solr will take care of the conversion to a geohash string
-        //disabled for now, need to update Solr.war first
-        //$data[self::getFieldName( $contentClassAttribute, 'geohash' )] = $longitude . ' ' . $latitude;
+        if ( !empty( $latitude) )
+        {
+            $data[self::getFieldName( $contentClassAttribute, 'latitude' )] = $latitude;
+        }
+        if ( !empty( $longitude ) && !empty( $latitude ) )
+        {
+            $data[self::getFieldName( $contentClassAttribute, 'coordinates' )] = $longitude . ',' . $latitude;
+            //almost the same input format, Solr will take care of the conversion to a geohash string
+            //disabled for now, need to update Solr.war first
+            //$data[self::getFieldName( $contentClassAttribute, 'geohash' )] = $longitude . ' ' . $latitude;
+        }
         return $data;
 
     }
@@ -84,7 +93,7 @@ class ezfSolrDocumentFieldGmapLocation extends ezfSolrDocumentFieldBase
         }
         return $subfields;
     }
-    static function getClassAttributeType( eZContentClassAttribute $classAttribute, $subAttribute = null )
+    static function getClassAttributeType( eZContentClassAttribute $classAttribute, $subAttribute = null, $context = 'search' )
     {
         if ( $subAttribute and
              $subAttribute !== '' and

@@ -123,7 +123,7 @@ class result extends eZWizardBase
 			        $result['content'] = $this->TPL->fetch( 'design:dbattributeconverter/result.tpl' );
         			$result['left_menu'] = 'design:parts/content/dbattributeconverter_menu.tpl';
 			        $result['path'] = array(
-			            array( 'url' => false, 'text' => ezi18n( 'dbattributeconverter/wizard', 'DB Attribute Converter - execute in background' ) )
+			            array( 'url' => false, 'text' => ezpI18n::tr( 'dbattributeconverter/wizard', 'DB Attribute Converter - execute in background' ) )
 			        );
 			
 			        return $result;
@@ -155,7 +155,7 @@ class result extends eZWizardBase
         $result['content'] = $this->TPL->fetch( 'design:dbattributeconverter/result.tpl' );
         $result['left_menu'] = 'design:parts/content/dbattributeconverter_menu.tpl';
         $result['path'] = array(
-            array( 'url' => false, 'text' => ezi18n( 'dbattributeconverter/wizard', 'DB Attribute Converter - Wizard finished' ) )
+            array( 'url' => false, 'text' => ezpI18n::tr( 'dbattributeconverter/wizard', 'DB Attribute Converter - Wizard finished' ) )
         );
 		
 		// reset wizard data

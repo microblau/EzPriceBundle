@@ -1,4 +1,164 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
+<context>
+    <name>design/admin/content/edit</name>
+    <message>
+        <source>View and manage (copy, delete, etc.) the versions of this object.</source>
+        <translation>Ver e gerenciar (copiar, deletar, etc.) as versões deste objeto.</translation>
+    </message>
+    <message>
+        <source>Manage versions</source>
+        <translation>Gerenciar versões</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/node/view/full</name>
+    <message>
+        <source>Last modified</source>
+        <translation>Última modificação</translation>
+    </message>
+    <message>
+        <source>Node ID</source>
+        <translation>ID do nó</translation>
+    </message>
+    <message>
+        <source>Object ID</source>
+        <translation>ID do objeto</translation>
+    </message>
+    <message>
+        <source>Another language</source>
+        <translation>Outro idioma</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Editar</translation>
+    </message>
+    <message>
+        <source>Edit the contents of this item.</source>
+        <translation>Editar os conteúdos deste item.</translation>
+    </message>
+    <message>
+        <source>Not available</source>
+        <translation>Não disponível</translation>
+    </message>
+    <message>
+        <source>You do not have permission to edit this item.</source>
+        <translation>Você não possue permissão para editar este item.</translation>
+    </message>
+    <message>
+        <source>Move</source>
+        <translation>Mover</translation>
+    </message>
+    <message>
+        <source>Move this item to another location.</source>
+        <translation>Mover este item para outro local.</translation>
+    </message>
+    <message>
+        <source>You do not have permission to move this item to another location.</source>
+        <translation>Você não possue permissão para mover este para outro local.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Remover</translation>
+    </message>
+    <message>
+        <source>Remove this item.</source>
+        <translation>Remover este item.</translation>
+    </message>
+    <message>
+        <source>You do not have permission to remove this item.</source>
+        <translation>Você não possue permissão para remover este item.</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation>Pré-visualizar</translation>
+    </message>
+    <message>
+        <source>New translation</source>
+        <translation>Nova tradução</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/pagelayout</name>
+    <message>
+        <source>Current user</source>
+        <translation>Usuário atual</translation>
+    </message>
+    <message>
+        <source>Change name, email, password, etc.</source>
+        <translation>Mudar nome, email, senha, etc.</translation>
+    </message>
+    <message>
+        <source>Change information</source>
+        <translation>Mudar informação</translation>
+    </message>
+    <message>
+        <source>Change user info</source>
+        <translation>Mudar informação de usuário</translation>
+    </message>
+    <message>
+        <source>Change password for &lt;%username&gt;.</source>
+        <translation>Mudar senha para &lt;%username&gt;.</translation>
+    </message>
+    <message>
+        <source>Change password</source>
+        <translation>Mudar senha</translation>
+    </message>
+    <message>
+        <source>There is %basket_count item in the shopping basket.</source>
+        <translation>Existe %basket_count item na cesta de compras.</translation>
+    </message>
+    <message>
+        <source>Shopping basket (%basket_count)</source>
+        <translation>Cesta de compras (%basket_count)</translation>
+    </message>
+    <message>
+        <source>There are %basket_count items in the shopping basket.</source>
+        <translation>Existem %basket_count itens na cesta de compras.</translation>
+    </message>
+    <message>
+        <source>Logout from the system.</source>
+        <translation>Sair do sistema.</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translation>Sair</translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/user/forgotpassword</name>
+    <message>
+        <source>Your account information</source>
+        <translation>Informações da sua conta</translation>
+    </message>
+    <message>
+        <source>Email</source>
+        <translation>Email</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/user</name>
+    <message>
+        <source>User</source>
+        <translation>Usuário</translation>
+    </message>
+    <message>
+        <source>Forgot password</source>
+        <translation>Esqueci minha senha</translation>
+    </message>
+    <message>
+        <source>Change password</source>
+        <translation>Mudar senha</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/user/register</name>
+    <message>
+        <source>Registration info</source>
+        <translation>Informações do cadastro</translation>
+    </message>
+</context>
 <context>
     <name>mbpaex/classes/datatypes</name>
     <message>

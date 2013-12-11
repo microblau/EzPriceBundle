@@ -41,7 +41,11 @@
 <tr>
     {if and( $ProductItem:item.item_object.contentobject, $ProductItem:item.item_object.contentobject.main_node )}
     {let node_url=$ProductItem:item.item_object.contentobject.main_node.url_alias}
-    <td>{$ProductItem:item.item_object.contentobject.class_identifier|class_icon( small,$ProductItem:item.item_object.contentobject.class_name )}&nbsp;{if $:node_url}<a href={$:node_url|ezurl}>{/if}{$ProductItem:item.item_object.contentobject.name|wash}{if $:node_url}</a>{/if}</td>
+    <td>{$ProductItem:item.item_object.contentobject.class_identifier|class_icon( small,$ProductItem:item.item_object.contentobject.class_name )}&nbsp;{if $:node_url}<a href={$:node_url|ezurl}>{/if}{$ProductItem:item.item_object.contentobject.name|wash}{if $:node_url}</a>{/if}
+	
+	{*$ProductItem:item|attribute(show)*}
+	
+	</td>
     {/let}
     {else}
     <td>{false()|class_icon( small )}&nbsp;{$ProductItem:item.item_object.name|wash}</td>

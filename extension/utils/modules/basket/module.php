@@ -126,6 +126,12 @@ $ViewList['ajaxadd'] = array(
     'default_navigation_part' => 'ezmynavigationpart',
     'params' => array( 'ObjectID', 'Quantity' ) );
 
+$ViewList['ajaxremove'] = array(
+    'functions' => array( 'buy' ),
+    'script' => 'ajaxremove.php',
+    'default_navigation_part' => 'ezmynavigationpart',
+    'params' => array( 'ObjectID', 'Quantity' ) );		
+	
 /*$ViewList['mementix'] = array(
     'functions' => array( 'buy' ),
     'script' => 'mementix.php',
@@ -138,6 +144,12 @@ $ViewList['mementixcheckprice'] = array(
     'default_navigation_part' => 'ezmynavigationpart',
     'params' => array( ) );
 
+$ViewList['imementoramacheckprice'] = array(
+    'functions' => array( 'buy' ),
+    'script' => 'imementoramacheckprice.php',
+    'default_navigation_part' => 'ezmynavigationpart',
+    'params' => array( ) );		
+	
 $ViewList['qmementixcheckprice'] = array(
     'functions' => array( 'buy' ),
     'script' => 'qmementixcheckprice.php',
@@ -275,6 +287,18 @@ $ViewList["csv-encuestas"] = array(
     "script" => "csv-encuestas.php",
     "default_navigation_part" => 'ezshopnavigationpart' );
 
+$ViewList["envios"] = array(
+    'functions' => array( 'envios' ),
+    "script" => "envios.php",
+   "default_navigation_part" => 'ezshopnavigationpart' );
+
+$ViewList["gastosenvio"] = array(
+    "script" => "gastosenvio.php",
+    "default_navigation_part" => 'ezmynavigationpart',
+    'unordered_params' => array( 'error' => 'Error' ),
+    "params" => array(  ) );
+    
+
 $FunctionList = array();
 $FunctionList['buy'] = array( );
 $FunctionList['checkout'] = array( );
@@ -284,4 +308,5 @@ $FunctionList['encuesta'] = array( );
 $FunctionList['csvencuestas'] = array( );
 $FunctionList['imemento'] = array( );
 $FunctionList['qmementix'] = array( );
+$FunctionList['envios'] = array( );
 ?>

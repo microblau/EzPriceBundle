@@ -60,7 +60,7 @@
                                     <li><a href={$block.custom_attributes.enlace_1|ezurl()}>{$block.custom_attributes.texto_1}</a></li>
                                     <li><a href={$block.custom_attributes.enlace_2|ezurl()}>{$block.custom_attributes.texto_2}</a></li>
                                     <li><a href={$block.custom_attributes.enlace_3|ezurl()}>{$block.custom_attributes.texto_3}</a></li>
-                                    <li><a href="http://solucionesmemento-indiv.efl.es/ActumPublic/ActumRss/suscripcion-email.jsp" target="_blank"> Necesito alertas jurídicas gratuitas</a></li>
+                                    {*<li><a href="http://blog.efl.es" target="_blank"> Necesito alertas jurídicas gratuitas</a></li>*}
 				    <li><a href={"basket/forgotpassword"|ezurl}>Recuperar mi contraseña</a></li>
                                 </ul>
                             </div>

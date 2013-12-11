@@ -134,7 +134,7 @@ $tpl->setVariable( 'ebook', $ebookquery[0]['ebook'] );
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:newsletter/configure.tpl' );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'cjw_newsletter/configure', 'Configure newsletter settings' ) ) );
+                                'text' => ezpI18n::tr( 'cjw_newsletter/configure', 'Configure newsletter settings' ) ) );
 
 
 ?>

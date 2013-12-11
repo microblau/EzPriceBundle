@@ -2,10 +2,10 @@
 [DatabaseSettings]
 DatabaseImplementation=ezmysqli
 Server=desta01
-User=lefebvre
-Password=lyXyv3Jq
-Database=lefebvre
-SQLOutput=enabled
+User=root
+Password=pj963
+Database=lefebvre47
+SQLOutput=disabled
 
 [DesignSettings]
 AdditionalSiteDesignList[]=googlesitemapgenerator
@@ -34,11 +34,12 @@ ActiveExtensions[]=collectexport
 ActiveExtensions[]=novenutils
 ActiveExtensions[]=ngsuggest
 ActiveExtensions[]=twitterblock
-ActiveExtensions[]=efltwitter
+#ActiveExtensions[]=efltwitter
 ActiveExtensions[]=eflyoutube
 ActiveExtensions[]=cjw_newsletter
 ActiveExtensions[]=eflvaloraciones
 ActiveExtensions[]=googlesitemapgenerator
+ActiveExtensions[]=ez_network
 #ActiveExtensions[]=ezpaypal
 
 [Session]
@@ -74,6 +75,7 @@ ForceVirtualHost=true
 RemoveSiteAccessIfDefaultAccess=enabled
 
 HostMatchMapItems[]=eflweb;site;
+HostMatchMapItems[]=www.efl.es;newhome;
 HostMatchMapItems[]=formacion.efl.es;forma
 HostMatchMapItems[]=formacion.eflweb.local;forma
 HostMatchMapItems[]=eflweb.local;site
@@ -101,7 +103,7 @@ RedirectAfterAddToBasket=reload
 LogoutRedirect=/
 
 [SSLZoneSettings]
-SSLZones=disabled
+SSLZones=enabled
 ModuleViewAccessMode[basket/ajaxadd]=keep
 ModuleViewAccessMode[basket/csv-encuestas]=keep
 ModuleViewAccessMode[basket/mementixcheckprice]=keep
@@ -116,18 +118,27 @@ ModuleViewAccessMode[domiciliacion/*]=ssl
 [MailSettings]
 Transport=file
 #Transport=SMTP
-AdminEmail=clientes@efl.es
-EmailSender=clientes@efl.es
-TransportServer=localhost
-TransportPort=25
+#AdminEmail=clientes@efl.es
+#EmailSender=clientes@efl.es
+#TransportServer=localhost
+#TransportPort=25
 #TransportUser=xxxx
 #TransportPassword=xxxx
+
+[MailSettings]
+Transport=SMTP
+TransportServer=smtp.desorden.net
+TransportPort=25
+TransportUser=smtp@desorden.net
+TransportPassword=smtp2011
+AdminEmail=lidia.valle@tantacom.com
+EmailSender=
 
 [EmbedViewModeSettings]
 AvailableViewModes[]=embed
 AvailableViewModes[]=embed-inline
 InlineViewModes[]=embed-inline
-EmailReceiver=victor.aranda@tantacom.com
+EmailReceiver=asistenciaclientes@efl.es
 
 [SiteAccessRules]
 Rules[]=Access;disable

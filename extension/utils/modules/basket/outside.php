@@ -7,7 +7,7 @@ if( $basket->OrderID == 0 )
 {
     $Params['Module']->redirectTo( 'basket/basket');
 }
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( 'basket',  eZBasket::currentBasket() );
 
 $orderInfo = eZPersistentObject::fetchObject( eflOrders::definition(), 
@@ -23,7 +23,7 @@ $mail->from = new ezcMailAddress( $ini->variable( 'Infocompras', 'Mail' ), $ini-
 $mail->addTo( new ezcMailAddress( $info['email'] ) ) ;
               
 $mail->subject = "Confirmación de su pedido en Ediciones Francis Lefebvre";
-$tplmail = templateInit();         
+$tplmail = eZTemplate::factory();         
 $tplmail->setVariable( 'info', $info );   
 $tplmail->setVariable( 'basket', eZBasket::currentBasket() );    
 $tplmail->setVariable( 'id', $id_pedido_lfbv );  
@@ -68,7 +68,7 @@ $transport = new ezcMailSmtpTransport( $ini->variable( 'Infocompras', 'SMTP' ), 
 $transport->send( $mail  ); 
 $basket->remove();
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:basket/outside.tpl" );
 $Result['path'] = array( array( 'url' => false,

@@ -24,6 +24,7 @@ var google_conversion_value = 0;
 	new YAHOO.Hack.FixIESelectWidth( 'asociacion' );
 </script>{/literal}
 {/if}
+            {ezcss_require( 'jquery.fancybox-1.3.0.css')} 
 <div id="bodyContent">
 
 			<div id="gridTwoColumnsTypeB" class="clearFix">
@@ -132,17 +133,17 @@ var google_conversion_value = 0;
 													</li>
 													
                                                     <li class="condiciones">
-														<label for="condiciones" {if is_set( $errors.condiciones)}class="error"{/if}><input type="checkbox" name="condiciones">&nbsp;&nbsp;Acepto las condiciones</label>
+														<label for="condiciones" {if is_set( $errors.condiciones)}class="error"{/if}><input type="checkbox" name="condiciones">&nbsp;&nbsp;He leído y acepto las condiciones de la <a class="lb" id="politicaligthBox" href={'lightbox/ver/19526'|ezurl}>Política de Privacidad</a> y el <a class="lb" id="avisoLightbox" href={'lightbox/ver/292'|ezurl}>Aviso Legal</a></label>
 														
-                                                    	<div>                                                    		
+                                                    	{*<div>                                                    		
                                                     		{fetch('content', 'node', hash( 'node_id', 1451)).data_map.texto.content.output.output_text}
-                                                    	</div>
+                                                    	</div>*}
                                                     </li>
 													
                                                     <li>
 														<label for="capchar" {if is_set( $errors.captchar)}class="error"{/if}>Introduzca los caracteres que visualiza en la imagen inferior *:</label>
 														<input type="text" id="eZHumanCAPTCHACode" name="eZHumanCAPTCHACode" class="text" value="" />
-														<br><br><br>
+														<br><br>
 															<img src={ezhumancaptcha_image()|ezroot()} alt="eZHumanCAPTCHA" />
 														<br><br/>
 													</li>                                           

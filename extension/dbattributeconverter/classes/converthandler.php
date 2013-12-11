@@ -66,7 +66,7 @@ class convertHandler
 
 	function getWarnings()
 	{
-		$warnings = array( ezi18n( 'dbattributeconverter/common', 'No warnings' ) );
+		$warnings = array( ezpI18n::tr( 'dbattributeconverter/common', 'No warnings' ) );
 		
 		return $warnings;		
 	}	
@@ -77,15 +77,15 @@ class convertHandler
 		$settings = array();
 		$settings[] = array( 'type'  => 'checkbox',
 							 'name'  => 'ClearData', 
-							 'label' => ezi18n( 'attributeconverter/common', 'Clear all data' ) );
+							 'label' => ezpI18n::tr( 'attributeconverter/common', 'Clear all data' ) );
 		$settings[] = array( 'type'  => 'select',
 							 'name'  => 'TestListbox',
-							 'label' => ezi18n( 'attributeconverter/common', 'Listbox test' ),
+							 'label' => ezpI18n::tr( 'attributeconverter/common', 'Listbox test' ),
 							 'options' => array( 'yes' => 'Yes', 
 												 'no' => 'No' ) );
 		$settings[] = array( 'type'  => 'text',
 							 'name'  => 'Text',
-							 'label' => ezi18n( 'attributeconverter/common', 'Type some text here' ) );
+							 'label' => ezpI18n::tr( 'attributeconverter/common', 'Type some text here' ) );
 		return $settings;
 		*/
 		return false;

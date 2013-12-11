@@ -39,16 +39,19 @@
     {set $filter=$filter|append( concat( 'attr_fecha_aparicion_dt:[* TO ', ezhttp('fecha_publicacion','get'),'-01-01T00:00:00Z]' ) ) }
 {/if}
 
-
+{def $subtree_array=cond( ezhttp_hasvariable( 'obras', 'get' ), ezhttp( 'obras', 'get') , array( 61, 43 ) )}
+{def $subtree = concat( '&', 'obras[]'|urlencode, '=', $subtree_array|implode( concat( '&', 'obras[]'|urlencode, '=' ) ) ) )}
+{set $filter = $filter|append('-meta_is_invisible_b:1') }
 
  {if ezhttp_hasvariable( 'SearchText', 'get' )}
                                             {def $results = fetch( ezfind, search, hash( 
                                                             query, ezhttp( 'SearchText', 'get'),
                                                             'limit', ezhttp( 'numItems', 'get'),
- 'class_id', array( 48, 101, 99, 98, 66, 49, 61, 94, 64, 28 ,147 ,142 ),
+ 'class_id', array( 48, 101, 99, 98, 66, 49, 61, 94, 64, 28 ,147 ,142,145,149 ),
                                                             'offset', $view_parameters.offset,
                                                             'subtree_array', cond( ezhttp_hasvariable( 'obras', 'get' ), ezhttp( 'obras', 'get') , array( 2 ) ),                                                           
-                                                       'filter', $filter     
+                                                       'filter', $filter,
+														'ignore_visibility', false()		
                                                     ) )}
                                                     
                                          
@@ -68,6 +71,7 @@
 										<div id="busquedaAvanzada">
 											 
 											<form  action={"content/advancedsearch"|ezurl} method="get"  id="busquedaAvanzadaForm" name="busquedaAvanzadaForm">
+											
 												<span class="camposObligatorios">* Datos obligatorios</span>
 
 												<label for="buscar" class="termSearch">Buscar 
@@ -176,7 +180,7 @@
                                             {include name=navigator
                                                  uri='design:navigator/google.tpl'
                                                  page_uri='/content/advancedsearch'
-                                                 page_uri_suffix=concat('?SearchText=',$search_text,'&numItems=',ezhttp( 'numItems', 'get'),'&SubTreeArray=',ezhttp( 'SubTreeArray', 'get'))
+                                                 page_uri_suffix=concat('?SearchText=',$search_text,'&numItems=',ezhttp( 'numItems', 'get'),'&obras=',$subtree)
                                                  item_count=$results.SearchCount
                                                  view_parameters=$view_parameters
                                                  item_limit=cond( ezhttp_hasvariable( 'numItems', 'get'), ezhttp( 'numItems', 'get'), 10 )}
@@ -294,7 +298,7 @@
                                                 {include name=navigator
                                                  uri='design:navigator/google.tpl'
                                                  page_uri='/content/advancedsearch'
-                                                 page_uri_suffix=concat('?SearchText=',$search_text,'&numItems=',ezhttp( 'numItems', 'get'),'&SubTreeArray=',ezhttp( 'SubTreeArray', 'get'))
+                                                 page_uri_suffix=concat('?SearchText=',$search_text,'&numItems=',ezhttp( 'numItems', 'get'),'&obras=',$subtree)
                                                  item_count=$results.SearchCount
                                                  view_parameters=$view_parameters
                                                  item_limit=10}

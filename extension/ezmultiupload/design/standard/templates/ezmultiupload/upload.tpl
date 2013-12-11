@@ -23,19 +23,20 @@
                                 '{$session_name}': '{$session_id}',
                                 'UserSessionHash': '{$user_session_hash}',
                                 //'XDEBUG_SESSION_START': 'XDEBUG_ECLIPSE',
-                                'UploadButton': 'Upload'
+                                'UploadButton': 'Upload',
+                                'ezxform_token': '@$ezxFormToken@'
                             {rdelim},
                 // Filter is passed on to uploader.setFileFilter() in ez.MultiUpload
                 fileType: [{ldelim} description:"{'Allowed Files'|i18n('extension/ezmultiupload')|wash('javascript')}", extensions:'{$file_types}' {rdelim}],
                 progressBarWidth: "300",
                 allFilesRecived:  "{'All files received.'|i18n('extension/ezmultiupload')|wash(javascript)}",
                 uploadCanceled:   "{'Upload canceled.'|i18n('extension/ezmultiupload')|wash(javascript)}",
-                thumbnailCreated: "{'Thumbnail created.'|i18n('extension/ezmultiupload')|wash(javascript)}"
+                thumbnailCreated: "{'Thumbnail created.'|i18n('extension/ezmultiupload')|wash(javascript)}",
+                flashError: "{'Could not load flash(or not loaded yet), this is needed for multiupload!'|i18n('extension/ezmultiupload')}"
             {rdelim};
             YAHOO.ez.MultiUpload.init();
         {rdelim},
-        timeout: 10000,
-        combine: true
+        timeout: 10000
     {rdelim}, "js");
 {rdelim})();
 </script>
@@ -55,6 +56,7 @@
             <div id="uploadButtonOverlay" style="position: absolute; z-index: 2"></div>
             <button id="uploadButton" type="button" style="z-index: 1">{'Select files'|i18n('extension/ezmultiupload')}</button>
             <button id="cancelUploadButton" type="button">{'Cancel'|i18n('extension/ezmultiupload')}</button>
+            <p><noscript><em style="color: red;">{'Javascript has been disabled, this is needed for multiupload!'|i18n('extension/ezmultiupload')}</em></noscript></p>
         </div>
         <div id="multiuploadProgress">
             <p><span id="multiuploadProgressFile">&nbsp;</span>&nbsp;

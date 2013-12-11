@@ -26,7 +26,6 @@
 
 include_once( 'autoload.php' );
 
-
 class eZObjectRelationBrowseType extends eZDataType
 {
      const DATA_TYPE_STRING = "ezobjectrelationbrowse";
@@ -36,7 +35,7 @@ class eZObjectRelationBrowseType extends eZDataType
     */
     function eZObjectRelationBrowseType()
     {
-        $this->eZDataType( self::DATA_TYPE_STRING, ezi18n( 'kernel/classes/datatypes', "Object relation browse", 'Datatype name' ),
+        $this->eZDataType( self::DATA_TYPE_STRING, ezpI18n::tr( 'kernel/classes/datatypes', "Object relation browse", 'Datatype name' ),
                            array( 'serialize_supported' => true ) );
     }
 
@@ -66,7 +65,7 @@ class eZObjectRelationBrowseType extends eZDataType
 			$selectedObjectIDArray = $http->hasPostVariable( $postVariableName ) ? $http->postVariable( $postVariableName ) : false;
 			if ( $contentObjectAttribute->validateIsRequired() and $selectedObjectIDArray === false )
 			{
-				$contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+				$contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
 																	 'Missing objectrelation browse input.' ) );
 				return eZInputValidator::STATE_INVALID;
 			}
@@ -77,7 +76,7 @@ class eZObjectRelationBrowseType extends eZDataType
         $content = $contentObjectAttribute->content();
         if ( $contentObjectAttribute->validateIsRequired() and count( $content['relation_browse'] ) == 0 )
 		{
-			$contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+			$contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
 																 'Missing objectrelation browse input.' ) );
 			return eZInputValidator::STATE_INVALID;
         }

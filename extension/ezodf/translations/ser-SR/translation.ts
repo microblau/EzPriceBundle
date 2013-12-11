@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>extension/ezodf</name>
     <message>
@@ -72,6 +74,10 @@ klasu prilikom uvoza, a Vi ćete dobiti obaveštenje o ovome nakon što se zavr�
 Slike su stavljene u biblioteku medija tako da ih možete ponovo koristiti i u drugim člancima.
 </translation>
     </message>
+    <message>
+        <source>The imported document is waiting for an approbation to be published.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>extension/ezodf/browse</name>
@@ -100,94 +106,94 @@ Slike su stavljene u biblioteku medija tako da ih možete ponovo koristiti i u d
     <name>extension/ezodf/export/error</name>
     <message>
         <source>Destination file format not supported</source>
-        <translation>Format odredišne datoteke nije podržan</translation>
+        <translation type="unfinished">Format odredišne datoteke nije podržan</translation>
     </message>
     <message>
         <source>PDF conversion failed</source>
-        <translation>PDF konverzija nije uspela</translation>
+        <translation type="unfinished">PDF konverzija nije uspela</translation>
     </message>
     <message>
         <source>Word conversion failed</source>
-        <translation>Word konverzija nije uspela</translation>
+        <translation type="unfinished">Word konverzija nije uspela</translation>
     </message>
     <message>
         <source>Unable to fetch node, or no read access</source>
-        <translation>Nije moguće dohvatiti čvor ili ga nije moguće pročitati</translation>
+        <translation type="unfinished">Nije moguće dohvatiti čvor ili ga nije moguće pročitati</translation>
     </message>
     <message>
         <source>Unable to open file %1 on server side</source>
-        <translation>Nije moguće otvoriti datoteku %1 na strani servera</translation>
+        <translation type="unfinished">Nije moguće otvoriti datoteku %1 na strani servera</translation>
     </message>
 </context>
 <context>
     <name>extension/ezodf/import/error</name>
     <message>
         <source>File extension or type is not allowed.</source>
-        <translation>Oznaka ili tip datoteke nisu dozvoljeni.</translation>
+        <translation type="unfinished">Oznaka ili tip datoteke nisu dozvoljeni.</translation>
     </message>
     <message>
         <source>Could not parse XML.</source>
-        <translation>Nije moguće analizirati XLM.</translation>
+        <translation type="unfinished">Nije moguće analizirati XLM.</translation>
     </message>
     <message>
         <source>Can not open socket. Please check if extension/ezodf/daemon.php is running.</source>
-        <translation>Nije moguće otvoriti spojnicu. Molimo proverite da li extension/ezodf/daemon.php radi.</translation>
+        <translation type="unfinished">Nije moguće otvoriti spojnicu. Molimo proverite da li extension/ezodf/daemon.php radi.</translation>
     </message>
     <message>
         <source>Can not convert the given document.</source>
-        <translation>Nije moguće pretvoriti dati dokument.</translation>
+        <translation type="unfinished">Nije moguće pretvoriti dati dokument.</translation>
     </message>
     <message>
         <source>Unable to call daemon. Fork can not create child process.</source>
-        <translation>Nije moguće pozvati daemon. Ogranak ne može da kreira podređeni proces.</translation>
+        <translation type="unfinished">Nije moguće pozvati daemon. Ogranak ne može da kreira podređeni proces.</translation>
     </message>
     <message>
         <source>Daemon reported error.</source>
-        <translation>Daemon je prijavio grešku.</translation>
+        <translation type="unfinished">Daemon je prijavio grešku.</translation>
     </message>
     <message>
         <source>Unknown node.</source>
-        <translation>Nepoznati čvor.</translation>
+        <translation type="unfinished">Nepoznati čvor.</translation>
     </message>
     <message>
         <source>Access denied.</source>
-        <translation>Pristup nije dozvoljen.</translation>
+        <translation type="unfinished">Pristup nije dozvoljen.</translation>
     </message>
     <message>
         <source>Error during import.</source>
-        <translation>Greška prilikom uvoza.</translation>
+        <translation type="unfinished">Greška prilikom uvoza.</translation>
     </message>
     <message>
         <source>Unknown content class specified in odf.ini:</source>
-        <translation>Klasa nepoznatog sadržaja navedena u odf.ini:</translation>
+        <translation type="unfinished">Klasa nepoznatog sadržaja navedena u odf.ini:</translation>
     </message>
     <message>
         <source>Unknown error.</source>
-        <translation>Nepoznata greška.</translation>
+        <translation type="unfinished">Nepoznata greška.</translation>
     </message>
     <message>
         <source>Filetype: </source>
-        <translation>Tip datoteke:</translation>
+        <translation type="unfinished">Tip datoteke:</translation>
     </message>
     <message>
         <source>Folder for images could not be created, access denied.</source>
-        <translation>Nije moguće kreirati fasciklu za slike, pristup nije dozvoljen.</translation>
+        <translation type="unfinished">Nije moguće kreirati fasciklu za slike, pristup nije dozvoljen.</translation>
     </message>
     <message>
         <source>Cannot import. File not found. Already imported?</source>
-        <translation>Ne mogu da uvezem. Datoteka nije pronađena. Već uvezena?</translation>
+        <translation type="unfinished">Ne mogu da uvezem. Datoteka nije pronađena. Već uvezena?</translation>
     </message>
     <message>
         <source>Cannot import document, supplied placement nodeID is not valid.</source>
-        <translation>Ne mogu da uvezem dokument, navedeni položaj IDčvora nije validan.</translation>
+        <translation type="unfinished">Ne mogu da uvezem dokument, navedeni položaj IDčvora nije validan.</translation>
     </message>
     <message>
         <source>Cannot store uploaded file, cannot import.</source>
-        <translation>Ne mogu da sačuvam otpremljenu datoteku, ne mogu da uvezem. </translation>
+        <translation type="unfinished">Ne mogu da sačuvam otpremljenu datoteku, ne mogu da uvezem. </translation>
     </message>
     <message>
         <source>Document is not supported.</source>
-        <translation>Dokument nije podržan.</translation>
+        <translation type="unfinished">Dokument nije podržan.</translation>
     </message>
     <message>
         <source>Unable to fetch node with id </source>

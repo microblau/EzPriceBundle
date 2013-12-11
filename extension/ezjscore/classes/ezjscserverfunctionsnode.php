@@ -1,4 +1,30 @@
 <?php
+//
+// Definition of ezjscServerFunctionsNode class
+//
+// Created on: <01-Jun-2010 00:00:00 ls>
+//
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+// SOFTWARE NAME: eZ JSCore extension for eZ Publish
+// SOFTWARE RELEASE: 4.7.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: eZ Business Use License Agreement eZ BUL Version 2.1
+// NOTICE: >
+//   This source file is part of the eZ Publish CMS and is
+//   licensed under the terms and conditions of the eZ Business Use
+//   License v2.1 (eZ BUL).
+// 
+//   A copy of the eZ BUL was included with the software. If the
+//   license is missing, request a copy of the license via email
+//   at license@ez.no or via postal mail at
+//  	Attn: Licensing Dept. eZ Systems AS, Klostergata 30, N-3732 Skien, Norway
+// 
+//   IMPORTANT: THE SOFTWARE IS LICENSED, NOT SOLD. ADDITIONALLY, THE
+//   SOFTWARE IS LICENSED "AS IS," WITHOUT ANY WARRANTIES WHATSOEVER.
+//   READ THE eZ BUL BEFORE USING, INSTALLING OR MODIFYING THE SOFTWARE.
+
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /**
  * ezjscServerFunctionsNode class definition that provide node fetch functions
@@ -23,6 +49,7 @@ class ezjscServerFunctionsNode extends ezjscServerFunctions
         $offset = isset( $args[2] ) ? $args[2] : 0;
         $sort = isset( $args[3] ) ? self::sortMap( $args[3] ) : 'published';
         $order = isset( $args[4] ) ? $args[4] : false;
+        $objectNameFilter = isset( $args[5] ) ? $args[5] : '';
 
         if ( !$parentNodeID )
         {
@@ -40,6 +67,7 @@ class ezjscServerFunctionsNode extends ezjscServerFunctions
                          'Offset' => $offset,
                          'SortBy' => array( array( $sort, $order ) ),
                          'DepthOperator' => 'eq',
+                         'ObjectNameFilter' => $objectNameFilter,
                          'AsObject' => true );
 
        // fetch nodes and total node count
@@ -52,6 +80,7 @@ class ezjscServerFunctionsNode extends ezjscServerFunctions
         {
             $nodeArray = false;
         }
+        unset( $node );// We have on purpose not checked permission on $node itself, so it should not be used
 
         // generate json response from node list
         if ( $nodeArray )
@@ -113,6 +142,10 @@ class ezjscServerFunctionsNode extends ezjscServerFunctions
         {
            throw new InvalidArgumentException( "Argument 1: '$embedType\_$embedId' does not map to a valid content object" );
         }
+        else if ( !$embedObject->canRead() )
+        {
+            throw new InvalidArgumentException( "Argument 1: '$embedType\_$embedId' is not available" );
+        }
 
         // Params for node to json encoder
         $params    = array('loadImages' => true);
@@ -151,6 +184,16 @@ class ezjscServerFunctionsNode extends ezjscServerFunctions
         $contentNodeID = $http->postVariable('ContentNodeID');
         $priorityArray = $http->postVariable('Priority');
         $priorityIDArray = $http->postVariable('PriorityID');
+
+        $contentNode = eZContentObjectTreeNode::fetch( $contentNodeID );
+        if ( !$contentNode instanceof eZContentObjectTreeNode )
+        {
+           throw new InvalidArgumentException( "Argument ContentNodeID: '$contentNodeID' does not exist" );
+        }
+        else if ( !$contentNode->canEdit() )
+        {
+            throw new InvalidArgumentException( "Argument ContentNodeIDs: '$contentNodeID' is not available" );
+        }
 
         if ( eZOperationHandler::operationIsAvailable( 'content_updatepriority' ) )
         {

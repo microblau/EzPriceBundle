@@ -1,3 +1,6 @@
+<div class="content-view-full">
+ <div class="class-{$node.class_identifier}">
+
 {include uri='design:infocollection_validation.tpl'}
 
 <div class="content-navigation">
@@ -7,7 +10,7 @@
 
 {* DESIGN: Header START *}<div class="box-header">
 
-{def $js_class_languages = $node.object.content_class.prioritized_languages_js_array
+{def $js_class_languages = $node.object.content_class.prioritized_languages_js_array|explode( '"' )|implode( '\'' )
      $disable_another_language = cond( eq( 0, count( $node.object.content_class.can_create_languages ) ),"'edit-class-another-language'", '-1' )
      $disabled_sub_menu = "['class-createnodefeed', 'class-removenodefeed']"
      $hide_status = ''}
@@ -41,11 +44,11 @@
 
 <div class="context-information">
 <p class="left modified">{'Last modified'|i18n( 'design/admin/node/view/full' )}: {$node.object.modified|l10n(shortdatetime)}, <a href={$node.object.current.creator.main_node.url_alias|ezurl}>{$node.object.current.creator.name|wash}</a> ({'Node ID'|i18n( 'design/admin/node/view/full' )}: {$node.node_id}, {'Object ID'|i18n( 'design/admin/node/view/full' )}: {$node.object.id})</p>
-<p class="right translation">{$node.object.current_language_object.locale_object.intl_language_name}&nbsp;<img src="{$node.object.current_language|flag_icon}" alt="{$language_code}" style="vertical-align: middle;" /></p>
+<p class="right translation">{$node.object.current_language_object.locale_object.intl_language_name}&nbsp;<img src="{$node.object.current_language|flag_icon}" width="18" height="12" alt="{$language_code}" style="vertical-align: middle;" /></p>
 <div class="break"></div>
 </div>
 
-<div class="tab-block">
+<div id="window-controls" class="tab-block">
 
 {include uri='design:window_controls.tpl'}
 
@@ -105,19 +108,10 @@
 </div>
 
 <div class="button-right">
-        <p class='versions'>
+	<p class='versions'>
     {* Link to manage versions *}
     <a href={concat("content/history/", $node.contentobject_id )|ezurl} title="{'View and manage (copy, delete, etc.) the versions of this object.'|i18n( 'design/admin/content/edit' )}">{'Manage versions'|i18n( 'design/admin/content/edit' )}</a>
     </p>
-</div>
-
-<div class="button-right">
-<div class="block">
-    {* Custom content action buttons. *}
-    {section var=ContentActions loop=$node.object.content_action_list}
-        <input class="button" type="submit" name="{$ContentActions.item.action}" value="{$ContentActions.item.name}" />
-    {/section}
-</div>
 </div>
 
 <div class="float-break"></div>
@@ -129,10 +123,15 @@
 </div>
 
 {* Children window.*}
+<div id="content-view-children">
 {if $node.is_container}
     {include uri='design:children.tpl'}
 {else}
     {include uri='design:no_children.tpl'}
 {/if}
+</div>
 
+</div>
+
+ </div>
 </div>

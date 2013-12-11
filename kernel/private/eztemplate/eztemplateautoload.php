@@ -2,14 +2,14 @@
 /**
  * File containing template autoload definitions for private kernel area.
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPLv2
- *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
  */
 
 $eZTemplateOperatorArray = array();
-$eZTemplateOperatorArray[] = array( 'script' => 'kernel/private/eztemplate/ezplanguageswitcheroperator.php',
-                                    'class' => 'ezpLanguageSwitcherOperator',
+$eZTemplateOperatorArray[] = array( 'class' => 'ezpLanguageSwitcherOperator',
                                     'operator_names' => array( 'language_switcher' ) );
 
 ?>

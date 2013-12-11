@@ -1,5 +1,6 @@
+<?php /* #?ini charset="utf-8"?
 [TemplateSettings]
-ExtensionAutoloadPath[]=collectexport
+#ExtensionAutoloadPath[]=collectexport
 
 [RegionalSettings]
 TranslationExtensions[]=collectexport
@@ -8,3 +9,5 @@ TranslationExtensions[]=collectexport
 PolicyOmitList[]=collectexport/overview
 PolicyOmitList[]=collectexport/export
 PolicyOmitList[]=collectexport/doexport
+
+*/?>

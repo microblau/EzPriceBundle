@@ -1,6 +1,8 @@
 <?php
 require( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
+
+$tpl->setVariable( "productos", $_SESSION['productsImemento'] );
 
 $Result['content'] = $tpl->fetch( 'design:basket/imemento.tpl' );
 $Result['path'] = array( 

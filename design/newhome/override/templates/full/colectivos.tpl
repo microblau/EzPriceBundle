@@ -125,10 +125,7 @@
 										 $order_by = cond( ne( ezpreference( 'order_by'), ''), ezpreference( 'order_by'), $materia|downcase() )
 										}
 
-{def $filtro =  array( 'and',
-                                                                    
-                                                                     concat( 'subattr_precio___discount_', $user.contentobject.main_node.parent_node_id ,'_i:1' )
-                                                                   )}
+										{*def $filtro =  array( 'and',concat( 'subattr_precio___discount_', $user.contentobject.main_node.parent_node_id ,'_i:1'))*}
 																   
                                      {def $attribute='812;770;398;884'}
                                      {def $params = array( 'or' )}
@@ -139,8 +136,7 @@
                                
                                     {switch match=$order_by}
                                 			{case match='precio'}
-                                               
-                                                {def $sort_array = hash( concat( 'subattr_precio___precio_', $user.contentobject.main_node.parent_node_id ,'_f' ), 'asc' )} 
+                                               {def $sort_array = hash( concat( 'subattr_precio___precio_', $user.contentobject.main_node.parent_node_id ,'_f' ), 'asc' )} 
                                             {/case}
                                             {case match='fechapublicacion'}
                                                 {def $sort_array = hash( 'attr_fecha_aparicion_dt', 'desc' )}                                                       
@@ -149,40 +145,32 @@
                                               {def $sort_array = hash( 'attr_fecha_aparicion_dt', 'desc' )}                                             
                                             {/case}
                                             {case match='fiscal'}
-                                                    
-                                                 {set $filtro=$filtro|append(concat( 'submeta_', 'area', '___id_si:', 147))}
-{def $sort_array = hash( 'attr_fecha_aparicion_dt', 'desc' )} 
+                                                {set $filtro=$filtro|append(concat( 'submeta_', 'area', '___id_si:', 147))}
+												{def $sort_array = hash( 'attr_fecha_aparicion_dt', 'desc' )} 
                                             {/case}
                                             {case match='social'}
-                    	                      
-                                                  {set $filtro=$filtro|append(concat( 'submeta_', 'area', '___id_si:', 146))}
-{def $sort_array = hash( 'attr_fecha_aparicion_dt', 'desc' )}    
+                    	                      {set $filtro=$filtro|append(concat( 'submeta_', 'area', '___id_si:', 146))}
+											  {def $sort_array = hash( 'attr_fecha_aparicion_dt', 'desc' )}    
                                             {/case}
                                             {case match='mercantil'}
-                	                            
-                                                {set $filtro=$filtro|append(concat( 'submeta_', 'area', '___id_si:', 148))}
-{def $sort_array = hash( 'attr_fecha_aparicion_dt', 'desc' )}    
+                	                            {set $filtro=$filtro|append(concat( 'submeta_', 'area', '___id_si:', 148))}
+												{def $sort_array = hash( 'attr_fecha_aparicion_dt', 'desc' )}    
                                             {/case}
                                             {case match='contable'}
-            	                                
-                                                {set $filtro=$filtro|append(concat( 'submeta_', 'area', '___id_si:', 149))}
-{def $sort_array = hash( 'attr_fecha_aparicion_dt', 'desc' )} 
-
-                                            {/case}
+            	                                {set $filtro=$filtro|append(concat( 'submeta_', 'area', '___id_si:', 149))}
+												{def $sort_array = hash( 'attr_fecha_aparicion_dt', 'desc' )} 
+											{/case}
                                             {case match='inmobiliario'}
-        	                                   
-                                                {set $filtro=$filtro|append(concat( 'submeta_', 'area', '___id_si:', 151))}
-{def $sort_array = hash( 'attr_fecha_aparicion_dt', 'desc' )} 
+        	                                   {set $filtro=$filtro|append(concat( 'submeta_', 'area', '___id_si:', 151))}
+											   {def $sort_array = hash( 'attr_fecha_aparicion_dt', 'desc' )} 
                                             {/case}
                                             {case match='administrativo'}
-    	                                        
-                                                {set $filtro=$filtro|append(concat( 'submeta_', 'area', '___id_si:', 153))}
-{def $sort_array = hash( 'attr_fecha_aparicion_dt', 'desc' )}  
+    	                                        {set $filtro=$filtro|append(concat( 'submeta_', 'area', '___id_si:', 153))}
+												{def $sort_array = hash( 'attr_fecha_aparicion_dt', 'desc' )}  
                                             {/case}
                                             {case match='juridico'}
-	                                          
-                                                {set $filtro=$filtro|append(concat( 'submeta_', 'area', '___id_si:', 190))}
-{def $sort_array = hash( 'attr_fecha_aparicion_dt', 'desc' )}   
+	                                          {set $filtro=$filtro|append(concat( 'submeta_', 'area', '___id_si:', 190))}
+											  {def $sort_array = hash( 'attr_fecha_aparicion_dt', 'desc' )}   
                                             {/case}
                                 		{/switch}
                                 		{def $results = fetch( 'ezfind', 'search', hash(
@@ -197,12 +185,13 @@
                                          
                                          
                                          
-                                       
+                            
                             {if gt( $results.SearchCount, 0)}
                         	<h2>Tiene {$results.SearchCount} producto{if ne( $results.SearchCount, 1)}s{/if} para el Colectivo/Asociación Profesional {$user.contentobject.main_node.parent.object.name}</h2>
                         	{/if}
                             
                             <div class="wrap">
+							
                           	
                                 <form action={"buscador/redirector"|ezurl()} method="post" id="filtrosform">
                                 	

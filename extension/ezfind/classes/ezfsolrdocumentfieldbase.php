@@ -3,25 +3,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Find
-// SOFTWARE RELEASE: 2.2.x
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE RELEASE: 2.7.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: eZ Business Use License Agreement eZ BUL Version 2.1
 // NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
+//  This source file is part of the eZ Publish CMS and is
+//  licensed under the terms and conditions of the eZ Business Use
+//  License v2.1 (eZ BUL).
 //
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
+//  A copy of the eZ BUL was included with the software. If the
+//  license is missing, request a copy of the license via email
+//  at license@ez.no or via postal mail at
+// 	Attn: Licensing Dept. eZ Systems AS, Klostergata 30, N-3732 Skien, Norway
 //
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
+//  IMPORTANT: THE SOFTWARE IS LICENSED, NOT SOLD. ADDITIONALLY, THE
+//  SOFTWARE IS LICENSED "AS IS," WITHOUT ANY WARRANTIES WHATSOEVER.
+//  READ THE eZ BUL BEFORE USING, INSTALLING OR MODIFYING THE SOFTWARE.
+
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -78,7 +76,7 @@ class ezfSolrDocumentFieldBase
     {
         $contentClassAttribute = $this->ContentObjectAttribute->attribute( 'contentclass_attribute' );
         $fieldNameArray = array();
-        foreach( array_keys( eZSolr::$fieldTypeContexts ) as $context )
+        foreach ( array_keys( eZSolr::$fieldTypeContexts ) as $context )
         {
             $fieldNameArray[] = self::getFieldName( $contentClassAttribute, null, $context );
         }
@@ -91,7 +89,7 @@ class ezfSolrDocumentFieldBase
         if ( is_array( $metaData ) )
         {
             $processedMetaDataArray = array();
-            foreach ($metaData as $value)
+            foreach ( $metaData as $value )
             {
                 $processedMetaDataArray[] = $this->preProcessValue( $value,
                                             self::getClassAttributeType( $contentClassAttribute ) );
@@ -102,7 +100,7 @@ class ezfSolrDocumentFieldBase
 
             $processedMetaDataArray[] = $this->preProcessValue( $metaData,
                                             self::getClassAttributeType( $contentClassAttribute ) );
-           
+
         }
         $fields = array();
         foreach ( $fieldNameArray as $fieldName )
@@ -130,7 +128,7 @@ class ezfSolrDocumentFieldBase
         {
             return '';
         }
-        foreach( $array as $key => $value )
+        foreach ( $array as $key => $value )
         {
             if ( is_array( $value ) )
             {
@@ -320,7 +318,7 @@ class ezfSolrDocumentFieldBase
      */
     static function getInstance( eZContentObjectAttribute $objectAttribute )
     {
-        if ( array_key_exists( $objectAttribute->attribute( 'id' ), self::$singletons ) )
+        if ( isset( self::$singletons[$objectAttribute->attribute( 'id' )] ) )
         {
             return self::$singletons[$objectAttribute->attribute( 'id' )];
         }
@@ -330,7 +328,7 @@ class ezfSolrDocumentFieldBase
 
             // Check if using custom handler.
             $customMapList = self::$FindINI->variable( 'SolrFieldMapSettings', 'CustomMap' );
-            if ( array_key_exists( $datatypeString, $customMapList ) )
+            if ( isset( $customMapList[$datatypeString] ) )
             {
                 $fieldBaseClass = $customMapList[$datatypeString];
                 if ( class_exists( $fieldBaseClass ) )
@@ -369,6 +367,12 @@ class ezfSolrDocumentFieldBase
                 {
                     $value = self::convertTimestampToDate( $value );
                 }
+                // Flag this as not to index
+                else
+                {
+                    $value = null;
+                }
+
             } break;
 
             case 'boolean':
@@ -417,7 +421,10 @@ class ezfSolrDocumentFieldBase
      */
     public static function generateSubattributeFieldName( eZContentClassAttribute $classAttribute, $subfieldName, $type )
     {
-        return self::$DocumentFieldName->lookupSchemaName( self::SUBATTR_FIELD_PREFIX . $classAttribute->attribute( 'identifier' ) . self::SUBATTR_FIELD_SEPARATOR . $subfieldName,
+        // base name of subfields ends with self::SUBATTR_FIELD_PREFIX so
+        // that it's possible to differentiate those fields in schema.xml
+        return self::$DocumentFieldName->lookupSchemaName( self::SUBATTR_FIELD_PREFIX . $classAttribute->attribute( 'identifier' )
+                                                            . self::SUBATTR_FIELD_SEPARATOR . $subfieldName . self::SUBATTR_FIELD_SEPARATOR,
                                                            $type );
     }
 

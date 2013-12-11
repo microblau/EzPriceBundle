@@ -1,35 +1,12 @@
 <?php
-//
-// Definition of eZUserDiscountRule class
-//
-// Created on: <27-Nov-2002 13:05:59 wy>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZUserDiscountRule class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 /*!
   \class eZUserDiscountRule ezuserdiscountrule.php
@@ -79,10 +56,17 @@ class eZUserDiscountRule extends eZPersistentObject
 
     function store( $fieldFilters = null )
     {
-        eZExpiryHandler::registerShutdownFunction();
-        $handler = eZExpiryHandler::instance();
-        $handler->setTimestamp( 'user-discountrules-cache', time() );
-        $handler->store();
+        if ( $this->ContentobjectID == eZUser::anonymousId() )
+        {
+            eZUser::purgeUserCacheByAnonymousId();
+        }
+        else
+        {
+            eZExpiryHandler::registerShutdownFunction();
+            $handler = eZExpiryHandler::instance();
+            $handler->setTimestamp( 'user-discountrules-cache', time() );
+            $handler->store();
+        }
         eZPersistentObject::store( $fieldFilters );
     }
 
@@ -107,38 +91,39 @@ class eZUserDiscountRule extends eZPersistentObject
 
     static function fetchIDListByUserID( $userID )
     {
-        $http = eZHTTPTool::instance();
-
-        eZExpiryHandler::registerShutdownFunction();
-        $handler = eZExpiryHandler::instance();
-        $expiredTimeStamp = 0;
-        if ( $handler->hasTimestamp( 'user-discountrules-cache' ) )
-            $expiredTimeStamp = $handler->timestamp( 'user-discountrules-cache' );
-
-        $ruleTimestamp =& $http->sessionVariable( 'eZUserDiscountRulesTimestamp' );
-
-        $ruleArray = false;
-        // check for cached version in session
-        if ( $ruleTimestamp > $expiredTimeStamp )
+        if ( $userID == eZUser::anonymousId() )
         {
-            if ( $http->hasSessionVariable( 'eZUserDiscountRules' . $userID ) )
-            {
-                $ruleArray =& $http->sessionVariable( 'eZUserDiscountRules' . $userID );
-            }
+                $userCache = eZUSer::getUserCacheByAnonymousId();
+                $ruleArray = $userCache['discount_rules'];
         }
-
-        if ( !is_array( $ruleArray ) )
+        else
         {
-            $userID = (int)$userID;
-            $db = eZDB::instance();
-            $query = "SELECT DISTINCT ezdiscountrule.id
-                  FROM ezdiscountrule,
-                       ezuser_discountrule
-                  WHERE ezuser_discountrule.contentobject_id = $userID AND
-                        ezuser_discountrule.discountrule_id = ezdiscountrule.id";
-            $ruleArray = $db->arrayQuery( $query );
-            $http->setSessionVariable( 'eZUserDiscountRules' . $userID, $ruleArray );
-            $http->setSessionVariable( 'eZUserDiscountRulesTimestamp', time() );
+            $http = eZHTTPTool::instance();
+
+            eZExpiryHandler::registerShutdownFunction();
+            $handler = eZExpiryHandler::instance();
+            $expiredTimeStamp = 0;
+            if ( $handler->hasTimestamp( 'user-discountrules-cache' ) )
+                $expiredTimeStamp = $handler->timestamp( 'user-discountrules-cache' );
+
+            $ruleTimestamp =& $http->sessionVariable( 'eZUserDiscountRulesTimestamp' );
+
+            $ruleArray = false;
+            // check for cached version in session
+            if ( $ruleTimestamp > $expiredTimeStamp )
+            {
+                if ( $http->hasSessionVariable( 'eZUserDiscountRules' . $userID ) )
+                {
+                    $ruleArray =& $http->sessionVariable( 'eZUserDiscountRules' . $userID );
+                }
+            }
+
+            if ( !is_array( $ruleArray ) )
+            {
+                $ruleArray = self::generateIDListByUserID( (int) $userID );
+                $http->setSessionVariable( 'eZUserDiscountRules' . $userID, $ruleArray );
+                $http->setSessionVariable( 'eZUserDiscountRulesTimestamp', time() );
+            }
         }
 
         $rules = array();
@@ -150,12 +135,30 @@ class eZUserDiscountRule extends eZPersistentObject
     }
 
     /**
+     * Get raw list of discount rules
+     *
+     * @internal
+     * @param int $userId
+     * @return array
+     */
+    static public function generateIDListByUserID( $userId )
+    {
+        $db = eZDB::instance();
+        $query = "SELECT DISTINCT ezdiscountrule.id
+              FROM ezdiscountrule,
+                   ezuser_discountrule
+              WHERE ezuser_discountrule.contentobject_id = $userId AND
+                    ezuser_discountrule.discountrule_id = ezdiscountrule.id";
+        return $db->arrayQuery( $query );
+    }
+
+    /**
      * Fetches the eZDiscountRules matching an array of eZUserID
      *
      * @param array(eZUserID) $idArray Array of user ID
      *
      * @return array(eZDiscountRule)
-     **/
+     */
     static function &fetchByUserIDArray( $idArray )
     {
         $db = eZDB::instance();

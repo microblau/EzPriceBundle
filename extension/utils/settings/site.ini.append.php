@@ -6,9 +6,11 @@ PolicyOmitList[]=basket/register
 PolicyOmitList[]=basket/basket
 PolicyOmitList[]=basket/payment
 PolicyOmitList[]=basket/confirmorder
+PolicyOmitList[]=basket/gastosenvio
 PolicyOmitList[]=basket/checkout
 PolicyOmitList[]=basket/outside
 PolicyOmitList[]=basket/ajaxadd
+PolicyOmitList[]=basket/ajaxremove
 PolicyOmitList[]=basket/mementix
 PolicyOmitList[]=basket/mementixcheckprice
 PolicyOmitList[]=basket/addmementix
@@ -17,6 +19,7 @@ PolicyOmitList[]=basket/imemento
 PolicyOmitList[]=basket/imementorama
 PolicyOmitList[]=basket/addimemento
 PolicyOmitList[]=basket/imementocheckprice
+PolicyOmitList[]=basket/imementoramacheckprice
 PolicyOmitList[]=basket/qmementix
 PolicyOmitList[]=basket/addqmementix
 PolicyOmitList[]=basket/qmementixcheckprice
@@ -67,6 +70,7 @@ ExtensionAutoloadPath[]=utils
 [EFLSettings]
 FormationSubdomain=formacion.efl.es
 WWWSubdomain=www.efl.es
+#WWWSubdomain=www.testefl.es
 
 [Cache]
 CacheItems[]=feeds

@@ -51,7 +51,7 @@ $tpl->setVariable( 'end_year', date('Y') );
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:collectexport/export.tpl' );
 $Result['path'] = array( array( 'url' => '/collectexport/overview',
-                                'text' => ezi18n( 'extension/collectexport', 'Collected information export' ) ),
+                                'text' => ezpI18n::tr( 'extension/collectexport', 'Collected information export' ) ),
                          array( 'url' => false,
                                 'text' => $objectName ) );
 

@@ -1,5 +1,5 @@
 {default enable_help=true() enable_link=true()}
-
+{def $pagedata = ezpagedata()}
 {if is_set($module_result.content_info.persistent_variable.site_title)}
     {set scope=root site_title=$module_result.content_info.persistent_variable.site_title}
 {else}
@@ -43,9 +43,19 @@
 
     {foreach $site.http_equiv as $key => $item}
     <meta name="{$key|wash}" content="{$item|wash}" />
-    
-
     {/foreach}
+    
+    {def $canonical=false}
+    {if or( is_set( $module_result.view_parameters.offset ), is_set( $module_result.view_parameters.mode ) )}
+            {set $canonical = true} 
+    {/if}
+    {if $canonical}
+        <link rel="canonical" href="http://{ezsys( 'hostname' )}/{$requested_uri_string}" />
+    {/if}{if is_set( $pagedata.persistent_variable.previous_page )}
+          <link rel="prev" href={$pagedata.persistent_variable.previous_page} />
+    {/if}{if is_set( $pagedata.persistent_variable.next_page )}     
+        <link rel="next" href={$pagedata.persistent_variable.next_page} />
+    {/if} 
     {*
     {foreach $site.meta as $key => $item}
     {if is_set( $module_result.content_info.persistent_variable[$key] )}

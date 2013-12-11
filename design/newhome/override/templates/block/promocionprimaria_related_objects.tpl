@@ -33,7 +33,7 @@ $(".btnOpinion").fancybox({
 									<div class="imgModuloDest">
                                        {if $node.data_map.url_youtube.has_content}
 {def $aux=$node.data_map.url_youtube.content|explode('v=')}
-                                            	<div class="youtube-player" id="{$aux.1}"></div>
+                                            	<div class="youtube-player" id="{$aux.1}" idvideo="{$aux.1}" ></div>
 {undef $aux}
                                        {elseif $node.data_map.video.has_content}
 
@@ -42,7 +42,11 @@ $(".btnOpinion").fancybox({
 
                                              {attribute_view_gui attribute=$video.data_map.video width=633 height=304 autostart=0}
                                         {else}
-										<img src={$img.data_map.image.content.promoprimariaconrelacionado.url|ezroot} width="{$img.data_map.image.content.original.width}" height="{$img.data_map.image.content.original.height}" alt="" />
+                                                           {if $node.data_map.producto_relacionado.has_content}
+										<a href={$node.data_map.producto_relacionado.content.main_node.url_alias|ezurl}><img src={$img.data_map.image.content.promoprimariaconrelacionado.url|ezroot} width="{$img.data_map.image.content.original.width}" height="{$img.data_map.image.content.original.height}" alt="" /></a>
+                                                           {else}
+                                                                                <a href="{$node.data_map.enlace.content}"><img src={$img.data_map.image.content.promoprimariaconrelacionado.url|ezroot} width="{$img.data_map.image.content.original.width}" height="{$img.data_map.image.content.original.height}" alt="" /></a>
+                                                           {/if}
                                        {/if}
 										<div class="txt {if $node.data_map.producto_relacionado.has_content|not}no-related{/if}">
                                             {if $node.data_map.producto_relacionado.has_content}
@@ -115,6 +119,7 @@ $(".btnOpinion").fancybox({
 								</div>		
 								{/if}
 								</li>
+								{undef $img}
                                 {/foreach}
 								
 							</ul>		

@@ -25,7 +25,7 @@
         	{if $block.valid_nodes.0.data_map.imagen.has_content}
         	      {def $imagen = fetch( 'content', 'object', hash( 'object_id', $block.valid_nodes.0.data_map.imagen.content.relation_browse.0.contentobject_id ))}
                                         <div class="media">
-                                        <img src={$imagen.data_map.image.content.original.url|ezroot()} width="{$imagen.data_map.image.content.original.width}" height="{$imagen.data_map.image.content.original.height}" alt="{$imagen.data_map.image.content.alternative_text}" />
+                                        <a href={$block.valid_nodes.0.url_alias|ezurl}><img src={$imagen.data_map.image.content.original.url|ezroot()} width="{$imagen.data_map.image.content.original.width}" height="{$imagen.data_map.image.content.original.height}" alt="{$imagen.data_map.image.content.alternative_text}" /></a>
                                         </div>       
         	{/if}
         {/if}

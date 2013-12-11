@@ -4,9 +4,9 @@
 
 {foreach $content_attributes_grouped_data_map as $attribute_group => $content_attributes_grouped}
 {if $attribute_group|ne( $attribute_default_category )}
-        <fieldset class="ezcca-collapsible">
-        <legend><a href="JavaScript:void(0);">{$attribute_categorys[$attribute_group]}</a></legend>
-        <div class="ezcca-collapsible-fieldset-content">
+    <fieldset class="ezcca-collapsible ezcca-attributes-group-{$attribute_group|wash}">
+    <legend><a href="JavaScript:void(0);">{$attribute_categorys[$attribute_group]}</a></legend>
+    <div class="ezcca-collapsible-fieldset-content">
 {/if}
 {foreach $content_attributes_grouped as $attribute_identifier => $attribute}
 {def $contentclass_attribute = $attribute.contentclass_attribute}
@@ -80,32 +80,35 @@
 {run-once}
 {* if is_set( $content_attributes_grouped_data_map[1] ) *}
 <script type="text/javascript">
-<!--
 {literal}
 
 jQuery(function( $ )
 {
     $('fieldset.ezcca-collapsible legend a').click( function()
     {
-                var container = $( this.parentNode.parentNode ), inner = container.find('div.ezcca-collapsible-fieldset-content');
-                if ( container.hasClass('ezcca-collapsed') )
-                {
-                        container.removeClass('ezcca-collapsed');
-                        inner.slideDown( 150 );
-            }
-                else
-                {
-                        inner.slideUp( 150, function(){
+        var container = $( this.parentNode.parentNode ), inner = container.find('div.ezcca-collapsible-fieldset-content');
+        if ( container.hasClass('ezcca-collapsed') )
+        {
+            container.removeClass('ezcca-collapsed');
+            inner.slideDown( 150 );
+        }
+        else
+        {
+            inner.slideUp( 150, function(){
                 $( this.parentNode ).addClass('ezcca-collapsed');
             });
         }
     });
-    // We don't hide these by default for accebility reasons
-    $('fieldset.ezcca-collapsible').addClass('ezcca-collapsed').find('div.ezcca-collapsible-fieldset-content').hide();
+    // Collapse by default, unless the group has at least one attribute with label.message-error
+    $('fieldset.ezcca-collapsible').each( function(){
+        if ( $(this).find('label.message-error').length == 0 )
+        {
+            $(this).addClass('ezcca-collapsed').find('div.ezcca-collapsible-fieldset-content').hide();
+        }
+    } );
 });
 
 {/literal}
--->
 </script>
 {* /if *}
 {/run-once}

@@ -8,7 +8,7 @@
  *  4.- El sistema le envía de nuevo el password al email y llama al ws para actualizarlo allí. 
 */
 require( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $http = eZHTTPTool::instance();
 
 if( $http->hasPostVariable( 'BtnPasswordRecover' ) )
@@ -47,7 +47,7 @@ if( $http->hasPostVariable( 'BtnPasswordRecover' ) )
 		$mail->setSender( $sender );
         $mail->setReceiver( $email );
         $mail->setSubject( $subject );
-        $templateMail = templateInit();
+        $templateMail = eZTemplate::factory();
         $templateMail->setVariable( 'key', $key );
         $mail->setBody(  $templateMail->fetch( 'design:basket/password_email.tpl' ) ); 
                
@@ -60,7 +60,7 @@ if( $http->hasPostVariable( 'BtnPasswordRecover' ) )
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:common/forgotpasswordopinion.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/shop', 'Recuperar Contraseña | Tienda Online EFL' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/shop', 'Recuperar Contraseña | Tienda Online EFL' ) ) );
 $Result['pagelayout'] = false;
 
 ?>

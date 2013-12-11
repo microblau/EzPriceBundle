@@ -9,6 +9,21 @@
 {ezcss_require( 'jquery.jcarousel.css')}
 {ezscript_require('jquery.fancybox-1.3.0.pack.js')} 
 {ezscript_require('common.js')}
+{*analytics de ficha de producto categorías*}
+<script type="text/javascript">
+{foreach $node.data_map.area.content.relation_list as $k=>$area}
+	{def $areas=fetch(content,object, hash(object_id, $area.contentobject_id))}
+		{literal}
+		_gaq.push(['_setCustomVar',1,'categoria','{/literal}{$areas.name}{literal}',3]);
+		{/literal}
+	{undef $areas}
+{/foreach}
+	{literal}		
+		_gaq.push(['_trackEvent', 'PhantomEvent', 'GO', '-', 0, true]); //  este evento es el encargado de asegurar el envío de la variable personalizada
+	{/literal}
+</script>   
+
+{*fin analytics*}
 {def $limite=6}
 {def $offset=0}
 {def $cuantasvaloracionestotales = fetch('producto','cuantasvaloraciones' , hash( 'node_id', $node.node_id ))} 
@@ -146,7 +161,7 @@
 
 									
 							
-									<label class="check" for="legal"> <input type="checkbox"id="legal" name="ContentObjectAttribute_data_boolean_243194" /> Acepto las <a id="condicionesligthBox" href={'lightbox/ver/1451'|ezurl}>condiciones legales</a></label>
+									<label class="check" for="legal"> <input type="checkbox" id="legal" name="ContentObjectAttribute_data_boolean_243194" /> He leído y acepto las condiciones de la <a class="lb" style="white-space: normal" id="politicaligthBox" href={'lightbox/ver/19526'|ezurl}>Política de Privacidad</a> y el <a class="lb" id="avisoLightbox" href={'lightbox/ver/292'|ezurl}>Aviso Legal</a></label>
 								
 							<input name="ActionCollectInformation" type="submit" value="Enviar solicitud" id="trySend" />
 	{def $currentusuario = fetch( 'user', 'current_user') }				

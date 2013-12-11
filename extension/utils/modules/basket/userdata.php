@@ -1,13 +1,12 @@
 <?php
-require( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $user = eZUser::currentUser();
 $email = $user->attribute( 'login' );
 
 $eflws = new eflWS();
 $existeUsuario = $eflws->existeUsuario( $email );
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $http = eZHTTPTool::instance();
 
@@ -411,6 +410,12 @@ else
 		{
 			$errors['condiciones'] = 'Debe aceptar las condiciones legales';
 		}
+                
+                if( !$http->hasPostVariable( 'avisolegal') )
+		{
+			$errors['avisolegal'] = 'Debe aceptar la política de privacidad y el aviso legal';
+		}
+		
 		
 		$tpl->setVariable( 'observaciones', $http->postVariable( 'observaciones' ) );
 		$order['observaciones'] = $http->postVariable( 'observaciones' );
@@ -739,7 +744,7 @@ else
 		  else
 		  $Result['content'] = $tpl->fetch( "design:basket/userdata_empresa.tpl" );
 		$Result['path'] = array( array( 'url' => false,
-		                                'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+		                                'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
 	}
 }
 

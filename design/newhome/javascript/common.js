@@ -1491,7 +1491,25 @@ var formsValidations = {
                         formsValidations.setMsgError(errorTxt, f);
                         return false;
                         f.find("fieldset legend").css("position","absolute");
-                }else return true;     
+                }else{
+                	if($("input#transferencia:checked").length == 1){
+                		_gaq.push(['_setCustomVar',2,'forma-de-pago','Transferencia',2]);
+                		_gaq.push(['_trackEvent', 'PhantomEvent', 'GO', '-', 0, true]);
+                	}
+                	if($("input#credito:checked").length == 1){
+                		_gaq.push(['_setCustomVar',2,'forma-de-pago','Tarjeta de crédito',2]);
+                		_gaq.push(['_trackEvent', 'PhantomEvent', 'GO', '-', 0, true]);
+                	}
+                	if($("input#paypal:checked").length == 1){
+                		_gaq.push(['_setCustomVar',2,'forma-de-pago','Paypal',2]);
+                		_gaq.push(['_trackEvent', 'PhantomEvent', 'GO', '-', 0, true]);
+                	}
+                	if($("input#domiciliacion:checked").length == 1){
+                		_gaq.push(['_setCustomVar',2,'forma-de-pago','Domiciliación',2]);
+                		_gaq.push(['_trackEvent', 'PhantomEvent', 'GO', '-', 0, true]);
+                	}
+                	return true;     
+                }    
                 return true;
        
         },
@@ -2589,6 +2607,18 @@ var lightbox = {
 		});
 	
 	},
+        links: function(){
+            var links = $("a.lb");
+            for( var i=0; i<links.length;i++){
+              
+            $(links[i]).fancybox({
+			'width':568, 
+			'height':512,
+			'padding':0,
+			'type':'iframe'
+		});
+            }
+        },
     vervideo:function(){
         var enlace = $("#video");
         $(enlace).fancybox({
@@ -3116,6 +3146,8 @@ jQuery(document).ready(function() {
 	if($("#home_recursos #gridHome1 .listadoProfundidad #inscribirme").length != 0) {	
 		lightbox.inscribirme();
 	}
+        
+        lightbox.links()
 	
     if( $("#video").length != 0 ) {
         lightbox.vervideo();
@@ -3163,7 +3195,49 @@ jQuery(document).ready(function() {
 //para enlaces externos a efl.es
 
 jQuery(function($){
-$('a:not([href*="' + document.domain + '"])').click(function(event){
+
+    //Recorre todos los enlaces
+    $("a").each(function(){
+        var $a = $(this),
+            hostname = $(this).prop('hostname'),
+            arrHostname = ["www.efl.es", "formacion.efl.es", "espacioclientes.efl.es"],
+            result = $.inArray(hostname,arrHostname);
+
+        //Si el hostname del enlace es igual que alguno de los del array.
+        if (result != -1){ //<-- Descomentar para Produccion
+
+ 		if(hostname !== document.domain){ //Si el hostname (dominio) del enlace no es igual que el dominio, es externo
+           $a.addClass("externo")
+       }
+ 
+        }
+        
+    })
+
+});
+
+//para los pdfs
+jQuery(function(){
+    jQuery('a[href$=".pdf"]').click(function(){ 
+            _gaq.push(['_trackEvent', 'Descargas', 'Pdf', this.href]);
+    }) 
+});
+
+//para añadir a la cesta de la compra
+
+jQuery(function(){
+    jQuery('a[href*="'+ "basket/add" +'"]').click(function(){ 
+       var precio =$('.ofertaSus span.precioNuevo').text().split("€")[0].replace(/,/g, ".");
+       var productPrice = Math.round(precio.replace(/(?!\.)[\D\s]/g,"")); // 
+        var nombreproducto = $(".subTit").parent().html().split("<")[0];    
+        _gaq.push(['_trackEvent', 'AddtoBasket', 'Click', nombreproducto,productPrice]);
+        
+    }) 
+});
+
+
+
+$('a.externo').click(function(event){ //Trackea los externos
 		// Just in case, be safe and don't do anything
 		if (typeof _gat == 'undefined') {
 			return;
@@ -3191,23 +3265,3 @@ $('a:not([href*="' + document.domain + '"])').click(function(event){
 		setTimeout('document.location = "' + href + '";', 100);
 	}
 });
-});
-
-//para los pdfs
-jQuery(function(){
-	jQuery('a[href$=".pdf"]').click(function(){ 
-			_gaq.push(['_trackEvent', 'Descargas', 'Pdf', this.href]);
-	}) 
-});
-
-//para añadir a la cesta de la compra
-
-jQuery(function(){
-	jQuery('a[href*="'+ "basket/add" +'"]').click(function(){ 
-		var precio =$('.ofertaSus span.precioNuevo').text();
-		var nombreproducto = $(".subTit").parent().html().split("<")[0];	
-		_gaq.push(['_trackEvent', 'AddtoBasket', 'Click', nombreproducto,precio]);
-		
-	}) 
-});
-

@@ -1,35 +1,12 @@
 <?php
-//
-// Definition of eZSubtreeNotificationRule class
-//
-// Created on: <14-May-2003 16:20:24 sp>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZSubtreeNotificationRule class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 /*!
   \class eZSubtreeNotificationRule ezsubtreenotificationrule.php
@@ -140,7 +117,7 @@ class eZSubtreeNotificationRule extends eZPersistentObject
      * @param eZContentObject content object to add
      *
      * @return array matching subtree notification rule data
-     **/
+     */
     static function fetchUserList( $nodeIDList, $contentObject )
     {
         if ( count( $nodeIDList ) == 0 )
@@ -179,7 +156,7 @@ class eZSubtreeNotificationRule extends eZPersistentObject
         }
 
         // Select affected nodes
-        $sqlINString = $db->generateSQLINstatement( $userNodeIDList, 'user_node.node_id', false, false, 'int' );
+        $sqlINString = $db->generateSQLINStatement( $userNodeIDList, 'user_node.node_id', false, false, 'int' );
         $sql = "SELECT DISTINCT user_node.node_id,
                                 user_node.path_string,
                                 user_tree.contentobject_id
@@ -521,6 +498,18 @@ class eZSubtreeNotificationRule extends eZPersistentObject
                         return array();
                     }
                 } break;
+                default:
+                {
+                    //check object state group limitation
+                    if ( strncmp( $key, 'StateGroup_', 11 ) === 0 )
+                    {
+                        if ( count( array_intersect( $limitationArray[$key],
+                                                     $contentObject->attribute( 'state_id_array' ) ) ) == 0 )
+                        {
+                            return array();
+                        }
+                    }
+                }
             }
         }
 

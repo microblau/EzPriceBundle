@@ -4,6 +4,7 @@
 	new YAHOO.Hack.FixIESelectWidth( 'ContentObjectAttribute_ezselect_selected_array_10799[]' ); 
 	new YAHOO.Hack.FixIESelectWidth( 'ContentObjectAttribute_ezselect_selected_array_12590[]' );
 </script>{/literal}
+{ezcss_require( 'jquery.fancybox-1.3.0.css')} 
 
 {set-block scope=root variable=cache_ttl}0{/set-block}
 {def $module_params = module_params()}
@@ -143,25 +144,18 @@
                                                 <ul class="datos">
                                                 	
                                                     <li class="condiciones">
-                                                    	<label for="condiciones" {if is_set( $error_politica)}class="error"{/if}>{attribute_view_gui attribute=$node.data_map.politica_privacidad} Acepto las condiciones legales</label>
-
+                                                    	<label for="condiciones" {if is_set( $error_politica)}class="error"{/if}>{attribute_view_gui attribute=$node.data_map.politica_privacidad} He leído y acepto las condiciones de la <a class="lb" id="politicaligthBox" href={'lightbox/ver/19526'|ezurl}>Política de Privacidad</a> y el <a class="lb" id="avisoLightbox" href={'lightbox/ver/292'|ezurl}>Aviso Legal</a></label>
+{*
                                                     	<div>                                                    		
                                                     		{fetch('content', 'node', hash( 'node_id', 1451)).data_map.texto.content.output.output_text}
                                                     	</div>
+                                                        *}
 
                                                     </li>
 
-							<li>
-								<label for="capchar" {if is_set( $error_captchar)}class="error"{/if}>Introduzca los caracteres que visualiza en la imagen inferior *:</label><br>
-<div>
-<input class="box" type="text" size="4" name="eZHumanCAPTCHACode" value="" />
-</div>
-<br>
-<img src={ezhumancaptcha_image()|ezroot()} alt="eZHumanCAPTCHA" /><br>
-
-
- <br/>
-							</li>
+							 <li>
+                                                        {attribute_view_gui attribute=$node.data_map.captcha}
+                                                    </li>
                                                                                                     
                                                 </ul>
 

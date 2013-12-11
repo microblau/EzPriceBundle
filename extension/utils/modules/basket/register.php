@@ -35,7 +35,7 @@
  */
 
 require( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $http = eZHTTPTool::instance();
 
@@ -199,17 +199,17 @@ if( $http->hasPostVariable( 'BtnRegister' ) )
 
                 $unserialized_order = unserialize($infoOrder->Order);
                 if( $unserialized_order['has_nautis4'] )
-                {
-                    $order['has_nautis4'] = $unserialized_order['has_nautis4'];                
-                }
-                if( $unserialized_order['has_mementix'] )
-                {
-                    $order['has_mementix'] = $unserialized_order['has_mementix'];                
-                }
-                if( $unserialized_order['has_imemento'] )
-                {
-                    $order['has_imemento'] = $unserialized_order['has_imemento'];                
-                }
+                            {
+                                $order['has_nautis4'] = $unserialized_order['has_nautis4'];                
+                            }
+                            if( $unserialized_order['has_mementix'] )
+                            {
+                                $order['has_mementix'] = $unserialized_order['has_mementix'];                
+                            }
+							if( $unserialized_order['has_imemento'] )
+                            {
+                                $order['has_imemento'] = $unserialized_order['has_imemento'];
+                            }
                 $order['codigopromocional'] = $unserialized_order['codigopromocional'];
                 $order['productos_bono'] = $unserialized_order['productos_bono'];
                 $order['descuento'] = $unserialized_order['descuento'];
@@ -406,8 +406,9 @@ elseif ( $http->hasPostVariable( 'BtnRegisterParticular' ) )
 		{
 			$errors['telefono2'] = "El campo 'Teléfono' de 'Datos de Envío' es obligatorio";		
 		}	
-		elseif( strlen( $http->postVariable( 'telefono2' ) >  16 ) )
+		elseif( strlen( $http->postVariable( 'telefono2' ) ) > 16 )
 		{
+
 			$errors['telefono2'] = "El campo 'Teléfono' de 'Datos de Envío' no puede tener más de 16 caracteres";					
 		}
         $tpl->setVariable( 'telefono2', $http->postVariable( 'telefono2' ) );
@@ -561,6 +562,11 @@ elseif ( $http->hasPostVariable( 'BtnRegisterParticular' ) )
 	
 	$tpl->setVariable( 'observaciones', $http->postVariable( 'observaciones' ) );
 	$order['observaciones'] = $http->postVariable( 'observaciones' );
+        
+        if( !( $http->hasPostVariable( 'condiciones' ) ) )
+	{
+            $errors['condiciones'] = 'Debe aceptar las condiciones de contratación';
+        }
 	
 	if( count( $errors) )
 	{
@@ -675,6 +681,10 @@ elseif ( $http->hasPostVariable( 'BtnRegisterParticular' ) )
             if( $unserialized_order['has_mementix'] )
             {
                 $order['has_mementix'] = $unserialized_order['has_mementix'];                
+            }
+			if( $unserialized_order['has_imemento'] )
+			{
+				$order['has_imemento'] = $unserialized_order['has_imemento'];
             }
             $order['codigopromocional'] = $unserialized_order['codigopromocional'];
             $order['productos_bono'] = $unserialized_order['productos_bono'];
@@ -1017,6 +1027,11 @@ elseif ( $http->hasPostVariable( 'BtnRegisterEmpresa' ) )
 	$tpl->setVariable( 'observaciones', $http->postVariable( 'observaciones' ) );
 	$order['observaciones'] = $http->postVariable( 'observaciones' );
 	
+        if( !( $http->hasPostVariable( 'condiciones' ) ) )
+	{
+            $errors['condiciones'] = 'Debe aceptar las condiciones de contratación';
+        }
+        
 	if( count( $errors) )
 	{
 		$tpl->setVariable( 'errors', $errors );
@@ -1154,6 +1169,10 @@ elseif ( $http->hasPostVariable( 'BtnRegisterEmpresa' ) )
             {
                 $order['has_mementix'] = $unserialized_order['has_mementix'];                
             }
+			if( $unserialized_order['has_imemento'] )
+			{
+				$order['has_imemento'] = $unserialized_order['has_imemento'];
+            }
             $order['codigopromocional'] = $unserialized_order['codigopromocional'];
             $order['productos_bono'] = $unserialized_order['productos_bono'];
             $order['descuento'] = $unserialized_order['descuento'];       
@@ -1234,10 +1253,10 @@ elseif( $http->hasPostVariable( 'BtnRegisterOutside') )
 	$tpl->setVariable( 'observaciones', $http->postVariable( 'observaciones' ) );
 	$order['observaciones'] = $http->postVariable( 'observaciones' );
 	
-	/*if( !$http->hasPostVariable( 'condiciones') )
+	if( !$http->hasPostVariable( 'condiciones') )
 	{
 		$errors['condiciones'] = 'Debe aceptar las condiciones legales';
-	}*/
+	}
 	
 	if( count( $errors) )
 	{

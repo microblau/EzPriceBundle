@@ -1,32 +1,12 @@
 <?php
-//
-// Definition of eZSimplifiedXMLEditOutput class
-//
-// Created on: <07-Apr-2006 15:37:29 ks>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZSimplifiedXMLEditOutput class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 // if ( !class_exists( 'eZXMLSchema' ) )
 class eZSimplifiedXMLEditOutput
@@ -341,7 +321,8 @@ class eZSimplifiedXMLEditOutput
         if ( $element->parentNode->nodeName != 'literal' )
         {
             $text = htmlspecialchars( $text );
-            $text = preg_replace( "#[\n]+#", "", $text );
+            $text = str_replace ( '&amp;nbsp;', '&nbsp;', $text);
+            $text = str_replace( "\n", '', $text );
         }
         return $text;
     }

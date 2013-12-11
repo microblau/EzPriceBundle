@@ -323,10 +323,10 @@ CREATE TABLE ezcontentclass_attribute (
   can_translate int(11) default '1',
   category varchar(25) NOT NULL default '',
   contentclass_id int(11) NOT NULL default '0',
-  data_float1 float default NULL,
-  data_float2 float default NULL,
-  data_float3 float default NULL,
-  data_float4 float default NULL,
+  data_float1 double default NULL,
+  data_float2 double default NULL,
+  data_float3 double default NULL,
+  data_float4 double default NULL,
   data_int1 int(11) default NULL,
   data_int2 int(11) default NULL,
   data_int3 int(11) default NULL,
@@ -399,7 +399,6 @@ CREATE TABLE ezcontentobject (
   current_version int(11) default NULL,
   id int(11) NOT NULL auto_increment,
   initial_language_id int(11) NOT NULL default '0',
-  is_published int(11) default NULL,
   language_mask int(11) NOT NULL default '0',
   modified int(11) NOT NULL default '0',
   name varchar(255) default NULL,
@@ -426,7 +425,7 @@ CREATE TABLE ezcontentobject_attribute (
   attribute_original_id int(11) default '0',
   contentclassattribute_id int(11) NOT NULL default '0',
   contentobject_id int(11) NOT NULL default '0',
-  data_float float default NULL,
+  data_float double default NULL,
   data_int int(11) default NULL,
   data_text longtext,
   data_type_string varchar(50) default '',
@@ -711,7 +710,10 @@ CREATE TABLE ezinfocollection_attribute (
   id int(11) NOT NULL auto_increment,
   informationcollection_id int(11) NOT NULL default '0',
   PRIMARY KEY  (id),
-  KEY ezinfocollection_attr_co_id (contentobject_id)
+  KEY ezinfocollection_attr_cca_id (contentclass_attribute_id),
+  KEY ezinfocollection_attr_co_id (contentobject_id),
+  KEY ezinfocollection_attr_coa_id (contentobject_attribute_id),
+  KEY ezinfocollection_attr_ic_id (informationcollection_id)
 ) ENGINE=InnoDB;
 
 
@@ -962,6 +964,15 @@ CREATE TABLE ezorder (
 
 
 
+CREATE TABLE ezorder_nr_incr (
+  id int(11) NOT NULL auto_increment,
+  PRIMARY KEY  (id)
+) ENGINE=InnoDB;
+
+
+
+
+
 CREATE TABLE ezorder_item (
   description varchar(255) default NULL,
   id int(11) NOT NULL auto_increment,
@@ -1060,9 +1071,11 @@ CREATE TABLE ezpdf_export (
 
 
 CREATE TABLE ezpending_actions (
+  id int(11) NOT NULL auto_increment,
   action varchar(64) NOT NULL default '',
   created int(11) default NULL,
   param longtext,
+  PRIMARY KEY  (id),
   KEY ezpending_actions_action (action),
   KEY ezpending_actions_created (created)
 ) ENGINE=InnoDB;
@@ -1075,8 +1088,10 @@ CREATE TABLE ezpolicy (
   function_name varchar(255) default NULL,
   id int(11) NOT NULL auto_increment,
   module_name varchar(255) default NULL,
+  original_id int(11) NOT NULL default '0',
   role_id int(11) default NULL,
-  PRIMARY KEY  (id)
+  PRIMARY KEY  (id),
+  KEY ezpolicy_original_id (original_id)
 ) ENGINE=InnoDB;
 
 
@@ -1111,10 +1126,72 @@ CREATE TABLE ezpreferences (
   id int(11) NOT NULL auto_increment,
   name varchar(100) default NULL,
   user_id int(11) NOT NULL default '0',
-  value varchar(100) default NULL,
+  value longtext,
   PRIMARY KEY  (id),
   KEY ezpreferences_name (name),
   KEY ezpreferences_user_id_idx (user_id,name)
+) ENGINE=InnoDB;
+
+
+
+
+
+CREATE TABLE ezprest_authcode (
+  client_id varchar(200) NOT NULL default '',
+  expirytime bigint(20) NOT NULL default '0',
+  id varchar(200) NOT NULL default '',
+  scope varchar(200) default NULL,
+  user_id int(11) NOT NULL default '0',
+  PRIMARY KEY  (id),
+  KEY authcode_client_id (client_id)
+) ENGINE=InnoDB;
+
+
+
+
+
+CREATE TABLE ezprest_authorized_clients (
+  created int(11) default NULL,
+  id int(11) NOT NULL auto_increment,
+  rest_client_id int(11) default NULL,
+  user_id int(11) default NULL,
+  PRIMARY KEY  (id),
+  KEY client_user (rest_client_id,user_id)
+) ENGINE=InnoDB;
+
+
+
+
+
+CREATE TABLE ezprest_clients (
+  client_id varchar(200) default NULL,
+  client_secret varchar(200) default NULL,
+  created int(11) NOT NULL default '0',
+  description longtext,
+  endpoint_uri varchar(200) default NULL,
+  id int(11) NOT NULL auto_increment,
+  name varchar(100) default NULL,
+  owner_id int(11) NOT NULL default '0',
+  updated int(11) NOT NULL default '0',
+  version int(1) NOT NULL default '0',
+  PRIMARY KEY  (id),
+  KEY client_id (client_id),
+  UNIQUE KEY client_id_unique (client_id,version)
+) ENGINE=InnoDB;
+
+
+
+
+
+CREATE TABLE ezprest_token (
+  client_id varchar(200) NOT NULL default '',
+  expirytime bigint(20) NOT NULL default '0',
+  id varchar(200) NOT NULL default '',
+  refresh_token varchar(200) NOT NULL default '',
+  scope varchar(200) default NULL,
+  user_id int(11) NOT NULL default '0',
+  PRIMARY KEY  (id),
+  KEY token_client_id (client_id)
 ) ENGINE=InnoDB;
 
 
@@ -1171,6 +1248,20 @@ CREATE TABLE ezproductcollection_item_opt (
   value varchar(255) NOT NULL default '',
   PRIMARY KEY  (id),
   KEY ezproductcollection_item_opt_item_id (item_id)
+) ENGINE=InnoDB;
+
+
+
+
+
+CREATE TABLE ezpublishingqueueprocesses (
+  created int(11) default NULL,
+  ezcontentobject_version_id int(11) NOT NULL default '0',
+  finished int(11) default NULL,
+  pid int(8) default NULL,
+  started int(11) default NULL,
+  status int(2) default NULL,
+  PRIMARY KEY  (ezcontentobject_version_id)
 ) ENGINE=InnoDB;
 
 
@@ -1342,6 +1433,7 @@ CREATE TABLE ezsearch_word (
 
 CREATE TABLE ezsection (
   id int(11) NOT NULL auto_increment,
+  identifier varchar(255) default NULL,
   locale varchar(255) default NULL,
   name varchar(255) default NULL,
   navigation_part_identifier varchar(100) default 'ezcontentnavigationpart',

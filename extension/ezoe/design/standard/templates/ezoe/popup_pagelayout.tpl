@@ -1,6 +1,6 @@
 {* eZ Online Editor MCE popup pagelayout *}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <title>{$module_result.persistent_variable.title}</title>
 
@@ -8,9 +8,9 @@
 {def $skin = ezini('EditorSettings', 'Skin', 'ezoe.ini',,true() )}
 
 {if and( is_set( $module_result.persistent_variable ), $module_result.persistent_variable.scripts )}
-    {ezscript_load( array( 'ezjsc::jquery', 'tiny_mce_popup.js', 'ezoe/popup_validate.js', $module_result.persistent_variable.scripts ) )}
+    {ezscript_load( array( 'ezjsc::jquery', 'ezjsc::jqueryio', 'tiny_mce_popup.js', 'ezoe/popup_validate.js', $module_result.persistent_variable.scripts ) )}
 {else}
-    {ezscript_load( array( 'ezjsc::jquery', 'tiny_mce_popup.js', 'ezoe/popup_validate.js' ) )}
+    {ezscript_load( array( 'ezjsc::jquery', 'ezjsc::jqueryio', 'tiny_mce_popup.js', 'ezoe/popup_validate.js' ) )}
 {/if}
 
 <style type="text/css">
@@ -29,7 +29,6 @@ table#browse_box_prev thead td { padding-bottom: 5px; }
 table#browse_box_prev tfoot td { padding-top: 5px; }
 
 #embed_preview_heading { margin: 14px 10px 2px 10px; color: #999; }
-#embed_preview { text-align: center; }
 #embed_preview.object_preview { margin: 0 10px 10px 10px; border: 1px solid #ddd; padding: 5px; clear: both; float: left; height: auto; width: 94%; }
 #embed_preview img { margin: auto; }
 

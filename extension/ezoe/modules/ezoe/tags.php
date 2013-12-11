@@ -4,25 +4,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Online Editor extension for eZ Publish
-// SOFTWARE RELEASE: 5.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE RELEASE: 4.7.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: eZ Business Use License Agreement eZ BUL Version 2.1
 // NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
+//   This source file is part of the eZ Publish CMS and is
+//   licensed under the terms and conditions of the eZ Business Use
+//   License v2.1 (eZ BUL).
+// 
+//   A copy of the eZ BUL was included with the software. If the
+//   license is missing, request a copy of the license via email
+//   at license@ez.no or via postal mail at
+//  	Attn: Licensing Dept. eZ Systems AS, Klostergata 30, N-3732 Skien, Norway
+// 
+//   IMPORTANT: THE SOFTWARE IS LICENSED, NOT SOLD. ADDITIONALLY, THE
+//   SOFTWARE IS LICENSED "AS IS," WITHOUT ANY WARRANTIES WHATSOEVER.
+//   READ THE eZ BUL BEFORE USING, INSTALLING OR MODIFYING THE SOFTWARE.
+
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -30,20 +28,20 @@
 $objectID      = isset( $Params['ObjectID'] ) ? (int) $Params['ObjectID'] : 0;
 $objectVersion = isset( $Params['ObjectVersion'] ) ? (int) $Params['ObjectVersion'] : 0;
 $tagName       = isset( $Params['TagName'] ) ? strtolower( trim( $Params['TagName'] )) : '';
-$customTagName = isset( $Params['CustomTagName'] ) ? strtolower( trim( $Params['CustomTagName'] )) : '';
+$customTagName = isset( $Params['CustomTagName'] ) ? trim( $Params['CustomTagName'] ) : '';
 
-if ( $customTagName === 'undefined' ) $customTagName = ''; 
+if ( $customTagName === 'undefined' ) $customTagName = '';
 
 if ( $objectID === 0  || $objectVersion === 0 )
 {
-   echo ezi18n( 'design/standard/ezoe', 'Invalid or missing parameter: %parameter', null, array( '%parameter' => 'ObjectID/ObjectVersion' ) );
+   echo ezpI18n::tr( 'design/standard/ezoe', 'Invalid or missing parameter: %parameter', null, array( '%parameter' => 'ObjectID/ObjectVersion' ) );
    eZExecution::cleanExit();
 }
 
 $object = eZContentObject::fetch( $objectID );
 if ( !$object instanceof eZContentObject || !$object->canEdit() )
 {
-   echo ezi18n( 'design/standard/ezoe', 'Invalid parameter: %parameter = %value', null, array( '%parameter' => 'ObjectId', '%value' => $objectID ) );
+   echo ezpI18n::tr( 'design/standard/ezoe', 'Invalid parameter: %parameter = %value', null, array( '%parameter' => 'ObjectId', '%value' => $objectID ) );
    eZExecution::cleanExit();
 }
 
@@ -90,7 +88,7 @@ switch ( $tagName )
 
 if ( !$templateName )
 {
-   echo ezi18n( 'design/standard/ezoe', 'Invalid parameter: %parameter = %value', null, array( '%parameter' => 'TagName', '%value' => $tagName ) );
+   echo ezpI18n::tr( 'design/standard/ezoe', 'Invalid parameter: %parameter = %value', null, array( '%parameter' => 'TagName', '%value' => $tagName ) );
    eZExecution::cleanExit();
 }
 
@@ -109,7 +107,7 @@ if ( $tagName === 'custom' )
         $customTagDescription = $contentIni->variable( 'CustomTagSettings', 'CustomTagsDescription' );
     else
         $customTagDescription = array();
-        
+
     if ( $contentIni->hasVariable( 'CustomTagSettings', 'IsInline' ) )
         $customInlineList = $contentIni->variable( 'CustomTagSettings', 'IsInline' );
 
@@ -143,7 +141,7 @@ else
 }
 
 include_once( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( 'object', $object );
 $tpl->setVariable( 'object_id', $objectID );
 $tpl->setVariable( 'object_version', $objectVersion );
@@ -177,7 +175,7 @@ if ( $tagName === 'td' || $tagName === 'th' )
 
     if ( $contentIni->hasVariable( $tagName2, 'ClassDescription' ) )
         $classListDescription = $contentIni->variable( $tagName2, 'ClassDescription' );
-    else 
+    else
         $classListDescription = array();
 
     if ( $contentIni->hasVariable( $tagName2, 'AvailableClasses' ) )

@@ -4,25 +4,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ JSCore extension for eZ Publish
-// SOFTWARE RELEASE: 1.x
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE RELEASE: 4.7.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: eZ Business Use License Agreement eZ BUL Version 2.1
 // NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
+//   This source file is part of the eZ Publish CMS and is
+//   licensed under the terms and conditions of the eZ Business Use
+//   License v2.1 (eZ BUL).
 // 
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
+//   A copy of the eZ BUL was included with the software. If the
+//   license is missing, request a copy of the license via email
+//   at license@ez.no or via postal mail at
+//  	Attn: Licensing Dept. eZ Systems AS, Klostergata 30, N-3732 Skien, Norway
 // 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// 
-// 
+//   IMPORTANT: THE SOFTWARE IS LICENSED, NOT SOLD. ADDITIONALLY, THE
+//   SOFTWARE IS LICENSED "AS IS," WITHOUT ANY WARRANTIES WHATSOEVER.
+//   READ THE eZ BUL BEFORE USING, INSTALLING OR MODIFYING THE SOFTWARE.
+
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -43,22 +41,27 @@ else
     $callSeperator = '@SEPERATOR$';
 
 if ( $http->hasPostVariable( 'ezjscServer_stream_seperator' ) )
-    $stramSeperator = $http->postVariable( 'ezjscServer_stream_seperator' );
+    $streamSeperator = $http->postVariable( 'ezjscServer_stream_seperator' );
 else
-    $stramSeperator = '@END$';
+    $streamSeperator = '@END$';
 
 if ( $http->hasPostVariable( 'ezjscServer_function_arguments' ) )
-    $callList = explode( $callSeperator, $http->postVariable( 'ezjscServer_function_arguments' ) );
+    $callList = explode( $callSeperator, strip_tags( $http->postVariable( 'ezjscServer_function_arguments' ) ) );
 else if ( isset( $Params['function_arguments'] ) )
-    $callList = explode( $callSeperator, $Params['function_arguments'] );
+    $callList = explode( $callSeperator, strip_tags( $Params['function_arguments'] ) );
 else
     $callList = array();
 
 // Allow get parameter to be set to test in browser
 if ( isset( $_GET['ContentType'] ) )
+{
     $contentType = $_GET['ContentType'];
+}
 else
+{
     $contentType = ezjscAjaxContent::getHttpAccept();
+    header('Vary: Accept');
+}
 
 // set http headers
 if ( $contentType === 'xml' )
@@ -86,7 +89,7 @@ if ( !$callList )
 }
 
 
-// prepere calls
+// prepare calls
 foreach( $callList as $call )
 {
     $temp = ezjscServerRouter::getInstance( explode( '::', $call ), true, true );
@@ -125,7 +128,7 @@ if ( $callType === 'stream' )
     // set_time_limit(65);
     while( time() < $endTime )
     {
-        echo $stramSeperator . implode( $callSeperator, multipleezjscServerCalls( $callFnList, $contentType ) );
+        echo $streamSeperator . implode( $callSeperator, multipleezjscServerCalls( $callFnList, $contentType ) );
         flush();
         usleep( $callInterval );
     }
@@ -155,7 +158,7 @@ function multipleezjscServerCalls( $calls, $contentType = 'json' )
         }
         else
         {
-            $response['error_text'] = 'Not a valid ezjscServerRouter argument: "' . $call . '"';
+            $response['error_text'] = 'Not a valid ezjscServerRouter argument: "' . htmlentities( $call, ENT_QUOTES ) . '"';
         }
         $r[] = ezjscAjaxContent::autoEncode( $response, $contentType );
     }

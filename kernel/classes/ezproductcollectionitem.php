@@ -1,32 +1,12 @@
 <?php
-//
-// Definition of eZProductCollectionItem class
-//
-// Created on: <04-Jul-2002 13:45:10 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZProductCollectionItem class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 /*!
   \class eZProductCollectionItem ezproductcollection.php
@@ -253,14 +233,11 @@ class eZProductCollectionItem extends eZPersistentObject
     function verify( $currency = false )
     {
         $contentObject = $this->attribute( 'contentobject' );
-     
-        
         if ( $contentObject != null && $contentObject->attribute( 'main_node_id' ) > 0 )
         {
-        
             $attributes = $contentObject->contentObjectAttributes();
             $optionsPrice = $this->calculatePriceWithOptions( $currency );
-            
+
             foreach ( $attributes as $attribute )
             {
                 $dataType = $attribute->dataType();
@@ -272,7 +249,6 @@ class eZProductCollectionItem extends eZPersistentObject
                     $priceWithOptions = $price + $optionsPrice;
                     if ( $priceWithOptions != $this->attribute( 'price' ) )
                     {
-                        
                         return false;
                     }
                     if ( $priceObj->attribute( 'is_vat_included' ) != ( $this->attribute( 'is_vat_inc' ) > 0 ) )
@@ -285,20 +261,8 @@ class eZProductCollectionItem extends eZPersistentObject
                     }
                     if ( $priceObj->discount() != $this->attribute( 'discount' ) )
                     {
-                        /*****hack*/
-                        
-                        $basket = eZBasket::currentBasket();
-					    $infoOrder = eZPersistentObject::fetchObject( eflOrders::definition(), null, array( 'productcollection_id' => $basket->attribute( 'productcollection_id') ) );
-					    
-					    $unserialized_order = unserialize($infoOrder->Order);
-					  
-					    
-					    if( $unserialized_order['descuento'] == 0)   
-					    {                  
-                            return false;
-					    }
+                        return false;
                     }
-                   
                     return true;
                 }
             }
@@ -314,7 +278,7 @@ class eZProductCollectionItem extends eZPersistentObject
      * @param array $productCollectionIDList array of eZProductCollection IDs
      *
      * @return void
-     **/
+     */
     static function cleanupList( $productCollectionIDList )
     {
         $db = eZDB::instance();

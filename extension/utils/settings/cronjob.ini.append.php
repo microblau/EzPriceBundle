@@ -25,5 +25,11 @@ Scripts[]=updateoffers.php
 [CronjobPart-deletediscountgroups]
 Scripts[]=deletediscountgroups.php
 
+[CronjobPart-sitemapcatalog]
+Scripts[]=sitemapcatalog.php
+ 
+[CronjobPart-sitemapformacion]
+Scripts[]=sitemapformacion.php
+
 */
 ?>

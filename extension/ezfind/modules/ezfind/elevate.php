@@ -3,25 +3,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Find
-// SOFTWARE RELEASE: 2.0.x
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE RELEASE: 2.7.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: eZ Business Use License Agreement eZ BUL Version 2.1
 // NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
+//  This source file is part of the eZ Publish CMS and is
+//  licensed under the terms and conditions of the eZ Business Use
+//  License v2.1 (eZ BUL).
 //
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
+//  A copy of the eZ BUL was included with the software. If the
+//  license is missing, request a copy of the license via email
+//  at license@ez.no or via postal mail at
+// 	Attn: Licensing Dept. eZ Systems AS, Klostergata 30, N-3732 Skien, Norway
 //
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
+//  IMPORTANT: THE SOFTWARE IS LICENSED, NOT SOLD. ADDITIONALLY, THE
+//  SOFTWARE IS LICENSED "AS IS," WITHOUT ANY WARRANTIES WHATSOEVER.
+//  READ THE eZ BUL BEFORE USING, INSTALLING OR MODIFYING THE SOFTWARE.
+
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -53,7 +51,7 @@ if ( $http->hasPostVariable( 'ObjectIDFromMenu' ) and is_numeric( $http->postVar
 }
 
 // back from browse
-elseif(
+else if (
     $http->hasPostVariable( 'BrowseActionName' ) and
     ( $http->postVariable( 'BrowseActionName' ) == ( 'ezfind-elevate-browseforobject' ) or $http->postVariable( 'BrowseActionName' ) == ( 'ezfind-searchelevateconfigurations-browse' ) ) and
     $http->hasPostVariable( "SelectedNodeIDArray" )
@@ -97,7 +95,7 @@ elseif ( $http->hasPostVariable( 'ezfind-elevate-browseforobject' ) or
 }
 
 // Store the actual Elevate configuration
-elseif( $http->hasPostVariable( 'ezfind-elevate-do') )
+else if ( $http->hasPostVariable( 'ezfind-elevate-do' ) )
 {
     $doStorage = true;
 
@@ -166,7 +164,7 @@ elseif( $http->hasPostVariable( 'ezfind-elevate-do') )
 }
 
 // Searching for elevate configurations, directly from clicking the action button, or from previous results' pagination links ( Next, Previous, 1, 2, 3 ... )
-elseif( $http->hasPostVariable( 'ezfind-searchelevateconfigurations-do' ) or
+else if ( $http->hasPostVariable( 'ezfind-searchelevateconfigurations-do' ) or
         $Params['SearchQuery'] !== false )
 {
     // Check for search query first
@@ -177,7 +175,7 @@ elseif( $http->hasPostVariable( 'ezfind-searchelevateconfigurations-do' ) or
         // Pass the search query on to the template, search will occur there.
         $viewParameters = array_merge( $viewParameters, array( 'search_query' => $searchQuery ) );
     }
-    elseif( $Params['SearchQuery'] != '' )
+    else if ( $Params['SearchQuery'] != '' )
     {
         $searchQuery = htmlspecialchars( $Params['SearchQuery'], ENT_QUOTES );
         // Pass the search query on to the template, search will occur there.
@@ -215,7 +213,7 @@ elseif( $http->hasPostVariable( 'ezfind-searchelevateconfigurations-do' ) or
 }
 
 // Synchronise Elevate configuration with Solr :
-elseif( $http->hasPostVariable( 'ezfind-elevate-synchronise' ) )
+else if ( $http->hasPostVariable( 'ezfind-elevate-synchronise' ) )
 {
     $solr = new eZSolr();
     //if ( eZFindElevateConfiguration::synchronizeWithSolr() )
@@ -243,8 +241,8 @@ $Result = array();
 $Result['content'] = $tpl->fetch( "design:ezfind/elevate.tpl" );
 $Result['left_menu'] = "design:ezfind/backoffice_left_menu.tpl";
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'extension/ezfind', 'eZFind' ) ),
+                                'text' => ezpI18n::tr( 'extension/ezfind', 'eZFind' ) ),
                          array( 'url' => false,
-                                'text' => ezi18n( 'extension/ezfind', 'Elevation' ) ) );
+                                'text' => ezpI18n::tr( 'extension/ezfind', 'Elevation' ) ) );
 
 ?>

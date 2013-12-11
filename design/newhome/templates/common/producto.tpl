@@ -10,6 +10,21 @@
 {ezscript_require('ui.slider.js')}  
 {ezscript_require('langEs.js')}  
 {ezscript_require('common.js')}  
+{*analytics de ficha de producto categorías*}
+<script type="text/javascript">
+{foreach $node.data_map.area.content.relation_list as $k=>$area}
+	{def $areas=fetch(content,object, hash(object_id, $area.contentobject_id))}
+		{literal}
+		_gaq.push(['_setCustomVar',1,'categoria','{/literal}{$areas.name}{literal}',3]);
+		{/literal}
+	{undef $areas}
+{/foreach}
+	{literal}		
+		_gaq.push(['_trackEvent', 'PhantomEvent', 'GO', '-', 0, true]); //  este evento es el encargado de asegurar el envío de la variable personalizada
+	{/literal}
+</script>   
+
+{*fin analytics*}
 
 {def $limite=6}
 {def $offset=0}
@@ -65,7 +80,7 @@
             <div id="gridWide">
                 
                 <div id="moduloDestacadoContenido" class="type1">                             
-                    <h1>{$node.name}
+                    <h1 itemprop="name">{$node.name}
 
                     <span class="subTit twoLines">{$node.data_map.subtitulo.content}</span></h1>
                     <div class="wrap">
@@ -81,7 +96,7 @@
                                                {if $node.data_map.imagen.has_content}
 												{def $imagen = fetch( 'content', 'object', hash( 'object_id', $node.data_map.imagen.content.relation_browse.0.contentobject_id ))}
 										<div class="attribute-image">  
-                                         <img src={$imagen.data_map.image.content.fichaproducto.url|ezroot()}
+                                         <img itemprop="image thumbnailUrl" src={$imagen.data_map.image.content.fichaproducto.url|ezroot()}
     alt="{$imagen.data_map.image.content.fichaproducto.alternative_text}"
  width="{$imagen.data_map.image.content.fichaproducto.width}"  height="{$imagen.data_map.image.content.fichaproducto.height}" />
 										</div>
@@ -129,7 +144,7 @@
                                 
 								</div>
 								
-                                	<div class="column2">
+                                	<div class="column2" itemprop="about">
                                     	{$node.data_map.entradilla.content.output.output_text}
                                    		{if or(  $node.parent_node_id|eq(66), $node.parent_node_id|eq(1485), $node.parent_node_id|eq(69), $node.parent_node_id|eq(70), $node.parent_node_id|eq(4058), $node.parent_node_id|eq(7343), $node.parent_node_id|eq(71) )|not }
 	                                    <div class="clearFix linksModulo">
@@ -146,7 +161,7 @@
                                      </div>
 
                                     <div class="column3">
-                                  	  <div class="nuevaFicha">
+                                  	  <div class="nuevaFicha" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                                       {if $node.data_map.clicktocall.has_content}
                                       <div class="llamamos">
                                                 <span>¿Necesita realizar alguna consulta?</span>
@@ -171,17 +186,19 @@
                           <span class="precioAnterior">
                                 	{$node.data_map.precio.content.price|l10n(clean_currency)} € + IVA
                           </span>
-                           <span class="precioNuevo">
+                           <span class="precioNuevo" itemprop="price">
                            
                             	{$node.data_map.precio.content.discount_price_ex_vat|l10n(clean_currency)} € + IVA
                           </span>
+<meta itemprop="priceCurrency" content="EUR" /> 
 			</div>
 {else}
 
                                           	<div class="ofertaSus">
-                                           	 <span class="precioNuevo">
+                                           	 <span class="precioNuevo" itemprop="price">
                                                     	{$node.data_map.precio.content.price|l10n(clean_currency)} € + IVA
                                                     </span>
+                                                    <meta itemprop="priceCurrency" content="EUR" /> 
                                              </div>
 {/if}
 										
@@ -847,17 +864,17 @@
                         <div class="wrap">
                             <ul>
                                {if $node.data_map.edicion.has_content}
-                                <li>Edición: {$node.data_map.edicion.content}</li>
+                                <li itemprop="bookEdition">Edición: {$node.data_map.edicion.content}</li>
                                 {/if}
                                 {if $node.data_map.fecha_aparicion.has_content}
                                 <li>Aparición: {$node.data_map.fecha_aparicion.content.timestamp|datetime('custom', '%d/%m/%Y')}</li>
                                 {/if}
                                 {if $node.data_map.paginas.has_content}
-                                <li>Páginas: {$node.data_map.paginas.content}</li>
+                                <li itemprop="numberOfPages">Páginas: {$node.data_map.paginas.content}</li>
                                 {/if}
                                 <li>{cond( $node.data_map.disp_librerias.content|eq( 1 ), 'Disponible en librerías')}</li>
                                 {if $node.data_map.isbn.has_content}
-                                <li>ISBN: {$node.data_map.isbn.content.value}</li>
+                                <li  itemprop="isbn">ISBN: {$node.data_map.isbn.content.value}</li>
                                 {/if}
                                 {if $node.data_map.issn.has_content}
                                 <li>ISSN: {$node.data_map.issn.content}</li>

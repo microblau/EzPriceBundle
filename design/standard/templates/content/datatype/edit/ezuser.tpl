@@ -29,13 +29,13 @@
 {* Password #1. *}
 <div class="element">
     <label for="{$id_base}_password">{'Password'|i18n( 'design/standard/content/datatype' )}:</label>
-    <input id="{$id_base}_password" class="ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" type="password" name="{$attribute_base}_data_user_password_{$attribute.id}" size="16" value="{if $attribute.content.original_password}{$attribute.content.original_password}{else}{if $attribute.content.has_stored_login}_ezpassword{/if}{/if}" />
+    <input id="{$id_base}_password" class="ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" type="password" name="{$attribute_base}_data_user_password_{$attribute.id}" size="16" value="{if $attribute.content.original_password}{$attribute.content.original_password|wash}{else}{if $attribute.content.has_stored_login}_ezpassword{/if}{/if}" />
 </div>
 
 {* Password #2. *}
 <div class="element">
     <label for="{$id_base}_password_confirm">{'Confirm password'|i18n( 'design/standard/content/datatype' )}:</label>
-    <input id="{$id_base}_password_confirm" class="ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" type="password" name="{$attribute_base}_data_user_password_confirm_{$attribute.id}" size="16" value="{if $attribute.content.original_password_confirm}{$attribute.content.original_password_confirm}{else}{if $attribute.content.has_stored_login}_ezpassword{/if}{/if}" />
+    <input id="{$id_base}_password_confirm" class="ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" type="password" name="{$attribute_base}_data_user_password_confirm_{$attribute.id}" size="16" value="{if $attribute.content.original_password_confirm}{$attribute.content.original_password_confirm|wash}{else}{if $attribute.content.has_stored_login}_ezpassword{/if}{/if}" />
 </div>
 
 {* Email. *}
@@ -43,6 +43,14 @@
     <label for="{$id_base}_email">{'Email'|i18n( 'design/standard/content/datatype' )}:</label>
     <input id="{$id_base}_email" class="ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" type="text" name="{$attribute_base}_data_user_email_{$attribute.id}" size="28" value="{$attribute.content.email|wash( xhtml )}" />
 </div>
+
+{* Email #2. Require e-mail confirmation *}
+{if ezini( 'UserSettings', 'RequireConfirmEmail' )|eq( 'true' )}
+<div class="element">
+    <label for="{$id_base}_email_confirm">{'Confirm email'|i18n( 'design/standard/content/datatype' )}:</label>
+    <input id="{$id_base}_email_confirm" class="ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" type="text" name="{$attribute_base}_data_user_email_confirm_{$attribute.id}" size="28" value="{cond( ezhttp_hasvariable( concat( $attribute_base, '_data_user_email_confirm_', $attribute.id ), 'post' ), ezhttp( concat( $attribute_base, '_data_user_email_confirm_', $attribute.id ), 'post')|wash( xhtml ), $attribute.content.email|wash )}" />
+</div>
+{/if}
 
 <div class="break"></div><div class="break"></div>
 </div>
@@ -52,9 +60,9 @@
 <div class="element">
     <label>{'Current account status:'|i18n( 'design/standard/content/datatype' )}
     {if $attribute.content.is_enabled}
-        <span class="userstatus-enabled">{'enabled'|i18n( 'design/standard/content/datatype' )}</span>
+	<span class="userstatus-enabled">{'enabled'|i18n( 'design/standard/content/datatype' )}</span>
     {else}
-        <span class="userstatus-disabled"> {'disabled'|i18n( 'design/standard/content/datatype' )}</span>
+	<span class="userstatus-disabled"> {'disabled'|i18n( 'design/standard/content/datatype' )}</span>
     {/if}
     </label>
 </div>

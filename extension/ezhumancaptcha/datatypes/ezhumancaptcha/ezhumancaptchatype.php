@@ -29,7 +29,7 @@ class eZHumanCAPTCHAType extends eZDataType
 
     public function __construct()
     {
-        $this->eZDataType( self::DATA_TYPE_STRING, ezi18n( 'extension/ezhumancaptcha', "Human CAPTCHA" ) );
+        $this->eZDataType( self::DATA_TYPE_STRING, ezpI18n::tr( 'extension/ezhumancaptcha', "Human CAPTCHA" ) );
     }
 
 
@@ -114,7 +114,7 @@ class eZHumanCAPTCHAType extends eZDataType
                 {
                     eZHumanCAPTCHATools::cleanupPrevious( $encryptedToken );
                     $http->setSessionVariable( $tokenSessionVariableName, '' );
-                    $contentObjectAttribute->setValidationError( ezi18n( 'extension/ezhumancaptcha', 'The CAPTCHA code is empty' ) );
+                    $contentObjectAttribute->setValidationError( ezpI18n::tr( 'extension/ezhumancaptcha', 'The CAPTCHA code is empty' ) );
                     return eZInputValidator::STATE_INVALID;
                 }
             }
@@ -127,7 +127,7 @@ class eZHumanCAPTCHAType extends eZDataType
                 {
                     eZHumanCAPTCHATools::cleanupPrevious( $encryptedToken );
                     $http->setSessionVariable( $tokenSessionVariableName, '' );
-                    $contentObjectAttribute->setValidationError( ezi18n( 'extension/ezhumancaptcha', 'The CAPTCHA code is not valid' ) );
+                    $contentObjectAttribute->setValidationError( ezpI18n::tr( 'extension/ezhumancaptcha', 'The CAPTCHA code is not valid' ) );
                     return eZInputValidator::STATE_INVALID;
                 }
             }
@@ -136,7 +136,7 @@ class eZHumanCAPTCHAType extends eZDataType
         }
         else
         {
-            $contentObjectAttribute->setValidationError( ezi18n( 'extension/ezhumancaptcha', 'The CAPTCHA code is not set' ) );
+            $contentObjectAttribute->setValidationError( ezpI18n::tr( 'extension/ezhumancaptcha', 'The CAPTCHA code is not set' ) );
             return eZInputValidator::STATE_INVALID;
         }
         return eZInputValidator::STATE_ACCEPTED;
@@ -159,7 +159,7 @@ class eZHumanCAPTCHAType extends eZDataType
             {
                 if( $ini->variable( 'GeneralSettings', 'IsAttributeRequired' ) == 'true' )
                 {
-                    $contentObjectAttribute->setValidationError( ezi18n( 'extension/ezhumancaptcha', 'The CAPTCHA attribute is missing' ) );
+                    $contentObjectAttribute->setValidationError( ezpI18n::tr( 'extension/ezhumancaptcha', 'The CAPTCHA attribute is missing' ) );
                     return eZInputValidator::STATE_INVALID;
                 }
             }

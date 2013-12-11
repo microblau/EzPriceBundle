@@ -108,7 +108,7 @@ class feZMetaData extends eZPersistentObject
 		$metaName = $this->attribute('meta_name');
 		if( in_array( $metaName, $ini->variable( 'MetaData', 'AvailablesMetaData' ) ) )
 		{
-			$metaName = ezi18n( 'fezmetadata', $ini->variable( 'MetaData_'.$metaName, 'Name' ) );
+			$metaName = ezpI18n::tr( 'fezmetadata', $ini->variable( 'MetaData_'.$metaName, 'Name' ) );
 		}
 		return $metaName;
 	}

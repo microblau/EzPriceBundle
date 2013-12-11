@@ -103,7 +103,8 @@ class eZUtilsUser extends eZUser
 	            eZUser::updateLastVisit( $userID );	            
 	            eZUser::setCurrentlyLoggedInUser( $user, $userID );
                 $basket = eZBasket::currentBasket();
-                 // die();
+                //print_r( $basket );
+               // die();
 	            
 	
 	                            // Reset number of failed login attempts

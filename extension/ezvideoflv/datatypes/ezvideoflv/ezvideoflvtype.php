@@ -40,7 +40,7 @@ class eZVideoFLVType extends eZDataType
 
     function eZVideoFLVType()
     {
-        $this->eZDataType( eZVideoFLVType::VIDEOFLV, ezi18n( 'kernel/classes/datatypes', "Video FLV", 'Datatype name' ),
+        $this->eZDataType( eZVideoFLVType::VIDEOFLV, ezpI18n::tr( 'kernel/classes/datatypes', "Video FLV", 'Datatype name' ),
                            array( 'serialize_supported' => true ) );
     }
 
@@ -183,19 +183,19 @@ class eZVideoFLVType extends eZDataType
         $canFetchResult = eZHTTPFile::canFetch( $httpFileName, $maxSize );
         if ( $mustUpload && $canFetchResult == eZHTTPFile::UPLOADEDFILE_DOES_NOT_EXIST )
         {
-            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+            $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                 'A valid media file is required.' ) );
             return eZInputValidator::STATE_INVALID;
         }
         if ( $canFetchResult == eZHTTPFile::UPLOADEDFILE_EXCEEDS_PHP_LIMIT )
         {
-            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+            $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                 'The size of the uploaded file exceeds the limit set by upload_max_filesize directive in php.ini. Please contact the site administrator.') );
             return eZInputValidator::STATE_INVALID;
         }
         if ( $canFetchResult == eZHTTPFile::UPLOADEDFILE_EXCEEDS_MAX_SIZE )
         {
-            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+            $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                 'The size of the uploaded file exceeds site maximum: %1 bytes.' ), $maxSize );
             return eZInputValidator::STATE_INVALID;
         }
@@ -217,7 +217,7 @@ class eZVideoFLVType extends eZDataType
             {
                 eZAppendWarningItem( array( 'error' => array( 'type' => 'kernel',
                                                               'number' => eZError::KERNEL_NOT_AVAILABLE ),
-                                            'text' => ezi18n( 'kernel/classes/datatypes',
+                                            'text' => ezpI18n::tr( 'kernel/classes/datatypes',
                                                               'File uploading is not enabled. Please contact the site administrator to enable it.' ) ) );
                 $isFileWarningAdded = true;
             }
@@ -367,7 +367,7 @@ class eZVideoFLVType extends eZDataType
         $httpFile->setMimeType( $mimeData['name'] );
         if ( !$httpFile->store( "original", false, false ) )
         {
-            $errors[] = array( 'description' => ezi18n( 'kernel/classes/datatypes/ezmedia',
+            $errors[] = array( 'description' => ezpI18n::tr( 'kernel/classes/datatypes/ezmedia',
                                                         'Failed to store media file %filename. Please contact the site administrator.', null,
                                                         array( '%filename' => $httpFile->attribute( "original_filename" ) ) ) );
             return false;

@@ -1,5 +1,6 @@
-<!DOCTYPE TS><TS>
-<defaultcodec></defaultcodec>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="fr_FR">
 <context>
     <name>extension/ezodf</name>
     <message>
@@ -69,8 +70,12 @@ the appropriate class during the import, you get a notice about this after the i
 Images are placed in the media library so you can re-use them in other articles.</source>
         <translation>Vous pouvez directement importer des documents OpenOffice.org Writer vers eZ Publish à partir de cette page. Vous devez
 indiquer l&apos;emplacement du document et eZ Publish s&apos;occupe du reste. Le document est converti dans
-la classe appropriée lors de l&apos;importation. Vous recevrez un avis concernant cette conversion une fois l&apos;importation terminée.
+la classe appropriée lors de l&apos;import. Vous recevrez des informations concernant cette conversion une fois l&apos;import terminé.
 Les images sont placées dans la médiathèque : vous pouvez les réutiliser dans d&apos;autres articles. </translation>
+    </message>
+    <message>
+        <source>The imported document is waiting for an approbation to be published.</source>
+        <translation>Le document importé est en attente d&apos;approbation pour être publié.</translation>
     </message>
 </context>
 <context>
@@ -104,15 +109,15 @@ Cliquez sur le nom de l&apos;emplacement pour modifier la liste de navigation.</
     </message>
     <message>
         <source>PDF conversion failed</source>
-        <translation>Echec de la conversion PDF</translation>
+        <translation>Échec de la conversion PDF</translation>
     </message>
     <message>
         <source>Word conversion failed</source>
-        <translation>Echec de la conversion Word</translation>
+        <translation>Échec de la conversion Word</translation>
     </message>
     <message>
         <source>Unable to fetch node, or no read access</source>
-        <translation>Impossible de récupérer le noeud ou de lire le chemin d&apos;accès</translation>
+        <translation>Impossible de récupérer le nœud ou de lire le chemin d&apos;accès</translation>
     </message>
     <message>
         <source>Unable to open file %1 on server side</source>
@@ -139,15 +144,15 @@ Cliquez sur le nom de l&apos;emplacement pour modifier la liste de navigation.</
     </message>
     <message>
         <source>Unable to call daemon. Fork can not create child process.</source>
-        <translation>Impossible d&apos;appeler le démon. Le fork ne peut pas créer de processus enfant.</translation>
+        <translation>Impossible d&apos;appeler le démon (daemon). La processus ne peut créer de processus enfant.</translation>
     </message>
     <message>
         <source>Daemon reported error.</source>
-        <translation>Le daemon a signalé une erreur.</translation>
+        <translation>Le démon (daemon) a signalé une erreur.</translation>
     </message>
     <message>
         <source>Unknown node.</source>
-        <translation>Noeud inconnu.</translation>
+        <translation>Nœud inconnu.</translation>
     </message>
     <message>
         <source>Access denied.</source>
@@ -155,11 +160,11 @@ Cliquez sur le nom de l&apos;emplacement pour modifier la liste de navigation.</
     </message>
     <message>
         <source>Error during import.</source>
-        <translation>Erreur lors de l&apos;importation.</translation>
+        <translation>Erreur lors de l&apos;import.</translation>
     </message>
     <message>
         <source>Unknown content class specified in odf.ini:</source>
-        <translation>Classe de contenu inconnue précisée dans odf.ini :</translation>
+        <translation>La classe de contenu définie dans odf.ini n&apos;existe pas :</translation>
     </message>
     <message>
         <source>Unknown error.</source>
@@ -171,7 +176,7 @@ Cliquez sur le nom de l&apos;emplacement pour modifier la liste de navigation.</
     </message>
     <message>
         <source>Folder for images could not be created, access denied.</source>
-        <translation>Impossible de créer le dossier pour les images : accès refusé.</translation>
+        <translation>Impossible de créer le dossier pour les images, l&apos;accès a été refusé.</translation>
     </message>
     <message>
         <source>Document is not supported.</source>
@@ -183,15 +188,15 @@ Cliquez sur le nom de l&apos;emplacement pour modifier la liste de navigation.</
     </message>
     <message>
         <source>Cannot import document, supplied placement nodeID is not valid.</source>
-        <translation>Impossible d&apos;importer le document, l&apos;identifiant du noeud de l&apos;emplacement fourni n&apos;est pas valide.</translation>
+        <translation>Impossible d&apos;importer le document, l&apos;identifiant du nœud de l&apos;emplacement fourni n&apos;est pas valide.</translation>
     </message>
     <message>
         <source>Cannot store uploaded file, cannot import.</source>
-        <translation>Impossible d&apos;enregistrer le fichier téléchargé, importation impossible.</translation>
+        <translation>Impossible d&apos;enregistrer le fichier téléchargé, import impossible.</translation>
     </message>
     <message>
         <source>Unable to fetch node with id </source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de récupérer le nœud dont l&apos;id est </translation>
     </message>
 </context>
 <context>
@@ -202,19 +207,19 @@ Cliquez sur le nom de l&apos;emplacement pour modifier la liste de navigation.</
     </message>
     <message>
         <source>Export OpenOffice</source>
-        <translation>Exporter OpenOffice</translation>
+        <translation>Export OpenOffice</translation>
     </message>
     <message>
         <source>Export PDF</source>
-        <translation>Exporter PDF</translation>
+        <translation>Export PDF</translation>
     </message>
     <message>
         <source>Export Word</source>
-        <translation>Exporter Word</translation>
+        <translation>Export Word</translation>
     </message>
     <message>
         <source>Import OpenOffice</source>
-        <translation>Importer OpenOffice</translation>
+        <translation>Import OpenOffice</translation>
     </message>
     <message>
         <source>Replace OpenOffice</source>

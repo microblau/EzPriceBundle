@@ -1,37 +1,20 @@
 <?php
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 // Set a default time zone if none is given. The time zone can be overriden
 // in config.php or php.ini.
-if ( !ini_get( "date.timezone" ) )
+if ( !ini_get( 'date.timezone' ) )
 {
-    date_default_timezone_set( "UTC" );
+    date_default_timezone_set( 'UTC' );
 }
 
 define( 'MAX_AGE', 86400 );
+header( 'X-Powered-By: eZ Publish (index_treemenu)' );
 
 if ( isset( $_SERVER['HTTP_IF_MODIFIED_SINCE'] ) )
 {
@@ -39,11 +22,20 @@ if ( isset( $_SERVER['HTTP_IF_MODIFIED_SINCE'] ) )
     header( 'Expires: ' . gmdate( 'D, d M Y H:i:s', time() + MAX_AGE ) . ' GMT' );
     header( 'Cache-Control: max-age=' . MAX_AGE );
     header( 'Last-Modified: ' . gmdate( 'D, d M Y H:i:s', strtotime( $_SERVER['HTTP_IF_MODIFIED_SINCE'] ) ) . ' GMT' );
+    header( 'Pragma: ' );
     exit();
 }
 
 require 'autoload.php';
-require_once( 'kernel/common/ezincludefunctions.php' );
+
+// Tweaks ini filetime checks if not defined!
+// This makes ini system not check modified time so
+// that index_treemenu.php can assume that index.php does
+// this regular enough, set in config.php to override.
+if ( !defined('EZP_INI_FILEMTIME_CHECK') )
+{
+    define( 'EZP_INI_FILEMTIME_CHECK', false );
+}
 
 function ezupdatedebugsettings()
 {
@@ -73,35 +65,32 @@ $_SERVER['SCRIPT_FILENAME'] = str_replace( '/index_treemenu.php', '/index.php', 
 $_SERVER['PHP_SELF'] = str_replace( '/index_treemenu.php', '/index.php', $_SERVER['PHP_SELF'] );
 
 $ini = eZINI::instance();
-
 $timezone = $ini->variable( 'TimeZoneSettings', 'TimeZone' );
 if ( $timezone )
 {
     putenv( "TZ=$timezone" );
 }
 
+// init uri code
 $GLOBALS['eZGlobalRequestURI'] = eZSys::serverVariable( 'REQUEST_URI' );
-
-eZSys::init( 'index.php', $ini->variable( 'SiteAccessSettings', 'ForceVirtualHost' ) == 'true' );
-
+eZSys::init( 'index.php', $ini->variable( 'SiteAccessSettings', 'ForceVirtualHost' ) === 'true' );
 $uri = eZURI::instance( eZSys::requestURI() );
 
 $GLOBALS['eZRequestedURI'] = $uri;
 
-require_once 'pre_check.php';
-
 // Check for extension
 eZExtension::activateExtensions( 'default' );
-// Extension check end
 
-require_once 'access.php';
-
-$access = accessType( $uri,
+// load siteaccess
+$access = eZSiteAccess::match( $uri,
                       eZSys::hostname(),
                       eZSys::serverPort(),
                       eZSys::indexFile() );
-$access = changeAccess( $access );
+$access = eZSiteAccess::change( $access );
 $GLOBALS['eZCurrentAccess'] = $access;
+
+// Check for new extension loaded by siteaccess
+eZExtension::activateExtensions( 'access' );
 
 $db = eZDB::instance();
 if ( $db->isConnected() )

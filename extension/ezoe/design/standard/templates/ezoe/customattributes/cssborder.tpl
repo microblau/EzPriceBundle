@@ -59,13 +59,11 @@
 </tr>
 </table>
 <script type="text/javascript">
-<!--
-
 eZOEPopupUtils.settings.customAttributeInitHandler['{$custom_attribute_id}_source'] = {literal} function( el, value )
 {
     
     var baseid = el.id.replace('_source', '_'), valArr = value.split(' ');
-    el.value = ez.num( valArr[0], 0, 'int' );
+    el.value = eZOEPopupUtils.Int( valArr[0] );
     var size = document.getElementById( baseid + 'sizetype' ), border = document.getElementById( baseid+'bordertype' ), color = document.getElementById( baseid+'color' );
     size.selectedIndex = jQuery.inArray( valArr[0].replace( el.value, '' ), jQuery('#' + size.id + ' option').map(function( i, n )
     {
@@ -86,6 +84,4 @@ eZOEPopupUtils.settings.customAttributeSaveHandler['{$custom_attribute_id}_sourc
         return '';
     return value + ( size.selectedIndex !== -1 ? size.options[size.selectedIndex].value : '' ) + ( border.selectedIndex !== -1 ? ' ' + border.options[border.selectedIndex].value : '' ) + ' ' + color.value;
 };{/literal}
-
-//-->
 </script>

@@ -5,6 +5,8 @@
 
 .colDatos1 .forgotPass, #modTab li, #finCompraForm .datos fieldset ul, .consultenosMod .wrapConsulta, #header #logo, div.calendars .listCalendar li, .package, .modType4 .boxProduct .cont, .integrado, .modType4 .descripcion div.clear { height:1%;}
 
+#datosUsuario .volver, #datosUsuario .submit { display:inline;}
+
 
 #home #modFormacion .description { height: 133px }
 #modDestacado .wrap span { margin-left:120px  }

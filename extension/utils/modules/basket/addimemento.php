@@ -105,7 +105,7 @@ else
     
 
 
-
+$http->setSessionVariable('productsImemento', "");
 
 $module->redirectTo( "/basket/basket/" );
 

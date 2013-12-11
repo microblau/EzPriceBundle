@@ -31,7 +31,7 @@ require_once( 'kernel/common/template.php' );
 
 $http = eZHTTPTool::instance();
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $param1 = $Params['Param1'];
 $param2 = $Params['Param2'];

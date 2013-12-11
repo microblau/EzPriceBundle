@@ -35,7 +35,7 @@ class eztext2ezxmltext extends convertHandler
 		$settings = array();
 		$settings[] = array( 'type'  => 'select',
 							 'name'  => 'Output',
-							 'label' => ezi18n( 'attributeconverter/common', 'Output' ),
+							 'label' => ezpI18n::tr( 'attributeconverter/common', 'Output' ),
 							 'options' => array( 'plain_text' => 'Plain text', 
 												 'xhtml' 	  => 'XHTML' ) );
 		return $settings;

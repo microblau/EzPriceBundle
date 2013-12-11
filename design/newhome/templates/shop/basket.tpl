@@ -71,12 +71,41 @@
 														<tr class="totalNoIva">
 															<th colspan="7">TOTAL (sin IVA)</th>
 															<td>{$basket.total_ex_vat|l10n( clean_currency )} €</td>
+														</tr>     
+                                                                                                                {if is_set($gastos_envio)}
+                                                                                                                <tr class="totalNoIva">
+
+															<th colspan="7">TOTAL COMPRA</th>
+															<td class="precio">{$basket.total_inc_vat|l10n( clean_currency ), $basket.total_inc_vat|l10n( clean_currency ))} €</td>
 														</tr>
-														<tr class="total">
+                                                                                                                <tr class="totalNoIva">
+															<th colspan="7">Gastos de Envío</th>
+															<td>{$gastos_envio|l10n( clean_currency )} €</td>
+														</tr>
+                                                                                                                <tr class="total">
 
 															<th colspan="7">TOTAL</th>
-															<td class="precio">{$basket.total_inc_vat|l10n( clean_currency )} €</td>
+															<td class="precio">{cond( is_set( $gastos_envio ), $basket.total_inc_vat|sum($gastos_envio)|l10n( clean_currency ), $basket.total_inc_vat|l10n( clean_currency ))} €</td>
 														</tr>
+                                                                                                                {else}
+                                                                                                                   
+
+                                                                                                                <tr class="totalNoIva">
+
+															<th colspan="7">TOTAL COMPRA</th>
+															<td class="precio">{$basket.total_inc_vat|l10n( clean_currency ), $basket.total_inc_vat|l10n( clean_currency ))} €</td>
+														</tr>
+                                                                                                                <tr class="totalNoIva">
+															<th colspan="7">Gastos de Envío</th>
+															<td style="font-size:10px; font-weight:normal"><a style="font-size:11px" class="ajax" href={"basket/gastosenvio"|ezurl}>Más información</a></td>
+														</tr>
+                                                                                                                <tr class="total">
+
+															<th colspan="7">TOTAL PARCIAL</th>
+															<td class="precio">{cond( is_set( $gastos_envio ), $basket.total_inc_vat|sum($gastos_envio)|l10n( clean_currency ), $basket.total_inc_vat|l10n( clean_currency ))} €</td>
+														</tr>
+                                                                                                                {/if}
+														
 													</tfoot>
 													<tbody>
 														
@@ -124,7 +153,9 @@
 																{if $product.item_object.contentobject.class_identifier|contains( 'curso')}
 																	<a href={$product.item_object.contentobject.main_node.url_alias|ezurl_formacion()}>{$product.object_name}</a>
 																{else}
-                                                                {if $product.item_object.contentobject.contentclass_id|eq(101)}
+{if $product.item_object.contentobject.contentclass_id|eq(48)}
+<strong style="color:#00528d">{$product.object_name}</strong>
+                                                                {elseif $product.item_object.contentobject.contentclass_id|eq(101)}
                                                                     <a href={$product.item_object.contentobject.main_node.url_alias|ezurl}>{$product.object_name}</a><br />                                      
                                                                     <span class="mementos">{$order_info.has_nautis4.mementos}. 
                                                                     <strong>{$order_info.has_nautis4.accesos}</strong></span>
@@ -426,6 +457,28 @@
 			
 		
 			
-{ezscript_require( array( 'jquery.fancybox-1.3.0.pack.js') )}
+{ezscript_require( array( 'jquery.fancybox-1.3.0.pack.js',  'colorbox/jquery.colorbox-min.js') )}
 {ezcss_require( array( 'jquery.fancybox-1.3.0.css') )}
+{literal}
+    <script type="text/javascript">
+    $(document).ready(function(){
+    $(".ajax").colorbox();
+    });
+    </script>
+    <style>
+       #colorbox{background-color:#fff; z-index:100000; border: 1px solid #000}
+       #colorbox div {padding:0}
+       #cboxClose {
+position: absolute;
+top: 0px;
+right: 0px;
+display: block;
+background: url(/design/newhome/images/cerrar.png) no-repeat top center;
+width: 32px;
+height: 36px;
+text-indent: -9999px;
+border: none;
+}
+    </style>
+{/literal}
 		

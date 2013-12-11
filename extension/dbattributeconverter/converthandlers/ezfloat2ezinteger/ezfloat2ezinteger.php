@@ -53,7 +53,7 @@ class ezfloat2ezinteger extends convertHandler
 		$settings = array();
 		$settings[] = array( 'type'  => 'select',
 							 'name'  => 'RoundMethod',
-							 'label' => ezi18n( 'attributeconverter/common', 'Round method' ),
+							 'label' => ezpI18n::tr( 'attributeconverter/common', 'Round method' ),
 							 'options' => array( 'floor' => 'Floor', 
 												 'round' => 'Round', 
 												 'ceil' => 'Ceil' ) );

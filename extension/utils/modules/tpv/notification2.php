@@ -13,7 +13,7 @@ eZDebug::writeError( 'bbbb' . $_GET['peticion'],
                              'tpv/notification' );
 
 require( 'kernel/common/template.php' );
-$tplmail = templateInit();
+$tplmail = eZTemplate::factory();
 
 
 if (!$http->hasGetVariable( 'peticion')  ) 

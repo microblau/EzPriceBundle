@@ -186,6 +186,7 @@ div.object-left
 
 #header li
 {
+
 	color: #D9EFFF;
 }
 
@@ -489,3 +490,32 @@ background-image:url("../images/bullet_fichas.gif");
     margin-left:0;
 }
 
+
+
+select#prodQI{
+ width: 249px;
+ margin-bottom: 10px;
+}
+
+#iMementoDest select#prodQI, {
+ width: 200px;
+ margin-bottom: 10px;
+}
+
+#iMementoDest .tryPromo {
+    width:auto !important;
+}
+
+select#prodQI option {  width: 240px;}
+#iMementoDest select#prodQI option {  width: 190px;}
+
+#formPrueba label, #frm_tryImemento label, #modMemGrat label{
+    white-space:normal
+}
+#datosUsuario form .datos li.condiciones label{
+    width:auto;
+	margin:1.5em 0;
+}
+#modMemGrat a{
+    text-decoration:underline;
+}

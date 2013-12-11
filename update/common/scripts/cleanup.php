@@ -1,31 +1,11 @@
 #!/usr/bin/env php
 <?php
-//
-// Created on: <18-Dec-2003 17:44:15 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
 
 require 'autoload.php';
 
@@ -126,18 +106,17 @@ else
 
 function changeSiteAccessSetting( &$siteaccess, $optionData )
 {
-    global $isQuiet;
+    $ini = eZINI::instance();
     $cli = eZCLI::instance();
-    if ( file_exists( 'settings/siteaccess/' . $optionData ) )
+    $availableSiteAccessList = $ini->variable( 'SiteAccessSettings', 'AvailableSiteAccessList' );
+    if ( in_array( $optionData, $availableSiteAccessList ) )
     {
         $siteaccess = $optionData;
-        if ( !$isQuiet )
-            $cli->notice( "Using siteaccess $siteaccess for database cleanup" );
+        $cli->output( "Using siteaccess $siteaccess for database cleanup" );
     }
     else
     {
-        if ( !$isQuiet )
-            $cli->notice( "Siteaccess $optionData does not exist, using default siteaccess" );
+        $cli->notice( "Siteaccess $optionData does not exist, using default siteaccess" );
     }
 }
 
@@ -164,16 +143,30 @@ $db->setIsSQLOutputEnabled( $showSQL );
 
 if ( $clean['session'] )
 {
-    $cli->output( "Removing all sessions" );
-    eZSession::cleanup();
+    if ( !eZSession::getHandlerInstance()->hasBackendAccess() )
+    {
+        $cli->output( "Could not remove sessions, current session handler does not support session cleanup (not backend based)." );
+    }
+    else
+    {
+        $cli->output( "Removing all sessions" );
+        eZSession::cleanup();
+    }
 }
 
 if ( $clean['expired_session'] )
 {
-    $cli->output( "Removing expired sessions,", false );
-    eZSession::garbageCollector();
-    $activeCount = eZSession::countActive();
-    $cli->output( " " . $cli->stylize( 'emphasize', $activeCount ) . " left" );
+    if ( !eZSession::getHandlerInstance()->hasBackendAccess() )
+    {
+        $cli->output( "Could not remove expired sessions, current session handler does not support session garbage collection (not backend based)." );
+    }
+    else
+    {
+        $cli->output( "Removing expired sessions,", false );
+        eZSession::garbageCollector();
+        $activeCount = eZSession::countActive();
+        $cli->output( " " . $cli->stylize( 'emphasize', $activeCount ) . " left" );
+    }
 }
 
 if ( $clean['preferences'] )

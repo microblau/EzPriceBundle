@@ -3,25 +3,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Find
-// SOFTWARE RELEASE: 1.0.x
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE RELEASE: 2.7.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: eZ Business Use License Agreement eZ BUL Version 2.1
 // NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
+//  This source file is part of the eZ Publish CMS and is
+//  licensed under the terms and conditions of the eZ Business Use
+//  License v2.1 (eZ BUL).
 //
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
+//  A copy of the eZ BUL was included with the software. If the
+//  license is missing, request a copy of the license via email
+//  at license@ez.no or via postal mail at
+// 	Attn: Licensing Dept. eZ Systems AS, Klostergata 30, N-3732 Skien, Norway
 //
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
+//  IMPORTANT: THE SOFTWARE IS LICENSED, NOT SOLD. ADDITIONALLY, THE
+//  SOFTWARE IS LICENSED "AS IS," WITHOUT ANY WARRANTIES WHATSOEVER.
+//  READ THE eZ BUL BEFORE USING, INSTALLING OR MODIFYING THE SOFTWARE.
+
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -61,6 +59,8 @@ class ezfSearchResultInfo
     {
         return array( 'facet_fields',
                       'facet_queries',
+                      'facet_dates',
+                      'facet_ranges',
                       'engine',
                       'hasError',
                       'error',
@@ -70,7 +70,10 @@ class ezfSearchResultInfo
                       // but a border case is present when "collation"
                       // is also a word searched for and not present in the
                       // spellcheck dictionary/index -- Solr php response writer "bug"
-                      'spellcheck_collation');
+                      'spellcheck_collation',
+                      'interestingTerms',
+                      'clusters'
+            );
     }
 
     /**
@@ -100,7 +103,7 @@ class ezfSearchResultInfo
                 {
                     return $this->ResultArray['error'];
                 }
-            };
+            }
 
             case 'facet_queries':
             {
@@ -116,7 +119,7 @@ class ezfSearchResultInfo
                 }
 
                 $facetArray = array();
-                foreach( $this->ResultArray['facet_counts']['facet_queries'] as $query => $count )
+                foreach ( $this->ResultArray['facet_counts']['facet_queries'] as $query => $count )
                 {
                     list( $field, $fieldValue ) = explode( ':', $query );
                     $fieldInfo = array( 'field' => $field,
@@ -144,7 +147,7 @@ class ezfSearchResultInfo
                 }
 
                 $facetArray = array();
-                foreach( $this->ResultArray['facet_counts']['facet_fields'] as $field => $facetField )
+                foreach ( $this->ResultArray['facet_counts']['facet_fields'] as $field => $facetField )
                 {
                     switch( $field )
                     {
@@ -156,7 +159,7 @@ class ezfSearchResultInfo
                                                 'nameList' => array(),
                                                 'queryLimit' => array(),
                                                 'countList' => array() );
-                            foreach( $facetField as $contentClassID => $count )
+                            foreach ( $facetField as $contentClassID => $count )
                             {
                                 if ( $contentClass = eZContentClass::fetch( $contentClassID ) )
                                 {
@@ -166,8 +169,7 @@ class ezfSearchResultInfo
                                 }
                                 else
                                 {
-                                    eZDebug::writeWarning( 'Could not fetch eZContentClass: ' . $contentClassID,
-                                                           'ezfSearchResultInfo::attribute()' );
+                                    eZDebug::writeWarning( 'Could not fetch eZContentClass: ' . $contentClassID, __METHOD__ );
                                 }
                             }
                             $facetArray[] = $fieldInfo;
@@ -183,7 +185,7 @@ class ezfSearchResultInfo
                                                 'nameList' => array(),
                                                 'queryLimit' => array(),
                                                 'countList' => array() );
-                            foreach( $facetField as $installationID => $count )
+                            foreach ( $facetField as $installationID => $count )
                             {
                                 $fieldInfo['nameList'][$installationID] = isset( $siteNameMapList[$installationID] ) ?
                                     $siteNameMapList[$installationID] : $installationID;
@@ -201,7 +203,7 @@ class ezfSearchResultInfo
                                                 'nameList' => array(),
                                                 'queryLimit' => array(),
                                                 'countList' => array() );
-                            foreach( $facetField as $ownerID => $count )
+                            foreach ( $facetField as $ownerID => $count )
                             {
                                 if ( $owner = eZContentObject::fetch( $ownerID ) )
                                 {
@@ -211,8 +213,7 @@ class ezfSearchResultInfo
                                 }
                                 else
                                 {
-                                    eZDebug::writeWarning( 'Could not fetch owner ( eZContentObject ): ' . $ownerID,
-                                                           'ezfSearchResultInfo::attribute()' );
+                                    eZDebug::writeWarning( 'Could not fetch owner ( eZContentObject ): ' . $ownerID, __METHOD__ );
                                 }
                             }
                             $facetArray[] = $fieldInfo;
@@ -226,7 +227,7 @@ class ezfSearchResultInfo
                                                 'nameList' => array(),
                                                 'queryLimit' => array(),
                                                 'countList' => array() );
-                            foreach( $facetField as $languageCode => $count )
+                            foreach ( $facetField as $languageCode => $count )
                             {
                                 $fieldInfo['nameList'][$languageCode] = $languageCode;
                                 $fieldInfo['queryLimit'][$languageCode] = 'language_code:' . $languageCode;
@@ -242,7 +243,7 @@ class ezfSearchResultInfo
                                                 'queryLimit' => array(),
                                                 'nameList' => array(),
                                                 'countList' => array() );
-                            foreach( $facetField as $value => $count )
+                            foreach ( $facetField as $value => $count )
                             {
                                 $fieldInfo['nameList'][$value] = $value;
                                 $fieldInfo['queryLimit'][$value] = $field . ':' . $value;
@@ -282,7 +283,7 @@ class ezfSearchResultInfo
                 {
                     // work around border case if 'collation' is searched for but does not exist in the spell check index
                     // the collation string is the last element of the suggestions array
-                    return end($this->ResultArray['spellcheck']['suggestions']);
+                    return end( $this->ResultArray['spellcheck']['suggestions'] );
 
                 }
                 else
@@ -297,6 +298,40 @@ class ezfSearchResultInfo
                 if ( isset( $this->ResultArray['interestingTerms'] ) )
                 {
                     return $this->ResultArray['interestingTerms'];
+                }
+                else
+                {
+                    return false;
+                }
+            } break;
+            case 'facet_dates':
+            {
+                if ( isset( $this->ResultArray['facet_dates'] ) )
+                {
+                    return $this->ResultArray['facet_dates'];
+                }
+                else
+                {
+                    return false;
+                }
+            } break;
+
+            case 'facet_ranges':
+            {
+                if ( isset( $this->ResultArray['facet_counts']['facet_ranges'] ) )
+                {
+                    return $this->ResultArray['facet_counts']['facet_ranges'];
+                }
+                else
+                {
+                    return false;
+                }
+            } break;
+            case 'clusters':
+            {
+                if ( isset( $this->ResultArray['clusters'] ) )
+                {
+                    return $this->ResultArray['clusters'];
                 }
                 else
                 {

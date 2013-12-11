@@ -4,29 +4,25 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 3.9.x
-// COPYRIGHT NOTICE: Copyright (C) 1999-2006 eZ systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE RELEASE: 4.7.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: eZ Business Use License Agreement eZ BUL Version 2.1
 // NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
+//   This source file is part of the eZ Publish CMS and is
+//   licensed under the terms and conditions of the eZ Business Use
+//   License v2.1 (eZ BUL).
+// 
+//   A copy of the eZ BUL was included with the software. If the
+//   license is missing, request a copy of the license via email
+//   at license@ez.no or via postal mail at
+//  	Attn: Licensing Dept. eZ Systems AS, Klostergata 30, N-3732 Skien, Norway
+// 
+//   IMPORTANT: THE SOFTWARE IS LICENSED, NOT SOLD. ADDITIONALLY, THE
+//   SOFTWARE IS LICENSED "AS IS," WITHOUT ANY WARRANTIES WHATSOEVER.
+//   READ THE eZ BUL BEFORE USING, INSTALLING OR MODIFYING THE SOFTWARE.
+
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
-
-require_once( "kernel/common/template.php" );
 
 function makeErrorArray( $num, $msg )
 {
@@ -38,7 +34,7 @@ $module = $Params["Module"];
 $NodeID = $Params['NodeID'];
 $ImportType = $Params['ImportType'];
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $tpl->setVariable( 'error', false );
 $tpl->setVariable( 'import_type', 'import' );
@@ -120,7 +116,7 @@ if ( $module->isCurrentAction( 'OOPlace' ) )
                 else
                 {
                     $tpl->setVariable( 'error', makeErrorArray( eZOOImport::ERROR_DOCNOTSUPPORTED,
-                                                                ezi18n( 'extension/ezodf/import/error', "Document is not supported." ) ) );
+                                                                ezpI18n::tr( 'extension/ezodf/import/error', "Document is not supported." ) ) );
                 }
 
             }
@@ -133,14 +129,14 @@ if ( $module->isCurrentAction( 'OOPlace' ) )
         {
             eZDebug::writeError( "Cannot import. File not found. Already imported?" );
             $tpl->setVariable( 'error', makeErrorArray( eZOOImport::ERROR_FILENOTFOUND,
-                                                        ezi18n( 'extension/ezodf/import/error', "Cannot import. File not found. Already imported?" ) ) );
+                                                        ezpI18n::tr( 'extension/ezodf/import/error', "Cannot import. File not found. Already imported?" ) ) );
         }
     }
     else
     {
         eZDebug::writeError( "Cannot import document, supplied placement nodeID is not valid." );
         $tpl->setVariable( 'error', makeErrorArray( eZOOImport::ERROR_PLACEMENTINVALID,
-                                                    ezi18n( 'extension/ezodf/import/error', "Cannot import document, supplied placement nodeID is not valid." ) ) );
+                                                    ezpI18n::tr( 'extension/ezodf/import/error', "Cannot import document, supplied placement nodeID is not valid." ) ) );
     }
 
 //    $tpl->setVariable( 'oo_mode', 'imported' );
@@ -178,6 +174,7 @@ else
                         $tpl->setVariable( 'class_identifier', $result['ClassIdentifier'] );
                         $tpl->setVariable( 'url_alias', $result['URLAlias'] );
                         $tpl->setVariable( 'node_name', $result['NodeName'] );
+                        $tpl->setVariable( 'published', $result['Published'] );
                         $tpl->setVariable( 'oo_mode', 'imported' );
                     }
                     else
@@ -189,7 +186,7 @@ else
                         else
                         {
                             $tpl->setVariable( 'error', makeErrorArray( eZOOImport::ERROR_DOCNOTSUPPORTED,
-                                                                        ezi18n( 'extension/ezodf/import/error',"Document is not supported." ) ) );
+                                                                        ezpI18n::tr( 'extension/ezodf/import/error',"Document is not supported." ) ) );
                         }
                     }
                     $http->removeSessionVariable( 'oo_direct_import_node' );
@@ -214,7 +211,7 @@ else
             {
                 eZDebug::writeError( "Cannot store uploaded file, cannot import" );
                 $tpl->setVariable( 'error', makeErrorArray( eZOOImport::ERROR_CANNOTSTORE,
-                                                            ezi18n( 'extension/ezodf/import/error',"Cannot store uploaded file, cannot import." ) ) );
+                                                            ezpI18n::tr( 'extension/ezodf/import/error',"Cannot store uploaded file, cannot import." ) ) );
             }
         }
     }
@@ -225,7 +222,7 @@ else
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:ezodf/import.tpl" );
 $Result['path'] = array( array( 'url' => '/ezodf/import/',
-                                'text' => ezi18n( 'extension/ezodf', 'OpenOffice.org import' ) ));
+                                'text' => ezpI18n::tr( 'extension/ezodf', 'OpenOffice.org import' ) ));
 
 
 

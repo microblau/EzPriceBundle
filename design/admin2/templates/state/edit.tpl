@@ -60,7 +60,7 @@
     {if $useFieldsets}
     <div class="block">
     <fieldset>
-    <legend><img src="{$translation.language.locale|flag_icon}" /> {$translation.language.locale_object.intl_language_name|wash}</legend>
+    <legend><img src="{$translation.language.locale|flag_icon}" width="18" height="12" /> {$translation.language.locale_object.intl_language_name|wash}</legend>
     {/if}
     <label>{"Name:"|i18n('design/admin/state/edit')}</label>
     <input type="text" size="80" maxlength="45" name="ContentObjectState_name[]" value="{$translation.name|wash}" />
@@ -78,7 +78,7 @@
 <div class="controlbar">
 {* DESIGN: Control bar START *}<div class="box-bc"><div class="box-ml">
 <div class="block">
-  <input class="defaultbutton" type="submit" name="StoreButton" value="{'Save changes'|i18n('design/admin/state/edit')|wash}" title="{'Save changes to this states.'|i18n( 'design/admin/state/edit' )|wash}" />
+  <input class="defaultbutton" type="submit" name="StoreButton" value="{'Save changes'|i18n('design/admin/state/edit')|wash}" title="{'Save changes to this state.'|i18n( 'design/admin/state/edit' )|wash}" />
   <input class="button" type="submit" name="CancelButton" value="{'Cancel'|i18n('design/admin/state/edit')|wash}" title="{'Cancel saving any changes.'|i18n( 'design/admin/state/edit' )|wash}" />
 </div>
 

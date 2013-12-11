@@ -1,6 +1,6 @@
 <?php 
 require( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $http = eZHTTPTool::instance();
 $module = $Params['Module'];
@@ -75,13 +75,13 @@ if ( $order instanceof eZOrder )
                 {
                     $Result = array();
                     require_once( "kernel/common/template.php" );
-                    $tpl = templateInit();
+                    $tpl = eZTemplate::factory();
 
                     $tpl->setVariable( 'operation_result', $operationResult );
 
                     $Result['content'] = $tpl->fetch( "design:shop/cancelcheckout.tpl" ) ;
                     $Result['path'] = array( array( 'url' => false,
-                                                    'text' => ezi18n( 'kernel/shop', 'Checkout' ) ) );
+                                                    'text' => ezpI18n::tr( 'kernel/shop', 'Checkout' ) ) );
 
                     return;
                 }
@@ -112,12 +112,12 @@ if ( $order instanceof eZOrder )
                 {
                     $Result = array();
                     require_once( "kernel/common/template.php" );
-                    $tpl = templateInit();
+                    $tpl = eZTemplate::factory();
                     $tpl->setVariable( 'attempt', $attempt );
                     $tpl->setVariable( 'orderID', $orderID );
                     $Result['content'] = $tpl->fetch( "design:shop/checkoutagain.tpl" ) ;
                     $Result['path'] = array( array( 'url' => false,
-                                                    'text' => ezi18n( 'kernel/shop', 'Checkout' ) ) );
+                                                    'text' => ezpI18n::tr( 'kernel/shop', 'Checkout' ) ) );
                     return;
                 }
                 else
@@ -127,13 +127,13 @@ if ( $order instanceof eZOrder )
 
                     $Result = array();
                     require_once( "kernel/common/template.php" );
-                    $tpl = templateInit();
+                    $tpl = eZTemplate::factory();
                     $tpl->setVariable ("ErrorCode", "NO_CALLBACK");
                     $tpl->setVariable ("OrderID", $orderID);
 
                     $Result['content'] = $tpl->fetch( "design:shop/cancelcheckout.tpl" ) ;
                     $Result['path'] = array( array( 'url' => false,
-                                                    'text' => ezi18n( 'kernel/shop', 'Checkout' ) ) );
+                                                    'text' => ezpI18n::tr( 'kernel/shop', 'Checkout' ) ) );
                     return;
                 }
             }
@@ -146,5 +146,5 @@ if ( $order instanceof eZOrder )
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:basket/checkout.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
 ?>

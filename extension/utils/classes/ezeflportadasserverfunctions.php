@@ -51,7 +51,7 @@ class ezEflPortadasServerFunctions extends ezjscServerFunctions
 	static function bloque( $args )
 	{
 		include_once( "kernel/common/template.php" );
-		$tpl = templateInit();
+		$tpl = eZTemplate::factory();
 				
 		if ( isset( $args[3] ) )
 		{
@@ -132,7 +132,7 @@ class ezEflPortadasServerFunctions extends ezjscServerFunctions
 	static function mementum( $args )
 	{
 		include_once( "kernel/common/template.php" );
-        $tpl = templateInit();
+        $tpl = eZTemplate::factory();
 		$items = eZContentObjectTreeNode::subTreeByNodeId(
 		                                  array( 'SortBy' => array( 'published', false ), 
 		                                         'Limit' => 5
@@ -155,7 +155,7 @@ class ezEflPortadasServerFunctions extends ezjscServerFunctions
     static function formacion( $args )
     {
     	include_once( "kernel/common/template.php" );
-        $tpl = templateInit();
+        $tpl = eZTemplate::factory();
         $attr = eZContentObjectAttribute::fetch( $args[1], $args[2] );
         $block = eZPageBlock::fetch( $args[0] );
         $els = simplexml_load_string( $attr->attribute( 'data_text' ) );
@@ -184,7 +184,7 @@ class ezEflPortadasServerFunctions extends ezjscServerFunctions
     static function promos( $args )
     {
     	include_once( "kernel/common/template.php" );
-        $tpl = templateInit();
+        $tpl = eZTemplate::factory();
         $node = eZContentObjectTreeNode::fetch( $args[0] );
         $data = $node->dataMap();
         $tpl->setVariable( 'node', $node );

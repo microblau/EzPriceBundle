@@ -1,5 +1,7 @@
 {* Load JavaScript dependencys + JavaScriptList *}
 {ezscript_load( array( ezini( 'JavaScriptSettings', 'JavaScriptList', 'design.ini' ), ezini( 'JavaScriptSettings', 'FrontendJavaScriptList', 'design.ini' ) )|prepend( 'ezjsc::jquery', 'ezjsc::jqueryio' ) )}
+{def $subtree_array=cond( ezhttp_hasvariable( 'SubTreeArray', 'get' ), ezhttp( 'SubTreeArray', 'get') , array( 61, 43 ) )}
+{def $subtree = concat( '&', 'SubTreeArray[]'|urlencode, '=', $subtree_array|implode( concat( '&', 'SubTreeArray[]'|urlencode, '=' ) ) ) )}
 <div id="gridTwoColumnsTypeB" class="clearFix">
                 <div class="columnType1">
                     <div id="modType2">
@@ -9,14 +11,18 @@
                                                         
                                     <div class="description">
                                         <div id="resultadosBusquedaPage">
+										{def $filterattrs = array('and')}
+									   {set $filterattrs = $filterattrs|append('-meta_is_invisible_b:1') }
                                        
                                         {if ezhttp_hasvariable( 'SearchText', 'get' )}
                                             {def $results = fetch( ezfind, search, hash( 
                                                             query, ezhttp( 'SearchText', 'get'),
-                                                            'class_id', array( 48, 101, 99, 98, 66, 49, 61, 94, 64, 28, 147, 142 ),
+                                                            'class_id', array( 48, 101, 99, 98, 66, 49, 61, 94, 64, 28, 147, 142,145,149 ),
                                                             'limit', ezhttp( 'numItems', 'get'),
                                                             'offset', $view_parameters.offset,
-                                                            subtree_array, cond( ezhttp_hasvariable( 'SubTreeArray', 'get' ), ezhttp( 'SubTreeArray', 'get') , array( 61, 43 ) ),                                                           
+                                                            subtree_array, cond( ezhttp_hasvariable( 'SubTreeArray', 'get' ), ezhttp( 'SubTreeArray', 'get') , array( 61, 43 ) ),
+															'filter', $filterattrs,
+															'ignore_visibility', false()
                                                             
                                                     ) )}
                                                     
@@ -28,9 +34,6 @@
                                                    
                                             
                                             <form action={"content/search"|ezurl} method="get" id="searchResultsForm" name="searchResultsForm" class="searchResultsForm">
-
-
-                                            
 
                                             <div class="unamodif">
                                             
@@ -121,7 +124,7 @@
                                             {include name=navigator
                                                  uri='design:navigator/google.tpl'
                                                  page_uri='/content/search'
-                                                 page_uri_suffix=concat('?SearchText=',$search_text,'&numItems=',ezhttp( 'numItems', 'get'),'&SubTreeArray=',ezhttp( 'SubTreeArray', 'get'))
+                                                 page_uri_suffix=concat('?SearchText=',$search_text,'&numItems=',ezhttp( 'numItems', 'get'),'&SubTreeArray=',$subtree)
                                                  item_count=$results.SearchCount
                                                  view_parameters=$view_parameters
                                                  item_limit=cond( ezhttp_hasvariable( 'numItems', 'get'), ezhttp( 'numItems', 'get'), 10 )}
@@ -244,7 +247,7 @@
                                                 {include name=navigator
                                                  uri='design:navigator/google.tpl'
                                                  page_uri='/content/search'
-                                                 page_uri_suffix=concat('?SearchText=',$search_text,'&numItems=',ezhttp( 'numItems', 'get'),'&SubTreeArray=',ezhttp( 'SubTreeArray', 'get'))
+                                                 page_uri_suffix=concat('?SearchText=',$search_text,'&numItems=',ezhttp( 'numItems', 'get'),'&SubTreeArray=',$subtree)
                                                  item_count=$results.SearchCount
                                                  view_parameters=$view_parameters
                                                  item_limit=cond( and( ezhttp_hasvariable( 'numItems', 'get'), ezhttp( 'numItems', 'get')|ne('') ), ezhttp( 'numItems', 'get'), 10 )}
@@ -277,4 +280,24 @@
                 </div>
 
             </div>
-                
+                {undef $subtree}
+
+{if $results.SearchCount|eq(0)} 
+{literal}
+<script type="text/javascript">
+       var _gaq = _gaq || [],
+             p = document.location.pathname,
+             s = document.location.search;
+
+       _gaq.push(['_setAccount', 'UA-2627590-1']);
+<? if (resultsCount == 0) { ?>
+       _gaq.push(['_trackPageview', p + s + '&tab=zero']);
+<? } else {?>
+       _gaq.push(['_trackPageview']);
+<? } ?>
+       (function() {
+             ........................
+       })();
+</script>
+{/literal}
+{/if}

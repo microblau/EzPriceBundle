@@ -4,56 +4,53 @@
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
 // SOFTWARE RELEASE: 4.1.x
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: eZ Business Use License Agreement eZ BUL Version 2.1
 // NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
+//   This source file is part of the eZ Publish CMS and is
+//   licensed under the terms and conditions of the eZ Business Use
+//   License v2.1 (eZ BUL).
+// 
+//   A copy of the eZ BUL was included with the software. If the
+//   license is missing, request a copy of the license via email
+//   at license@ez.no or via postal mail at
+//  	Attn: Licensing Dept. eZ Systems AS, Klostergata 30, N-3732 Skien, Norway
+// 
+//   IMPORTANT: THE SOFTWARE IS LICENSED, NOT SOLD. ADDITIONALLY, THE
+//   SOFTWARE IS LICENSED "AS IS," WITHOUT ANY WARRANTIES WHATSOEVER.
+//   READ THE eZ BUL BEFORE USING, INSTALLING OR MODIFYING THE SOFTWARE.
+
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
-            
-/*! \file ezjslibcookiesupport.js 
+
+/*! \file ezjslibcookiesupport.js
 */
 
-/*!    
+/*!
     \brief
     Functions which works direct with cookie:
         ezjslib_setCookie,
         ezjslib_getCookie,
         ezjslib_setCookieFromArray,
         ezjslib_getCookieToArray.
-        
 */
 
 
 /*!
     Sets cookie with \a name, \a value and \a expires date.
 */
-function ezjslib_setCookie( name, value, expires ) 
+function ezjslib_setCookie( name, value, expires )
 {
     document.cookie = name + '=' + escape(value) + (( !expires ) ? "" : ('; expires=' + expires.toUTCString())) + '; path=/';
-} 
+}
 
 /*!
     \return a value of cookie with name \a name.
 */
-function ezjslib_getCookie( name ) 
+function ezjslib_getCookie( name )
 {
     var cookie  = document.cookie;
-    
+
     var startPos = cookie.indexOf( name );
     if ( startPos != -1 )
     {
@@ -67,7 +64,7 @@ function ezjslib_getCookie( name )
     }
 
     return null;
-} 
+}
 
 /*!
     Converts array \a valueArray to string using as delimiter \a delimiter.

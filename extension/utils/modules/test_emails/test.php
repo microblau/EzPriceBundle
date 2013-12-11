@@ -4,7 +4,7 @@ $http = eZHTTPTool::instance();
 $tipo = $http->getVariable( 'tipo' );
 require( 'kernel/common/template.php' );
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 if($tipo == 'tarjeta')
 	$Result['content'] = $tpl->fetch( 'design:test_emails/mail_pedido_tarjeta.tpl' );

@@ -2,7 +2,7 @@
 
 
 [TemplateSettings]
-ExtensionAutoloadPath[]=ezgmaplocation
+#ExtensionAutoloadPath[]=ezgmaplocation
 
 [RegionalSettings]
 TranslationExtensions[]=ezgmaplocation

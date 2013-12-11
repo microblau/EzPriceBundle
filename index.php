@@ -1,38 +1,25 @@
 <?php
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-ini_set( 'display_errors', 1 );
-ini_set('session.cookie_domain', '.efl.es');
-if ( version_compare( PHP_VERSION, '5.1' ) < 0 )
+/**
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @version 4.7.0
+ * @package kernel
+ */
+
+/**
+ * PHP 5.2 is our hard requirement
+ */
+if ( version_compare( PHP_VERSION, '5.2' ) < 0 )
 {
     print( "<h1>Unsupported PHP version " . PHP_VERSION . "</h1>" );
-    print( "<p>eZ Publish 4.x does not run with PHP version lower than 5.1.</p>".
+    print( "<p>eZ Publish 4.x does not run with PHP version lower than 5.2.</p>".
            "<p>For more information about supported software please visit ".
            "<a href=\"http://ez.no/download/ez_publish\" >eZ Publish download page</a></p>" );
     exit;
 }
+ini_set('display_errors',1);
+ini_set('session.cookie_domain', '.efl.es');
+$scriptStartTime = microtime( true );
 
 // Set a default time zone if none is given to avoid "It is not safe to rely
 // on the system's timezone settings" warnings. The time zone can be overriden
@@ -46,7 +33,6 @@ require 'autoload.php';
 
 ignore_user_abort( true );
 
-$scriptStartTime = microtime( true );
 ob_start();
 
 $use_external_css = true;
@@ -89,10 +75,6 @@ $GLOBALS['eZSiteBasics'] =& $siteBasics;
 $GLOBALS['eZRedirection'] = false;
 
 error_reporting ( E_ALL | E_STRICT );
-
-$debugINI = eZINI::instance( 'debug.ini' );
-eZDebugSetting::setDebugINI( $debugINI );
-
 
 /*!
  Reads settings from site.ini and passes them to eZDebug.
@@ -191,24 +173,22 @@ function eZDBCleanup()
         $db = eZDB::instance();
         $db->setIsSQLOutputEnabled( false );
     }
-//     session_write_close();
 }
 
 function eZFatalError()
 {
     header("HTTP/1.1 500 Internal Server Error");
-    print( "<b>Fatal error</b>: eZ Publish did not finish its request<br/>" );
+    print( "<b>Fatal error</b>: The web server did not finish its request<br/>" );
     if ( ini_get('display_errors') == 1 )
     {
-        $ini = eZINI::instance();
-        if ( $ini->variable( 'DebugSettings', 'DebugOutput' ) === 'enabled' )
+        if ( eZDebug::isDebugEnabled() )
             print( "<p>The execution of eZ Publish was abruptly ended, the debug output is present below.</p>" );
         else
-            print( "<p>The execution of eZ Publish was abruptly ended, debug information can be found in the log files normally placed in var/log/*</p>" );
+            print( "<p>Debug information can be found in the log files normally placed in var/log/* or by enabling 'DebugOutput' in site.ini</p>" );
     }
     else
     {
-        print( "<p>The execution of eZ Publish was abruptly ended. Contact website owner with current url and what you did, and owner will be able to debug the issue further.</p>" );
+        print( "<p>Contact website owner with current url and info on what you did, and owner will be able to debug the issue further (by enabling 'display_errors' in php.ini).</p>" );
     }
     $templateResult = null;
     eZDisplayResult( $templateResult );
@@ -231,6 +211,8 @@ function eZDisplayDebug()
     if ( $ini->variable( 'DebugSettings', 'DebugOutput' ) != 'enabled' )
         return null;
 
+    $scriptStopTime = microtime( true );
+
     $type = $ini->variable( "DebugSettings", "Debug" );
     //eZDebug::setHandleType( eZDebug::HANDLE_NONE );
     if ( $type == "inline" or $type == "popup" )
@@ -250,7 +232,9 @@ function eZDisplayDebug()
 
         eZDebug::appendBottomReport( 'Template Usage Statistics', eZTemplatesStatisticsReporter::generateStatistics( $as_html ) );
 
-        return eZDebug::printReport( $type == "popup", $as_html, true );
+        eZDebug::setScriptStop( $scriptStopTime );
+        return eZDebug::printReport( $type == "popup", $as_html, true, false, true,
+            true, $ini->variable( "DebugSettings", "DisplayIncludedFiles" ) == 'enabled' );
     }
     return null;
 }
@@ -260,13 +244,15 @@ function eZDisplayDebug()
 */
 function eZDisplayResult( $templateResult )
 {
+    ob_start();
     if ( $templateResult !== null )
     {
-        $classname = eZINI::instance()->variable( "OutputSettings", "OutputFilterName" );
+        $classname = eZINI::instance()->variable( "OutputSettings", "OutputFilterName" );//deprecated
         if( !empty( $classname ) && class_exists( $classname ) )
         {
             $templateResult = call_user_func( array ( $classname, 'filter' ), $templateResult );
         }
+        $templateResult = ezpEvent::getInstance()->filter( 'response/preoutput', $templateResult );
         $debugMarker = '<!--DEBUG_REPORT-->';
         $pos = strpos( $templateResult, $debugMarker );
         if ( $pos !== false )
@@ -285,6 +271,8 @@ function eZDisplayResult( $templateResult )
     {
         eZDisplayDebug();
     }
+    $fullPage = ob_get_clean();
+    echo ezpEvent::getInstance()->filter( 'response/output', $fullPage );
 }
 
 function fetchModule( $uri, $check, &$module, &$module_name, &$function_name, &$params )
@@ -326,106 +314,141 @@ $GLOBALS['eZGlobalRequestURI'] = eZSys::serverVariable( 'REQUEST_URI' );
 
 // Initialize basic settings, such as vhless dirs and separators
 
-eZSys::init( 'index.php', $ini->variable( 'SiteAccessSettings', 'ForceVirtualHost' ) == 'true' );
+eZSys::init( 'index.php', $ini->variable( 'SiteAccessSettings', 'ForceVirtualHost' ) === 'true' );
 
 eZDebug::addTimingPoint( "Script start" );
 
 $uri = eZURI::instance( eZSys::requestURI() );
 $GLOBALS['eZRequestedURI'] = $uri;
-require_once "pre_check.php";
 
 // Check for extension
-require_once( 'kernel/common/ezincludefunctions.php' );
 eZExtension::activateExtensions( 'default' );
 // Extension check end
 
-require_once "access.php";
-
-$access = accessType( $uri,
+$access = eZSiteAccess::match( $uri,
                       eZSys::hostname(),
                       eZSys::serverPort(),
                       eZSys::indexFile() );
-$access = changeAccess( $access );
+$access = eZSiteAccess::change( $access );
 eZDebugSetting::writeDebug( 'kernel-siteaccess', $access, 'current siteaccess' );
-
-// Check for activating Debug by user ID (Final checking. The first was in eZDebug::updateSettings())
-eZDebug::checkDebugByUser();
 
 // Check for siteaccess extension
 eZExtension::activateExtensions( 'access' );
 // Siteaccess extension check end
 
-// Make sure template.ini reloads its cache incase
-// siteaccess or extensions override it
-$tplINI = eZINI::instance( 'template.ini' );
-$tplINI->loadCache();
+// Now that all extensions are activated and siteaccess has been changed, reset
+// all eZINI instances as they may not take into account siteaccess specific settings.
+eZINI::resetAllInstances( false );
 
-// Check if this should be run in a cronjob
-// Need to be run before eZHTTPTool::instance() because of eZSessionStart() which
-// is called from eZHandlePreChecks() below.
-$useCronjob = $ini->variable( 'Session', 'BasketCleanup' ) == 'cronjob';
-if ( !$useCronjob )
+ezpEvent::getInstance()->registerEventListeners();
+
+// Be able to do general events early in process
+ezpEvent::getInstance()->notify( 'request/preinput', array( $uri ) );
+
+$mobileDeviceDetect = new ezpMobileDeviceDetect( ezpMobileDeviceDetectFilter::getFilter() );
+if( $mobileDeviceDetect->isEnabled() )
 {
-    // Functions for session to make sure baskets are cleaned up
-    function eZSessionBasketDestroy( $db, $key, $escapedKey )
-    {
-        $basket = eZBasket::fetch( $key );
-        if ( is_object( $basket ) )
-            $basket->remove();
-    }
+    $mobileDeviceDetect->process();
 
-    function eZSessionBasketGarbageCollector( $db, $time )
-    {
-        eZBasket::cleanupExpired( $time );
-    }
-
-    function eZSessionBasketEmpty( $db )
-    {
-        eZBasket::cleanup();
-    }
-
-    // Fill in hooks
-    eZSession::addCallback( 'destroy_pre', 'eZSessionBasketDestroy');
-    eZSession::addCallback( 'gc_pre', 'eZSessionBasketGarbageCollector');
-    eZSession::addCallback( 'cleanup_pre', 'eZSessionBasketCleanup');
+    if ( $mobileDeviceDetect->isMobileDevice() )
+        $mobileDeviceDetect->redirect();
 }
-
-// addCallBack to update session id for shop basket on session regenerate
-function eZSessionBasketRegenerate( $db, $escNewKey, $escOldKey, $escUserID  )
-{
-    $db->query( "UPDATE ezbasket SET session_id='$escNewKey' WHERE session_id='$escOldKey'" );
-}
-
-eZSession::addCallback( 'regenerate_post', 'eZSessionBasketRegenerate');
 
 // Initialize module loading
 $moduleRepositories = eZModule::activeModuleRepositories();
 eZModule::setGlobalPathList( $moduleRepositories );
 
-$check = eZHandlePreChecks( $siteBasics, $uri );
+// make sure we get a new $ini instance now that it has been reset
+$ini = eZINI::instance();
 
-require_once( 'kernel/common/i18n.php' );
+// start: eZCheckValidity
+// pre check, setup wizard related so needs to be before session/db init
+if ( $ini->variable( 'SiteAccessSettings', 'CheckValidity' ) === 'true' )
+{
+    $check = array( 'module' => 'setup',
+                    'function' => 'init' );
+    // Turn off some features that won't bee needed yet
+    $siteBasics['policy-check-omit-list'][] = 'setup';
+    $siteBasics['show-page-layout'] = $ini->variable( 'SetupSettings', 'PageLayout' );
+    $siteBasics['validity-check-required'] = true;
+    $siteBasics['session-required'] = $siteBasics['user-object-required'] = false;
+    $siteBasics['db-required'] = $siteBasics['no-cache-adviced'] = $siteBasics['url-translator-allowed'] = false;
+    $siteBasics['site-design-override'] = $ini->variable( 'SetupSettings', 'OverrideSiteDesign' );
+    $access = array( 'name' => 'setup',
+                     'type' => eZSiteAccess::TYPE_URI );
+    $access = eZSiteAccess::change( $access );
+    eZTranslatorManager::enableDynamicTranslations();
+}
+// stop: eZCheckValidity
 
 if ( $sessionRequired )
 {
-    $dbRequired = true;
-}
-
-$db = false;
-if ( $dbRequired )
-{
-    $db = eZDB::instance();
-    if ( $sessionRequired and
-         $db->isConnected() )
+    // Check if this should be run in a cronjob
+    if ( $ini->variable( 'Session', 'BasketCleanup' ) !== 'cronjob' )
     {
-        eZSession::start();
+        // Functions for session to make sure baskets are cleaned up
+        function eZSessionBasketDestroy( $db, $key, $escapedKey )
+        {
+            $basket = eZBasket::fetch( $key );
+            if ( is_object( $basket ) )
+                $basket->remove();
+        }
+
+        function eZSessionBasketGarbageCollector( $db, $time )
+        {
+            eZBasket::cleanupExpired( $time );
+        }
+
+        function eZSessionBasketEmpty( $db )
+        {
+            eZBasket::cleanup();
+        }
+
+        // Fill in hooks
+        eZSession::addCallback( 'destroy_pre', 'eZSessionBasketDestroy');
+        eZSession::addCallback( 'gc_pre',      'eZSessionBasketGarbageCollector');
+        eZSession::addCallback( 'cleanup_pre', 'eZSessionBasketCleanup');
     }
 
-    if ( !$db->isConnected() )
-        $warningList[] = array( 'error' => array( 'type' => 'kernel',
-                                                  'number' => eZError::KERNEL_NO_DB_CONNECTION ),
-                                'text' => 'No database connection could be made, the system might not behave properly.' );
+    // addCallBack to update session id for shop basket on session regenerate
+    function eZSessionBasketRegenerate( $db, $escNewKey, $escOldKey, $escUserID  )
+    {
+        $db->query( "UPDATE ezbasket SET session_id='$escNewKey' WHERE session_id='$escOldKey'" );
+    }
+
+    eZSession::addCallback( 'regenerate_post', 'eZSessionBasketRegenerate');
+
+    if ( $ini->variable( 'Session', 'ForceStart' ) === 'enabled' )
+        eZSession::start();
+    else
+        eZSession::lazyStart();
+
+    // let session specify if db is required
+    $dbRequired = eZSession::getHandlerInstance()->dbRequired();
 }
+
+// if $dbRequired, open a db connection and check that db is connected
+if ( $dbRequired && !eZDB::instance()->isConnected() )
+{
+    $warningList[] = array( 'error' => array( 'type' => 'kernel',
+                                              'number' => eZError::KERNEL_NO_DB_CONNECTION ),
+                            'text' => 'No database connection could be made, the system might not behave properly.' );
+}
+
+// eZCheckUser: pre check, RequireUserLogin & FORCE_LOGIN related so needs to be after session init
+if ( !isset( $check ) )
+{
+    $check = eZUserLoginHandler::preCheck( $siteBasics, $uri );
+}
+
+/**
+ * Check for activating Debug by user ID (Final checking. The first was in eZDebug::updateSettings())
+ * @uses eZUser::instance() So needs to be executed after eZSession::start()|lazyStart()
+ */
+eZDebug::checkDebugByUser();
+
+
+ezpEvent::getInstance()->notify( 'request/input', array( $uri ) );
 
 // Initialize with locale settings
 $locale = eZLocale::instance();
@@ -460,8 +483,6 @@ foreach( $headerList as $key => $value )
 {
     header( $key . ': ' . $value );
 }
-
-eZSection::initGlobalID();
 
 // Read role settings
 $globalPolicyCheckOmitList = $ini->variable( 'RoleSettings', 'PolicyOmitList' );
@@ -525,11 +546,11 @@ while ( $moduleRunRequired )
     if ( $uri->isEmpty() )
     {
         $tmp_uri = new eZURI( $ini->variable( "SiteSettings", "IndexPage" ) );
-        $moduleCheck = accessAllowed( $tmp_uri );
+        $moduleCheck = eZModule::accessAllowed( $tmp_uri );
     }
     else
     {
-        $moduleCheck = accessAllowed( $uri );
+        $moduleCheck = eZModule::accessAllowed( $uri );
     }
 
     if ( !$moduleCheck['result'] )
@@ -750,6 +771,12 @@ while ( $moduleRunRequired )
     }
 }
 
+
+/**
+ * Ouput an is_logged_in cookie when users are logged in for use by http cache soulutions.
+ *
+ * @deprecated As of 4.5, since 4.4 added lazy session support (init on use)
+ */
 if ( $ini->variable( "SiteAccessSettings", "CheckValidity" ) !== 'true' )
 {
     $currentUser = eZUser::currentUser();
@@ -761,8 +788,11 @@ if ( $ini->variable( "SiteAccessSettings", "CheckValidity" ) !== 'true' )
 
     if ( $currentUser->isLoggedIn() )
     {
-        setcookie( 'is_logged_in', 'true', 0, $cookiePath );
-        header( 'Etag: ' . $currentUser->attribute( 'contentobject_id' ) );
+        // Only set the cookie if it doesnt exist. This way we are not constantly sending the set request in the headers.
+        if ( !isset( $_COOKIE['is_logged_in'] ) || $_COOKIE['is_logged_in'] != 'true' )
+        {
+            setcookie( 'is_logged_in', 'true', 0, $cookiePath );
+        }
     }
     else if ( isset( $_COOKIE['is_logged_in'] ) )
     {
@@ -873,14 +903,15 @@ if ( $module->exitStatus() == eZModule::STATUS_REDIRECT )
         }
 
         $tpl = eZTemplate::factory();
-        if ( count( $warningList ) == 0 )
+        if ( empty( $warningList ) )
             $warningList = false;
+
         $tpl->setVariable( 'site', $site );
         $tpl->setVariable( 'warning_list', $warningList );
         $tpl->setVariable( 'redirect_uri', eZURI::encodeURL( $redirectURI ) );
         $templateResult = $tpl->fetch( 'design:redirect.tpl' );
 
-        eZDebug::addTimingPoint( "End" );
+        eZDebug::addTimingPoint( "Script end" );
 
         eZDisplayResult( $templateResult );
     }
@@ -889,9 +920,9 @@ if ( $module->exitStatus() == eZModule::STATUS_REDIRECT )
 }
 
 // Store the last URI for access history for login redirection
-// Only if database is connected and only if there was no error or no redirects happen
-if ( is_object( $db ) and $db->isConnected() and
-     $module->exitStatus() == eZModule::STATUS_OK )
+// Only if user has session and only if there was no error or no redirects happen
+if ( eZSession::hasStarted() &&
+    $module->exitStatus() == eZModule::STATUS_OK )
 {
     $currentURI = $completeRequestedURI;
     if ( strlen( $currentURI ) > 0 and $currentURI[0] != '/' )
@@ -940,6 +971,8 @@ if ( !isset( $moduleResult['ui_context'] ) )
     $moduleResult['ui_context'] = $module->uiContextName();
 }
 $moduleResult['ui_component'] = $module->uiComponentName();
+$moduleResult['is_mobile_device'] = $mobileDeviceDetect->isMobileDevice();
+$moduleResult['mobile_device_alias'] = $mobileDeviceDetect->getUserAgentAlias();
 
 $templateResult = null;
 
@@ -981,105 +1014,90 @@ if ( $show_page_layout )
 
     $tpl->setVariable( "site", $site );
 
-    $ezinfo = array( 'version' => eZPublishSDK::version( true ),
-                     'version_alias' => eZPublishSDK::version( true, true ),
-                     'revision' => eZPublishSDK::revision() );
-
-    $tpl->setVariable( "ezinfo", $ezinfo );
-    if ( isset( $tpl_vars ) and is_array( $tpl_vars ) )
+    if ( $ini->variable( 'DebugSettings', 'DisplayDebugWarnings' ) == 'enabled' )
     {
-        foreach( $tpl_vars as $tpl_var_name => $tpl_var_value )
+        // Make sure any errors or warnings are reported
+        if ( isset( $GLOBALS['eZDebugError'] ) and
+             $GLOBALS['eZDebugError'] )
         {
-            $tpl->setVariable( $tpl_var_name, $tpl_var_value );
+            eZAppendWarningItem( array( 'error' => array( 'type' => 'error',
+                                                          'number' => 1 ,
+                                                          'count' => $GLOBALS['eZDebugErrorCount'] ),
+                                        'identifier' => 'ezdebug-first-error',
+                                        'text' => ezpI18n::tr( 'index.php', 'Some errors occurred, see debug for more information.' ) ) );
+        }
+
+        if ( isset( $GLOBALS['eZDebugWarning'] ) and
+             $GLOBALS['eZDebugWarning'] )
+        {
+            eZAppendWarningItem( array( 'error' => array( 'type' => 'warning',
+                                                          'number' => 1,
+                                                          'count' => $GLOBALS['eZDebugWarningCount'] ),
+                                        'identifier' => 'ezdebug-first-warning',
+                                        'text' => ezpI18n::tr( 'index.php', 'Some general warnings occured, see debug for more information.' ) ) );
         }
     }
 
-    if ( $show_page_layout )
+    if ( $userObjectRequired )
     {
-        if ( $ini->variable( 'DebugSettings', 'DisplayDebugWarnings' ) == 'enabled' )
-        {
-            // Make sure any errors or warnings are reported
-            if ( isset( $GLOBALS['eZDebugError'] ) and
-                 $GLOBALS['eZDebugError'] )
-            {
-                eZAppendWarningItem( array( 'error' => array( 'type' => 'error',
-                                                              'number' => 1 ,
-                                                              'count' => $GLOBALS['eZDebugErrorCount'] ),
-                                            'identifier' => 'ezdebug-first-error',
-                                            'text' => ezpI18n::tr( 'index.php', 'Some errors occurred, see debug for more information.' ) ) );
-            }
+        $currentUser = eZUser::currentUser();
 
-            if ( isset( $GLOBALS['eZDebugWarning'] ) and
-                 $GLOBALS['eZDebugWarning'] )
-            {
-                eZAppendWarningItem( array( 'error' => array( 'type' => 'warning',
-                                                              'number' => 1,
-                                                              'count' => $GLOBALS['eZDebugWarningCount'] ),
-                                            'identifier' => 'ezdebug-first-warning',
-                                            'text' => ezpI18n::tr( 'index.php', 'Some general warnings occured, see debug for more information.' ) ) );
-            }
-        }
-
-        if ( $userObjectRequired )
-        {
-            $currentUser = eZUser::currentUser();
-
-            $tpl->setVariable( "current_user", $currentUser );
-            $tpl->setVariable( "anonymous_user_id", $ini->variable( 'UserSettings', 'AnonymousUserID' ) );
-        }
-        else
-        {
-            $tpl->setVariable( "current_user", false );
-            $tpl->setVariable( "anonymous_user_id", false );
-        }
-
-        $tpl->setVariable( "access_type", $access );
-
-        if ( count( $warningList ) == 0 )
-            $warningList = false;
-        $tpl->setVariable( 'warning_list', $warningList );
-
-        $resource = "design:";
-        if ( is_string( $show_page_layout ) )
-        {
-            if ( strpos( $show_page_layout, ":" ) !== false )
-            {
-                $resource = "";
-            }
-        }
-        else
-        {
-            $show_page_layout = "pagelayout.tpl";
-        }
-
-        // Set the navigation part
-        // Check for navigation part settings
-        $navigationPartString = 'ezcontentnavigationpart';
-        if ( isset( $moduleResult['navigation_part'] ) )
-        {
-            $navigationPartString = $moduleResult['navigation_part'];
-
-            // Fetch the navigation part
-        }
-        $navigationPart = eZNavigationPart::fetchPartByIdentifier( $navigationPartString );
-
-        $tpl->setVariable( 'navigation_part', $navigationPart );
-        $tpl->setVariable( 'uri_string', $uri->uriString() );
-        if ( isset( $moduleResult['requested_uri_string'] ) )
-        {
-            $tpl->setVariable( 'requested_uri_string', $moduleResult['requested_uri_string'] );
-        }
-        else
-        {
-            $tpl->setVariable( 'requested_uri_string', $actualRequestedURI );
-        }
-
-        // Set UI context and component
-        $tpl->setVariable( 'ui_context', $moduleResult['ui_context'] );
-        $tpl->setVariable( 'ui_component', $moduleResult['ui_component'] );
-
-        $templateResult = $tpl->fetch( $resource . $show_page_layout );
+        $tpl->setVariable( "current_user", $currentUser );
+        $tpl->setVariable( "anonymous_user_id", $ini->variable( 'UserSettings', 'AnonymousUserID' ) );
     }
+    else
+    {
+        $tpl->setVariable( "current_user", false );
+        $tpl->setVariable( "anonymous_user_id", false );
+    }
+
+    $tpl->setVariable( "access_type", $access );
+
+    if ( empty( $warningList ) )
+        $warningList = false;
+
+    $tpl->setVariable( 'warning_list', $warningList );
+
+    $resource = "design:";
+    if ( is_string( $show_page_layout ) )
+    {
+        if ( strpos( $show_page_layout, ":" ) !== false )
+        {
+            $resource = "";
+        }
+    }
+    else
+    {
+        $show_page_layout = "pagelayout.tpl";
+    }
+
+    // Set the navigation part
+    // Check for navigation part settings
+    $navigationPartString = 'ezcontentnavigationpart';
+    if ( isset( $moduleResult['navigation_part'] ) )
+    {
+        $navigationPartString = $moduleResult['navigation_part'];
+
+        // Fetch the navigation part
+    }
+    $navigationPart = eZNavigationPart::fetchPartByIdentifier( $navigationPartString );
+
+    $tpl->setVariable( 'navigation_part', $navigationPart );
+    $tpl->setVariable( 'uri_string', $uri->uriString() );
+    if ( isset( $moduleResult['requested_uri_string'] ) )
+    {
+        $tpl->setVariable( 'requested_uri_string', $moduleResult['requested_uri_string'] );
+    }
+    else
+    {
+        $tpl->setVariable( 'requested_uri_string', $actualRequestedURI );
+    }
+
+    // Set UI context and component
+    $tpl->setVariable( 'ui_context', $moduleResult['ui_context'] );
+    $tpl->setVariable( 'ui_component', $moduleResult['ui_component'] );
+
+    $templateResult = $tpl->fetch( $resource . $show_page_layout );
 }
 else
 {
@@ -1087,7 +1105,7 @@ else
 }
 
 
-eZDebug::addTimingPoint( "End" );
+eZDebug::addTimingPoint( "Script end" );
 
 $out = ob_get_clean();
 echo trim( $out );

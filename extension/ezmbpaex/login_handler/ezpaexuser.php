@@ -2,8 +2,8 @@
 /**
  * File containing the eZPaExUser class
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPLv2
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
  * @package ezmbpaex
  */
 
@@ -40,7 +40,7 @@ class eZPaExUser extends eZUser
      */
     public function __construct( $row = null )
     {
-        @parent::eZUser( $row );
+        parent::eZUser( $row );
     }
 
     /**
@@ -54,12 +54,12 @@ class eZPaExUser extends eZUser
     public static function loginUser( $login, $password, $authenticationMatch = false )
     {
         $user = self::_loginUser( $login, $password, $authenticationMatch );
-        if ( is_object( $user ) )
+        if ( $user instanceof eZUser )
         {
             $userID = $user->attribute( 'contentobject_id' );
-            $paex = eZPaEx::getPaEx( $userID );
+            $paex = eZPaEx::getPaEx( $userID, true );
 
-            if ( $paex->isExpired() )
+            if ( $paex instanceof eZPaEx && $paex->isExpired() )
             {
                 self::passwordHasExpired( $user );
                 return false;

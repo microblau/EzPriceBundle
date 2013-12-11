@@ -152,19 +152,15 @@
 </div>
 {literal}
 <script type="text/javascript">
-<!--
-
 document.getElementById('trash-list-sort-control').style.display = '';
 
 function trashSortingSelection( trashUrl )
 {
-        trashUrl += '/(sort_field)/' + document.getElementById('trash_sort_field').value;
-        trashUrl += '/(sort_order)/' + document.getElementById('trash_sort_order').value;
-        document.location = trashUrl;
-        return false;
+	trashUrl += '/(sort_field)/' + document.getElementById('trash_sort_field').value;
+	trashUrl += '/(sort_order)/' + document.getElementById('trash_sort_order').value;
+	document.location = trashUrl;
+	return false;
 }
-
--->
 </script>
 {/literal}
 <div class="break"></div>

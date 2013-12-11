@@ -47,7 +47,7 @@ class selectClass extends eZWizardBase
         $result['content'] = $this->TPL->fetch( 'design:dbattributeconverter/select_class.tpl' );
         $result['left_menu'] = 'design:parts/content/dbattributeconverter_menu.tpl';
         $result['path'] = array(
-            array( 'url' => false, 'text' => ezi18n( 'dbattributeconverter/wizard', 'Attribute converter - select content class' ) )
+            array( 'url' => false, 'text' => ezpI18n::tr( 'dbattributeconverter/wizard', 'Attribute converter - select content class' ) )
         );
 
         return $result;
@@ -62,7 +62,7 @@ class selectClass extends eZWizardBase
         }
         else if ( $this->HTTP->hasPostVariable( 'NextButton' ) )
         {
-            $this->WarningList[] = ezi18n( 'dbattributeconverter/wizard','You have to select one class.' );
+            $this->WarningList[] = ezpI18n::tr( 'dbattributeconverter/wizard','You have to select one class.' );
         }
 
         return false;

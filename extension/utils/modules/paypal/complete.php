@@ -1,10 +1,21 @@
 <?php 
 require( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $http = eZHTTPTool::instance();
 $basket = eZBasket::currentBasket();
 $tpl->setVariable( 'basket',  eZBasket::currentBasket() );
 $tpl->setVariable( 'order_id', $Params['OrderID'] );
+$id_pro=$basket->ProductCollectionID;
+
+$orderInfo = eZPersistentObject::fetchObject( eflOrders::definition(), 
+                                                            null, 
+                                                            array( 'productcollection_id' => $id_pro )  
+                                                            );
+
+
+$info = unserialize( $orderInfo->Order );
+$tpl->setVariable( 'id_pedido_lfbv',  $info["id_pedido_lfbv"] );
+
 if( $http->hasPostVariable( 'btnContinuar' ) )
 {
     $tpl->setVariable( 'id', $Params['OrderID'] );
@@ -26,7 +37,7 @@ if( $http->hasPostVariable( 'btnContinuar' ) )
     $Result = array();
     $Result['content'] = $tpl->fetch( "design:paypal/finproceso.tpl" );
     $Result['path'] = array( array( 'url' => false,
-                                    'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+                                    'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
     return;
 }
 $basket->remove();
@@ -49,7 +60,7 @@ if( $encuesta != 0 )
                 $Result = array();
             	$Result['content'] = $tpl->fetch( "design:transferencia/complete.tpl" );
 	            $Result['path'] = array( array( 'url' => false,
-	                                        'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+	                                        'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
         } 
         elseif( $http->hasPostVariable                               ( 'ContentObjectAttribute_ezsurvey_store_button'  ) )
         {
@@ -60,7 +71,7 @@ if( $encuesta != 0 )
                 $Result = array();
             	$Result['content'] = $tpl->fetch( "design:transferencia/complete.tpl" );
 	            $Result['path'] = array( array( 'url' => false,
-	                                        'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+	                                        'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
         }
     }
 }
@@ -87,11 +98,11 @@ if( $http->hasPostVariable( 'btnContinuar' ) )
 else
 {
     
-	$tpl->setVariable( 'id', $http->sessionVariable( 'id_pedido_lfbv' ) );
+	$tpl->setVariable( 'id_pedido_lfbv', $info["id_pedido_lfbv"] );
     
 	$Result = array();
 	$Result['content'] = $tpl->fetch( "design:paypal/complete.tpl" );
 	$Result['path'] = array( array( 'url' => false,
-	                                'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+	                                'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
 include( 'kernel/common/template.php' );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $contents = eZClusterFileHandler::instance( 'var/cache/encuesta.txt' )->fetchContents();
 $unserialized_cache = unserialize( $contents );
 $encuesta = eZContentObject::fetch( $unserialized_cache['encuesta'] );
@@ -45,5 +45,5 @@ $tpl->setVariable( 'node', $encuesta->attribute( 'main_node' ) );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:encuesta/rellenar.tpl" );
 $Result['path'] = array( array( 'url' => false,
-	                                'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+	                                'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
 ?>

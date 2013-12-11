@@ -1,4 +1,58 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
+<context>
+    <name>design/admin/content/search</name>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished">Cerca</translation>
+    </message>
+    <message>
+        <source>All content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The same location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For more options try the %1Advanced search%2.</source>
+        <comment>The parameters are link start and end tags.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following words were excluded from the search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No results were found while searching for &lt;%1&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search tips</source>
+        <translation type="unfinished">Consells de cerca</translation>
+    </message>
+    <message>
+        <source>Check spelling of keywords.</source>
+        <translation type="unfinished">Comprova com has escrit les paraules clau.</translation>
+    </message>
+    <message>
+        <source>Try changing some keywords e.g. &amp;quot;car&amp;quot; instead of &amp;quot;cars&amp;quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try more general keywords.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fewer keywords result in more matches. Try reducing keywords until you get a result.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search for &lt;%1&gt; returned %2 matches</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 <context>
     <name>design/admin/node/view/full</name>
     <message>
@@ -15,6 +69,29 @@
     </message>
 </context>
 <context>
+    <name>design/admin/pagelayout</name>
+    <message>
+        <source>Search in all content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished">Cerca</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in &apos;%node&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced search.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>design/base</name>
     <message>
         <source>The following words were excluded from the search</source>
@@ -22,12 +99,12 @@
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cerca</translation>
     </message>
     <message>
         <source>For more options try the %1Advanced search%2</source>
         <comment>The parameters are link start and end tags.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Per a més opcions fes servir la %1Cerca avançada%2</translation>
     </message>
     <message>
         <source>No results were found when searching for &quot;%1&quot;</source>
@@ -35,11 +112,11 @@
     </message>
     <message>
         <source>Search tips</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Consells de cerca</translation>
     </message>
     <message>
         <source>Check spelling of keywords.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Comprova com has escrit les paraules clau.</translation>
     </message>
     <message>
         <source>Try changing some keywords eg. car instead of cars.</source>
@@ -55,7 +132,7 @@
     </message>
     <message>
         <source>Search for &quot;%1&quot; returned %2 matches</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">La cerca per &quot;%1&quot; ha retornat %2 coincidències</translation>
     </message>
 </context>
 <context>
@@ -70,11 +147,23 @@
     </message>
     <message>
         <source>Phrase search can be achieved by using quotes, example: &quot;No TV and no beer make Homer go something something&quot;</source>
-        <translation>Es pot aconseguir fer una cerca de frase fent servir cometes, exemple: &quot;Prova de cerca&quot;</translation>
+        <translation type="obsolete">Es pot aconseguir fer una cerca de frase fent servir cometes, exemple: &quot;Prova de cerca&quot;</translation>
     </message>
     <message>
         <source>Words may be excluded by using a minus ( - ) character, example: free -beer</source>
-        <translation>Es poden excloure paraules fent servir el caràcter menys ( - ), exemple: gratis -cervesa</translation>
+        <translation type="obsolete">Es poden excloure paraules fent servir el caràcter menys ( - ), exemple: gratis -cervesa</translation>
+    </message>
+    <message>
+        <source>Spell check suggestion: did you mean</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phrase search can be achieved by using quotes, example: &quot;Quick brown fox jumps over the lazy dog&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Words may be excluded by using a minus ( - ) character, example: lazy -dog</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -129,7 +218,11 @@
     </message>
     <message>
         <source>Refine with facets</source>
-        <translation>Refina amb característiques</translation>
+        <translation type="obsolete">Refina amb característiques</translation>
+    </message>
+    <message>
+        <source>Refine your search</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -153,6 +246,17 @@
     <message>
         <source>Related content</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/ezwebin/pagelayout</name>
+    <message>
+        <source>Search text:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished">Cerca</translation>
     </message>
 </context>
 <context>
@@ -255,7 +359,7 @@
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cerca</translation>
     </message>
     <message>
         <source>No results were found when searching for &quot;%1&quot;</source>
@@ -263,7 +367,7 @@
     </message>
     <message>
         <source>Search for &quot;%1&quot; returned %2 matches</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">La cerca per &quot;%1&quot; ha retornat %2 coincidències</translation>
     </message>
     <message>
         <source>Score</source>
@@ -278,19 +382,19 @@
     <name>extension/ezfind</name>
     <message>
         <source>eZFind</source>
-        <translation>eZFind</translation>
+        <translation type="unfinished">eZFind</translation>
     </message>
     <message>
         <source>Elevation</source>
-        <translation>Elevació</translation>
+        <translation type="unfinished">Elevació</translation>
     </message>
     <message>
         <source>Elevation detail</source>
-        <translation>Detalls de l&apos;elevació</translation>
+        <translation type="obsolete">Detalls de l&apos;elevació</translation>
     </message>
     <message>
         <source>Remove Elevation</source>
-        <translation>Esborra Elevació</translation>
+        <translation type="unfinished">Esborra Elevació</translation>
     </message>
 </context>
 <context>
@@ -302,6 +406,10 @@
     <message>
         <source>Refine with facets</source>
         <translation>Refina amb característiques</translation>
+    </message>
+    <message>
+        <source>No search results...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -327,7 +435,7 @@
     <name>extension/ezfind/elevate</name>
     <message>
         <source>Error while generating the configuration XML</source>
-        <translation>S&apos;ha produït un error al generar la configuració XML</translation>
+        <translation type="unfinished">S&apos;ha produït un error al generar la configuració XML</translation>
     </message>
     <message>
         <source>Unable to open &apos;%1&apos;. Write access is required on this file in order to flush Solr&apos;s elevate configuration.</source>
@@ -463,7 +571,7 @@
     </message>
     <message>
         <source>Find matching elevate configurations</source>
-        <translation>Troba configuracions d&apos;elevació coincidents</translation>
+        <translation type="obsolete">Troba configuracions d&apos;elevació coincidents</translation>
     </message>
     <message>
         <source>Find elevate configurations matching the search query entered.</source>
@@ -575,22 +683,38 @@
     </message>
     <message>
         <source>An unknown error occured in updating Solr&apos;s elevate configuration.</source>
-        <translation>S&apos;ha produit un error al actualitzar la configuració d&apos;elevació del Solr.</translation>
+        <translation type="unfinished">S&apos;ha produit un error al actualitzar la configuració d&apos;elevació del Solr.</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Elevate %objectlink with:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>for language:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>extension/ezfind/facets</name>
     <message>
         <source>Content type</source>
-        <translation>Tipus de contingut</translation>
+        <translation type="unfinished">Tipus de contingut</translation>
     </message>
     <message>
         <source>Author</source>
-        <translation>Autor</translation>
+        <translation type="unfinished">Autor</translation>
     </message>
     <message>
         <source>Keywords</source>
-        <translation>Paraules clau</translation>
+        <translation type="unfinished">Paraules clau</translation>
     </message>
     <message>
         <source>Creation time</source>
@@ -599,6 +723,10 @@
     <message>
         <source>Clear all</source>
         <translation>Neteja tot</translation>
+    </message>
+    <message>
+        <source>Publication Year</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -640,7 +768,11 @@
     </message>
     <message>
         <source>eZ Find 2.2 search plugin &amp;copy; 2009 eZ Systems AS, powered by Apache Solr 1.4</source>
-        <translation>Extensió de cerca eZ Find 2.2 &amp;copy; 2009 eZ Systems AS, powered by Apache Solr 1.4</translation>
+        <translation type="obsolete">Extensió de cerca eZ Find 2.2 &amp;copy; 2009 eZ Systems AS, powered by Apache Solr 1.4</translation>
+    </message>
+    <message>
+        <source>eZ Find %version search plugin &amp;copy; 1999-2012 eZ Systems AS, powered by Apache Solr 3.1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

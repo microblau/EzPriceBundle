@@ -30,7 +30,7 @@ $module = $Params['Module'];
 require_once( "kernel/common/template.php" );
 $basket = eZBasket::currentBasket();
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 //comprabamos codigo
 if( $http->hasPostVariable( 'btnCodigo' ) )
 {
@@ -456,9 +456,43 @@ if ( $shippingInfo !== null )
     $totalIncShippingExVat  = $basket->attribute( 'total_ex_vat'  ) + $shippingInfo['cost'];
     $totalIncShippingIncVat = $basket->attribute( 'total_inc_vat' ) + $shippingInfo['cost'];
 
+    
     $tpl->setVariable( 'shipping_info', $shippingInfo );
     $tpl->setVariable( 'total_inc_shipping_ex_vat', $totalIncShippingExVat );
     $tpl->setVariable( 'total_inc_shipping_inc_vat', $totalIncShippingIncVat );
+}
+
+// tratamos de darle al usuario información sobre gastos de envío
+$user = eZUser::currentUser();
+$email = $user->attribute( 'login' );
+
+$eflws = new eflWS();
+$existeUsuario = $eflws->existeUsuario( $email );
+
+if( $existeUsuario )
+{
+    $usuario_empresa = $eflws->getUsuarioCompleto( $existeUsuario );
+    $usuario = $usuario_empresa->xpath( '//usuario' );
+    $provincia = (string)$usuario[0]->direnvio_provincia;
+      // inicializamos total
+            $total = 0;
+            // recorremos cesta e incrementamos total si el producto es de categoría 
+            // editorial
+            // empezamos descartando los cursos
+
+            $products = tantaBasketFunctionCollection::getProductsInBasket($basket->attribute( 'productcollection_id' ) );
+$productos_editorial = 0;
+foreach( $products['result'] as $product ){
+
+$data = eZContentObject::fetch( $product['item_object']->attribute( 'contentobject' )->attribute( 'id' ) )->dataMap() ;
+if( $data['categoria']->content()->attribute('name') == 'Editorial' ){
+   $total += $product['total_price_ex_vat'];
+   $productos_editorial++;
+   }
+}
+
+    $gastosEnvio = eZShopFunctions::getShippingCost( $provincia, $total, $productos_editorial );
+    $tpl->setVariable( 'gastos_envio', $gastosEnvio );
 }
 
 $infoOrder = eZPersistentObject::fetchObject( eflOrders::definition(), null, array( 'productcollection_id' => $basket->attribute( 'productcollection_id') ) );
@@ -468,5 +502,5 @@ $tpl->setVariable( 'codigo', $unserialized_order['codigopromocional'] );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:shop/basket.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
 ?>
