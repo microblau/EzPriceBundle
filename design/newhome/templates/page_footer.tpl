@@ -169,6 +169,7 @@
                 <span>Todos los derechos reservados</span>
                 <span><a href={fetch( 'content', 'node', hash( 'node_id', 292) ).url_alias|ezurl}>Aviso Legal</a></span>
                 <span><a href={fetch( 'content', 'node', hash( 'node_id', 19526) ).url_alias|ezurl}>Política de privacidad</a></span>
+				<span><a href={fetch( 'content', 'node', hash( 'node_id', 18949) ).url_alias|ezurl}>Política de cookies</a></span>
 			
 			</span>
 		</div>
