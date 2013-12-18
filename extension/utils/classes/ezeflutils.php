@@ -344,6 +344,8 @@ if( $data['categoria']->content()->attribute('name') == 'Editorial' ){
    }
 }
             $gastosEnvio = eZShopFunctions::getShippingCost( $provincia, $total, $productos_editorial++ );
+            $gastosEnvio = $gastosEnvio + ( $gastosEnvio * 0.04 );
+
             return array( 'result' => $gastosEnvio );
             }
             else return array( 'result' => -1 );
