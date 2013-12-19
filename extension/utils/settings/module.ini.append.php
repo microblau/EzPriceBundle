@@ -18,5 +18,7 @@ ModuleList[]=producto
 ModuleList[]=lightbox
 ModuleList[]=encuesta
 ModuleList[]=blog
+ModuleList[]=utils
+
 
 */ ?>

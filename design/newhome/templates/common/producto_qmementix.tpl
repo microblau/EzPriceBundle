@@ -127,7 +127,7 @@
 					<div class="tryPromo">
 						<a href="#" class="tryProd"><span>Pruébelo <strong>GRATIS</strong> 15 días </span></a>
 
-                        <form id="frm_tryImemento" action={"content/action"|ezurl} method="post">
+                        <form id="frm_tryImemento" action={"utils/action"|ezurl} method="post">
 							<fieldset>
 								<legend>Solicitud de prueba de producto</legend>
 							<span class="requiredText">* Datos obligatorios</span>

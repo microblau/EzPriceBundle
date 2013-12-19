@@ -88,7 +88,7 @@
 
 {if not(and($module_params.module_name|eq('content'),$module_params.function_name|eq('collectedinfo'))) }
                                            
-<form method="post" action={"content/action"|ezurl} id="form_inf_colectivo">
+<form method="post" action={"utils/action"|ezurl} id="form_inf_colectivo">
                                             <span class="camposObligatorios">* Datos obligatorios</span>
 
                                                

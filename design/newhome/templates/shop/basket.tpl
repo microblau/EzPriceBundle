@@ -79,7 +79,7 @@
 															<td class="precio">{$basket.total_inc_vat|l10n( clean_currency ), $basket.total_inc_vat|l10n( clean_currency ))} €</td>
 														</tr>
                                                                                                                 <tr class="totalNoIva">
-															<th colspan="7">Gastos de Envío</th>
+															<th colspan="7">Gastos de Envío (Con Iva)</th>
 															<td>{$gastos_envio|l10n( clean_currency )} €</td>
 														</tr>
                                                                                                                 <tr class="total">

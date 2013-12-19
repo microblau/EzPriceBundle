@@ -5,6 +5,8 @@
 	Formulario de Prueba de Producto - acción comercial 9569
 {/if}
 {/set-block}
+
+xxxx
 {set-block scope=root variable=email_sender}contacto@efl.es{/set-block}
 {append-block scope=root variable=email_receiver}mjizquierdo@efl.es{/append-block}
 {append-block scope=root variable=email_receiver}msandin@efl.es{/append-block}
@@ -16,6 +18,6 @@
 CAMPOS DEL FORMULARIO:
 
 {foreach $collection.attributes as $attribute}
-{$attribute.contentclass_attribute_name|wash()}:{attribute_result_gui view=info attribute=$attribute}
+{$attribute.contentclass_attribute_name|wash()}:{attribute_result_gui view=info attribute=$attribute} 
 {/foreach}
 

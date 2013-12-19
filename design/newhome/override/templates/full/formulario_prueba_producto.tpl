@@ -98,7 +98,8 @@ var google_conversion_value = 0;
 									<div class="description">
 										<div id="datosUsuario">
 
-						{if and( not($validation.attributes|count()|gt(0)), not(and($module_params.module_name|eq('content'),$module_params.function_name|eq('collectedinfo'))))  }
+						
+{if and($validation.attributes|count()|eq(0),$module_params.module_name|ne('content'),$module_params.module_name|ne('utils'),$module_params.function_name|eq('collectedinfo')) }
 						<p>{fetch('content', 'node', hash( 'node_id', $node.node_id)).data_map.descripcion.content.output.output_text}</p><br>
 						{/if}
 
@@ -113,8 +114,9 @@ var google_conversion_value = 0;
                                         			</ul>
                                         		</div>
                                         	{else}	
+
 	
-							{if and($module_params.module_name|eq('content'),$module_params.function_name|eq('collectedinfo')) }
+							{if and(or($module_params.module_name|eq('content'),$module_params.module_name|eq('utils')),$module_params.function_name|eq('collectedinfo')) }
 								<div class="contacte" >
 								El formulario se ha enviado correctamente.
 								En breve nos pondremos en contacto con usted.	
@@ -124,7 +126,7 @@ var google_conversion_value = 0;
 						{/if}
 
 
-{if not(and($module_params.module_name|eq('content'),$module_params.function_name|eq('collectedinfo'))) }
+{if and( $module_params.module_name|ne('utils'), not(and($module_params.module_name|eq('content'),$module_params.function_name|eq('collectedinfo'))))}
                                            
 <form method="post" action={"content/action"|ezurl} id="form_inf_colectivo">
                                             <span class="camposObligatorios">* Datos obligatorios</span>

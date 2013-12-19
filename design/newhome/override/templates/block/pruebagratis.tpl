@@ -1,7 +1,7 @@
 <h2><strong>Pruebe gratis</strong> nuestros productos electrónicos 15 días</h2>
 					<div class="inner">
 					
-						<form action={"content/action"|ezurl} method="post">
+						<form action={"utils/action"|ezurl} method="post">
 							
 							<span>* Datos obligatorios</span>
 							<ul>
