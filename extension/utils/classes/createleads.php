@@ -36,7 +36,7 @@ $productAttr = eZContentObjectAttribute::fetch( $data['producto']->ContentObject
 			      "ArrStrProductId" => array($product),
 			      "ArrStrProductName" => array( eZContentObject::fetch( $data['producto']->content() )),
 			      "StrBusinessAction" => 'Acción Comercial 9569',
-			      "StrRequest" => 'Información',
+			      "StrRequest" => 'Demo',
 			      "StrSource" => 'http://www.efl.es',
 			      "StrObservations" => ''
 			      
