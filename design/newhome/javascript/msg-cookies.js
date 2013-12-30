@@ -5,7 +5,8 @@
     while(arr_dominio.length > 2){ arr_dominio.shift(); }
     var dominio_principal = arr_dominio.join(".");
     var expiration = (new Date(2037, 12, 31)).toGMTString();
-    var thecookie = nombre + " = " + escape(valor) + "; expires=" + expiration+"; path=/; domain=."+dominio_principal;
+	//var thecookie = nombre + " = " + escape(valor) + "; expires=" + expiration+"; path=/; domain=."+dominio_principal;
+	var thecookie = nombre + " = " + escape(valor) + "; expires=0; path=/; domain=."+dominio_principal;
     document.cookie = thecookie;
   }
 
