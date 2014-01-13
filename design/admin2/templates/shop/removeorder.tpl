@@ -13,10 +13,10 @@
 <div class="message-confirmation">
 
 {if $delete_result|count|eq(1)}
-<h2>{'Are you sure you want to remove order #%order_number?'|i18n( 'design/admin/shop/removeorder',, hash( '%order_number', $delete_result ) )}</h2>
+<h2>{'Are you sure you want to remove order #%order_number?'|i18n( 'design/admin/shop/removeorder',, hash( '%order_number', $delete_result|wash ) )}</h2>
 {else}
 <h2>{'Are you sure you want to remove the following orders?'|i18n( 'design/admin/shop/removeorder' )}</h2>
-{$delete_result}
+{$delete_result|wash}
 {/if}
 
 </div>
