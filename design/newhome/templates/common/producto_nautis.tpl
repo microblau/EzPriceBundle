@@ -112,10 +112,17 @@
                         
                     	<div class="descripcion">
                             <ul class="tabs" style="float:none">
-                                
+         {def $n_hijos_versiones = fetch( 'content', 'list_count', hash(
+                 'parent_node_id', $node.node_id,
+                 'class_filter_type', 'include',
+                 'class_filter_array', array( 'version_nautis' )
+         ))}
+{if $n_hijos_versiones|gt(0)}
                                <li {if array( 'producto_nautis' )|contains( $clase )}class="sel"{/if}>
                                 {if array( 'producto_nautis' )|contains( $clase )}<h2>{else}<a href="{$node.url_alias|ezurl(no)}">{/if}Versiones{if array( 'producto_nautis' )|contains( $clase )}</h2>{else}</a>{/if}
                                 </li>
+
+{/if}
                                 {if $node.data_map.ventajas.has_content}
                                <li {if $clase|eq('ventajas_producto') }class="sel"{/if}>
                                 {if $clase|eq('ventajas_producto') }<h2>{else}<a href="{fetch( 'content', 'list', hash( 'parent_node_id', $node.node_id,
@@ -156,10 +163,19 @@
  )).0.url_alias|ezurl(no)}#producttext">{/if}Preguntas frecuentes{if $clase|eq( 'faqs_producto' )}</h2>{else}</a>{/if}
                                 </li>                           
                                 {/if} 
+
+				{def $pestanias = fetch( 'content', 'list', hash(
+                 'parent_node_id', $node.node_id,
+                 'class_filter_type', 'include',
+                 'class_filter_array', array( 'pestania' )
+         ))}
+				{foreach $pestanias as $pestania}
+				    <li {if eq($pestania.node_id, $nodo.node_id)}class="sel"{/if}>{if eq($pestania.node_id, $nodo.node_id)}<h2>{else}<a href={$pestania.url_alias|ezurl}>{/if}{$pestania.name}{if eq($pestania.node_id, $nodo.node_id)}</h2>{else}</a>{/if}</li>
+                                {/foreach}
                             </ul>
                             
                             <div class="cont fichaVar1 clearFix {if and( is_set( $view_parameters.ver ), $view_parameters.ver|eq( 'ventajas') )}listType02{/if}" id="producttext">
-                                {if $clase|eq( 'producto_nautis' )}
+                                {if and( $clase|eq( 'producto_nautis' ), $n_hijos_versiones|gt(0))}
                             	<div class="boxProduct flt type1">
                                 {def $versiones = fetch( 'content', 'list', hash( 'parent_node_id', $node.node_id,
                                                                                   'class_filter_type', 'include',
@@ -550,7 +566,23 @@
                             	                {include uri="design:common/ficha/modVentajas_nautis.tpl"}
                             	               </div>
                             	           </div>
+			{elseif $clase|eq('pestania')}
+
+					<div>
+                            	           <h2>{$nodo.name}</h2>
+                            	           <div class="preguntas clearFix">
+
+                            	               <div class="flt" style="width:620px">
+						   {$nodo.data_map.contenido.content.output.output_text}
+                            	               </div>
+	
+                                                
+                            	               <div id="modVentajas" class="frt">
+                            	                {include uri="design:common/ficha/modVentajas_nautis.tpl"}
+                            	               </div>
+                            	           </div>
                                 {/if} 
+			
                             </div>
                         
            		</div>

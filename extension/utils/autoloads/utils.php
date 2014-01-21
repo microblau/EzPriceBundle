@@ -22,7 +22,7 @@ class Utils
      */
     function operatorList()
     {
-        return array( 'normalize_path', 'ezurl_formacion', 'ezurl_www', 'sortbasketitems', 'redirect', 'tweetrelativetime' );
+        return array( 'normalize_path', 'ezurl_formacion', 'ezurl_www', 'sortbasketitems', 'redirect', 'tweetrelativetime', 'redirectToFirstAvailableChild' );
     }
     
     /**
@@ -44,6 +44,7 @@ class Utils
     {
         return array( 'normalize_path' => array( ), 'ezurl_formacion' => array( ), 'ezurl_www' => array(), 
         				'sortbasketitems' => array(), 'redirect' => array(), 'tweetrelativetime' => array(),
+				'redirectToFirstAvailableChild' => array()
          );               
     }
     
@@ -122,6 +123,48 @@ class Utils
                    $operatorValue =  $years <= 1 ? "hace un año" : "hace " . $years . " años";
                 }
                 break;
+	   case 'redirectToFirstAvailableChild':
+		$data = $operatorValue->dataMap();
+		if ( $data['ventajas']->hasContent() )
+		{
+		   $ventajas = eZContentObjectTreeNode::subTreeByNodeId( 
+                      array( 'ClassFilterType' => 'include',
+                            'ClassFilterArray' => array( 'ventajas_producto' ) ),
+
+		      $operatorValue->attribute('node_id')
+		   );
+                  
+	          eZURI::transformURI( $ventajas[0]->urlAlias() );
+                  eZHTTPTool::redirect( '/' . $ventajas[0]->urlAlias(), array(), 301 );
+                 
+		 
+                }
+                
+		if ( $data['condiciones']->hasContent() )
+		{
+		   $els = eZContentObjectTreeNode::subTreeByNodeId( 
+                      array( 'ClassFilterType' => 'include',
+                            'ClassFilterArray' => array( 'condiciones_producto' ) ),
+
+		      $operatorValue->attribute('node_id')
+		   );
+                  
+	          eZURI::transformURI( $els[0]->urlAlias() );
+                  eZHTTPTool::redirect( '/' . $els[0]->urlAlias(), array(), 301 );
+                 
+		 
+                }
+
+		$pestanias =  eZContentObjectTreeNode::subTreeByNodeId( 
+                      array( 'ClassFilterType' => 'include',
+                            'ClassFilterArray' => array( 'pestania' ) ),
+
+		      $operatorValue->attribute('node_id')
+		   );
+		     eZURI::transformURI( $pestanias[0]->urlAlias() );
+                  eZHTTPTool::redirect( '/' . $pestanias[0]->urlAlias(), array(), 301 );
+		
+		break;
         }	
     }    
 }

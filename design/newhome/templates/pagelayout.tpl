@@ -14,6 +14,18 @@
     {concat( 'newsletter/track/', ezhttp( 'hash', 'get' ), '/', ezhttp( 'id', 'get' ) )|redirect}
 {/if}
 
+{if array( 'producto_nautis' )|contains( $module_result.content_info.class_identifier )}
+{def $nautis =fetch( 'content', 'node', hash( 'node_id', $module_result.node_id ))}
+{def $n_hijos_versiones = fetch( 'content', 'list_count', hash(
+                 'parent_node_id', $module_result.node_id,
+                 'class_filter_type', 'include',
+                 'class_filter_array', array( 'version_nautis' )
+         ))}
+{if $n_hijos_versiones|eq(0)}
+{$nautis|redirectToFirstAvailableChild()}
+{/if}
+{/if}
+
 {cache-block keys=array( $module_result.uri, fetch( 'shop', 'basket' ).items|count, $current_user.contentobject_id, $extra_cache_key )}
 {def $pagedata         = ezpagedata()
      $pagestyle        = $pagedata.css_classes
