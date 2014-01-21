@@ -487,19 +487,19 @@
 											{def $user_id=$current_user.contentobject_id}
                                            {def $havotado=fetch('producto','havotado' , hash( 'node_id', $node.node_id , 'usuario',$user_id ))} 
 
-											{if $current_user.is_logged_in}
+									{*		{if $current_user.is_logged_in} *}
 
-                                                   {if $havotado|gt(0)}
+                                                   {if and( $current_user.is_logged_in,$havotado|gt(0) )}
                                                       <a href="/producto/opinion?n=already" id="formOpinion"><img src={"btn_opine.png"|ezimage()} alt="Opine sobre esta obra" /></a>
                                                    {else}
                                                     <a href="{concat('/producto/opinion?n=', $node.node_id)}" id="formOpinion"><img src={"btn_opine.png"|ezimage()} alt="Opine sobre esta obra" /></a>
                                                     
                                                     {/if}
-                                             {else}
+                                            {* {else}
                                               
                                              	 <a href="/producto/login/(opinion)/{$node.node_id}" id="formOpinion"><img src={"btn_opine.png"|ezimage()} alt="Opine sobre esta obra"  /></a>
                                              
-                                             {/if}       
+                                             {/if}  *}
                                             {undef $user_id}
                                             {undef $current_user}
                                         </li>
@@ -623,20 +623,20 @@
 											{def $user_id=$current_user.contentobject_id}
                                            {def $havotado=fetch('producto','havotado' , hash( 'node_id', $node.node_id , 'usuario',$user_id ))} 
 
-											{if $current_user.is_logged_in}
+											{*{if $current_user.is_logged_in}*}
 
-                                                   {if $havotado|gt(0)}
+                                                   {if and( $current_user.is_logged_in,$havotado|gt(0) )}
                                                       <a href="/producto/opinion?n=already" id="formOpinion"><img src={"btn_opine.png"|ezimage()} alt="Opine sobre esta obra" /></a>
                                                    {else}
                                                     <a href="{concat('/producto/opinion?n=', $node.node_id)}" id="formOpinion"><img src={"btn_opine.png"|ezimage()} alt="Opine sobre esta obra" /></a>
                                                     
                                                     {/if}
-                                             {else}
+                                            {* {else}
 												
                                              	 <a href="/producto/login/(opinion)/{$node.node_id}" id="formOpinion"><img src={"btn_opine.png"|ezimage()} alt="Opine sobre esta obra" /></a>
                                              
                                              {/if}       
-                                            {undef $user_id}
+                                            {undef $user_id} *}
                                             {undef $current_user}
                             </div>
                         	<p class="top">" {$muestraaleatorio.0.comentario}"</p>
@@ -824,19 +824,19 @@
 											{def $user_id=$current_user.contentobject_id}
                                            {def $havotado=fetch('producto','havotado' , hash( 'node_id', $node.node_id , 'usuario',$user_id ))} 
 
-											{if $current_user.is_logged_in}
+								{*			{if $current_user.is_logged_in} *}
 
-                                                   {if $havotado|gt(0)}
+                                                  {if and( $current_user.is_logged_in,$havotado|gt(0) )}
                                                       <a href="/producto/opinion?n=already" id="formOpinion"><img src={"btn_opine.png"|ezimage()} alt="Opine sobre esta obra" /></a>
                                                    {else}
                                                     <a href="{concat('/producto/opinion?n=', $node.node_id)}" id="formOpinion"><img src={"btn_opine.png"|ezimage()} alt="Opine sobre esta obra" /></a>
                                                     
                                                     {/if}
-                                             {else}
+{*                                             {else}
 												
                                              	 <a href="/producto/login/(opinion)/{$node.node_id}" id="formOpinion"><img src={"btn_opine.png"|ezimage()} alt="Opine sobre esta obra" /></a>
                                              
-                                             {/if}       
+                                             {/if}  *}     
                                             {undef $user_id}
                                             {undef $current_user}
                             

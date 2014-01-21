@@ -3,7 +3,7 @@
 $tpl = eZTemplate::factory();
 $v = new Valoraciones(); 
 $havotado = false;
-if( is_numeric( $_GET['n'] ) )
+if( is_numeric( $_GET['n'] ) && eZUser::currentUser()->isLoggedIn() )
     $havotado = $v->havotado( $_GET['n'], eZUser::currentUser()->id() );
 
 $n = $_GET['n'];

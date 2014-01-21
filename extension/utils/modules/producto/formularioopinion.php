@@ -15,7 +15,7 @@ $existeUsuario = $eflws->existeUsuario( $email );
 
 if ( $existeUsuario == 0 )
 {
-	print 'no existe usuario';
+	//print 'no existe usuario';
 }
 else
 {
@@ -30,7 +30,28 @@ else
 
 
 if (isset($_POST['enviar'])){
-	
+		if( $http->hasPostVariable( 'nombre' ) && ( $http->postVariable( 'nombre' )!=''  ) ){
+			$nombre = $http->postVariable( 'nombre' );
+		   
+                }elseif( $http->hasPostVariable( 'nombre' )){
+		   $errors['nombre']="Debes indicar tu nombre";
+                }
+
+		if( $http->hasPostVariable( 'apellidos' ) && ( $http->postVariable( 'apellidos' )!=''  ) ){
+			$ape1 = $http->postVariable( 'apellidos' );
+		   
+                }elseif( $http->hasPostVariable( 'apellidos' )){
+		   $errors['apellidos']="Debes indicar tus apellidos";
+                }
+		
+		if( $http->hasPostVariable( 'email' ) && ( $http->postVariable( 'email' )!=''  ) ){
+			$email = $http->postVariable( 'email' );
+		   
+                }elseif( $http->hasPostVariable( 'email' )){
+		   $errors['email']="Debes indicar tu email";
+                }
+		
+			
 		if ( ($http->hasPostVariable('star1')) && ($http->PostVariable('star1') != '') ){
 			$calidad=$http->PostVariable('star1');
 		}else{
@@ -51,6 +72,13 @@ if (isset($_POST['enviar'])){
 		if ( ($http->hasPostVariable('opinion')) && ($http->PostVariable('opinion') != '') ){	
 			$opinion=$http->PostVariable('opinion');
 		}
+if( $http->hasPostVariable( 'eZHumanCAPTCHACode' ) ){
+		  $eZHumanCAPTCHAValidation = eZHumanCAPTCHATools::validateHTTPInput();
+    if ( count( $eZHumanCAPTCHAValidation ) )
+    {
+		$errors['captchar'] = "El valor del captcha introducido no es correcto";
+    }
+}
 
 		$node_id=$http->PostVariable('node_id');
 		$user_id=$http->PostVariable('user_id');
@@ -77,13 +105,15 @@ if (isset($_POST['enviar'])){
 		$tpl->setVariable( 'errors',  $errors );
 		$tpl->setVariable( 'user_id',  $user_id );
 		$tpl->setVariable( 'nodeid',  $node_id );
+
 		print $tpl->fetch( "design:ajax/formularioopinion.tpl" );
 		eZExecution::cleanExit();
 	}else{
 
 		$db = eZDB::instance();
-        $db->query( "INSERT INTO valoraciones_productos ( user_id , node_producto , ha_votado , calidad , actualizaciones , facilidad , comentario, visible ,fecha ,nombre, apellidos ,empresa ) 
-		VALUES (".$user_id.",". $node_id.", 1 ,".$calidad." , ".$actualizaciones." , ".$facilidad.",'". $opinion."' ,2,".$fecha." , '".$nombre."','".$ape1."','".$empresa."')");
+        $db->query( "INSERT INTO valoraciones_productos ( user_id , node_producto , ha_votado , calidad , actualizaciones , facilidad , comentario, visible ,fecha ,nombre, apellidos ,empresa, email ) 
+		VALUES (".$user_id.",". $node_id.", 1 ,".$calidad." , ".$actualizaciones." , ".$facilidad.",'". $opinion."' ,2,".$fecha." , '".$nombre."','".$ape1."','".$empresa."','".$email."')");
+
 		print $tpl->fetch( "design:confirmacionopinion.tpl" );
 		
 		

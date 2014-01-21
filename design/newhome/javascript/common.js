@@ -1965,6 +1965,9 @@ var formsValidations = {
 		validaOpinionForm:function(obj){
 			var errorTxt = "";
 			var f = $(obj);				
+			if(f.find("input[name=nombre3]").val() == ''){
+				errorTxt += literal["opinionForm"][4];
+			}
 			
 			if(!f.find("input[name=star1]:checked").val()){
 				errorTxt += literal["opinionForm"][0];

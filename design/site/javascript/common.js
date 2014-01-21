@@ -1929,7 +1929,29 @@ var formsValidations = {
         },
 		validaOpinionForm:function(obj){
 			var errorTxt = "";
-			var f = $(obj);				
+			var f = $(obj);		
+		       
+			if(f.find("input[name=nombre]").val() == ''){
+				errorTxt += literal["opinionForm"][4];
+				f.find("input[name=nombre]").addClass("error");
+			}else f.find("input[name=nombre]").removeClass("error");		
+			
+			if(f.find("input[name=apellidos]").val() == ''){
+				errorTxt += literal["opinionForm"][5];
+				f.find("input[name=apellidos]").addClass("error");
+			}else f.find("input[name=apellidos]").removeClass("error");
+
+			if(f.find("input[name=email]").val() == ''){
+				errorTxt += literal["opinionForm"][6];
+				f.find("input[name=email]").addClass("error");
+			}else f.find("input[name=email]").removeClass("error");
+
+
+			if(f.find("input#email").length > 0  && !regularExpressions.isValidEmail(f.find("input#email").val())){
+                             errorTxt += literal["opinionForm"][7];
+		             f.find("input#email").addClass("error");
+                        } else f.find("input#email").removeClass('error');
+			
 			
 			if(!f.find("input[name=star1]:checked").val()){
 				errorTxt += literal["opinionForm"][0];

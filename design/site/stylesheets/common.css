@@ -60,7 +60,7 @@
 .msgError ul { margin: 17px 0; padding: 0; list-style: none  }
 	.msgError li { margin: 0; padding: 4px 0 4px 30px; background: url(../images/bullet_pPrimaria.gif) no-repeat 0 3px; list-style:none  }	
 	
-	form .error input.text, form .error label input.text, #datosPago fieldset.error input, .direccion .error input, #opinionForm textarea.error { border-color:#E00101 !important;  }
+	form .error input.text, form .error label input.text, #datosPago fieldset.error input, .direccion .error input, #opinionForm textarea.error, #opinionForm input.error { border-color:#E00101 !important;  }
 	
 .wysiwyg p { margin-bottom: 15px  }	
 .wysiwyg ul, .wysiwyg ul li { list-style: disc  }

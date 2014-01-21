@@ -32,6 +32,7 @@
 									<div class="description">
                                     	<div class="opinionForm">
                                             <p>Use este formulario para realizar una valoración y enviarnos su opinión acerca de la obra.</p>
+					
                                             <p>Indique su valoración por cada uno de los siguientes criterios:</p>
                                             
 {def $current_user=fetch( 'user', 'current_user' )}  
@@ -39,7 +40,7 @@
 {def $user_id=$current_user.contentobject_id}
  
  
- {*if and($errors|count|ne(0), $exito|eq(0) )}
+ {if and($errors|count|ne(0), $exito|eq(0) )}
                 <div class="msgError">
 						<span>{'Lo sentimos, pero se han encontrado los siguientes errores'|i18n('comunes')}:</span>
 						<ul>
@@ -48,11 +49,13 @@
 							{/foreach}
 						</ul>
 					</div>
-   {/if*}
+   {/if}
                                             
 											 <form action="/producto/formularioopinion" method="post" id="opinionForm">
+					     
                                              <div class="opinion">
                                                 <ul>
+					           
                                                     <li><span>Calidad</span>
                                                     {*<img src={"img_estrellas.gif"|ezimage()} alt="" class="frt" />
                                                     	<INPUT type="radio" name="calidad" value="1">1
@@ -105,11 +108,42 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                           
-                                            	<label for="opinion">En este formulario puede escribirnos su opinión sobre la obra:</label>
+                                            {if $current_user.is_logged_in|not}
+<p>Indique sus datos personales:</p>
+					    <div class="datos">
+						<div>
+							<label for="nombre">Nombre</label>
+							<input type="text" name="nombre" id="nombre" class="text" />			
+						    </div>
+
+						   <div>
+							<label for="apellidos">Apellidos</label>
+							<input type="text" name="apellidos" id="apellidos" class="text" />			
+						    </div>
+
+						    <div>
+							<label for="email">E-mail</label>
+							<input type="text" name="email" id="email" class="text" />			
+						    </div>
+					     </div>
+					            {/if}
+                                            	<label for="opinion">En este campo puede escribirnos su opinión sobre la obra:</label>
                                                 <input type="hidden" name="node_id" id="node_id" value="{if $node_id|ne('')}{$node_id}{else}{$nodeid}{/if}" />
                                                 <input type="hidden" name="user_id" id="user_id" value="{$user_id}" />
                                                 <textarea id="opinion" name="opinion" class="text" cols="5" rows="5"></textarea>
+
+						<div style="margin-top:20px">
+ {if $current_user.is_logged_in|not}
+														<label for="capchar" {if is_set( $error_captchar)}class="error"{/if}>Introduzca los caracteres que visualiza en la imagen inferior *:</label><br>
+														<div>
+															<input class="box text" type="text" size="4" name="eZHumanCAPTCHACode" value="" />
+														</div>
+														<br>
+														<img src={ezhumancaptcha_image()|ezroot()} alt="eZHumanCAPTCHA" /><br>
+
+														 <br/>
+													</div>
+{/if}
                                                {* <span class="info">(Máximo xxx caracteres)</span> *}
                                             	<div class="clearFix">
    	                                            	<span class="submit frt">

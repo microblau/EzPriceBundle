@@ -2088,7 +2088,8 @@ h2.titleOpinion { margin:-20px 0 20px}
 				#videoLightbox .opinionForm .opinion li span { float:left;}
 		#videoLightbox .opinionForm .opinion ul:after { content:" "; display:block; clear:both; height:0; visibility:hidden;}
 	#videoLightbox .opinionForm label { margin-bottom:10px}
-	#videoLightbox .opinionForm textarea.text { border:1px solid #C6E7FF; padding:2px; width:556px; margin-bottom:5px}
+	#videoLightbox .opinionForm textarea.text,#videoLightbox .opinionForm input.text { border:1px solid #C6E7FF; padding:2px; width:556px; margin-bottom:5px}
+#videoLightbox .opinionForm div.datos > div {margin-bottom: 15px;}
 	
 .ocultaAltFancy #fancybox-title { display:none!important}
 

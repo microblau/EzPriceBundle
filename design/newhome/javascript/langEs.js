@@ -209,3 +209,7 @@ literal["opinionForm"] = [];
 	literal["opinionForm"][1] = "Debes valorar el criterio 'Actualizaciones'|";	
 	literal["opinionForm"][2] = "Debes valorar el criterio 'Facilidad de consulta'|";	
 	literal["opinionForm"][3] = "Debes escribir una opinión|";	
+	literal["opinionForm"][4] = "Debes indicar tu nombre|";	
+	literal["opinionForm"][5] = "Debes indicar tus apellidos|";	
+	literal["opinionForm"][6] = "Debes indicar tu e-mail|";	
+	literal["opinionForm"][7] = "El e-mail introducido no es correcto|";	
