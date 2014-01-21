@@ -161,9 +161,12 @@ class Utils
 
 		      $operatorValue->attribute('node_id')
 		   );
+		if( count($pestanias) ){
 		     eZURI::transformURI( $pestanias[0]->urlAlias() );
+ 
                   eZHTTPTool::redirect( '/' . $pestanias[0]->urlAlias(), array(), 301 );
-		
+                }
+		$operatorValue = '';
 		break;
         }	
     }    

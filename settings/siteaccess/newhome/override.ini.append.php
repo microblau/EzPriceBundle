@@ -37,6 +37,11 @@ MatchFile=full/producto_hijo.tpl
 Subdir=templates
 Match[class_identifier]=opiniones_clientes
 
+[pestanias]
+Source=node/view/full.tpl
+MatchFile=full/producto_hijo.tpl
+Subdir=templates
+Match[class_identifier]=pestania
 
 [testimonios_producto]
 Source=node/view/full.tpl
