@@ -1383,7 +1383,7 @@ p.subtitle { background:url(../images/bck_accesoMementix.gif) repeat-y 0 0; padd
 .fichas #modInformacion2 { background:url(../images/boton_ficha_gris.jpg) no-repeat 0 100%; width:166px; height:120px; margin-bottom:10px; float:right; padding:0}
 	.fichas #moduloDestacadoContenido #modInformacion div { padding:10px 0 10px 10px}
 	.fichas #moduloDestacadoContenido #modInformacion2 div { padding:3px 0 3px 3px}
-.fichas .descuentoType1 { position:relative; left:2px; width:57px; height:66px; padding:9px 9px 0 9px; background:url(../images/bck_descuentoType1.png) no-repeat 0 0; text-align:center; margin:5px 0 10px}
+.fichas .descuentoType1 { position:relative; left:2px; width:57px; height:66px; padding:3px 9px 6px 9px; background:url(../images/bck_descuentoType1.png) no-repeat 0 0; text-align:center; margin:5px 0 10px}
 	.fichas .descuentoType1 strong { display:block} 
 	
 .fichas .modType4 .descripcion .cursoDet .versiones ul li { background-image:none; padding:0; border-bottom:2px solid #c6e7ff}

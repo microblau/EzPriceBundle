@@ -97,7 +97,7 @@ class discountsType extends eZWorkflowEventType
 																false,
 																array( array( 'operation' => 'ezdiscountsubrule.id' ) ),
 																array( 'ezdiscountsubrule' ),
-																' AND ezdiscountsubrule.id = ezdiscountsubrule_value.discountsubrule_id AND ezdiscountsubrule.discountrule_id = 3 '
+																' AND ezdiscountsubrule.id = ezdiscountsubrule_value.discountsubrule_id AND ezdiscountsubrule.discountrule_id = 82 '
 																
 																	
 					);
