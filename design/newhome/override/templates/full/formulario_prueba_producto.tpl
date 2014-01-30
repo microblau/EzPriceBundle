@@ -128,7 +128,7 @@ var google_conversion_value = 0;
 
 {if and( $module_params.module_name|ne('utils'), not(and($module_params.module_name|eq('content'),$module_params.function_name|eq('collectedinfo'))))}
                                            
-<form method="post" action={"content/action"|ezurl} id="form_inf_colectivo">
+<form method="post" action={"utils/action"|ezurl} id="form_inf_colectivo">
                                             <span class="camposObligatorios">* Datos obligatorios</span>
 
 						

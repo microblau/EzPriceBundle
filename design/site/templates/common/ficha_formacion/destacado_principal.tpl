@@ -40,7 +40,7 @@
 		<!--
                               {$node.data_map.precio.content|attribute(show)} 
 -->
-                                    <div class="descuentoType1"><span>{$node.data_map.precio.content.discount_price_ex_vat|l10n(clean_currency)} &euro;</span> + IVA</div>
+                                    <div class="descuentoType1"><span>{$node.data_map.precio.content.discount_price_ex_vat|l10n(clean_currency)}&euro;</span> + IVA</div>
                                 {/if}
                                 {if $node.data_map.precio.has_content}
                                     <div class="antes">{if $node.data_map.precio.content.has_discount}Antes {/if}<span>{$node.data_map.precio.content.ex_vat_price|l10n(clean_currency)} &euro;</span> + IVA</div>
