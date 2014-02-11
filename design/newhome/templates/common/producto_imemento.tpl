@@ -1,5 +1,5 @@
 {ezcss_require( 'imemento.css' )}
-{ezscript_require( 'imemento.js' ))}
+{ezscript_require( 'imemento.js' )}
 {ezpagedata_set( 'bodyclass', 'fichas')}
 {ezpagedata_set( 'menuoption', 2 )}    
 {ezpagedata_set( 'metadescription', $node.data_map.subtitulo.content )}    
@@ -472,16 +472,7 @@
                                                     <a href="{concat('/producto/opinion?n=', $node.node_id)}" id="formOpinion"><img src={"btn_opine.png"|ezimage()} alt="Opine sobre esta obra" /></a>
                                                     
                                                     {/if}
-                                            {* {else}
-                                              
-                                             	 <a href="/producto/login/(opinion)/{$node.node_id}" id="formOpinion"><img src={"btn_opine.png"|ezimage()} alt="Opine sobre esta obra"  /></a>
-                                             
-                                             {/if}  *}
-                                             {else}
-                                              
-                                             	 <a href="/producto/login/(opinion)/{$node.node_id}" id="formOpinion"><img src={"btn_opine.png"|ezimage()} alt="Opine sobre esta obra"  /></a>
-                                             
-                                             {/if}       
+                                                 
                                             {undef $user_id}
                                             {undef $current_user}
                                         </li>
@@ -610,16 +601,7 @@
                                                     <a href="{concat('/producto/opinion?n=', $node.node_id)}" id="formOpinion"><img src={"btn_opine.png"|ezimage()} alt="Opine sobre esta obra" /></a>
                                                     
                                                     {/if}
-                                            {* {else}
-                                              
-                                             	 <a href="/producto/login/(opinion)/{$node.node_id}" id="formOpinion"><img src={"btn_opine.png"|ezimage()} alt="Opine sobre esta obra"  /></a>
-                                             
-                                             {/if}  *}
-                                             {else}
-												
-                                             	 <a href="/producto/login/(opinion)/{$node.node_id}" id="formOpinion"><img src={"btn_opine.png"|ezimage()} alt="Opine sobre esta obra" /></a>
-                                             
-                                             {/if}       
+                                          
                                             {undef $user_id}
                                             {undef $current_user}
                             </div>
@@ -816,16 +798,7 @@
                                                     <a href="{concat('/producto/opinion?n=', $node.node_id)}" id="formOpinion"><img src={"btn_opine.png"|ezimage()} alt="Opine sobre esta obra" /></a>
                                                     
                                                     {/if}
-                                            {* {else}
-                                              
-                                             	 <a href="/producto/login/(opinion)/{$node.node_id}" id="formOpinion"><img src={"btn_opine.png"|ezimage()} alt="Opine sobre esta obra"  /></a>
-                                             
-                                             {/if}  *}
-                                             {else}
-												
-                                             	 <a href="/producto/login/(opinion)/{$node.node_id}" id="formOpinion"><img src={"btn_opine.png"|ezimage()} alt="Opine sobre esta obra" /></a>
-                                             
-                                             {/if}       
+                                                 
                                             {undef $user_id}
                                             {undef $current_user}
                             
