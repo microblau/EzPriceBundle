@@ -221,10 +221,10 @@ elseif ( $product['item_object']->attribute( 'contentobject' )->attribute( 'cont
 												               
 												$mail->from = new ezcMailAddress( 'clientes@efl.es', 'Ediciones Francis Lefebvre' );
 												              
-												$mail->addBcc( new ezcMailAddress(  'carlos.revillo@tantacom.com', 'Carlos' ) );
+												
 												if ( $info['tipo_usuario'] )
 												{
-												    $mail->addTo( new ezcMailAddress( 'internet@efl.es' ) );
+												    $mail->addTo( new ezcMailAddress( 'pedidosweb@efl.es' ) );
 												    if( count( $cursos['result'] ) )
 												    {
 												       $mail->addTo( new ezcMailAddress( 'inscripciones@efl.es' ) );
