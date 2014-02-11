@@ -266,7 +266,7 @@
                                         <h2>Instrucciones de pago por transferencia</h2>
                                         <ol>
                                             <li><span>Haga su transferencia antes de 72 horas* en el siguiente número de <abbr ttile="Cuenta Corriente">C/C</abbr>: {ezini( 'Infocompras', 'CC', 'basket.ini')}.</span></li>
-                                            <li><span>Envíenos el justificante bancario de su transferencia a la dirección de email <a href="mailto:{ezini( 'Infocompras', 'Mail', 'basket.ini')}">{ezini( 'Infocompras', 'Mail', 'basket.ini')}</a> o por fax al número  {ezini( 'Infocompras', 'Fax', 'basket.ini')}.</li>
+                                            <li><span>Envíenos el justificante bancario de su transferencia a la dirección de email <a href="mailto:contablidadled@efl.es">contablidadled@efl.es</a> o por fax al número  {ezini( 'Infocompras', 'Fax', 'basket.ini')}.</li>
                                             <li><span>¡Importante!. Indique el siguiente número de pedido <strong>{$id}</strong> en las observaciones de su transferencia.</span></li>
                                         </ol>
                                         

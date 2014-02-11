@@ -46,7 +46,7 @@
 Ha seleccionado como modo de pago TRANSFERENCIA BANCARIA. Para tramitar con agilidad su pedido, por favor, siga las siguientes instrucciones:
 <ul>
 <li>Haga su transferencia antes de 72 horas* en el siguiente número de C/C: {ezini( 'Infocompras', 'CC', 'basket.ini')}</li>
-<li>Envíenos el justificante bancario de su transferencia a la dirección de email {ezini( 'Infocompras', 'Mail', 'basket.ini')} o por fax al número {ezini( 'Infocompras', 'Fax', 'basket.ini')}.</li>
+<li>Envíenos el justificante bancario de su transferencia a la dirección de email contabilidadled@efl.es por fax al número {ezini( 'Infocompras', 'Fax', 'basket.ini')}.</li>
 <li>¡Importante! indique el siguiente número de pedido <b>{$id}</b> en las observaciones de su trasferencia.</li>
 </ul>
 
