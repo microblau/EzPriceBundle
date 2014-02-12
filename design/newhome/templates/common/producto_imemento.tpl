@@ -142,7 +142,7 @@
 									<input type="text" id="email" name="ContentObjectAttribute_data_text_244858" class="text" /></label>
 
 <label for="cp">Su código postal <span>*</span>
-									<input type="text" id="cp" name="ContentObjectAttribute_ezstring_data_text_266834" class="text" /></label>
+									<input type="text" id="cp" name="ContentObjectAttribute_ezstring_data_text_276701" class="text" /></label>
 								
 									
 

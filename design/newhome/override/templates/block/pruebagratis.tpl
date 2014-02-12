@@ -23,7 +23,7 @@
 								</li>
 <li>
 <label for="cp">Su código postal*</label>
-									<input type="text" id="cp" name="ContentObjectAttribute_ezstring_data_text_266840" class="text" />
+									<input type="text" id="cp" name="ContentObjectAttribute_ezstring_data_text_276769" class="text" />
 								</li>
 								<li>
 									<label for="sepro">Seleccione producto*</label>
