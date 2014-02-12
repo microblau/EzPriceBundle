@@ -9,6 +9,7 @@ literal["modGratis"] = [];
 	literal["modGratis"][5] = "Debe aceptar la política de privacidad y el aviso legal|";
         literal["modGratis"][6] = "Debe seleccionar un producto|";
         literal["modGratis"][7] = "El campo 'E-mail' es obligatorio|";
+	literal["modGratis"][8] = "El campo 'Código Postal' es obligatorio|"
 	
 
 literal["modActualidad"] = [];	
@@ -99,6 +100,14 @@ var formsValidationsHome = {
                     errorTxt += literal["modGratis"][6];
 		     parent.addClass("error");
                 }
+
+		aux = f.find("input#cp");
+		parent = aux.parent();
+		
+		if(!aux.val()){		
+			errorTxt += literal["modGratis"][8];			
+			parent.addClass("error");
+		}else parent.removeClass("error");
                 
 		
 		parent = f.find(".acepto");	

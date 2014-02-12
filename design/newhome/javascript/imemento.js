@@ -4,6 +4,9 @@ literal["modTryiMemento"] = [];
 	literal["modTryiMemento"][2] = "El campo 'Su teléfono' es obligatorio|";	
 	literal["modTryiMemento"][3] = "El formato del campo 'Su teléfono' no es correcto|";	
 	literal["modTryiMemento"][4] = "Debe aceptar las condiciones legales|";
+	literal["modTryiMemento"][5] = "El campo 'Su email' es obligatorio|";
+	literal["modTryiMemento"][6] = "El formato del campo 'Su email' no es correcto|";
+	literal["modTryiMemento"][7] = "El campo 'Su código postal' es obligatorio|";
 	
 
 
@@ -63,6 +66,29 @@ var formsValidationsHome = {
 			}else parent.removeClass("error");
 			
 		} 
+
+		aux = f.find("input#email");
+		parent = aux.parent();
+		
+		if(!aux.val()){		
+			errorTxt += literal["modTryiMemento"][5];			
+			parent.addClass("error");
+		}else{
+			parent.removeClass("error");
+			if(!regularExpressions.isValidEmail(aux.val())){
+				errorTxt += literal["modTryiMemento"][6];
+				parent.addClass("error");
+			}else parent.removeClass("error");
+			
+		} 
+		
+		aux = f.find("input#cp");
+		parent = aux.parent();
+		if(!aux.val()){		
+			errorTxt += literal["modTryiMemento"][7];			
+			parent.addClass("error");
+		}else parent.removeClass("error");
+
 						
 		parent = f.find(".check");	
 		if(!f.find(":checkbox").is(":checked")){

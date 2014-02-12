@@ -21,9 +21,14 @@
 									<label for="sue">Su email*</label>
 									<input type="text" id="sue" name="ContentObjectAttribute_data_text_10810" class="text" />
 								</li>
+<li>
+<label for="cp">Su código postal*</label>
+									<input type="text" id="cp" name="ContentObjectAttribute_ezstring_data_text_266840" class="text" />
+								</li>
 								<li>
 									<label for="sepro">Seleccione producto*</label>
 <input type="hidden" name="ContentObjectAttribute_ezselect_selected_array_10807" value="" />
+
 
 									<select id="sepro" name="ContentObjectAttribute_ezselect_selected_array_10807[]">
 										<option selected="selected" value=""></option>

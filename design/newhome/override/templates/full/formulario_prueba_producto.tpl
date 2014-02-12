@@ -167,13 +167,19 @@ var google_conversion_value = 0;
                                                     	<label for="telefono">Teléfono *</label>
                                                         
 							{attribute_view_gui attribute=$node.data_map.telefono}
-                                                    </li>                                                  
+                                                    </li> 
+ 						<li {if is_set( $error_cp)}class="error"{/if}>
+                                                    	<label for="cp">Código postal *</label>
+                                                        
+							{attribute_view_gui attribute=$node.data_map.cod_postal}
+                                                    </li>                                                 
 							
 						  	<li>
                                <label for="telefono">Producto Qmementix</label>
 									{*attribute_view_gui attribute=$node.data_map.telefono*}
 									
-                            </li>                                               
+                            </li>         
+							                                       
                                                      
                                                     
                                                 </ul>

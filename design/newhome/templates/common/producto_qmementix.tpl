@@ -143,6 +143,9 @@
 								
 									<label for="email">Su email <span>*</span>
 									<input type="text" id="email" name="ContentObjectAttribute_data_text_243192" class="text" /></label>
+
+									<label for="cp">Su código postal <span>*</span>
+									<input type="text" id="cp" name="ContentObjectAttribute_ezstring_data_text_266837" class="text" /></label>
 									<label for="prod">Seleccione producto  <span>*</span></label>
 									<input type="hidden" id="prod" name="ContentObjectAttribute_ezselect_selected_array_243188[]" value="0" />
 									
