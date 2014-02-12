@@ -30,18 +30,20 @@ $productAttr = eZContentObjectAttribute::fetch( $data['producto']->ContentObject
 			      "StrLeadFirstName" => $data['nombre']->content(),
 			      "StrLeadLastName1" => $data['apellidos']->content(),
 			      "StrLeadLastName2" => "",
-			      "StrLeadPostalCode" => "", 
+			      "StrLeadPostalCode" => $data['cod_postal']->content(), 
 			      "StrLeadPhoneHome" => $data['telefono']->content(),             
 			      "StrLeadMail" => $data['email']->content(),
-			      "ArrStrProductId" => array($product),
-			      "ArrStrProductName" => array( eZContentObject::fetch( $data['producto']->content() )),
-			      "StrBusinessAction" => 'Acción Comercial 9569',
+			      "ArrStrProductId" => array(),
+			      "ArrStrProductName" => array( 'Productos electrónicos -' . $product ),
+			      "StrBusinessAction" => '9569',
 			      "StrRequest" => 'Demo',
 			      "StrSource" => 'http://www.efl.es',
 			      "StrObservations" => ''
 			      
 			     )
 			);
+		
+			
 	          break;
 	       case 15258:
 $data = $collection->dataMap();
@@ -54,41 +56,44 @@ $data = $collection->dataMap();
 			      "StrLeadFirstName" => $data['nombre']->content(),
 			      "StrLeadLastName1" => $data['apellidos']->content(),
 			      "StrLeadLastName2" => "",
-			      "StrLeadPostalCode" => "", 
+			      "StrLeadPostalCode" =>  $data['cod_postal']->content(), 
 			      "StrLeadPhoneHome" => $data['telefono']->content(),             
 			      "StrLeadMail" => $data['email']->content(),
 			      "ArrStrProductId" => array(),
 			      "ArrStrProductName" => array('Imemento_' . $product),
-			      "StrBusinessAction" => 'Acción Comercial 9582',
+			      "StrBusinessAction" => '9582',
 			      "StrRequest" => 'Información',
 			      "StrSource" => 'http://www.efl.es',
 			      "StrObservations" => ''
 			      
 			     )
 			);
+
+	
 	          break;
 
                  case 14864:
 $data = $collection->dataMap();
-  $product = $data['prod_qmeime']->DataText ;
+  $product = $data['prod_qmeime']->DataText;
 
 			$result = $client->CreateLead(
 			     array( 
 			      "StrLeadFirstName" => $data['nombre']->content(),
 			      "StrLeadLastName1" => $data['apellidos']->content(),
 			      "StrLeadLastName2" => "",
-			      "StrLeadPostalCode" => "", 
+			      "StrLeadPostalCode" =>  $data['cod_postal']->content(), 
 			      "StrLeadPhoneHome" => $data['telefono']->content(),             
-			      "StrLeadMail" => $data['email'],
+			      "StrLeadMail" => $data['email']->content(),
 			      "ArrStrProductId" => array(),
 			      "ArrStrProductName" => array('QMementix_'. $product),
-			      "StrBusinessAction" => 'Acción Comercial 9569',
+			      "StrBusinessAction" => '9569',
 			      "StrRequest" => 'Información',
 			      "StrSource" => 'http://www.efl.es',
 			      "StrObservations" => ''
 			      
 			     )
 			);
+			
 	          break;
 
 		 case 1455:
@@ -110,15 +115,19 @@ $productAttr = eZContentObjectAttribute::fetch( $data['about_info']->ContentObje
 			      "StrLeadMail" => $data['email']->content(),
 			      "ArrStrProductId" => array(),
 			      "ArrStrProductName" => array(),
-			      "StrBusinessAction" => 'Acción Comercial 9569',
+			      "StrBusinessAction" => '9569',
 			      "StrRequest" => 'Demo',
 			      "StrSource" => 'http://www.efl.es',
 			      "StrObservations" => ''
 			      
 			     )
 			);
-
+eZLog::write( "Formulario de Más información: " . print_r($result, true), 'ws.log' ) ;
 	          break;
+ 
+
         }
+
+	
    }
 }
