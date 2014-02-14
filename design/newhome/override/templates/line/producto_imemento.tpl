@@ -18,7 +18,7 @@
 
 								{def $cuantasvaloracionestotales = fetch('producto','cuantasvaloraciones' , hash( 'node_id', $node.node_id ))} 
                                 {if $cuantasvaloracionestotales|gt(0)}
-                                              <h2><a href={concat($node.url_alias, '/(ver)/valoraciones')|ezroot()}>{$cuantasvaloracionestotales} {if $cuantasvaloracionestotales|eq(1)} valoración{else} valoraciones{/if} de usuarios</a></h2> 
+                                              <h2><a href={concat($node.url_alias, '/valoraciones')|ezroot()}>{$cuantasvaloracionestotales} {if $cuantasvaloracionestotales|eq(1)} valoración{else} valoraciones{/if} de usuarios</a></h2> 
 								{/if}
                                                
                                                
