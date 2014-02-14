@@ -20,7 +20,7 @@ class discountsType extends eZWorkflowEventType
     	$parameters = $process->attribute( 'parameter_list' );
     	$objectID = $parameters['object_id'];
         $object = eZContentObject::fetch( $objectID );      
-        if( ( $object->attribute( 'contentclass_id' ) == 48 ) or ( $object->attribute( 'contentclass_id' ) == 100 ) or ( $object->attribute( 'contentclass_id' ) == 61 ) )
+        if( ( $object->attribute( 'contentclass_id' ) == 49 ) or ( $object->attribute( 'contentclass_id' ) == 48 ) or ( $object->attribute( 'contentclass_id' ) == 100 ) or ( $object->attribute( 'contentclass_id' ) == 61 ) )
         {
 	        $data = $object->dataMap();
 		
