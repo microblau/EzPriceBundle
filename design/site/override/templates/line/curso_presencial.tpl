@@ -64,9 +64,9 @@
                                                  {if $nodefrom|ne(74)}
                                                 <div class="difPrecios">
                                                     {if $node.data_map.precio.content.has_discount}
-                                                    <span class="antes">Antes <span>{$node.data_map.precio.content.price|round()} €</span></span>
+                                                    <span class="antes">Antes <span>{$node.data_map.precio.content.price|l10n(clean_currency)} €</span></span>
                                                     {/if}
-                                                    <span class="ahora{if $node.data_map.precio.content.has_discount|not} soloPrecio{/if}">{if $node.data_map.precio.content.has_discount}Ahora{/if} <span>{if $node.data_map.precio.content.has_discount}{$node.data_map.precio.content.discount_price_ex_vat|round()}{else}{$node.data_map.precio.content.price|round()}{/if} €</span></span>
+                                                    <span class="ahora{if $node.data_map.precio.content.has_discount|not} soloPrecio{/if}">{if $node.data_map.precio.content.has_discount}Ahora{/if} <span>{if $node.data_map.precio.content.has_discount}{$node.data_map.precio.content.discount_price_ex_vat|round()}{else}{$node.data_map.precio.content.price|l10n(clean_currency)}{/if} €</span></span>
                                                 </div>
                                                 {/if}
                                                 {if $nodefrom|eq(74)}
