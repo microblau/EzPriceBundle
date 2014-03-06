@@ -48,7 +48,7 @@
 				{include uri="design:breadCrumb.tpl}
 			</td>
 			<td width="50%" align="right">
-				<a href="http://solucionesmemento-indiv.efl.es/" target="_blank"><img src={"sage_btn_accesoMementosSAGE.gif"|ezimage} alt=""/></a>
+				<a href="http://acceso.qmemento.com/welcome.do?forward=qmemento" target="_blank"><img src={"sage_btn_accesoMementosSAGE.gif"|ezimage} alt=""/></a>
 			</td>
 		</tr>
 	</table>
