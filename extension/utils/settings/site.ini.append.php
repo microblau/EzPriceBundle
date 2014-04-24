@@ -54,12 +54,16 @@ PolicyOmitList[]=test_emails
 PolicyOmitList[]=rpsm
 #PolicyOmitList[]=producto
 PolicyOmitList[]=producto/login
+PolicyOmitList[]=producto/opinion
 PolicyOmitList[]=producto/forgotpassword
+PolicyOmitList[]=producto/formularioopinion
 PolicyOmitList[]=producto/xmlproducts
 PolicyOmitList[]=ebook/download
 PolicyOmitList[]=lightbox
 PolicyOmitList[]=blog
 PolicyOmitList[]=newsletter/track
+PolicyOmitList[]=utils
+PolicyOmitList[]=google
 
 
 
@@ -68,8 +72,8 @@ PolicyOmitList[]=newsletter/track
 ExtensionAutoloadPath[]=utils
 
 [EFLSettings]
-FormationSubdomain=formacion.efl.es
-WWWSubdomain=www.efl.es
+FormationSubdomain=formacionefl47.tantacom.com
+WWWSubdomain=efl47.tantacom.com
 #WWWSubdomain=www.testefl.es
 
 [Cache]

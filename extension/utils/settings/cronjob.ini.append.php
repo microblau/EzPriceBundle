@@ -31,5 +31,8 @@ Scripts[]=sitemapcatalog.php
 [CronjobPart-sitemapformacion]
 Scripts[]=sitemapformacion.php
 
+[CronjobPart-sendCatalogToBlog]
+Scripts[]=sendcatalogtoblog.php
+
 */
 ?>

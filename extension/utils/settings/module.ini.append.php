@@ -19,6 +19,6 @@ ModuleList[]=lightbox
 ModuleList[]=encuesta
 ModuleList[]=blog
 ModuleList[]=utils
-
+ModuleList[]=google
 
 */ ?>
