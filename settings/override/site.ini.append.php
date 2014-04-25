@@ -1,10 +1,10 @@
 <?php /* #?ini charset="utf-8"?
 [DatabaseSettings]
 DatabaseImplementation=ezmysqli
-Server=desta01
-User=root
-Password=pj963
-Database=lefebvre47
+Server=localhost
+User=lefebvre
+Password=lyXyv3Jq
+Database=lefebvre
 SQLOutput=disabled
 
 [DesignSettings]
@@ -89,6 +89,7 @@ DebugByIP=enabled
 DebugRedirection=disabled
 DebugIPList[]
 DebugIPList[]=212.0.126.46
+DebugIPList[]=212.4.112.90
 DebugIPList[]=88.12.15.142
 #DebugIPList[]=192.168.1.56
 #DebugIPList[]=192.168.1.80
@@ -103,7 +104,7 @@ RedirectAfterAddToBasket=reload
 LogoutRedirect=/
 
 [SSLZoneSettings]
-SSLZones=enabled
+SSLZones=disabled
 ModuleViewAccessMode[basket/ajaxadd]=keep
 ModuleViewAccessMode[basket/csv-encuestas]=keep
 ModuleViewAccessMode[basket/mementixcheckprice]=keep
@@ -126,7 +127,7 @@ Transport=file
 #TransportPassword=xxxx
 
 [MailSettings]
-Transport=SMTP
+Transport=sendmail
 TransportServer=smtp.desorden.net
 TransportPort=25
 TransportUser=smtp@desorden.net
