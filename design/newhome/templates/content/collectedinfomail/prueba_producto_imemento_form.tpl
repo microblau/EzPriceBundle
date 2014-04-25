@@ -12,7 +12,6 @@
 {append-block scope=root variable=email_cc_receivers}mourelle@efl.es{/append-block}
 {append-block scope=root variable=email_cc_receivers}iglesias@efl.es{/append-block}
 {append-block scope=root variable=email_cc_receivers}hurtado@efl.es{/append-block}
-
 CAMPOS DEL FORMULARIO:
 
 {$collection.attributes[0].contentclass_attribute_name|wash()} {attribute_result_gui view=info attribute=$collection.attributes[0]}:{attribute_result_gui view=info attribute=$collection.attributes[1]}

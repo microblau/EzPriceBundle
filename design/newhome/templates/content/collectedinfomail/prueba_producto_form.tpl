@@ -6,6 +6,7 @@
 {/if}
 {/set-block}
 
+
 {set-block scope=root variable=email_sender}contacto@efl.es{/set-block}
 {append-block scope=root variable=email_receiver}mjizquierdo@efl.es{/append-block}
 {append-block scope=root variable=email_receiver}msandin@efl.es{/append-block}

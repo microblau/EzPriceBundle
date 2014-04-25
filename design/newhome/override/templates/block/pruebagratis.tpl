@@ -30,36 +30,9 @@
 <input type="hidden" name="ContentObjectAttribute_ezselect_selected_array_10807" value="" />
 
 
-									<select id="sepro" name="ContentObjectAttribute_ezselect_selected_array_10807[]">
-										<option selected="selected" value=""></option>
-                                        <option value="0">QMementix</option>
-                                        <option value="1">Qmemento 4</option>
-                                        <option value="2">Qmemento Fiscal</option>
-                                        <option value="3">Qmemento Social</option>
-                                        <option value="4">Qmemento Fiscal Contable</option>
-                                        <option value="5">Qmemento Contable</option>
-                                        <option value="6">Qmemento Mercantil Concursal</option>
-                                        <option value="7">Qmemento Inmobiliario</option>
-                                        <option value="8">Qmemento Administrativo</option>
-                                        <option value="9">Qmemento Jurídico</option>
-                                        <option value="10">VIAbilidad Inmobiliaria</option>
-                                        <option value="11">Actum-Actualidad Mementos</option>
-										*}
-										<option value="0">QMementix</option>
-										<option value="1">Qmemento Asesoría</option>
-										<option value="2">Qmemento Social</option>
-										<option value="3">Qmemento Fiscal</option>
-										<option value="4">Qmemento Financiero</option>
-										<option value="5">Qmemento Profesional</option>
-										<option value="6">Qmemento Contable</option>
-										<option value="7">Qmemento Mercantil</option>
-										<option value="8">Viabilidad Inmobiliaria</option>
-										<option value="9">Actum-Actualidad Mementos</option>
-										<option value="10">Nautis Administrativo</option>
-<option value="11">Nautis Inmobiliario</option>
-<option value="12">Nautis Jurídico</option>
-<option value="13">iMemento</option>
-									</select>
+									<select name="ContentObjectAttribute_ezselect_selected_array_10807[]" id="sepro"><option value=""></option><option value="0" >Bases de datos jurídicas El Derecho</option><option value="1">QMemento</option><option value="2">Mementos en Internet (QMementix)</option><option value="3">Mementos para iPad (iMemento)</option></select>
+										
+									
 								</li>
 								<li class="acepto">
                                                                     <label for="acep"> <input type="checkbox"id="acep" name="ContentObjectAttribute_data_boolean_10812" /> He leído y acepto las condiciones de la <a id="politicaligthBox" href={'lightbox/ver/19526'|ezurl}>Política de Privacidad</a> y el <a id="avisoLightbox" href={'lightbox/ver/292'|ezurl}>Aviso Legal</a></label>
