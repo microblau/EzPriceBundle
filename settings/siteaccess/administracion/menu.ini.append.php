@@ -6,4 +6,5 @@ Links[ciao]=basket/ciao
 Links[productos_csv]=basket/csvproducts
 Links[encuesta]=basket/encuesta
 Links[envios]=basket/envios
+Links[googlefeed]=google/feed
 */?>
