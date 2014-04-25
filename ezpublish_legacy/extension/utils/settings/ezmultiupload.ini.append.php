@@ -1,14 +1,26 @@
-<?php  /*
+<?php /*
+
+[MultiUploadSettings]
+AvailableClasses[]
+AvailableClasses[]=folder
+AvailableClasses[]=gallery
+
+AvailableSubtreeNode[]
+
+MultiuploadHandlers[]
+
 [FileTypeSettings_folder]
-FileType[]=*.pdf
-FileType[]=*.png
-FileType[]=*.jpg
-FileType[]=*.gif
-FileType[]=*.jpeg
+FileType[]
+FileType[]=*.odt
+FileType[]=*.flv
+FileType[]=*.xap
 FileType[]=*.doc
-FileType[]=*.xls
-FileType[]=*.ppt
-FileType[]=*.xlsx
-FileType[]=*.pptx
-FileType[]=*.swf
+
+[FileTypeSettings_gallery]
+FileType[]
+FileType[]=*.jpg
+FileType[]=*.png
+FileType[]=*.gif
+FileType[]=*.flv
+
 */ ?>

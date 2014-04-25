@@ -17,8 +17,7 @@ if ( version_compare( PHP_VERSION, '5.2' ) < 0 )
            "<a href=\"http://ez.no/download/ez_publish\" >eZ Publish download page</a></p>" );
     exit;
 }
-ini_set('display_errors',1);
-ini_set('session.cookie_domain', '.efl.es');
+
 $scriptStartTime = microtime( true );
 
 // Set a default time zone if none is given to avoid "It is not safe to rely
