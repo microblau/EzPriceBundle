@@ -19,6 +19,7 @@ Disallow: /agentes
 Disallow: /aviso-legal
 Disallow: /basket/
 Disallow: /content/
+Allow: /content/download/
 Disallow: /colectivos/
 Disallow: /design/
 Disallow: /ezjscore/
