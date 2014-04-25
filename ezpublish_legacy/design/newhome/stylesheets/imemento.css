@@ -1,0 +1,246 @@
+.imemento{}
+	.imemento .modType4{background-color:#4f4f4f;background-image:url(../images/curve_modType4Fichas-top-imemento.png);}
+		.imemento .fichas .modType4 .imprimir a{background-image:url(../images/print_imemento.gif);}
+			.imemento .modType4 .descripcion .tabs li a{background-color:#292929;color:#fff;}
+				.imemento .modType4 .descripcion .tabs li .cL{background-image:url(../images/curve_type1-left-imemento.gif);}
+				.imemento .modType4 .descripcion .tabs li .cR{background-image:url(../images/curve_type1-right-imemento.gif);}
+				.imemento .modType4 .descripcion .tabs li.sel .cL{background-image:url(../images/curve_type1-left-sel-imemento.gif);}
+				.imemento .modType4 .descripcion .tabs li.sel .cR{background-image:url(../images/curve_type1-right-sel-imemento.gif);}
+			.imemento .modType4 .descripcion .fix{background-image:url(../images/curve_modType4Fichas-bot-imemento.gif);}
+		.imemento .modType4 .fix{background-image:url(../images/curve_modType4Fichas-bot2-imemento.gif);}
+	#iMementoDest{margin:15px 0;padding:15px;border-radius:10px;background-color:#4f4f4f;box-shadow:0 1px 3px rgba(0,0,0,0.25)}
+		#iMementoDest .logo{margin-bottom:15px;}
+		#mycarousel, .resume {width:640px;float:left}
+		#iMementoDest .resume { color:#FFF; font-size:15px; }
+			#iMementoDest .resume .features { margin-left:0; }
+				#iMementoDest .resume .features li { min-height:20px; padding-top:5px; padding-left:35px; background:url(../images/bullet_arrow_2.png) 0 0 no-repeat; }
+			#iMementoDest .boxes { margin-top:2em; text-align:center; }
+				#iMementoDest .boxes li { display:inline-block; width:113px; margin:0 2px 15px; padding:0; border-radius:10px; overflow:hidden; background-image:none; box-shadow:1px 1px 1px rgba(0,0,0,0.2); }
+				#iMementoDest .boxes li:first-child { margin-left:0; }
+					
+						#iMementoDest .boxes .title { display:inline-block; width:90%; padding:7px 5%; color:#FFF; font-size:15px; }
+						#iMementoDest .boxes .desc { display:inline-block; width:100%; color:#21323e; font-size:12px; }
+						#iMementoDest .boxes .percent, #iMementoDest .boxes .text { display:block; }
+							#iMementoDest .boxes .percent { padding:14px 0 7px; font-size:30px; }
+							#iMementoDest .boxes .text { padding-bottom:7px; }
+
+							/*Type1*/
+							#iMementoDest .boxes .type1 .title { background-color:#142a33; }
+							#iMementoDest .boxes .type1 .desc { 
+								background: #d88e11; /* Old browsers */
+								background: -webkit-linear-gradient(#d88e11 1%, #a56c14 100%);
+								background: -o-linear-gradient(#d88e11 1%, #a56c14 100%);
+								background: -moz-linear-gradient(#d88e11 1%, #a56c14 100%);
+								background: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.01, #d88e11), to(#a56c14));
+								background: linear-gradient(#d88e11 1%, #a56c14 100%)
+							}
+							/*Type2*/
+							#iMementoDest .boxes .type2 .title { background-color:#142a33; }
+							#iMementoDest .boxes .type2 .desc { 
+								background: #C2D9E3; /* Old browsers */
+								background: -webkit-linear-gradient(#C2D9E3 1%, #90acb9 100%);
+								background: -o-linear-gradient(#C2D9E3 1%, #90acb9 100%);
+								background: -moz-linear-gradient(#C2D9E3 1%, #90acb9 100%);
+								background: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.01, #C2D9E3), to(#90acb9));
+								background: linear-gradient(#C2D9E3 1%, #90acb9 100%)
+							}
+					
+					
+
+		#iMementoDest .carrusel{margin:0 0 15px;padding:0;list-style-type:none;}
+		.imemento .jcarousel-clip{margin:0;width:auto}
+		.imemento .jcarousel-control{display:none;float:right;margin-top:-35px}
+			.imemento .jcarousel-control a{float:left;display:block;width:20px;height:20px;margin-left:10px;border-radius:50%;background-color:#4f4f4f}
+			.imemento .jcarousel-control a.sel{background-color:#0087c0}
+				.imemento .jcarousel-control span{display:none;text-indent:-9999px;}
+			#iMementoDest .carrusel li{margin:0;padding:0;width:640px;height:auto}
+				#iMementoDest .carrusel .multimedia{margin-bottom:10px;}
+				#iMementoDest .carrusel h3{margin-bottom:10px;font-size:20px;font-weight:bold;color:#fff;}
+				#iMementoDest .carrusel p{font-size:14px;color:#fff;}
+		#iMementoDest .infoDest{float:right;width:245px;margin:-30px 0 15px}
+			#iMementoDest .contact { border:1px solid #ffcd4c; border-radius:10px; margin-bottom:18px; padding:12px; background-color:#ffedbd; color:#FFF; }
+				#iMementoDest .contact .tit { border-bottom:1px solid #7e7e7e;padding-bottom:15px; font-size:16px; font-weight:bold;color:#000 }
+				#iMementoDest .contact .link { display:inline-block; padding:12px 0; }
+					#iMementoDest .contact .link a { padding-left:15px; background:url(../images/bullet_flecha.gif) 0 3px no-repeat; font-weight:bold; color:#115c90; text-decoration:underline; }
+					#iMementoDest .contact .link a:hover { text-decoration:none; }
+				#iMementoDest .contact .subtit { border-top:1px solid #7e7e7e; padding-top:12px; font-weight:bold; text-align:center;color:#000 }
+					#iMementoDest .contact .subtit .tel { display:inline-block; margin-top:10px; font-size:27px; }
+			#iMementoDest .tryPromo{margin-bottom:5px;border:3px solid #0a649c;border-radius:13px;color:#fff;background-color:#0087c0;}
+				#iMementoDest .tryProd{display:block;border:2px solid #fff;border-radius:13px;font-size:14px;text-align:center;color:#fff;background:#0065a1 url(../images/b_tryProd.png) 0 0 repeat-x;}
+				#iMementoDest .tryProd.sel{background:none;border:0;padding-top:10px;background:url(../images/tab-close.gif) 97% 80% no-repeat;}
+					#iMementoDest .tryProd strong{font-size:18px;}
+					#iMementoDest .tryProd.sel strong{font-size:14px;font-weight:normal;}
+				#frm_tryImemento{margin:15px 15px 0;border-top:1px solid #006490;background-color:#0087c0;}
+					#frm_tryImemento fieldset{padding:15px 0;border-top:1px solid #59b1d6;}
+						#frm_tryImemento .requiredText{display:block;text-align:right;}
+						#frm_tryImemento label{margin-bottom:10px;font-size:13px;font-weight:bold;color:#fff;}
+							#frm_tryImemento label input{display:block;width:100%;height:23px;margin-top:2px;border:1px solid #93cce4;border-width:0 0 1px;}
+						#frm_tryImemento .check{font-weight:normal;}
+							#frm_tryImemento .check input{display:inline;width:auto;height:auto;margin:0 5px 0 0;border:0;}
+							#frm_tryImemento .check a{font-weight:bold;color:#fff;text-decoration:underline;}
+							#frm_tryImemento .check a:hover{text-decoration:none;}
+						#trySend{display:block;width:170px;margin:0 auto;padding:10px 20px;font-family:Arial, san-serif;font-size:16px;font-weight:bold;color:#fff;border:2px solid #fff;border-radius:20px;background:#fc9d00 url(../images/b_sendTry.png) 0 0 repeat-x;box-shadow:0 0 0 2px #e59922;cursor:pointer}
+			#iMementoDest .confPromo{padding:20px 10px;border:2px solid #c5e6fe;border-radius:13px;background-color:#fff;}
+				#iMementoDest .confPromo .dest{display:block;margin-bottom:20px;font-size:24px;font-weight:bold;text-align:center;color:#2770ab;}
+					#iMementoDest .confPromo .dest span{font-size:18px;font-weight:normal;}
+				#iMementoDest .confPromo .conf{display:block;/*width:210px;*/margin:0 auto 20px;padding:10px;font-family:Arial, san-serif;font-size:14px;font-weight:normal;color:#fff;border:2px solid #fff;border-radius:20px;background:#fc9d00 url(../images/b_sendTry.png) 0 0 repeat-x;box-shadow:0 0 0 2px #e59922;}
+					#iMementoDest .confPromo .conf span{display:block;padding-left:40px;background:url(../images/b_conf.png) 0 50% no-repeat;}
+						#iMementoDest .confPromo .conf strong{font-weight:bold;font-size:18px;}
+				#iMementoDest .confPromo .moreInfo{width:150px;margin:0 auto;padding:10px 5px;border:2px solid #d8d8d8;border-radius:10px;}
+			#iMementoDest .appStore{display:block;width:159px;margin:35px auto 0;}
+				.imemento #modInformacion{float:none;margin:10px auto 0;}
+					.imemento #iMementoDest #modInformacion div{padding:10px 0 10px 10px;}
+						.imemento #modInformacion .verMas a{font-weight:normal;}
+		#iMementoDest .footerTools{clear:both;margin:15px 0 0;padding:15px 0 0;border-top:1px solid #2e2e2e;text-align:right;list-style-type:none;}
+			#iMementoDest .footerTools li{display:inline;margin:0 10px 0 0;padding:0;vertical-align:middle;}
+				#iMementoDest .footerTools span{font-size:12px;color:#8e8e8e;}
+
+.imemento .configMementos { margin:0; }
+	.imemento .configMementos li { float:left; border-radius:10px 10px 0 0; overflow:hidden; margin:0 5px 0 0; padding:0; border:solid 1px #c0c0c0; }
+	.imemento .configMementos li.sel { border-bottom:solid 1px #FFF; margin-top:-5px; }
+		.imemento .configMementos a { display:inline-block; padding:5px 10px; background-color:#adadad; color:#FFF; font-size:13px; }
+		.imemento .configMementos li.sel a { padding:10px 10px 5px; background-color:#FFF; color:#000; font-size:14px; font-weight:bold; }
+
+.imemento .columnType1{float:left;width:680px;margin:15px 0;}
+.imemento .columnType1.frt { float:right; margin-top:0; }
+	.confImemento{padding:15px;border-radius:10px;background-color:#4f4f4f;box-shadow:0 1px 3px rgba(0,0,0,0.25);color:#fff;}
+		.confImemento .entry{margin:25px 0 10px;padding-bottom:10px;border-bottom:1px solid #6b6b6b;}
+			.confImemento .entry h3,
+			.confImemento .sub_entry h4{margin-bottom:5px;font-weight:bold;font-size:20px;}
+			.confImemento .sub_entry h4{color:#56778b;}
+			.confImemento .entry p,
+			.confImemento .sub_entry p{font-size:14px;}
+		.confImemento .sub_entry{margin-bottom:30px;}
+		.confImemento .tabs{margin:0;padding:0;}
+			.confImemento .tabs li{float:left;display:block;margin:0 10px 0 0;padding:7px 10px;background-color:#292929;border-radius:10px 10px 0 0;}
+			.confImemento .tabs .sel{background-color:#fff;}
+				.confImemento .tabs a{font-size:14px;color:#fff;}
+				.confImemento .tabs a:hover{text-decoration:underline;}
+				.confImemento .tabs .sel a{color:#000;}
+		.confImemento .tabContent{clear:both;padding-bottom:25px;background-color:#fff;border-radius:0 0 10px 10px;}
+			.confImemento .tabContent fieldset label { vertical-align:middle; white-space:normal;font-size: 12px;font-weight: normal;}
+			.confImemento .tabContent fieldset input { float:left; margin:0 5px 0 0; vertical-align: middle}
+				.confImemento .tabContent ul { width:auto; margin:25px 0 0 40px; padding:0}
+					.confImemento .tabContent li { display:inline-block; width:300px; padding:0; vertical-align:top}
+			.confImemento .tabContent .packs{margin:0;padding:20px;color:#000;}
+				.confImemento .tabContent .packs li{display:block;width:auto;position:relative;margin-bottom:30px;}
+				.confImemento .tabContent .packs li:after{clear:both;display:block;height:0;visibility:hidden;content:"."}
+					.confImemento .tabContent .packs h5{margin-bottom:10px;}
+						.confImemento .tabContent .packs h5 a{font-size:20px;font-weight:bold;color:#004e71;}
+					.confImemento .tabContent .packs p{font-size:13px;}
+					.confImemento .tabContent .packs ul{width:460px;margin:10px 0 0;padding:0 145px 10px 0;border:1px solid #d5d5d5;border-width:1px 0;}
+						.confImemento .tabContent .packs ul li{margin:10px 0 0;padding-left:15px;background:url(../images/i_arrow.png) 2px 4px no-repeat;}
+					.confImemento .tabContent .packs .addCart{position:absolute;bottom:15px;right:0;}
+
+
+.imemento .modType4_2 { border:1px solid #c0c0c0; border-radius:0 10px 10px 10px; margin-top:-1px; padding-bottom:20px; background-color:#FFF; }
+	.imemento #gridTwoColumnsFichas .listado { padding-top:20px; }
+	.imemento #gridTwoColumnsFichas .modType4_2 #productlist th { color:#000; font-size:14px; font-weight:bold; }
+	.imemento #gridTwoColumnsFichas .modType4_2 #productlist th.name { padding-left:22px; text-align:left; }
+
+	/*Filtro*/
+	.filter { padding:0 12px; }
+	.filter a { color:#00518c; font-weight:bold; }
+		.filter a:hover { text-decoration:underline; }
+	.filter-link { padding:2px 0 3px 25px; background:url(../images/ico_list.gif) 0 0 no-repeat; }
+	.filter-wrap { margin-top:5px; padding:10px; border-radius:10px; background-color:#d1d1d2; }
+		.filter .tit { padding-left:5px; font-size:14px; font-weight:bold; }
+		.filter-close { float:right; }
+		.filter ul { margin:10px 0 0 0; padding:10px; border-radius:10px; background:#FFF; }
+			.filter li { padding:0; font-size:13px; font-weight:bold; }
+			.filter li a { text-decoration:underline; }
+				.filter li a:hover { text-decoration:none; }
+
+	/*Tabla Mementos*/
+	
+	#gridTwoColumnsFichas .imementos .pvp { width:120px; }
+	#gridTwoColumnsFichas .imementos .selection { width:90px; }
+	
+		#gridTwoColumnsFichas #productlist .imementos td { border-top:solid 2px #c3c3c3; border-bottom:solid 2px #c3c3c3; height:auto; padding:10px 6px; font-size:14px; font-weight:normal; }
+			#gridTwoColumnsFichas #productlist .imementos td:first-child { padding-left:10px; }
+		#gridTwoColumnsFichas #productlist .imementos .sep td { border:none; height:0; padding:5px 0; }
+			#gridTwoColumnsFichas .imementos td label { font-size:15px;cursor:default; }
+			#gridTwoColumnsFichas .imementos .desc { padding-left:10px; }
+			#gridTwoColumnsFichas .imementos .discount { color:#068100; font-size:16px; font-weight:bold; }
+			#gridTwoColumnsFichas #productlist .imementos .pvp del, #gridTwoColumnsFichas #productlist .pvp ins { color:#000; }
+				#gridTwoColumnsFichas #productlist .imementos .pvp del { font-size:16px; }
+				#gridTwoColumnsFichas #productlist .imementos .pvp ins { font-size:18px; font-weight:bold; }
+
+			#gridTwoColumnsFichas #productlist td:first-child { border-left:solid 2px #c3c3c3; border-radius:10px 0 0 10px; }
+				#gridTwoColumnsFichas #productlist td.selection  { border-right:solid 2px #c3c3c3; border-radius:0 10px 10px 0; text-align:center; }
+				#gridTwoColumnsFichas #productlist tbody tr { background-color:#FFF;/*cursor:pointer; */}
+
+	/*For results in infinite Scroll*/
+	#gridTwoColumnsFichas #productlist .imementos thead th.hidden { display:none; visibility:hidden; height:0; padding:0; }
+
+	.imemento #gridTwoColumnsFichas #productlist tbody .pvp { color:#000; }
+
+	#productlist table input.pretty.off { position:absolute; left:-1000em; }
+
+	#productlist table .c_off, #productlist table .c_on { display:inline-block; width:31px; height:31px; margin-top:-8px; background-position:50% 0; background-repeat:no-repeat; cursor:pointer; }
+		#productlist table .c_off { background-image:url(../images/b_check.png); }
+		#productlist table .c_on { background-image:url(../images/b_checkOK.png); }
+
+	/*Cesta*/
+	#gridTwoColumnsFichas .myIMemento { z-index:1; border-radius:10px; width:238px; padding:10px; background-color:#5a5a5a; }
+	.myIMemento .resume { width:90%; padding:10px 5%; border:solid 2px #d8d8d8; border-radius:10px; background-color:#FFF; text-align:center; }
+		.myIMemento .resume p { text-align:left; }
+
+		.myIMemento .resume .basket { border-top:solid 3px #828282; border-bottom:solid 3px #828282; margin:10px 0; padding:15px 0; font-size:16px; }
+		.myIMemento .resume .basket p { margin-bottom:5px; }
+			.myIMemento .resume .basket del, .myIMemento .resume .basket ins { color:#000; border:none; }
+				.myIMemento .resume .basket ins { font-weight:bold; }
+				.myIMemento .resume .basket .discount { margin-bottom:0; color:#068100; font-weight:bold; }
+		.myIMemento .resume .flt, .myIMemento .resume .cant { width:100%; font-size:16px; }
+		.myIMemento .resume .cant { float:left; clear:left; color:#000; }
+
+
+	.myIMemento .tit { display:inline-block; padding:0 0 10px 20px; }
+		.myIMemento .tit img { width:190px; }
+
+.imemento .sidebar{float:right;width:260px;margin:15px 0;}
+	.imemento .sidebar .miImemento{margin-bottom:20px;padding:20px 10px 10px;border-radius:10px;background-color:#5a5a5a;}
+		.imemento .sidebar .miImemento h2{margin:0 0 10px 10px;font-size:26px;font-weight:bold;color:#fff;}
+		.imemento .sidebar .miImemento .cesta{margin:0;padding:10px;border:1px solid #d8d8d8;border-radius:10px;background-color:#fff;}
+			.imemento .sidebar .miImemento .cesta li{margin:0;padding:0;text-align:right;}
+				.imemento .sidebar .miImemento .cesta .listMem{margin-bottom:5px;padding-bottom:5px;border-bottom:2px solid #5a5a5a;font-size:24px;font-weight:bold;color:#010101;}
+				.imemento .sidebar .miImemento .cesta .total{margin-bottom:30px;font-size:24px;font-weight:bold;color:#010101;}
+				.imemento .sidebar .miImemento .cesta .descuento{margin-bottom:5px;padding-bottom:5px;border-bottom:2px solid #5a5a5a;font-size:18px;font-weight:bold;color:#800;}
+				.imemento .sidebar .miImemento .cesta .productoTotal{display:block;text-align:left;font-size:12px;font-weight:normal;color:#515151;}
+				.imemento .sidebar .miImemento .cesta .precioTotal{font-size:24px;font-weight:bold;color:#004602;}
+				.imemento .sidebar .miImemento .cesta .reset{text-align:center;}
+	.imemento .sidebar .help{margin-bottom:20px;padding:20px;border:2px solid #ffcd4c;border-radius:10px;background:#ffedbd url(../images/b_help.png) 0 0 repeat-x;}
+	.imemento .sidebar .help h2{margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #ffcd4c;font-size:21px;font-weight:bold;color:#333;}
+	.imemento .sidebar .help a{display:block;margin-bottom:10px;padding:0 0 10px 15px;border-bottom:1px solid #ffcd4c;font-size:12px;text-decoration:underline;color:#00518c;background:url(../images/ico_verMas.png) 0 2px no-repeat;}
+	.imemento .sidebar .help a:hover{text-decoration:none;}
+	.imemento .sidebar .help p{font-size:12px;color:#333;}
+		.imemento .sidebar .help strong{display:block;margin-top:10px;font-size:27px;font-weight:bold;}
+.imemento .columnType1:after, .imemento .sidebar:after{clear:both;display:block;height:0;visibility:hidden;content:"."}
+
+.tryPromo .msgError { margin:5px; padding:10px; background: #fff; border:1px solid E00101 }
+	.tryPromo .msgError ul { margin:0; padding:5px 10px }
+		.tryPromo .msgError li { padding: 4px 0 4px 0;  background: none; color: #E00101; font-size:12px; list-style: disc  }
+
+.fichas #gridWide.imemento .modType4 {background: #161616; border-radius: 10px; }			
+.fichas #gridWide.imemento .fix, .fichas #gridWide.imemento .descripcion .fix { background: none;  }		
+	.imemento .titleOpinion { color:#fff }
+
+.fichas #gridWide.imemento .cursoDet {border-radius: 0 0 10px 10px;}	
+#productlist .pag{float:right;}
+
+.basketrama { border-top:solid 3px #828282; /*border-bottom:solid 3px #828282;*/ margin:10px 0; padding:15px 0; font-size:16px; }
+		.basketrama p { margin-bottom:5px;color:#000;font-weight:normal; }
+			 .basketrama del, .basketrama ins { color:#000; border:none; }
+				.basketrama ins { font-weight:bold; }
+				.basketrama  { margin-bottom:0; color:#068100; font-weight:bold; }
+	#basketAdd .discount {color:#068100;font-weight:bold;}
+#basketAdd .sepBasket {border-bottom:solid 3px #828282; margin:10px 0;}	
+#productlist tbody td:last-child { background:none; }
+
+.descrama ul { margin:0.75em 0 1em 0 }
+.imementos.juridica .descrama ul { margin:.75em 0 1em 1.6em;}
+
+#modMiImemento.fixed { position:fixed; top:0;}
+
+#gridTwoColumnsFichas .imementos .discount { margin-left: 2.5em; color:#009e0f;}
+#gridTwoColumnsFichas #filterDiv { position:relative;}

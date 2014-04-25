@@ -1,0 +1,214 @@
+#headerLinks li, #categoriesTabs, #navBar ul, #modAccesoAbonados li, .paginationResults, #faq .respuestas ul li, #modComprando ul li, .formulario .datos li, .colDatos1 .forgotPass, #finCompraForm .datos fieldset ul, .consultenosMod .wrapConsulta, #modFormacion2 .formacionList li, #modMiMementix ul li, #novedades .description ul li, #tops li, .fichas .modType4 .cursoDet .versiones ul li, #header #logo, div.calendars .listCalendar li, .package, .modType4 .boxProduct .cont, .integrado, #datosUsuario form .datos li, .modType4 .descripcion div.clear, .fichas .modType4 .descripcion .cursoDet .column1 ul li,  { height: 1%; }
+
+.clearFix, .instruccionesTransferencia, .fichas .columnType1 #modFichasPrecio ul li, #producttext .cursoDet .column2 #modVentajas li, #cestaPaso1 #gridType3 .inner ul.ezsr-star-rating, .formacion ul li, #navBar li.buscador #buscadorSimple, #navBar li.buscador, #modActum, #tabsNov { zoom:1}
+
+#navBar ul ul { height: auto  }
+#wrapSections li, .modTambien #modCatalogo li, #modResultados form ul li, #modPuedes ul li, #modNovedades .carrousel ul li, #modNovedades .noCar ul li, #modNovedades .consulta ul li, #datosUsuario .volver, #datosUsuario .submit { display: inline; }
+
+#home .btn { padding:3px 10px 4px}
+	#home .btn .cL { top:12px}
+	#home .btn .cR { top:12px}
+	#home .noCar .btn .cL { top:0px}
+	#home .noCar .btn .cR { top:0px}
+	#home #modFormacion .description .btn .cL { top:7px}
+	#home #modFormacion .description .btn .cR { top:7px}
+	#home #gridHome2 #modDestacado .wrap { height:auto;}
+
+#home #modResultados { min-height:100px;}
+
+#home #modCatalogo li { display: block }
+
+.btn { border:1px solid red;}
+/*#home #modFormacion .btn { width:auto; display:inline-block; padding:0; height:20px !important; padding:0 10px 0; background:red none;}
+	.btn a { display:block; background-color:blue;}
+	#home #modFormacion .btn .cL { position:absolute; top:0; left:0; width:7px; height:21px;}
+	#home #modFormacion .btn .cR { position:absolute; top:0; right:0; width:6px; height:21px;}*/
+
+#modResultados form button { padding:4px 4px 7px 0px}
+
+#modNovedades { margin-top:-20px}
+	#home #modNovedades { margin: 0 }
+
+#modNovedades .consulta ul li.reset { float:none; margin-left:60px}
+
+#moduloDestacadoContenido li { padding: 5px 0 0 15px;   }
+
+#listadoAreas li { display: inline  }
+
+
+#listadoAreas .verMas { padding: 10px 0 3px 10px;  }
+#listadoAreas .area {margin-bottom: -3px;   }
+
+.btnType2 { display: inline-block; padding:2px 14px 4px 0;  }		
+	.btnType2 span { padding:3px 0 7px 15px;  } 	
+	
+#busquedaAvanzada form li { display: inline }	
+
+#busquedaAvanzada .termSearch {  padding-left: 127px  }
+
+#definirResultados li  { display: inline  }
+
+
+#pasosCompra li { display: inline; width: 239px;   }
+
+#cestaCompra .options { bottom: 12px; }
+
+#gridWide .mapaWeb ul li ul li { display:inline}
+
+#newsletter .submit { margin-top:0;}
+
+#busquedaAvanzada .tipoObras select { position: relative;  }				
+
+
+.ventaCruzadaRecomendacion .btnType2  { padding:2px 10px 3px 0; }
+	.ventaCruzadaRecomendacion .btnType2 span { padding:4px 0 6px 15px;  }
+	
+#faq .respuestas ul li ol { margin-left:23px}
+
+#datosUsuario .volver, #datosFacturacion .volver {float:left; margin: 0; padding-left:0}
+#datosUsuario .submit, #datosFacturacion .submit {float:right; margin:0 }
+
+#datosFacturacion fieldset div { margin-top: -4px  }
+
+#gridDatos .colDatos2 ul { margin:18px 0 52px}
+
+#datosPago fieldset .datos input { margin-top: 0   }
+
+#datosPago fieldset .datos .hide { display: none; position: static; overflow: visible; width: auto; height: auto;  }
+
+#datosPago fieldset .datos .numCuenta legend span { margin-left: 0;    }
+
+#datosPago fieldset .datos .datos .numCuenta #banco { margin-left: 93px  }
+
+#datosPago table { margin-top: 20px; padding-top: 0; }
+
+#datosFacturacion form.empresa .datos li.contacto fieldset div { padding-top: 5px  }
+
+#datosFacturacion form.empresa .datos li label { width: 241px;}
+#datosFacturacion form.empresa .datos .direccion div { padding-left:254px; }
+
+#datosFacturacion form.empresa .datos .direccion input.text { width: 120px  }
+
+#datosFacturacion form.contactoEmpresa .datos li.direccion legend span { width:255px  }
+
+#datosFacturacion .empresa .condiciones div{ margin-left: 248px  }
+		
+		#datosFacturacion .contactoEmpresa .condiciones div { margin-left: 273px  }
+		
+#gridDatos .colDatos1 .submit { margin-bottom: 0  }
+
+#modType2 #ventajasCompra  li { display: inline; }
+
+#tops .tabs li { display: inline; margin-right: 6px}
+
+#finCompraForm .datos fieldset ul li, #modColectivos .description .listColectivos ul li, .otherQuery ul li, .consultenos .listFaq li, .modType4 .descripcion .tabs li, .modType4.cursos .cont ul li { display:inline;}		
+
+#modFormacion .formacionList li { display:inline}
+#modFormacion .formacionList .columnType1 h3 { padding-top:5px}
+#modFormacion2 .formacionList .columnType1 ul { padding:5px 20px 7px 40px}
+#modFormacion .verMas a { display:block; width:130px}
+
+#accesoMementos form li { display:inline}
+
+#modMiMementix { margin:0; padding:0 0 1px 0}
+	#modMiMementix ul { margin:-2px 8px 17px 9px/*; padding:0 10px 0px 8px*/}
+	
+#novedades ul li .action .btnType2 { float:none; margin-left:10px}
+
+.fichas .modType4 .testimonio .botonTestimonio span.mas { padding:4px 5px}
+
+.fichas .cursos .description ul li { display:inline}
+
+.fichas .columnType1 #modFichasPrecio .opinion ul li span, .fichas .columnType1 #modFichasPrecio2 .opinion ul li span { float:left}
+
+.fichas #moduloDestacadoContenido .modConvencerse .verMas a { background-position:85px 30px}
+.fichas #moduloDestacadoContenido #modInformacion .verMas a { background-position:108px 30px}
+.fichas #gridType3 .borde .verMas a { background-position:95px 29px}
+
+.fichas .cursosRel .description ul li, .modType5 .description ul li, .modType5 .cursosRel .description ul li, div.calendars .listCalendar li { display:inline}
+
+#navBar li.buscador .verMas { width:135px; }
+
+.listResults .action .btn { display:inline-block; }
+
+.calendario caption span { padding:6px 0 5px;}
+
+
+.testimonio  .jcarousel-next-horizontal, .testimonio  .jcarousel-prev-horizontal { top: 171px;  }
+ 
+
+.fichas .modType4 .descripcion .cursoDet .column1 .testimonio  .jcarousel-prev-horizontal, .fichas .modType4 .descripcion .cursoDet .column1 .testimonio  .jcarousel-next-horizontal { top: 110px;}
+
+.fichas .columnType2 .modType4 { position:static; /*z-index: 0 !important; z-index: -1;*/}
+
+.fichas #gridType3 .columnType1 .inner .columnsType1 li { display:inline; }
+
+.fichas #gridType3.wide .columnType1 .inner li { display:inline;}
+#cestaPaso1 #modType2 .description .fix { margin-left: -15px;  }
+#novedades ul li .wysiwyg ul.list li.ezsr-current-rating { height: auto  }
+
+.fichas .modType4 .descripcion .cursoDet .column1 .testimonio .jcarousel-clip-horizontal { height:110px;}
+
+.formacion ul { margin:30px 0 0 30px;}
+
+#header .mediosPago li, #footer .mediosPago li { display:inline;}
+
+#navBar li.buscador { width:325px; top:5px;}
+#navBar li.buscador #buscadorSimple { width:224px; padding:0;}
+ #navBar li.buscador #buscadorSimple .btn { float:left; border:none; width:5em; height:1.8em; margin:0 !important;}
+	#navBar li.buscador #buscadorSimple input.text { border:0; margin:0;}
+	#navBar li.buscador span.link a { display:block; background:url(../images/ico_navBar.gif) no-repeat 100% .8em;}
+
+#breadCrumb ul { background:url(../images/ico_breadCrumb.gif) no-repeat 0 .3em;}
+	#breadCrumb li { display:inline;}
+	
+		
+		
+		
+		
+		
+#presentacionRecursos .columnType1 .novedades li a { line-height:35px}	
+#presentacionRecursos .columnType1 .novedades li { margin: 0 14px 0 0}	
+#home_recursos  #gridHome1 .columnType2  #modDestacado {height:330px}		
+#home_recursos #gridHome1 #listadoRecursos.listadoProfundidad  .modWhite { height: 180px}
+	
+
+	
+	
+	
+.modType4 .descripcion .tabs li h2 { padding:5px 10px}
+.modType4 .descripcion .tabs li a { padding:5px 10px}
+.modType4 .descripcion .tabs li { margin:0}
+.fichas .modType4 .volver { margin:0 0 5px}
+
+.modType4 .descripcion .tabs li h2 { padding:5px 10px}
+.modType4 .descripcion .tabs li a { padding:5px 10px}
+
+
+/*******Nuevos estilos***********/
+
+.fichas .opiniones .columnFrt .opinion span { float:left}
+	
+.fichas #moduloDestacadoContenido .infoFichaTop li { list-style-image:none}
+
+.fichas .columnType1 #modFichasPrecio2 ul li { zoom:1}
+.fichas .modType4 .descripcion .opiniones ul.valoraciones li, .homeMementos #gridHome1 .columnType1 .wrap li, .homeMementos #gridHome2 .modPago li { display:inline}
+.opiniones .barra span { vertical-align:top}
+	
+.fichas .modType4 .descripcion .cursoDet .opiniones .versiones ul li div.frt img { margin-top:-16px}
+
+#gridTwoColumnsFichas .columnType2 { position:relative}
+#modFichasPrecio { position:relative; z-index:9}
+
+#modFichasPrecio .opinion .modValoraciones .verMas { width:200px; margin-top:-15px}
+#modFichasPrecio .opinion .modValoraciones .mas { float:left; bottom:16px}
+
+.opinionForm .opinion span { float:left}
+
+#search .field { margin-right: -4px; padding: 2px 7px 1px;   }
+#search .submit { overflow: visible; width: 1; height: 22px; border: none;     }
+
+#gridHome1 .wrap, #home #modDestacado  { padding-bottom: 10px }
+
+.ie7 #sage_home_recursos #gridHome1 #presentacionRecursos .wrap {padding-bottom: 8px; background-color: #fff;}
+.ie7 #sage_home_recursos #gridHome1 #presentacionRecursos .columnType1 .curveSup {padding-top: 0; background-image: none;}

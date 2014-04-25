@@ -1,0 +1,524 @@
+#footer li, #modAccesoAbonados li, #gridTwoColumnsFichas li, #moduloDestacadoContenido li, 
+#gridType1 li, #gridType2 li, #gridType3 li, #gridType4 li, #gridType5 li, #gridType6 li, #novedades li
+{
+	background-image:none;
+}
+.fichas .modType4 .volver 
+{
+	float:right;
+	position:relative;
+	left:0;
+	top:0;
+}
+
+.fichas .modType4 .volver.addmargin 
+{
+	margin-bottom:5px
+}
+
+.modType4 .descripcion .tabs
+{
+	float:left;
+}
+
+#cursoDetalle .modType4 .descripcion .tabs
+{
+	float:none;
+}
+
+.modType4 .descripcion div.clear
+{
+	padding:0;
+}
+.modType4 .descripcion .clear:after, .fichas .columnType1 #modFichasPrecio .info .bmarks .inner ul:after, .opinion li:after, #formacion .sideBar .bmarks .inner ul:after 
+{
+	clear:both; 
+	display:block;
+	font-size:1px;
+	line-height:1px;
+	height:0; 
+	content:".";
+}
+
+.bmarks 
+{
+	margin:0;
+	text-align:left;
+	position:absolute;
+	left: 95px;
+	top:75px;
+	z-index:10000;
+}
+
+.fixScreen { right: 185px; left: auto  }
+
+.fichas .columnType1 #modFichasPrecio .info .bmarks .inner, #formacion .sideBar .bmarks .inner
+{
+	margin:0;
+	background:none;
+	border:2px solid #c7e7ff;
+}
+
+.fichas .columnType1 #modFichasPrecio .info .bmarks .inner li, #formacion .sideBar .bmarks .inner li
+{
+	padding:0;
+}
+
+.fichas .columnType1 #modFichasPrecio .info .bmarks .inner ul, #formacion .sideBar .bmarks .inner ul
+{
+	padding:0;
+}
+
+.fichas .columnType1 #modFichasPrecio .info .bmarks .inner ul li, #formacion .sideBar .bmarks .inner ul li
+{
+	float:left;
+	width:140px;
+	margin-bottom:10px;
+}
+
+.fichas .columnType1 #modFichasPrecio .info .bmarks .inner ul li img, #formacion .sideBar .bmarks .inner ul li img
+{
+	vertical-align:middle;
+	margin-right:3px;
+}
+
+.fichas .columnType1 #modFichasPrecio .info .bmarks .inner ul li a, #formacion .sideBar .bmarks .inner i 
+{
+	text-decoration:none;
+	font-weight:normal;
+}
+
+
+
+.compartelo {
+	position:relative;
+}
+
+#novedades ul li .wysiwyg ul.list
+{
+	margin-top:4px
+}
+li.ezsr-current-rating, #tops li.ezsr-current-rating
+{
+	 background-image: url(../images/img_stars.gif);
+	 background-position: 0 -19px;
+	 background-repeat: repeat-x;
+	 padding-left:0;
+}
+.fichas #moduloDestacadoContenido.type1 .column3
+{
+	width:166px;
+}
+
+.fichas #moduloDestacadoContenido.type1b .column3
+{
+	width:270px;
+}
+
+#novedades ul li .wysiwyg ul.list li.ezsr-current-rating
+{
+	background:none;
+	background-image: url(../images/img_stars.gif);
+	background-position: 0 -19px;
+	background-repeat: repeat-x;
+	padding-left:0;
+}
+
+#todasLasObras #gridType1 .inner ul.ezsr-star-rating, #todasLasObras #gridType2 .inner ul.ezsr-star-rating,  #todasLasObras #gridType3 .inner ul.ezsr-star-rating, #todasLasObras #gridType4 .inner ul.ezsr-star-rating,  #todasLasObras #gridType5 .inner ul.ezsr-star-rating,
+#todasLasObras .divcarousel .inner ul.ezsr-star-rating  
+{
+	padding:0
+}
+
+#todasLasObras #gridType1 li.ezsr-current-rating, #todasLasObras #gridType2 li.ezsr-current-rating, #todasLasObras #gridType3 li.ezsr-current-rating, #todasLasObras #gridType4 li.ezsr-current-rating
+{
+	background:none;
+	background-image: url(../images/img_stars.gif);
+	background-position: 0 -19px;
+	background-repeat: repeat-x;
+	padding-left:0;
+}
+
+#todasLasObras #gridType4 .inner .personal ul.ezsr-star-rating
+{
+	width: 100px;
+}
+
+#todasLasObras #gridType4 .inner .personal ul.ezsr-star-rating li
+{
+    background-image:none;
+}
+
+#todasLasObras #gridType4 .inner .personal ul.ezsr-star-rating li.ezsr-current-rating
+{
+    background:none;
+    background-image: url(../images/img_stars.gif);
+    background-position: 0 -19px;
+    background-repeat: repeat-x;
+    padding-left:0;
+}
+
+.clear:after
+{
+	display:block;
+	height: 0;
+	font-size: 1px;
+	clear: both;
+	content:".";
+		
+}
+
+div.object-left
+{
+	clear: none;
+}
+
+#modNovedades .carrousel ul.ezsr-star-rating, #modNovedades .noCar ul.ezsr-star-rating
+{
+	padding: 0;
+	margin: 5px 0;
+}
+
+#modNovedades .carrousel span.btn, #modNovedades .noCar span.btn
+{
+	margin: 0 0 5px 0;
+}
+
+#header li
+{
+
+	color: #D9EFFF;
+}
+
+body#formacion #headerLinks li 
+{
+	color:#4B90CC;
+}
+
+ul li 
+{
+	background: none;
+}
+
+#todasLasObras .divcarousel { width: 760px; margin-bottom: 13px; padding: 13px 0 0 0;  }
+
+	#todasLasObras .divcarousel  h2 { padding:  14px 0 7px 3px;  }
+
+	#todasLasObras .divcarousel  .wrap { padding: 0;  }
+
+	#todasLasObras .divcarousel .columnType1 { position: relative; float: left; width: 352px; padding: 0 10px; background: #fff url(../images/curve_todasAre-gr3.gif) no-repeat 0 0    }				
+
+	#todasLasObras .divcarousel  .columnType2 { position: relative; float: right; width: 352px; padding: 0 10px; background: #fff url(../images/curve_todasAre-gr3.gif) no-repeat 0 0  }
+
+		
+
+	#todasLasObras .divcarousel .fix { position: absolute; left: 0; width: 372px; height: 10px; padding: 0; background: url(../images/curve_infoTodasAre-gr3.gif) no-repeat 0 0 	}
+
+	
+
+	#todasLasObras .divcarousel .wrapColumn { width: 352px; padding: 10px 0 0 0; background: url(../images/curve_supWrapColumn-gr3.gif) no-repeat 0 0  }
+
+		#todasLasObras .divcarousel .wrapColumn .fix { position: static; width: 352px; height: 10px; padding: 0; background: url(../images/curve_infWrapColumn-gr3.gif) no-repeat 0 0  }		
+
+	#todasLasObras .divcarousel .inner{ position: relative; width:352px; padding: 0; background: url(../images/bck_innerTodasAr-gr3.gif) repeat-y 0 0   }	
+
+		#todasLasObras .divcarousel .inner ul { margin: 0; padding: 0 19px; list-style: none  }
+
+				#todasLasObras .divcarousel .inner li { float: left; width: 129px; margin: 0 47px 10px 0; padding: 0 } 
+
+					#todasLasObras .divcarousel .inner li.reset { margin:0 0 10px 0;    } 
+
+					#todasLasObras .divcarousel .inner img { display: block; margin: 0; padding: 0  }
+
+				#todasLasObras .divcarousel .inner p { margin: 3px 0 5px 0  }	
+
+				#todasLasObras .divcarousel .inner .action { margin-top:7px; padding: 0  }
+
+div.ezflow-block{padding:0}
+
+#todasLasObras .divcarousel2 { width: 760px; margin-bottom: 13px; padding: 13px 0 0 0; background: url(../images/curve_todasAre-gr1.gif) no-repeat 0 0  }
+
+	#todasLasObras .divcarousel2 h2 { padding:  0 0 7px 3px }
+
+	#todasLasObras .divcarousel2 .wrap { width: 741px;  padding: 0 10px; background: #fff; }
+
+	#todasLasObras .divcarousel2 .columnType1 { width: 740px; padding: 0   }							
+
+	#todasLasObras .divcarousel2 .fix { width: 761px; height: 9px; padding: 0; background: url(../images/curve_infoTodasAre-gr1.gif) no-repeat 0 0 	}
+
+	
+
+	#todasLasObras .divcarousel2 .wrapColumn { width: 100%; padding: 10px 0 0 0; background: url(../images/curve_supWrapColumn-gr2.gif) no-repeat 0 0  }
+
+		#todasLasObras .divcarousel2 .wrapColumn .fix { width: 100%; height: 10px; padding: 0; background: url(../images/curve_infWrapColumn-gr2.gif) no-repeat 0 0  }		
+
+	#todasLasObras .divcarousel2 .inner{ position: relative; padding: 0; background: url(../images/bck_innerTodasAr-gr2.gif) repeat-y 0 0   }	
+
+		#todasLasObras .divcarousel2 .inner ul { margin: 0; padding: 0 19px; list-style: none  }
+
+				#todasLasObras .divcarousel2 .inner li { float: left; width: 129px; margin: 0 47px 10px 0; padding: 0 } 
+
+					#todasLasObras .divcarousel2 .inner li.reset { margin:0 0 10px 0;  } 
+
+					#todasLasObras .divcarousel2 .inner img { display: block; margin: 0; padding: 0  }
+
+				#todasLasObras .divcarousel2 .inner p { margin: 3px 0 5px 0  }	
+
+				#todasLasObras .divcarousel2 .inner .action { margin-top:7px; padding: 0  }
+
+#content.valores #moduloDestacadoContenido .inner .wysiwyg 
+{
+	padding:29px 28px 0;
+	font-size: 12px;
+}
+
+#gridTwoColumns.acceso .columnType1
+{
+	float:none;
+	width: 952px;
+}
+
+#gridTwoColumns.acceso #modAbonados h1 { height: 35px; padding: 19px 16px 0 16px; background: url(../images/curve_supAbonados2.gif) no-repeat 0 0  }
+#gridTwoColumns.acceso #modAbonados .fix { width: 952px; height: 8px; padding: 0; background: url(../images/curve_infModAbonados2.gif) no-repeat 0 0 }
+#gridTwoColumns.acceso #modAbonados .description { padding: 0;  background: #fff url(../images/curve_modAbonadosSupDescription2.gif) no-repeat 0 0;  }
+#gridTwoColumns.acceso #modAbonados .description .fix { width: 686px; height: 11px;   padding: 0; background: #fff url(../images/curve_modAbonadosInfDescription2.gif) no-repeat 0 0; }
+#cestaPaso1 #gridType3 .inner ul.ezsr-star-rating { margin:0 0 20px; padding:0; }
+#cestaPaso1 #gridType3 .inner ul.ezsr-star-rating li.ezsr-current-rating {background: transparent url(../images/img_stars.gif) repeat-x scroll left -19px;}
+
+#cestaPaso1 #gridType3 .columnType2{width:auto; background:#FFFFFF url(../images/curve_cest1-gr3-2b.gif) no-repeat scroll 0 0;}
+#cestaPaso1 #gridType3 .columnType2 .wrapColumn{width:auto; background:transparent url(../images/curve_supWrapCest1-2b.gif) no-repeat scroll 0 0;}
+
+#cestaPaso1 #gridType3 .columnType2 .fix {
+background:transparent url(../images/curve_infCest1-gr3-2b.gif) no-repeat scroll 0 0;
+width:761px;
+}
+#cestaPaso1 #gridType3 .columnType2 .inner {
+background:transparent url(../images/bck_innerCest1-2b.gif) repeat-y scroll 0 0;
+}
+
+#cestaPaso1 #gridType3 .columnType2 .wrapColumn .fix {
+background:transparent url(../images/curve_infWrapCest1-2b.gif) no-repeat scroll -1px 0;
+}
+
+.fichas #moduloDestacadoContenido h1 span 
+{
+	display:block;
+	padding: 5px 0 12px;
+}
+
+.precioIva 
+{
+	padding:8px 0;
+    /*position: inherit;*/
+    display:block;
+}
+
+li.condiciones div {
+border:1px solid #C6E7FF;
+height:83px;
+overflow:auto;
+padding:11px;
+width:347px;
+margin-top: 10px;
+}
+
+li.condiciones div p {
+	margin-bottom: 21px;
+}
+
+#datosUsuario form .datos li.condiciones label {
+display:block;
+float:none;
+}
+
+#novedades ul li .action .precioIva
+{
+    display:block; text-align:center;
+}
+.price_offer{ color: #900 }
+
+
+.form_newsletter {color:#000000;font-size:12px;font-weight:normal; padding-left: 130px;}
+form .error textarea.text{ border-color:#E00101 !important;  }
+.preciooferta{color:#900; margin-top: 4px}
+
+#cestaCompra table .precio, #confirmacion table .precio{font-size:14px}
+.tabla_formaciones {padding-bottom:10px;width:100%;}
+#definirResultados div { background: url(../images/bck_definirResultados.gif) repeat-y 0 0  }
+.unamodif { padding: 0 28px  }
+
+.precioAnterior {text-decoration:none; font-size:12px;}
+
+.totalNoIva td{font-size: 14px}
+
+#busquedaAvanzada .tipoObras select { width: 100px; margin-left: 23px; vertical-align: middle }
+
+
+#definirResultados li {
+width:180px;
+display:block;
+}
+
+
+#finCompraForm ul.datos ul#areaslist li label{font-size:10px}
+
+#modType2 .instruccionesTransferencia p, #modType2 p.modoPago {font-size:12px; margin-left:30px; margin-bottom:10px}
+#modType2 #datosFacturacion .instruccionesTransferencia, #modType2 #datosFacturacion p.modoPago { margin-left:0; }
+#modType2 .instruccionesTransferencia p, #modType2 ul.modoPago {font-size:12px; margin-left:30px; margin-bottom:10px}
+#modType2 .instruccionesTransferencia p.note {font-size:10px;}
+
+.formulario .datos li span.hint {display: block; margin-left:115px; margin-bottom:10px}
+
+.formulario li.error select {border: 1px solid #E00101}
+.formulario li select{border:1px solid #C6E7FF; background-color:#fff}
+
+.formulario .datos li span#logopaypal {margin-left:0; float:left; margin-right: 5px;}
+#datosPago fieldset .datos #paypalitem input {margin-top:10px;}
+.formulario .datos li span#textpaypal {margin-top:5px; font-size:12px; margin-left:3px; display:block; float:left; width: 320px}
+
+#logohispassl{text-align:center;margin-left:19px;}
+
+.button{ display:inline-block; width: 71px; cursor:pointer; padding:2px 0px 4px; background:#2770ab url(../images/bck_btn.gif) repeat-x 0 0; vertical-align:middle; text-align:center; font-size:11px;  }
+
+.button a {color:#fff; font-weight:bold; text-decoration:none; }
+#modFormacion div.button{padding: 2px 0 4px; margin-top:0}
+#modFormacion .description li .button a{color:#fff}
+li.fltitems a, li.fltitems span{margin-right: 5px; padding-top: 2px;}
+li.fltitems .button a {margin-right: 0;}
+
+#novedades ul li .action {float:left; width: 120px; margin-left:12px; margin-right: 15px;}
+#novedades ul li .button {margin-top: 50px;}
+
+#novedades ul li .wysiwyg.wide 
+{
+width: 460px
+}
+
+#modColectivos {font-size: 12px}
+
+#toolbar, #gridType3{padding:0}
+
+.fichas .modType4 .descripcion .cursoDet .column1 ul li {color:#000000}
+	.fichas .modType4 .descripcion .cursoDet .column1 ul li a { color:#00528D  }
+
+#moduloDestacadoContenido .modType4 .descripcion .tabs{float:none;}
+
+#cestaCompra span.mementos, #confirmacion span.mementos
+{
+    font-weight: normal;
+    color: #4B90CC;
+    font-size: 11px;
+}
+
+#producttext p 
+{
+    margin-bottom: 1em;
+}
+
+#faq .preguntas .respuestas ul li {background:none;}
+
+}
+
+#faq .preguntas .respuestas ul li ul li ul li {
+background:url("../images/bullet_guion.gif") no-repeat scroll 0 50% transparent;
+}
+
+.dudas a, .dudas2 a, .module.reset a {margin-left: 5px;
+color: #00528D;
+    font-weight: bold;
+    text-decoration: none;
+    padding-right: 14px;
+     background: url("../images/ico_verMas.png") no-repeat scroll 100% 4px transparent;
+}
+.dudas2 a, .module.reset a {font-weight: normal; margin-left: 0}
+
+#mediaspace {margin-left: 10px;}
+
+#modColectivos .description .listColectivos ul li 
+{
+    display:block;
+    width: auto;
+}
+
+#finCompraForm .datos fieldset legend span {
+    padding-left:50px;
+}
+
+#resultadosBusquedaPage span.searchTerm
+{
+    width: auto;
+}
+
+.searchResultsForm input
+{
+	top: 0
+}
+
+.fichas #gridTwoColumnsFichas .modType4 .descripcion .cursoDet .column1 ul li {
+background-image:url("../images/bullet_fichas.gif");
+}
+
+.fichas #gridTwoColumnsFichas .modType4 .descripcion .cursoDet .column1 .testimonio .jcarousel-item { background-image: none  }
+
+#bodyContent #mediaspace {margin-left:0}
+#bodyContent #promocionPrimaria #mediaspace {margin-left:10px}
+
+#bodyContent .object-left  { margin-right: 16px }
+#bodyContent #commonGrid #moduloDestacadoContenido .column2 {width: 410px}
+
+.fichas .modType4 .descripcion .cursoDet .testimonio .versiones ul li {padding: 0 0 0 20px;}
+#gridTwoColumnsFichas #producttext .cursoDet .column1 .jcarousel-item {background:none}
+
+.difPrecios .soloPrecio {margin-left:68px;}
+
+.fichas .modType4 .descripcion .cursoDet .testimonio .versiones ul li.reset {padding:0 0 0 20px}
+
+#datosLoginForm ul, #datosLoginForm li {margin:0; padding:0}
+#datosLoginForm li {margin-bottom: 10px;}
+#videoLightbox .opinionForm #datosLoginForm label {margin-bottom: 2px;}
+#videoLightbox ul, #videoLightbox li {padding-left:0; margin-left:0}
+#videoLightbox div.msgError li {padding-left: 30px}
+
+#datosLoginForm .verMas { margin:0 0 10px;}
+
+.pexperto {color:#000; font-weight:bold; text-align:center; margin-top: 5px;}
+
+#bodyContent #promocionPrimaria .imgModuloDest #mediaspace {margin-left:0}
+#finProceso .encuesta label {font-weight:normal; float:left; white-space:normal}
+
+#sage_home_recursos.recursospsm_sage #gridHome1 #presentacionRecursos .columnType1 .description ul{
+    margin-left:0;
+}
+
+
+
+select#prodQI{
+ width: 249px;
+ margin-bottom: 10px;
+}
+
+#iMementoDest select#prodQI, {
+ width: 200px;
+ margin-bottom: 10px;
+}
+
+
+
+#iMementoDest .tryPromo {
+    width:auto !important;
+}
+
+select#prodQI option {  width: 240px;}
+#iMementoDest select#prodQI option {  width: 190px;}
+#iMementoDest select#prodQI {width:98%}
+
+#formPrueba label, #frm_tryImemento label, #modMemGrat label{
+    white-space:normal
+}
+#datosUsuario form .datos li.condiciones label{
+    width:auto;
+	margin:1.5em 0;
+}
+#modMemGrat a{
+    text-decoration:underline;
+}

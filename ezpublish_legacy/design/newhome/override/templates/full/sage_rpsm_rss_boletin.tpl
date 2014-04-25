@@ -1,0 +1,1 @@
+{"recursospsm/nuevo_contenido"|redirect()}

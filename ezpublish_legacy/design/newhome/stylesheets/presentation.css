@@ -1,0 +1,2392 @@
+
+			
+	
+#categoriesTabs .tabs { position: relative; z-index: 2; top: 1px; margin: 0; padding: 0; list-style: none  }		
+	#categoriesTabs .tabs li { position: relative; float: left; margin: 0 3px 0 0; padding: 5px 12px; } 
+		#categoriesTabs .tabs li .cLeft, #categoriesTabs .tabs li .cRight { position: absolute; top: 0; width: 12px; height: 18px; background-position: 0 0; background-repeat: no-repeat  }
+		#categoriesTabs .tabs li .cLeft { left: 0; background-image: url(../images/curve-l-tab.png)  }
+			#categoriesTabs .tabs li.sel .cLeft { left: 0; background-image: url(../images/curve-l-tabS.gif)  }
+		#categoriesTabs .tabs li .cRight { right: 0; background-image: url(../images/curve-r-tab.png) }
+			#categoriesTabs .tabs li.sel .cRight { background-image: url(../images/curve-r-tabS.gif);   }
+		#categoriesTabs .cat1 { background-color: #C51822   }
+		#categoriesTabs .cat2 { background-color: #fabada }
+		#categoriesTabs .cat3 { background-color: #F9CBD8 }
+		#categoriesTabs .cat4 { background-color: #4B90CC }
+		#categoriesTabs .cat5 { background-color: #00674E }
+		#categoriesTabs .cat6 { background-color: #898F99 }
+		#categoriesTabs .cat7 { background-color: #392D88 }
+		#categoriesTabs .cat8 { background-color: #FCB122 }
+		#categoriesTabs .cat9 { background-color: #FFEDA6  }
+		#categoriesTabs .sel { background-color:#fff; border-left: 1px solid #C1C1C1; border-right: 1px solid #C1C1C1; border-top: 1px solid #C1C1C1;   }
+		#categoriesTabs .reset { margin-right: 0 }
+	#categoriesTabs .wrap { position: relative; z-index: 1; background: #fff; border: 1px solid #C1C1C1  }	
+
+
+	#modAbonados { padding: 0   }
+	#modAbonados h1 { height: 35px; padding: 19px 16px 0 16px; background: url(../images/curve_supAbonados.gif) no-repeat 0 0  }
+	#modAbonados .wrap {  padding: 10px 9px 3px 9px; background: #9F9F9F url(../images/bck_wrapGridHome1.gif) repeat-x scroll 0 0  }
+	#modAbonados .description { padding: 0;  background: #fff url(../images/curve_modAbonadosSupDescription.gif) no-repeat 0 0;  }
+		#modAbonados .description .wysiwyg { padding: 10px 29px 29px 29px; }
+	#modAbonados ul { margin: 6px 0; padding: 0; list-style: none  }
+			#modAbonados li { margin: 0 0 5px 0; padding: 4px 0 4px 30px; background: url(../images/bullet_pPrimaria.gif) no-repeat 0 5px; list-style: none  }			
+	
+	#modAbonados .fix { width: 704px; height: 8px; padding: 0; background: url(../images/curve_infModAbonados.gif) no-repeat 0 0 }
+		#modAbonados .description .fix { width: 686px; height: 11px;   padding: 0; background: #fff url(../images/curve_modAbonadosInfDescription.gif) no-repeat 0 0; }
+	
+	#modAccesoAbonados { padding: 0 0 33px 0;  background: #dfdfdf url(../images/bck_modAccesoAbonados.gif) no-repeat 0 100%  }		
+		#modAccesoAbonados h2 { height: 24px; padding: 17px 17px 0 17px; background: url(../images/curve_modAccesoAbSup.gif) no-repeat 0 0  }	
+		#modAccesoAbonados form { padding: 0 15px  }
+			#modAccesoAbonados form ul { margin: 12px 0 0 0; padding: 0; list-style: none  }
+			#modAccesoAbonados form li { margin: 0 0 2px 0; padding: 0;   }
+				#modAccesoAbonados label { float: left; display: inline; width: 63px; margin-right: 10px; white-space: normal; text-align: right  }
+				#modAccesoAbonados .text { float: right }
+				#modAccesoAbonados form span { display:block; clear: both; text-align: right  }
+				#modAccesoAbonados .submit { margin-top:10px  }
+				#modAccesoAbonados .text { width: 124px; padding: 0; border: 1px solid #d0d0d0; background: #eaeaea  }
+
+#gridWide, #gridWide #moduloDestacadoContenido { width: 953px; margin-bottom: 21px; padding-top:10px; position:relative  }	
+	.fichas #gridWide { margin-bottom:0}			
+	#gridWide h1, #gridWide #moduloDestacadoContenido h1 { height: 40px; padding: 18px 0 0 16px; background:url(../images/curve_supWide.gif) no-repeat 0 0; } 									
+		#gridWide #moduloDestacadoContenido .camposObligatorios { position:absolute; top:30px; left:325px}
+#gridWide .wrap, #gridWide #moduloDestacadoContenido .wrap {  padding: 0 9px 3px 10px; background: url(../images/bck_wrapWide.gif) repeat-y scroll 0 0  }
+				#gridWide .inner, #gridWide #moduloDestacadoContenido .inner { padding: 0;  background: #fff url(../images/curve_supWideDescription.gif) no-repeat 0 0;  }
+					#gridWide .inner .wysiwyg, #gridWide #moduloDestacadoContenido .inner .wysiwyg { padding: 29px 28px 0 28px; }
+					
+		#gridWide .fix, #gridWide #moduloDestacadoContenido .fix { width: 953px; height: 12px; padding: 0; background: url(../images/curve_infWide.gif) no-repeat 0 0 }
+		.fichas #gridWide .fix { background:none; height:inherit}
+			#gridWide .inner .fix, #gridWide #moduloDestacadoContenido .inner .fix { width: 934px; height: 14px;   padding: 0; background: #fff url(../images/curve_infWideDescription.gif) no-repeat 0 0; }				
+
+#moduloDestacadoContenido { min-height: 284px  }
+#moduloDestacadoContenido h1 { height: 56px; padding: 18px 0 0 16px; background: #c6e7ff url(../images/curve_supValorDestacado.gif) no-repeat 0 0  }
+	#moduloDestacadoContenido .wrap {  padding: 0 12px 0 11px; background: url(../images/bck_wrapValorDestacado.gif) repeat-y scroll 0 0  }
+	#moduloDestacadoContenido .inner { padding: 0;  background: #fff url(../images/curve_supValorDestacadoDescription.gif) no-repeat 0 0;  }	
+	#moduloDestacadoContenido .object-left { margin-right:20px  }
+	#moduloDestacadoContenido ul { margin: 26px 0 0 10px; padding: 0; list-style: none  }
+			#moduloDestacadoContenido li { margin: 0 0 5px 0; padding: 0 0 4px 0; list-style-image: url(../images/bullet_pPrimaria.gif)  }
+
+	#moduloDestacadoContenido .fix { width: 762px; height: 21px; padding: 0; background: url(../images/curve_infValorDestacado.gif) no-repeat 0 0 }	#moduloDestacadoContenido .verMas a { background-position: 100% 6px   }		
+	#moduloDestacadoContenido .linksModulo .flt { padding-top: 20px  }
+	 #moduloDestacadoContenido .linksModulo .verMas { padding-top:20px; margin:0 20px 0 0;}
+	#moduloDestacadoContenido .linksModulo .frt { padding-right: 14px; vertical-align: middle  }
+		
+			
+#listadoValores { margin: 13px 0 0 0; padding: 0; list-style: none  }			
+	#listadoValores li { width: 760px; margin: 0 0 14px 0; padding:12px 0 0 0; background: url(../images/curve_supValores.gif) no-repeat 0 0  }
+		#listadoValores li li { width: auto; margin: 0; padding: 0; background: none  }
+		#listadoValores .wrap {margin-top:7px;  padding: 10px 0 0 0; background: url(../images/curve_supInnerValores.gif) no-repeat 0 0; }
+	#listadoValores .valor { padding: 0 10px; background: #fff }
+	#listadoValores .inner { min-height: 154px; padding:12px 12px 0 12px; background: url(../images/bck_listadoValoresInner.gif) repeat-y 0 0 }
+	#listadoValores .fix { width: 760px; height: 21px; padding: 0; background: url(../images/curve_infValores.gif) no-repeat 0 0 }
+	
+#listadoNotas { margin: 13px 0 0 0; padding: 0; list-style: none  }			
+	#listadoNotas li { width: 760px; margin: 0 0 14px 0; padding:12px 0 0 0; background: url(../images/curve_supNotas.gif) no-repeat 0 0  }
+		#listadoNotas li li { width: auto; margin: 0; padding: 0; background: none  }
+		#listadoNotas .wrap {margin-top:7px;  padding: 10px 0 0 0; background: url(../images/curve_supInnerNotas.gif) no-repeat 0 0; }
+	#listadoNotas .nota { padding: 0 10px; background: #dcdcdc }
+	#listadoNotas .inner { min-height: 100px; padding:12px 20px 0 12px; background: url(../images/bck_listadoNotasInner.gif) repeat-y 0 0 }
+	#listadoNotas .fix { width: 760px; height: 21px; padding: 0; background: url(../images/curve_infNotas.gif) no-repeat 0 0 }	
+		
+	#listadoNotas .wysiwyg { position: relative  }
+		#listadoNotas .date { position: absolute; left: -16px; top: 0; width: 94px; height: 59px; padding: 23px 17px 0 12px; background: url(../images/bck_dateNota.gif) no-repeat 0 0   }	
+		#listadoNotas .date .month { display: block; margin: -11px 0 4px 32px; } 
+		#listadoNotas .date .year { margin-left: 30px; } 
+		#listadoNotas .wysiwyg .attribute-cuerpo { margin-left: 126px  }	
+		
+#listadoAreas { margin-top:16px  }		
+	#listadoAreas ul { margin: 0; padding: 0; list-style: none  }		
+		#listadoAreas li { display:inline-block; width: 372px; margin: 0 15px 14px 0; padding:0; background: #fff url(../images/curve_supAreas.gif) no-repeat 0 0; vertical-align: top  }
+			#listadoAreas li li { display:block; width: auto;  margin: 0; padding: 0; background: none  }
+			#listadoAreas li.reset { margin-right:0 }
+			#listadoAreas .area {width: 352px; padding: 0;    }
+			#listadoAreas h2 { padding:  14px 25px 0 14px }
+			#listadoAreas .wrap { position: relative; margin-top: 13px; padding: 0 10px; }
+				#listadoAreas .inner { width:328px; min-height: 290px; padding:12px 13px 0 12px; background: url(../images/bck_listadoAreasInner.gif) repeat-y 0 0 }
+			#listadoAreas .fix {  width: 372px; height: 20px; padding: 0; background: url(../images/curve_infAreas.gif) no-repeat 0 0 }	
+			
+			#listadoAreas .detail { position: relative; margin-bottom: 12px; padding: 0  }				
+				#listadoAreas .detail h3 { width:211px; margin-left:85px; padding-top:7px  }
+					#listadoAreas .detail.noImage h3 { width: 248px; margin-left: 0; padding-top: 0 }
+				#listadoAreas .detail span { display: block; margin-left:85px;  }
+					#listadoAreas .detail.noImage span { margin-left: 0; }
+				#listadoAreas .detail span.btn, #listadoAreas .detail span.btn span { /*display:inline-block;*/ margin-left:0 }
+				#listadoAreas .detail img { float:left  }
+				#listadoAreas .detail .action { position: absolute; right: 0; bottom:10px; padding: 0;  }
+			#listadoAreas .otros { position: relative; margin-top:7px; margin-bottom: 41px; padding: 9px 0 0 0; background: url(../images/curve_supOtros.gif) no-repeat 0 0  }
+					#listadoAreas .otros ul { width: 301px; padding: 0 11px 0 13px; border-left:1px solid #d4d4d4; border-right:1px solid #d4d4d4;  }
+					#listadoAreas .otros li { position: relative; margin-bottom: 8px; padding-bottom: 8px; background: url(../images/bck_dot.gif) repeat-x 0 100% }
+						#listadoAreas .otros li.reset { margin-bottom: 0; padding-bottom: 0; background: none }
+						#listadoAreas .otros .info { width: 219px; margin-top:3px; padding: 0 }
+							#listadoAreas .otros span { display: block;  }							
+						#listadoAreas .otros span.btn, #listadoAreas .otros span.btn span { display: inline-block;  }						
+						#listadoAreas .otros .action { position: absolute; right: 0; bottom:10px; padding: 0  }
+							#listadoAreas .otros .reset .action { bottom: 0 }
+					
+					#listadoAreas .otros .fix { width: 327px; height: 9px; padding: 0; background: url(../images/curve_infOtros.gif) no-repeat 0 0  }				
+				#listadoAreas .verMas { position: absolute; left: 12px; bottom:0; width: 338px; padding: 10px 0 0 10px; border-top:1px solid #c6e7ff  }
+
+#todasLasObras { margin-top:14px;  }				
+	#todasLasObras #gridType1 { width: 760px; margin-bottom: 15px; padding: 13px 0 0 0; background: url(../images/curve_todasAre-gr1.gif) no-repeat 0 0  }
+	#todasLasObras #gridType1 h2 { padding:  0 0 7px 3px }
+	#todasLasObras #gridType1 .wrap { width: 741px;  padding: 0 10px; background: #fff; }
+	#todasLasObras #gridType1 .columnType1 { float: left; width: 363px; padding: 0   }				
+	#todasLasObras #gridType1 .columnType2 { float: right; width: 363px; padding: 0 }
+		#todasLasObras #gridType1 .columnType2 h2 { padding-left: 0 } 
+	#todasLasObras #gridType1 .fix { width: 761px; height: 9px; padding: 0; background: url(../images/curve_infoTodasAre-gr1.gif) no-repeat 0 0 	}
+	
+	#todasLasObras #gridType1 .wrapColumn { width: 363px; padding: 10px 0 0 0; background: url(../images/curve_supWrapColumn.gif) no-repeat 0 0  }
+		#todasLasObras #gridType1 .wrapColumn .fix { width: 363px; height: 10px; padding: 0; background: url(../images/curve_infWrapColumn.gif) no-repeat 0 0  }		
+	#todasLasObras #gridType1 .inner{ position: relative; padding: 0; background: url(../images/bck_innerTodasAr-gr1.gif) repeat-y 0 0   }	
+		#todasLasObras #gridType1 .inner ul { margin: 0; padding: 0 19px; list-style: none  }
+				#todasLasObras #gridType1 .inner li { float: left; width: 129px; margin: 0 47px 10px 0; padding: 0 } 
+					#todasLasObras #gridType1 .inner li.reset { margin:0 0 10px 0;  } 
+					#todasLasObras #gridType1 .inner img { display: block; margin: 0; padding: 0  }
+		#todasLasObras .wrap .inner .ezsr-star-rating { margin:0 0 10px !important;}
+				#todasLasObras #gridType1 .inner p { margin: 3px 0 5px 0  }	
+				#todasLasObras #gridType1 .inner .action { margin-top:7px; padding: 0  }
+	#todasLasObras .options { margin-top: 10px; padding: 10px 15px 0 15px; border-top:1px solid #c6e7ff    }			
+	#todasLasObras .verMas { float: left  }
+	#todasLasObras .pagination { float: right  }
+	
+
+	#todasLasObras #gridType2 { width: 760px; margin-bottom: 13px; padding: 13px 0 0 0; background: url(../images/curve_todasAre-gr1.gif) no-repeat 0 0  }
+	#todasLasObras #gridType2 h2 { padding:  0 0 7px 3px }
+	#todasLasObras #gridType2 .wrap { width: 741px;  padding: 0 10px; background: #fff; }
+	#todasLasObras #gridType2 .columnType1 { width: 740px; padding: 0   }							
+	#todasLasObras #gridType2 .fix { width: 761px; height: 9px; padding: 0; background: url(../images/curve_infoTodasAre-gr1.gif) no-repeat 0 0 	}
+	
+	#todasLasObras #gridType2 .wrapColumn { width: 100%; padding: 10px 0 0 0; background: url(../images/curve_supWrapColumn-gr2.gif) no-repeat 0 0  }
+		#todasLasObras #gridType2 .wrapColumn .fix { width: 100%; height: 10px; padding: 0; background: url(../images/curve_infWrapColumn-gr2.gif) no-repeat 0 0  }		
+	#todasLasObras #gridType2 .inner{ position: relative; padding: 0; background: url(../images/bck_innerTodasAr-gr2.gif) repeat-y 0 0   }	
+		#todasLasObras #gridType2 .inner ul { margin: 0; padding: 0 19px; list-style: none  }
+				#todasLasObras #gridType2 .inner li { float: left; width: 129px; margin: 0 47px 10px 0; padding: 0 } 
+					#todasLasObras #gridType2 .inner li.reset { margin:0 0 10px 0;  } 
+					#todasLasObras #gridType2 .inner img { display: block; margin: 0; padding: 0  }
+				#todasLasObras #gridType2 .inner p { margin: 3px 0 5px 0  }	
+				#todasLasObras #gridType2 .inner .action { margin-top:7px; padding: 0  }
+				
+				
+#todasLasObras #gridType3 { width: 760px; margin-bottom: 13px; padding: 13px 0 0 0;  }
+	#todasLasObras #gridType3 h2 { padding:  14px 0 7px 3px;  }
+	#todasLasObras #gridType3 .wrap { padding: 0;  }
+	#todasLasObras #gridType3 .columnType1 { position: relative; float: left; width: 352px; padding: 0 10px; background: #fff url(../images/curve_todasAre-gr3.gif) no-repeat 0 0    }				
+	#todasLasObras #gridType3 .columnType2 { position: relative; float: right; width: 352px; padding: 0 10px; background: #fff url(../images/curve_todasAre-gr3.gif) no-repeat 0 0  }
+		
+	#todasLasObras #gridType3 .fix { position: absolute; left: 0; width: 372px; height: 10px; padding: 0; background: url(../images/curve_infoTodasAre-gr3.gif) no-repeat 0 0 	}
+	
+	#todasLasObras #gridType3 .wrapColumn { width: 352px; padding: 10px 0 0 0; background: url(../images/curve_supWrapColumn-gr3.gif) no-repeat 0 0  }
+		#todasLasObras #gridType3 .wrapColumn .fix { position: static; width: 352px; height: 10px; padding: 0; background: url(../images/curve_infWrapColumn-gr3.gif) no-repeat 0 0  }		
+	#todasLasObras #gridType3 .inner{ position: relative; width:352px; padding: 0; background: url(../images/bck_innerTodasAr-gr3.gif) repeat-y 0 0   }	
+		#todasLasObras #gridType3 .inner ul { margin: 0; padding: 0 19px; list-style: none  }
+				#todasLasObras #gridType3 .inner li { float: left; width: 129px; margin: 0 47px 10px 0; padding: 0 } 
+					#todasLasObras #gridType3 .inner li.reset { margin:0 0 10px 0;    } 
+					#todasLasObras #gridType3 .inner img { display: block; margin: 0; padding: 0  }
+				#todasLasObras #gridType3 .inner p { margin: 3px 0 5px 0  }	
+				#todasLasObras #gridType3 .inner .action { margin-top:7px; padding: 0  }				
+				
+
+#todasLasObras #gridType4 { width: 760px; margin-bottom: 13px; padding: 13px 0 0 0;  }
+	#todasLasObras #gridType4 h2 { padding:  14px 0 7px 3px;  }
+	#todasLasObras #gridType4 .wrap { padding: 0;  }
+	#todasLasObras #gridType4 .columnType1 { position: relative; float: left; width: 354px; padding: 0 10px; background: #fff url(../images/curve_todasAre-gr4.gif) no-repeat 0 0    }				
+	#todasLasObras #gridType4 .columnType2 { position: relative; float: right; width: 354px; padding: 0 10px; background: #fff url(../images/curve_todasAre-gr4.gif) no-repeat 0 0  }
+	#todasLasObras #gridType4 .productoOnline { position: absolute; top: -4px; right: 17px; z-index: 200; width: 79px; height: 69px;   }
+		
+	#todasLasObras #gridType4 .fix { position: absolute; left: 0; width: 374px; height: 10px; padding: 0; background: url(../images/curve_infoTodasAre-gr4.gif) no-repeat 0 0 	}
+	
+	#todasLasObras #gridType4 .wrapColumn { width: 352px; padding: 10px 0 0 0; background: url(../images/curve_supWrapColumn-gr4.gif) no-repeat 0 0  }
+		#todasLasObras #gridType4 .wrapColumn .fix { position: static; width: 352px; height: 10px; padding: 0; background: url(../images/curve_infWrapColumn-gr4.gif) no-repeat 0 0  }		
+	#todasLasObras #gridType4 .inner{ position: relative; z-index: 100; width:352px; padding: 0; background: url(../images/bck_innerTodasAr-gr3.gif) repeat-y 0 0   }	
+		#todasLasObras #gridType4 .inner ul { margin: 0; padding: 0 19px; list-style: none  }
+				#todasLasObras #gridType4 .inner li { float: left; width: 129px; margin: 0 47px 10px 0; padding: 0 } 
+					#todasLasObras #gridType4 .inner li.reset { margin: 0 0 10px 0;  } 
+					#todasLasObras #gridType4 .inner img { display: block; margin: 0; padding: 0  }
+				#todasLasObras #gridType4 .inner p { margin: 3px 0 5px 0;   }	
+				#todasLasObras #gridType4 .inner .action { margin-top:7px; padding: 0  }					
+				
+				
+				#todasLasObras #gridType4 .inner .personal ul { width: 141px; margin: 20px 0 0 0; padding: 0  }
+					#todasLasObras #gridType4 .inner .personal li { float: none; width: auto; margin: 0; padding: 0 0 0 10px; background: url(../images/bullet_arrow.png) no-repeat 0 5px } 			
+					#todasLasObras #gridType4 .inner .personal img { margin: 0 0 8px 0;   }
+				.personal .image { float:left; width: 71px; padding: 15px 0 0 10px  }		
+				.personal .description { float: right; width: 214px; padding: 15px 10px 0 0  }	
+					
+				
+				
+				
+	
+	
+#todasLasObras #gridType5 { width: 760px; margin-bottom: 13px; padding: 13px 0 0 0; }
+	#todasLasObras #gridType5 h2 { height: 14px; padding:  13px 7px 7px 13px;  background: url(../images/curve_todasAre-gr5.gif) no-repeat 0 0  }
+	#todasLasObras #gridType5 .wrap {  width:740px; padding: 0 10px; background: #dcdcdc; }
+	#todasLasObras #gridType5 .columnType1 { width: 740px; padding: 0   }							
+	#todasLasObras #gridType5 .fix { width: 760px; height: 10px; padding: 0; background: url(../images/curve_infoTodasAre-gr5.gif) no-repeat 0 0 	}
+	
+	#todasLasObras #gridType5 .wrapColumn { width: 100%; padding: 10px 0 0 0; background: url(../images/curve_supWrapColumn-gr5.gif) no-repeat 0 0  }
+		#todasLasObras #gridType5 .wrapColumn .fix { width: 100%; height: 10px; padding: 0; background: url(../images/curve_infWrapColumn-gr5.gif) no-repeat 0 0  }		
+	#todasLasObras #gridType5 .inner{ position: relative; padding: 0; background: url(../images/bck_innerTodasAr-gr5.gif) repeat-y 0 0   }	
+		#todasLasObras #gridType5 .inner ul { margin: 0; padding: 0 19px; list-style: none  }
+				#todasLasObras #gridType5 .inner li { float: left; width: 129px; margin: 0 47px 10px 0; padding: 0 } 
+					#todasLasObras #gridType5 .inner li.reset { margin: 0 0 10px 0;  } 
+					#todasLasObras #gridType5 .inner img { display: block; margin: 0; padding: 0  }
+				#todasLasObras #gridType5 .inner p { margin: 3px 0 5px 0  }	
+				#todasLasObras #gridType5 .inner .action { margin-top:7px; padding: 0  }							
+				
+		#todasLasObras #gridType5 .options { border-top:1px solid #bbb  }
+		#todasLasObras .action { width:72px; height:22px;}		
+		
+		
+#modType2 {margin-bottom: 17px; padding: 0   }
+	#modType2 h1 { /*height: 42px;*/ padding: 16px 16px 0 16px; background: url(../images/curve_supModType2.gif) no-repeat 0 0  }
+	#modType2 .wrap {  padding: 0 10px 0 10px; background: url(../images/bck_wrapModType2.gif) repeat-y scroll 0 0  }
+		#modType2 .wrap2 {  padding: 0 12px 0 10px; background: url(../images/bck_wrapModType2.gif) repeat-y scroll 0 0  }
+	#modType2 .description { padding: 0;  background: url(../images/curve_ModType2SupDescription.gif) no-repeat 0 0;  }
+		#modType2 .descriptionTypeB { padding: 0;  background: url(../images/curve_ModType2DescriptionAzul.gif) no-repeat 0 0;  }
+		#modType2 .description .wysiwyg { padding: 10px 29px 29px 29px; }	
+	
+	#modType2 .fix { width: 767px; height: 12px; padding: 0; background: url(../images/curve_infModType2.gif) no-repeat 0 0 }
+		#modType2 .description .fix { width: 745px; height: 9px;   padding: 0; background: #fff url(../images/curve_ModType2InfDescription.gif) no-repeat 0 0; }
+			#modType2 .curvaFondo .description .fix { height:19px; background:#c6e7ff url(../images/curve_fondoAzul.gif) no-repeat 0 0}			
+			
+			
+#modType3 { padding: 0   }
+	#modType3 .title { width:733px; padding: 16px 16px 4px 16px; background:#FFF url(../images/curve_supModType3.gif) no-repeat 0 0  }
+	#modType3 .wrap {  padding: 0 10px 0 10px;  background: url(../images/bck_wrapModType3.gif) repeat-y 0 0;  }		
+	#modType3 .description { padding: 0; background: url(../images/curve_ModType3SupDescription.gif) no-repeat 0 0; }
+		#modType3 .description .cont { background: url(../images/bck_modType03-modInt.gif) repeat-y 0 0;}		
+		#modType3 .description .wysiwyg { padding: 10px 29px 29px 29px; }	
+	
+	#modType3 .fix { width: 767px; height: 12px; padding: 0; background: url(../images/curve_infModType3.gif) no-repeat 0 0 }
+		#modType3 .description .fix { width: 745px; height: 9px;   padding: 0; background: #fff url(../images/curve_ModType3InfDescription.gif) no-repeat 0 0; }
+			
+			
+						
+	#busquedaAvanzada { position: relative; padding: 37px 0 28px 52px; }
+		#busquedaAvanzada .camposObligatorios { position: absolute; right: 48px; top: -35px  }		
+	#busquedaAvanzada .termSearch {  margin-bottom: 36px; padding-left: 122px  }
+		#busquedaAvanzada .termSearch input { width:271px; margin-left: 23px;   }		
+	#busquedaAvanzada fieldset { position: relative; margin-bottom: 32px  }
+		#busquedaAvanzada legend { display: block; visibility: visible;   }	
+			#busquedaAvanzada legend span { position: absolute; display: block; width: 162px; text-align: right   }	
+		#busquedaAvanzada fieldset label { display:inline; vertical-align: middle  }
+			#busquedaAvanzada fieldset input {  vertical-align: middle   }
+		
+			#busquedaAvanzada form ul { width: 476px; margin:0 0 0 186px; padding: 0;  }
+				#busquedaAvanzada form li { display: inline-block; width:209px; padding: 0; vertical-align: top  }
+				
+#busquedaAvanzada .tipoObras { margin-top:20px; vertical-align: middle }							
+	#busquedaAvanzada .tipoObras select { width: 84px; margin-left: 23px; vertical-align: middle }				
+#busquedaAvanzada .submit { display: block; margin-top:20px; margin-left: 188px;  }
+
+
+
+#modContacto, #modInfo { /*width: 132px; height:155px;*/ margin-bottom: 9px; padding:0; background: url(../images/bck_modContacto.gif) no-repeat 0 100%}
+/*#modInfo { height:95px; padding: 24px 20px 28px 19px; background-image: url(../images/bck_modInfo.gif)  }*/
+	#modInfo span.contacto { display:block; margin-top:7px; padding: 0 20px 24px 25px  }	
+	#modContacto h2, #modInfo h2 { background:url(../images/bck_tituloModContacto.gif) no-repeat 0 0; padding:24px 20px 10px 19px }
+	/*#modInfo h2 { margin-bottom:14px }*/
+	#modContacto .contacte { display: block; margin-left: 3px; background: url(../images/bck_contacte.gif) no-repeat 85% 0; padding:0 20px  }
+	#modContacto ul { margin: 18px 0 0 3px; padding:0 20px 28px 19px; list-style: none  }
+		#modContacto li { margin: 0 0 5px 0; padding: 0 0 0 23px;  }
+			#modContacto li.telefono, #modInfo span.telefono { margin-bottom: 9px; padding: 3px 0 0 23px; background: url(../images/ico_telefono.gif) no-repeat 0 0  }
+			#modInfo span.telefono { background-position: 25px 0; padding-left:50px  }
+			#modContacto li.chat { background: url(../images/ico_chat.gif) no-repeat 0 0 }
+			#modContacto li.videoc { background: url(../images/ico_videoconferencia.gif) no-repeat 0 0 }
+			#modContacto li.email { background: url(../images/ico_email.gif) no-repeat 0 0   }
+	
+#modComprando { background:#828282 url(../images/curve_infModComprando.gif) no-repeat 0 100%; margin-bottom:12px}		
+	#modComprando h2 { background:url(../images/curve_supModComprando.gif) no-repeat 0 0; padding:12px 0 11px 15px; margin-top:-1px}
+	#modComprando ul { background-color:#fff; margin:-2px 10px 17px 9px; padding:0 11px 0 8px; border-left:2px solid #c5c5c5; border-right:2px solid #c5c5c5}
+		#modComprando ul li { margin:0 0 10px; padding:0 0 5px; border-bottom:1px solid #c0c0c0}
+			#modComprando ul li.reset { border-bottom:none; padding:0}
+			#modComprando ul li.total { padding:5px 0 0 0; border-top:2px solid #c0c0c0; border-bottom:none}
+			#modComprando ul li span { display:block}			
+			#modComprando ul li span.precio { text-align: right }			
+			#modComprando ul li .precioTotal { float:right}
+			
+#modMiMementix { background:#828282 url(../images/curve_infModComprando.gif) no-repeat 0 100%; margin-bottom:12px}		
+	#modMiMementix h2 { background:url(../images/curve_supModComprando.gif) no-repeat 0 0; padding:12px 0 11px 15px; margin-top:-1px}
+	#modMiMementix ul { background-color:#fff; margin:-2px 10px 17px 9px; padding:0 11px 0 8px; border-left:2px solid #c5c5c5; border-right:2px solid #c5c5c5}
+		#modMiMementix ul li { margin:0 0 5px; padding:0}
+			#modMiMementix ul li.reset { border-bottom:none; padding:0}
+			#modMiMementix ul li.total { padding:5px 0 0 0; border-top:2px solid #c0c0c0; border-bottom:none}
+			#modMiMementix ul li span { display:block}
+				#modMiMementix ul li .descuento { margin-top:8px}
+					#modMiMementix ul li .descuento span { display:inline}
+			#modMiMementix ul li span.listaMem, #modMiMementix ul li span.descuento { float:right}
+			#modMiMementix ul li span.precio { text-align: right }			
+			#modMiMementix ul li .precioTotal, #modMiMementix ul li .precio { float:right}		
+			#modMiMementix ul li img { margin:0; padding:0}
+		
+		
+		
+
+#bodyContent .resultadosBusqueda .inner .wysiwyg { padding: 29px 0 0 0; }
+
+.searchResultsForm { padding: 0 28px  }
+.searchResultsForm label { display: inline; vertical-align: middle  }
+.searchResultsForm input { position: relative; top:3px; vertical-align: middle 	}
+	.searchResultsForm input.text { position: static; width:266px 	}
+
+.searchResultsForm .verMas { display: inline-block; position: relative; top:3px; margin-left: 11px  }	
+			
+span.searchTerm	{ display: block; margin-top:21px; padding: 6px 30px; border-top: 1px solid #EAF6FF; border-bottom:1px solid #EAF6FF; background: url(../images/bck_searchTMsgError.gif) repeat-x 0 100%  }			
+
+.resultadosBusqueda .attribute-cuerpo { padding: 0 28px  }			
+.resultadosBusqueda h2 { margin-top: 20px; padding-left: 39px;  }			
+.resultadosBusqueda .wysiwyg ul { margin: 6px 0; padding: 8px 0 0 39px; list-style: none  }
+			.resultadosBusqueda .wysiwyg li { margin: 0; padding: 4px 0 4px 30px; background: url(../images/bullet_pPrimaria.gif) no-repeat 0 0; list-style:none  }
+
+.numResults	{ margin: 11px 0; padding: 0 28px  }		
+.numResults label { display: inline; vertical-align: middle  }
+.numResults input, .numResults select { vertical-align: middle 	}
+	 
+			
+#resultadosBusquedaPage { padding: 21px 0;  }
+#resultadosBusquedaPage span.searchTerm { width: 685px  }
+#modType2 .description #resultadosBusquedaPage .wysiwyg { padding: 0  }
+
+#listResults, .listResults { margin: 0; padding: 0 28px;   }
+	#listResults li, .listResults li { margin: 0 0 20px 0; padding: 0; } 
+		#listResults .wysiwyg p, listResults .wysiwyg p { margin-bottom: 0;  line-height: normal;}
+
+.moreInfo li img { float:left; margin:0 15px 10px 0; }
+
+#modType2 h2.title4 { border-bottom:1px solid #C6E7FF; margin:0 28px 20px; padding-bottom:5px; }
+
+.paginationResults { margin-bottom: 21px; padding:7px 28px;  border-bottom:1px solid #C6E7FF; border-top:1px solid #C6E7FF}
+	.paginationResults span { float:left }
+	.paginationResults ul { float:right; margin:0; padding:0 }		
+		.paginationResults li { display:inline; margin:0 2px 0 0; padding:0; background:none }
+		.paginationResults li.next { margin-left:5px; }
+		.paginationResults li.prev { margin-right:10px }
+
+#definirResultados { margin-top: 18px; margin-bottom: 23px;  padding: 14px 0 0 28px; background: url(../images/curve_supDefinirResultados.gif) no-repeat 28px 0 }
+#resultadosBusquedaPage #definirResultados { padding-left:0; background-position:0 0;}
+	#modType2 .description #definirResultados .fix { width: 691px; height: 14px; padding: 0; background: url(../images/curve_infDefinirResultados.gif)  }		
+	
+	#definirResultados .title { padding-left: 31px  }
+	#definirResultados form, #definirResultados .inner { background: url(../images/bck_definirResultados.gif) repeat-y 0 0  }
+	#definirResultados ul { margin:0; padding: 13px 55px 0;  }
+				#definirResultados li { display: inline-block; width:225px; padding: 0; vertical-align: top  }
+				#definirResultados li.reset { width: auto }
+				#definirResultados label { display: inline  }
+				#definirResultados li input { vertical-align: middle }
+				
+
+.checkout img { display: block; margin: 0 0 7px 0; padding: 0; } 
+
+#pasosCompra { margin: 0 0 16px 0; padding: 0;  }
+	#pasosCompra li { display: inline-block; width: 236px; margin: 0; padding: 0 }
+		#pasosCompra li.reset { width: 234px }
+		
+#modVentajas { margin-bottom: 9px; padding: 0; background: url(../images/bck_modVentajas.gif) no-repeat 0 100%  }		
+	#modVentajas h2 { padding: 36px 32px 42px 31px; background: url(../images/bck_tituloModVentajas.gif) no-repeat 0 0  }
+	#modVentajas ul, #faq #modVentajas ul { margin: 0; padding: 0 10px 23px 17px;   }
+		#modVentajas li, #faq #modVentajas li { margin: 0 0 6px 0; padding: 0 0 0 17px; background: url(../images/bullet_modVentajas.gif) no-repeat 0 3px }
+	
+	#gridTwoColumnsFichas #modVentajas li { background-image:url(../images/bullet_modVentajas.gif); background-repeat:no-repeat; background-position:0 3px;}
+	#gridTwoColumnsFichas #producttext .cursoDet .column1 li { background:url(../images/bullet_fichas.gif); background-repeat:no-repeat;}
+		#gridTwoColumnsFichas #producttext .cursoDet .opiniones.column1 li { background:none}
+	#gridTwoColumnsFichas #producttext .cursoDet .column1 #faq li { background-image:none;}
+	#gridTwoColumnsFichas #modVentajas li, #gridTwoColumnsFichas #producttext .cursoDet .column1 #faq #modVentajas li { background-image:url(../images/bullet_modVentajas.gif); background-repeat:no-repeat; background-position:0 3px;}
+
+	/* Product List (Seleccione Mementos) */
+	#gridTwoColumnsFichas .listado { padding:0 10px; }
+	#productlist table {width:100%; border-spacing: 0;}
+	
+	#productlist thead th {padding:0 10px 5px;}
+	
+	#productlist tbody .pvp, #productlist tbody .pvp del { color:#006000; }
+	#productlist tbody .pvp-offer, #productlist tbody .pvp-offer ins { color:#852C25; }
+	#productlist del, #productlist ins {border-bottom:none;}
+
+	#productlist .name { width:350px; }
+
+	#productlist .pvp, #productlist .pvp-offer {width:155px; text-align: center;}
+
+	
+
+	
+		#productlist tbody td { height:60px; padding:0 10px; border-bottom: solid 6px #8bb7de; vertical-align: middle; background-color:#FFF;}
+			#productlist tbody td:first-child, #productlist tbody td:last-child { background:#fff url(../images/bck_td.gif) 0 100% no-repeat; }
+				#productlist tbody td:first-child { border-radius:7px 0 0 0; }
+				#productlist tbody td:last-child { border-radius:0 7px 0 0; background-position:100% 100%; }
+	/* Pretty Checkbox */
+	#productlist label { white-space:normal; }
+		#productlist label:hover {cursor: pointer;}
+		#productlist label.c_on, #productlist label.c_off {padding:11px 35px 7px; }
+		#productlist label.c_on { background:url(../images/b_checkOk.png) 0 45% no-repeat;}
+		#productlist label.c_off { background:url(../images/b_check.png) 0 45% no-repeat;}
+		
+
+#cestaPaso1 #modType2 h1 { background:transparent url(../images/curve_supModType2-ces1.gif) no-repeat scroll 0 0;  }
+#cestaPaso1 #modType2 .wrap { width:740px; padding: 0 9px 0 11px; background: #fff  }
+	#cestaPaso1 #modType2 .description { background: #fff  }
+	#cestaPaso1 #modType2  .fix  { background:transparent url(../images/curve_infModType2-cest.gif) no-repeat scroll 0 0; }
+		#cestaPaso1 #modType2 .description .fix { width: 740px; height: 9px; padding: 0; background:#fff url(../images/curve_infModType2Desc-cest.gif) no-repeat 0 0;  }
+	
+	#cestaPaso1 .searchResultsForm { margin-bottom: 17px; padding: 0  }	
+		#cestaPaso1 .searchResultsForm .text { width: 123px; margin-left: 10px  }
+
+#cestaCompra { position: relative; padding: 12px 0 0 0; background: url(../images/curve_supCesta.gif) no-repeat 0 0  }
+	#cestaCompra form {padding: 0 15px; background: url(../images/bck_formCesta.gif) repeat-y 0 0  }
+	#cestaCompra table { padding: 0; border: 0; border-collapse:collapse  }		
+		#cestaCompra thead th, #cestaCompra thead td { padding:0 6px; background: #C6E7FF  }
+		#cestaCompra thead th { padding-bottom: 10px  }
+		#cestaCompra select { width: 65px  }
+		#cestaCompra tfoot td, #confirmacion tfoot td { padding-top: 12px; vertical-align: top  }
+		#cestaCompra tfoot th, #confirmacion table tfoot th { padding-top: 12px; padding-right: 18px; text-align: right  }
+		#cestaCompra tfoot .total { height:80px;}
+			#cestaCompra tfoot .total th, #cestaCompra tfoot .total td { vertical-align:top;}
+#cestaCompra tbody td { padding: 7px; border-bottom: 2px solid #C6E7FF  }
+	#cestaCompra tbody .last td { border-color: #C0C0C0  }
+
+	#cestaCompra .descuentoType1 { position: relative; left: 15px; width: 57px; height: 66px; padding: 9px 9px 0 9px; background: url(../images/bck_descuentoType1.png) no-repeat 0 0; text-align: center  }
+	#cestaCompra .descuentoType2 { width: 43px; height: 51px; padding: 9px 9px 0 9px; background: url(../images/bck_descuentoType2.png) no-repeat 0 0; text-align: center  }
+	#cestaCompra .descuentoType1 strong, #cestaCompra .descuentoType2 strong { display: block } 
+	
+	#cestaCompra tbody td.action { text-align: center  }
+	#cestaCompra tbody .ventaCruzada td { border-bottom: none; background-color: #F5F5F5  }
+	#cestaCompra tbody .ventaCruzadaRecomendacion td { border-bottom: none; background-color: #F5F5F5  }
+	
+	#cestaCompra tbody .prevVenta td { border-bottom: none  }
+	
+	.ventaCruzada td .curve, .ventaCruzadaRecomendacion td .curve { position: absolute; width:9px; height: 9px; background-position: 0 0; background-repeat: no-repeat  }	
+	   
+	   
+	  
+	 .ventaCruzada td.cTl {background:#f5f5f5 url(../images/curve_tl-vcruzada.gif) no-repeat 0 0  }	
+	.ventaCruzada td.cTr {background:#f5f5f5 url(../images/curve_tr-vcruzada.gif) no-repeat 100% 0   }
+	
+	.ventaCruzadaRecomendacion td.cBl {background:#f5f5f5 url(../images/curve_bl-vcruzada.gif) no-repeat 0 100%   }
+	 
+	.ventaCruzadaRecomendacion td.cBr {background:#f5f5f5 url(../images/curve_br-vcruzada.gif) no-repeat 100% 100%   } 
+	     
+		
+	
+#cestaCompra .options { position: absolute; left: 0; bottom: -8px; width: 700px; margin-top: 10px; padding: 6px 20px; border-top:1px solid #C6E7FF  }	
+	#cestaCompra .options .volver { float: left  }	
+	#cestaCompra .options input { float: right  }	
+	
+.precioIva { position: relative; left: -5px; padding: 8px 12px; border: 2px solid #FAA636; text-align: center; background-color: #fff  }	
+	.precioIva .cTopL, .precioIva .cTopR, .precioIva .cBotL, .precioIva .cBotR { position: absolute; width: 12px; height: 12px; background-position: 0 0; background-repeat: no-repeat  } 
+	.precioIva .cTopL { top: -2px; left: -2px; background-image:url(../images/curve_tl-precio.gif) }
+	.precioIva .cTopR { top: -2px; right: -2px; background-image:url(../images/curve_tr-precio.gif) }
+	.precioIva .cBotL { bottom: -4px; left: -2px; background-image:url(../images/curve_bl-precio.gif)}
+	.precioIva .cBotR { bottom: -4px; right: -2px; background-image:url(../images/curve_br-precio.gif) }	
+	
+	.ventaCruzadaRecomendacion .precioIva, .ventaCruzada .precioIva { background-color:#fff  }
+	
+	.ventaCruzada .precioIva .cTopL { background-image:url(../images/curve_tl-precio-2.gif) }
+	.ventaCruzada .precioIva .cTopR { background-image:url(../images/curve_tr-precio-2.gif) }
+	.ventaCruzada .precioIva .cBotL { background-image:url(../images/curve_bl-precio-2.gif)}
+	.ventaCruzada .precioIva .cBotR { background-image:url(../images/curve_br-precio-2.gif) }	
+	
+.precioAnterior { margin-top:.5em; text-align: center   }
+	
+#cestaPaso1 #gridType3 { width: 760px; margin-bottom: 13px; padding: 13px 0 0 0;  }
+	#cestaPaso1 #gridType3 h2 { padding:  14px 0 7px 3px;  }
+	#cestaPaso1 #gridType3 .wrap { padding: 0;  }
+	#cestaPaso1 #gridType3 .columnType1 { position: relative; width: 234px; padding: 0 10px; background: #fff url(../images/curve_cest1-gr3-1.gif) no-repeat 0 0    }				
+	#cestaPaso1 #gridType3 .columnType2 { position: relative; width: 470px; padding: 0 10px; background: #fff url(../images/curve_cest1-gr3-2.gif) no-repeat 0 0  }
+	
+	#cestaPaso1 #gridType3 .fix {position: absolute; left: 0; height: 10px; padding: 0; } 
+		
+		#cestaPaso1 #gridType3 .columnType1 .fix { width: 254px; background: url(../images/curve_infCest1-gr3-1.gif) no-repeat 0 0 	}
+	
+		#cestaPaso1 #gridType3 .columnType2 .fix { width: 490px; background: url(../images/curve_infCest1-gr3-2.gif) no-repeat 0 0 	}
+	
+	#cestaPaso1 #gridType3 .wrapColumn { padding: 10px 0 0 0;   }
+		#cestaPaso1 #gridType3 .wrapColumn .fix { position: static; width: 100%; height: 10px; padding: 0;  }		
+		
+		#cestaPaso1 #gridType3 .columnType1 .wrapColumn { width: 236px; background: url(../images/curve_supWrapCest1-1.gif) no-repeat 0 0 }
+			#cestaPaso1 #gridType3 .columnType1 .wrapColumn .fix { background: url(../images/curve_infWrapCest1-1.gif) no-repeat 0 0  }		
+		#cestaPaso1 #gridType3 .columnType2 .wrapColumn { width:472px; background: url(../images/curve_supWrapCest1-2.gif) no-repeat 0 0  }
+			#cestaPaso1 #gridType3 .columnType2 .wrapColumn .fix { background: url(../images/curve_infWrapCest1-2.gif) no-repeat 0 0  }		
+		
+	#cestaPaso1 #gridType3 .inner{ position: relative; width:100%; padding: 0;    }	
+	
+		#cestaPaso1 #gridType3 .columnType1 .inner{ background: url(../images/bck_innerCest1-1.gif) repeat-y 0 0   }
+		#cestaPaso1 #gridType3 .columnType2 .inner{ background: url(../images/bck_innerCest1-2.gif) repeat-y 0 0   }
+	
+		#cestaPaso1 #gridType3 .inner ul { margin: 0; padding: 8px 4px; list-style: none  }
+				#cestaPaso1 #gridType3 .inner li { float: left; width: 232px; margin:0 0 10px; padding: 0 } 
+					#cestaPaso1 #gridType3 .inner img { display: block; margin: 0; padding: 0  }
+				#cestaPaso1 #gridType3 .inner p { margin: 3px 0 5px 0  }	
+				#cestaPaso1 #gridType3 .inner .action { margin-top:7px; padding: 0  }			
+				
+				#cestaPaso1 #gridType3  .image { float:left; width: 100px; padding: 0 0 0 10px  }		
+				#cestaPaso1 #gridType3  .image img { display: block; margin: 0 }
+					#cestaPaso1 #gridType3 .image .valoracion { margin-top: 40px }
+				#cestaPaso1 #gridType3  .description { width: 114px; padding:0 10px 0 0  }					
+					#cestaPaso1 #gridType3 .inner li .description { width: 104px }
+						#cestaPaso1 #gridType3 .inner li.solo { width:auto}
+						#cestaPaso1 #gridType3 .inner li .sinImage { margin-left:10px; width:auto}
+					
+					
+#newsletter { position: relative; padding: 28px 0 28px 20px}			
+	#newsletter .camposObligatorios { position: absolute; right: 48px; top: -35px  }
+	#newsletter fieldset { position: relative; margin:25px 0 20px}
+		#newsletter legend { display: block; visibility: visible;   }	
+			#newsletter legend span { position: absolute; display: block; width: 272px; text-align: right   }	
+		#newsletter fieldset label { display:inline; vertical-align: middle  }
+			#newsletter fieldset input {  vertical-align: middle   }
+		
+			#newsletter form ul { width: 404px; margin:0 0 0 277px; padding: 0;  }
+				#newsletter form li { width:188px; padding: 0; vertical-align: top  }
+				
+			#newsletter form ul.datos { width: 476px; margin:0; padding:0 0 0 160px}
+				#newsletter form .datos li { width:auto}
+					#newsletter form .datos li label {float:left; width:105px; margin-right:7px; text-align:right}					
+					#newsletter form .datos li select { width:177px}
+		
+#newsletter .submit { display:block; margin:10px 0 0 395px}
+
+#gridWide .wrap .columnType1 { float:left; width:759px}
+	#gridWide .columnType1 .inner { background:#FFFFFF url(../images/curve_supMapaCol1.gif) no-repeat 0 0; height:545px}
+		#gridWide .columnType1 .inner .wysiwyg { padding:10px 20px 0}
+			#gridWide .mapaWeb h2 { margin-top:12px}
+			#gridWide .mapaWeb h3 { margin:10px 0}
+			#gridWide .mapaWeb ul { margin:0; padding:0}
+				#gridWide .mapaWeb ul li { margin:0; padding:0; list-style:none}
+					#gridWide .mapaWeb ul li { border-bottom:2px solid #c6e7ff}
+						#gridWide .mapaWeb ul li.reset, #gridWide .mapaWeb ul li ul li { border-bottom:none}
+						#gridWide .mapaWeb ul li ul { margin-bottom:10px}
+							#gridWide .mapaWeb ul li ul li { display:inline-block; width:117px; vertical-align:top}
+								#gridWide .mapaWeb .bullet li { background:url(../images/bullet_guion.gif) no-repeat 0 50%; padding-left:10px}
+		#gridWide .columnType1 .inner .fix { background:#FFFFFF url(../images/curve_infMapaCol1.gif) no-repeat 0 0; width:759px}
+
+#gridWide .wrap .columnType2 { float:right; width:164px}
+	#gridWide .columnType2 .inner { background:#FFFFFF url(../images/curve_supMapaCol2.gif) no-repeat 0 0; height:545px; position:relative}
+	#gridWide .columnType2 .mapaWeb ul { padding-left:15px}
+	#gridWide .columnType2 .mapaWeb h2 { margin:12px 0}
+	#gridWide .columnType2 .mapaWeb h3 { margin:0}
+	#gridWide .columnType2 .mapaWeb ul li { border-bottom:none}
+		#gridWide .columnType2 .mapaWeb ul li ul { padding:0}
+		#gridWide .columnType2 .inner .fix { background:#FFFFFF url(../images/curve_infMapaCol2.gif) no-repeat 0 0; width:164px; position:absolute; bottom:0}
+	
+	#gridWide .columnType1 .mapaWeb { min-height:545px; height:auto;}
+		
+.busFaq { background:url(../images/bck_faq.gif) repeat-x 0 18px}
+	.busFaq #faqForm { margin-top:28px; padding-bottom:15px}
+		.busFaq #faqForm ul { margin:0; padding:0}
+			.busFaq #faqForm ul li { margin:0 0 15px 30px; padding:0}
+				.busFaq #faqForm label { float:left; text-align:right; width:376px; padding-right:15px}
+				.busFaq #faqForm #subtipoPregunta { width:293px}
+				
+#faq { padding:20px 30px}
+	#faq .preguntas { margin:10px 0 20px; padding:20px 0 0; border-top:2px solid #c6e7ff; border-bottom:2px solid #c6e7ff}
+	.sideBar #faq .preguntas { margin:0; padding:0 10px; border:none}
+		#faq .preguntas ul { margin:0; padding:0}
+			#faq .preguntas ul li { margin:0 0 15px; padding:0 0 0 15px; background:url(../images/bullet_faq.gif) no-repeat 0 5px}
+			
+	#faq .respuestas ul { margin:0; padding:0}
+		#faq .respuestas ul li { margin:0 0 15px; padding:0}
+			#faq .respuestas ul li .wysiwyg { padding:0}
+			#faq .respuestas ul li h3 { margin-bottom:10px}
+			#faq .respuestas ul li .wysiwyg ul, #faq .respuestas ul li .wysiwyg ul li { list-style-type:none}
+				#faq .respuestas ul li ul li { background:url(../images/bullet_guion.gif) no-repeat scroll 0 50%; padding-left:10px; margin:0}
+				#faq .respuestas ul li ol li { margin:0}
+			#faq .respuestas ul li .ancla { background:url(../images/bullet_subir.gif) no-repeat right 50%; float:right}		
+				#faq .respuestas ul li .ancla a { padding-right:20px}	
+				
+#datosUsuario { position: relative; padding: 28px 30px 28px 20px}			
+	#datosUsuario .camposObligatorios { position: absolute; right: 10px; top: -35px  }
+	#datosUsuario #form_inf_colectivo  { position:relative;}
+		#datosUsuario #form_inf_colectivo .camposObligatorios { top:3px; }
+	#datosUsuario h2 { border-bottom:1px solid #c6e7ff; margin-bottom:20px; padding-bottom:5px}			
+	#datosUsuario form ul.datos { width:530px; /*width: 476px;*/ margin:0; padding:0 0 0 130px; /*padding:0 0 0 160px*/}
+		#datosUsuario form .datos li { width:auto}
+			#datosUsuario form .datos li label {float:left; width:132px; /*width:200px;*/ margin-right:7px; text-align:left; white-space:normal;}					
+			#datosUsuario form .datos li span { margin-left:10px}
+				#datosUsuario form .datos li span.select-box { margin-left:0  }
+#datosUsuario .clearFix { margin-top: 10px; text-align:center;  }			
+	#datosUsuario .volver { display:inline-block; vertical-align:middle; margin-right: 20px; padding-top: 3px }
+		#datosUsuario .volver a { background-position:0 2px}
+	#datosUsuario .submit { display:inline-block; vertical-align:middle;  }
+	#datosUsuario input.text { width: 146px !important;}
+	#datosUsuario select { width: 148px}
+	#datosUsuario select.halfbox {width: 48%} 
+	#datosUsuario .ebook select { width:247px}
+	#datosUsuario img { margin-left:146px;}
+	#datosUsuario #datosUsuarioColectivo img { margin-left:0;}
+	#datosUsuario fieldset legend  {display: block; visibility: visible;   }
+		#datosUsuario form .datos li legend span { position: absolute; margin-left: 0  }
+		#datosUsuario fieldset ul { margin-left: 115px  }
+	#datosUsuario form .datos li fieldset label, #datosUsuario form .datos li fieldset input { float:none; text-align: left  }
+	#datosUsuario fieldset input { vertical-align: middle  }
+
+.formulario .datos { width: 476px; margin:0; padding:0 0 0 160px}
+		.formulario .datos li { width:auto; margin-left:0 !important;}
+			.formulario .datos li label, .formulario .datos li .etiqueta {float:left; width:115px; margin-right:7px; text-align:left}					
+			.formulario .datos li span { margin-left:10px}
+				.formulario .datos li .etiqueta { margin-left: 0  }
+			.formulario li select { width:146px  }
+			.formulario li textarea { width:344px  }
+			.formulario li.condiciones label { float: none; display:block  }
+				.formulario li.condiciones label input { float: none; width:auto; vertical-align: middle  }
+			.formulario li.condiciones div { width: 347px; height: 83px; padding: 11px; overflow: auto; border: 1px solid #C6E7FF  }
+			.formulario fieldset legend { display: block; visibility: visible;   }
+			.formulario legend span { position: absolute  }
+	
+	#finCompraForm.formulario legend span { position:static;}
+	
+#datosFacturacion { position: relative; padding: 28px 25px}			
+
+	#datosFacturacion .camposObligatorios { position: absolute; right: 10px; top: -35px  }	
+	#datosFacturacion h2 { border-bottom:1px solid #c6e7ff; margin-bottom:20px; padding-bottom:5px}			
+	#datosFacturacion .datos { width:599px; padding-left:130px  }
+		#datosFacturacion form.empresa .datos, #datosFacturacion .datos li.reset, .formulario .datos li.reset, #datosFacturacion .datos li.reset label, .formulario .datos li.reset label { width: auto;  }
+	#datosFacturacion .datos li.condiciones { margin-top:15px;}
+	#datosFacturacion .datos li.condiciones { margin-bottom:15px;}
+		#datosFacturacion form.contactoEmpresa .datos { width: 697px; padding-left: 0  }
+	#datosFacturacion label, #datosFacturacion .etiqueta { width:149px; white-space:normal;  }
+	#datosFacturacion form.empresa label, #datosFacturacion form.empresa .etiqueta { width:132px  }
+	#datosFacturacion form.contactoEmpresa label, #datosFacturacion form.contactoEmpresa .etiqueta { width:262px  }
+	#datosFacturacion #empresa { width:344px  }
+		#datosFacturacion form.empresa #empresa { width: 300px  }
+	#datosFacturacion fieldset { margin-bottom: 20px  }
+	#datosFacturacion fieldset div { padding-left: 354px  }
+		#datosFacturacion fieldset label { display: inline; width: auto; padding-right: 20px  }
+		#datosFacturacion fieldset input { vertical-align: middle  }
+	
+#datosFacturacion .clearFix { margin-top: 20px; text-align:center;  }			
+	#datosFacturacion .contactoEmpresa .clearFix  { margin-left: 295px;  }
+	#datosFacturacion .volver { float:left; margin-right: 20px; padding-top: 3px }
+		#datosFacturacion .volver a { background-position:0 2px}
+	/*#datosFacturacion .submit { float:right;  }*/
+	#datosFacturacion input.text { width: 120px   }
+	/*#datosFacturacion .condiciones label { margin-left: 158px  }*/
+	#datosFacturacion form.empresa  .condiciones label { width:auto;}
+	#datosFacturacion .condiciones div { margin-top: 6px  }
+	
+		/*#datosFacturacion .empresa .condiciones div{ margin-left: 250px  }*/
+		
+		#datosFacturacion .contactoEmpresa .condiciones div { margin-left: 275px  }
+
+	#datosFacturacion .direccion fieldset { margin-bottom: 0  }
+	#datosFacturacion .direccion legend  {display: block; visibility: visible;   }
+		#datosFacturacion form .datos li.direccion legend span { position: absolute; display: block; width: 148px; margin-left: 0; padding-top: 3px; text-align:left;  }						
+		#datosFacturacion form.empresa .datos li.direccion legend span { width:132px  }
+		
+		#datosFacturacion form.contactoEmpresa .datos li.direccion legend span { width:263px  }
+		
+		#datosFacturacion .direccion div { padding-left: 162px  }
+			#datosFacturacion form.empresa .direccion div { padding-left:145px  }
+			#datosFacturacion form.contactoEmpresa .direccion div { padding-left:275px  }			
+	#datosFacturacion form .datos li.direccion fieldset label, #datosFacturacion form .datos li.direccion fieldset input { float:none; text-align: left; width:auto; margin-right:0  }
+	#datosFacturacion .direccion input, #datosFacturacion .direccion select { vertical-align: middle  }
+	#datosFacturacion .direccion select { width:97px  }
+	
+	#datosFacturacion form.empresa .direccion input.text, #datosFacturacion form.contactoEmpresa .direccion input.text { width:127px  }
+	 
+	
+	#datosFacturacion form #num, #datosFacturacion form #num2 { width: 30px; margin-left: 5px  }
+	
+	#datosFacturacion form.empresa .cursos label, #datosFacturacion form.contactoEmpresa .cursos label { width:198px  }
+	
+	#datosFacturacion .contacto fieldset { margin-bottom: 0  }
+	#datosFacturacion .contacto legend  {display: block; visibility: visible;   }
+		#datosFacturacion form .datos li.contacto span { float: left; width:200px; margin-left: 407px; margin-top:-18px;  }
+		#datosFacturacion form .datos li.contacto legend span { position: absolute; float: none; display: block; width: 234px; margin-left: 0; margin-top:0; padding-top: 3px; text-align: right  }
+		#datosFacturacion .contacto div {  padding-left: 248px  }
+	#datosFacturacion form .datos li.contacto fieldset label, #datosFacturacion form .datos li.contacto fieldset input { float:none; text-align: left; width:auto; margin-right:0  }
+	
+	#datosFacturacion .tipoCompra fieldset { margin-bottom: 0  }
+	#datosFacturacion .tipoCompra legend  {display: block; visibility: visible;   }
+		#datosFacturacion form .datos li.tipoCompra legend span { position: absolute; display: block; width: 264px; margin-left: 0; padding-top: 3px; text-align: right  }
+		#datosFacturacion .tipoCompra div { padding-left: 275px  }
+		#datosFacturacion form .datos li.tipoCompra fieldset label { display:block  }
+	#datosFacturacion form .datos li.tipoCompra fieldset label, #datosFacturacion form .datos li.tipoCompra fieldset input { float:none; text-align: left; width:auto; margin-right:0  }
+	
+
+#datosPago { position: relative; padding: 28px 25px}			
+	#datosPago .camposObligatorios { position: absolute; right: 10px; top: -35px  }	
+	#datosPago h2 { border-bottom:1px solid #c6e7ff; margin-bottom:20px; padding-bottom:5px}			
+	#datosPago .datos { width:509px; padding-left: 172px  }	
+	#datosPago legend span { display: block; width:176px; text-align: right  }
+	#datosPago fieldset { margin-bottom: 20px  }
+	#datosPago fieldset li { margin-bottom: 15px  }
+		#datosPago fieldset .datos label { width: 413px; margin-left: 7px; margin-right: 0; text-align: left  }
+		#datosPago fieldset .datos input { float: left; margin-top: 3px   }
+		
+		#datosPago fieldset .datos .numCuenta legend { position: relative  }
+			#datosPago fieldset .datos .numCuenta legend span { display: block; width:78px  }
+		#datosPago fieldset .datos .datos { clear: both; width: auto; padding-left: 0; padding-top: 15px  }			
+			#datosPago fieldset .datos .datos label { width:83px; text-align: right }
+			#datosPago fieldset .datos .datos input { margin-top: 0; }
+			#datosPago fieldset .datos .datos .numCuenta input { float: none;   }
+			#datosPago fieldset .datos .datos .numCuenta #banco { width: 47px; margin-left: 96px  }
+			#datosPago fieldset .datos .datos .numCuenta #sucursal { width: 49px   }
+			#datosPago fieldset .datos .datos .numCuenta #control { width: 15px  }
+			#datosPago fieldset .datos .datos .numCuenta #cuenta { width: 151px  }
+			
+		
+		#datosPago thead th { padding: 2px 5px; background: #C6E7FF  }
+			#datosPago .disabled thead th {  }
+		#datosPago tfoot th { padding-top: 9px; padding-right: 56px; text-align: right; border-top: 1px solid #C0C0C0 }			
+		#datosPago td { padding: 2px 5px  }
+			#datosPago tfoot td {padding-top: 9px; border-top: 1px solid #C0C0C0  }
+	
+	#datosPago .clearFix { margin-top: 10px; text-align:center;  }			
+	#datosPago .volver { float:left; margin-right: 20px; padding-top: 3px }
+		#datosPago .volver a { background-position:0 2px}
+	
+	#datosPago table { padding-top: 20px; border: 0; clear: both }
+	
+	#datosContactoInteForm p { margin-bottom: 10px  }
+		
+#gridWide.compraPaso2 .inner { background-image:url(../images/curve_supWideCompra.gif)}	
+#gridWide.compraPaso2 .inner .fix { background-image:url(../images/curve_infWideCompra.gif); width:953px}
+
+#gridWide #pasosCompra h1 { padding:0; background:none; height:auto}	
+
+#gridDatos { padding:20px 20px 30px 0}
+	#gridDatos .colDatos1 { float:left; width:284px; margin:20px 0 0 50px;}
+		#gridDatos .colDatos1 form ul.datos { width:270px; margin:18px 0 18px 13px; }
+			#gridDatos .colDatos1 form .datos li { width:auto;}
+				#gridDatos .colDatos1 form .datos li label {float:left; width:115px; margin-right:7px; text-align:right; }
+				#gridDatos .colDatos1 form .datos li span { margin-left:10px}
+				#gridDatos .colDatos1 form .datos li span.olvido { display:block; padding:2px 0 0; text-align:right;}
+	#gridDatos .colDatos1 .clearFix { width: 155px; margin-left: 300px; margin-top: 10px  }			
+		#gridDatos .colDatos1 .volver { float:left; margin-right: 20px; padding-top: 3px }
+			#gridDatos .colDatos1 .volver a { background-position:0 2px}
+		#gridDatos .colDatos1 .submit { float:right; margin-bottom: 10px  }
+		#gridDatos .colDatos1 input.text { width: 120px; padding:0;}
+		#gridDatos .colDatos1 .forgotPass { display: none; clear: both; border:1px solid #d3d3d3;  margin-bottom:20px; padding:10px;}
+			#gridDatos .colDatos1 .forgotPass p { margin-bottom:10px;}
+			#gridDatos .colDatos1 .forgotPass #email { display:block; width:255px; margin-bottom:10px;}
+			#gridDatos .colDatos1 .forgotPass .volver { float:left;}
+		
+	#gridDatos .colDatos2 { float:left; width: 365px; margin:20px 0 0 175px}
+		#gridDatos .colDatos2 ul { margin:18px 0 44px; padding:0}
+			#gridDatos .colDatos2 ul li { margin:0 0 10px; padding:0 0 0 25px; background:url(../images/bullet_ventajas.gif) no-repeat 0 50%}
+
+#ciudades { padding:20px 0}
+	#ciudades p { margin-bottom:20px}
+	#ciudades table th { border-bottom:1px solid #c6e7ff; padding-bottom:3px}
+	#ciudades table td { padding-top:5px}
+			
+#datosFormacion { position: relative; padding: 28px 30px 28px 20px}			
+	#datosFormacion .camposObligatorios { position: absolute; right:30px; top:33px  }	
+	#datosFormacion h2 { border-bottom:1px solid #c6e7ff; margin-bottom:20px; padding-bottom:5px}			
+	#datosFormacion form ul.datos { width: 476px; margin:0; padding:0 0 0 95px}
+		#datosFormacion form .datos li { width:auto}
+			#datosFormacion form .datos li label {float:left; width:180px; margin-right:7px; text-align:right}		
+			#datosFormacion form .datos li select { width:146px}			
+			#datosFormacion form .datos li span { margin-left:10px}
+#datosFormacion .clearFix { width: 155px; margin-left: 300px; margin-top: 10px  }			
+	#datosFormacion .submit { float:right;  }
+	#datosFormacion input.text { width: 120px   }
+	
+#datosFacturacion dl.datos { padding:0 0 0 100px; margin-bottom:30px}
+	#datosFacturacion dl.datos dt { float:left; text-align:right; margin-right:10px; margin-bottom:16px; width:205px; clear:left}
+	#datosFacturacion dl.datos dd { margin-bottom:16px}
+	
+#confirmacion { padding:17px 35px 20px}
+	#confirmacion table th { padding-bottom:3px; text-align:center;}
+	#confirmacion table th.total { padding-left:25px;}
+	#confirmacion table tbody th.producto { text-align:left;}
+	#confirmacion table th.price { padding-right:20px; text-align:right;}
+	#confirmacion table th, #confirmacion table td { padding-right:10px;}
+	#confirmacion table tr.first td { padding-top:28px;}
+	#confirmacion table td.price, #confirmacion table td.total { text-align:right;}
+	#confirmacion table tbody td { padding:5px 10px 5px 0; text-align:center;}
+	#confirmacion table tbody td.producto { text-align:left;}
+	#confirmacion table tr.last td { padding-bottom:22px;}
+	#confirmacion table tfoot .totalNoIva td, #confirmacion table tfoot .totalNoIva th { border-top:2px solid #c0c0c0;}
+
+#modType2 #finProceso { padding-top: 29px   }
+#finProceso ul, #ventajasCompra ul { margin: 0; padding: 0 21px  }	
+	#finProceso ul li, #ventajasCompra ul li {  margin: 0; padding: 4px 0 4px 30px; background: url(../images/bullet_pPrimaria.gif) no-repeat 0 0  }
+
+#modType2 #ventajasCompra  { padding-top: 19px   }	
+	
+.instruccionesTransferencia { width: 698px; margin: 18px 21px 10px 21px; padding: 0 0 10px 0 ; background: url(../images/bck_instrucciones.gif) no-repeat 0 100%  }	
+	.instruccionesTransferencia h2 { height: 20px; padding: 25px 0 0 55px;  background: #fff url(../images/bck_titleInstrucciones.gif) no-repeat 0 0}
+		.instruccionesTransferencia ol { padding: 0 40px 0 56px  }
+			.instruccionesTransferencia ol li { display: list-item; margin:0 0 6px 0; padding: 0; list-style: decimal; background: none }
+
+#datosFacturacion .instruccionesTransferencia { width:auto; margin: 18px 0 10px;}
+
+#modType2 #ventajasCompra  ul { padding-bottom: 15px  }			
+#modType2 #ventajasCompra  li { display: inline-block; width: 245px;  vertical-align: top  }				
+	#modType2 #ventajasCompra  li.reset { width: 395px }
+	
+.cestaVacia { display: block; margin-bottom: 15px; padding: 6px 0 11px 47px; background: url(../images/ico_cestaVacia.gif) no-repeat 0 0 }	
+
+
+ #gridType6 { width: 760px; margin-bottom: 13px; padding: 13px 0 0 0;  }	 
+	 #gridType6 .wrap { padding: 0;  }
+	 #gridType6 .columnType1 { position: relative; width: 353px; padding: 47px 10px 0 10px; background: #fff url(../images/curve_grid6c1Sup.gif) no-repeat 0 0    }				
+		 #gridType6 .columnType1 .fix { position: absolute; left: 0; width: 373px; height: 12px; padding: 0; background: url(../images/curve_grid6c1Inf.gif) no-repeat 0 0 	}
+	 #gridType6 .columnType2 { position: relative; width: 352px; padding: 47px 10px 0 10px; background: #DCDCDC url(../images/curve_grid6c2Sup.gif) no-repeat 0 0  }			  	
+	 	#gridType6 .columnType2 .fix { position: absolute; left: 0; width: 372px; height: 12px; padding: 0; background: url(../images/curve_grid6c2Inf.gif) no-repeat 0 0 	}
+	
+	#gridType6 .columnType1 .wrapColumn { width: 353px; padding: 10px 0 0 0; background: url(../images/curve_grid6c1WrSup.gif) no-repeat 0 0  }
+		 #gridType6 .columnType1 .wrapColumn .fix { position: static; width: 350px; height: 10px; padding: 0; background: url(../images/curve_grid6c1WrInf.gif) no-repeat 0 0  }		
+	 #gridType6 .columnType1 .inner{ position: relative; width:350px; padding: 0; background: url(../images/curve_grid6c1Inner.gif) repeat-y 0 0   }	
+	 	 	
+	 #gridType6 .columnType2 .wrapColumn { width: 352px; padding: 10px 0 0 0; background: url(../images/curve_grid6c2WrSup.gif) no-repeat 0 0  }
+		 #gridType6 .columnType2 .wrapColumn .fix { position: static; width: 350px; height: 10px; padding: 0; background: url(../images/curve_grid6c2WrInf.gif) no-repeat 0 0  }		
+	 #gridType6 .columnType2 .inner{ position: relative; width:350px; padding: 0; background: url(../images/curve_grid6c2Inner.gif) repeat-y 0 0   }	
+		 
+
+#tops ul, #tops li { margin: 0; padding: 0; list-style: none  }	 
+	#tops li { margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #C6E7FF  }
+		#tops li img { float: left; margin-left: 15px; margin-right: 17px;  }
+ 	#tops li div { float: left; width:168px;   }
+		#tops li div.sinImage { margin-left:15px}
+ 		#tops li div img { float: none; display: block; margin: 6px 0 0 0; padding: 0 } 
+	#tops li span { float: right; padding-right: 15px;  } 
+		#tops li.reset { margin-bottom: 0; padding-bottom: 0; border-bottom: none }
+	#tops .tabs { position: relative; top: -35px; margin-bottom: -30px;  }
+		#tops .tabs li { position: relative; top: -2px; display: inline-block; vertical-align: top; margin: 0 3px 0 0; padding: 0; border:none; background: #C6E7FF; border: 2px solid #C6E7FF;  }
+			#tops .tabs li .cL, #tops .tabs li .cR { position: absolute; top: -2px; width: 8px; height: 8px; background-position: 0 0; background-repeat: no-repeat;   }
+			#tops .tabs li .cL { left: -2px;  background-image: url(../images/curve_topsTabsCLeft.gif) }
+				#tops .tabs li.sel .cL { background-image: url(../images/curve_topsTabsCLeft-s.gif) }
+			#tops .tabs li .cR { right: -2px; background-image: url(../images/curve_topsTabsCRight.gif)  }
+				#tops .tabs li.sel .cR { background-image: url(../images/curve_topsTabsCRight-s.gif) }
+			#tops .tabs li.sel { background: #fff; border-bottom-color: #fff;  }	
+			#tops .tabs li h2 { padding:5px 13px; }
+			#tops .tabs li a { display: block; padding:5px 13px; }			
+	 
+#modTab .title { position: relative; top: -33px; margin-bottom: -30px; padding:8px 0 0 7px; background: url(../images/curve_titleModTab.gif) no-repeat 0 0  }
+	#modTab .title span { padding:8px 16px 0 5px; background: url(../images/curve_titleModTab-b.gif) no-repeat 100% 0}
+#modTab .title span { padding:8px 16px 0 5px; background: url(../images/curve_titleModTab-b.gif) no-repeat 100% 0}
+	#modTab ul, #modTab li { margin: 0; padding: 0; list-style: none  }
+	#modTab ul { padding: 12px 12px 0  }
+		#modTab li { margin-bottom: 8px; padding-bottom: 8px; background: url(../images/bck_dot.gif) repeat-x 0 100%   }
+			#modTab li.reset { margin-bottom: 0; padding-bottom: 0; background: none }
+
+	#finCompraForm ul.datos { width:600px; padding:0 0 0 32px;}
+	#finCompraForm ul.datos li label { width:275px; white-space:normal;}
+	#finCompraForm ul.datos li imput { width:199px;}
+	#finCompraForm ul.datos li #numEmple { width:38px;}
+	#finCompraForm ul.datos li select { width:177px;}
+	#finCompraForm .datos fieldset legend span {padding-left:85px;}
+	#finCompraForm .datos fieldset ul { margin-left:271px;}
+		#finCompraForm .datos fieldset ul li { display:inline-block; width:130px; vertical-align:top;}
+			#finCompraForm .datos fieldset ul li label { width:auto; text-align:left;}
+			#finCompraForm .datos fieldset ul li imput { margin-right:5px;}
+	#finCompraForm .submit { margin-left:442px;}
+	
+#modColectivos { padding: 0   }
+	#modColectivos h1 { height: 35px; padding: 19px 16px 0 16px; background:#828282 url(../images/curve_colectivosWrapTop.gif) no-repeat 0 0  }
+	#modColectivos .wrap {  padding: 10px 9px 3px 9px; background: #9F9F9F url(../images/bck_wrapGridHome1.gif) repeat-x scroll 0 0  }
+	#modColectivos .description { padding: 0;  background: #fff url(../images/curve_colectivosInt-top.gif) no-repeat 0 0;  }
+		#modColectivos .description .wysiwyg { padding: 10px 29px 29px 29px; }
+	#modColectivos ul { margin: 6px 0; padding: 0; list-style: none  }
+			#modColectivos li { margin: 0 0 5px 0; padding: 4px 0 4px 30px; background: url(../images/bullet_pPrimaria.gif) no-repeat 0 5px; list-style: none  }			
+	
+	#modColectivos .fix { width: 512px; height: 8px; padding: 0; background: url(../images/curve_colectivosWrapBottom.gif) no-repeat 0 0 }
+		#modColectivos .description .fix { width: 100%; height: 11px;   padding: 0; background: #fff url(../images/curve_colectivosInt-bottom.gif) no-repeat 0 100%; }
+		
+	#modColectivos .description .contacto { margin:30px 0 10px; padding-left:30px; background:url(../images/ico_contacto.gif) no-repeat 0 0;}
+		#modColectivos .description .contacto .tit { display:block; margin-bottom:10px;}
+	#modColectivos .description .colectivos { margin:18px 0 0; padding:0 0 0 28px;}
+	#modColectivos .description .listColectivos { padding-left:28px; background:url(../images/ico_colectivos.gif) no-repeat 0 0; }
+		#modColectivos .description .listColectivos ul li { display:inline-block; width:114px; padding:0 4px 4px 14px; vertical-align:top; background:url(../images/bullet_arrow.png) no-repeat 0 5px;}
+		
+	#gridWide.consultenos .inner .wysiwyg { padding:29px 28px 0; }
+	#gridWide.consultenos .wrap { padding:0 9px 11px 10px;}
+		.consultenos .wrap h2 { margin-bottom:15px;}
+	
+	.consultenosMod { width:261px; float:left; padding:10px 0 0; background:url(../images/curve_contactenos-top.png) no-repeat 0 0;}
+		.consultenosMod .wrapConsulta { padding:0 11px 0 10px; background:url(../images/bck_contactenos.gif) repeat-y 0 0;}
+		#gridWide .consultenosMod .fix { width:261px; background:url(../images/curve_contactenos-bot.gif) no-repeat 0 0;}
+		#gridWide .consultenosMod .modConsulta { background:url(../images/bck_modDudas.gif) no-repeat 0 100%; padding:0; margin-bottom:15px}
+			#gridWide .consultenosMod .modConsulta h3 { background:url(../images/bck_tituloModDudas.gif) no-repeat 0 0; padding:10px 0 0 12px}
+			.consultenosMod .modConsulta ul { margin:10px 0 0 3px; padding:5px 12px 10px }
+				.consultenosMod .modConsulta li { padding:0 0 0 25px; list-style:none;}
+				.consultenosMod .modConsulta li.chat { background:url(../images/ico_chat.gif) no-repeat 0 2px;}
+				.consultenosMod .modConsulta li.videoc { background:url(../images/ico_videoconferencia.gif) no-repeat 0 2px;}
+		.consultenosMod .ventajas { margin:0; padding:0; list-style:none;}
+			.consultenosMod .ventajas li { padding:4px 0 6px 30px; background:url(../images/bullet_pPrimaria.gif) no-repeat 0 5px; list-style:none;}
+	
+	.otherQuery { float:left; width:599px; margin-left:18px;}
+		.otherQuery ul { margin:10px 0 0; padding:0;}
+			.otherQuery ul li { display:inline-block; width:157px; margin:0 20px 10px 0; padding:0 0 0 25px; vertical-align:top;}
+				.otherQuery ul li span.address { display:block;}
+			.otherQuery ul .personalizado { background:url(../images/ico_personalizado.gif) no-repeat 0 0;}
+			.otherQuery ul .escribenos { background:url(../images/ico_escribenos.gif) no-repeat 0 0;}
+			.otherQuery ul .correo { background:url(../images/ico_mail.gif) no-repeat 0 0;}
+				.otherQuery ul .correo .first { margin-top:5px;}
+			.otherQuery ul .telefono { background:url(../images/ico_telefono2.gif) no-repeat 0 0;}
+			.otherQuery ul .fax { background:url(../images/ico_fax.gif) no-repeat 0 0;}
+			.otherQuery ul .email { background:url(../images/ico_email2.gif) no-repeat 0 0;}
+			.otherQuery ul li.last { margin-right:0;}
+	#gridWide.consultenos .faq .wysiwyg { padding:18px 28px 0}
+		.consultenos .listFaq { margin-left:0;}
+			.consultenos .listFaq li { display:inline-block; width:266px; margin:0 10px 10px 0; padding-left:15px; vertical-align:top; background:url(../images/bullet_faq.gif) no-repeat 0 2px;}
+			.consultenos .listFaq li.last { margin:0; }
+
+#modType2.formacion .description .wysiwyg { padding-bottom:0}
+.formacion .object-left { margin-right:40px}			
+.formacion ul { margin:30px 0 0; list-style:none}
+	.formacion ul li { list-style-image:url(../images/bullet_pPrimaria.gif); margin:0 0 5px; padding:0 0 4px}
+
+#modFormacion2, #modFormacion { margin-bottom:21px}	
+	#modFormacion2 h2, #modFormacion h2 { background:url(../images/curve_supFormacion.gif) no-repeat 0 0; padding:8px 16px 0; height:24px}
+	#modFormacion2 div, #modFormacion div  { padding:0}
+	#modFormacion2 .fix, #modFormacion .fix { background:url(../images/curve_infFormacion.gif) no-repeat 0 0; height:10px; padding:0; width:953px}
+	#home #modFormacion .fix { background:none; height:0}
+	#modFormacion2 .wrap, #modFormacion .wrap { background:#9F9F9F url(../images/bck_wrapGridHome1.gif) repeat-x 0 0; padding:0 10px}
+		#modFormacion2 .wrap .description, #modFormacion .wrap .description { background:#fff url(../images/curve_supFormacionModType2.gif) no-repeat 0 0}
+		#modFormacion2 .wrap .description .fix, #modFormacion .wrap .description .fix {background:#fff url(../images/curve_infFormacionModType2.gif) no-repeat 0 0;height:9px; padding:0; width:933px}
+			#modFormacion2 .formacionList { margin:0; padding:30px 15px 5px}
+			#modFormacion .formacionList { margin:0; padding:20px 10px 5px}
+				#modFormacion2 .formacionList li { margin:0 0 15px; padding:0}
+				#modFormacion .formacionList li { display:inline-block; width:168px; vertical-align:top; margin:0 1.2em 0 0; padding:0}
+					#modFormacion .formacionList li.reset { margin:0}
+					#modFormacion .formacionList li .columnType1 { margin-bottom:20px}
+					#modFormacion2 .formacionList li .columnType1 { background:url(../images/bck_formacionList1.gif) repeat-y 0 0; float:left; width:720px}
+						#modFormacion2 .formacionList li .columnType1 h3 { background:url(../images/curve_supformacionList1.gif) no-repeat 0 0; padding:15px 0 5px 5px}
+							#modFormacion2 .formacionList li .columnType1 h3 span, #modFormacion .formacionList li .columnType1 h3 span { background-repeat:no-repeat; background-position:0 0; padding:7px 0 0 35px}
+								#modFormacion2 .formacionList li.presencial .columnType1 h3 span, #modFormacion .formacionList li.presencial .columnType1 h3 span { background-image:url(../images/bck_formacionPresencial.gif)}
+								#modFormacion2 .formacionList li.distancia .columnType1 h3 span, #modFormacion .formacionList li.distancia .columnType1 h3 span { background-image:url(../images/bck_formacionDistancia.gif)}
+								#modFormacion2 .formacionList li.medida .columnType1 h3 span, #modFormacion .formacionList li.medida .columnType1 h3 span { background-image:url(../images/bck_formacionMedida.gif)}
+								#modFormacion2 .formacionList li.masters .columnType1 h3 span, #modFormacion .formacionList li.masters .columnType1 h3 span { background-image:url(../images/bck_formacionMasters.gif)}
+								#modFormacion2 .formacionList li.confe .columnType1 h3 span, #modFormacion .formacionList li.confe .columnType1 h3 span { background-image:url(../images/bck_formacionConfe.gif)}
+							#modFormacion2 .formacionList .columnType1 p { padding-left:40px}
+							#modFormacion2 .formacionList .columnType1 ul { padding:5px 20px 10px 40px; margin:0; border-bottom:1px solid #d3d3d3}
+							#modFormacion .formacionList .columnType1 ul { margin:20px 0 0; padding:0}
+								#modFormacion2 .formacionList .columnType1 ul li { padding:4px 0; margin:0; background:url(../images/sep_formacionList.gif) repeat-x 0 100%}
+								#modFormacion .formacionList .columnType1 ul li { width:auto; display:inherit; margin:0 0 15px; padding:0}
+									#modFormacion2 .formacionList .columnType1 ul li.reset { background:none}
+										#modFormacion .formacionList .columnType1 ul li a { display:block}
+							#modFormacion2 .formacionList .columnType1 .verMas { padding:5px 20px 0 0}
+						#modFormacion2 .formacionList li .columnType1 .fix { background: url(../images/curve_infFormacionList1.gif) no-repeat 0 0; height:9px; padding:0; width:720px}
+					#modFormacion2 .formacionList li .columnType2 { background:url(../images/bck_formacionList2.gif) repeat-y 0 0; float:right; width:168px}
+					#modFormacion .formacionList li .columnType2 { background:url(../images/bck_formacionList2.gif) repeat-y 0 0; width:168px}
+						#modFormacion2 .formacionList li .columnType2 .title, #modFormacion .formacionList li .columnType2 .title { background:url(../images/curve_supFormacionList2.gif) no-repeat 0 0; padding:9px}
+						#modFormacion2 .formacionList li .columnType2 div, #modFormacion .formacionList li .columnType2 div { padding:9px}
+							#modFormacion2 .formacionList li .columnType2 div img, #modFormacion .formacionList li .columnType2 div img { margin-right:10px}
+							#modFormacion2 .formacionList .columnType2 div span.nombre, #modFormacion .formacionList .columnType2 div span.nombre { display:block; margin-top:32px}
+						#modFormacion2 .formacionList li .columnType2 .fix, #modFormacion .formacionList li .columnType2 .fix { background: url(../images/curve_infFormacionList2.gif) no-repeat 0 0; height:9px; padding:0; width:168px}
+
+
+.modType4, #cursoDetalle .modType4 { margin:0 0 14px; padding:10px 0 0; background:#8bb7de url(../images/curve_modType4-top.png) no-repeat 0 0;}
+	.modType4 .fix, #cursoDetalle .modType4 .fix { height:10px; padding:0; background:url(../images/curve_modType4-bot.gif) no-repeat 0 0;}
+	.modType4 .descripcion .fix, #cursoDetalle .modType4 .descripcion .fix { height:8px; background:url(../images/curve_modType4-cont-bot.gif) no-repeat 0 0;}
+	.modType4 .descripcion, #cursoDetalle .modType4 .descripcion { margin:0 11px 0 10px;}
+	
+		.modType4 .descripcion .tabs { margin:0;}
+			.modType4 .descripcion .tabs li { display:inline-block; position:relative; margin:0 2px 0 0; padding:0; vertical-align:top;}
+			/*#cursoDetalle .type2 .descripcion .tabs li { top:5px}*/
+				.modType4 .descripcion .tabs li h2 { padding:5px 8px}
+				.modType4 .descripcion .tabs li a { display:block; padding:5px 8px; background-color:#C6E7FF;}
+				.modType4 .descripcion .tabs li .cL, .modType4 .descripcion .tabs li .cR, .modType4 .descripcion .tabs li.sel .cL, .modType4 .descripcion .tabs li .cR { position:absolute; width:8px; height:8px; top:0}
+				.modType4 .descripcion .tabs li .cL { left:0; background:url(../images/curve_type1-left.gif) no-repeat 0 0;}
+				.modType4 .descripcion .tabs li .cR { right:0; background:url(../images/curve_type1-right.gif) no-repeat 0 0;}
+				.modType4.type2 .descripcion .tabs li .cL { background:url(../images/curve_type2-left.gif) no-repeat 0 0;}
+				.modType4.type2 .descripcion .tabs li .cR { background:url(../images/curve_type2-right.gif) no-repeat 0 0;}
+			.modType4 .descripcion .tabs li.sel { background-color:#FFF;}
+				.modType4 .descripcion .tabs li.sel .cL { left:0; background:url(../images/curve_type1-left-sel.gif) no-repeat 0 0;}
+				.modType4 .descripcion .tabs li.sel .cR { right:0; background:url(../images/curve_type1-right-sel.gif) no-repeat 0 0;}
+				.modType4.type2 .descripcion .tabs li.sel .cL { background:url(../images/curve_type2-left-sel.gif) no-repeat 0 0;}
+				.modType4.type2 .descripcion .tabs li.sel .cR { background:url(../images/curve_type2-right-sel.gif) no-repeat 0 0;}
+				
+		.modType4 .descripcion .cont { padding:20px 10px; background-color:#FFF;}
+			.modType4 .descripcion .cursoDet .column1 { float:left; width:424px;}
+				.modType4 .descripcion .cursoDet .column1 .spInf { margin:0 0 10px;}
+			.modType4 .descripcion .cursoDet .solo { float:left; width:auto}
+				.modType4 .descripcion .cursoDet .column1 ul { margin:0;}
+					.modType4 .descripcion .cursoDet .column1 ul li { margin:0 0 8px 0; padding:0 0 0 20px; background:url(../images/bullet_primaria2.gif) no-repeat 0 0}
+			.modType4 .descripcion .cursoDet .column2 { float:right; width:237px;}
+			.modType4 .descripcion .fix { height:8px; background:url(../images/curve_modType4-cont-bot.gif) no-repeat 0 0;}
+		.modType4.type2 .descripcion .cont { background:#FFF url(../images/curve_modType42-cont-top.gif) no-repeat 0 0;}
+			.modType4.type2 .descripcion .fix, #cursoDetalle .modType4.type2 .descripcion .fix { height:5px; background:url(../images/curve_modType42-cont-bot.gif) no-repeat 0 0;}
+#cursoDetalle .modType4.type2 { background:#0f68aa url(../images/curve_modType42-top.png) no-repeat 0 0;}
+	#cursoDetalle .modType4.type2 .fix { height:9px; padding:0; background:url(../images/curve_modType42-bot.gif) no-repeat 0 0;}
+
+.modType4.cursos .cont ul { margin:0;}
+	.modType4.cursos .cont ul li { display:inline-block; width:685px; margin:0 0 10px 0; padding:0 0 10px; vertical-align:top; background:url(../images/bck_dotted.gif) repeat-x 0 100%}
+		.modType4.cursos .cont ul li.last { background:none; margin:0; padding:0}
+		#cursoDetalle .modType4.cursos .cont ul li a { display:block}
+
+#gridWide #moduloDestacadoContenido.type1 h1 { padding:6px 0 0 16px; height:auto}
+#moduloDestacadoContenido .twoLines { display:block; padding:4px 0;}
+
+#moduloDestacado .fix { background:url(../images/curve_infWide-destacado.gif) no-repeat 0 0;}
+#moduloDestacado .inner .fix { background:url(../images/curve_infWideDescription.gif) no-repeat 0 0;}
+#moduloDestacadoc .wrap { background:url(../images/bck_wrapWide-destacado.gif) repeat-y 0 0;}
+
+#moduloDestacado .carac ul { margin:10px 0 0;}
+	#moduloDestacado .carac ul li { margin:0 0 2px; padding:2px 0 10px 30px; background:url(../images/bullet_pPrimaria.gif) no-repeat 0 0;}
+	
+p.subtitle { background:url(../images/bck_accesoMementix.gif) repeat-y 0 0; padding:0 10px 20px}
+.mementix .numAccesos h2, .mementix #accesoMementos h2 { background:url(../images/ico_num1.gif) no-repeat 0 5px; padding:10px 0 10px 30px}
+	.mementix .numAccesos { padding:18px 20px 20px 15px}
+		.mementix .numAccesos h2 { display:inline; float:left}
+		.mementix .numAccesos .verMas { display:inline; float:right; padding-top:10px}
+
+#accesoMementos { padding:18px 20px 20px 15px}	
+	.mementix #accesoMementos h2 { background:url(../images/ico_num2.gif) no-repeat 0 5px;}
+	#accesoMementos fieldset label { vertical-align:middle; white-space:normal;}
+		#accesoMementos fieldset input { float:left; margin:0 5px 0 0; vertical-align: middle}
+		#accesoMementos form ul, .mementix #mementosForm #accesoMementos ul { width:auto; margin:25px 0 0 40px; padding:0}
+			#accesoMementos form li, .mementix #mementosForm #accesoMementos ul li { display:inline-block; width:330px; padding:0; vertical-align:top}
+				
+#novedades { margin: 13px 0 0 0; width:760px}			
+	#novedades .fix { background:url(../images/curve_infModType2-cest.gif) no-repeat 0 0; height:9px}
+	#novedades h2 { background:#FFF url(../images/curve_supValores.gif) no-repeat 0 0; padding:18px 0 0 18px; height:32px}
+	#novedades .wrap { background-color:#FFF; padding:0 10px}
+		#novedades .wrap form { background:#c6e7ff url(../images/curve_novedadesForm.gif) no-repeat 0 0; padding:10px 20px 10px 30px}
+			#novedades .wrap form ul { margin:0}
+				#novedades .wrap form ul li { margin:0; padding:0}
+				#novedades .wrap form ul li, #novedades .wrap form ul li label { display:inline}
+				#novedades .wrap form ul li select { width:160px}
+		#novedades .description { background:url(../images/bck_listadoValoresInner.gif) repeat-y 0 0; padding:1px 0 0}
+			#novedades .description .fix { background:#FFFFFF url(../images/curve_infModType2Desc-cest.gif) no-repeat 0 0; height:9px}
+			#novedades .description ul { margin:0; padding:0 20px 15px; border-bottom:1px solid #c6e7ff}
+				#novedades .description ul li { clear:both; border-bottom:2px solid #c6e7ff; margin:20px 0 0; padding:0 0 20px}
+			#novedades .description .paginationResults ul { margin:0; padding:0; border:0}
+				#novedades .description .paginationResults ul li { clear:none; border:none; margin:0 5px 0 0; padding:0; float:left}
+					#novedades .description .paginationResults ul li.prev { margin-right:10px}
+					#novedades .description .paginationResults ul li.next { margin-left:5px}
+					#novedades .description ul li.reset { padding:0; border:none}
+					#novedades ul li .image { display:inline; float:left; margin:0 0 30px 0; padding:40px 0 0; width:140px; position:relative}
+						#novedades ul li .image .novedad { position:absolute; top:5px; left:30px; margin:0}
+					#novedades ul li .wysiwyg { width:320px; float:left}	
+						#novedades ul li .solo { width:695px; float:left}
+						#novedades ul li .solo2 { width:465px; float:left}
+						#novedades ul li .solo3 { width:600px; float:left}
+						#novedades ul li .wysiwyg h3 { display:inline; margin-right:50px}
+						#novedades ul li .wysiwyg p { margin-top:0; margin-bottom:0; /*margin-top:10px*/}
+						#novedades ul li .wysiwyg p.spInf { margin:10px 0 15px;}
+						#novedades ul li .wysiwyg ul { margin:0; padding:0}
+							#novedades ul li .wysiwyg ul { border:none}
+							#novedades ul li .wysiwyg ul li { margin:0 0 2px; padding:0 0 0 15px; border:none; list-style:none; background:url(../images/bullet_arrow.png) no-repeat 0 5px}
+								#novedades ul li .wysiwyg ul.ezsr-star-rating li { background: none  }
+					#novedades ul li .action { width:220px; float:right; padding:50px 0 0}
+						#novedades ul li .action2 { width:100px}
+						#novedades ul li .action .precioIva	{ display:inline}
+						#novedades ul li .action .btnType2 { float:right}
+			#novedades .pagination { float:right; margin-top:8px}
+			
+.fichas #gridWide #moduloDestacadoContenido .inner .wysiwyg, #moduloDestacadoContenido .inner .wysiwyg, #modType2.formacion .description .wysiwyg { padding:14px 28px 0 30px}
+.fichas #moduloDestacadoContenido .verMas { display:inline}
+.fichas #moduloDestacadoContenido .ejemplar { /*position:absolute; top:90px; right:20px*/ float:right; margin-bottom:10px}
+.fichas .modType4 { background-image:url(../images/curve_modType4Fichas-top.png); position:relative}
+	.fichas .modType4 .volver { margin:0 10px 5px 0}
+		.fichas .modType4 .volver a { background:url(../images/ico_volverFichas.gif) no-repeat 0 5px; padding-left:25px}
+	.fichas .modType4 .descripcion .cursoDet .colUnica { width:auto}
+		.fichas .modType4 .descripcion .cursoDet .colUnica .margen { margin:50px 9px 0 0}
+		.fichas .modType4 .descripcion .cursoDet .colUnica .versiones ul li .dosCol { width:auto}
+			.fichas .modType4 .descripcion .cursoDet .colUnica .versiones ul li .flt ul li { background:none; padding-left:0}
+				.fichas .modType4 .descripcion .cursoDet .colUnica .versiones ul li .dosCol ul li { display:inline-block; vertical-align:top; width:260px}
+			.fichas .modType4 .descripcion .cursoDet .colUnica .versiones ul li .flt ul li ul li { background:url(../images/bullet_arrow.png) no-repeat 0 5px; padding-left:10px}
+	.fichas .modType4 .descripcion .cursoDet .column1 ul { margin-top:10px}
+		.fichas .modType4 .descripcion .cursoDet .column1 ul li { background-image:url(../images/bullet_fichas.gif)}
+	.fichas .modType4 .descripcion .cursoDet .column1 .verMas { padding-bottom:15px; border-bottom:2px solid #c6e7ff}
+	.fichas .modType4 .descripcion .cursoDet .column1 .testimonio { margin-top:10px}
+	.fichas .modType4 .descripcion .cursoDet .column2 { width:208px}
+	
+.fichas .columnType1 #modFichasPrecio h2 { background:url(../images/curve_supModFichasPrecio.gif) no-repeat 0 0; height:38px; padding:10px 0 0 10px}
+	.fichas .columnType1 #modFichasPrecio.ahora h2 span { display:block}
+	.fichas .columnType1 #modFichasPrecio .fix { background:url(../images/curve_infModFichasPrecio.gif) no-repeat 0 0; height:10px; padding:0}
+	.fichas .columnType1 #modFichasPrecio .wrap { background:url(../images/bck_ModFichasPrecio.gif) repeat-y 0 0; padding:0 10px 0}
+		.fichas .columnType1 #modFichasPrecio ul { margin:0; padding:10px 0 0}
+		.fichas .columnType1 #modFichasPrecio.ahora ul { padding:10px 0 0}
+			.fichas .columnType1 #modFichasPrecio ul li { margin:0 0 5px; padding:0}
+			.fichas .columnType1 #modFichasPrecio .info, .fichas .columnType1 #modFichasPrecio2 .info { background:url(../images/curve_supmodFichasPrecioInfo.gif) no-repeat 0 0; padding:6px 0}
+			.fichas .sideBar .info { background:url(../images/curve_supmodFichasPrecioInfoCursos.gif) no-repeat 0 0; padding:6px 0; position:relative; margin-bottom:15px}
+				.fichas .columnType1 #modFichasPrecio .info .inner, .fichas .columnType1 #modFichasPrecio2 .info .inner { background:url(../images/bck_innerModFichaPrecio.gif) repeat-y 0 0}
+				.fichas .sideBar .info .inner { background:url(../images/bck_innerModFichaPrecioCursos.gif) repeat-y 0 0}
+				.fichas .columnType1 #modFichasPrecio .info ul, .fichas .columnType1 #modFichasPrecio2 .info ul { padding:5px 0 0 10px}
+				.fichas .sideBar .info ul { padding:5px 0 0 10px; margin:0}
+					.fichas .columnType1 #modFichasPrecio .info ul li, .fichas .columnType1 #modFichasPrecio2 .info ul li { padding:5px 0 5px 25px; margin-bottom:5px; background-position:0 0; background-repeat:no-repeat}
+					.fichas .sideBar .info ul li { padding:5px 0 5px 25px; margin-bottom:5px; background-position:0 0; background-repeat:no-repeat}
+						.fichas .columnType1 #modFichasPrecio .info ul li.paginas, .fichas .columnType1 #modFichasPrecio2 .info ul li.paginas, .fichas .sideBar .info ul li.paginas { background-image: url(../images/ico_paginas.gif)}
+						.fichas .columnType1 #modFichasPrecio .info ul li.sumario, .fichas .columnType1 #modFichasPrecio2 .info ul li.sumario, .fichas .sideBar .info ul li.sumario { background-image: url(../images/ico_sumario.gif)}
+						/*.fichas .columnType1 #modFichasPrecio .info ul li.compartelo, .fichas .columnType1 #modFichasPrecio2 .info ul li.compartelo, .fichas .sideBar .info ul li.compartelo { background-image: url(../images/ico_compartelo.gif)}*/
+						.fichas .columnType1 #modFichasPrecio .info ul li.imprimir, .fichas .columnType1 #modFichasPrecio2 .info ul li.imprimir, .fichas .sideBar .info ul li.imprimir { background-image: url(../images/ico_imprimir.gif)}
+						.fichas .columnType1 #modFichasPrecio .info ul li.demo, .fichas .columnType1 #modFichasPrecio2 .info ul li.demo, .fichas .sideBar .info ul li.demo { background-image: url(../images/ico_demo.gif)}
+						.fichas .columnType1 #modFichasPrecio .info ul li.secretos, .fichas .columnType1 #modFichasPrecio2 .info ul li.secretos, .fichas .sideBar .info ul li.secretos { background-image: url(../images/ico_secretos.gif)}
+			.fichas .columnType1 #modFichasPrecio .info .fix, .fichas .columnType1 #modFichasPrecio2 .info .fix { background:url(../images/curve_infModFichasPrecioInfo.gif) no-repeat 0 0}
+			.fichas .sideBar .info .fix { background:url(../images/curve_infModFichasPrecioInfoCursos.gif) no-repeat 0 0}
+			.fichas .columnType1 #modFichasPrecio .dudas { background:url(../images/bck_modDudas.gif) no-repeat 0 100%; padding:0; margin-bottom:15px}
+				.fichas .columnType1 #modFichasPrecio .dudas h3 { background:url(../images/bck_tituloModDudas.gif) no-repeat 0 0; padding:10px 0 0 12px}
+				.fichas .columnType1 #modFichasPrecio .dudas ul { padding:5px 12px 10px}
+					.fichas .columnType1 #modFichasPrecio .dudas ul li { padding:0 0 5px 22px; margin:0; background-position:0 0; background-repeat:no-repeat}
+						.fichas .columnType1 #modFichasPrecio .dudas ul li.chat { background-image:url(../images/ico_chat.gif)}
+						.fichas .columnType1 #modFichasPrecio .dudas ul li.contacto { background-image:url(../images/ico_contactoMas.gif)}
+				.fichas .columnType1 #modFichasPrecio .opinion ul { border-top:1px solid #c6e7ff; padding:5px 0 0; margin:5px 0 0}
+					.fichas .columnType1 #modFichasPrecio .opinion ul li { border-bottom:1px solid #c6e7ff; padding:0 0 5px}
+				
+.fichas .columnType1 #modFichasPrecio .info ul li.reset, .fichas .columnType1 #modFichasPrecio2 .info ul li.reset  { padding-left: 0 }
+
+.fichas .columnType1 #modFichasPrecio .info ul span.compartelo, .fichas .columnType1 #modFichasPrecio2 .info ul span.compartelo { display: block; padding:5px 0 5px 25px; background: url(../images/ico_compartelo.gif) no-repeat 0 0 }
+
+.info ul li.reset .flt { width: 6em; padding:0}
+.info ul li.reset .frt { width: 13em; padding: 0 }
+
+.fichas .modType4 .descripcion .fix { background-image:url(../images/curve_modType4Fichas-bot.gif)}
+.fichas .modType4 .fix { background-image:url(../images/curve_modType4Fichas-bot2.gif)}
+.fichas .modType4 .testimonio ul { margin: 0; padding: 0; list-style: none  }
+	.fichas .modType4 .testimonio h3 { margin-bottom:8px}
+	.fichas .modType4 .testimonio img { margin:0 15px 15px 0}
+	.fichas .modType4 .testimonio span { display:block; margin:8px 0}
+	
+	.fichas .modType4 .descripcion .cursoDet .column1 .testimonio li { padding: 0; background: none  }
+	.fichas .modType4 .descripcion .cursoDet .column1 .testimonio .botonTestimonio { margin-left: 63px  }
+	
+		.testimonio .jcarousel-list { left:0; margin:0; overflow:hidden; padding:0; position:relative; top:0; z-index:1; }
+
+		.testimonio .jcarousel-clip { margin:0; overflow:hidden; padding:0; position:relative; z-index:2; }
+		
+		.testimonio .jcarousel-container { position: relative; width: 208px;       }
+			.fichas .modType4 .descripcion .cursoDet .column1 .testimonio .jcarousel-container { width: 424px }
+		.testimonio .jcarousel-container-horizontal { width: 208px;  }
+			.fichas .modType4 .descripcion .cursoDet .column1 .testimonio .jcarousel-container-horizontal { width: 424px }
+		
+		.testimonio .jcarousel-clip-horizontal { width:  208px; height: 171px; }
+			.fichas .modType4 .descripcion .cursoDet .column1 .testimonio .jcarousel-clip-horizontal { width: 424px; height: 130px }
+
+		.testimonio  .jcarousel-item { float: left; width: 208px; height: 171px; margin-left: 0; padding: 0; background: none;  }
+		.fichas .modType4 .descripcion .cursoDet .column1 .testimonio .jcarousel-item  { width: 424px; height: 110px; }
+
+		.testimonio  .jcarousel-item-horizontal { margin-right: 10px; }
+		.testimonio  .jcarousel-item-vertical { margin-bottom: 10px; }
+		.testimonio  .jcarousel-item-placeholder { background: #fff;  }
+
+
+		.testimonio  .jcarousel-next-horizontal { position: absolute; top: 169px; right: 78px; width: 21px; height: 20px; padding: 0; cursor: pointer; background: transparent url(../images/btn_testimonioDisabled-rg.gif) no-repeat 0 0; }
+		
+			.fichas .modType4 .descripcion .cursoDet .column1 .testimonio  .jcarousel-next-horizontal { top: 128px; right: auto; left: 173px }
+		
+		.testimonio  .jcarousel-next-disabled-horizontal { cursor: default; background: transparent url(../images/btn_testimonioDisabled-rf.gif) no-repeat 0 0 }
+
+		.testimonio  .jcarousel-prev-horizontal { position: absolute; top: 169px; left: 5px; width: 21px; height: 20px; padding: 0; cursor: pointer; background: transparent url(../images/btn_testimonio-lf.gif) no-repeat 0 0; }
+			.fichas .modType4 .descripcion .cursoDet .column1 .testimonio  .jcarousel-prev-horizontal { top: 128px; left: 69px;  }
+		
+		.testimonio .jcarousel-prev-disabled-horizontal { cursor: default; background:transparent url(../images/btn_testimonioDisabled-lf.gif) no-repeat 0 0}
+
+		.testimonio .jcarousel-next-disabled-horizontal, .testimonio .jcarousel-next-disabled-horizontal:hover, .testimonio .jcarousel-next-disabled-horizontal:active, .testimonio .jcarousel-prev-disabled-horizontal, .testimonio .jcarousel-prev-disabled-horizontal:hover, .testimonio .jcarousel-prev-disabled-horizontal:active { background-position: 0 0  }
+
+	
+		.fichas .modType4 .testimonio span.nombre { display:inline}
+.fichas .modType4 .testimonio .botonTestimonio span { display:inline; margin:0}
+	.fichas .modType4 .testimonio .botonTestimonio span img { margin:0; position:relative; top:5px}
+		.fichas .modType4 .testimonio .botonTestimonio span.left img { right:-3px}
+		.fichas .modType4 .testimonio .botonTestimonio span.right img { left:-3px}
+	.fichas .modType4 .testimonio .botonTestimonio span.mas { background:url(../images/bck_testimonio.gif) repeat-x 0 0; padding:5px; margin-left: 26px}
+.fichas .modType4 .column2 .imprimir { margin-bottom:10px}
+	.fichas .modType4 .column2 .imprimir a { background:url(../images/ico_imprimir.gif) no-repeat 0 0; padding:5px 0 5px 25px}
+/*.fichas #modVentajas { background-image:url(../images/bck_ModVentajasFicha.gif)}
+	.fichas #modVentajas h2 { background-image:url(../images/bck_tituloModVentajasFicha.gif); padding:36px 33px 42px 45px}*/
+.fichas #modVentajas { background:none;}
+	.fichas #modVentajas ul { padding:0 17px 23px; background:url(../images/bck_ModVentajasFicha.png) no-repeat 0 100%;}
+		.fichas #modVentajas h2 { background-image:url(../images/bck_tituloModVentajasFicha.png); padding:36px 33px 28px 45px}
+			.fichas #modVentajas h2 span { display:block}
+	
+.fichas #gridType3 { margin-bottom:23px; padding:13px 0 0 0}
+	.fichas #gridType3 h2, .fichas .sideBar #software h2 { padding:14px 0 7px 3px}
+	.fichas #gridType3 .wrap { padding:0}
+	.fichas #gridType3 .columnType1 { position:relative; width:470px; padding:0 10px; background:#fff url(../images/curve_cest1-gr3-2.gif) no-repeat 0 0}
+		.fichas #gridType3 .columnType1.colUnica { width:659px; background-image:url(../images/curve_cest1-gr3-2Unica.gif)}		
+		.fichas #cursoDetalle #gridType3 .columnType1.colUnica { width:709px; background-image:url(../images/curve_cursoDetalle-gr3-Unica.gif)}			
+	.fichas #gridType3 .columnType2 { position:relative; width:160px; padding:0 10px; background:#fff url(../images/curve_supFichas-gr3-2.gif) no-repeat 0 0}
+	.fichas #gridType3 #software.columnType2 { background:#dcdcdc url(../images/curve_supFichasSoftware.gif) no-repeat 0 0}
+	.fichas .sideBar #software.columnType2 { background:#dcdcdc url(../images/curve_supFichasSoftwareCurso.gif) no-repeat 0 0}
+	.fichas .sideBar #software.columnType2 { padding:0 10px; position:relative}
+	
+	/*modulo enlaces abonados*/
+	#gridTwoColumns .sideBar #software.columnType2 { position:relative; padding:0 10px; background:#DCDCDC url(../images/curve_supFichasEnlacesAbonados.gif) no-repeat 0 0}
+		#gridTwoColumns .sideBar #software.columnType2 h2 { padding:14px 0 7px 3px;}
+		#gridTwoColumns .sideBar #software.columnType2 #faq { padding:20px 10px;}
+		#gridTwoColumns .sideBar #software.columnType2 .wrapColumn { padding:10px 0 0; background:url(../images/curve_supFichasWrapAbonados.gif) no-repeat 0 0; }
+			#gridTwoColumns .sideBar #software.columnType2 .inner { background:url(../images/bck_FichasInnerAbonados.gif) repeat-y 0 0;}
+			
+		#gridTwoColumns .sideBar #software.columnType2 .fix { position:absolute; left:0; width:100%; height:10px; padding:0; background:url(../images/curve_infFichasAbonados.gif) no-repeat 0 0;}
+		#gridTwoColumns .sideBar #software.columnType2 .wrapColumn .fix { position:static; width:100%; height:10px; background:url(../images/curve_infFichasWrapAbonados.gif) no-repeat 0 0;}
+		#gridTwoColumns .sideBar #faq .preguntas { padding:0 2px;}
+		
+	
+	.fichas #gridType3 .fix, .fichas .sideBar .fix {position:absolute; left:0; height:10px; padding:0} 
+	.fichas .sideBar .fix { width:208px}
+		.fichas #gridType3 .columnType1 .fix { width:490px; background:url(../images/curve_infCest1-gr3-2.gif) no-repeat 0 0}
+			.fichas #gridType3 .columnType1.colUnica .fix { width:679px; background:url(../images/curve_infCest1-gr3-2Unica.gif)}
+			.fichas #cursoDetalle #gridType3 .columnType1.colUnica .fix { width:729px; background:url(../images/curve_infCursoDetalle-gr3-Unica.gif)}
+		.fichas #gridType3 .columnType2 .fix { width:180px; background:url(../images/curve_infFichas-gr3-2.gif) no-repeat 0 0}
+		.fichas #gridType3 #software.columnType2 .fix { background:url(../images/curve_infFichasSoftware.gif) no-repeat 0 0}
+		.fichas .sideBar #software.columnType2 .fix { background:url(../images/curve_infFichasSoftwareCursos.gif) no-repeat 0 0}
+	.fichas #gridType3 .wrapColumn, .fichas .sideBar .wrapColumn { padding:10px 0 0 0}
+		.fichas #gridType3 .wrapColumn .fix, .fichas .sideBar .wrapColumn .fix { position:static; width:100%; height:10px; padding:0}		
+		.fichas #gridType3 .columnType1 .wrapColumn { width:472px; background:url(../images/curve_supWrapCest1-2.gif) no-repeat 0 0}
+			.fichas #gridType3 .columnType1.colUnica .wrapColumn { width:659px; background-image:url(../images/curve_supWrapCest1-2Unica.gif)}
+			.fichas #cursoDetalle #gridType3 .columnType1.colUnica .wrapColumn { width:709px; background-image:url(../images/curve_supWrapCursoDetalle-Unica.gif)}
+			.fichas #gridType3 .columnType1 .wrapColumn .fix { background:url(../images/curve_infWrapCest1-2.gif) no-repeat 0 0}
+				.fichas #gridType3 .columnType1.colUnica .wrapColumn .fix { width:659px; background-image:url(../images/curve_infWrapCest1-2Unica.gif)}
+				.fichas #cursoDetalle #gridType3 .columnType1.colUnica .wrapColumn .fix { width:709px; background-image:url(../images/curve_infWrapCursoDetalle-Unica.gif)}
+		.fichas #gridType3 .columnType2 .wrapColumn { width:162px; background:url(../images/curve_supFichasWrap-2.gif) no-repeat 0 0}
+		.fichas #gridType3 #software.columnType2 .wrapColumn { width:162px; background:url(../images/curve_supFichasWrapSoftware.gif) no-repeat 0 0}
+		.fichas .sideBar #software.columnType2 .wrapColumn { width:188px; background:url(../images/curve_supFichasWrapSoftwareCursos.gif) no-repeat 0 0}
+			.fichas #gridType3 .columnType2 .wrapColumn .fix { background:url(../images/curve_infFichasWrap-2.gif) no-repeat 0 0}
+			.fichas #gridType3 #software.columnType2 .wrapColumn .fix { background:url(../images/curve_infFichasWrapSoftware.gif) no-repeat 0 0}
+			.fichas .sideBar #software.columnType2 .wrapColumn .fix { background:url(../images/curve_infFichasWrapSoftwareCursos.gif) no-repeat 0 0}		
+	.fichas #gridType3 .inner{ position:relative; width:100%; padding:0}	
+		.fichas #gridType3 .columnType1 .inner{ background:url(../images/bck_innerCest1-2.gif) repeat-y 0 0}
+			.fichas #gridType3 .columnType1.colUnica .inner{ background-image:url(../images/bck_innerCest1-2Unica.gif)}
+			.fichas #cursoDetalle #gridType3 .columnType1.colUnica .inner{ background-image:url(../images/bck_innerCursoDetalle-Unica.gif)}
+		.fichas #gridType3 .columnType2 .inner{ background:url(../images/bck_FichasInner-2.gif) repeat-y 0 0; padding-top:10px}
+		.fichas #gridType3 #software.columnType2 .inner { background:url(../images/bck_FichasInnerSoftware.gif) repeat-y 0 0}
+		.fichas .sideBar #software.columnType2 .inner { background:url(../images/bck_FichasInnerSoftwareCursos.gif) repeat-y 0 0}
+		.fichas #gridType3 .inner ul { border-bottom:1px solid #c6e7ff; margin:0; padding:8px 5px; /*padding:8px 4px;*/ list-style:none; }
+			.fichas #gridType3 .inner ul.reset { border:none}
+				.fichas #gridType3 .inner li { float:left; width:230px; margin:0; padding:0; min-height:90px}
+				/**/
+				.fichas #gridType3 .columnType1 .inner ul { padding:8px 10px;}
+					.fichas #gridType3 .columnType1 .inner li { width:224px;}
+						.fichas #gridType3 .columnType1 .inner li .description { width:110px; padding:0 10px 0 4px;}
+					.fichas #gridType3 .columnType1 .inner li.solo .description { width:336px;}
+				.fichas #gridType3 .columnType1 .inner .columnsType1 { padding:8px 19px; text-align:center;}
+					.fichas #gridType3 .columnType1 .inner .columnsType1 li { display:inline-block; float:none; width:168px; margin:0 20px 0 0; vertical-align:top; text-align:left;}
+						.fichas #gridType3 .columnType1 .inner .columnsType1 li .description { width:auto;}
+					.fichas #gridType3 .columnType1 .inner .columnsType1 li.reset { margin:0;}
+				/**/
+					.fichas #gridType3 .colUnica .inner li { width:318px}
+					.fichas #gridType3 .inner li.solo { width:auto}
+						.fichas #gridType3 .inner li.solo .description { width:353px}
+							.fichas #gridType3 .colUnica .inner li.solo .description { width:528px; padding:0 10px 0 0;}
+					.fichas #gridType3 .inner li.sinImage .description { width:auto; margin-left:10px}
+						.fichas #gridType3 .colUnica .inner li.sinImage .description { width:auto}
+					.fichas #gridType3 .inner ul.reset li { margin-bottom:10px}
+				.fichas #gridType3 .inner p { margin:3px 0 5px 0}	
+				.fichas #gridType3 .image { width: 100px; padding:0}		
+				.fichas #gridType3 .description { width:114px; padding:0 10px 0 0}
+					.fichas #gridType3 .columnType2 .inner .description { float:none; padding:0 10px; width:auto}
+						.fichas #gridType3 .columnType2 .inner ul { float:none; padding:0; width:auto; border:none}
+						.fichas .sideBar .columnType2 .inner ul { margin:0}
+							.fichas #gridType3 .columnType2 .inner ul li { float:none; width:auto; margin-bottom:16px}
+								.fichas #gridType3 .columnType2 .inner ul li img { display:block; margin:0 auto 5px}
+					.fichas #gridType3 .inner li .description { width:120px}
+						.fichas #gridType3 .colUnica .inner li .description { width:204px}
+					.fichas #gridType3 .columnType1 .inner .verMas { padding:10px 0 0 15px}
+					.fichas #gridType3 .columnType2 ul.borde li { margin-bottom:0}
+					.fichas #gridType3 .borde div { border-bottom:1px solid #c6e7ff}
+					.fichas #gridType3 .borde .verMas { padding:10px 0 0 10px}
+
+.fichas #gridType3.wide .columnType1 { width:737px; background:#fff url(../images/curve_top-cest1-gr3-3.gif) no-repeat 0 0; }
+	.fichas #gridType3.wide .columnType1 .fix { width:757px; background:#fff url(../images/curve_bot-cest1-gr3-3.gif) no-repeat 0 0;}
+	.fichas #gridType3.wide .columnType1 .wrapColumn { width:737px; background:url(../images/curve_supWrapCest1-3.gif) no-repeat 0 0; }
+		.fichas #gridType3.wide .columnType1 .inner { background:url(../images/bck_innerCest1-3.gif) repeat-y 0 0;}
+			.fichas #gridType3.wide .columnType1 .inner ul { padding:8px;}
+				.fichas #gridType3.wide .columnType1 .inner li { display:inline-block; float:none; width:238px; vertical-align:top;}
+					.fichas #gridType3.wide .columnType1 .inner li .description { width:124px;}
+		.fichas #gridType3.wide .columnType1 .wrapColumn .fix { background:url(../images/curve_botWrapCest1-3.gif) no-repeat 0 0;}
+
+
+	.fichas .cursosRel h2 { background:#fff url(../images/curve_supCursosFichas.gif) no-repeat 0 0; padding:10px 0 0 10px; height:20px}
+	.fichas .cursosRel .wrap { background-color:#fff; padding:0 10px}
+		.fichas .cursosRel .description { background:url(../images/curve_supCursosFichasDescription.gif) no-repeat 0 0; padding:8px 0 0 }
+			.fichas .cursosRel .description ul { margin:0; padding:0 0 0 10px; border-left:1px solid #d3d3d3; border-right:1px solid #d3d3d3}
+				.fichas .cursosRel .description ul li { width:185px; margin:0 25px 0 0; padding:0; display:inline-block; vertical-align:top}
+					.fichas .cursosRel .description ul li.solo { width:620px}	
+					.fichas .cursosRel .description ul li.solo2 { width:395px}
+.fichas .cursosRel .fix { background:url(../images/curve_infCursosFichas.gif) no-repeat 0 0; height:8px}
+	.fichas .cursosRel .description .fix { background:url(../images/curve_infCursosFichasDescription.gif) no-repeat 0 0; height:8px}
+
+
+.fichas .modConvencerse { background:url(../images/bck_modConvencerse.gif) no-repeat 0 100%; width:166px; /*position:absolute; top:90px; right:30px;*/ margin-bottom:10px; float:right; padding:0}
+	.fichas #moduloDestacadoContenido .modConvencerse div { padding:10px 0 10px 10px}
+.fichas #modInformacion { background:url(../images/bck_modInformacion.gif) no-repeat 0 100%; width:166px; /*position:absolute; top:160px; right:23px;*/ margin-bottom:10px; float:right; padding:0}
+.fichas #modInformacion2 { background:url(../images/boton_ficha_gris.jpg) no-repeat 0 100%; width:166px; height:120px; margin-bottom:10px; float:right; padding:0}
+	.fichas #moduloDestacadoContenido #modInformacion div { padding:10px 0 10px 10px}
+	.fichas #moduloDestacadoContenido #modInformacion2 div { padding:3px 0 3px 3px}
+.fichas .descuentoType1 { position:relative; left:2px; width:57px; height:66px; padding:9px 9px 0 9px; background:url(../images/bck_descuentoType1.png) no-repeat 0 0; text-align:center; margin:5px 0 10px}
+	.fichas .descuentoType1 strong { display:block} 
+	
+.fichas .modType4 .descripcion .cursoDet .versiones ul li { background-image:none; padding:0; border-bottom:2px solid #c6e7ff}
+.fichas .modType4 .descripcion .cursoDet .sumario ul li { background-image:none; padding:10px 0 0 0; border-top:2px solid #c6e7ff; border-bottom:none}
+	.fichas .modType4 .descripcion .cursoDet .colUnica #modVentajas ul li { border:none}
+	.fichas .modType4 .descripcion .cursoDet .versiones ul li .flt { width:340px}
+	.fichas .modType4 .descripcion .cursoDet .sumario ul li .flt { width:auto}
+		.fichas .modType4 .descripcion .cursoDet .versiones ul li .flt h3 { margin-bottom:10px}
+		.fichas .modType4 .descripcion .cursoDet .versiones ul li .flt ul { margin-top:5px}
+			.fichas .modType4 .descripcion .cursoDet .versiones ul li .flt ul li { border:none; margin:0 0 5px; background:url(../images/bullet_arrow.png) no-repeat 0 5px; padding-left:10px}
+			.fichas .modType4 .descripcion .cursoDet .sumario ul li .flt ul li { padding:0 0 0 10px}
+
+.fichas #gridWide .modType4 { background:#8BB7DE url(../images/curve_modType4-wide-top.png) no-repeat 0 0;}
+	.fichas #gridWide .modType4 .columnTipo1 { float:left; width:455px; margin-right:24px;}
+	.fichas #gridWide .modType4 .columnTipo2 { float:left; width:430px;}
+	.fichas #gridWide .modType4 .text p { margin-bottom:12px;}
+	.fichas #gridWide .modType4 .text .title { padding:8px 0;}
+.fichas #gridWide .modType4 .fix { height:10px; background:url(../images/curve_modType4Fichas-wide-bot2.gif) no-repeat 0 0;}
+.fichas #gridWide .modType4 .descripcion .fix { width:932px; height:10px; background:url(../images/curve_modType4Fichas-wide-bot.gif) no-repeat 0 0;}
+.fichas #gridWide .modType4 .fichaVar1 .clearFix { margin-bottom:20px}
+
+.fichas .precioIva { display:inline; float:right;/* top:-80px; left:14px;*/ padding:12px 20px; margin-bottom:10px}
+	.fichas .precioIva .cTopL, .fichas .precioIva .cTopR, .fichas .precioIva .cBotL, .fichas .precioIva .cBotR { position:absolute; width:25px; height:25px; background-position: 0 0; background-repeat: no-repeat  } 
+	.fichas .precioIva .cTopL { top: -2px; left: -2px; background-image:url(../images/curve_tl-precioFichas.gif) }
+	.fichas .precioIva .cTopR { top: -2px; right: -2px; background-image:url(../images/curve_tr-precioFichas.gif) }
+	.fichas .precioIva .cBotL { bottom: -4px; left: -2px; background-image:url(../images/curve_bl-precioFichas.gif)}
+	.fichas .precioIva .cBotR { bottom: -4px; right: -2px; background-image:url(../images/curve_br-precioFichas.gif) }
+	.fichas .precioIva .precioAnterior { display:inline}
+	
+.fichas #faq { padding:0}
+.fichas .modType4 .descripcion .cursoDet #faq .flt { width:420px; margin-right:10px}
+.fichas .modType4 .descripcion .cursoDet .column1 #faq .respuestas ul li { background-image:none}
+
+#moduloDestacadoContenido.type1 .precios { /*position:absolute; top:90px; right:230px*/ float:left; width:80px}
+	#moduloDestacadoContenido.type1 .precios .descuentoType1 span { padding-top:18px}
+	#moduloDestacadoContenido.type1 .precios .antes { text-align:center}
+	#moduloDestacadoContenido.type1 .precios .antes span, #moduloDestacadoContenido.type1 .precios .descuentoType1 span { display:block}
+	
+#moduloDestacadoContenido .sinImagen { width:230px; padding:30px 100px 30px 30px}
+#moduloDestacadoContenido .buscaCurso { padding:20px 20px 20px 0; width:255px}
+#moduloDestacadoContenido .buscaCurso .fix { background:url(../images/curve_infBuscaCurso.gif) no-repeat 0 0; height:10px; width:255px}
+	#moduloDestacadoContenido .buscaCurso h2 { background:url(../images/curve_supBuscaCurso.gif) no-repeat 0 0; padding:12px 0 0 20px; height:20px}
+	#moduloDestacadoContenido .buscaCurso form { background:#00528d url(../images/bck_formBuscaCurso.gif) repeat-x 0 0}
+		#moduloDestacadoContenido .buscaCurso ul { margin:0; padding:10px 0 0 20px}
+			#moduloDestacadoContenido .buscaCurso ul li { list-style:none; list-style-image:none; padding:0}
+				#moduloDestacadoContenido .buscaCurso ul li select { width:210px}
+			#moduloDestacadoContenido .buscaCurso .submit { margin-right:24px}
+
+#moduloDestacadoContenido .priceCont { position:relative;}
+ 	#moduloDestacadoContenido .priceCont .descuentoType1 { position:absolute; top:4px; right:-9px; width:57px; height:66px; padding:9px 9px 0; text-align:center; background:url(../images/bck_descuentoType1.png) no-repeat 0 0}
+		#moduloDestacadoContenido .priceCont .descuentoType1 span { display:block; padding:18px 0 0;}
+
+.difPrecios { display:inline; float:left}
+	.difPrecios .antes, .difPrecios .ahora { display:inline-block; vertical-align:top}
+	.difPrecios .antes { margin-right:30px}
+	.difPrecios .soloPrecio { margin-left:78px}
+		.difPrecios .antes span, .difPrecios .ahora span { display:block; margin-top:5px; padding-bottom:10px}
+#novedades .margen { margin-top:20px}
+
+#gridType7 { width:760px; margin-bottom:13px; padding:13px 0 0 0}	 
+	#gridType7 .wrap { padding:0}
+	#gridType7 .columnType1, #gridType7 .columnType2 { position:relative; width:353px; padding:10px 10px 0; background:#fff url(../images/curve_grid6c1Sup.gif) no-repeat 0 0}				
+		#gridType7 .columnType1 .fix, #gridType7 .columnType2 .fix { position:absolute; left:0; width:373px; height:12px; padding:0; background: url(../images/curve_grid6c1Inf.gif) no-repeat 0 0}
+	
+	#gridType7 .columnType1 .wrapColumn, #gridType7 .columnType2 .wrapColumn { width:353px; padding:10px 0 0 0; background:url(../images/curve_grid7WrSup.gif) no-repeat 0 0}
+		#gridType7 .columnType1 .wrapColumn .fix, #gridType7 .columnType2 .wrapColumn .fix { position:static; width:350px; height:10px; padding:0; background: url(../images/curve_grid7WrInf.gif) no-repeat 0 0}		
+	#gridType7 .columnType1 .inner, #gridType7 .columnType2 .inner { position:relative; width:315px; padding:0 20px 0 15px; background:url(../images/curve_grid7Inner.gif) repeat-y 0 0; min-height:175px}	
+			#gridType7 p { margin:15px 0}
+			
+.modType5 { background:#dcdcdc url(../images/curve_modType5-top.gif) no-repeat 0 0; padding:10px 0 0; margin:0 0 15px; width:760px}
+	.modType5 .fix { background:url(../images/curve_modType5-bottom.gif) no-repeat 0 0; height:10px; padding:0}
+	.modType5 .wrap { margin:0 13px}
+		.modType5 .wrap .tabs { position:relative; z-index:2; top:2px; margin:0; padding:0; list-style:none }		
+			.modType5 .wrap .tabs li { position: relative; float: left; margin: 0 3px 0 1px; padding:5px 12px} 
+				.modType5 .wrap .tabs li .cLeft, .modType5 .wrap .tabs li .cRight { position:absolute; top:0; width:12px; height:18px; background-position:0 0; background-repeat: no-repeat}
+				.modType5 .wrap .tabs li .cLeft { left:0; background-image:url(../images/curve-l-tab.png)}
+					.modType5 .wrap .tabs li.sel .cLeft { left:0; background-image:url(../images/curve-l-tabS.gif)}
+				.modType5 .wrap .tabs li .cRight { right:0; background-image:url(../images/curve-r-tab.png)}
+					.modType5 .wrap .tabs li.sel .cRight { background-image:url(../images/curve-r-tabS.gif)}
+				.modType5 .wrap .cat1 { background-color:#0000ff}
+				.modType5 .wrap .cat2 { background-color:#c51822}
+				.modType5 .wrap .cat3 { background-color:#f9cbd8}
+				.modType5 .wrap .cat4 { background-color:#4b90cc}
+				.modType5 .wrap .cat5 { background-color:#00674e}
+				.modType5 .wrap .cat6 { background-color:#898f99}
+				.modType5 .wrap .cat7 { background-color:#392d88}
+				.modType5 .wrap .cat8 { background-color:#fcb122}
+				.modType5 .wrap .cat9 { background-color:#ffeda6}
+				.modType5 .wrap .sel { background-color:#fff}
+				.modType5 .wrap .reset { margin-right:0}
+	.modType5 .description { position:relative; z-index:1; background:#fff; border:1px solid #c1c1c1; border-bottom:none; margin:0 13px; padding:20px}
+		.modType5 .description ul { margin:0; padding:0}
+			.modType5 .description ul li { display:inline-block; width:320px; margin-right:40px; padding:0}
+				.modType5 .description ul li.reset { margin-right:0}
+				.modType5 .description ul li h3 { margin-bottom:5px}
+				.modType5 .description ul li div { display:inline; float:left}
+				.modType5 .description ul li .image { width:80px; margin-right:10px}
+				.modType5 .description ul li .wysiwyg { margin:10px 10px 0 0; width:130px}
+				.modType5 .description ul li .action { margin-top:10px; float:right}
+				
+	.modType5 .cursosRel .wrap { background-color:#fff; padding:0; margin:0}
+	.modType5 .cursosRel .description { background:url(../images/curve_supCursosPresenDescription.gif) no-repeat 0 0; padding:8px 0 0; border:0; margin:10px 0 0}
+		.modType5 .cursosRel .description ul { margin:0; padding:0 0 0 10px; border-left:1px solid #d3d3d3; border-right:1px solid #d3d3d3}
+			.modType5 .cursosRel .description ul li { margin:0 25px 0 0; padding:0 0 10px; display:block; /*vertical-align:top;*/ width:auto; background: url(../images/bck_dotted.gif) repeat-x 0 100%; min-height:50px}
+				.modType5 .cursosRel .description ul li .wysiwyg { width:563px}
+				.modType5 .cursosRel .description ul li.reset { background:none; padding:0}
+	.modType5 .cursosRel .fix { background:url(../images/curve_infCursosFichas.gif) no-repeat 0 0; height:8px}
+		.modType5 .cursosRel .description .fix { background:url(../images/curve_infCursosPresenDescription.gif) no-repeat 0 0; height:8px}
+		
+	.modType5 .cursosFormacion { margin:0 13px; padding:25px 20px 20px; background:#fff url(../images/bck_cursosFormacion.gif) repeat-x 0 0; border:1px solid #c1c1c1; border-top:none}
+		.modType5 .cursosFormacion .wysiwyg { display:inline; float:left}
+			#cursos .modType5 .cursosFormacion .verMas a { background-image:url(../images/ico_abajo.gif); background-position:100% 1px; padding-right:20px}
+			#cursos .modType5 .cursosFormacion form { margin-top:15px}
+			#cursos .modType5 .cursosFormacion label { text-align:right; width:300px; float:left}
+			#cursos .modType5 .cursosFormacion select { width:140px}
+		.modType5 .cursosFormacion .action { margin-top:10px; float:right}
+
+#newsletter #infoColectivos ul.datos { margin:1em 0 0 0;}
+	#infoColectivos textarea { width:174px; border:1px solid #C6E7FF;}
+		#infoColectivos li.error textarea { border:1px solid #FF0000;}
+
+#datosFormacion #cursoContabilidad ul.datos { margin:20px 0 0 0;}
+#cursoContabilidad textarea { width:190px;}
+#cursoContabilidad li.error select, #cursoContabilidad li.error textarea { border:1px solid #FF0000;}
+
+#datosFormacion #masterContabilidad { padding-top:30px;}
+#datosFormacion #masterContabilidad ul.datos { margin:20px 0 0 0;}
+	#masterContabilidad textarea { width:190px; border:1px solid #C6E7FF;}
+	#masterContabilidad li select { border:1px solid #C6E7FF;}
+	#masterContabilidad li.error select, #cursoContabilidad li.error textarea { border:1px solid #FF0000;}
+
+#modType2 #confirmacion { position:relative;}
+	#modType2 #confirmacion div.cont { padding:20px;}
+		#modType2 #confirmacion div.cont p { margin-bottom:5px;}
+		#confirmacion .print { position:absolute; right:0; top:-30px; margin-right:5px; padding:0 0 5px 20px; background:url(../images/ico_imprimir2.gif) no-repeat 0 0;}
+		
+		#modType2.entryConfirmacion .wysiwyg { padding:0 16px 0; background:transparent url(../images/curve_supModType2b.gif) no-repeat scroll 0 0; }
+			#modType2.entryConfirmacion .wysiwyg p { margin-bottom: 0; padding-bottom: 15px } 
+		#modType2 #confirmacion .wysiwyg { margin-top: 20px; padding: 0; background: none  }
+		
+.fichas #moduloDestacadoContenido .column1, #commonGrid #moduloDestacadoContenido .column1 { width:250px}
+.fichas #moduloDestacadoContenido .column2 { width:400px; float:left}
+	.fichas #moduloDestacadoContenido.type1 .column2 { width:335px}
+	.fichas #moduloDestacadoContenido .sinImage, .fichas #moduloDestacadoContenido.type1 .sinImage { width:600px; float:left}
+	.fichas #moduloDestacadoContenido .solo, .fichas #moduloDestacadoContenido.type1 .solo { width:876px; float:left}
+.fichas #moduloDestacadoContenido .column3 { width:208px; float:right; padding-top:10px}
+	.fichas #moduloDestacadoContenido.type1 .column3 { width:270px}
+		.fichas #moduloDestacadoContenido.type1 .column3 span.link { float:right; width:163px;}
+
+#commonGrid #moduloDestacadoContenido .column2 { width:400px; float:left}
+#commonGrid #moduloDestacadoContenido .solo { width:683px; float:left}
+
+#modType2.formacion .description .wysiwyg .column2 { width:475px; float:left}
+#modType2.formacion .description .wysiwyg .solo { width:688px; float:left}
+
+#newsletter #peticionContactoForm ul.datos { margin-top:15px; padding:0 0 0 135px;}
+	#peticionContactoForm ul.datos li label { width:180px;}
+	#peticionContactoForm .submit { margin:10px 0 0 442px;}
+
+#newsletter #peticionPruebaProductoForm ul.datos { margin-top:15px; padding:0 0 0 72px;}
+	#peticionPruebaProductoForm ul.datos li label { width:256px;}
+	#peticionPruebaProductoForm ul.datos li.error select { border:1px solid #FF0000;}
+	#peticionPruebaProductoForm .submit { margin:10px 0 0 456px;}
+
+#modNovedades .carrousel ul li {
+display:inline-block;
+margin:0 20px 0 0;
+padding:0;
+width:170px;
+}
+
+
+/*Carousel*/
+#modNovedades .jcarousel-list li, .jcarousel-item { height:auto;}
+/*#modNovedades .verMas a { display:block;}*/
+
+.jcarousel-next-horizontal {
+    position: absolute;
+    top: 134px;
+    right: -20px;
+    width: 39px;
+    height: 42px;
+    cursor: pointer;
+    background: transparent url(../images/carrousel_novedades-r.gif) no-repeat 0 0;
+}
+
+.jcarousel-next-disabled-horizontal, .jcarousel-next-disabled-horizontal:hover, .jcarousel-next-disabled-horizontal:active {
+    cursor: default;
+    background-position: -96px 0;
+}
+
+.jcarousel-clip { width:560px;}
+
+.jcarousel-prev-horizontal {
+    position: absolute;
+    top: 134px;
+    left: -20px;
+    width: 39px;
+    height: 42px;
+    cursor: pointer;
+    background: transparent url(../images/carrousel_novedades-l.gif) no-repeat 0 0;
+}
+
+.jcarousel-prev-disabled-horizontal, .jcarousel-prev-disabled-horizontal:hover, .jcarousel-prev-disabled-horizontal:active {
+    cursor: default;
+    background-position: -96px 0;
+}
+
+.numAccesos h2 { margin-bottom:15px;}
+.numAccesos .slider { clear:both; width:635px; height:22px; padding:0 45px 0 21px; background:url(../images/bck_slider.png) no-repeat 0 0;}
+.numAccesos .slider .chart { position:relative; margin:0 60px;}
+.numAccesos .slider .sliderChart { position:relative;}
+	.numAccesos .slider .sliderChart .ui-slider-handle { position:absolute; top:-8px; width:23px; height:23px; background:url(../images/btn_slider.png) no-repeat 0 0;}
+	.numAccesos .slider .sliderChart .slider-lb { position:absolute; width:100px;}
+	.numAccesos .slider .sliderChart #item1 { left:-42px;}
+	.numAccesos .slider .sliderChart #item2 { left:16%;}
+	.numAccesos .slider .sliderChart #item3 { left:36%;}
+	.numAccesos .slider .sliderChart #item4 { left:56%;}
+	.numAccesos .slider .sliderChart #item5 { left:76%;}
+	.numAccesos .slider .sliderChart #item6 {right:-69px;}
+	.numAccesos .slider .sliderChart .first { padding-left:10px;}
+	.numAccesos .slider .sliderChart .last { padding-right:0;}
+	
+/*quitar capa chart y hacer la llamada del js a .sliderChart en vez de a .chart*/
+/*.numAccesos .slider .ui-slider { position:relative;}
+	.numAccesos .slider .sliderChart .ui-slider-handle { position:absolute; top:-8px; width:23px; height:23px; background:url(../images/btn_slider.png) no-repeat 0 0;}
+	.numAccesos .slider .sliderChart .slider-lb { padding-right:44px;}
+	.numAccesos .slider .sliderChart .first { padding-left:10px;}
+	.numAccesos .slider .sliderChart .last { padding-right:0;}*/
+
+.pagination span.prev {display:block; float:left; width:16px; height:15px; text-indent:-1000em;}
+
+.fichas .modType4 .descripcion .cursoDet .testimonio { float:none; width:auto}
+	.fichas .modType4 .descripcion .cursoDet .testimonio .versiones ul li.reset { border:0; margin:0; padding:0}
+	.fichas .modType4 .descripcion .cursoDet .testimonio .versiones ul li .flt { width:550px}
+		.fichas .modType4 .descripcion .cursoDet .testimonio .versiones ul li .flt span { text-align:right}
+		
+.fichas .modType4 .descripcion .cursoDet .fechas { float:none; width:auto}
+	.fichas .modType4 .descripcion .cursoDet .fechas h2, .fichas .modType4 .descripcion .cursoDet .fechas p { margin-bottom:1em}
+	.fichas .modType4 .descripcion .cursoDet .fechas .lugar { width:300px; height:300px; margin:0 auto}
+	/*.fichas .modType4 .descripcion .cursoDet .fechas ul li { padding-bottom:.5em}
+		.fichas .modType4 .descripcion .cursoDet .fechas ul li.reset { border:0; margin:0; padding:0}
+		.fichas .modType4 .descripcion .cursoDet .fechas ul li h3, .fichas .modType4 .descripcion .cursoDet .fechas ul li p { margin-bottom:1em}*/
+	
+#modFormacion .formacionList2 li { width:292px; margin:0 12px 14px 0; padding-top:8px; background:url(../images/curve_top-modType2.gif) no-repeat 0 0;}
+	#modFormacion .formacionList2 li .cont { border-left:1px solid #d4d4d4; border-right:1px solid #d4d4d4; padding: 5px 10px 0 8px;}
+		#modFormacion .formacionList2 li .title { padding:4px 0 1px 38px; margin-bottom:18px;}
+		#modFormacion .formacionList2 li .presencial { background:url(../images/bck_formacionPresencial.gif) no-repeat 0 0;}
+		#modFormacion .formacionList2 li .masters { background:url(../images/bck_formacionMasters.gif) no-repeat 0 0;}
+		#modFormacion .formacionList2 li .distancia { background:url(../images/bck_formacionDistancia.gif) no-repeat 0 0;}
+		#modFormacion .formacionList2 li .medida { background:url(../images/bck_formacionMedida.gif) no-repeat 0 0;}
+		#modFormacion .formacionList2 li .confe { background:url(../images/bck_formacionConfe.gif) no-repeat 0 0;}
+		#modFormacion .formacionList2 li .blended { background:url(../images/bck_formacionBlended.gif) no-repeat 0 0;}
+		#modFormacion .formacionList2 li ul { border-bottom:1px solid #c7c7c7; margin:0 0 10px; padding:0;}
+			#modFormacion .formacionList2 li li { display:block; width:auto; margin:0 8px 7px 0; padding:0 0 7px; background:url(../images/bck_line-dotted.gif) repeat-x 0 100%;}
+				#modFormacion .formacionList2 li li .curso { display:block;}
+			#modFormacion .formacionList2 li li.last { background:none;}
+	#modFormacion .formacionList2 li.curso .fix { width:auto; height:8px; background:url(../images/curve_bottom-modType2.gif) no-repeat 0 0;}
+	#modFormacion .formacionList2 li .modInt { margin:10px 0 0; padding-top:9px; background:url(../images/curve_top_cont-int.gif) no-repeat 0 0;}
+		#modFormacion .formacionList2 li .modInt .cont { border-left:2px solid #c6e7ff; border-right:2px solid #c6e7ff;}
+			#modFormacion .formacionList2 li .modInt .cont img { float:left; max-width:59px; margin-right:8px;}
+			#modFormacion .formacionList2 li .modInt .cont .text { float:left; width:182px;}
+				#modFormacion .formacionList2 li .modInt .cont .text p { margin-bottom:4px;}
+				#modFormacion .formacionList2 li .modInt .cont .text span { display:block;}
+		#modFormacion .formacionList2 li .modInt .fix { width:auto; height:9px; background:url(../images/curve_bottom_cont-int.gif) no-repeat 0 0;}
+
+#modFormacion .formacionList2 li.reset { margin:0;}
+
+#tiposFormacion li.sel a, #tiposFormacion li.sel a:hover { cursor:default;}
+
+div.calendars .listCalendar { margin:24px 20px}
+	div.calendars .listCalendar li { display:inline-block; width:430px; margin:0 22px 22px 0; padding:0; vertical-align:top;}
+	div.calendars .listCalendar li.reset { margin:0 0 22px;}
+		div.calendars table { width:194px;}
+		div.calendars .calendarItem { float:left; width:194px; margin:0 10px 0 0; padding:0;}
+		div.calendars .prevs .calendarItem { border:2px solid #e2e2e2; border-top:1px solid #e2e2e2;}
+		div.calendars .actual .calendarItem { border:2px solid #01538e; border-top:1px solid #01538e;}
+		div.calendars .nexts .calendarItem { border:2px solid #c6e7ff; border-top:1px solid #c6e7ff;}
+			.calendario caption { margin:0; padding:0;}
+				.calendario caption span { display:block; width:194px; border-bottom:none; margin:0; padding:6px 0; text-align:center;}
+			.calendario tr {padding-bottom:2px;}
+			.calendario td { width:24px; margin-right:2px; padding:2px 0; text-align:center; }
+				.calendario .publicacion { background-color:#c6e7ff;}
+				div.calendars .prevs .calendario .publicacion { background-color:#e2e2e2;}
+		div.calendars .events { float:left; width:220px; }
+			div.calendars .events .title { margin:2px 0 10px;}
+			div.calendars .events ul { margin:0; padding:0;}
+				div.calendars .events li { display:block; width:auto; margin:0 0 8px; padding:0 0 0 22px;}
+	div.calendars .listCalendar .prevs caption span  { background:url(../images/bck_caption-prev.gif) repeat-x 0 0;}
+	div.calendars .listCalendar .prevs .events li { background:url(../images/bullet_disabled.gif) no-repeat 0 0;}
+	div.calendars .listCalendar .actual caption span { background:url(../images/bck_caption-actual.gif) repeat-x 0 0;}
+	div.calendars .listCalendar .actual .events li { background:url(../images/bullet_active.gif) no-repeat 0 0; }
+	div.calendars .listCalendar .nexts caption span { background:url(../images/bck_caption-nexts.gif) repeat-x 0 0;}
+	div.calendars .listCalendar .nexts .events li { background:url(../images/bullet_active.gif) no-repeat 0 0; }
+
+.lisType1 { margin:0; padding:0;}
+	.lisType1 li, .modType4 .listType02 li { padding-left:22px; background:url(../images/bullet_fichas.gif) no-repeat 0 0;}
+	.modType4 .listType02 .productos li { padding-left:0; background:none; list-style:none;}
+	.boxProduct { position:relative; width:217px; margin-bottom:10px; padding:0 0 20px; background:url(../images/curve_botModProduct.png) no-repeat 0 100%;}
+		.boxProduct .title { padding:14px 15px 16px; background:#959595 url(../images/curve_supModProduct.png) no-repeat 0 0;}
+			.boxProduct .title span { display:block;}
+			.modType4 .boxProduct .wrapCont { padding:12px 0 0; background:url(../images/curve_supModProduct-int.png) no-repeat 0 0;}
+				.modType4 .boxProduct .cont { position:relative; padding:10px 20px; background:url(../images/bck_modProduct.gif) repeat-y 0 0;}
+					.modType4 .boxProduct .cont .boxBtn { margin-bottom:12px; padding:3px 0;}
+					.modType4 .boxProduct .cont .descuentoType1 { margin:0 auto;}
+					.modType4 .boxProduct .cont .verMas { margin-top:12px;}
+					.productos { margin:0; padding:0;}
+						.productos li { float:left; margin:0 15px 0 0; padding:0;}
+		.boxProduct.type1 { width:553px; background:url(../images/curve_botModProduct2.gif) no-repeat 0 100%;}
+			.boxProduct.type1 .title { height:20px; padding:8px 15px 13px; background:url(../images/curve_supModProduct2.gif) no-repeat 0 0; }
+			.boxProduct.type1 .wrapCont { padding:0 10px 0 9px; background:#9c9c9c url(../images/bck_modProduct2b.gif) repeat-x 0 0;}
+			.modType4 .boxProduct.type1 .cont { background:url(../images/bck_modProduct2b-cont.gif) repeat-y 0 0;}
+		
+		.boxProduct.type2 { width:692px; background:url(../images/curve_botModProduct3.gif) no-repeat 0 100%;}
+			.boxProduct.type2 .title { height:20px; padding:8px 15px 13px; background:url(../images/curve_supModProduct3.gif) no-repeat 0 0; }
+			.boxProduct.type2 .wrapCont { padding:0 10px 0 9px; background:#9c9c9c url(../images/bck_modProduct2b.gif) repeat-x 0 0;}
+			.modType4 .boxProduct.type2 .cont { background:url(../images/bck_modProduct3-cont.gif) repeat-y 0 0;}
+		
+		.boxProduct.type3 { width:912px; background:url(../images/curve_botModProduct4.gif) no-repeat 0 100%;}
+			.boxProduct.type3 .title { height:20px; padding:8px 15px 13px; background:url(../images/curve_supModProduct4.gif) no-repeat 0 0; }
+			.boxProduct.type3 .wrapCont { padding:0 10px 0 9px; background:#9c9c9c url(../images/bck_modProduct2b.gif) repeat-x 0 0;}
+			.modType4 .boxProduct.type3 .cont { background:url(../images/bck_modProduct4-cont.gif) repeat-y 0 0;}
+			.modType4 .boxProduct.type1 .cont, .modType4 .boxProduct.type2 .cont, .modType4 .boxProduct.type3 .cont { padding:10px 12px 10px;}
+		
+		.boxProduct.type1 .title span, .boxProduct.type2 .title span, .boxProduct.type3 .title span { display:inline;}
+		.boxProduct .cont .offers .verMas { margin-top:0; margin-bottom:12px;}
+		.boxProduct .cont .offers .boxBtn { margin-bottom:0; margin-top:12px;}
+		.boxProduct.type1 .packages { float:left; width:408px; margin-right:2px;}
+			.packages ul { margin:0; padding:0;}
+			.package { float:left; margin-right:18px; padding: 0 18px 0 0; background:url(../images/ico_plus.gif) no-repeat 100% 42px;}
+			.package.col1 { width:154px;}
+			.package.reset { margin-right:5px; padding:0; background:none;}
+			.package.col2 { width:212px;}
+			.package.col3 { width:108px;}
+			.package.col4 { width:178px;}
+				.boxProduct .package .title { height:auto; padding:0 0 8px; background:none; text-align:left;}
+				.package li { padding-left:12px; background:url(../images/bullet_arrow.png) no-repeat 0 5px; text-align:left;}
+			.boxProduct .offers { float:right;}
+				.boxProduct .offers .descuentoType1 { margin:0 0 0 10px;}
+			
+			
+			.modType4 .fichaVar1 #modVentajas { width:208px;}
+				.modType4 .fichaVar1 #modVentajas .title { padding:36px 33px 28px 45px;}
+	.cursosRel.wide { margin-bottom:20px;}
+		.cursosRel.wide .fix { background:url(../images/curve_botCursosFichas-wide.png) no-repeat 0 100%;}
+			.cursosRel.wide h2 { background:#fff url(../images/curve_supCursosFichas-wide.png) no-repeat 0 0;}
+				.cursosRel.wide .description {  background:url(../images/curve_supCursosFichasDescription-wide.png) no-repeat 0 0;}
+					.cursosRel.wide .description li { width:200px;}
+					.cursosRel.wide .description .fix { background:url(../images/curve_infCursosFichasDescription-wide.png) no-repeat 0 0;}
+
+#gridTwoColumnsTypeB #modType4b .modType4 { background:#8BB7DE url(../images/curve_modType4b.gif) no-repeat 0 0;}
+	#gridTwoColumnsTypeB #modType4b .modType4 h1  { margin-bottom:20px;}
+	#gridTwoColumnsTypeB #modType4b .modType4 .fix { background:url(../images/curve_modType4b-bot2.gif) no-repeat 0 0;}
+	#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .cont { position:relative; background:#fff url(../images/curve_modType4b-bis-cont-top.gif) no-repeat 0 0;}
+		#gridTwoColumnsTypeB #modType4b .modType4 .cont .tools { position:absolute; right:20px; top:8px; margin:0;}
+			#gridTwoColumnsTypeB #modType4b .modType4 .cont .tools .demo { padding:4px 0 2px 26px; background:url(../images/ico_demo.gif) no-repeat 0 0;}
+			#gridTwoColumnsTypeB #modType4b .modType4 .cont .tools .print { padding:4px 0 2px 26px; background:url(../images/ico_imprimir.gif) no-repeat 0 0;}
+		#gridTwoColumnsTypeB #modType4b .modType4 .cont .column1 { float:left; width:486px;}
+			#gridTwoColumnsTypeB #modType4b .modType4 .cont .column1 p { margin-bottom:20px;}
+		#gridTwoColumnsTypeB #modType4b .modType4 .cont .column2 { float:right; width:216px}
+		#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .cont .precios .descuentoType1 { position:static;}
+			#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .cont .precios .descuentoType1 .descuento { display:block;}
+			#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .cont .mementos { margin:0; padding:0;}
+				#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .cont .mementos li { float:left; width:96px; margin:0 30px 0 0; padding:0;}
+				#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .cont .mementos li.reset { margin:0;}
+		#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .cont #accesoMementos { width:356px}
+			#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .cont #accesoMementos ul { margin:10px 0 0 40px;}
+		#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .cont .paqPromocion { width:228px; margin:0 0 0 20px; padding:28px 10px 20px 64px; background:url(../images/ico_plus.gif) no-repeat 0 90px;}
+			#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .cont .paqPromocion .title { margin-bottom:18px;}
+			#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .cont .paqPromocion ul { margin:0;}
+				#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .cont .paqPromocion li { padding-left:12px; background:url(../images/bullet_arrow.png) no-repeat 0 5px;}
+	#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .fix { background:#fff url(../images/curve_modType4b-cont-bot.gif) no-repeat 0 0;}
+
+.integrado span { margin-right:10px;}
+.integrado span, .integrado img { display:inline-block; vertical-align:middle}
+
+#todasLasObras #gridType1 .inner ul.ezsr-star-rating, #todasLasObras #gridType2 .inner ul.ezsr-star-rating, #todasLasObras #gridType3 .inner ul.ezsr-star-rating, #todasLasObras #gridType4 .inner ul.ezsr-star-rating, #todasLasObras #gridType5 .inner ul.ezsr-star-rating, #todasLasObras .divcarousel2 .inner ul.ezsr-star-rating { margin:0 0 7px}
+
+.modType4 .colUnica .versiones { position:relative;}
+	.modType4 .colUnica .versiones .imprimir { position:absolute; top:5px; right:0;}
+	
+.fichas #gridTwoColumnsFichas .modType4 .descripcion .cursoDet .column1.testimonio ul li { background:none;}
+
+
+/******************************************************************************************/
+
+
+
+
+
+
+
+
+
+
+#gridWide.casosExito{ padding-top: 0px}
+
+#casos #gridType2 {background: url(../images/curves_top_949.gif) no-repeat scroll 0 0 transparent;margin-bottom: 13px; padding: 13px 0 0; width: 953px}
+	#casos #gridType2 .fix { background: url(../images/curves_bottom_949.gif) no-repeat scroll 0 0 transparent; height: 9px;padding: 0; width: 953px}
+	#casos #gridType2 .wrap {background: none repeat scroll 0 0 #FFFFFF; padding: 0 10px;width: 929px}
+	#casos #gridType2 .columnType1 { padding: 0; width: 926px}
+#casos #gridType2 .wrapColumn { background: url(../images/curve_supWrapColumn_926.gif) no-repeat scroll 0 0 transparent; padding: 10px 0 0;width: 100%}
+	#casos #gridType2 .wrapColumn .fix { background: url(../images/curve_infWrapColumn_926.gif) no-repeat scroll 0 0 transparent; height: 10px; padding: 0; width: 100%}
+#casos #gridType2 .inner { background: url(../images/bck_inner_926.gif) repeat-y scroll 0 0 transparent; padding: 0; position: relative}
+	#casos #gridType2 .inner ul { list-style: none outside none; margin: 0; padding: 0 19px}
+		#casos #gridType2 .inner li { float: left; width: 100%}
+			#casos #gridType2 .inner li.reset {border-bottom:none}
+			#casos #gridType2 .inner li img {float: left}
+			#casos #gridType2 .inner li  h2{ padding:0 0 18px 0}
+
+#casos .options { border-top: 1px solid #C6E7FF; margin-top: 10px; padding: 10px 15px 0}
+#casos .pagination {float: right}
+
+
+#modBlanco { background: url(../images/bck_modBlanco.gif) no-repeat 0 100%;margin-bottom: 9px; padding: 0 0 5px 0}
+	#modBlanco h2{background: url(../images/bck_tituloModBlanco.gif) no-repeat 0 0 ;padding: 14px 20px 0 25px}
+
+
+#modType2 #guias {padding: 10px 0 28px 0;position: relative}
+	#modType2  #guias ul{ float:left;margin-right:36px;margin-left:25px}
+		#modType2  #guias  ul li { float:left; border-bottom:2px solid #c6e7ff;padding-left:0;padding-left:2px;width:682px}
+		#modType2  #guias  ul li img{ float:left}
+		
+	#modType2 #guias  div.flt {margin:0 0 2px 15px; width:594px}
+	#modType2 #guias  div a.pdf{ float:left; background:url(../images/ico_pdf.gif) no-repeat 0 0; padding-left:20px; margin-top:10px}
+	#modType2 #guias  div span.youtube{float:right; background:url(../images/ico_youtube.gif) no-repeat 100% 0; padding:10px 35px 0 0}
+
+	#modType2 #guias .options { border-top: 1px solid #C6E7FF; margin-top: 10px;padding: 10px 0 0;float:left;	width:745px}
+	#modType2 #guias  .pagination {float: right}
+		
+	
+	
+#home_recursos  #gridHome1 .columnType2 {float: right; width: 262px;}
+#home_recursos #gridHome1 .presentacion h2 { background: url(../images/curve_sup_presentacionRecursos.gif) no-repeat scroll 0 0; height: 38px; padding: 16px 24px 0}
+#home_recursos #gridHome1  .presentacion .wrap { background: url(../images/bck_presentacionRecursos.gif) no-repeat scroll 0 100% #DCDCDC; padding-bottom: 12px; padding-left: 12px}
+#home_recursos #gridHome1  .presentacion .columnType1 { background: url(../images/curve_inf_presentacionDestacados.gif) no-repeat scroll 0 100% #fff;float: left;padding: 0 0 8px;width: 658px}
+	#home_recursos #gridHome1  .presentacion .columnType1 .curveSup { background: url(../images/curve_sup_presentacionDestacados.gif) no-repeat scroll 0 0; padding: 8px 0 0}
+	#home_recursos #gridHome1  .presentacion .columnType1 .wrapAjaxContent {min-height: 100px}
+	#home_recursos #gridHome1  #presentacionRecursos .columnType1 .media {float: left;padding: 0 0 0 9px;width: 369px}
+	#home_recursos #gridHome1  #presentacionRecursos .columnType1 .description {float: right;padding: 10px 8px 0 0; width: 247px}
+	#home_recursos #gridHome1  #presentacionRecursosVid .columnType1 .media {float: left;padding: 0 0 0 9px;width: 240px}
+	#home_recursos #gridHome1  #presentacionRecursosVid .columnType1 .description {float: right;padding: 10px 8px 0 0; width: 375px}	
+	#home_recursos #gridHome1  #presentacionRecursosVid .columnType1 .description .flt{width:100px}
+	#home_recursos #gridHome1  #presentacionRecursosVid .columnType1 .description .frt{padding:20px 12px 0 0}
+	
+	
+.presentacion .columnType1 ul { list-style: none outside none;margin: 6px 0;padding: 0}
+	.presentacion  .columnType1 li { background: url(../images/bullet_pPrimaria.gif) no-repeat scroll 0 0; margin: 0; padding: 4px 0 4px 30px}
+		
+	#presentacionRecursos .columnType1 .novedades { float:right; padding-top:30px}
+	#presentacionRecursosVid .columnType1 .novedades { float:right; padding-top:30px}
+	
+		.presentacion  .columnType1 .novedades  ul{ float:left; margin:0; padding:0}
+			.presentacion  .columnType1 .novedades  li{ background:none; float:left;margin:0 15px 0 0; padding:9px 0 0 0;}
+				.presentacion .columnType1 .novedades  li.email a{ background: url(../images/ico_mail_novedades.gif) no-repeat scroll 0 0; padding:9px 0 0 40px}
+				.presentacion  .columnType1 .novedades  li.rss a{ background: url(../images/ico_rss_novedades.gif) no-repeat scroll 0 0; padding:9px 0 0 40px}
+				
+#home_recursos  #gridHome1  #listadoRecursos{position:relative;background-color:#0366ae;margin-top:10px}
+	#home_recursos #gridHome1  #listadoRecursos h2 { background: url(../images/curve_sup_listadoRecursos.gif) no-repeat 0 0; padding: 16px 10px 5px;margin-top:-1px}
+	#home_recursos #gridHome1  #listadoRecursos .contenido { background: url(../images/bck_wrap_listadoRecursos.gif) repeat-x scroll 0 0;width: 658px;padding:0 10px 13px 12px;min-height:200px}
+		#home_recursos #gridHome1  #listadoRecursos .contenido .wrap { background: url(../images/bck_inner_recursos.gif) repeat-y 0 0; padding: 0 0; position: relative}
+			#home_recursos #gridHome1  #listadoRecursos .wrap h3 { background: url(../images/curve_sup_inner_recursos.gif) no-repeat 0 0;	height:40px; padding: 12px 0 0 14px}
+	#home_recursos #gridHome1  #listadoRecursos .fix{background: url(../images/curve_inf_listadoRecursos.gif) no-repeat scroll 0 0 transparent; bottom: -2px; height: 11px;left: 0; position: absolute; width: 100%}
+	#home_recursos #gridHome1  #listadoRecursos .wrap .fix {background: url(../images/curve_inf_inner_recursos.gif) no-repeat scroll 0 0 transparent; bottom: 0px;height: 19px; left: 0; position: absolute;width: 100%}
+
+#home_recursos #gridHome1  #guias {padding: 0 30px 28px 25px;position: relative}
+	#home_recursos #gridHome1  #guias .entradilla {padding:0 0 12px 0}
+		#home_recursos #gridHome1  #guias .entradilla p{padding-bottom:5px}
+#home_recursos #gridHome1  #guias ul { float: left;margin:0 0 0 0;	padding:0 0 0 0}
+	#home_recursos #gridHome1  #guias ul li { border-bottom: 2px solid #C6E7FF; float: left; padding: 0 0 3px 2px;margin-left:0;width: 603px}
+		#home_recursos #gridHome1  #guias ul li img { float: left}
+#home_recursos #gridHome1  #guias div.flt {margin: 0 0 2px 15px; width: 515px}
+	#home_recursos #gridHome1  #guias div a.pdf { background: url(../images/ico_pdf.gif) no-repeat scroll 0 0 transparent; float: left; margin-top: 10px;padding-left: 20px}
+	#home_recursos #gridHome1  #guias div span.youtube { background: url(../images/ico_youtube.gif) no-repeat scroll 100% 0 transparent;float: right;padding: 11px 35px 0 0}
+#home_recursos #gridHome1  #guias .botones {clear:both;margin-top:5px;text-align:center}
+
+
+#home_recursos  #gridHome1 .columnType2 {float: right; width: 262px;}
+	#home_recursos  #gridHome1 .columnType2  #modDestacado { background: url(../images/bck_destacadoAyuda.png) no-repeat scroll 0 100% #f8a433;float: left; padding: 0; width: 262px;min-height:310px}
+		#home_recursos  #gridHome1 .columnType2  #modDestacado h2 { background: url(../images/curve_sup_destacadoAyuda.png) no-repeat 0 0; padding: 16px 0 0 10px}
+		#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap {background: url(../images/curve_wrap_sup_destacado.gif) no-repeat 0 0 #FFFFFF;margin: 5px 10px 10px;padding: 10px 0px 10px 0px;position: relative}
+				#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap  span{background:none;margin:0; padding:0;cursor:inherit}
+				#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap .content { background: url(../images/bck_wrap_destacado.gif) repeat-y 0 0 #FFFFFF}
+				#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap .fix {background: url(../images/curve_wrap_inf_destacado.gif) no-repeat 0 0;bottom: -3px;height: 11px; left: 0; position: absolute}
+				#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.chat { background: url(../images/curve_wrap_sup_top.gif) no-repeat 0 0 #FFF}
+					#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.chat .content{ position:relative; height:41px}
+					#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.chat span{background: url(../images/ico_chat.png) no-repeat 0 0;width:53px; height:43px;margin:0; padding:0;position:absolute;left:33px;top:0}
+					#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.chat a{background: url(../images/ico_acceso_chat.gif) no-repeat 100% 10px;padding-right: 25px;margin-left: 98px}
+				#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.contact{ text-align:center }
+				#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.faq{ text-align:center }
+					#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.faq h3{background: url(../images/ico_faq.gif) no-repeat 0 0px; margin-left: 11px; padding:0 0 8px 20px}
+					#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.faq p{ margin:0 }
+					#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.faq  div.clearFix { margin:10px 0 0 30px}
+						#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.faq  div.clearFix a img{margin-right:11px}
+					#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.faq .fix { background: url(../images/curve_wrap_inf_destacadoReset.gif) no-repeat 0 0}
+
+#home_recursos  #gridHome1 .columnType2  #modExperiencia, #home_recursos  #gridHome1 .columnType2  #modEnlaces { background: url(../images/bck_experiencia.png) no-repeat scroll 0 100% #9f9f9f;float: left; padding: 0; margin-top:10px; width: 262px;min-height:310px}
+	#home_recursos  #gridHome1 .columnType2  #modExperiencia h2, #home_recursos  #gridHome1 .columnType2  #modEnlaces h2  { background: url(../images/curve_sup_experiencia.png) no-repeat 0 0; padding: 16px 0 0 12px}
+	#home_recursos  #gridHome1 .columnType2  #modExperiencia .wrap, #home_recursos  #gridHome1 .columnType2  #modEnlaces .wrap  {background: url(../images/curve_wrap_sup_experiencia.png) no-repeat 0 0 #FFFFFF;margin: 8px 13px 13px 13px;padding: 10px 0px 10px 0px;position: relative}
+			#home_recursos  #gridHome1 .columnType2  #modExperiencia .wrap  span{background:none;margin:0; padding:0;cursor:inherit}
+			#home_recursos  #gridHome1 .columnType2  #modExperiencia .wrap .content { background-color: #FFFFFF}
+			#home_recursos  #gridHome1 .columnType2  #modExperiencia .wrap .fix, #home_recursos  #gridHome1 .columnType2  #modEnlaces .wrap .fix  {background: url(../images/curve_wrap_inf_experiencia.png) no-repeat 0 0;bottom: -3px;height: 11px; left: 0; position: absolute}
+
+#home_recursos  #gridHome1 .columnType2  #modExperiencia .wrap  ul, #home_recursos  #gridHome1 .columnType2  #modEnlaces .wrap  ul{ padding:0 12px 0 12px; margin:0}
+#home_recursos  #gridHome1 .columnType2  #modExperiencia .wrap  ul li, #home_recursos  #gridHome1 .columnType2  #modEnlaces .wrap  ul li{ padding:0 0 8px 0; margin:0; border-bottom:1px solid #b2b2b2}
+#home_recursos  #gridHome1 .columnType2  #modExperiencia .wrap  ul li.reset{ position:relative; border-bottom:none; margin:8px 0 0 0}
+#home_recursos  #gridHome1 .columnType2  #modExperiencia .wrap  ul li.reset .bocadillo{background: url(../images/bocadillo.gif) no-repeat 0 0; width:149px; height:79px;bottom: -18px; margin-left: 50px;margin-top: -16px;position: relative; text-align:center}
+
+#home_recursos  #gridHome1 .columnType2  #modExperiencia .wrap  ul li.reset .bocadillo p{padding: 5px 9px 0;} 
+#home_recursos  #gridHome1 .columnType2  #modExperiencia .wrap  ul li.reset .mas span{float:left;}
+#home_recursos  #gridHome1 .columnType2  #modExperiencia .wrap  ul li.reset .mas a{ float:right;background: url(../images/bullet_subNavBar.png) no-repeat 100% 3px; padding:0 15px 0 0; margin-top:15px}
+
+#home_recursos  #gridHome1 .columnType2  #modExperiencia .wrap h3{padding:0 0 8px 0} 
+#home_recursos  #gridHome1 .columnType2  #modExperiencia .wrap li div.clearFix{ text-align:center; margin-top:8px;} 
+
+#home_recursos  #gridHome1 .columnType2  #modEnlaces{ min-height:100px;background: url(../images/bck_enlaces.png) no-repeat scroll 0 100% #9f9f9f;}
+	#home_recursos #gridHome1 .columnType2 #modEnlaces h2 {padding: 9px 0 0 10px}
+	#home_recursos #gridHome1 .columnType2 #modEnlaces .wrap ul{ padding-top:4px}
+		#home_recursos #gridHome1 .columnType2 #modEnlaces .wrap ul li{ border-bottom:0}
+	#home_recursos  #gridHome1 .columnType2  #modEnlaces li a{background: url(../images/bullet_subNavBar.png) no-repeat 100% 3px; padding-right:15px}
+
+#home_recursos  #gridHome1 .columnType2  #modWhite { background: url(../images/bck_white.png) no-repeat scroll 0 100% #fff;float: left; padding: 0 0 17px 0; margin-top:10px; width: 262px;min-height:100px}
+	#home_recursos  #gridHome1 .columnType2  #modWhite h2  { background: url(../images/curve_sup_white.png) no-repeat 0 0;height:32px; padding: 10px 0 0 12px;}
+
+#home_recursos  #gridHome1 .columnType2  #modWhite .wrap  {background:#FFFFFF;margin: 0 13px 0px 13px;padding: 5px 0px 0px 0px;position: relative}
+		#home_recursos  #gridHome1 .columnType2  #modWhite .wrap .fix  {background: url(../images/curve_wrap_inf_experiencia.png) no-repeat 0 0;bottom: -3px;height: 11px; left: 0; position: absolute}			
+	#home_recursos  #gridHome1 .columnType2  #modWhite .wrap  ul{ padding:0 12px 0 12px; margin:0}
+		#home_recursos  #gridHome1 .columnType2  #modWhite .wrap  ul li{ padding:0 0 8px 0; margin:0; border-bottom:1px solid #b2b2b2}		
+			#home_recursos  #gridHome1 .columnType2  #modWhite li a{background: url(../images/bullet_subNavBar.png) no-repeat 100% 3px; padding-right:15px}	
+
+
+#home_recursos  #gridHome1 .columnType2  #modWhite .image {padding: 8px 0 0 7px}
+#home_recursos  #gridHome1 .columnType2  #modWhite .description { padding: 0 10px 0 10px; width: 200px}
+#home_recursos  #gridHome1 .columnType2  #modWhite.experto .content {padding: 0 12px 0 12px}
+	#home_recursos  #gridHome1 .columnType2  #modWhite.experto .content  .botones{ text-align:center; margin-top:10px; padding-bottom:0}
+
+	
+
+#home_recursos #gridHome1 #listadoRecursos.listadoProfundidad .contenido { padding: 0 10px 13px 0px;width:670px}
+#home_recursos #gridHome1 #listadoRecursos.listadoProfundidad  .wrap { background: none; padding: 0; position: relative;min-height:131px}
+#home_recursos #gridHome1 #listadoRecursos.listadoProfundidad  ul {margin:0 0 0 15px; padding:0}
+	#home_recursos #gridHome1 #listadoRecursos.listadoProfundidad  ul li{margin:0 20px 0 0; padding:0;float:left}
+	#home_recursos #gridHome1 #listadoRecursos.listadoProfundidad  ul li.reset{margin:0 0 0 0; padding:0}
+#home_recursos #gridHome1 #listadoRecursos.listadoProfundidad  .modWhite { background: url(../images/curve_inf_profundidad.png) no-repeat scroll 0 100% #FFFFFF;float: left; margin-top: 10px; min-height: 180px;padding: 0 0 17px; width: 315px;position:relative}
+	#home_recursos #gridHome1 #listadoRecursos.listadoProfundidad  .modWhite h3{background: url(../images/curve_sup_profundidad.png) no-repeat scroll 0 0 transparent; height: 39px; padding: 10px 0 0 12px}
+	#home_recursos #gridHome1 #listadoRecursos.listadoProfundidad  .modWhite  .content{ padding: 0 30px}
+	#home_recursos #gridHome1 #listadoRecursos.listadoProfundidad  .modWhite  ul{ padding: 0; margin:12px 0 0 0}
+		#home_recursos #gridHome1 #listadoRecursos.listadoProfundidad  .modWhite  li{ padding: 0; margin:0 0 5px 0;float:none}
+			#home_recursos #gridHome1 #listadoRecursos.listadoProfundidad  .modWhite  li a{ background: url(../images/bullet_subNavBar.png) no-repeat scroll 100% 3px transparent;  padding: 0 15px 0 0}
+
+#home_recursos #gridHome1 #listadoRecursos.listadoProfundidad  .botones{ margin-top: 10px; padding-bottom: 0; text-align: center; position:absolute;bottom:0;width:250px}
+	
+
+#listadoRecursos .modWhite{ width:315px}
+
+#lightboxWrap { background: none  }	
+	#lightboxWrap div { padding: 0 }
+	#lightboxWrap #wrapper { width: auto  }	
+	#formInscripcion { width: 568px  }
+		#formInscripcion h1 { padding-bottom: 10px; background-image:url(../images/curve_supFormIns.png)   }
+		#formInscripcion .wrap {padding:0 10px 0 9px; background-image:url(../images/bck_wrapFormIns.gif) }
+		#formInscripcion #modType2  { margin-bottom: 0  }
+		#formInscripcion .description { background-image: url(../images/curve_mod2SupForInsDescript.gif) }
+		#formInscripcion .camposObligatorios { top: -29px  }
+		#formInscripcion #datosUsuario { padding:48px 30px 28px 20px; }		
+		#formInscripcion form ul.datos { padding:0  }
+		#formInscripcion form .datos li  { margin-bottom: 12px  }
+			#formInscripcion form .datos li label { width: 77px; padding-top: 2px   }
+			#formInscripcion input.text { width: 336px !important; padding:2px; border: 1px solid #C6E7FF   }
+			#formInscripcion .datos li.acepto label { width:auto; padding-left: 90px  }
+			#formInscripcion .datos li.captcha { padding-top:30px;  }
+				#formInscripcion .datos li.captcha label { width:167px; padding-left: 112px; padding-top: 0 }
+					#formInscripcion .datos li.captcha input.text { width:135px !important  }
+					#formInscripcion .captcha span{ display: block; clear: both; padding: 20px 0 20px 82px   }
+			
+			
+			#formInscripcion .datos input { vertical-align: middle  }
+		
+		#formInscripcion #modType2 .fix { width: 568px;  background:  url(../images/curve_infModType2ForIns.png) no-repeat 0 0;    }			
+			#formInscripcion #modType2 .description .fix { width: 547px; background-image: url(../images/curve_mod2InfForInsDescript.gif);  }	
+
+#gridWide .columnType1 .rss { height: auto  }
+
+
+
+/*****Nuevos estilos****/
+
+.fichas .opinion span, .opinionForm .opinion span { display:inline-block; width:120px}
+        .fichas .opinion .modValoraciones span { width:auto}
+                .fichas .opinion .modValoraciones span.verMas { display:block}
+
+
+.fichas .infoFichaTop { margin-top:20px}
+        .fichas #moduloDestacadoContenido .infoFichaTop ul { margin:0; padding:0}
+       
+        .fichas #moduloDestacadoContenido .infoFichaTop li { padding:5px 0 5px 25px; margin-bottom:5px; background-position:0 0; background-repeat:no-repeat; list-style:none}
+                .fichas #moduloDestacadoContenido .infoFichaTop li.paginas { background-image: url(../images/ico_paginas.gif)}
+                .fichas #moduloDestacadoContenido .infoFichaTop li.sumario { background-image: url(../images/ico_sumario.gif)}
+                .fichas #moduloDestacadoContenido .infoFichaTop li.compartelo { background-image: url(../images/ico_compartelo.gif)}
+                .fichas #moduloDestacadoContenido .infoFichaTop li.imprimir { background-image: url(../images/ico_imprimir.gif)}
+                .fichas #moduloDestacadoContenido .infoFichaTop li.demo { background-image: url(../images/ico_demo.gif)}
+                .fichas #moduloDestacadoContenido .infoFichaTop li.secretos { background-image: url(../images/ico_secretos.gif)}
+                .fichas #moduloDestacadoContenido .infoFichaTop li.video { background-image: url(../images/ico_video.gif)}
+
+.fichas #moduloDestacadoContenido .nuevaFicha { margin:0 auto; text-align:center}
+               
+.fichas .nuevaFicha .llamamos { margin-bottom:20px}
+        .fichas .nuevaFicha .llamamos a { display:inline-block; margin-top:10px}
+.fichas #moduloDestacadoContenido .nuevaFicha .ejemplar { float:none; display:inline-block}
+
+.fichas .ofertaSus { width:119px; padding:12px 22px; margin:0 auto 10px; border:2px solid #ffd8af; background:url(../images/bck_ofertaSuscrip.gif) repeat-x 0 0; position:relative}
+        .fichas #moduloDestacadoContenido .ofertaSus span.desc { display:inline-block; margin-bottom:10px}
+
+        .fichas .ofertaSus .cTl, .fichas .ofertaSus .cTr, .fichas .ofertaSus .cBl, .fichas .ofertaSus .cBr { position:absolute; width:8px; height:8px; background-position:0 0; background-repeat:no-repeat}
+        .fichas .ofertaSus .cTl { top: -2px; left: -2px; background-image:url(../images/curve_ofertaSus-tl.gif) }
+        .fichas .ofertaSus .cTr { top: -2px; right: -2px; background-image:url(../images/curve_ofertaSus-tr.gif) }
+        .fichas .ofertaSus .cBl { bottom: -4px; left: -2px; background-image:url(../images/curve_ofertaSus-bl.gif)}
+        .fichas .ofertaSus .cBr { bottom: -4px; right: -2px; background-image:url(../images/curve_ofertaSus-br.gif) }
+
+.fichas .columnType1 #modFichasPrecio .wrap p { margin-bottom:15px}    
+        .fichas .columnType1 #modFichasPrecio .wrap p.top { padding-top:15px}
+       
+.fichas .columnType1 #modFichasPrecio .opinion li .mas { float:right; margin:2px 0 0 5px}
+
+.fichas .columnType1 #modFichasPrecio2 { margin-top:14px}
+        .fichas .columnType1 #modFichasPrecio2 h2 { background:url(../images/curve_supModFichasPrecio.gif) no-repeat 0 0; height:38px; padding:10px 0 0 10px}
+                .fichas .columnType1 #modFichasPrecio2.ahora h2 span { display:block}
+        .fichas .columnType1 #modFichasPrecio2 .fix { background:url(../images/curve_infModFichasPrecio.gif) no-repeat 0 0; height:10px; padding:0}
+        .fichas .columnType1 #modFichasPrecio2 .wrap { background:url(../images/bck_ModFichasPrecio.gif) repeat-y 0 0; padding:0 10px 0}
+                .fichas .columnType1 #modFichasPrecio2 ul { margin:0; padding:10px 0 0}
+                        .fichas .columnType1 #modFichasPrecio2.ahora ul { padding:10px 0 0}
+                        .fichas .columnType1 #modFichasPrecio2 ul li { margin:0 0 5px; padding:0}
+        .fichas .columnType1 #modFichasPrecio2 .dudas { background:url(../images/bck_modDudas.gif) no-repeat 0 100%; padding:0; margin-bottom:15px}
+                .fichas .columnType1 #modFichasPrecio2 .dudas h3 { background:url(../images/bck_tituloModDudas.gif) no-repeat 0 0; padding:10px 0 0 12px}
+                .fichas .columnType1 #modFichasPrecio2 .dudas ul { padding:5px 12px 10px}
+                        .fichas .columnType1 #modFichasPrecio2 .dudas ul li { padding:0 0 5px 22px; margin:0; background-position:0 0; background-repeat:no-repeat}
+                                .fichas .columnType1 #modFichasPrecio2 .dudas ul li.chat { background-image:url(../images/ico_chat.gif)}
+                                .fichas .columnType1 #modFichasPrecio2 .dudas ul li.contacto { background-image:url(../images/ico_contactoMas.gif)}
+        .fichas .columnType1 #modFichasPrecio2 .centrado { margin:0 auto; text-align:center}
+       
+.fichas #modFichasPrecio2 .ahora { position:relative; top:-10px}
+
+#videoLightbox { width:621px}
+        #videoLightbox h1 { background-image:url("../images/curve_supVideo.png"); padding-bottom:10px}
+        #videoLightbox #modType2 { margin:0}
+        #videoLightbox .wrap { background-image:url("../images/bck_wrapVideo.gif"); padding:0 10px 0 9px}
+                #videoLightbox .description { background-image:url("../images/curve_mod2SupVideoDescript.gif")}
+                #videoLightbox #modType2 .description .fix { background-image:url("../images/curve_mod2InfVideoDescript.gif"); width:602px}
+        #videoLightbox #modType2 .fix { background-image:url("../images/curve_infModType2Video.png"); width:621px}
+        #videoLightbox .videoLgb { padding:10px}
+       
+.modType4 .descripcion .cursoDet .opiniones { float:none; width:auto}
+        .fichas .modType4 .opiniones h2 { border-bottom:2px solid #C6E7FF; padding-bottom:10px}
+        .fichas .modType4 .descripcion .cursoDet .opiniones .versiones ul li .flt { width:380px}
+                .fichas .modType4 .opiniones .flt span { display:block; margin:8px 0}
+                        .fichas .modType4 .opiniones .flt span.nombre { display:inline}
+        .fichas .modType4 .descripcion .cursoDet .opiniones .versiones ul li div.frt { width:225px}
+                .fichas .modType4 .descripcion .cursoDet .opiniones .opinion ul { margin:0}
+                        .fichas .modType4 .descripcion .cursoDet .opiniones .opinion li { border:none}
+        .fichas .modType4 .descripcion .cursoDet .opiniones .verMas { border:none; padding:0}
+       
+.opiniones .mrg { margin:10px 0}
+
+h2.titleOpinion { margin:-20px 0 20px}
+.opiniones .columnFlt { float:left; width:620px; border-top:2px solid #C6E7FF}
+.opiniones .columnFrt { float:right; width:271px; background:url("../images/curve_top_cont-int.gif") no-repeat 0 0; padding-top:9px}
+        .opiniones .columnFrt .cont { border-left:2px solid #C6E7FF; border-right:2px solid #C6E7FF; padding:0 10px 10px}
+        .fichas #gridWide .modType4 .opiniones .columnFrt .fix { background:url("../images/curve_bottom_cont-int.gif") no-repeat 0 0; width:271px; height:9px}
+        .fichas .modType4 .descripcion .opiniones .columnFrt ul li { border:none; margin:0 0 15px}
+                .fichas .modType4 .descripcion .opiniones .columnFrt ul li.reset { margin:0}
+                .fichas .modType4 .descripcion .opiniones .columnFrt .opinion { border-top:1px solid #C6E7FF; margin-top:8px; padding-top:5px}
+                        .fichas .modType4 .descripcion .opiniones .columnFrt .opinion li { border-bottom:1px solid #C6E7FF; margin:0 0 5px; padding-bottom:5px}
+                                .fichas .modType4 .descripcion .opiniones .columnFrt p { margin-bottom:8px}
+                               
+.fichas .modType4 .descripcion .opiniones ul.valoraciones { margin:0}
+        .fichas .modType4 .descripcion .opiniones ul.valoraciones li, .fichas .columnType1 #modFichasPrecio .opinion .modValoraciones li { display:inline-block; vertical-align:top; width:215px; margin:0 14px 0 0; border:none; position:inherit}
+                .fichas .modType4 .descripcion .opiniones ul.valoraciones li.boton { margin:0; text-align:center}
+                        .opiniones ul.valoraciones li.boton p { margin-bottom:15px}
+                .fichas .modType4 .descripcion .opiniones ul.valoraciones li li { margin:0 0 10px}
+                        .opiniones .estrellas, #modFichasPrecio .opinion .modValoraciones .estrellas { width:91px; margin-right:5px; display:inline-block}
+                        .opiniones .barra, #modFichasPrecio .opinion .modValoraciones .barra { border:1px solid #cacaca; background:#dcdcdc url(../images/bck_barra.gif) repeat-x 0 0; width:80px; height:12px; display:inline-block; margin-right:5px; vertical-align:middle}
+                                .opiniones .sel .barra, #modFichasPrecio .opinion .modValoraciones .sel .barra { border:1px solid #f8b366; background:#fdeedf url(../images/bck_barra-sel.gif) repeat-x 0 0}
+                                .opiniones .barra span, #modFichasPrecio .opinion .modValoraciones .barra span {  background:#75a5d1 url(../images/bck_barra_color.gif) repeat-x 0 0; height:12px; display:inline-block}
+                                        .opiniones .sel .barra span, #modFichasPrecio .opinion .modValoraciones .sel .barra span {  background:#ee7e00 url(../images/bck_barra_color-sel.gif) repeat-x 0 0}
+       
+.fichas .columnType1 #modFichasPrecio .opinion ul li { position:relative}
+                                       
+#modFichasPrecio .opinion .modValoraciones { left:210px; bottom:-8px; z-index:1}       
+        #modFichasPrecio .opinion .modValoraciones h4 { background:url(../images/curve_modVal-top.gif) no-repeat 0 0; padding:16px 0 8px 14px}
+        #modFichasPrecio .opinion .modValoraciones div { border-left:5px solid #e8e8e8; border-right:5px solid #e8e8e8; padding:0 11px 12px 12px; background:#fff}
+        #modFichasPrecio .opinion .modValoraciones .fix { background:url(../images/curve_modVal-bot.gif) no-repeat 0 0; position:absolute; bottom:-5px; left:0; width:248px; height:12px; border:none}
+                .fichas .columnType1 #modFichasPrecio .opinion .modValoraciones ul { border:none; margin:0 0 15px}
+                        .fichas .columnType1 #modFichasPrecio .opinion .modValoraciones li { margin:0}
+                #modFichasPrecio .opinion .modValoraciones .verMas { text-align:right}
+                #modFichasPrecio .opinion .modValoraciones .mas { position:absolute; bottom:14px; left:11px}
+               
+#videoLightbox .opinionForm { padding:20px}
+	#videoLightbox .opinionForm p { margin-bottom:15px}
+	#videoLightbox .opinionForm .opinion { width:260px; margin:0 auto 15px}
+		#videoLightbox .opinionForm .opinion ul { border-top:1px solid #C6E7FF; margin:5px 0 0; padding:5px 0 0}
+			#videoLightbox .opinionForm .opinion li { clear:both; float:left; width:100%; border-bottom:1px solid #C6E7FF; margin:0 0 5px; padding:0 0 5px}
+				#videoLightbox .opinionForm .opinion li span { float:left;}
+		#videoLightbox .opinionForm .opinion ul:after { content:" "; display:block; clear:both; height:0; visibility:hidden;}
+	#videoLightbox .opinionForm label { margin-bottom:10px}
+	#videoLightbox .opinionForm textarea.text { border:1px solid #C6E7FF; padding:2px; width:556px; margin-bottom:5px}
+	
+.ocultaAltFancy #fancybox-title { display:none!important}
+
+#modFichasPrecio .botonOpine { padding-top:30px; text-align:center} 
+
+
+/****estilos home mementos****/
+
+.homeMementos #gridHome1 { margin-bottom: 18px;  }			
+	.homeMementos #gridHome1 .wrap { position: relative; padding: 0 10px; background: #9f9f9f url(../images/bck_wrapGridHome1.gif) repeat-x 0 0   }			
+	.homeMementos #gridHome1 .columnType1 { float: left; width:680px;  }	
+		.homeMementos #gridHome1 .columnType1 h2, .homeMementos #gridHome1 .columnType2 h2 { padding: 16px 10px 5px; }
+	.homeMementos #gridHome1 .columnType2 { float: right; width: 256px;   }	
+
+.homeMementos #areaAbonados { margin:12px 0; padding:0 0 12px; background:#f58400 url(../images/bck_areaAbonados.gif) no-repeat scroll 0 100%}
+	.homeMementos #areaAbonados h2 { background:url(../images/curve_areaAbonadosSup.gif) no-repeat 0 0; height:38px; padding:16px 24px 0}
+	.homeMementos #areaAbonados .wrap { margin:0 12px; padding:0 0 16px; background:#fff url(../images/curve_areaAbonadosWrInf.gif) no-repeat 0 100%}
+		.homeMementos #areaAbonados .curveSup { padding:16px 16px 0 10px; background:url(../images/curve_areaAbonadosWrSup.gif) no-repeat 0 0}
+			.homeMementos #areaAbonados .columnType1 { float:left; width:315px; padding:0; background:#f1f1f1 url(../images/curve_homeMementosInfCol1.gif) no-repeat 0 100%}
+				.homeMementos #areaAbonados .columnType1 .inner { padding:0 10px 10px}
+			.homeMementos #areaAbonados .columnType2 { float:right; width:555px; margin-left:15px; padding-left:15px; border-left:1px solid #b2b2b2}
+				.homeMementos #areaAbonados .columnType2 h3 { margin:14px 0 20px; }
+				.homeMementos #areaAbonados .columnType2 ul { margin:0 0 27px;}
+			.homeMementos #areaAbonados h3 { margin-bottom:20px}
+				.homeMementos #areaAbonados .columnType1 h3 { background:url(../images/curve_homeMementosSupCol1.gif) no-repeat 0 0; padding:15px 10px 0}
+			.homeMementos #areaAbonados ul { margin:0 0 20px; padding:0}
+				.homeMementos #areaAbonados .columnType1 li { padding-left:17px; background:url(../images/ico_verMas.png) no-repeat 0 4px; margin-bottom:15px}
+				.homeMementos #areaAbonados .columnType2 li { padding:2px 0 4px 30px; background:url(../images/bullet_pPrimaria.gif) no-repeat 0 0; margin-bottom:15px}
+				.homeMementos #areaAbonados p .verMas { display:inline; margin-left:5px}
+				.homeMementos #areaAbonados .dudas { padding:8px 0 6px 30px; background:url(../images/ico_faq.gif) no-repeat 0 0}
+	
+.homeMementos #gridHome1 .columnType1 { background:url(../images/bck_buscaHomeMementos.gif) repeat-y 0 0; padding:0}		
+	.homeMementos #gridHome1 .columnType1 h2 { background:url(../images/curve_buscaHomeMementosSup.gif) no-repeat 0 0}
+	.homeMementos #gridHome1 .columnType1 .wrap { background:#fff url(../images/curve_buscaHomeMementosWrInf.gif) no-repeat 0 100%; padding:0; margin:0 11px}
+		.homeMementos #gridHome1 .columnType1 .wrap .inner { background:url(../images/curve_buscaHomeMementosWrSup.gif) no-repeat 0 0; padding:17px 15px 0}
+		.homeMementos #gridHome1 .columnType1 .wrap .fix {position: absolute; width: 680px; height: 11px; background:url(../images/curve_buscaHomeMementosInf.gif) no-repeat 0 0; bottom:-11px; left:-11px}
+			.homeMementos #gridHome1 .columnType1 .wrap ul { margin:0 0 0 30px}
+				.homeMementos #gridHome1 .columnType1 .wrap li { display:inline-block; vertical-align:top; width:170px; margin:0 18px 20px 0}
+					.homeMementos #gridHome1 .columnType1 .wrap li.reset { margin:0 0 20px}
+					
+.homeMementos #gridHome1 .columnType2 h2 { background:url(../images/curve_cursosHomeMementosSup.gif) no-repeat 0 0}
+.homeMementos #gridHome1 .columnType2 .wrap { background:#0f68aa url(../images/bck_cursosMementosWr.gif) repeat-x 0 0; padding:0 10px 4px}
+	.homeMementos #gridHome1 .columnType2 .wrap .fix { position: absolute; left: 0; width: 256px; height: 10px; background:url(../images/curve_cursosHomeMementosInf.gif) no-repeat 0 0}
+	.homeMementos #modTambien { padding: 10px; background:#fff url(../images/bck_cursosMementosMod2.gif) no-repeat 0 0}
+	.homeMementos #modTambien .module { border-bottom: 1px solid #B2B2B2; padding: 6px 0 7px; }
+		.homeMementos #modTambien h3 { margin:7px 0; padding:0}
+			.homeMementos #modTambien ul { margin:0; padding:0}
+				.homeMementos #modTambien li { padding-left:15px; margin:0 0 10px; background:url(../images/ico_verMas.png) no-repeat 0 3px}
+				.homeMementos #gridHome1 .columnType2 .wrap .fix { bottom:-12px}
+				
+.homeMementos #gridHome2 .modPago { background:url(../images/curve_modPagoInf.gif) no-repeat 0 100%; padding:0 0 8px; float:left; width:680px}
+	.homeMementos #gridHome2 .modPago .wrap { background:url(../images/curve_modPagoSup.gif) no-repeat 0 0; padding:8px 0 0}
+		.homeMementos #gridHome2 .modPago ul { background:url(../images/bck_modPago.gif) repeat-y 0 0; margin:0; padding:10px 15px}
+			.homeMementos #gridHome2 .modPago li { display:inline-block; width:200px; vertical-align:top; margin:0 0 0 10px; padding:0 0 0 10px; border-left:1px solid #b2b2b2}
+				.homeMementos #gridHome2 .modPago li.first { margin:0; padding:0; border:none}
+				.homeMementos #gridHome2 .modPago h2, .homeMementos #gridHome2 .modPago p { margin-bottom:15px}
+				.homeMementos #gridHome2 .modPago .verMas { text-align:right; margin-bottom:5px}
+					.homeMementos #gridHome2 .modPago ul.listPagos { background:none; padding:0}
+						.homeMementos #gridHome2 .modPago .listPagos li { float:left; display:block; width:auto; margin:0 3px 10px; padding:0; border:none}
+		
+.homeMementos #gridHome2 .modTwitter { background:#dcdcdc url(../images/curve_modTwitterInf.gif) no-repeat 0 100%; padding:0 0 8px; float:right; width:256px}
+	.homeMementos #gridHome2 .modTwitter .wrap { background:url(../images/curve_modTwitterSup.gif) no-repeat 0 0; padding:8px 10px 0 10px}
+		.homeMementos #gridHome2 .modTwitter .inner { background:#fff url(../images/curve_modTwitterInnerInf.gif) no-repeat 0 100%; padding:0 0 8px}
+		.homeMementos #gridHome2 .modTwitter h2 { background:#fff url(../images/curve_modTwitterInnerSup.gif) no-repeat 0 0; padding:10px 0 0 13px}
+
+.homeMementos #gridHome1 .columnType1 p { margin:0 0 6px;}
+.homeMementos #gridHome1 .columnType1 span.verMas { margin:0 0 6px;}
+
+#modNovedades span { display:block;}
+
+
+/********************** RPSM SAGE ********************/
+	
+	#sage_home_recursos  #gridHome1 .columnType2 {float: right; width: 262px;}
+
+
+	#sage_home_recursos #gridHome1 #presentacionRecursos h2 { background: url(../images/sage_curve_sup_presentacionRecursos.gif) no-repeat scroll 0 0; height: 38px; padding: 16px 24px 0}
+	#sage_home_recursos #gridHome1 #presentacionRecursos .wrap { background: url(../images/sage_bck_presentacionRecursos.gif) no-repeat scroll 0 100% #eeeeee; padding-bottom: 12px; padding-left: 12px}
+	#sage_home_recursos #gridHome1 #presentacionRecursos .columnType1 { background: url(../images/sage_curve_inf_presentacionDestacados.gif) no-repeat scroll 0 100%;float:left;padding: 0 0 8px;width: 658px}
+	#sage_home_recursos #gridHome1 #presentacionRecursos .columnType1 .curveSup { background: url(../images/sage_curve_sup_presentacionDestacados.gif) no-repeat scroll 0 0; padding: 8px 0 0}
+	#sage_home_recursos #gridHome1 #presentacionRecursos .columnType1 .media {float: left;padding: 0 0 0 9px;width: 260px}
+	#sage_home_recursos #gridHome1 #presentacionRecursos .columnType1 .description {float: left;padding: 10px 8px 0 0; width: 300px;height: 100px}
+	#sage_home_recursos #gridHome1 #presentacionRecursos .columnType1 .description ul {float: left; margin-left: 140px; padding: 10px 8px 0 0;}
+	#sage_home_recursos #gridHome1 #presentacionRecursos .columnType1 .wrapAjaxContent {min-height: 176px}
+
+
+	#sage_home_recursos #presentacionRecursos .columnType1 ul { list-style: none outside none;margin: 6px 0;padding: 0}
+	#sage_home_recursos #presentacionRecursos .columnType1 li { background: url(../images/bullet_pPrimaria.gif) no-repeat scroll 0 0; margin: 0; padding: 4px 0 4px 30px}
+	
+	#sage_home_recursos #presentacionRecursos .columnType1 .novedades {float:right; padding-top:85px}
+	#sage_home_recursos #presentacionRecursos .columnType1 .novedades  ul{ float:left; margin:0; padding:0}
+	#sage_home_recursos #presentacionRecursos .columnType1 .novedades  li{ background:none; float:left;margin:0 15px 0 0; padding:0}
+	#sage_home_recursos #presentacionRecursos .columnType1 .novedades  li.email a{ background: url(../images/sage_smallshape_graywhite.gif) no-repeat scroll 0 0; padding:4px 0 0 30px}
+	#sage_home_recursos #presentacionRecursos .columnType1 .novedades  li.rss a{ background: url(../images/ico_rss_novedades.gif) no-repeat scroll 0 0; padding:9px 0 0 40px}
+
+/*********************/
+
+	#sage_home_recursos #gridHome1 #listadoRecursos {position:relative;background-color:#ffffff;margin-top:10px}
+	#sage_home_recursos #gridHome1 #listadoRecursos h2 {background: url(../images/sage_curve_sup_listadoRecursos.gif) no-repeat scroll 0 0; padding: 16px 24px 0}
+	#sage_home_recursos #gridHome1 #listadoRecursos .wrap { background: url(../images/sage_bck_listadoRecursos.gif) no-repeat scroll 0 100%; padding-bottom: 12px; padding-left: 12px}
+	
+	
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .mementos { background: url(../images/sage_bck_inner_recursos.gif) no-repeat scroll 0 100%; height:110px; padding:16px 0px 0; }
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .formacion { background: url(../images/sage_bck_inner_recursos.gif) no-repeat scroll 0 100%; height:110px; padding:16px 0px 0; }
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .recursos { background: url(../images/sage_bck_inner_recursos.gif) no-repeat scroll 0 100%; height:110px; padding:16px 0px 0; }
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .productos { background: url(../images/sage_bck_inner_recursos.gif) no-repeat scroll 0 100%; height:110px; padding:16px 0px 0;}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .mementos img_bordeinf {float:left; width:330px; height:25px; padding: 16px 24px 0}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .formacion img_bordeinf {float:left; width:330px; height:25px; padding: 16px 24px 0}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .recursos img_bordeinf {float:left; width:330px; height:25px; padding: 16px 24px 0}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .productos img_bordeinf {float:left; width:330px; height:25px; padding: 16px 24px 0}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .mementos h3 {background: url(../images/sage_curve_sup_inner_recursos.gif) no-repeat scroll 0 0;width:340px; padding: 18px 18px 0;}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .formacion h3 {background: url(../images/sage_curve_sup_inner_recursos.gif) no-repeat scroll 0 0;width:340px; padding: 18px 18px 0}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .recursos h3 {background: url(../images/sage_curve_sup_inner_recurso_der.gif) no-repeat scroll 0 0;width:340px; padding: 18px 18px 0}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .productos h3 {background: url(../images/sage_curve_sup_inner_recurso_izq.gif) no-repeat scroll 0 0;width:340px;padding: 18px 18px 0}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .mementos p {padding:5px 0px 0px 18px;}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .formacion p {padding:5px 0px 0px 18px;}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .recursos p {padding:5px 0px 0px 18px;}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .productos p {padding:5px 0px 0px 18px;}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .mementos .img_link {margin-left:15px;padding:10px 0px 0px 0px}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .formacion .img_link {margin-left:130px;padding:10px 0px 0px 0px}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .recursos .img_link {margin-left:130px;padding:10px 0px 0px 0px}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .productos .img_link {margin-left:130px;padding:10px 0px 0px 0px}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .mementos {float:left; padding: 10px 0px 0 0; width:330px;}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .formacion {float:left; padding: 10px 0px 0 0; width:330px;}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .recursos {float:left; padding: 10px 0px 0 0; width:330px;}
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .productos {float:left; padding: 10px 0px 0 0; width:330px;}
+	
+	#sage_home_recursos #gridHome1 #listadoRecursos .columnType1 .wrapAjaxContent {min-height: 180px}
+	
+	#sage_home_recursos #listadoRecursos .columnType1 ul { list-style: none outside none;margin: 6px 0;padding: 0}
+	#sage_home_recursos #listadoRecursos .columnType1 li { background: url(../images/bullet_pPrimaria.gif) no-repeat scroll 0 0; margin: 0; padding: 4px 0 4px 30px}
+
+
+/*********************/
+
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado { background: url(../images/sage_bck_destacadoAyuda.png) no-repeat scroll 0 100% #ffffff;float: left; padding: 0; width: 262px;height:308px}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado h2 { background: url(../images/sage_curve_sup_destacadoAyuda.png) no-repeat 0 0; padding: 16px 0px 0 10px; height:30px}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap {background: 0 0 #F4F9F8; margin: 5px 10px 10px; padding: 0px 0px 0px 0px;position: relative}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap  span{background: none;margin:0; padding:0;}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap .content { background: none}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap .fix {background:none; bottom: -3px;height: 5px; left: 0; position: absolute}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.chat { background:  0 0 #F4F9F8}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.chat .content{ position:relative; margin-top:15px;height:45px}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.chat a{background: url(../images/sage_ico_chat.png) no-repeat 0 0 #F4F9F8; width:93px; height:65px; margin-top:20px;padding:15px 0 50px 100px;}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.contact .content{ position:relative; margin-top:5px;height:48px}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.contact a{background: url(../images/sage_ico_contacto.gif) #F4F9F8 no-repeat 0 0; width:78px; height:65px;  padding:10px 0 45px 85px; margin-left: 0px;}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.contact h3{margin-left: 35px; padding:5px 0 40px 80px}
+
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.faq .content{ position:relative; margin-top:5px;height:20px}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.faq h3{background: url(../images/sage_ico_faq.gif) no-repeat 0 0px; margin-top: 5px; padding:22px 0px 40px 85px}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.faq h4{margin: -40px 0px 0px 85px;}
+
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.faq  a img{margin: 10px -70px 0px 80px;}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.faq .fix { background: none}
+
+
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado h2 { color: #000000;font-size: 22px;font-weight: bold}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap a:hover{ text-decoration:none}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.chat a{ color:#005030;font-size:30px}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.contact span{font-size:22px;font-weight:bold;color:#005030}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.contact a{font-size:22px;font-weight:bold;color:#005030}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.contact h3{color:#005030; font-size:20px }
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.faq h3{color:#005030; font-size:15px; font-weight:bold}
+#sage_home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.faq h4{color:#727173; font-size:10px;}
+
+
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion { background: url(../images/sage_bck_destacadoOpinion.png) no-repeat scroll 0 100% #ffffff;float: left; padding: 0; width: 262px;height:310px}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion h2 { background: url(../images/sage_curve_sup_destacadoOpinion.png) no-repeat 0 0; padding: 16px 0px 0 10px; height:30px}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap {background: none; margin: 5px 10px 10px; padding: 0px 0px 0px 0px;position: relative}
+
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion h3 {margin-left: 0px; padding:5px 0 5px 10px}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion h4 {margin-left: 0px; padding:5px 0 5px 10px}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap  span{background: none;margin:0; padding:0;}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap .content { background: none}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap .fix {background:none; bottom: -3px;height: 5px; left: 0; position: absolute}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap.opinion { background: none}
+
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap .opinion {margin: 20px 0px 0px 140px;}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap.casos {background: none;}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap.casos h3 {background: url(../images/sage_casos_estrellas.gif) no-repeat 165px 10px; margin-left: -10px;height:60px}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap.casos h4 {background:none; margin: 0px 100px 0px -10px;}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap.casos h5 {background:none; margin: -60px 0px 0px 140px;}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap.casos a img {margin: 20px 0px 0px 140px;}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap.casos .fix {background: none}
+
+
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion h2 { color: #000000;font-size: 22px;font-weight: bold}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap a:hover{ text-decoration:none}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap.chat a{ color:#ffffff;font-size:30px}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap.contact span{font-size:22px;font-weight:bold;color:#ffffff}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap.contact a{font-size:22px;font-weight:bold;color:#ffffff}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion h3 {color:#B5101C; font-size:18px;font-weight:normal}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion h4 {color:#999999; font-size:12px;font-weight:normal}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap.casos h3{color: #000000;font-size: 22px;font-weight: bold}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap.casos h4{color:#ffffff; font-size:13px; font-style:italic}
+#sage_home_recursos  #gridHome1 .columnType2  #modOpinion .wrap.casos h5{color:#727173; font-size:9px;}
+
+
+#sage_home_recursos  #gridHome1 .columnType2  #modAmpliar { background: url(../images/sage_bck_destacadoAmpliar.png) no-repeat scroll 0 100% #ffffff;float: left; padding: 0; width: 262px;height:130px}
+#sage_home_recursos  #gridHome1 .columnType2  #modAmpliar h2 { background: url(../images/sage_curve_sup_destacadoOpinion.png) no-repeat 0 0; padding: 16px 0px 0 10px; height:30px}
+#sage_home_recursos  #gridHome1 .columnType2  #modAmpliar .wrap {background: none; margin: 5px 10px 10px; padding: 0px 0px 0px 0px;position: relative}
+#sage_home_recursos  #gridHome1 .columnType2  #modAmpliar h4 {margin-left: 0px; padding:0px 0 5px 10px}
+#sage_home_recursos  #gridHome1 .columnType2  #modAmpliar .wrap  span{background: none;margin:0; padding:0;}
+#sage_home_recursos  #gridHome1 .columnType2  #modAmpliar .imgAmpliar {float:right; margin-top:10px; margin-right:10px}
+
+#sage_home_recursos  #gridHome1 .columnType2  #modLinks { background: url(../images/sage_bck_modLinks.png) no-repeat scroll 0 100% #ffffff;float: left; padding: 0; width: 262px;height:130px}
+#sage_home_recursos  #gridHome1 .columnType2  #modLinks h4 { background: url(../images/sage_curve_sup_modLinks.png) no-repeat 0 0; padding: 0px 0px 0px 20px; width:262px; height:20px}
+#sage_home_recursos  #gridHome1 .columnType2  #modLinks li { background: url(../images/sage_smallshape_graywhite.gif) no-repeat 0 0; margin-left:20px; padding: 2px 0px 0 30px; height:18px;}
+
+ #sage_home_recursos #gridHome1 #listadoRecursos #videoGuias .wrap { background: url(../images/sage_bck_listadovideoGuias.gif) no-repeat scroll 0 100%; margin-top:-1px; padding-bottom: 12px; padding-left: 12px}
+ 
+ #sage_home_recursos #gridHome1  #guias-titulo h3 {padding: 10px 30px 0px 15px; position: left}
+ #sage_home_recursos #gridHome1  #guias .fecha h4 {padding: 10px 10px 0px 10px; position: left}
+ #sage_home_recursos #gridHome1  #guias {padding: 10px 30px 0px 15px;position: left}
+ #sage_home_recursos #gridHome1  #guias .entradilla p {margin:0px 0 0 0;padding-top:0px; padding-bottom:10px}
+ #sage_home_recursos #gridHome1  #guias ul { float: left;margin:0 0 0 0; padding:0 0 0 0}
+ #sage_home_recursos #gridHome1  #guias ul li { border-bottom: 1px solid #B9B2D8; float: left; padding: 0px 0 5px 0px;margin-left:0;width: 620px}
+ #sage_home_recursos #gridHome1  #guias ul li img { float: left; padding: 10px 10px 0px 0px;}
+ #sage_home_recursos #gridHome1  #guias .entradilla img { float: right;}
+ #sage_home_recursos #gridHome1  #guias div.flt {margin: 0 0 2px 15px; width: 510px;}
+ #sage_home_recursos #gridHome1  #guias div a.pdf { background: url(../images/ico_pdf.gif) no-repeat scroll 0 0 transparent; float: left; margin-top: 10px;padding-left: 20px}
+ #sage_home_recursos #gridHome1  #guias div span.youtube { background: url(../images/ico_youtube.gif) no-repeat scroll 100% 0 transparent;float: right;padding: 11px 35px 0 0}
+ #sage_home_recursos #gridHome1  #guias .botones {margin-top:10px;text-align:right}
+
+ 
+#listadoGuias ul {float:left;margin-right:10px;margin-left:10px}
+#listadoGuias ul li {float:left; border-bottom:1px solid #B9B2D8;padding-bottom:5px; margin-top:2px; padding-left:2px;width:600px}
+#listadoGuias ul li img {float:left}
+#listadoGuias .flt {float:left; margin:0px 0 2px 15px; width:500px}
+#listadoGuias .fecha {float:left;}
+#listadoGuias .descripcion {float:left;}
+#listadoGuias div a.pdf {float:left; background:url(../images/ico_pdf.gif) no-repeat 0 0; padding-left:20px; margin-top:10px}
+#listadoGuias div span.youtube {float:right; background:url(../images/ico_youtube.gif) no-repeat 100% 0; padding:12px 35px 0 0}
+
+#sage_home_recursos #gridHome1 .columnType2 #modAmpliar2 { background: url(../images/sage_bck_destacadoAmpliar2.png) no-repeat scroll 0 100% #ffffff;float: left; padding-top: 10px; width: 262px;height:345px}
+#sage_home_recursos #gridHome1 .columnType2 #modAmpliar2 h2 {background: url(../images/sage_curve_sup_destacadoOpinion.png) no-repeat 0 0; padding: 16px 0px 0 100px; height:30px}
+#sage_home_recursos #gridHome1 .columnType2 #modAmpliar2 ul {padding: 0px 0px 0 80px;}
+#sage_home_recursos #gridHome1 .columnType2 #modAmpliar2 .wrap {background: none; margin: 5px 10px 10px; padding: 0px 0px 0px 0px;position: relative}
+#sage_home_recursos #gridHome1 .columnType2 #modAmpliar2 h4 {margin-left: 0px; padding:0px 0 5px 10px}
+#sage_home_recursos #gridHome1 .columnType2 #modAmpliar2 .wrap  span{background: none;margin:0; padding:0;}
+#sage_home_recursos #gridHome1 .columnType2 #modAmpliar2 .imgAmpliar {float:right; margin-top:10px; margin-right:10px}
+
+
+#sage_home_recursos #gridWide, #sage_home_recursos #gridWide #moduloDestacadoContenido { width: 953px; margin-bottom: 21px; padding-top:10px; position:relative  } 
+#sage_home_recursos #gridWide h1, #sage_home_recursos #gridWide #moduloDestacadoContenido h1 { height: 30px; padding: 20px 0 0 20px; background:url(../images/sage_curve_supWide.gif) no-repeat 0 0; }          
+#sage_home_recursos #gridWide #moduloDestacadoContenido .camposObligatorios { position:absolute; top:30px; left:325px}
+#sage_home_recursos #gridWide .wrap, #sage_home_recursos #gridWide #moduloDestacadoContenido .wrap {  padding: 0 9px 3px 10px; background: url(../images/sage_bck_wrapWide.gif) repeat-y scroll 0 0  }
+#sage_home_recursos #gridWide .inner .wysiwyg, #sage_home_recursos #gridWide #moduloDestacadoContenido .inner .wysiwyg { padding: 10px 28px 0 28px; }
+#sage_home_recursos #gridWide .fix, #sage_home_recursos #gridWide #moduloDestacadoContenido .fix { width: 953px; height: 30px; margin-left: 1px; padding: 0; background: url(../images/sage_curve_infWide.gif) no-repeat 0 0 }
+#sage_home_recursos #gridWide .inner .fix, #sage_home_recursos #gridWide #moduloDestacadoContenido .inner .fix { width: 934px; height: 14px;   padding: 0; background: url(../images/sage_curve_infWideDescription.gif) no-repeat 0 0; }    
+#sage_home_recursos #gridWide .inner, #sage_home_recursos #gridWide #moduloDestacadoContenido .inner { width: 880px; padding:0px;  background: url(../images/sage_curve_supWideDescription.gif) no-repeat 0 0;  }
+#sage_home_recursos #gridWide .inner .wysiwyg, #sage_home_recursos #gridWide #moduloDestacadoContenido .inner .wysiwyg { padding: 15px 28px 0 20px; }
+#sage_home_recursos #gridWide .ventajas li {background: url(../images/sage_smallshape_graywhite.gif) no-repeat 0 0; padding:0px 0px 0px 30px;}
+
+
+#sage_home_recursos #gridWide.casosExito {padding-top: 0px;}
+
+#sage_casos #gridType2 {background: url(../images/sage_curve_supWrapColumn_926.gif) no-repeat scroll 0 0 transparent; width: 953px;}
+#sage_casos #gridType2 .fix { background: url(../images/sage_curves_bottom_949.gif) no-repeat scroll 0 0 transparent; width: 953px;}
+
+#sage_casos #gridType2 .columnType1 {float: left;background:url(../images/sage_bck_inner_926.gif) repeat-y 0 0; margin-top: 10px;}
+#sage_casos #gridType2 .columnType1 {margin-bottom:-3px; padding: 0px 0px 0px 0px; width:926px;}
+#sage_casos #gridType2 .wrapColumn { background: url(../images/sage_curve_supWrapColumn_926.gif) no-repeat scroll 0 0 transparent; margin-left:0px; padding: 0px 0 0;width: 100%}
+
+#sage_casos #descripcion h2 {margin-left:10px; padding: 30px 0 10px 0}
+#sage_casos #descripcion p {margin-left:13px; margin-right:20px;}
+#sage_casos #logos {float:left; padding-bottom:10px; margin-top:15px;}
+#sage_casos #descripcion {float:left; margin-left: 10px;}
+
+#sage_casos .pagination {float: right}
+
+#sage_casos #listadoCasos {float:left;}
+#sage_casos #listadoCasos li {float:left; border-bottom:2px solid #e2e2e2;margin-right:10px;}
+
+
+#gridWide.tituloRSS {padding-top: 10px;}
+#gridWide.tituloRSS h1 {padding-top: 15px; padding-bottom:10px}
+
+#rss #gridType2 {background: url(../images/sage_curves_top_949.gif) no-repeat scroll 0 0 transparent;margin-left: 0px; padding: 0px 0px 0px 0px; width: 953px}
+#rss #gridType2 .fix { background: url(../images/sage_curves_bottom_949.gif) no-repeat scroll 0 0 transparent; width: 953px;}
+
+#rss #gridType2 .columnType1 {float: left;background:url(../images/sage_bck_inner_926.gif) repeat-y 0 0; margin-left:12px;margin-bottom:10px;}
+#rss #gridType2 .columnType1 {margin-bottom:-3px; padding: 0px 0px 0px 0px; width:926px;}
+#rss #gridType2 .wrapColumn { background: url(../images/sage_curve_supWrapColumn_926.gif) no-repeat scroll 0 0 transparent; margin-left:0px; padding: 0px 0 0;width: 100%}
+
+#rss #gridType2 .entry h2 {margin-left:15px; padding: 20px 0 0px 0}
+#rss #gridType2 .reset h2 {margin-left:0px; padding: 10px 0 10px 0}
+
+#rss #gridType2 p {margin-left:13px; margin-right:20px;}
+#rss #logos {float:left; padding-bottom:10px; margin-top:15px;}
+#rss #descripcion {float:left; margin-left: 10px;}
+
+#rss .pagination {float: right}
+
+#rss .ventajas li {background:url(../images/sage_smallshape_graywhite.gif) no-repeat 0 0; margin-left:20px; padding: 2px 0px 3px 28px}
+#rss .reset li {background:url(../images/sage_smallshape_graywhite.gif) no-repeat 0 0; margin-left:2px; padding: 2px 0px 3px 28px}
+
+
+#sage_home_recursos #modType2 {margin-bottom: 17px; padding: 0   }
+#sage_home_recursos #modType2 h1 { /*height: 42px;*/ padding: 16px 16px 0 16px; background: url(../images/sage_form_curve_supModType2.gif) no-repeat 0 0  }
+#sage_home_recursos #modType2 .wrap {  padding: 0 10px 0 10px; background: url(../images/sage_form_bck_wrapModType2.gif) repeat-y scroll 0 0  }
+#sage_home_recursos #modType2 .wrap2 {  padding: 0 12px 0 10px; background: url(../images/sage_form_bck_wrapModType2.gif) repeat-y scroll 0 0  }
+#sage_home_recursos #modType2 .description { padding: 0;  background: url(../images/sage_form_curve_ModType2SupDescription.gif) no-repeat 0 0;  }
+#sage_home_recursos #modType2 .descriptionTypeB { padding: 0;  background: url(../images/sage_form_curve_ModType2DescriptionAzul.gif) no-repeat 0 0;  }
+#sage_home_recursos #modType2 .description .wysiwyg { padding: 10px 29px 29px 29px; }    
+#sage_home_recursos #modType2 .fix { width: 767px; height: 18px; padding: 0; background: url(../images/sage_form_curve_infModType2.gif) no-repeat 0 0 }
+#sage_home_recursos #modType2 .description .fix { width: 745px; height: 9px;   padding: 0; background: #fff url(../images/sage_form_curve_ModType2InfDescription.gif) no-repeat 0 0; }
+#sage_home_recursos #modType2 .curvaFondo .description .fix { height:19px; background:#e2e2e2 url(../images/sage_form_curve_fondoAzul.gif) no-repeat 0 0}         
+	
+	
+#sage_home_recursos #datosUsuario { position: relative; padding: 28px 30px 28px 20px}			
+#sage_home_recursos #datosUsuario .camposObligatorios { position: absolute; right: 10px; top: -35px  }
+#sage_home_recursos #datosUsuario #form_inf_colectivo  { position:relative;}
+#sage_home_recursos #datosUsuario #form_inf_colectivo .camposObligatorios { top:3px; }
+#sage_home_recursos #datosUsuario h2 { border-bottom:1px solid #e2e2e2; margin-bottom:20px; padding-bottom:5px}			
+#sage_home_recursos #datosUsuario form ul.datos { width:530px; /*width: 476px;*/ margin:0; padding:0 0 0 130px; /*padding:0 0 0 160px*/}
+#sage_home_recursos #datosUsuario form .datos li { width:auto}
+#sage_home_recursos #datosUsuario form .datos li label {float:left; width:200px; /*width:121px;*/ margin-right:7px; text-align:right; white-space:normal;}					
+#sage_home_recursos #datosUsuario form .datos li span { margin-left:10px}
+#sage_home_recursos #datosUsuario .clearFix { width: 155px; margin-left: 315px; margin-top: 10px  }			
+#sage_home_recursos #datosUsuario .volver { float:left; margin-right: 20px; padding-top: 3px }
+#sage_home_recursos #datosUsuario .volver a { background-position:0 2px}
+#sage_home_recursos #datosUsuario .submit { float:right;  }
+#sage_home_recursos #datosUsuario input.text { width: 120px !important;}
+#sage_home_recursos #datosUsuario select { width: 148px}
+#sage_home_recursos #datosUsuario fieldset legend  {display: block; visibility: visible;   }
+#sage_home_recursos #datosUsuario form .datos li legend span { position: absolute; margin-left: 0  }
+#sage_home_recursos #datosUsuario fieldset ul { margin-left: 115px  }
+#sage_home_recursos #datosUsuario form .datos li fieldset label, #datosUsuario form .datos li fieldset input { float:none; text-align: left  }
+#sage_home_recursos #datosUsuario fieldset input { vertical-align: middle  }
+
+body.sage_home_recursos {background-image:url(../images/bck_body2.gif); background-color:#fff}
+
+#presentacionRecursos h2, #listadoRecursos h2 {color:#535548}
+
+.encuesta {padding: 10px; font-size: 12px}
+.encuesta label {font-weight:normal; float:left; white-space:auto }
+.encuesta input {font-size: 1em}
+.encuesta .survey-choices {float: left; width: 400px}
+
+.survey-choices .block .block {
+	height: 30px;
+	line-height: 30px;
+	padding: 0;
+	margin: 0;
+}
+
+.encuesta .survey-choices .block .block * {
+	vertical-align: middle;
+	
+}
+
+.encuesta .survey-choices .block input {
+	margin: 0 3px 0 0;
+}
+.survey-choices .block .block {
+	height: 30px;
+	line-height: 30px;
+	padding: 0;
+	margin: 0;
+}
+
+.encuesta .survey-choices .block .block * {
+	vertical-align: middle;
+	
+}
+
+.encuesta .survey-choices .block input {
+	margin: 0 3px 0 0;
+}
+
+#sociallinks {
+    position: absolute;
+    right: 290px;
+    top: 32px;
+}
+
+
+#sociallinks li {
+    float: left;
+    margin-right: 6px;
+    padding-left: 0;
+}
+
+input.pretty.off { position:absolute; left:-1000em; }
+.ie7 input.pretty.off { position:absolute; left:-1000em; }
+.ie8 input.pretty.off { position:absolute; left:-1000em; }
+.destacadoSage a {color:#00528D;font-weight:normal;}
+.destacadoIntSage {padding-top:0px !important;margin-top:85px}

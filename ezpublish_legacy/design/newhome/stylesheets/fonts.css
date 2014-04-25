@@ -1,0 +1,723 @@
+body { font-family: Arial, Helvetica, sans-serif; font-size: 12px  }
+
+a { color: #4b4747;  }
+
+
+
+#header a, .cesta { color:#D9EFFF  }
+#headerLinks .acceso { font-weight:bold  }
+
+body#formacion #headerLinks li a { color:#4b90cc;}
+body#formacion #headerLinks li.acceso a { color:#205395;}
+
+#header #logo .claim { font-size:20px; color:#88b5dd;}
+
+#navBar a { color:#fff; font-size: 14px; letter-spacing: -1; font-weight:bold  }
+	#navBar li li a { font-weight:normal  }
+
+
+#navBar li.buscador #buscadorSimple .btn { color:#fff;}
+#navBar li.buscador span.link a { font-size:11px; font-weight:bold; line-height:11px;}
+
+
+#navBar .cesta { font-weight: normal; color:#fff; font-size:12px; line-height:30px   }
+	#navBar .cesta a { font-size:12px }
+	
+#abonado { color:#fff; font-size:11px}	
+	#abonado a { color:#fff; text-decoration: none; font-size:13px }
+		#abonado a:hover { text-decoration: underline }		
+
+#search a { color:#656565; text-decoration: none; font-weight: bold }
+	#search a:hover { text-decoration: underline }		
+	#search .submit {color:#fff; font-size:12px }
+	#search .tel { font-weight: bold }
+
+#breadCrumb li a { color:#0050b9; font-weight:bold; font-size:11px}
+
+#subNavBar a, #subNavBar h1 { color:#00528d; font-size:13px; font-weight:bold   }	
+	#subNavBar li li a { color:#4b90cb  }
+	#subNavBar a:hover { text-decoration: none   }	
+	#subNavBar li li a, #subNavBar li li strong { font-size:12px }
+	#subNavBar li li a:hover, #subNavBar h1 { color:#000   }	
+	
+#wrapSections { font-size:11px  }
+	#wrapSections strong { color:#666 }
+
+#wrapperCopy { font-size:11px  }
+
+#newsletterContacto a { color:#00528D; font-weight:bold   }
+
+#home #modFormacion h2 { font-size: 17px; color: #fff  }
+	#home #modFormacion h2 a { color:#fff; font-weight:normal; text-decoration: none }
+		#home #modFormacion h2 a:hover { text-decoration: underline }
+	
+	#tiposFormacion strong, #tiposFormacion li.sel a, #tiposFormacion li.sel a:hover { color:#245582; font-weight:bold; text-decoration:none;  }		
+	#tiposFormacion a { color:#fff 	}
+
+
+.verMas a, .volver a {  color:#00528D; font-weight:bold; text-decoration: none   }		
+	.verMas a:hover, .volver a:hover { text-decoration: underline  }
+	
+#wrapper #bodyContent .btn a, .btnType2 a { color:#fff; font-weight:bold; font-size:11px; text-decoration:none}
+	#wrapper #bodyContent .btn a:hover, .btnType2 a:hover  { color:#fff; text-decoration:none}
+	
+#modDestacado h2 { color:#fff; font-size: 22px; font-weight:normal 	}	
+#modFormacion .description h3 { color:#333; 	}
+
+#modDestacado .wrap p { color:#000; line-height: 17px  } 
+#modDestacado .wrap span a { color:#fff; font-size:12px; font-weight:bold; text-decoration:none}
+	#modDestacado .wrap span a:hover { color:#fff; text-decoration:none}
+	
+#modActum h2 { color:#333; font-size: 17px; 	}	
+#categoriesTabs .tabs li { font-size:11px }
+#categoriesTabs .sel, #categoriesTabs .tabs .sel a, #categoriesTabs .tabs .sel a:hover { color:#C51822; font-weight:bold;  }
+
+#categoriesTabs .tabs a { color:#fff  }
+#categoriesTabs .cat3 a, #categoriesTabs .cat8 a, #categoriesTabs .cat9 a { color: #000  }
+
+#modActum #categoriesTabs .wrap a {color:#00528D   }
+
+#promocionPrimaria h2 { color:#00528D; font-size:24px; font-weight:normal   }
+
+#promocionPrimaria .columnType2 li * { font-size:14px  }
+#promocionPrimaria .columnType2 li strong, #promocionPrimaria .columnType2 li.sel a { color:#000  }
+#promocionPrimaria .columnType2 li.sel a, #promocionPrimaria .columnType2 li.sel a:hover { font-weight:bold; text-decoration:none; cursor:default;}
+#promocionPrimaria .columnType2 li a { color:#00528D;  }
+
+#promocionPrimaria .columnType1 { color:#000; font-size:14px }
+
+#modFormacion .description li a { color: #00528d  }
+#modFormacion .description li .date { color: #828282  }
+
+#gridHome1 h2 { color:#fff  }
+
+#home .modTambien h3 { color:#333;   }
+
+#home .modTambien a { color:#00528d; font-weight:normal}
+#home .modTambien p { line-height: 18px  }
+#home .modTambien p, #home .modTambien label { color:#828282 }
+#home .modTambien label  { font-weight:normal; white-space: normal }
+
+#modResultados label { color:#666; font-size:14px}
+#modResultados button span { color:#fff; font-size:12px; font-weight:bold}
+
+#modNovedades h3 { color:#00528d; font-size:17px; font-weight:bold}
+#modNovedades h4 { color:#000; font-size:14px; font-weight:bold}
+#modNovedades span { color:#00528d; font-size:12px; font-weight:bold}
+#modNovedades span.verMas a { font-weight:normal}
+
+#modNovedades .consulta li a { color:#4c90cc; font-size:14px; font-weight:bold}
+#modNovedades .consulta ul li.reset span { color:#000; font-size:12px; font-weight:normal}
+#modNovedades .consulta li .verMas a { font-size:17px; background-position:100% 6px}
+
+#modPuedes li span { color:#000}
+#modPuedes li a { color:#00528d; font-weight:bold}
+	#modPuedes li a:hover { color:#00528d}
+
+#modAbonados h1, #modColectivos h1 { font-size: 24px; color: #fff; font-weight:normal; letter-spacing: -1px   }
+#modAbonados h2 { font-size: 17px; color:#00528d; letter-spacing: -1px   }
+#modAbonados .description, #modColectivos h2 { font-size:14px  }
+#modAbonados .description strong, #modAbonados .description a, #modColectivos .description a {  color:#4b90cc}
+#modAbonados .description a, #modColectivos .description a { text-decoration: none  }
+	#modAbonados .description a:hover, #modColectivos .description a:hover { text-decoration: underline  }
+	
+	#modAccesoAbonados h2 { color:#000; font-size:14px  }
+	
+	#modAccesoAbonados label { font-size: 12px  }
+	#modAccesoAbonados form li span a { font-size:11px; color:#00528d  }
+
+#modColectivos { color:#000;   }
+	
+#gridWide h1, .mainTitle { font-size: 24px; color: #00528d; font-weight:normal; letter-spacing: -1px; line-height: 24px   }	
+
+
+
+.wysiwyg p { line-height:16px  }
+.wysiwyg a {  color:#4b90cc}	
+
+#listadoValores h2 { color: #000; font-size: 14px  }
+
+#moduloDestacadoContenido .wysiwyg { font-size:14px  }
+
+.currentSection { color:#fff; font-weight:bold; /*line-height: 32px*/  }
+	#subNavBar .currentSection a { color:#fff;}
+
+#listadoNotas h2 { color: #000; font-size: 17px  }
+#listadoNotas .date { color:#fff; font-weight:bold; font-size:14px  }
+	#listadoNotas .date .year { font-size:23px; line-height: 16px  }
+	#listadoNotas .date .day { font-size:27px  }
+	#listadoNotas .date .month { font-weight:normal } 
+	
+.fechaCelebracion	{ font-size:16px; color:#000; font-weight:bold  }
+
+#moduloDestacadoContenido .verMas a { color:#4c90cc; font-size:17px  }
+
+#listadoAreas h2 { color:#000; font-size:14px  }
+
+.area h3 { color:#333; font-size:14px  }
+.area .detail h3, .area .detail h3 a, .area .otros h4, .area .otros h4 a { color:#000; font-size:12px  }
+
+#listadoAreas .verMas a, #todasLasObras .verMas a { font-weight:normal }
+
+ 
+
+#todasLasObras h2, #cestaPaso1 #gridType3 h2 { font-size:14px; color:#000  }
+	#todasLasObras #gridType4 h2 { color:#fff; font-weight:normal  }
+#todasLasObras h3, h3 a, #cestaPaso1 #gridType3 h3, #cestaPaso1 #gridType3 h3 a { font-size:12px; color:#00528d  }
+#todasLasObras .inner p { line-height: 14px    }	
+
+.pagination .items { color:#828282  }
+
+
+#modType2 h1 { font-size: 24px; color: #00528D; font-weight:normal; letter-spacing: -1px   }
+#modType2 h2 { font-size: 17px; color:#00528d; letter-spacing: -1px   }
+#modType2 .description, #modType2 .faq, #novedades .paginationResults { font-size:14px  }
+#modType2 .description strong, #modAbonados .description a {  color:#4b90cc}
+#modType2 .description a { text-decoration: none  }
+	#modType2 .description a:hover { text-decoration: underline  }
+	
+#modType3 .title { font-size: 17px; color: #00528D; font-weight:normal; letter-spacing: -1px   }
+#modType3 .description { font-size:14px  }
+#modType3 .description a { text-decoration: none  }
+	#modType3 .description a:hover { text-decoration: underline  }	
+	
+#busquedaAvanzada .termSearch, #busquedaAvanzada .tipoObras { color:#000; font-size:12px; white-space: normal  }	
+
+#busquedaAvanzada legend, #busquedaAvanzada fieldset label { font-weight:normal; font-size:12px }
+
+#busquedaAvanzada .tipoObras { font-weight: normal  }
+#busquedaAvanzada .tipoObras select { color:#666 }
+
+#modContacto h2, #modInfo h2 { font-size:14px; color:#333; letter-spacing: -1px }
+
+#modContacto .contacte { font-size:14px; color:#333; font-weight:bold; line-height:13px  }
+#modContacto li.telefono, #modInfo span.telefono { font-size:15px; font-weight:bold; color:#333  } 
+#modContacto li a { text-decoration: none; color:#00528D }
+	#modContacto li a:hover { text-decoration: underline }
+	
+#modInfo span.contacto { color: #000  }	
+	
+#modComprando h2 { font-size:16px; font-weight:bold; color:#fff}
+#modComprando ul li .producto, #modComprando ul li .producto a { font-size:12px; font-weight:bold; color:#00528d}
+#modComprando ul li .productoTotal { font-size:12px; color:#333}
+#modComprando ul li .precio { font-size:12px; color:#00674e}
+#modComprando ul li .precioTotal { font-size:17px; font-weight:bold; color:#00674e}
+
+#modMiMementix h2 { font-size:16px; font-weight:bold; color:#fff}
+#modMiMementix ul li .listaMem { font-size:15px; font-weight:bold; color:#333}
+#modMiMementix ul li .descuento { font-size:12px; font-weight:bold; color:#990000}
+	#modMiMementix ul li .descuento span { font-size:17px}
+#modMiMementix ul li .precio { font-size:17px; font-weight:bold; color:#333}
+#modMiMementix ul li .precioTotal { font-size:17px; font-weight:bold; color:#00674e}
+
+	
+span.searchTerm	{ font-size:14px; }	
+	span.searchTerm strong, #resultadosBusquedaPage .searchTerm strong { color:#000 } 
+.searchResultsForm .verMas a { font-size:12px; color:#00528D; font-weight:normal  }	
+.resultadosBusqueda h2 { font-weight:normal  }	
+.resultadosBusqueda h2, .resultadosBusqueda li { font-size:14px; color:#000 }	
+
+.paginationResults span { color:#666   }
+.paginationResults li { font-weight:bold; color:#00528D }
+	.paginationResults li a { color:#C6E7FF  }
+		.paginationResults li.prev a, .paginationResults li.next a{ color:#666 }
+
+#listResults, .listResults { font-size:12px   }	
+	#modType2 h2.title4 { font-size:14px; color:#000000; font-weight:bold; letter-spacing:-1px;}	
+	#listResults h2, #modType2 .listResults h3 { font-size:12px; font-weight:normal; color:#989898; letter-spacing: normal  }
+		#listResults h2 a, .listResults h3 a { font-weight:bold; color:#00528D  }
+	#listResults .wysiwyg p, .listResults .wysiwyg p { line-height: normal;} 
+	
+.numResults label, #definirResultados label { font-weight: normal; white-space: normal  }
+#definirResultados .title { color:#000  }
+#definirResultados label { color:#000; font-size:12px  }
+
+.msgError span { color:#E00101; font-weight:bold  }
+.msgError li { font-size:14px; color:#000  }
+form .error, form .error label, #datosPago fieldset.error legend, .direccion .error legend, .contacto .error legend, .tipoCompra .error legend { color:#E00101 !important;  }
+
+.camposObligatorios { color:#666; font-size:11px  }
+
+#modVentajas h2, #faq #modVentajas h2 { color:#AB6910; font-size:14px; letter-spacing: -1px  }
+
+#modVentajas li { color:#fff  }
+
+#cestaPaso1 #gridType3 p { color:#000  }
+
+#cestaPaso1 .searchResultsForm label { color:#666; letter-spacing: -1px  }
+
+#cestaCompra thead th { color:#3B74A5; font-size:12px  }
+#cestaCompra table a { color:#00528D; font-weight:bold; font-size:16px  }
+#cestaCompra table .precio, #confirmacion table .precio { color:#00674E; font-weight:bold; font-size:16px  }
+	#cestaCompra table .precio .iva, #confirmacion table .precio .iva { font-size:14px; font-weight:normal }
+
+.totalNoIva th { font-weight:normal; font-size:12px; color:#333  }	
+.total th { font-size:12px; color:#333  }	
+.totalNoIva td { font-weight:bold; font-size:16px; color:#333  }	
+
+#cestaCompra .options { font-size:12px;  }
+	#cestaCompra .options a { font-weight:normal  }
+
+#cestaCompra .descuentoType1 { color:#990000; line-height:20px; font-size:15px }	
+	#cestaCompra .descuentoType1 strong {color:#990000; font-size:17px; line-height: 16px }
+	
+#cestaCompra .descuentoType2 { color:#990000; line-height:13px; font-size:11px }	
+	#cestaCompra .descuentoType2 strong {color:#990000; font-size:16px; line-height: 16px }
+	
+	.ventaCruzadaRecomendacion p { color:#4C90CC; font-weight:bold  }
+	tbody .ventaCruzadaRecomendacion .action p { font-size:12px; color:#000; font-weight:normal  }
+	#cestaCompra table .ventaCruzadaRecomendacion .action p a { font-size:12px; font-weight:normal  }
+	#cestaCompra .ventaCruzadaRecomendacion .action .btnType2 a { color:#fff; font-size:11px  }
+	
+	.precioAnterior { font-size:11px; font-weight:normal; color:#990000;  text-decoration: line-through  }
+		.precioAnterior span { color:#00674E; }
+	
+#newsletter legend, #newsletter label, #newsletter p {color:#000; font-weight:normal; font-size:12px }
+
+#gridWide .mapaWeb h2, #gridWide .mapaWeb h2 a { font-size:14px; color:#00528d; font-weight:bold}
+#gridWide .mapaWeb h3, #gridWide .mapaWeb h3 a { font-size:12px; color:#00528d; font-weight:bold}
+#gridWide .mapaWeb ul li ul li a{ font-size:12px; color:#00528d}
+
+.busFaq #faqForm label { font-size:14px; color:#666; font-weight:bold}
+
+#faq h2, #faq .respuestas, .fichas #faq .respuestas ul li { color:#000}
+#faq .preguntas ul li a { font-size:12px; color:#00528D; font-weight:bold; text-decoration:none}
+	#faq .preguntas ul li a:hover { text-decoration:underline}
+#modType2 #faq .respuestas h3, #modType2 #faq .respuestas h3 a, .fichas #faq .respuestas h3, .fichas #faq .respuestas h3 a, #bodyContent.fichas .sumario ul li h3 { font-size:14px; font-weight:bold; color:#000; text-decoration:none}
+	#modType2 #faq .respuestas h3 a { color:#000; text-decoration:none}
+#faq .respuestas p, #faq .respuestas ul li ul li, #faq .respuestas ol { font-size:12px}
+#faq .respuestas a { font-size:12px; color:#00538a; font-weight:bold}
+
+#datosUsuario label, #datosUsuario p, #datosFacturacion label, #datosFacturacion p, #datosPago label, #datosPago p, #datosFormacion label {color:#000; font-weight:normal; font-size:12px }
+#datosUsuario h2, #datosFacturacion h2, #datosPago h2, #datosFormacion h2 { font-size:14px; font-weight:bold; color:#000}
+#datosUsuario form .datos li span, .formulario .datos li span { font-size:10px} 
+.formulario .datos li span.etiqueta, .formulario .datos li span.valor { font-size:12px; color:#000  }
+#datosUsuario .volver a, #datosFacturacion .volver a, #datosPago .volver a { font-size:12px; font-weight:normal}
+
+
+#datosUsuario form .datos li legend span { font-weight:normal; font-size:12px }
+#datosFacturacion form .datos li.direccion legend span, #datosFacturacion form .datos li.contacto legend span, #datosFacturacion form .datos li.tipoCompra legend span { font-weight:normal; font-size:12px }
+
+#datosFacturacion form .datos li.contacto span { line-height: 11px }
+	#datosFacturacion form .datos li.contacto legend span { line-height: normal }
+
+#datosPago fieldset .datos label { white-space:normal  }
+#datosPago fieldset .datos .datos .numCuenta fieldset { margin-bottom: 0  }
+	#datosPago fieldset .datos .datos .numCuenta legend span { font-size:12px  }
+
+#datosPago table { font-size: 12px  }
+#datosPago thead th { color:#3B74A5;   }
+	#datosPago .disabled thead th { color:#C5C4C4  }
+#datosPago td { color:#000  }
+	#datosPago .disabled td { color:#C5C4C4  }
+	#datosPago tfoot th { color:#333  }
+		#datosPago .disabled tfoot th { color:#C5C4C4  }
+	#datosPago tfoot td { color:#00674E; font-weight:bold; font-size:17px }
+		#datosPago .disabled tfoot td {  }
+
+.formulario li.condiciones div * { color:#666; font-size:11px  }
+.formulario legend { font-weight:normal; font-size:12px  }
+
+#modType2 .description #datosPago label strong { color:#000  }
+
+.colDatos1 h2, .colDatos2 h2 { font-size:14px; font-weight:bold; color:#000}
+	.colDatos1 h2 { text-align:right}
+#gridDatos .colDatos1 span.olvido a { color:#000; font-size:11px; text-decoration:underline}
+	#gridDatos .colDatos1 span.olvido a:hover { text-decoration:none}
+#gridDatos .colDatos2 ul li a { font-size:12px; color:#000}	
+#gridDatos .volver a { font-weight:normal}
+
+#gridDatos .colDatos1 form .datos li label { font-weight:normal; color:#000  }
+
+#ciudades { font-size:12px; color:#000}
+#ciudades table th { text-align:left}
+
+#datosFacturacion dl.datos { font-size:12px; color:#000}
+	#datosFacturacion dl.datos dt { font-weight:normal}
+	#datosFacturacion dl.datos dd { font-weight:bold}
+
+#confirmacion { font-size:12px}
+	#confirmacion table thead th { text-align:center; color:#3b74a5;}
+	#confirmacion table th.producto { text-align:left;}
+	#confirmacion table td.producto { color:#00528d; font-weight:bold;}
+	#confirmacion table td.price { color:#00674e; font-weight:bold;}
+		#confirmacion table td.price span.iva { font-weight:normal;}
+	#confirmacion table td.total { color:#00674e; font-weight:bold;}
+	#confirmacion table tfoot .precio, #confirmacion table tfoot .totalNoIva td { text-align:right;}
+
+#finProceso, #modType2 #finProceso strong { color:#000  }
+#finProceso .instruccionesTransferencia h2 { font-size: 14px; color:#000  }
+.instruccionesTransferencia  li { font-weight:bold  }
+.instruccionesTransferencia  li span { font-size:12px; font-weight:normal  }
+
+#gridDatos .colDatos1 .forgotPass label { font-weight:normal;}
+
+#ventajasCompra ul li { color:#000  }
+
+.cestaVacia { font-size: 19px; color:#000  }
+
+#modType3 .title { font-weight:bold;}
+
+#finCompraForm ul.datos li label { font-size:12px; font-weight:normal; color:#000;}
+
+#finCompraForm .datos fieldset legend span { font-size:12px;}
+
+#modTab { color:#000  }
+	#modTab .title { font-size: 14px; letter-spacing: -1px  }
+	#modTab h3 a { color:#000; font-size:12px; text-decoration: none
+	 } 
+	 #modTab h3 a:hover { text-decoration: underline }
+
+#tops span { color:#00674E  }
+	#tops h3 a:hover { text-decoration: underline; color: #00528D  }
+
+#tops .tabs li h2, #tops .tabs li a {font-size: 14px; letter-spacing: -1px  }
+#tops .tabs li h2 { color:#000  }
+#tops .tabs li a { color:#00528D;  }
+
+#modColectivos .description .contacto .tit { font-size:14px; color:#4c90cc; font-weight:bold;}
+#modColectivos .description .contacto .verMas { font-size:12px; color:#00528D;}
+	#modColectivos .description .contacto .verMas a { font-weight:bold;}
+#modColectivos .description .listColectivos { font-size:12px;}
+	#modColectivos .description .listColectivos li { font-weight:bold;}
+
+.consultenos h2 { font-size:14px; color:#666666; font-weight:bold;}
+.consultenos h2.title { font-size:14px; font-weight:bold; color:#333333;}
+.consultenos h3.title2 { font-size:17px; color:#00528d; font-weight:bold;}
+.consultenos h2.title3 { font-size:17px; color:#00528d; font-weight:bold;}
+#gridWide .consultenosMod .modConsulta h3 { letter-spacing:-1px;}
+
+.otherQuery ul li span.textColor, .otherQuery ul li a { color:#00528d;}
+.otherQuery ul li, .consultenosMod .ventajas li { color:#000;}
+
+.formacion .verMas a:hover { color:#4b90cc}
+#modFormacion2 h2, #modFormacion h2 { color:#fff}
+#modFormacion2 .formacionList .columnType1, #modFormacion2 .formacionList .columnType1 h3, #modFormacion .formacionList .columnType1, #modFormacion .formacionList .columnType1 h3 { color:#000}
+	#modFormacion2 .formacionList .columnType1 h3, #modFormacion2 .formacionList .columnType1 p, #modFormacion .formacionList .columnType1 h3, #modFormacion .formacionList .columnType1 p { font-size:14px}
+	#modFormacion2 .formacionList .columnType1 ul li a, #modFormacion .formacionList .columnType1 ul li a { color:#000; font-weight:bold}
+#modFormacion2 .formacionList .columnType1 ul li span, #modFormacion .formacionList .columnType1 ul li span { font-weight:bold}
+#modFormacion2 .formacionList .columnType2 p.title, #modFormacion .formacionList .columnType2 p.title { color:#000}
+#modFormacion2 .formacionList .columnType2 span, #modFormacion .formacionList .columnType2 span { color:#666}
+	#modFormacion2 .formacionList .columnType2 span.nombre, #modFormacion .formacionList .columnType2 span.nombre { font-weight:bold} { font-weight:bold}
+
+.consultenos .listFaq li a { color:#02538b; font-weight:bold;}
+
+.modType4 .descripcion .tabs li h2 { font-size:14px; color:#333333; font-weight:bold;}
+.modType4 .descripcion .tabs li a { font-size:14px; color:#00528d; letter-spacing:-1px;}
+.modType4 .descripcion .cursoDet .column2 .testimonio span.name { font-weight:bold;}
+.modType4.cursos .cont ul li, .modType4 .descripcion .cursoDet .column1, .modType4 .descripcion .cursoDet .column2 { color:#000;}
+.modType4 .descripcion .cursoDet .column2 .testimonio span { color:#666;}
+#cursoDetalle .modType4.cursos .cont ul li a { font-weight:bold; color:#000; text-decoration:none}
+	#cursoDetalle .modType4.cursos .cont ul li a:hover { color:#000; text-decoration:underline}
+
+#moduloDestacado .subTit { font-size:16px; color:#000;}
+#moduloDestacado .carac ul li { color:#000;}
+#moduloDestacado.type1 .cont .desc .banners .bannerInfo .title { font-size:15px;}
+	#moduloDestacado.type1 .cont .desc .banners .bannerInfo .title span { font-size:17px;}
+	
+p.subtitle { font-size:16px; color:#000}
+.mementix #modType2 h2 { color:#666; font-size:14px; font-weight:bold}
+.mementix .numAccesos .verMas a { font-weight:normal; font-size:12px}
+#accesoMementos fieldset label { font-weight:normal; font-size:12px }
+
+#novedades h2 { font-size:14px; font-weight:bold; color:#000}
+#novedades h3 a { font-size:16px; font-weight:bold; color:#00528d; text-decoration:none}
+	#novedades h3 a:hover { color:#00528d; text-decoration:underline}
+#novedades .wrap form ul li label { font-size:12px; font-weight:bold; color:#3b74a5}
+#novedades .precioIva { color:#00674E; font-weight:bold; font-size:16px  }
+	#novedades .precioIva .iva { font-size:14px; font-weight:normal }
+	
+#gridWide #moduloDestacadoContenido .camposObligatorios { font-size:16px; color:#000; font-weight:bold}
+.fichas #moduloDestacadoContenido li { color:#000}
+.fichas #moduloDestacadoContenido span, #moduloDestacadoContenido span.oferta { font-size:14px; font-weight:bold; color:#4c90cc}
+	.fichas #moduloDestacadoContenido h1 span { font-size:16px; color:#000}
+	.fichas #moduloDestacadoContenido span.oferta, #moduloDestacadoContenido span.oferta { color:#990000}
+		.fichas #moduloDestacadoContenido span.oferta span { font-size:18px; color:#990000}
+	.fichas #moduloDestacadoContenido span.verMas a { color:#00528d; font-size:14px}
+	.fichas .modType4 h2 { font-size:20px}
+
+.fichas .columnType1 #modFichasPrecio h2 { font-size:12px; font-weight:normal; color:#00674e}
+	.fichas .columnType1 #modFichasPrecio h2 span { font-size:17px; font-weight:bold}
+.fichas .columnType1 #modFichasPrecio.ahora h2 { font-size:12px; font-weight:normal; color:#990000}
+	.fichas .columnType1 #modFichasPrecio.ahora h2 strong { font-size:17px}
+.fichas .columnType1 #modFichasPrecio .info ul li a, .fichas .columnType1 #modFichasPrecio2 .info ul li a, .fichas .sideBar .info ul li a { color:#00528d; font-weight:bold}
+.fichas .columnType1 #modFichasPrecio .dudas h3 { font-size:14px; color:#333}
+.fichas .columnType1 #modFichasPrecio .dudas ul li a { color:#00528d}
+.fichas .columnType1 #modFichasPrecio .opinion h3 { font-size:14px; color:#333}
+.fichas .columnType1 #modFichasPrecio .opinion span { color:#333}
+	
+.fichas .modType4 .volver a { color:#fff}
+.fichas .modType4 .descripcion .cursoDet .column1 ul li { color:#000}
+.fichas #cursoDetalle .modType4 .descripcion .cursoDet .column1 ul li { color:#000}
+	.fichas .modType4 .testimonio span.nombre { font-weight:bold; color:#666}
+	.fichas .modType4 .testimonio .botonTestimonio span.mas { font-size:10px; color:#666}
+.fichas #modVentajas h2 span { font-size:20px; font-weight:bold}
+
+.fichas .cursosRel h2 { font-size:14px; font-weight:bold; color:#000}
+.fichas .cursosRel .description ul, .fichas .cursosRel .description ul li h3 a { color:#000}
+	.fichas .cursosRel .description ul li h3 { font-size:12px}
+	
+.fichas #gridType3 h2, .fichas .sideBar h2 { font-size:14px; color:#000}
+.fichas #gridType3 h3 a:hover, .fichas #gridType3 .verMas a:hover { color:#00528D}
+.fichas #gridType3 .precio { color:#00674e}
+
+.fichas #moduloDestacadoContenido .modConvencerse .verMas a, .fichas #moduloDestacadoContenido #modInformacion .verMas a { font-size:12px; font-weight:normal}
+.fichas #moduloDestacadoContenido .modConvencerse .verMas a, .fichas #moduloDestacadoContenido #modInformacion2 .verMas a { font-size:12px; font-weight:normal}
+.fichas .modType4 .column2 .imprimir a, .imprimir a { color:#00528d; font-weight:bold}
+
+.fichas .descuentoType1 { color:#990000; line-height:16px; font-size:9px }	
+	.fichas .descuentoType1 strong {color:#990000; font-size:12px; line-height:16px }
+.fichas .modType4 .descripcion .cursoDet .versiones ul li h3 { font-size:12px; color:#00528d}
+	.fichas .modType4 .descripcion .cursoDet .versiones ul li h3 span { font-weight:normal}
+.fichas .modType4 .descripcion .cursoDet .versiones ul li .flt, .fichas .modType4 .descripcion .cursoDet .versiones ul li .flt li, .fichas .modType4 .descripcion .cursoDet .fechas ul li p, .fichas .modType4 .descripcion .cursoDet .fechas p { color:#000}
+
+.fichas #moduloDestacadoContenido .precioIva, .fichas #moduloDestacadoContenido .precioIva span { color:#990000; font-weight:bold; font-size:14px}
+.fichas #moduloDestacadoContenido .precioIva p { font-size:14px;}
+.fichas #moduloDestacadoContenido .precioIva .grande { font-size:24px}
+.fichas #moduloDestacadoContenido .precioIva div { font-size:18px}
+.fichas #moduloDestacadoContenido .precioIva .precioAnterior span { color:#00674e; font-size:18px; font-weight:normal}
+
+#moduloDestacadoContenido.type1 .precios .descuentoType1 { font-size:14px}
+	#moduloDestacadoContenido.type1 .precios .descuentoType1 span { font-size:20px; font-weight:bold; color:#990000}
+#moduloDestacadoContenido.type1 .precios .antes { font-size:12px; color:#00674e}
+	#moduloDestacadoContenido.type1 .precios .antes span { font-size:17px; color:#00674e; font-weight:bold}
+	
+#moduloDestacadoContenido .sinImagen span.font { font-size:17px; font-weight:bold; color:#00528d}
+#moduloDestacadoContenido .buscaCurso h2 { font-size:16px; color:#fff}	
+
+.difPrecios .antes, .difPrecios .ahora { font-size:12px; color:#333}
+	.difPrecios .antes span { font-size:18px; font-weight:bold; color:#00674e}
+	.difPrecios .ahora span { font-size:18px; font-weight:bold; color:#990000}
+.busquedaCursos ul li .wysiwyg { color:#000}
+	.busquedaCursos .wysiwyg p { font-weight:bold}
+	
+#gridType7 h2, #gridType7 p { color:#000}
+#gridType7 h2 { font-size:14px}
+
+.modType5 .wrap .tabs li a, .modType5 .wrap .tabs li h2 { font-size:12px; color:#fff}
+.modType5 .wrap .tabs li.sel h2 { color:#00528d}
+.modType5 .wrap .tabs li.cat1 a, .modType5 .wrap .tabs li.cat3 a, .modType5 .wrap .tabs li.cat8 a, .modType5 .wrap .tabs li.cat9 a { color:#000}
+
+#cursos .modType5 .description ul li h3 { font-size:17px; color:#00528d}
+#cursos .modType5 h4, #cursos .modType5 h4 a { font-size:12px; font-weight:bold; color:#000}
+#cursos .modType5 .cursosRel h3 { font-size:14px; color:#333}
+#cursos .modType5 .cursosFormacion a { font-size:17px}
+#cursos .modType5 .cursosFormacion label { font-size:14px; font-weight:normal; color:#666}
+
+#confirmacion .print a { font-size:12px; font-weight:bold; color:#00528d;}
+
+#modType2 #confirmacion div.cont a { color:#00528D;}
+
+#navBar li.buscador .busy form span, #navBar li.buscador .busy form p { font-size:13px; color:#FFF;}
+
+#navBar li.buscador .verMas a { font-size:12px;}
+
+.numAccesos .slider .sliderChart .slider-lb { font-size:11px; color:#c8e8ff;}
+.numAccesos .slider .sliderChart .sel { font-size:12px; color:#fff;}
+/*.numAccesos .slider .sliderChart .sel { font-size:14px; color:#fff;}*/
+
+#modFormacion .formacionList2 li li .curso { color:#000; font-weight:bold;}
+#modFormacion .formacionList2 li .modInt .cont .text p { color:#000;}
+
+div.calendars table { font-size:12px;}
+.calendario caption span { font-size:14px; color:#717171;}
+.calendario td { font-size:12px; font-weight:bold; color:#000;}
+div.calendars .events .title { font-size:18px; font-weight:normal;}
+div.calendars .prevs .events .title { color:#717171;}
+div.calendars .listCalendar .actual caption span { color:#fff;}
+div.calendars .listCalendar .actual .events .title, div.calendars .listCalendar .actual .events li, div.calendars .listCalendar .actual .events li a { color:#00528d;}
+div.calendars .listCalendar .nexts caption span { color:#00528d;}
+div.calendars .listCalendar .nexts .events .title, div.calendars .listCalendar .nexts .events li, div.calendars .listCalendar .nexts .events li a { color:#4b90cc;}
+
+#gridWide .modType4 .text { color:#000;}
+
+.boxProduct .title { font-size:16px; font-weight:bold; color:#fff;}
+	.boxProduct .title span { font-size:13px; font-weight:normal;}
+	.boxProduct .cont { text-align:center;}
+		.modType4 .boxProduct .cont .verMas a { font-weight:normal;}
+
+.boxProduct.type1 .title span, .boxProduct.type2 .title span, .boxProduct.type3 .title span { font-weight:normal;}
+.boxProduct .package .title { font-size:14px; font-weight:bold; color:#666;}
+
+#gridTwoColumnsTypeB #modType4b .modType4 h1 { font-size:22px; color:#000;}
+#gridTwoColumnsTypeB #modType4b .modType4 .cont .tools a { font-weight:bold; color:#00528d;}
+#gridTwoColumnsTypeB #modType4b .modType4 .cont .column1 p { color:#333;}
+#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .cont .accesoMementos .title { font-size:14px;}
+#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .cont .mementos li span { font-size:16px; font-weight:bold; color:#00528d;}
+#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .cont .precios .descuentoType1 { font-size:16px; color:#00674E; font-weight:bold; line-height:normal}
+#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .cont .precios .descuentoType1 .iva { font-size:12px; color:#00674E;}
+	#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .cont .precios .descuentoType1 .descuento { font-size:9px; color:#990000;}
+#gridTwoColumnsTypeB #modType4b .modType4 .descripcion .cont .title { font-size:14px; color:#666;}
+
+.integrado span { font-size:14px; font-weight:bold; color:#625e5e;}
+
+.fichas .modType4 .descripcion .cursoDet .column1 .testimonio li { color:#000  }
+
+#novedades ul li .wysiwyg p { font-weight:normal;}
+
+#moduloDestacadoContenido .priceCont .descuentoType1 { line-height:19px; color:#990000;}
+	#moduloDestacadoContenido .priceCont .descuentoType1 span { font-size:20px; color:#990000; font-weight:bold;}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+#casos #gridType2 .inner li a { color:#00528d}	
+	
+	
+#modBlanco h2{color: #000;font-size: 17px;letter-spacing: -1px}
+#modBlanco ul li a{color: #00528d;font-size: 12px;font-weight:bold}
+
+#modType2 #guias  h2{color:#00528d; font-size:12px}
+#modType2 #guias  .fecha{color:#989898; font-size:12px}
+#modType2 #guias  p{color:#000; font-size:12px}
+
+#modType2 #guias  div a.pdf{color:#989898; font-size:11px}
+
+#modType2 #guias  div span.pdf{color:#989898; font-size:10px}
+
+#modType2 #guias  div span.youtube{color:#989898; font-size:10px}
+#modType2 #guias  div span.youtube a{color:#989898; font-size:10px; text-decoration:underline}
+
+
+#home_recursos #gridHome1  .presentacion .columnType1 {color: #000000;font-size: 14px}
+#home_recursos .presentacion h2 { color: #00528D;font-size: 24px; font-weight: normal}
+.presentacion .columnType1 .novedades  li a{ color:#00528d; font-size:12px}
+
+#home_recursos   #presentacionRecursosVid  .description a {color:#000;font-size:20px}	
+
+#home_recursos #gridHome1 .columnType1 #listadoRecursos .wrap h3 {color: #02365c;font-size: 17px}	
+	
+
+#home_recursos #gridHome1 .columnType1 #guias .entradilla p{color:#000; font-size:14px}
+#home_recursos #gridHome1  #guias .entradilla span{color:#000; font-size:12px}
+
+#home_recursos #gridHome1  #guias h4 { color: #00528D; font-size: 12px}
+#home_recursos #gridHome1  #guias .fecha { color: #989898;font-size: 12px}
+#home_recursos #gridHome1  #guias p { color: #000000;font-size: 12px}
+#home_recursos #gridHome1  #guias div a.pdf { color: #989898;font-size: 11px}
+#home_recursos #gridHome1  #guias div span.youtube { color: #989898; font-size: 10px}
+#home_recursos #gridHome1  #guias div span.youtube a {color: #989898; font-size: 10px; text-decoration: underline}
+
+
+#home_recursos  #gridHome1 .columnType2  #modDestacado h2 { color: #FFFFFF;font-size: 22px;font-weight: normal}
+#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap a:hover{ text-decoration:none}
+#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.chat a{ color:#464646;font-size:30px}
+#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.contact span{font-size:22px;font-weight:bold;color:#464646}
+#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.contact a{font-size:22px;font-weight:bold;color:#464646}
+#home_recursos  #gridHome1 .columnType2  #modDestacado .wrap.faq h3{color:#464646; font-size:18px }
+
+#home_recursos  #gridHome1 .columnType2  #modExperiencia .wrap  ul li.reset .bocadillo p{color:#828282; font-size:11px} 
+#home_recursos  #gridHome1 .columnType2  #modExperiencia .wrap h3{color:#333333; font-size:16px} 
+
+#home_recursos  #gridHome1 .columnType2  #modExperiencia .wrap p{color:#828282; font-size:12px} 
+
+#home_recursos  #gridHome1 .columnType2  #modWhite h2  {color:#000; font-size:17px}
+#home_recursos  #gridHome1 .columnType2  #modWhite a  { color:#00528d; font-size:14px; font-weight:bold}
+
+
+#lightboxWrap label { font-weight:bold  }
+
+#lightboxWrap .acepto label, #lightboxWrap .captcha label { font-weight:normal  }
+
+	
+#home_recursos #gridHome1 #listadoRecursos.listadoProfundidad  .modWhite  p{ color:#000; font-size:14px;}
+#home_recursos #gridHome1 #listadoRecursos.listadoProfundidad  .modWhite  p.mini{ color:#000; font-size:13px;}
+#home_recursos #gridHome1 #listadoRecursos.listadoProfundidad  .modWhite  li a{ color:#00528d; font-size:12px; font-weight:bold}
+
+	
+
+
+/*****Nuevos estilos****/
+       
+
+.fichas .infoFichaTop a { color:#00528D; font-size:12px; font-weight:bold}
+.fichas #moduloDestacadoContenido .llamamos span { font-size:14px; font-weight:normal; color:#000}
+.fichas #moduloDestacadoContenido .ofertaSus span { color:#f98400; font-size:15px;}
+.fichas #moduloDestacadoContenido .ofertaSus span.precioAnterior { font-size:16px; color:#5b5b5b}
+.fichas #moduloDestacadoContenido .ofertaSus span.precioNuevo { font-size:18px}
+
+.fichas .columnType1 #modFichasPrecio h2.subTitle { font-size:18px; font-weight:bold; color:#000}
+.fichas .columnType1 #modFichasPrecio2 h2 { font-size:12px; font-weight:normal; color:#00674e}
+        .fichas .columnType1 #modFichasPrecio2 h2 span { font-size:17px; font-weight:bold}
+.fichas .columnType1 #modFichasPrecio2.ahora h2 { font-size:12px; font-weight:normal; color:#990000}
+        .fichas .columnType1 #modFichasPrecio2.ahora h2 strong { font-size:17px}
+.fichas .columnType1 #modFichasPrecio2 .dudas h3 { font-size:14px; color:#333}
+.fichas .columnType1 #modFichasPrecio2 .dudas ul li a { color:#00528d}
+
+.fichas #modFichasPrecio2 .ahora { font-size:12px; color:#f98400}
+        .fichas #modFichasPrecio2 .ahora span { font-size:17px; font-weight:bold}
+       
+h2.titleOpinion { color:#000}
+.fichas .modType4 .descripcion .cursoDet .opiniones .opinion li { color:#333}
+.fichas .modType4 .opiniones .flt span.nombre, .fichas .modType4 .descripcion .opiniones .columnFrt span.nombre { font-weight:bold; color:#666}
+.fichas .modType4 .descripcion .opiniones .columnFrt h3 { font-size:20px}
+.fichas .modType4 .descripcion .opiniones .columnFrt ul li { color:#000}
+
+.fichas .modType4 .descripcion .opiniones ul.valoraciones li h3, #modFichasPrecio .opinion .modValoraciones h4 { color:#333}
+.opiniones .valoraciones span, .fichas .columnType1 #modFichasPrecio .opinion .modValoraciones span { color:#666; font-weight:bold}
+.opiniones .valoraciones .estrellas, .fichas .columnType1 #modFichasPrecio .opinion .modValoraciones span.estrellas { color:#00528d; font-weight:bold}
+.opiniones ul.valoraciones li.boton p { color:#333}
+
+#videoLightbox .opinionForm { font-size:12px}
+#videoLightbox .opinionForm label { font-weight:normal}
+#videoLightbox .opinionForm .info { font-size:11px; color:#666}
+        #videoLightbox .opinionForm.confir { font-size:14px}
+                #videoLightbox .opinionForm.confir strong { color:#000}
+               
+               
+               
+/****estilos home mementos****/
+
+.homeMementos #areaAbonados h2 { font-size:24px; font-weight:normal; color:#fff}
+.homeMementos #areaAbonados h3 { font-size:16px; color:#333}
+.homeMementos #areaAbonados li a { font-size:14px; font-weight:bold; color:#00528d}
+.homeMementos #areaAbonados .columnType1 p .verMas a, .homeMementos #gridHome2 .modPago .verMas a { font-weight:normal}
+
+.homeMementos #gridHome1 .columnType1 h2 { font-size:20px; color:#000}
+.homeMementos #gridHome2 .modPago h2 { font-size:14px; color:#333333} 
+
+.homeMementos #modTambien p { line-height: 18px;  color: #828282;}
+.homeMementos #modTambien a { color: #00528D; font-weight: normal; }
+
+	/* listado mementos */
+	#gridTwoColumnsFichas #productlist h2 { color:#FFF; font: normal 22px 'Arial', helvetica, sans-serif; }
+	#gridTwoColumnsFichas #productlist th { color:#fff; font-weight: normal;}
+	#gridTwoColumnsFichas #productlist td { font-size:16px; font-weight: bold; }
+		#gridTwoColumnsFichas #productlist td label {color:#005490; }
+
+/**************/
+
+
+#promocionPrimaria .verVideo a { font-size:12px; color:#00528D; font-weight: bold } 
+.mediosPago h2 { color:#333; font-size:14px; }
+#footer .mediosPago li a { font-weight: normal }
+#modActum .mas a { font-size:10px }
+#modMemGrat h3 { color:#333; font-size:12px }
+#modMemGrat p { color:#828282; font-size:11px  }
+#modMemGrat label { font-weight: normal }
+.modTwitter { color:#818181 }
+	.modTwitter a { color:#2f538a } 
+
+#modSusc label { font-weight: normal } 
+#modSusc .tit { color:#134b79; font-size:15px; font-weight: bold; text-decoration: underline }
+	#modSusc .tit:hover { text-decoration: none }
+
+#formPrueba h2 { color:#fff; font-weight: normal; font-size:15px; line-height: 18px }	
+	#formPrueba h2 strong { font-size:20px; font-weight: normal  }
+#formPrueba span, #formPrueba label { color:#000 }	
+	#formPrueba .acepto label { font-weight: normal }
+	#formPrueba .acepto label a { text-decoration: underline }
+		#formPrueba .acepto label a:hover { text-decoration: none }
+	
+	#modSage p { color:#018166; font-size: 16px; font-weight: bold; line-height: 15px  }
+	#modSage span { font-weight: bold }		
+	
+#datosUsuario .ebook select { font-size:1em }	
