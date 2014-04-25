@@ -211,13 +211,13 @@ elseif ( $product['item_object']->attribute( 'contentobject' )->attribute( 'cont
 
     if ( $info['tipo_usuario'] )
     {
-        $mail->addTo( new ezcMailAddress( 'pedidosweb@efl.es' ) );
+        $mail->addTo( new ezcMailAddress( 'internet@efl.es' ) );
         if( count( $cursos['result'] ) )
         {
 	       $mail->addTo( new ezcMailAddress( 'inscripciones@efl.es' ) );
         }
     }
-    $mail->addTo( new ezcMailAddress( 'clientes@efl.es' ) );
+    $mail->addTo( new ezcMailAddress( 'pedidosweb@efl.es' ) );
    
                   
     //$mail->subject = "Pedido en la tienda. Pedido nº " . $Params['OrderID'] . ' --- PRUEBAS DESDE TANTA, NO PROCESAR!!!!!!!!!!!!';
