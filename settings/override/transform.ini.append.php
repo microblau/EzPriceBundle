@@ -1,4 +1,0 @@
-<?php /* 
-[urlalias]
-Commands[]=lowercase
-*/ ?>

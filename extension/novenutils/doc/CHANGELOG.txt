@@ -1,6 +1,0 @@
-Noven Utils
-2009 Jerome Vieilledent - Noven
-
-1.0
-------------------
-Initial public release

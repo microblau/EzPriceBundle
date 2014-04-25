@@ -1,1 +1,0 @@
-ID: {$node.node_id}
