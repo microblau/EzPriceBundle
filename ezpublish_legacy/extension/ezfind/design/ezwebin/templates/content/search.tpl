@@ -135,13 +135,11 @@
     <h1 class="long">{"Search"|i18n("design/ezwebin/content/search")}</h1>
 </div>
 
-<p>
-<div id="ezautocomplete">
+<div class="yui3-skin-sam ez-autocomplete">
     <input class="halfbox" type="text" size="20" name="SearchText" id="Search" value="{$search_text|wash}" />
     <input class="button" name="SearchButton" type="submit" value="{'Search'|i18n('design/ezwebin/content/search')}" />
-    <div id="mainarea-autocomplete-rs"></div>
 </div>
-</p>
+
 {if $search_extras.spellcheck_collation}
      {def $spell_url=concat('/content/search/',$search_text|count_chars()|gt(0)|choose('',concat('?SearchText=',$search_extras.spellcheck_collation|urlencode)))|ezurl}
      <p>{'Spell check suggestion: did you mean'|i18n('design/ezfind/search')} <b>{concat("<a href=",$spell_url,">")}{$search_extras.spellcheck_collation}</a></b> ?</p>
@@ -188,9 +186,12 @@
           <div id="ezfHelp" style="display: none;">
               <ul>
                   <li>{'The search is case insensitive. Upper and lower case characters may be used.'|i18n( 'design/ezfind/search' )}</li>
-                  <li>{'The search result contains all search terms.'|i18n( 'design/ezfind/search' )}</li>
                   <li>{'Phrase search can be achieved by using quotes, example: "Quick brown fox jumps over the lazy dog"'|i18n( 'design/ezfind/search' )}</li>
-                  <li>{'Words may be excluded by using a minus ( - ) character, example: lazy -dog'|i18n( 'design/ezfind/search' )}</li>
+                  <li>{'Words may be excluded by using a minus ( - ) prefix character, example: lazy -dog'|i18n( 'design/ezfind/search' )}</li>
+                  <li>{'Words may be required by using a plus ( + ) prefix character, example: +yellow coat'|i18n( 'design/ezfind/search' )}</li>
+                  <li>{'Wildcard characters * and ? can be used for partial string matching, example: syst* may expand to systems'|i18n( 'design/ezfind/search' )}</li>
+                  <li>{'Fuzzy searches can also be used appending a ~ character, example: like suster~ may match sister'|i18n( 'design/ezfind/search' )}</li>
+                  <li>{'Proximity searches can be established using double quotes and a maximum distance (in words) after a ~ character, example: "conference publish"~5 will match text where conference and publish are separated by a maximum of 5 words'|i18n( 'design/ezfind/search' )}</li>
               </ul>
           </div>
       </fieldset>
@@ -209,7 +210,7 @@
                   {foreach $facetData.nameList as $key2 => $facetName}
                       {if eq( $activeFacetParameters[concat( $defaultFacet['field'], ':', $defaultFacet['name'] )], $facetName )}
                           {set $activeFacetsCount=sum( $key, 1 )}
-                          {def $suffix=$uriSuffix|explode( concat( '&filter[]=', $facetData.queryLimit[$key2]|solr_quotes_escape ) )|implode( '' )|explode( concat( '&activeFacets[', $defaultFacet['field'], ':', $defaultFacet['name'], ']=', $facetName ) )|implode( '' )}
+                          {def $suffix=$uriSuffix|explode( concat( '&filter[]=', $facetData.fieldList[$key2], ':"', $key2|solr_quotes_escape, '"' ) )|implode( '' )|explode( concat( '&activeFacets[', $defaultFacet['field'], ':', $defaultFacet['name'], ']=', $facetName ) )|implode( '' )}
                           <li>
                               <a href={concat( $baseURI, $suffix )|ezurl}>[x]</a> <strong>{$defaultFacet['name']}</strong>: {$facetName|trim('"')|wash}
                           </li>
@@ -246,7 +247,7 @@
                         {if ne( $key2, '' )}
                         <li>
                             <a href={concat(
-                                $baseURI, '&filter[]=', $facetData.queryLimit[$key2]|solr_quotes_escape|rawurlencode,
+                                $baseURI, '&filter[]=', $facetData.fieldList[$key2], ':"', $key2|solr_quotes_escape|rawurlencode, '"',
                                 '&activeFacets[', $defaultFacet['field'], ':', $defaultFacet['name'], ']=',
                                 $facetName|rawurlencode,
                                 $uriSuffix )|ezurl}>
@@ -336,15 +337,16 @@
 <div class="border-bl"><div class="border-br"><div class="border-bc"></div></div></div>
 </div>
 
-{ezscript_require( array('ezjsc::jquery', 'ezjsc::yui2', 'ezajax_autocomplete.js') )}
-<script language="JavaScript" type="text/javascript">
-jQuery('#mainarea-autocomplete-rs').css('width', jQuery('input#Search').width());
-var autocomplete = new eZAJAXAutoComplete({ldelim}
-    url: "{'ezjscore/call/ezfind::autocomplete'|ezurl('no')}",
-    inputid: 'Search',
-    containerid: 'mainarea-autocomplete-rs',
-    minquerylength: {ezini( 'AutoCompleteSettings', 'MinQueryLength', 'ezfind.ini' )},
-    resultlimit: {ezini( 'AutoCompleteSettings', 'Limit', 'ezfind.ini' )}
+{ezscript_require( array('ezjsc::yui3', 'ezajax_autocomplete.js') )}
+<script type="text/javascript">
+
+YUI(YUI3_config).use('ezfindautocomplete', function (Y) {ldelim}
+    Y.eZ.initAutoComplete({ldelim}
+        url: "{'ezjscore/call/ezfind::autocomplete'|ezurl('no')}",
+        inputSelector: '#Search',
+        minQueryLength: {ezini( 'AutoCompleteSettings', 'MinQueryLength', 'ezfind.ini' )},
+        resultLimit: {ezini( 'AutoCompleteSettings', 'Limit', 'ezfind.ini' )}
+    {rdelim});
 {rdelim});
 
 {literal}

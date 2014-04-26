@@ -4,12 +4,12 @@
 <context>
     <name>design/admin2/autosave</name>
     <message>
-        <source>An error occured while autosaving the draft</source>
+        <source>An error occurred while autosaving the draft</source>
         <translation>Une erreur s&apos;est produite durant l&apos;enregistrement automatique du brouillon</translation>
     </message>
     <message>
         <source>The draft is being saved</source>
-        <translation>Le brouillon est en cours de d&apos;enregistrement</translation>
+        <translation>Le brouillon est en cours d&apos;enregistrement</translation>
     </message>
 </context>
 <context>
@@ -34,7 +34,7 @@
         <translation>Chargement...</translation>
     </message>
     <message>
-        <source>An error occured.</source>
+        <source>An error occurred.</source>
         <translation>Une erreur est survenue.</translation>
     </message>
     <message>
@@ -45,12 +45,12 @@
 <context>
     <name>design/ezwebin/autosave</name>
     <message>
-        <source>An error occured while autosaving the draft</source>
+        <source>An error occurred while autosaving the draft</source>
         <translation>Une erreur s&apos;est produite durant l&apos;enregistrement automatique du brouillon</translation>
     </message>
     <message>
         <source>The draft is being saved</source>
-        <translation>Le brouillon est en cours de d&apos;enregistrement</translation>
+        <translation>Le brouillon est en cours d&apos;enregistrement</translation>
     </message>
 </context>
 <context>

@@ -12,6 +12,7 @@ var contentType = '{$content_type}', classFilter = [];
     classFilter.push('{$class_filter}');
 {/foreach}
 
+eZOEPopupUtils.settings.browseImageAlias = "{ezini( 'EditorSettings', 'BrowseImageAlias', 'ezoe.ini' )|wash( 'javascript' )}";
 {literal}
 
 tinyMCEPopup.onInit.add( function(){
@@ -60,7 +61,7 @@ eZOEPopupUtils.settings.browseClassGenerator = function( n, hasImage ){
         <div class="panel">
             <table class="properties">
 
-                {include uri="design:ezoe/upload/common_attributes.tpl" file_name_attribute='accept="image/*"'}
+                {include uri="design:ezoe/upload/common_attributes.tpl" objectname_input_name='ContentObjectAttribute_name' file_name_attribute='accept="image/*"'}
 
                 <!-- Next two attributes are image specific  -->
                 <tr>

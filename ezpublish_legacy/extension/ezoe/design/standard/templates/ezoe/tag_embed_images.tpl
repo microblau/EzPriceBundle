@@ -43,7 +43,7 @@ tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {
     },
     tagAttributeEditor: function( ed, el, args )
     {
-        args['inline'] = jQuery('#embed_inline_source').attr( 'checked' ) ? 'true' : 'false';
+        args['inline'] = jQuery('#embed_inline_source').prop( 'checked' ) ? 'true' : 'false';
         el = eZOEPopupUtils.switchTagTypeIfNeeded( el, (contentType === 'images' || compatibilityMode === 'enabled' ? 'img' : (args['inline'] === 'true' ? 'span' : 'div') ) );
         var imageAttributes = eZOEPopupUtils.embedObject['image_attributes'];
         if ( !imageAttributes || !eZOEPopupUtils.embedObject['data_map'][ imageAttributes[0] ] )
@@ -62,7 +62,15 @@ tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {
            if ( args['align'] )
            {
                // adding a class based on the align to force the alignment in the editor
-               args['class']  = 'ezoeAlign' + args['align'];
+               if ( args['class'] )
+               {
+                   args['class'] = args['class'].replace( /ezoeAlign\w+/, '' );
+                   args['class'] = args['class'] + ' ezoeAlign' + args['align'];
+               }
+               else
+               {
+                   args['class'] = 'ezoeAlign' + args['align'];
+               }
            }
         }
         ed.dom.setAttribs( el, args );
@@ -77,6 +85,8 @@ function inlineSelectorChange( e, el )
     // embed and embed-inline have different settings
     var viewList = jQuery('#embed_view_source'), classList = jQuery('#embed_class_source'), inline = el.checked;
     var tag = inline ? 'embed-inline' : 'embed', editorEl = eZOEPopupUtils.settings.editorElement, def = attributeDefaults[ tag ];
+    var align = jQuery('#embed_align_source'), middleAlign = jQuery('#embed_align_source option[value="middle"]');
+
     if ( tag === selectedTagName ) return;
     selectedTagName = tag;
     eZOEPopupUtils.settings.selectedTag = tag;
@@ -90,7 +100,20 @@ function inlineSelectorChange( e, el )
     if ( editorEl )
     {
         var viewValue = editorEl.getAttribute('view');
-        var classValue = jQuery.trim( editorEl.className.replace(/(webkit-[\w\-]+|Apple-[\w\-]+|mceItem\w+|ezoeItem\w+|mceVisualAid)/g, '') );
+        var classValue = jQuery.trim( editorEl.className.replace(/(webkit-[\w\-]+|Apple-[\w\-]+|mceItem\w+|ezoeAlign\w+|ezoeItem\w+|mceVisualAid)/g, '') );
+    }
+
+    if ( inline )
+    {
+        if ( align.val() === middleAlign.attr('value') )
+        {
+            align.val('');
+        }
+        middleAlign.hide();
+    }
+    else
+    {
+        middleAlign.show();
     }
 
     if ( viewValue && viewListData[ tag ].join !== undefined && (' ' + viewListData[ tag ].join(' ') + ' ').indexOf( ' ' + viewValue + ' ' ) !== -1 )

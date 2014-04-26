@@ -2,7 +2,7 @@
 /**
  * File containing ezcomSubscriptionTest class
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @copyright Copyright (C) 1999-2013 eZ Systems AS. All rights reserved.
  * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
  *
  */
@@ -44,7 +44,7 @@ class ezcomSubscriptionTest extends ezpDatabaseTestCase
         $subscription->setAttribute( 'enabled', 1 );
         $subscription->store();
 
-        $this->assertType( 'ezcomSubscription', $subscription );
+        $this->assertInstanceOf( 'ezcomSubscription', $subscription );
         $this->assertEquals( 14, $subscription->attribute( 'user_id' ) );
         $this->assertEquals( 4, $subscription->attribute( 'subscriber_id' ) );
         $this->assertEquals( 'ezcomcomment', $subscription->attribute( 'subscription_type' ) );
@@ -59,7 +59,7 @@ class ezcomSubscriptionTest extends ezpDatabaseTestCase
     public function testFetch()
     {
         $subscription = ezcomSubscription::fetch( 1 );
-        $this->assertType( 'ezcomSubscription', $subscription );
+        $this->assertInstanceOf( 'ezcomSubscription', $subscription );
         $subscription = ezcomSubscription::fetch( 1001 );
         $this->assertEquals( null, $subscription );
     }

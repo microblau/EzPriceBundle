@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <software>
     <metadata>
-        <name>eZ Autosave</name>
-        <version>1.0.0</version>
-        <copyright>Copyright (C) 2011 NGUYEN DINH Quoc-Huy, 2011-2012 eZ Systems AS</copyright>
-        <license>eZ Business Use License Agreement eZ BUL Version 2.1</license>
+        <name>eZ Autosave LS</name>
+        <version>5.3.0-beta1</version>
+        <copyright>Copyright (C) 2011 NGUYEN DINH Quoc-Huy, 2011-2013 eZ Systems AS</copyright>
+        <license>GNU General Public License v2</license>
         <info_url>http://projects.ez.no/ezautosave</info_url>
     </metadata>
 

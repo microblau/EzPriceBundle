@@ -2,32 +2,109 @@
 /**
  * File containing the ezxFormToken class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 1.1.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package ezformtoken
  */
 
 /**
- * This class takes listens to interal kernel events in eZ Publish to validate forms using pr session tokens
+ * This class listens to interal kernel events in eZ Publish to validate forms using pr session tokens
  *
  * @See settings/site.ini.append.php for events used.
  * @See doc/Readme.rst for info about extension and about how to modify your ajax code to work with it.
  *
  * @internal
  * @since 4.5.0
- * @version 1.1.0
+ * @version  2014.3
  * @package ezformtoken
  */
-
 class ezxFormToken
 {
     const SESSION_KEY = __CLASS__;
-    
+
     const FORM_FIELD = 'ezxform_token';
 
     const REPLACE_KEY = '@$ezxFormToken@';
-    
+
+    /**
+     * @var string|null
+     */
+    static protected $secret;
+
+    /**
+     * @var string
+     */
+    static protected $intention = 'legacy';
+
+    /**
+     * @var string
+     */
+    static protected $formField = self::FORM_FIELD;
+
+    /**
+     * @var string
+     */
+    static protected $token;
+
+    /**
+     * @var bool
+     */
+    static protected $isEnabled = true;
+
+    /**
+     * @return string
+     */
+    static protected function getSecret()
+    {
+        if ( self::$secret === null )
+        {
+            self::$secret = eZINI::instance( 'site.ini' )->variable( 'HTMLForms', 'Secret' );
+        }
+
+        return self::$secret;
+    }
+
+    /**
+     * @param string $secret
+     */
+    static public function setSecret( $secret )
+    {
+        self::$secret = $secret;
+    }
+
+    /**
+     * @return string
+     */
+    static protected function getIntention()
+    {
+        return self::$intention;
+    }
+
+    /**
+     * @param string $intention
+     */
+    static public function setIntention( $intention )
+    {
+        self::$intention = $intention;
+    }
+
+    /**
+     * @return string
+     */
+    static protected function getFormField()
+    {
+        return self::$formField;
+    }
+
+    /**
+     * @param string $formField
+     */
+    static public function setFormField( $formField )
+    {
+        self::$formField = $formField;
+    }
+
     /**
      * request/input event listener
      * Checks if form token is valid if user is logged in.
@@ -36,7 +113,7 @@ class ezxFormToken
      */
     static public function input( eZURI $uri )
     {
-        if ( $_SERVER['REQUEST_METHOD'] !== 'POST' && empty( $_POST ) )
+        if ( isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] !== 'POST' && empty( $_POST ) )
         {
             eZDebugSetting::writeDebug( 'ezformtoken', 'Input not protected (not POST)', __METHOD__ );
             return null;
@@ -56,20 +133,31 @@ class ezxFormToken
             return null;
         }*/
 
-        if ( empty( $_POST[self::FORM_FIELD] ) )
-            throw new Exception( 'Missing token from Form', 404 );
+        if ( !empty( $_POST[self::getFormField()] ) )
+        {
+            $token = $_POST[self::getFormField()];
+        }
+        // allow ajax calls using POST with other formats than forms (such as
+        // json or xml) to still validate using a custom http header
+        else if ( !empty( $_SERVER['HTTP_X_CSRF_TOKEN'] ) )
+        {
+            $token = $_SERVER['HTTP_X_CSRF_TOKEN'];
+        }
+        else
+        {
+            throw new Exception( 'Missing form token from Request', 404 );
+        }
 
-        
-        if ( $_POST[self::FORM_FIELD] !== self::getToken() )
-            throw new Exception( 'Wrong token found in Form!', 404 );
-            
+        if ( $token !== self::getToken() )
+            throw new Exception( 'Wrong form token found in Request!', 404 );
+
         eZDebugSetting::writeDebug( 'ezformtoken', 'Input validated, token verified and was correct', __METHOD__ );
     }
 
     /**
      * response/output event filter
      * Appends tokens to  POST forms if user is logged in.
-     * 
+     *
      * @param string $templateResult ByRef
      */
     static public function output( $templateResult )
@@ -97,28 +185,41 @@ class ezxFormToken
         }
 
         $token = self::getToken();
-        $field = self::FORM_FIELD;
+        $field = self::getFormField();
         $replaceKey = self::REPLACE_KEY;
-        $tag = "\n<span style='display:none;' id=\"{$field}_js\" title=\"{$token}\"></span>\n";
-        $input = "\n<input type=\"hidden\" name=\"{$field}\" value=\"{$token}\" />\n";
-               
+
         eZDebugSetting::writeDebug( 'ezformtoken', 'Output protected (all forms will be modified)', __METHOD__ );
 
-        $templateResult = preg_replace(
-            '/(<body[^>]*>)/i',
-            '\\1' . $tag,
-            $templateResult
-        );
+        // If document has head tag, insert in a html5 valid and semi standard way
+        if ( strpos( $templateResult, '<head>' ) !== false )
+        {
+            $templateResult = str_replace(
+                '<head>',
+                "<head>\n"
+                . "<meta name=\"csrf-param\" content=\"{$field}\" />\n"
+                . "<meta name=\"csrf-token\" id=\"{$field}_js\" title=\"{$token}\" content=\"{$token}\" />\n",
+                $templateResult
+            );
+        }
+        // else fallback to hidden span inside body
+        else
+        {
+            $templateResult = preg_replace(
+                '/(<body[^>]*>)/i',
+                '\\1' . "\n<span style='display:none;' id=\"{$field}_js\" title=\"{$token}\"></span>\n",
+                $templateResult
+            );
+        }
 
         $templateResult = preg_replace(
             '/(<form\W[^>]*\bmethod=(\'|"|)POST(\'|"|)\b[^>]*>)/i',
-            '\\1' . $input,
+            '\\1' . "\n<input type=\"hidden\" name=\"{$field}\" value=\"{$token}\" />\n",
             $templateResult
         );
 
         return str_replace( $replaceKey, $token, $templateResult );
     }
-    
+
     /**
      * session/regenerate event handler, clears form token when users
      * logs out / in.
@@ -126,7 +227,7 @@ class ezxFormToken
     static public function reset()
     {
         eZDebugSetting::writeDebug( 'ezformtoken', 'Reset form token', __METHOD__ );
-        eZSession::unsetkey( self::SESSION_KEY, false );
+        self::$token = null;
     }
 
     /**
@@ -137,12 +238,22 @@ class ezxFormToken
      */
     static public function getToken()
     {
-        if ( eZSession::issetkey( self::SESSION_KEY ) )
-            return eZSession::get( self::SESSION_KEY );
+        if ( self::$token === null )
+        {
+            self::$token = sha1( self::getSecret() . self::getIntention() . session_id() );
+        }
 
-        $token = md5( uniqid( self::SESSION_KEY, true ) );
-        eZSession::set( self::SESSION_KEY, $token );
-        return $token;
+        return self::$token;
+    }
+
+    /**
+     * Enables/Disables CSRF protection.
+     *
+     * @param bool $isEnabled
+     */
+    static public function setIsEnabled( $isEnabled )
+    {
+        self::$isEnabled = (bool)$isEnabled;
     }
 
     /**
@@ -153,10 +264,13 @@ class ezxFormToken
      */
     static protected function shouldProtectUser()
     {
+        if ( !self::$isEnabled )
+            return false;
+
         if ( !eZSession::hasStarted() )
             return false;
 
-        if ( !eZUser::currentUser()->isLoggedIn() )
+        if ( !eZUser::isCurrentUserRegistered() )
             return false;
 
         return true;

@@ -2,7 +2,7 @@
     eZ Online Editor MCE popup : common js code used in popups
     Created on: <06-Feb-2008 00:00:00 ar>
     
-    Copyright (c) 1999-2012 eZ Systems AS
+    Copyright (c) 1999-2014 eZ Systems AS
     Licensed under the GPL 2.0 License:
     http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt 
 */
@@ -50,6 +50,8 @@ var eZOEPopupUtils = {
         editorSelectedText: false,
         // Same as above but with markup
         editorSelectedHtml: false,
+        // the selected node in the editor, set on init
+        editorSelectedNode: false,
         // generates class name for tr elements in browse / search / bookmark list
         browseClassGenerator: function(){ return ''; },
         // generates browse link for a specific mode
@@ -59,7 +61,9 @@ var eZOEPopupUtils = {
         // custom save function pr custom attribute
         customAttributeSaveHandler: [],
         // Title text to set on tilte tag and h2#tag-edit-title tag in tag edit / create dialogs
-        tagEditTitleText: ''
+        tagEditTitleText: '',
+        // the default image alias to use while browsing
+        browseImageAlias: 'small'
     },
 
     /**
@@ -107,6 +111,7 @@ var eZOEPopupUtils = {
             if ( jQuery.trim( selectedHtml ) !== '' )
                 s.editorSelectedHtml = selectedHtml;
         }
+        s.editorSelectedNode = ed.selection.getNode();
         
         if ( s.onInit && s.onInit.call )
             s.onInit.call( eZOEPopupUtils, s.editorElement, s.tagName, ed );
@@ -225,7 +230,7 @@ var eZOEPopupUtils = {
             }
             else if ( eZOEPopupUtils.xmlToXhtmlHash[s.tagName] )
             {
-                s.editorElement = eZOEPopupUtils.insertTagCleanly( ed, eZOEPopupUtils.xmlToXhtmlHash[s.tagName], '&nbsp;' );
+                s.editorElement = eZOEPopupUtils.insertTagCleanly( ed, eZOEPopupUtils.xmlToXhtmlHash[s.tagName], tinymce.isIE ? '&nbsp;' : '<br data-mce-bogus="1" />' );
             }
             if ( s.onTagGenerated )
             {
@@ -306,7 +311,8 @@ var eZOEPopupUtils = {
      */
     insertTagCleanly: function( ed, tag, content, args )
     {
-        var edCurrentNode = ed.selection.getNode(), newElement = edCurrentNode.ownerDocument.createElement( tag );
+        var edCurrentNode = eZOEPopupUtils.settings.editorSelectedNode ? eZOEPopupUtils.settings.editorSelectedNode : ed.selection.getNode(),
+            newElement = edCurrentNode.ownerDocument.createElement( tag );
         if ( tag !== 'img' ) newElement.innerHTML = content;
 
         if ( edCurrentNode.nodeName === 'TD' )
@@ -441,11 +447,11 @@ var eZOEPopupUtils = {
             'style': ''
         }, s = eZOEPopupUtils.settings, handler = s.customAttributeSaveHandler;
         var customArr = [];
-        jQuery( '#' + node + ' input,#' + node + ' select' ).each(function( i, el )
+        jQuery( '#' + node + ' input,#' + node + ' select,#' + node + ' textarea' ).each(function( i, el )
         {
             var o = jQuery( el ), name = o.attr("name"), value, style;
             if ( o.hasClass('mceItemSkip') || !name ) return;
-            if ( o.attr("type") === 'checkbox' && !o.attr("checked") ) return;
+            if ( o.attr("type") === 'checkbox' && !o.prop("checked") ) return;
 
             // see if there is a save hander that needs to do some work on the value
             if ( handler[el.id] !== undefined && handler[el.id].call !== undefined )
@@ -480,7 +486,7 @@ var eZOEPopupUtils = {
         {
             var o = jQuery( el ), name = o.attr("name");
             if ( o.hasClass('mceItemSkip') || !name ) return;
-            if ( o.attr("type") === 'checkbox' && !o.attr("checked") ) return;
+            if ( o.attr("type") === 'checkbox' && !o.prop("checked") ) return;
             // see if there is a save hander that needs to do some work on the value
             if ( handler[el.id] !== undefined && handler[el.id].call !== undefined )
                 args[name] = handler[el.id].call( o, el, o.val() );
@@ -549,9 +555,10 @@ var eZOEPopupUtils = {
         for(var i = 0, l = arr.length; i < l; i++)
         {
             t = arr[i].split('|');
-            values[t[0]] = t[1];
+            var key = t.shift();
+            values[key] = t.join('|');
         }
-        jQuery( '#' + node + ' input,#' + node + ' select' ).each(function( i, el )
+        jQuery( '#' + node + ' input,#' + node + ' select,#' + node + ' textarea' ).each(function( i, el )
         {
             var o = jQuery( el ), name = el.name;
             if ( o.hasClass('mceItemSkip') || !name )
@@ -822,12 +829,12 @@ var eZOEPopupUtils = {
                    tr.appendChild( td );
                    
                    td = document.createElement("td");
-                   var imageIndex = eZOEPopupUtils.indexOfImage( n, 'small' );
+                   var imageIndex = eZOEPopupUtils.indexOfImage( n, eZOEPopupUtils.settings.browseImageAlias );
                    if ( imageIndex !== -1 )
                    {
                        tag = document.createElement("span");
                        tag.className = 'image_preview';
-                       tag.innerHTML += ' <a href="#">' + ed.getLang('preview.preview_desc')  + '<img src="' + ed.settings.ez_root_url + n.data_map[ n.image_attributes[imageIndex] ].content['small'].url + '" /></a>';
+                       tag.innerHTML += ' <a href="#">' + ed.getLang('preview.preview_desc')  + '<img src="' + ed.settings.ez_root_url + n.data_map[ n.image_attributes[imageIndex] ].content[eZOEPopupUtils.settings.browseImageAlias].url + '" /></a>';
                        td.appendChild( tag );
                        hasImage = true;
                    }
@@ -899,7 +906,7 @@ var eZOEPopupUtils = {
 
     indexOfImage: function( jsonNode, alias )
     {
-        if ( !alias ) alias = 'small';
+        if ( !alias ) alias = eZOEPopupUtils.settings.browseImageAlias;
         var index = -1;
         jQuery.each( jsonNode.image_attributes, function( i, attr )
         {

@@ -5,24 +5,24 @@
 // Created on: <17-Jan-2005 09:11:41 bf>
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.7.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
-// SOFTWARE LICENSE: eZ Business Use License Agreement eZ BUL Version 2.1
+// SOFTWARE NAME: eZ Publish Community Project
+// SOFTWARE RELEASE:  2014.3
+// COPYRIGHT NOTICE: Copyright (C) 1999-2014 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2
 // NOTICE: >
-//   This source file is part of the eZ Publish CMS and is
-//   licensed under the terms and conditions of the eZ Business Use
-//   License v2.1 (eZ BUL).
+//   This program is free software; you can redistribute it and/or
+//   modify it under the terms of version 2.0  of the GNU General
+//   Public License as published by the Free Software Foundation.
 // 
-//   A copy of the eZ BUL was included with the software. If the
-//   license is missing, request a copy of the license via email
-//   at license@ez.no or via postal mail at
-//  	Attn: Licensing Dept. eZ Systems AS, Klostergata 30, N-3732 Skien, Norway
+//   This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//   GNU General Public License for more details.
 // 
-//   IMPORTANT: THE SOFTWARE IS LICENSED, NOT SOLD. ADDITIONALLY, THE
-//   SOFTWARE IS LICENSED "AS IS," WITHOUT ANY WARRANTIES WHATSOEVER.
-//   READ THE eZ BUL BEFORE USING, INSTALLING OR MODIFYING THE SOFTWARE.
-
+//   You should have received a copy of version 2.0 of the GNU General
+//   Public License along with this program; if not, write to the Free
+//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+//   MA 02110-1301, USA.
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -66,20 +66,6 @@ class eZOOImport
     var $ERROR = array();
     var $currentUserID;
 
-    /**
-     * eZINI object for odf.ini
-     *
-     * @var eZINI
-     */
-    protected $ooINI;
-
-    /**
-     * whether we use a custom class or not while importing the document
-     *
-     * @var bool
-     */
-    protected $useCustomClass = false;
-
     /*!
      Constructor
     */
@@ -91,8 +77,6 @@ class eZOOImport
         $currentUser = eZUser::currentUser();
         $this->currentUserID  = $currentUser->id();
         $this->ImportDir .= md5( time() ) . "/";
-
-        $this->ooINI = eZINI::instance( 'odf.ini' );
     }
 
     /*!
@@ -165,8 +149,9 @@ class eZOOImport
     */
     function daemonConvert( $sourceFile, $destFile )
     {
-        $server = $this->ooINI->variable( "ODFImport", "OOConverterAddress" );
-        $port = $this->ooINI->variable( "ODFImport", "OOConverterPort" );
+        $ooINI = eZINI::instance( 'odf.ini' );
+        $server = $ooINI->variable( "ODFImport", "OOConverterAddress" );
+        $port = $ooINI->variable( "ODFImport", "OOConverterPort" );
         $res = false;
         $fp = fsockopen( $server,
                          $port,
@@ -224,101 +209,27 @@ class eZOOImport
     }
 
     /**
-     * Figures out the content class to use from the DOMDocument or from
-     * settings if the default content class is to be used.
+     * Creates a new content or updates an existing one based on $file
      *
-     * @param DOMDocument $dom
-     * @return eZContentClass|null
+     * @param string $file the file to import
+     * @param int $placeNodeID the node id where to place the new document or
+     *        the node of the document to update
+     * @param string $originalFileName
+     * @param string $importType "import" or "replace"
+     * @param eZContentUpload|null $upload (not used in this method)
+     * @param string|false $locale the locale to use while creating/updating
+     *        the content
+     * @return array|false false if something went wrong
      */
-    protected function getImportContentClass( DOMDocument $dom )
+    function import( $file, $placeNodeID, $originalFileName, $importType = "import", $upload = null, $locale = false )
     {
-        $importClassIdentifier = false;
-        $sectionNodeArray = $dom->getElementsByTagNameNS(
-            self::NAMESPACE_TEXT, 'section'
-        );
-
-        if ( $sectionNodeArray->length > 0 )
-        {
-            $registeredClassArray = $this->ooINI->variable(
-                'ODFImport', 'RegisteredClassArray'
-            );
-
-            // Check the defined sections in OO document
-            $sectionNameArray = array();
-            foreach ( $sectionNodeArray as $sectionNode )
-            {
-                $sectionNameArray[] = strtolower(
-                    str_replace(
-                        ' ', '_',
-                        $sectionNode->getAttributeNS( self::NAMESPACE_TEXT, "name" )
-                    )
-                );
-            }
-            sort( $sectionNameArray );
-
-            // Check if there is a coresponding eZ Publish class for this document
-            foreach ( $registeredClassArray as $className )
-            {
-                $attributeArray = $this->ooINI->variable(
-                    $className, 'Attribute'
-                );
-                if ( empty( $attributeArray ) )
-                    continue;
-
-                sort( $attributeArray );
-
-                if ( $sectionNameArray === $attributeArray )
-                {
-                    $importClassIdentifier = $className;
-                    break;
-                }
-            }
-        }
-
-        if ( $importClassIdentifier === false )
-        {
-            $importClassIdentifier = $this->ooINI->variable( 'ODFImport', 'DefaultImportClass' );
-            $this->useCustomClass = false;
-        }
-        else
-        {
-            $this->useCustomClass = true;
-        }
-
-        return eZContentClass::fetchByIdentifier( $importClassIdentifier );
-    }
-
-    /**
-     * Returns the content DOMDocument object from the .odt file
-     *
-     * @param string $file
-     * @return DOMDocument|null
-     */
-    protected function getDOMDocument( $file )
-    {
-        $archive = ezcArchive::open(
-            $file, null, new ezcArchiveOptions( array( 'readOnly' => true ) )
-        );
-        eZDir::mkdir( $this->ImportDir, false, true );
-        $archive->extract( $this->ImportDir );
-
-        $fileName = $this->ImportDir . "content.xml";
-        $dom = new DOMDocument( '1.0', 'UTF-8' );
-        $success = $dom->load( $fileName );
-        return ( !$success ? null : $dom );
-    }
-
-
-    /*!
-      Imports an OpenOffice.org document from the given file.
-    */
-    function import( $file, $placeNodeID, $originalFileName, $importType = "import", $upload = null )
-    {
+        $ooINI = eZINI::instance( 'odf.ini' );
+        //$tmpDir = $ooINI->variable( 'ODFSettings', 'TmpDir' );
         // Use var-directory as temporary directory
         $tmpDir = getcwd() . "/" . eZSys::cacheDirectory();
 
-        $allowedTypes = $this->ooINI->variable( 'DocumentType', 'AllowedTypes' );
-        $convertTypes = $this->ooINI->variable( 'DocumentType', 'ConvertTypes' );
+        $allowedTypes = $ooINI->variable( 'DocumentType', 'AllowedTypes' );
+        $convertTypes = $ooINI->variable( 'DocumentType', 'ConvertTypes' );
 
         $originalFileType = array_slice( explode('.',  $originalFileName), -1, 1 );
         $originalFileType = strtolower( $originalFileType[0] );
@@ -333,7 +244,45 @@ class eZOOImport
         if ( $importType == "replace" )
              $GLOBALS["OOImportObjectID"] = $placeNodeID;
 
+        // Check if we have access to node
+        $place_node = eZContentObjectTreeNode::fetch( $placeNodeID );
 
+        $importClassIdentifier = $ooINI->variable( 'ODFImport', 'DefaultImportClass' );
+
+        // Check if class exist
+        $class = eZContentClass::fetchByIdentifier( $importClassIdentifier );
+        if ( !is_object( $class ) )
+        {
+            eZDebug::writeError( "Content class <strong>$importClassIdentifier</strong> specified in odf.ini does not exist." );
+            $this->setError( self::ERROR_UNKNOWNCLASS, $importClassIdentifier );
+            return false;
+        }
+
+        if ( !is_object( $place_node ) )
+        {
+            $locationOK = false;
+
+            if ( $upload !== null )
+            {
+                $parentNodes = false;
+                $parentMainNode = false;
+                $locationOK = $upload->detectLocations( $importClassIdentifier, $class, $placeNodeID, $parentNodes, $parentMainNode );
+            }
+
+            if ( $locationOK === false || $locationOK === null )
+            {
+                $this->setError( self::ERROR_UNKNOWNNODE, ezpI18n::tr( 'extension/ezodf/import/error', "Unable to fetch node with id ") . $placeNodeID );
+                return false;
+            }
+
+            $placeNodeID = $parentMainNode;
+            $place_node = eZContentObjectTreeNode::fetch( $placeNodeID );
+        }
+
+
+        // Check if document conversion is needed
+        //
+        // Alex 2008/04/21 - added !== false
         if ( in_array( $originalFileType, $convertTypes, false ) !== false )
         {
             $uniqueStamp = md5( time() );
@@ -354,80 +303,35 @@ class eZOOImport
             // Overwrite the file location
             $file = $tmpToFile;
         }
-        $dom = $this->getDOMDocument( $file );
 
+        $importResult = array();
+        $unzipResult = "";
+        $uniqueImportDir = $this->ImportDir;
+        eZDir::mkdir( $uniqueImportDir, false, true );
+
+        $http = eZHTTPTool::instance();
+
+        $archiveOptions = new ezcArchiveOptions( array( 'readOnly' => true ) );
+        $archive = ezcArchive::open( $file, null, $archiveOptions );
+        $archive->extract( $uniqueImportDir );
+
+        $fileName = $uniqueImportDir . "content.xml";
+        $dom = new DOMDocument( '1.0', 'UTF-8' );
+        $success = $dom->load( $fileName );
+        $sectionNodeHash = array();
+
+        // At this point we could unlink the destination file from the conversion, if conversion was used
         if ( isset( $tmpToFile ) )
         {
             unlink( $tmpToFile );
         }
 
-        if ( $dom === null )
+        if ( !$success )
         {
             $this->setError( self::ERROR_PARSEXML );
             return false;
         }
 
-        // Check if we have access to node
-        $place_node = eZContentObjectTreeNode::fetch( $placeNodeID );
-
-        $contentClass = $this->getImportContentClass( $dom );
-        if ( !$contentClass instanceof eZContentClass )
-        {
-            if ( !$this->useCustomClass )
-            {
-                $importClassIdentifier = $this->ooINI->variable(
-                    'ODFImport', 'DefaultImportClass'
-                );
-                eZDebug::writeError(
-                    "Content class $importClassIdentifier specified in odf.ini does not exist."
-                );
-                $this->setError(
-                    self::ERROR_UNKNOWNCLASS, $importClassIdentifier
-                );
-            }
-            else
-            {
-                eZDebug::writeError(
-                    "Content class indicated in the document does not exist.."
-                );
-                $this->setError( self::ERROR_UNKNOWNCLASS );
-            }
-            return false;
-        }
-        $importClassIdentifier = $contentClass->attribute( 'identifier' );
-
-        if ( !$place_node instanceof eZContentObjectTreeNode )
-        {
-            $this->setError(
-                self::ERROR_UNKNOWNNODE,
-                ezpI18n::tr(
-                    'extension/ezodf/import/error',
-                    "Unable to fetch node with id "
-                ) . $placeNodeID
-            );
-            return false;
-        }
-        if ( $importType == "replace" )
-        {
-            // Check if we are allowed to edit the node
-            $functionCollection = new eZContentFunctionCollection();
-            $access = $functionCollection->checkAccess( 'edit', $place_node, false, false );
-        }
-        else
-        {
-            // Check if we are allowed to create a node under the node
-            $functionCollection = new eZContentFunctionCollection();
-            $access = $functionCollection->checkAccess( 'create', $place_node, $importClassIdentifier, $place_node->attribute( 'class_identifier' ) );
-        }
-
-        if ( ! ( $access['result'] ) )
-        {
-            $this->setError( self::ERROR_ACCESSDENIED );
-            return false;
-        }
-
-        $importResult = array();
-        $sectionNodeHash = array();
 
         // Fetch the automatic document styles
         $automaticStyleArray = $dom->getElementsByTagNameNS( self::NAMESPACE_OFFICE, 'automatic-styles' );
@@ -439,47 +343,80 @@ class eZOOImport
         // Fetch the body section content
         $sectionNodeArray = $dom->getElementsByTagNameNS( self::NAMESPACE_TEXT, 'section' );
 
-        if ( $this->useCustomClass && $sectionNodeArray->length > 0 )
+        $customClassFound = false;
+        if ( $sectionNodeArray->length > 0 )
         {
+            $registeredClassArray = $ooINI->variable( 'ODFImport', 'RegisteredClassArray' );
+
+            // Check the defined sections in OO document
+            $sectionNameArray = array();
             foreach ( $sectionNodeArray as $sectionNode )
             {
-                $sectionName = str_replace(
-                    " ", "_",
-                    strtolower(
-                        $sectionNode->getAttributeNS( self::NAMESPACE_TEXT, 'name' )
-                    )
-                );
-                $xmlText = "";
-                $level = 1;
-                $childArray = $sectionNode->childNodes;
-                $nodeCount = 1;
-                foreach ( $childArray as $childNode )
+                $sectionNameArray[] = strtolower( $sectionNode->getAttributeNS( self::NAMESPACE_TEXT, "name" ) );
+            }
+
+            // Check if there is a coresponding eZ Publish class for this document
+            foreach ( $registeredClassArray as $className )
+            {
+                $attributeArray = $ooINI->variable( $className, 'Attribute' );
+
+                if ( !empty( $attributeArray ) )
                 {
-                    if ( $childNode->nodeType === XML_ELEMENT_NODE )
+                    // Convert space to _ in section names
+                    foreach ( $sectionNameArray as $key => $value )
                     {
-                        $isLastTag = ( $nodeCount == $childArray->length );
-                        $xmlText .= self::handleNode( $childNode, $level, $isLastTag );
+                        $sectionNameArray[$key] = str_replace( " ", "_", $value );
                     }
 
-                    $nodeCount++;
+                    sort( $attributeArray );
+                    sort( $sectionNameArray );
+
+                    $diff = array_diff( $attributeArray, $sectionNameArray );
+                    if ( empty( $diff ) )
+                    {
+                        $importClassIdentifier = $className;
+                        $customClassFound = true;
+                        break;
+                    }
                 }
-                $endSectionPart = "";
-                $levelDiff = 1 - $level;
-                if ( $levelDiff < 0 )
-                    $endSectionPart = str_repeat( "</section>", abs( $levelDiff ) );
-                $charset = eZTextCodec::internalCharset();
+            }
 
-                // Store the original XML for each section, since some datatypes needs to handle the XML specially
-                $sectionNodeHash[$sectionName] = $sectionNode;
+            if ( $customClassFound == true )
+            {
+                foreach ( $sectionNodeArray as $sectionNode )
+                {
+                    $sectionName = str_replace( " ", "_", strtolower( $sectionNode->getAttributeNS( self::NAMESPACE_TEXT, 'name' ) ) );
+                    $xmlText = "";
+                    $level = 1;
+                    $childArray = $sectionNode->childNodes;
+                    $nodeCount = 1;
+                    foreach ( $childArray as $childNode )
+                    {
+                        if ( $childNode->nodeType === XML_ELEMENT_NODE )
+                        {
+                            $isLastTag = ( $nodeCount == $childArray->length );
+                            $xmlText .= self::handleNode( $childNode, $level, $isLastTag );
+                        }
 
-                $xmlTextArray[$sectionName] = "<?xml version='1.0' encoding='$charset' ?>" .
-                     "<section xmlns:image='http://ez.no/namespaces/ezpublish3/image/' " .
-                     "  xmlns:xhtml='http://ez.no/namespaces/ezpublish3/xhtml/'><section>" .
-                     $xmlText . $endSectionPart . "</section></section>";
+                        $nodeCount++;
+                    }
+                    $endSectionPart = "";
+                    $levelDiff = 1 - $level;
+                    if ( $levelDiff < 0 )
+                        $endSectionPart = str_repeat( "</section>", abs( $levelDiff ) );
+                    $charset = eZTextCodec::internalCharset();
+
+                    // Store the original XML for each section, since some datatypes needs to handle the XML specially
+                    $sectionNodeHash[$sectionName] = $sectionNode;
+
+                    $xmlTextArray[$sectionName] = "<?xml version='1.0' encoding='$charset' ?>" .
+                         "<section xmlns:image='http://ez.no/namespaces/ezpublish3/image/' " .
+                         "  xmlns:xhtml='http://ez.no/namespaces/ezpublish3/xhtml/'><section>" . $xmlText . $endSectionPart . "</section></section>";
+                }
             }
         }
 
-        if ( !$this->useCustomClass )
+        if ( $customClassFound == false )
         {
             // No defined sections. Do default import.
             $bodyNodeArray = $dom->getElementsByTagNameNS( self::NAMESPACE_OFFICE, 'text' );
@@ -535,16 +472,17 @@ class eZOOImport
                 $sectionNodeArray[$key] = $sectionNode;
             }
 
+            $customClassFound = false;
             if ( $sectionNameArray )
             {
-                $registeredClassArray = $this->ooINI->variable( 'ODFImport', 'RegisteredClassArray' );
+                $registeredClassArray = $ooINI->variable( 'ODFImport', 'RegisteredClassArray' );
 
-                // Check if there is a corresponding eZ Publish class for this document
+                // Check if there is a coresponding eZ Publish class for this document
                 foreach ( $registeredClassArray as $className )
                 {
-                    $attributeArray = $this->ooINI->variable( $className, 'Attribute' );
+                    $attributeArray = $ooINI->variable( $className, 'Attribute' );
 
-                    if ( count( $attributeArray ) > 0 )
+                    if ( !empty( $attributeArray ) )
                     {
                         // Convert space to _ in section names
                         foreach ( $sectionNameArray as $key => $value )
@@ -556,17 +494,17 @@ class eZOOImport
                         sort( $sectionNameArray );
 
                         $diff = array_diff( $attributeArray, $sectionNameArray );
-                        if ( count( $diff ) == 0 )
+                        if ( empty( $diff ) )
                         {
                             $importClassIdentifier = $className;
-                            $this->useCustomClass = true;
+                            $customClassFound = true;
                             break;
                         }
                     }
                 }
             }
 
-            if ( $this->useCustomClass )
+            if ( $sectionNameArray && $customClassFound == true )
             {
                 foreach ( $sectionNodeArray as $key => $sectionNode )
                 {
@@ -613,18 +551,45 @@ class eZOOImport
             }
         }
 
-        // Create object start
+        if ( $importType == "replace" )
+        {
+            // Check if we are allowed to edit the node
+            $functionCollection = new eZContentFunctionCollection();
+            $access = $functionCollection->checkAccess(
+                'edit', $place_node, false, false, $locale
+            );
+        }
+        else
+        {
+            // Check if we are allowed to create a node under the node
+            $functionCollection = new eZContentFunctionCollection();
+            $access = $functionCollection->checkAccess(
+                'create', $place_node, $importClassIdentifier,
+                $place_node->attribute( 'class_identifier' ), $locale
+            );
+        }
+
+        if ( $access['result'] )
         {
             // Check if we should replace the current object or import a new
             if ( $importType !== "replace" )
             {
+                $class = eZContentClass::fetchByIdentifier( $importClassIdentifier );
+
                 $place_object = $place_node->attribute( 'object' );
                 $sectionID = $place_object->attribute( 'section_id' );
 
                 $creatorID = $this->currentUserID;
                 $parentNodeID = $placeNodeID;
 
-                $object = $contentClass->instantiate( $creatorID, $sectionID );
+                if ( !is_object( $class ) )
+                {
+                    eZDebug::writeError( "Content class <strong>$importClassIdentifier</strong> specified in odf.ini does not exist." );
+                    $this->setError( self::ERROR_UNKNOWNCLASS, $importClassIdentifier );
+                    return false;
+                }
+
+                $object = $class->instantiate( $creatorID, $sectionID, false, $locale );
 
                 $nodeAssignment = eZNodeAssignment::create( array(
                                                                  'contentobject_id' => $object->attribute( 'id' ),
@@ -645,11 +610,11 @@ class eZOOImport
             {
                 // Check if class is supported before we start changing anything
                 $placeClassIdentifier = $place_node->attribute( 'class_identifier' );
-                if ( $this->ooINI->hasVariable( $placeClassIdentifier, 'DefaultImportTitleAttribute' ) &&
-                     $this->ooINI->hasVariable( $placeClassIdentifier, 'DefaultImportBodyAttribute' ) )
+                if ( $ooINI->hasVariable( $placeClassIdentifier, 'DefaultImportTitleAttribute' ) &&
+                     $ooINI->hasVariable( $placeClassIdentifier, 'DefaultImportBodyAttribute' ) )
                 {
-                    $titleAttribute = $this->ooINI->variable( $placeClassIdentifier, 'DefaultImportTitleAttribute');
-                    $bodyAttribute = $this->ooINI->variable( $placeClassIdentifier, 'DefaultImportBodyAttribute' );
+                    $titleAttribute = $ooINI->variable( $placeClassIdentifier, 'DefaultImportTitleAttribute');
+                    $bodyAttribute = $ooINI->variable( $placeClassIdentifier, 'DefaultImportBodyAttribute' );
 
                     // Extra check to see if attributes exist in dataMap (config is not wrong)
                     $dataMap = $place_node->attribute( 'data_map' );
@@ -671,16 +636,16 @@ class eZOOImport
 
                 // already fetched: $node = eZContentObjectTreeNode::fetch( $placeNodeID );
                 $object = $place_node->attribute( 'object' );
-                $version = $object->createNewVersion();
+                $version = $object->createNewVersionIn( $locale );
 
-                $dataMap = $object->fetchDataMap( $version->attribute( 'version' ) );
+                $dataMap = $version->dataMap();
             }
             $contentObjectID = $object->attribute( 'id' );
 
-            if ( $this->useCustomClass )
+            if ( $customClassFound == true )
             {
                 // Initialize the actual object attributes
-                $attributeArray = $this->ooINI->variable( $importClassIdentifier, 'Attribute' );
+                $attributeArray = $ooINI->variable( $importClassIdentifier, 'Attribute' );
                 foreach ( $attributeArray as $attributeIdentifier => $sectionName  )
                 {
                     switch( $dataMap[$attributeIdentifier]->DataTypeString )
@@ -688,6 +653,10 @@ class eZOOImport
                         case "ezstring":
                         case "eztext":
                         {
+                            if ( !isset( $xmlTextArray[$sectionName] ) )
+                            {
+                                continue;
+                            }
                             $eztextDom = new DOMDOcument( '1.0', 'UTF-8' );
                             $eztextDom->loadXML( $xmlTextArray[$sectionName] );
                             $text = $eztextDom->documentElement->textContent;
@@ -697,6 +666,10 @@ class eZOOImport
 
                         case "ezxmltext":
                         {
+                            if ( !isset( $xmlTextArray[$sectionName] ) )
+                            {
+                                continue;
+                            }
                             $dataMap[$attributeIdentifier]->setAttribute( 'data_text', $xmlTextArray[$sectionName] );
                             $dataMap[$attributeIdentifier]->store();
                         }break;
@@ -706,6 +679,10 @@ class eZOOImport
                         {
                             // Only support date formats as a single paragraph in a section with the format:
                             // day/month/year
+                            if ( !isset( $xmlTextArray[$sectionName] ) )
+                            {
+                                continue;
+                            }
                             $dateString = strip_tags( $xmlTextArray[$sectionName] );
 
                             $dateArray = explode( "/", $dateString );
@@ -730,6 +707,10 @@ class eZOOImport
                         {
                             // Only support date formats as a single paragraph in a section with the format:
                             // day/month/year 14:00
+                            if ( !isset( $xmlTextArray[$sectionName] ) )
+                            {
+                                continue;
+                            }
                             $dateString = trim( strip_tags( $xmlTextArray[$sectionName] ) );
 
                             $dateTimeArray = explode(  " ", $dateString );
@@ -913,8 +894,8 @@ class eZOOImport
                 if ( ( !isset ( $titleAttribute ) ) || ( !isset ( $bodyAttribute ) ) )
                 {
                     // Set attributes accorring to import class
-                    $titleAttribute = $this->ooINI->variable( $importClassIdentifier, 'DefaultImportTitleAttribute');
-                    $bodyAttribute = $this->ooINI->variable( $importClassIdentifier, 'DefaultImportBodyAttribute' );
+                    $titleAttribute = $ooINI->variable( $importClassIdentifier, 'DefaultImportTitleAttribute');
+                    $bodyAttribute = $ooINI->variable( $importClassIdentifier, 'DefaultImportBodyAttribute' );
                 }
 
                 $objectName = basename( $originalFileName );
@@ -934,7 +915,7 @@ class eZOOImport
             $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $contentObjectID,
                                                                                          'version' => $version->attribute( 'version' ) ) );
 
-            $storeImagesInMedia = $this->ooINI->variable( "ODFImport", "PlaceImagesInMedia" ) == "true";
+            $storeImagesInMedia = $ooINI->variable( "ODFImport", "PlaceImagesInMedia" ) == "true";
             if ( $storeImagesInMedia == true )
             {
                 // Fetch object to get correct name
@@ -948,7 +929,7 @@ class eZOOImport
                     $node = eZContentObjectTreeNode::fetch( $mediaRootNodeID );
 
                     $articleFolderName = $object->attribute( 'name' );
-                    $importFolderName = $this->ooINI->variable( 'ODFImport', 'ImportedImagesMediaNodeName' );
+                    $importFolderName = $ooINI->variable( 'ODFImport', 'ImportedImagesMediaNodeName' );
                     $importNode = self::createSubNode( $node, $importFolderName );
 
                     $articleNode = self::createSubNode( $importNode, $articleFolderName );
@@ -998,9 +979,15 @@ class eZOOImport
             }
             $importResult['ClassIdentifier'] = $importClassIdentifier;
         }
+        else
+        {
+            $this->setError( self::ERROR_ACCESSDENIED );
+            return false;
+        }
+
 
         // Clean up
-        eZDir::recursiveDelete( $this->ImportDir );
+        eZDir::recursiveDelete( $uniqueImportDir );
         return $importResult;
     }
 
@@ -1602,7 +1589,8 @@ class eZOOImport
                                 {
 
                                     // Import image
-                                    $imageClassIdentifier = $this->ooINI->variable( "ODFImport", "DefaultImportImageClass" );
+                                    $ooINI = eZINI::instance( 'odf.ini' );
+                                    $imageClassIdentifier = $ooINI->variable( "ODFImport", "DefaultImportImageClass" );
                                     $class = eZContentClass::fetchByIdentifier( $imageClassIdentifier );
                                     $creatorID = $this->currentUserID;
 

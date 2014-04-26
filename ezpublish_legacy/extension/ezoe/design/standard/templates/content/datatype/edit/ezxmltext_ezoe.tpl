@@ -85,7 +85,7 @@
         theme_advanced_toolbar_floating : true,
         theme_advanced_resize_horizontal : false,
         theme_advanced_resizing : true,
-        valid_elements : "-strong/-b/-bold[class|customattributes],-em/-i/-emphasize[class|customattributes],span[id|type|class|title|customattributes|align|style|view|inline|alt],sub[class|type|customattributes|align],sup[class|type|customattributes|align],u[class|type|customattributes|align],pre[class|title|customattributes],ol[class|customattributes],ul[class|customattributes],li[class|customattributes],a[href|name|target|view|title|class|id|customattributes],p[class|customattributes|align|style],img[id|type|class|title|customattributes|align|style|view|inline|alt|src],table[class|border|width|id|title|customattributes|ezborder|bordercolor|align|style],tr[class|customattributes],th[class|width|rowspan|colspan|customattributes|align|style],td[class|width|rowspan|colspan|customattributes|align|style],div[id|type|class|title|customattributes|align|style|view|inline|alt],h1[class|customattributes|align|style],h2[class|customattributes|align|style],h3[class|customattributes|align|style],h4[class|customattributes|align|style],h5[class|customattributes|align|style],h6[class|customattributes|align|style],br",
+        valid_elements : "-strong/b[class|customattributes],-em/i[class|customattributes],span[id|type|class|title|customattributes|align|style|view|inline|alt],sub[class|type|customattributes|align],sup[class|type|customattributes|align],u[class|type|customattributes|align],pre[class|title|customattributes],ol[class|customattributes],ul[class|customattributes],li[class|customattributes],a[href|name|target|view|title|class|id|customattributes],p[class|customattributes|align|style],img[id|type|class|title|customattributes|align|style|view|inline|alt|src],table[class|border|width|id|title|customattributes|ezborder|bordercolor|align|style],tr[class|customattributes],th[class|width|rowspan|colspan|customattributes|align|style],td[class|width|rowspan|colspan|customattributes|align|style],div[id|type|class|title|customattributes|align|style|view|inline|alt],h1[class|customattributes|align|style],h2[class|customattributes|align|style],h3[class|customattributes|align|style],h4[class|customattributes|align|style],h5[class|customattributes|align|style],h6[class|customattributes|align|style],br",
         valid_child_elements : "a[%itrans_na],table[tr],tr[td|th],ol/ul[li],h1/h2/h3/h4/h5/h6/pre/strong/b/p/em/i/u/span/sub/sup/li[%itrans|#text]div/pre/td/th[%btrans|%itrans|#text]",
         // cleanup : false,
         // cleanup_serializer : 'xml',
@@ -115,6 +115,7 @@
         ez_tinymce_url : {'javascript/tiny_mce.js'|ezdesign},
         ez_contentobject_id : {$attribute.contentobject_id},
         ez_contentobject_version : {$attribute.version},
+        ez_form_token: "@$ezxFormToken@",
         spellchecker_rpc_url : {'/ezoe/spellcheck_rpc'|ezurl},
         spellchecker_languages : '{$spell_languages}',
         atd_rpc_url : {'/ezoe/atd_rpc?url='|ezurl},
@@ -128,15 +129,51 @@
         /* the URL to the button image to display */
         //atd_button_url              : "atdbuttontr.gif",
         atd_css_url : {'javascript/plugins/AtD/css/content.css'|ezdesign},
+        paste_text_linebreaktype : "br",
         paste_preprocess : function(pl, o) {ldelim}
+            var ed = pl.editor, uid, elt, prev;
+
             // Strip <a> HTML tags from clipboard content (Happens on Internet Explorer)
             o.content = o.content.replace( /(\s[a-z]+=")<a\s[^>]+>([^<]+)<\/a>/gi, '$1$2' );
+            // Strip namespaced tags, avoids issues with Word's "Smart Tags"
+            o.content = o.content.replace(/<\/?[^<>\s]+:[^<>]+>/g, '');
+
+            {literal}
+            // Workaround for https://jira.ez.no/browse/EZP-21903
+            // http://www.tinymce.com/develop/bugtracker_view.php?id=6483
+            if ( tinymce.isWebKit ) {
+                uid = tinymce.DOM.uniqueId();
+                ed.focus();
+                ed.execCommand('mceInsertContent', false, '<span id="' + uid + '"></span>');
+                elt = ed.getDoc().getElementById(uid);
+
+                if ( !elt.nextSibling || elt.nextSibling.nodeValue === "" ) {
+                    // we are at the end of the line
+                    // if it ends with only a non break space, we transform it into a normal space
+                    prev = elt.previousSibling;
+
+                    if ( prev && prev.nodeType === 3 && !prev.nodeValue.match(/ \u00a0$/) ) {
+                        prev.nodeValue = prev.nodeValue.replace(/\u00a0$/, ' ');
+                    }
+                }
+                ed.dom.remove(elt);
+            }
+            {/literal}
         {rdelim},
         paste_postprocess: function(pl, o) {ldelim}
             // removes \n after <br />, this is for paste of text
             // with soft carriage return from Word in Firefox
             // see issue http://issues.ez.no/18702
             o.node.innerHTML = o.node.innerHTML.replace(/<br\s?.*\/?>\n/gi,'<br>'); 
+            {literal}
+            if (
+                pl.editor.pasteAsPlainText
+                && o.node.childNodes.length === 1
+                && o.node.firstChild.tagName.toLowerCase() === 'pre'
+            ) {
+                o.node.innerHTML = o.node.firstChild.innerHTML.replace(/\n/g, "<br />");
+            }
+            {/literal}
         {rdelim}
 
     {rdelim};

@@ -13,7 +13,7 @@ YUI(YUI3_config).use('ezautosubmit', 'node-base', 'node-style', function (Y) {ld
         {rdelim}),
         messages = {ldelim}
 
-            error: "{'An error occured while autosaving the draft'|i18n( 'design/ezwebin/autosave' )|wash( 'javascript' )}",
+            error: "{'An error occurred while autosaving the draft'|i18n( 'design/ezwebin/autosave' )|wash( 'javascript' )}",
             saving: "{'The draft is being saved'|i18n( 'design/ezwebin/autosave' )|wash( 'javascript' )}"
         {rdelim},
         timer = false, place;
@@ -47,6 +47,7 @@ YUI(YUI3_config).use('ezautosubmit', 'node-base', 'node-style', function (Y) {ld
         place.setStyle('top', parseInt(Y.one('#ezwt').get('offsetHeight')) - 1 + 'px');
 {/literal}
         {if ezini( 'AutosaveSettings', 'HideStoreDraftButton', 'autosave.ini' )|eq( 'enabled' )}Y.all(this.conf.form + ' input[name=StoreButton]').hide();{/if}
+        {if ezini( 'AutosaveSettings', 'HidePreviewLink', 'autosave.ini' )|eq( 'enabled' )}Y.all(this.conf.form + ' #preview-link').each(function () {ldelim} this.hide() {rdelim});{/if}
 {literal}
         Y.on('beforeunload', function (e) {
             setTimeout(function () {

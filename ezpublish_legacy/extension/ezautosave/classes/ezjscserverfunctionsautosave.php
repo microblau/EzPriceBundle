@@ -2,9 +2,9 @@
 /**
  * File containing the ezjscServerFunctionsAutosave class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 1.0.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version 5.3.0-beta1
  * @package ezautosave
  */
 
@@ -187,12 +187,9 @@ class ezjscServerFunctionsAutosave extends ezjscServerFunctions
         );
 
         $version->setAttribute( 'modified', time() );
-        $status = eZContentObjectVersion::STATUS_INTERNAL_DRAFT;
-        if ( $http->hasPostVariable( 'StoreExitButton' ) )
-        {
-            $status = eZContentObjectVersion::STATUS_DRAFT;
-        }
-        $version->setAttribute( 'status', $status );
+
+        // Do not use internal draft since it simulates the saving action
+        $version->setAttribute( 'status', eZContentObjectVersion::STATUS_DRAFT );
 
         $attributesToStore = array();
         foreach( $fetchResult['attribute-input-map'] as $id => $value )
@@ -251,15 +248,15 @@ class ezjscServerFunctionsAutosave extends ezjscServerFunctions
         $tpl->setVariable( 'version', $object->version( (int)$args[1] ) );
         $tpl->setVariable( 'locale', eZLocale::instance( $args[2] ) );
         $siteaccessList = self::getSiteaccessList( $args[2], $object );
-        $defaultSiteaccess = eZINI::instance( 'site.ini' )->variable( 'SiteSettings', 'DefaultAccess' );
-        if ( !isset( $siteaccessList[$defaultSiteaccess] ) )
+        if ( empty( $siteaccessList ) )
         {
-            // default siteaccess is not able to show the object in the
-            // selected locale, so we take the first one in available
-            // siteaccess
-            $defaultSiteaccess = current( $siteaccessList );
+            $siteaccessList = array(
+                eZINI::instance( 'site.ini' )->variable(
+                    'SiteSettings', 'DefaultAccess'
+                )
+            );
         }
-        $tpl->setVariable( 'default_siteaccess', $defaultSiteaccess );
+        $tpl->setVariable( 'default_siteaccess', current( $siteaccessList ) );
         $tpl->setVariable( 'siteaccess_list', $siteaccessList );
 
         $result['preview'] = $tpl->fetch( 'design:content/ajax_preview.tpl' );
@@ -278,25 +275,36 @@ class ezjscServerFunctionsAutosave extends ezjscServerFunctions
     protected static function getSiteaccessList( $locale, eZContentObject $object )
     {
         $ini = eZINI::instance( 'site.ini' );
-        $availableSA = $ini->variable( 'SiteAccessSettings', 'AvailableSiteAccessList' );
-        if ( $object->attribute( 'always_available' ) )
-        {
-            return $availableSA;
-        }
+        $availableSA = array_unique(
+            $ini->variable( 'SiteAccessSettings', 'RelatedSiteAccessList' )
+        );
+        $alwaysAvailable = $object->attribute( 'always_available' );
 
-        $result = array();
+        $dedicatedSA = array();
+        $canShowSA = array();
+        $showAllSA = array();
         foreach ( $availableSA as $sa )
         {
             $saINI = eZSiteAccess::getIni( $sa, 'site.ini' );
+            $saLanguagesList = $saINI->variable( 'RegionalSettings', 'SiteLanguageList' );
             if ( $locale === $saINI->variable( 'RegionalSettings', 'ContentObjectLocale' )
-                    || in_array( $locale, $saINI->variable( 'RegionalSettings', 'SiteLanguageList' ) )
-                    || $saINI->variable( 'RegionalSettings', 'ShowUntranslatedObjects' ) === 'enabled'
+                    || ( is_array( $saLanguagesList ) && $saLanguagesList[0] === $locale )
                )
             {
-                $result[$sa] = $sa;
+                $dedicatedSA[$sa] = $sa;
+            }
+            else if ( in_array( $locale, $saINI->variable( 'RegionalSettings', 'SiteLanguageList' ) ) )
+            {
+                $canShowSA[$sa] = $sa;
+            }
+            else if ( $saINI->variable( 'RegionalSettings', 'ShowUntranslatedObjects' ) === 'enabled'
+                    || $alwaysAvailable
+                )
+            {
+                $showAllSA[$sa] = $sa;
             }
         }
-        return $result;
+        return $dedicatedSA + $canShowSA + $showAllSA;
     }
 }
 ?>

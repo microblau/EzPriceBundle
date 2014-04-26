@@ -1,355 +1,357 @@
 /**
  * SaxParser.js
  *
- * Copyright 2010, Moxiecode Systems AB
+ * Copyright, Moxiecode Systems AB
  * Released under LGPL License.
  *
- * License: http://tinymce.moxiecode.com/license
- * Contributing: http://tinymce.moxiecode.com/contributing
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
  */
 
 (function(tinymce) {
-        /**
-         * This class parses HTML code using pure JavaScript and executes various events for each item it finds. It will
-         * always execute the events in the right order for tag soup code like <b><p></b></p>. It will also remove elements
-         * and attributes that doesn't fit the schema if the validate setting is enabled.
-         *
-         * @example
-         * var parser = new tinymce.html.SaxParser({
-         *     validate: true,
-         *
-         *     comment: function(text) {
-         *         console.log('Comment:', text);
-         *     },
-         *
-         *     cdata: function(text) {
-         *         console.log('CDATA:', text);
-         *     },
-         *
-         *     text: function(text, raw) {
-         *         console.log('Text:', text, 'Raw:', raw);
-         *     },
-         *
-         *     start: function(name, attrs, empty) {
-         *         console.log('Start:', name, attrs, empty);
-         *     },
-         *
-         *     end: function(name) {
-         *         console.log('End:', name);
-         *     },
-         *
-         *     pi: function(name, text) {
-         *         console.log('PI:', name, text);
-         *     },
-         *
-         *     doctype: function(text) {
-         *         console.log('DocType:', text);
-         *     }
-         * }, schema);
-         * @class tinymce.html.SaxParser
-         * @version 3.4
-         */
+	/**
+	 * This class parses HTML code using pure JavaScript and executes various events for each item it finds. It will
+	 * always execute the events in the right order for tag soup code like <b><p></b></p>. It will also remove elements
+	 * and attributes that doesn't fit the schema if the validate setting is enabled.
+	 *
+	 * @example
+	 * var parser = new tinymce.html.SaxParser({
+	 *     validate: true,
+	 *
+	 *     comment: function(text) {
+	 *         console.log('Comment:', text);
+	 *     },
+	 *
+	 *     cdata: function(text) {
+	 *         console.log('CDATA:', text);
+	 *     },
+	 *
+	 *     text: function(text, raw) {
+	 *         console.log('Text:', text, 'Raw:', raw);
+	 *     },
+	 *
+	 *     start: function(name, attrs, empty) {
+	 *         console.log('Start:', name, attrs, empty);
+	 *     },
+	 *
+	 *     end: function(name) {
+	 *         console.log('End:', name);
+	 *     },
+	 *
+	 *     pi: function(name, text) {
+	 *         console.log('PI:', name, text);
+	 *     },
+	 *
+	 *     doctype: function(text) {
+	 *         console.log('DocType:', text);
+	 *     }
+	 * }, schema);
+	 * @class tinymce.html.SaxParser
+	 * @version 3.4
+	 */
 
-        /**
-         * Constructs a new SaxParser instance.
-         *
-         * @constructor
-         * @method SaxParser
-         * @param {Object} settings Name/value collection of settings. comment, cdata, text, start and end are callbacks.
-         * @param {tinymce.html.Schema} schema HTML Schema class to use when parsing.
-         */
-        tinymce.html.SaxParser = function(settings, schema) {
-                var self = this, noop = function() {};
+	/**
+	 * Constructs a new SaxParser instance.
+	 *
+	 * @constructor
+	 * @method SaxParser
+	 * @param {Object} settings Name/value collection of settings. comment, cdata, text, start and end are callbacks.
+	 * @param {tinymce.html.Schema} schema HTML Schema class to use when parsing.
+	 */
+	tinymce.html.SaxParser = function(settings, schema) {
+		var self = this, noop = function() {};
 
-                settings = settings || {};
-                self.schema = schema = schema || new tinymce.html.Schema();
+		settings = settings || {};
+		self.schema = schema = schema || new tinymce.html.Schema();
 
-                if (settings.fix_self_closing !== false)
-                        settings.fix_self_closing = true;
+		if (settings.fix_self_closing !== false)
+			settings.fix_self_closing = true;
 
-                // Add handler functions from settings and setup default handlers
-                tinymce.each('comment cdata text start end pi doctype'.split(' '), function(name) {
-                        if (name)
-                                self[name] = settings[name] || noop;
-                });
+		// Add handler functions from settings and setup default handlers
+		tinymce.each('comment cdata text start end pi doctype'.split(' '), function(name) {
+			if (name)
+				self[name] = settings[name] || noop;
+		});
 
-                /**
-                 * Parses the specified HTML string and executes the callbacks for each item it finds.
-                 *
-                 * @example
-                 * new SaxParser({...}).parse('<b>text</b>');
-                 * @method parse
-                 * @param {String} html Html string to sax parse.
-                 */
-                self.parse = function(html) {
-                        var self = this, matches, index = 0, value, endRegExp, stack = [], attrList, i, text, name, isInternalElement, removeInternalElements,
-                                shortEndedElements, fillAttrsMap, isShortEnded, validate, elementRule, isValidElement, attr, attribsValue, invalidPrefixRegExp,
-                                validAttributesMap, validAttributePatterns, attributesRequired, attributesDefault, attributesForced, selfClosing,
-                                tokenRegExp, attrRegExp, specialElements, attrValue, idCount = 0, decode = tinymce.html.Entities.decode, fixSelfClosing, isIE;
+		/**
+		 * Parses the specified HTML string and executes the callbacks for each item it finds.
+		 *
+		 * @example
+		 * new SaxParser({...}).parse('<b>text</b>');
+		 * @method parse
+		 * @param {String} html Html string to sax parse.
+		 */
+		self.parse = function(html) {
+			var self = this, matches, index = 0, value, endRegExp, stack = [], attrList, i, text, name, isInternalElement, removeInternalElements,
+				shortEndedElements, fillAttrsMap, isShortEnded, validate, elementRule, isValidElement, attr, attribsValue, invalidPrefixRegExp,
+				validAttributesMap, validAttributePatterns, attributesRequired, attributesDefault, attributesForced, selfClosing,
+				tokenRegExp, attrRegExp, specialElements, attrValue, idCount = 0, decode = tinymce.html.Entities.decode, fixSelfClosing, isIE;
 
-                        function processEndTag(name) {
-                                var pos, i;
+			function processEndTag(name) {
+				var pos, i;
 
-                                // Find position of parent of the same type
-                                pos = stack.length;
-                                while (pos--) {
-                                        if (stack[pos].name === name)
-                                                break;                                          
-                                }
+				// Find position of parent of the same type
+				pos = stack.length;
+				while (pos--) {
+					if (stack[pos].name === name)
+						break;						
+				}
 
-                                // Found parent
-                                if (pos >= 0) {
-                                        // Close all the open elements
-                                        for (i = stack.length - 1; i >= pos; i--) {
-                                                name = stack[i];
+				// Found parent
+				if (pos >= 0) {
+					// Close all the open elements
+					for (i = stack.length - 1; i >= pos; i--) {
+						name = stack[i];
 
-                                                if (name.valid)
-                                                        self.end(name.name);
-                                        }
+						if (name.valid)
+							self.end(name.name);
+					}
 
-                                        // Remove the open elements from the stack
-                                        stack.length = pos;
-                                }
-                        };
+					// Remove the open elements from the stack
+					stack.length = pos;
+				}
+			};
 
-                        // Precompile RegExps and map objects
-                        tokenRegExp = new RegExp('<(?:' +
-                                '(?:!--([\\w\\W]*?)-->)|' + // Comment
-                                '(?:!\\[CDATA\\[([\\w\\W]*?)\\]\\]>)|' + // CDATA
-                                '(?:!DOCTYPE([\\w\\W]*?)>)|' + // DOCTYPE
-                                '(?:\\?([^\\s\\/<>]+) ?([\\w\\W]*?)[?/]>)|' + // PI
-                                '(?:\\/([^>]+)>)|' + // End element
-                                '(?:([^\\s\\/<>]+)((?:\\s+[^"\'>]+(?:(?:"[^"]*")|(?:\'[^\']*\')|[^>]*))*|\\/)>)' + // Start element
-                        ')', 'g');
+			function parseAttribute(match, name, value, val2, val3) {
+				var attrRule, i;
 
-                        attrRegExp = /([\w:\-]+)(?:\s*=\s*(?:(?:\"((?:\\.|[^\"])*)\")|(?:\'((?:\\.|[^\'])*)\')|([^>\s]+)))?/g;
-                        specialElements = {
-                                'script' : /<\/script[^>]*>/gi,
-                                'style' : /<\/style[^>]*>/gi,
-                                'noscript' : /<\/noscript[^>]*>/gi
-                        };
+				name = name.toLowerCase();
+				value = name in fillAttrsMap ? name : decode(value || val2 || val3 || ''); // Handle boolean attribute than value attribute
 
-                        // Setup lookup tables for empty elements and boolean attributes
-                        shortEndedElements = schema.getShortEndedElements();
-                        selfClosing = schema.getSelfClosingElements();
-                        fillAttrsMap = schema.getBoolAttrs();
-                        validate = settings.validate;
-                        removeInternalElements = settings.remove_internals;
-                        fixSelfClosing = settings.fix_self_closing;
-                        isIE = tinymce.isIE;
-                        invalidPrefixRegExp = /^:/;
+				// Validate name and value
+				if (validate && !isInternalElement && name.indexOf('data-') !== 0) {
+					attrRule = validAttributesMap[name];
 
-                        while (matches = tokenRegExp.exec(html)) {
-                                // Text
-                                if (index < matches.index)
-                                        self.text(decode(html.substr(index, matches.index - index)));
+					// Find rule by pattern matching
+					if (!attrRule && validAttributePatterns) {
+						i = validAttributePatterns.length;
+						while (i--) {
+							attrRule = validAttributePatterns[i];
+							if (attrRule.pattern.test(name))
+								break;
+						}
 
-                                if (value = matches[6]) { // End element
-                                        value = value.toLowerCase();
+						// No rule matched
+						if (i === -1)
+							attrRule = null;
+					}
 
-                                        // IE will add a ":" in front of elements it doesn't understand like custom elements or HTML5 elements
-                                        if (isIE && invalidPrefixRegExp.test(value))
-                                                value = value.substr(1);
+					// No attribute rule found
+					if (!attrRule)
+						return;
 
-                                        processEndTag(value);
-                                } else if (value = matches[7]) { // Start element
-                                        value = value.toLowerCase();
+					// Validate value
+					if (attrRule.validValues && !(value in attrRule.validValues))
+						return;
+				}
 
-                                        // IE will add a ":" in front of elements it doesn't understand like custom elements or HTML5 elements
-                                        if (isIE && invalidPrefixRegExp.test(value))
-                                                value = value.substr(1);
+				// Add attribute to list and map
+				attrList.map[name] = value;
+				attrList.push({
+					name: name,
+					value: value
+				});
+			};
 
-                                        isShortEnded = value in shortEndedElements;
+			// Precompile RegExps and map objects
+			tokenRegExp = new RegExp('<(?:' +
+				'(?:!--([\\w\\W]*?)-->)|' + // Comment
+				'(?:!\\[CDATA\\[([\\w\\W]*?)\\]\\]>)|' + // CDATA
+				'(?:!DOCTYPE([\\w\\W]*?)>)|' + // DOCTYPE
+				'(?:\\?([^\\s\\/<>]+) ?([\\w\\W]*?)[?/]>)|' + // PI
+				'(?:\\/([^>]+)>)|' + // End element
+				'(?:([A-Za-z0-9\\-\\:\\.]+)((?:\\s+[^"\'>]+(?:(?:"[^"]*")|(?:\'[^\']*\')|[^>]*))*|\\/|\\s+)>)' + // Start element
+			')', 'g');
 
-                                        // Is self closing tag for example an <li> after an open <li>
-                                        if (fixSelfClosing && selfClosing[value] && stack.length > 0 && stack[stack.length - 1].name === value)
-                                                processEndTag(value);
+			attrRegExp = /([\w:\-]+)(?:\s*=\s*(?:(?:\"((?:[^\"])*)\")|(?:\'((?:[^\'])*)\')|([^>\s]+)))?/g;
+			specialElements = {
+				'script' : /<\/script[^>]*>/gi,
+				'style' : /<\/style[^>]*>/gi,
+				'noscript' : /<\/noscript[^>]*>/gi
+			};
 
-                                        // Validate element
-                                        if (!validate || (elementRule = schema.getElementRule(value))) {
-                                                isValidElement = true;
+			// Setup lookup tables for empty elements and boolean attributes
+			shortEndedElements = schema.getShortEndedElements();
+			selfClosing = settings.self_closing_elements || schema.getSelfClosingElements();
+			fillAttrsMap = schema.getBoolAttrs();
+			validate = settings.validate;
+			removeInternalElements = settings.remove_internals;
+			fixSelfClosing = settings.fix_self_closing;
+			isIE = tinymce.isIE;
+			invalidPrefixRegExp = /^:/;
 
-                                                // Grab attributes map and patters when validation is enabled
-                                                if (validate) {
-                                                        validAttributesMap = elementRule.attributes;
-                                                        validAttributePatterns = elementRule.attributePatterns;
-                                                }
+			while (matches = tokenRegExp.exec(html)) {
+				// Text
+				if (index < matches.index)
+					self.text(decode(html.substr(index, matches.index - index)));
 
-                                                // Parse attributes
-                                                if (attribsValue = matches[8]) {
-                                                        isInternalElement = attribsValue.indexOf('data-mce-type') !== -1; // Check if the element is an internal element
+				if (value = matches[6]) { // End element
+					value = value.toLowerCase();
 
-                                                        // If the element has internal attributes then remove it if we are told to do so
-                                                        if (isInternalElement && removeInternalElements)
-                                                                isValidElement = false;
+					// IE will add a ":" in front of elements it doesn't understand like custom elements or HTML5 elements
+					if (isIE && invalidPrefixRegExp.test(value))
+						value = value.substr(1);
 
-                                                        attrList = [];
-                                                        attrList.map = {};
+					processEndTag(value);
+				} else if (value = matches[7]) { // Start element
+					value = value.toLowerCase();
 
-                                                        attribsValue.replace(attrRegExp, function(match, name, value, val2, val3) {
-                                                                var attrRule, i;
+					// IE will add a ":" in front of elements it doesn't understand like custom elements or HTML5 elements
+					if (isIE && invalidPrefixRegExp.test(value))
+						value = value.substr(1);
 
-                                                                name = name.toLowerCase();
-                                                                value = name in fillAttrsMap ? name : decode(value || val2 || val3 || ''); // Handle boolean attribute than value attribute
+					isShortEnded = value in shortEndedElements;
 
-                                                                // Validate name and value
-                                                                if (validate && !isInternalElement && name.indexOf('data-') !== 0) {
-                                                                        attrRule = validAttributesMap[name];
+					// Is self closing tag for example an <li> after an open <li>
+					if (fixSelfClosing && selfClosing[value] && stack.length > 0 && stack[stack.length - 1].name === value)
+						processEndTag(value);
 
-                                                                        // Find rule by pattern matching
-                                                                        if (!attrRule && validAttributePatterns) {
-                                                                                i = validAttributePatterns.length;
-                                                                                while (i--) {
-                                                                                        attrRule = validAttributePatterns[i];
-                                                                                        if (attrRule.pattern.test(name))
-                                                                                                break;
-                                                                                }
+					// Validate element
+					if (!validate || (elementRule = schema.getElementRule(value))) {
+						isValidElement = true;
 
-                                                                                // No rule matched
-                                                                                if (i === -1)
-                                                                                        attrRule = null;
-                                                                        }
+						// Grab attributes map and patters when validation is enabled
+						if (validate) {
+							validAttributesMap = elementRule.attributes;
+							validAttributePatterns = elementRule.attributePatterns;
+						}
 
-                                                                        // No attribute rule found
-                                                                        if (!attrRule)
-                                                                                return;
+						// Parse attributes
+						if (attribsValue = matches[8]) {
+							isInternalElement = attribsValue.indexOf('data-mce-type') !== -1; // Check if the element is an internal element
 
-                                                                        // Validate value
-                                                                        if (attrRule.validValues && !(value in attrRule.validValues))
-                                                                                return;
-                                                                }
+							// If the element has internal attributes then remove it if we are told to do so
+							if (isInternalElement && removeInternalElements)
+								isValidElement = false;
 
-                                                                // Add attribute to list and map
-                                                                attrList.map[name] = value;
-                                                                attrList.push({
-                                                                        name: name,
-                                                                        value: value
-                                                                });
-                                                        });
-                                                } else {
-                                                        attrList = [];
-                                                        attrList.map = {};
-                                                }
+							attrList = [];
+							attrList.map = {};
 
-                                                // Process attributes if validation is enabled
-                                                if (validate && !isInternalElement) {
-                                                        attributesRequired = elementRule.attributesRequired;
-                                                        attributesDefault = elementRule.attributesDefault;
-                                                        attributesForced = elementRule.attributesForced;
+							attribsValue.replace(attrRegExp, parseAttribute);
+						} else {
+							attrList = [];
+							attrList.map = {};
+						}
 
-                                                        // Handle forced attributes
-                                                        if (attributesForced) {
-                                                                i = attributesForced.length;
-                                                                while (i--) {
-                                                                        attr = attributesForced[i];
-                                                                        name = attr.name;
-                                                                        attrValue = attr.value;
+						// Process attributes if validation is enabled
+						if (validate && !isInternalElement) {
+							attributesRequired = elementRule.attributesRequired;
+							attributesDefault = elementRule.attributesDefault;
+							attributesForced = elementRule.attributesForced;
 
-                                                                        if (attrValue === '{$uid}')
-                                                                                attrValue = 'mce_' + idCount++;
+							// Handle forced attributes
+							if (attributesForced) {
+								i = attributesForced.length;
+								while (i--) {
+									attr = attributesForced[i];
+									name = attr.name;
+									attrValue = attr.value;
 
-                                                                        attrList.map[name] = attrValue;
-                                                                        attrList.push({name: name, value: attrValue});
-                                                                }
-                                                        }
+									if (attrValue === '{$uid}')
+										attrValue = 'mce_' + idCount++;
 
-                                                        // Handle default attributes
-                                                        if (attributesDefault) {
-                                                                i = attributesDefault.length;
-                                                                while (i--) {
-                                                                        attr = attributesDefault[i];
-                                                                        name = attr.name;
+									attrList.map[name] = attrValue;
+									attrList.push({name: name, value: attrValue});
+								}
+							}
 
-                                                                        if (!(name in attrList.map)) {
-                                                                                attrValue = attr.value;
+							// Handle default attributes
+							if (attributesDefault) {
+								i = attributesDefault.length;
+								while (i--) {
+									attr = attributesDefault[i];
+									name = attr.name;
 
-                                                                                if (attrValue === '{$uid}')
-                                                                                        attrValue = 'mce_' + idCount++;
+									if (!(name in attrList.map)) {
+										attrValue = attr.value;
 
-                                                                                attrList.map[name] = attrValue;
-                                                                                attrList.push({name: name, value: attrValue});
-                                                                        }
-                                                                }
-                                                        }
+										if (attrValue === '{$uid}')
+											attrValue = 'mce_' + idCount++;
 
-                                                        // Handle required attributes
-                                                        if (attributesRequired) {
-                                                                i = attributesRequired.length;
-                                                                while (i--) {
-                                                                        if (attributesRequired[i] in attrList.map)
-                                                                                break;
-                                                                }
+										attrList.map[name] = attrValue;
+										attrList.push({name: name, value: attrValue});
+									}
+								}
+							}
 
-                                                                // None of the required attributes where found
-                                                                if (i === -1)
-                                                                        isValidElement = false;
-                                                        }
+							// Handle required attributes
+							if (attributesRequired) {
+								i = attributesRequired.length;
+								while (i--) {
+									if (attributesRequired[i] in attrList.map)
+										break;
+								}
 
-                                                        // Invalidate element if it's marked as bogus
-                                                        if (attrList.map['data-mce-bogus'])
-                                                                isValidElement = false;
-                                                }
+								// None of the required attributes where found
+								if (i === -1)
+									isValidElement = false;
+							}
 
-                                                if (isValidElement)
-                                                        self.start(value, attrList, isShortEnded);
-                                        } else
-                                                isValidElement = false;
+							// Invalidate element if it's marked as bogus
+							if (attrList.map['data-mce-bogus'])
+								isValidElement = false;
+						}
 
-                                        // Treat script, noscript and style a bit different since they may include code that looks like elements
-                                        if (endRegExp = specialElements[value]) {
-                                                endRegExp.lastIndex = index = matches.index + matches[0].length;
+						if (isValidElement)
+							self.start(value, attrList, isShortEnded);
+					} else
+						isValidElement = false;
 
-                                                if (matches = endRegExp.exec(html)) {
-                                                        if (isValidElement)
-                                                                text = html.substr(index, matches.index - index);
+					// Treat script, noscript and style a bit different since they may include code that looks like elements
+					if (endRegExp = specialElements[value]) {
+						endRegExp.lastIndex = index = matches.index + matches[0].length;
 
-                                                        index = matches.index + matches[0].length;
-                                                } else {
-                                                        text = html.substr(index);
-                                                        index = html.length;
-                                                }
+						if (matches = endRegExp.exec(html)) {
+							if (isValidElement)
+								text = html.substr(index, matches.index - index);
 
-                                                if (isValidElement && text.length > 0)
-                                                        self.text(text, true);
+							index = matches.index + matches[0].length;
+						} else {
+							text = html.substr(index);
+							index = html.length;
+						}
 
-                                                if (isValidElement)
-                                                        self.end(value);
+						if (isValidElement && text.length > 0)
+							self.text(text, true);
 
-                                                tokenRegExp.lastIndex = index;
-                                                continue;
-                                        }
+						if (isValidElement)
+							self.end(value);
 
-                                        // Push value on to stack
-                                        if (!isShortEnded) {
-                                                if (!attribsValue || attribsValue.indexOf('/') != attribsValue.length - 1)
-                                                        stack.push({name: value, valid: isValidElement});
-                                                else if (isValidElement)
-                                                        self.end(value);
-                                        }
-                                } else if (value = matches[1]) { // Comment
-                                        self.comment(value);
-                                } else if (value = matches[2]) { // CDATA
-                                        self.cdata(value);
-                                } else if (value = matches[3]) { // DOCTYPE
-                                        self.doctype(value);
-                                } else if (value = matches[4]) { // PI
-                                        self.pi(value, matches[5]);
-                                }
+						tokenRegExp.lastIndex = index;
+						continue;
+					}
 
-                                index = matches.index + matches[0].length;
-                        }
+					// Push value on to stack
+					if (!isShortEnded) {
+						if (!attribsValue || attribsValue.indexOf('/') != attribsValue.length - 1)
+							stack.push({name: value, valid: isValidElement});
+						else if (isValidElement)
+							self.end(value);
+					}
+				} else if (value = matches[1]) { // Comment
+					self.comment(value);
+				} else if (value = matches[2]) { // CDATA
+					self.cdata(value);
+				} else if (value = matches[3]) { // DOCTYPE
+					self.doctype(value);
+				} else if (value = matches[4]) { // PI
+					self.pi(value, matches[5]);
+				}
 
-                        // Text
-                        if (index < html.length)
-                                self.text(decode(html.substr(index)));
+				index = matches.index + matches[0].length;
+			}
 
-                        // Close any open elements
-                        for (i = stack.length - 1; i >= 0; i--) {
-                                value = stack[i];
+			// Text
+			if (index < html.length)
+				self.text(decode(html.substr(index)));
 
-                                if (value.valid)
-                                        self.end(value.name);
-                        }
-                };
-        }
+			// Close any open elements
+			for (i = stack.length - 1; i >= 0; i--) {
+				value = stack[i];
+
+				if (value.valid)
+					self.end(value.name);
+			}
+		};
+	}
 })(tinymce);

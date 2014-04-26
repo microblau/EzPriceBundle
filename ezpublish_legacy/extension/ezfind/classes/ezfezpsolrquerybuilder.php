@@ -2,24 +2,24 @@
 //
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Find
-// SOFTWARE RELEASE: 2.7.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
-// SOFTWARE LICENSE: eZ Business Use License Agreement eZ BUL Version 2.1
+// SOFTWARE NAME: eZ Publish Community Project
+// SOFTWARE RELEASE:  2014.3
+// COPYRIGHT NOTICE: Copyright (C) 1999-2014 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2
 // NOTICE: >
-//  This source file is part of the eZ Publish CMS and is
-//  licensed under the terms and conditions of the eZ Business Use
-//  License v2.1 (eZ BUL).
-//
-//  A copy of the eZ BUL was included with the software. If the
-//  license is missing, request a copy of the license via email
-//  at license@ez.no or via postal mail at
-// 	Attn: Licensing Dept. eZ Systems AS, Klostergata 30, N-3732 Skien, Norway
-//
-//  IMPORTANT: THE SOFTWARE IS LICENSED, NOT SOLD. ADDITIONALLY, THE
-//  SOFTWARE IS LICENSED "AS IS," WITHOUT ANY WARRANTIES WHATSOEVER.
-//  READ THE eZ BUL BEFORE USING, INSTALLING OR MODIFYING THE SOFTWARE.
-
+//   This program is free software; you can redistribute it and/or
+//   modify it under the terms of version 2.0  of the GNU General
+//   Public License as published by the Free Software Foundation.
+// 
+//   This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//   GNU General Public License for more details.
+// 
+//   You should have received a copy of version 2.0 of the GNU General
+//   Public License along with this program; if not, write to the Free
+//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+//   MA 02110-1301, USA.
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -139,7 +139,7 @@ class ezfeZPSolrQueryBuilder
      */
     public function buildSearch( $searchText, $params = array(), $searchTypes = array() )
     {
-        eZDebug::writeDebug( $params, 'search params' );
+        eZDebugSetting::writeDebug( 'extension-ezfind-query', $params, 'search params' );
         $searchCount = 0;
 
         $offset = ( isset( $params['SearchOffset'] ) && $params['SearchOffset'] ) ? $params['SearchOffset'] : 0;
@@ -156,6 +156,7 @@ class ezfeZPSolrQueryBuilder
         $visibilityDefaultSetting = self::$SiteINI->variable( 'SiteAccessSettings', 'ShowHiddenNodes' );
         $visibilityDefault = ( $visibilityDefaultSetting === 'true' ) ? true : false;
         $ignoreVisibility = isset( $params['IgnoreVisibility'] )  ?  $params['IgnoreVisibility'] : $visibilityDefault;
+        $this->searchPluginInstance->postSearchProcessingData['ignore_visibility'] = $ignoreVisibility;
         $limitation = isset( $params['Limitation'] )  ?  $params['Limitation'] : null;
         $boostFunctions = isset( $params['BoostFunctions'] )  ?  $params['BoostFunctions'] : null;
         $forceElevation = isset( $params['ForceElevation'] )  ?  $params['ForceElevation'] : false;
@@ -164,6 +165,7 @@ class ezfeZPSolrQueryBuilder
         $fieldsToReturn = isset( $params['FieldsToReturn'] ) ? $params['FieldsToReturn'] : array();
         $highlightParams = isset( $params['HighLightParams'] ) ? $params['HighLightParams'] : array();
         $searchResultClusterParams = isset( $params['SearchResultClustering'] ) ? $params['SearchResultClustering'] : array();
+        $extendedAttributeFilter = isset( $params['ExtendedAttributeFilter'] ) ? $params['ExtendedAttributeFilter'] : array();
 
 
         // distributed search option
@@ -229,34 +231,34 @@ class ezfeZPSolrQueryBuilder
             $filterQuery[] = $policyLimitationFilterQuery;
         }
 
-		// Add time/date query filter
-    	if ( $dateFilter > 0 )
-		{
-    		switch ( $dateFilter )
-			{
-				// last day
-				case 1:
-					$searchTimestamp = strtotime( '-1 day' );
-				break;
-				// last week
-				case 2:
-					$searchTimestamp = strtotime( '-1 week' );
-					break;
-				// last month
-				case 3:
-					$searchTimestamp = strtotime( '-1 month' );
-					break;
-				// last three month
-				case 4:
-					$searchTimestamp = strtotime( '-3 month' );
-					break;
-				// last year
-				case 5:
-					$searchTimestamp = strtotime( '-1 year' );
-				break;
-			}
-			$filterQuery[] = eZSolr::getMetaFieldName( 'published' ) . ':[' . ezfSolrDocumentFieldBase::preProcessValue( $searchTimestamp, 'date' ) .'/DAY TO *]';
-		}
+                // Add time/date query filter
+        if ( $dateFilter > 0 )
+                {
+                switch ( $dateFilter )
+                        {
+                                // last day
+                                case 1:
+                                        $searchTimestamp = strtotime( '-1 day' );
+                                break;
+                                // last week
+                                case 2:
+                                        $searchTimestamp = strtotime( '-1 week' );
+                                        break;
+                                // last month
+                                case 3:
+                                        $searchTimestamp = strtotime( '-1 month' );
+                                        break;
+                                // last three month
+                                case 4:
+                                        $searchTimestamp = strtotime( '-3 month' );
+                                        break;
+                                // last year
+                                case 5:
+                                        $searchTimestamp = strtotime( '-1 year' );
+                                break;
+                        }
+                        $filterQuery[] = eZSolr::getMetaFieldName( 'published' ) . ':[' . ezfSolrDocumentFieldBase::preProcessValue( $searchTimestamp, 'date' ) .'/DAY TO *]';
+                }
 
         if ( (!eZContentObjectTreeNode::showInvisibleNodes() || !$ignoreVisibility ) && ( self::$FindINI->variable( 'SearchFilters', 'FilterHiddenFromDB' ) == 'enabled' ) )
         {
@@ -303,10 +305,13 @@ class ezfeZPSolrQueryBuilder
         }
 
         //add raw filters
-        $rawFilters = self::$FindINI->variable( 'SearchFilters', 'RawFilterList' );
-        if ( is_array( $rawFilters ) )
+        if ( self::$FindINI->hasVariable( 'SearchFilters', 'RawFilterList' ) )
         {
-            $filterQuery = array_merge( $filterQuery, $rawFilters );
+            $rawFilters = self::$FindINI->variable( 'SearchFilters', 'RawFilterList' );
+            if ( is_array( $rawFilters ) )
+            {
+                $filterQuery = array_merge( $filterQuery, $rawFilters );
+            }
         }
 
         // Build and get facet query prameters.
@@ -321,7 +326,7 @@ class ezfeZPSolrQueryBuilder
         //the array_unique below is necessary because attribute identifiers are not unique .. and we get as
         //much highlight snippets as there are duplicate attribute identifiers
         //these are also in the list of query fields (dismax, ezpublish) request handlers
-	$queryFields = array_unique( $this->getClassAttributes( $contentClassID, $contentClassAttributeID, $fieldTypeExcludeList ) );
+        $queryFields = array_unique( $this->getClassAttributes( $contentClassID, $contentClassAttributeID, $fieldTypeExcludeList ) );
 
         //highlighting only in the attributes, otherwise the object name is repeated in the highlight, which is already
         //partly true as it is mostly composed of one or more attributes.
@@ -415,7 +420,15 @@ class ezfeZPSolrQueryBuilder
                 // if another value is specified, it is supposed to be a dismax like handler
                 // with possible other tuning variables then the stock provided 'ezpublish' in solrconfi.xml
                 // remark it should be lowercase in solrconfig.xml!
-                $handlerParameters = array ( 'q' => $searchText,
+
+                $boostQueryString = $this->boostQuery();
+                $rawBoostQueries = self::$FindINI->variable( 'QueryBoost', 'RawBoostQueries' );
+                if ( is_array( $rawBoostQueries ) && !empty( $rawBoostQueries ) )
+                {
+                    $boostQueryString .= ' ' . implode( ' ', $rawBoostQueries );
+                }
+                $handlerParameters = array ( 'q'  => $searchText,
+                                             'bq' => $boostQueryString,
                                              'qf' => implode( ' ', array_merge( $queryFields, $extraFieldsToSearch ) ),
                                              'qt' => $queryHandler );
 
@@ -440,7 +453,9 @@ class ezfeZPSolrQueryBuilder
                 eZSolr::getMetaFieldName( 'main_url_alias' ) . ' ' . eZSolr::getMetaFieldName( 'installation_url' ) . ' ' .
                 eZSolr::getMetaFieldName( 'id' ) . ' ' . eZSolr::getMetaFieldName( 'main_node_id' ) . ' ' .
                 eZSolr::getMetaFieldName( 'language_code' ) . ' ' . eZSolr::getMetaFieldName( 'name' ) .
-                ' score ' . eZSolr::getMetaFieldName( 'published' ) . ' ' . eZSolr::getMetaFieldName( 'path_string' ) . ' ' . implode( ' ', $extraFieldsToReturn );
+                ' score ' . eZSolr::getMetaFieldName( 'published' ) . ' ' . eZSolr::getMetaFieldName( 'path_string' ) . ' ' .
+                eZSolr::getMetaFieldName( 'main_path_string' ) . ' ' . eZSolr::getMetaFieldName( 'is_invisible' ) . ' ' .
+                implode( ' ', $extraFieldsToReturn );
 
         if ( ! $asObjects )
         {
@@ -458,7 +473,7 @@ class ezfeZPSolrQueryBuilder
 
         $searchResultClusterParamList = array( 'clustering' => 'true');
         $searchResultClusterParamList = $this->buildSearchResultClusterQuery($searchResultClusterParams);
-        eZDebug::writeDebug( $searchResultClusterParamList, 'Cluster params' );
+        eZDebugSetting::writeDebug( 'extension-ezfind-query', $searchResultClusterParamList, 'Cluster params' );
 
 
         $queryParams =  array_merge(
@@ -469,7 +484,6 @@ class ezfeZPSolrQueryBuilder
                 'sort' => $sortParameter,
                 'indent' => 'on',
                 'version' => '2.2',
-                'bq' => $this->boostQuery(),
                 'fl' => $fieldsToReturnString,
                 'fq' => $filterQuery,
                 'hl' => self::$FindINI->variable( 'HighLighting', 'Enabled' ),
@@ -487,6 +501,27 @@ class ezfeZPSolrQueryBuilder
             $elevateParamList,
             $searchResultClusterParamList
         );
+
+
+        if( isset( $extendedAttributeFilter['id'] ) && isset( $extendedAttributeFilter['params'] ) )
+        {
+            //single filter
+            $extendedAttributeFilter = array( $extendedAttributeFilter );
+        }
+
+        foreach( $extendedAttributeFilter as $filterDefinition )
+        {
+            if( isset( $filterDefinition['id'] ) )
+            {
+                $filter = eZFindExtendedAttributeFilterFactory::getInstance( $filterDefinition['id'] );
+                if( $filter )
+                {
+                    $filterParams = isset( $filterDefinition['params'] ) ? $filterDefinition['params'] : array();
+                    $queryParams = $filter->filterQueryParams( $queryParams, $filterParams );
+                }
+            }
+        }
+
         return $queryParams;
     }
 
@@ -498,10 +533,9 @@ class ezfeZPSolrQueryBuilder
      *
      * In site.ini :
      * <code>
-     * # Prioritized list of languages. Only objects existing in these
-     * # languages will be shown (unless ShowUntranslatedObjects is enabled).
-     * # If an object exists in more languages, that one which is first in
-     * # SiteLanguageList will be used to render it.
+     * # Prioritized list of languages. Only translations in these
+     * # languages will be shown
+     *
      * [RegionalSettings]
      * SiteLanguageList[]
      * SiteLanguageList[]=eng-GB
@@ -515,21 +549,19 @@ class ezfeZPSolrQueryBuilder
      * </code>
      *
      * When SearchMainLanguageOnly is set to 'enabled', only results in the first language in SiteLanguageList[] will be returned.
-     * When SearchMainLanguageOnly is set to 'disabled', results will be returned with respecting the fallback defined in SiteLanguageList[] :
-     *  of all matching results, the ones in eng-GB will be returned, and in case no translation in eng-GB exists for a result,
-     *  it will be returned in fre-FR if existing.
+     * When SearchMainLanguageOnly is set to 'disabled', searching will be done across all possible translations defined in
+     * SiteLanguageList[] (unless ShowUntranslatedObjects is enabled, in this case no language filtering will be done at all)
      *
-     * @TODO Offer a more relaxed option, allowing search across translations regardless of
-     * available translations
      *
      * @return string The correct language filtering string, appended to the 'fq' parameter in the Solr request.
      */
     protected function buildLanguageFilterQuery()
     {
-        $languageFilterString = $languageExcludeString = '';
+        $languageFilterString = '';
         $ini = eZINI::instance();
         $languages = $ini->variable( 'RegionalSettings', 'SiteLanguageList' );
         $searchMainLanguageOnly = self::$FindINI->variable( 'LanguageSearch', 'SearchMainLanguageOnly' ) == 'enabled';
+        $showUntranslatedObjects = $ini->variable( 'RegionalSettings', 'ShowUntranslatedObjects' ) == 'enabled';
         $languageCodeMetaName = eZSolr::getMetaFieldName( 'language_code' );
         $availableLanguageCodesMetaName = eZSolr::getMetaFieldName( 'available_language_codes' );
 
@@ -537,22 +569,12 @@ class ezfeZPSolrQueryBuilder
         {
             $languageFilterString = $languageCodeMetaName . ':' . $languages[0];
         }
-        else
+        else if ( $showUntranslatedObjects === false )
         {
-            foreach ( $languages as $key => $language )
-            {
-                if ( $key == 0 )
-                {
-                    $languageFilterString = $languageCodeMetaName . ':' . $languages[0];
-                }
-                else
-                {
-                    $languageFilterString .= " OR ( $languageCodeMetaName:$language $languageExcludeString )";
-                }
-
-                $languageExcludeString .= " AND -$availableLanguageCodesMetaName:$language";
-            }
+            $languageFilterString = $languageCodeMetaName . ':(' . implode( ' OR ' , $languages ) . ')';
+            $languageFilterString .= " OR ( " . eZSolr::getMetaFieldName( 'always_available' ) . ':true )';
         }
+
         return $languageFilterString;
     }
 
@@ -575,7 +597,7 @@ class ezfeZPSolrQueryBuilder
      * @param array &$handlerParameters The inclusion of boost functions in the final search parameter array depends on which queryHandler is used.
      *                                  This parameter shall be modified in one of the cases.
      *
-     * @return array In one of the cases, an array shall be returned, containing the boost expression under the 'bf' key.
+     * @return array containing the boost expressions for the various request handler boost parameters
      */
     protected function buildBoostFunctions( $boostFunctions = null, &$handlerParameters )
     {
@@ -626,25 +648,62 @@ class ezfeZPSolrQueryBuilder
         }
         switch ( $handlerParameters['qt'] )
         {
-        	case 'ezpublish' :
-        	{
-        	    // The dismax based handler
+                case 'ezpublish' :
+                {
+                // The edismax based handler which takes its own boost parameters
                 // Push the boost expression in the 'bf' parameter, if it is not empty.
-                $boostString = implode( ' ', $processedBoostFunctions['functions'] );
-                $boostString .= ' ' . implode( ' ', $processedBoostFunctions['fields'] );
-                return ( $boostString == '' ) ? array() : array( 'bf' => trim( $boostString ) );
-        	} break;
+                //
+                // for the fields to boost, modify the qf parameter for edismax
+                // this is set before in the buildSearch method
+                $queryFields = explode(' ', $handlerParameters['qf']);
+                foreach ( $processedBoostFunctions['fields'] as $fieldToBoost => $boostString )
+                {
+                    $key = array_search($fieldToBoost, $queryFields);
+                    if (false !== $key)
+                    {
+                        $queryFields[$key] = $boostString;
+                    }
+                    // might be a custom created field, lets add it implicitely with its boost specification
+                    else
+                    {
+                        $queryFields[] = $boostString;
+                    }
+                }
+                $handlerParameters['qf'] = implode( ' ', $queryFields );
 
-        	default:
-        	{
-        	    // Simplestandard or standard search handlers.
-        	    // Append the boost expression to the 'q' parameter.
-        	    // Alter the $handlerParameters array ( passed as reference )
-        	    // @TODO : Handle query-time field boosting through the buildMultiFieldQuery() method.
-        	    //         Requires a modified 'heuristic' mode.
-        	    $boostString = implode( ' ', $processedBoostFunctions['functions'] );
+                $boostReturnArray = array();
+
+                //additive boost functions
+                if ( array_key_exists(  'functions', $boostFunctions ) )
+                {
+                    $boostReturnArray['bf'] = $boostFunctions['functions'];
+                }
+
+                // multiplicative boost functions
+                if ( array_key_exists(  'mfunctions', $boostFunctions ) )
+                {
+                    $boostReturnArray['boost'] = $boostFunctions['mfunctions'];
+                }
+
+                //add the queries to the existing bq edismax parameter
+                if ( array_key_exists(  'queries', $boostFunctions ) )
+                {
+                    $handlerParameters['bq'] .= ' ' . implode(' ', $boostFunctions['queries']);
+                }
+
+                return $boostReturnArray;
+                } break;
+
+                default:
+                {
+                    // Simplestandard or standard search handlers.
+                    // Append the boost expression to the 'q' parameter.
+                    // Alter the $handlerParameters array ( passed as reference )
+                    // @TODO : Handle query-time field boosting through the buildMultiFieldQuery() method.
+                    //         Requires a modified 'heuristic' mode.
+                    $boostString = implode( ' ', $processedBoostFunctions['functions'] );
                 $handlerParameters['q'] .= ' _val_:' . trim( $boostString );
-        	} break;
+                } break;
         }
         return array();
     }
@@ -659,9 +718,9 @@ class ezfeZPSolrQueryBuilder
      */
     public function buildMoreLikeThis( $queryType, $query, $params = array() )
     {
-        eZDebug::writeDebug( $queryType, 'mlt querytype' );
-        eZDebug::writeDebug( $query, 'mlt query' );
-        eZDebug::writeDebug( $params, 'mlt params' );
+        eZDebugSetting::writeDebug( 'extension-ezfind-query-mlt', $queryType, 'mlt querytype' );
+        eZDebugSetting::writeDebug( 'extension-ezfind-query-mlt', $query, 'mlt query' );
+        eZDebugSetting::writeDebug( 'extension-ezfind-query-mlt', $params, 'mlt params' );
         $searchCount = 0;
 
         $queryInstallationID = ( isset( $params['QueryInstallationID'] ) && $params['QueryInstallationID'] ) ? $params['QueryInstallationID'] : eZSolr::installationID();
@@ -718,10 +777,13 @@ class ezfeZPSolrQueryBuilder
         }
 
         //add raw filters
-        $rawFilters = self::$FindINI->variable( 'SearchFilters', 'RawFilterList' );
-        if ( is_array( $rawFilters ) )
+        if ( self::$FindINI->hasVariable( 'SearchFilters', 'RawFilterList' ) )
         {
-            $filterQuery = array_merge( $filterQuery, $rawFilters );
+            $rawFilters = self::$FindINI->variable( 'SearchFilters', 'RawFilterList' );
+            if ( is_array( $rawFilters ) )
+            {
+                $filterQuery = array_merge( $filterQuery, $rawFilters );
+            }
         }
 
         // Build and get facet query prameters.
@@ -804,7 +866,8 @@ class ezfeZPSolrQueryBuilder
                 eZSolr::getMetaFieldName( 'main_url_alias' ) . ' ' . eZSolr::getMetaFieldName( 'installation_url' ) . ' ' .
                 eZSolr::getMetaFieldName( 'id' ) . ' ' . eZSolr::getMetaFieldName( 'main_node_id' ) . ' ' .
                 eZSolr::getMetaFieldName( 'language_code' ) . ' ' . eZSolr::getMetaFieldName( 'name' ) .
-                ' score ' . eZSolr::getMetaFieldName( 'published' ) . ' ' . eZSolr::getMetaFieldName( 'path_string' ),
+                ' score ' . eZSolr::getMetaFieldName( 'published' ) . ' ' .
+                eZSolr::getMetaFieldName( 'path_string' ) . ' ' . eZSolr::getMetaFieldName( 'is_invisible' ),
                 'fq' => $filterQuery,
                 'wt' => 'php' ),
             $facetQueryParamList );
@@ -877,11 +940,12 @@ class ezfeZPSolrQueryBuilder
 
                     default:
                     {
+                        $baseFieldName = $field;
                         $field = eZSolr::getFieldName( $field, false, 'sort' );
                         if ( !$field )
                         {
                             eZDebug::writeNotice( 'Sort field does not exist in local installation, but may still be valid: ' .
-                                                  $facetDefinition['field'],
+                                                  $baseFieldName,
                                                   __METHOD__ );
                             continue;
                         }
@@ -1302,15 +1366,11 @@ class ezfeZPSolrQueryBuilder
                     case 'between':
                     case 'none':
                     case 'all':
-                    {
                         $queryPart['date.other'] = strtolower( $facetDefinition['date.other'] );
-                    }
-
+                        break;
                     default:
-                    {
                         eZDebug::writeWarning( 'Invalid option gived for date.other: ' . $facetDefinition['date.other'],
                                                __METHOD__ );
-                    } break;
                 }
             }
 
@@ -1430,7 +1490,7 @@ class ezfeZPSolrQueryBuilder
      */
     protected function getContentClassFilterQuery( $contentClassIdent )
     {
-		if ( empty( $contentClassIdent ) )
+                if ( empty( $contentClassIdent ) )
         {
             return null;
         }
@@ -1456,10 +1516,10 @@ class ezfeZPSolrQueryBuilder
                         $classQueryParts[] = eZSolr::getMetaFieldName( 'contentclass_id' ) . ':' . $class->attribute( 'id' );
                     }
                 }
-            	else
-				{
-					eZDebug::writeError( "Unknown class_id filtering parameter: $classID", __METHOD__ );
-				}
+                else
+                                {
+                                        eZDebug::writeError( "Unknown class_id filtering parameter: $classID", __METHOD__ );
+                                }
             }
 
             return implode( ' OR ', $classQueryParts );
@@ -1488,7 +1548,7 @@ class ezfeZPSolrQueryBuilder
      * @param boolean $ignoreVisibility Set to true for the visibility to be ignored
      * @return string Lucene/Solr query string which can be used as filter query for Solr
      */
-    protected function policyLimitationFilterQuery( $limitation = null, $ignoreVisibility = false )
+    protected function policyLimitationFilterQuery( $limitation = null, $ignoreVisibility = null )
     {
         $filterQuery = false;
         $policies = array();
@@ -1497,35 +1557,31 @@ class ezfeZPSolrQueryBuilder
         {
             if ( empty( $limitation ) )
             {
-                return false;
-            }
-
-            if ( isset( $limitation['accessWord'] ) )
-            {
-                switch ( $limitation['accessWord'] )
-                {
-                    case 'limited':
-                        if ( isset( $limitation['policies'] ) )
-                        {
-                            $policies = $limitation['policies'];
-                            break;
-                        }
-                        // break omitted, "limited" without policies == "no"
-                    case 'no':
-                        return 'NOT *:*';
-                    case 'yes':
-                        break;
-                    default:
-                        return false;
-                }
+                $limitation['accessWord'] = 'yes';
             }
         }
         else
         {
-            $accessResult = eZUser::currentUser()->hasAccessTo( 'content', 'read' );
-            if ( !in_array( $accessResult['accessWord'], array( 'yes', 'no' ) ) )
+            $limitation = eZUser::currentUser()->hasAccessTo( 'content', 'read' );
+        }
+
+        if ( isset( $limitation['accessWord'] ) )
+        {
+            switch ( $limitation['accessWord'] )
             {
-                $policies = $accessResult['policies'];
+                case 'limited':
+                    if ( isset( $limitation['policies'] ) )
+                    {
+                        $policies = $limitation['policies'];
+                        break;
+                    }
+                    // break omitted, "limited" without policies == "no"
+                case 'no':
+                    return ' NOT *:* ';
+                case 'yes':
+                    break;
+                default:
+                    return false;
             }
         }
 
@@ -1677,21 +1733,13 @@ class ezfeZPSolrQueryBuilder
             $filterQuery = '(' . eZSolr::getMetaFieldName( 'installation_id' ) . ':' . eZSolr::installationID() . $anonymousPart . ')';
         }
 
-        // Add limitations based on allowed languages.
-        $ini = eZINI::instance();
-        if ( $ini->variable( 'RegionalSettings', 'SiteLanguageList' ) )
-        {
-            $filterQuery = '( ' . $filterQuery . ' AND ( ' . eZSolr::getMetaFieldName( 'language_code' ) . ':' .
-                implode( ' OR ' . eZSolr::getMetaFieldName( 'language_code' ) . ':', $ini->variable( 'RegionalSettings', 'SiteLanguageList' ) ) . ' ) )';
-        }
-
-        // Add visibility condition
-        if ( !$ignoreVisibility )
+        // Add ignore visibility condition, either explicitely set to boolean false or not specified
+        if ( $ignoreVisibility === false || $ignoreVisibility === null )
         {
             $filterQuery .= ' AND ' . eZSolr::getMetaFieldName( 'is_invisible' ) . ':false';
         }
 
-        eZDebug::writeDebug( $filterQuery, __METHOD__ );
+        eZDebugSetting::writeDebug( 'extension-ezfind-query', $filterQuery, __METHOD__ );
 
         return $filterQuery;
     }

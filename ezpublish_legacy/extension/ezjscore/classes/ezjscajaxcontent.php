@@ -5,24 +5,24 @@
 // Created on: <5-Aug-2007 00:00:00 ar>
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ JSCore extension for eZ Publish
-// SOFTWARE RELEASE: 4.7.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
-// SOFTWARE LICENSE: eZ Business Use License Agreement eZ BUL Version 2.1
+// SOFTWARE NAME: eZ Publish Community Project
+// SOFTWARE RELEASE:  2014.3
+// COPYRIGHT NOTICE: Copyright (C) 1999-2014 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2
 // NOTICE: >
-//   This source file is part of the eZ Publish CMS and is
-//   licensed under the terms and conditions of the eZ Business Use
-//   License v2.1 (eZ BUL).
+//   This program is free software; you can redistribute it and/or
+//   modify it under the terms of version 2.0  of the GNU General
+//   Public License as published by the Free Software Foundation.
 // 
-//   A copy of the eZ BUL was included with the software. If the
-//   license is missing, request a copy of the license via email
-//   at license@ez.no or via postal mail at
-//  	Attn: Licensing Dept. eZ Systems AS, Klostergata 30, N-3732 Skien, Norway
+//   This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//   GNU General Public License for more details.
 // 
-//   IMPORTANT: THE SOFTWARE IS LICENSED, NOT SOLD. ADDITIONALLY, THE
-//   SOFTWARE IS LICENSED "AS IS," WITHOUT ANY WARRANTIES WHATSOEVER.
-//   READ THE eZ BUL BEFORE USING, INSTALLING OR MODIFYING THE SOFTWARE.
-
+//   You should have received a copy of version 2.0 of the GNU General
+//   Public License along with this program; if not, write to the Free
+//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+//   MA 02110-1301, USA.
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -240,7 +240,7 @@ class ezjscAjaxContent
         $ret['owner_id']                        = (int) $contentObject->attribute( 'owner_id' );
         $ret['class_id']                        = (int) $contentObject->attribute( 'contentclass_id' );
         $ret['class_name']                      = $contentObject->attribute( 'class_name' );
-        $ret['path_identification_string']      = $node->attribute( 'path_identification_string' );
+        $ret['path_identification_string']      = $node ? $node->attribute( 'path_identification_string' ) : '';
         $ret['translations']                    = eZContentLanguage::decodeLanguageMask($contentObject->attribute( 'language_mask' ), true);
         $ret['can_edit']                        = $contentObject->attribute( 'can_edit' );
 
@@ -260,7 +260,7 @@ class ezjscAjaxContent
             }
             else
             {
-                $ret['creator'] = array( 'id'   => $contentObject->attribute( 'creator_id' ),
+                $ret['creator'] = array( 'id'   => $contentObject->attribute( 'current' )->attribute('creator_id'),
                                          'name' => null );// user has been deleted
             }
         }
@@ -452,6 +452,30 @@ class ezjscAjaxContent
 
                     if ( !isset( $imageArray['original'] ) )
                         $imageArray['original'] = $content->attribute( 'original' );
+
+                    array_walk_recursive(
+                        $imageArray,
+                        function ( &$element, $key )
+                        {
+                            // These fields can contain non utf-8 content
+                            // badly handled by mb_check_encoding
+                            // so they are just encoded in base64
+                            // see https://jira.ez.no/browse/EZP-21358
+                            if ( $key == "MakerNote" || $key == "UserComment")
+                            {
+                                $element =  base64_encode( (string)$element );
+                            }
+                            // json_encode/xmlEncode need UTF8 encoded strings
+                            // (exif) metadata might not be for instance
+                            // see https://jira.ez.no/browse/EZP-19929
+                            else if ( !mb_check_encoding( $element, 'UTF-8' ) )
+                            {
+                                $element = mb_convert_encoding(
+                                    (string)$element, 'UTF-8'
+                                );
+                            }
+                        }
+                    );
 
                     $attrtibuteArray[ $key ]['content'] = $imageArray;
                 }

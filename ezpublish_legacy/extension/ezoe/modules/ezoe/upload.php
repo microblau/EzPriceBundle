@@ -3,24 +3,24 @@
 // Created on: <10-Feb-2007 00:00:00 ar>
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Online Editor extension for eZ Publish
-// SOFTWARE RELEASE: 4.7.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
-// SOFTWARE LICENSE: eZ Business Use License Agreement eZ BUL Version 2.1
+// SOFTWARE NAME: eZ Publish Community Project
+// SOFTWARE RELEASE:  2014.3
+// COPYRIGHT NOTICE: Copyright (C) 1999-2014 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2
 // NOTICE: >
-//   This source file is part of the eZ Publish CMS and is
-//   licensed under the terms and conditions of the eZ Business Use
-//   License v2.1 (eZ BUL).
+//   This program is free software; you can redistribute it and/or
+//   modify it under the terms of version 2.0  of the GNU General
+//   Public License as published by the Free Software Foundation.
 // 
-//   A copy of the eZ BUL was included with the software. If the
-//   license is missing, request a copy of the license via email
-//   at license@ez.no or via postal mail at
-//  	Attn: Licensing Dept. eZ Systems AS, Klostergata 30, N-3732 Skien, Norway
+//   This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//   GNU General Public License for more details.
 // 
-//   IMPORTANT: THE SOFTWARE IS LICENSED, NOT SOLD. ADDITIONALLY, THE
-//   SOFTWARE IS LICENSED "AS IS," WITHOUT ANY WARRANTIES WHATSOEVER.
-//   READ THE eZ BUL BEFORE USING, INSTALLING OR MODIFYING THE SOFTWARE.
-
+//   You should have received a copy of version 2.0 of the GNU General
+//   Public License along with this program; if not, write to the Free
+//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+//   MA 02110-1301, USA.
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -102,85 +102,122 @@ if ( $http->hasPostVariable( 'uploadButton' ) || $forcedUpload )
         $objectName = trim( $http->postVariable( 'objectName' ) );
     }
 
-    $uploadedOk = $upload->handleUpload(
-        $result,
-        'fileName',
-        $location,
-        false,
-        $objectName,
-        $version->attribute( 'initial_language' )->attribute( 'locale' )
-    );
-
-
-    if ( $uploadedOk )
+    try
     {
-        $newObject = $result['contentobject'];
-        $newObjectID = $newObject->attribute( 'id' );
-        $newObjectName = $newObject->attribute( 'name' );
-        $newObjectNodeID = (int) $newObject->attribute( 'main_node_id' ); // this will be empty if object is stopped by approve workflow
+        $uploadedOk = $upload->handleUpload(
+            $result,
+            'fileName',
+            $location,
+            false,
+            $objectName,
+            $version->attribute( 'initial_language' )->attribute( 'locale' ),
+            false
+        );
+        if ( !$uploadedOk )
+        {
+            throw new RuntimeException( "Upload failed" );
+        }
 
-        // edit attributes
-        $newVersionObject  = $newObject->attribute( 'current' );
-        $newObjectDataMap  = $newVersionObject->attribute('data_map');
+        $uploadVersion = $uploadedOk['contentobject']->currentVersion();
+        $newObjectID = $uploadedOk['contentobject']->attribute( 'id' );
 
-        foreach ( array_keys( $newObjectDataMap ) as $key )
+        foreach ( $uploadVersion->dataMap() as $key => $attr )
         {
             //post pattern: ContentObjectAttribute_attribute-identifier
             $base = 'ContentObjectAttribute_'. $key;
-            if ( $http->hasPostVariable( $base ) && $http->postVariable( $base ) !== '' )
+            $postVar = trim( $http->postVariable( $base, '' ) );
+            if ( $postVar !== '' )
             {
-                switch ( $newObjectDataMap[$key]->attribute( 'data_type_string' ) )
+                switch ( $attr->attribute( 'data_type_string' ) )
                 {
-                    case 'eztext':
                     case 'ezstring':
-                        // TODO: Validate input ( max length )
-                        $newObjectDataMap[$key]->setAttribute('data_text', trim( $http->postVariable( $base ) ) );
-                        $newObjectDataMap[$key]->store();
+                        $classAttr = $attr->attribute( 'contentclass_attribute' );
+                        $dataType = $classAttr->attribute( 'data_type' );
+                        if ( $dataType->validateStringHTTPInput( $postVar, $attr, $classAttr ) !== eZInputValidator::STATE_ACCEPTED )
+                        {
+                            throw new InvalidArgumentException( $attr->validationError() );
+                        }
+                    case 'eztext':
+                    case 'ezkeyword':
+                        $attr->fromString( $postVar );
+                        $attr->store();
                         break;
                     case 'ezfloat':
-                        // TODO: Validate input ( max / min values )
-                        $newObjectDataMap[$key]->setAttribute('data_float', (float) str_replace(',', '.', $http->postVariable( $base ) ) );
-                        $newObjectDataMap[$key]->store();
+                        $floatValue = (float)str_replace( ',', '.', $postVar );
+                        $classAttr = $attr->attribute( 'contentclass_attribute' );
+                        $dataType = $classAttr->attribute( 'data_type' );
+                        if ( $dataType->validateFloatHTTPInput( $floatValue, $attr, $classAttr ) !== eZInputValidator::STATE_ACCEPTED )
+                        {
+                            throw new InvalidArgumentException( $attr->validationError() );
+                        }
+                        $attr->setAttribute( 'data_float', $floatValue );
+                        $attr->store();
                         break;
                     case 'ezinteger':
-                        // TODO: Validate input ( max / min values )
+                        $classAttr = $attr->attribute( 'contentclass_attribute' );
+                        $dataType = $classAttr->attribute( 'data_type' );
+                        if ( $dataType->validateIntegerHTTPInput( $postVar, $attr, $classAttr ) !== eZInputValidator::STATE_ACCEPTED )
+                        {
+                            throw new InvalidArgumentException( $attr->validationError() );
+                        }
                     case 'ezboolean':
-                        $newObjectDataMap[$key]->setAttribute('data_int', (int) $http->postVariable( $base ) );
-                        $newObjectDataMap[$key]->store();
+                        $attr->setAttribute( 'data_int', (int)$postVar );
+                        $attr->store();
                         break;
                     case 'ezimage':
-                        $content = $newObjectDataMap[$key]->attribute('content');
-                        $content->setAttribute( 'alternative_text', trim( $http->postVariable( $base ) ) );
-                        $content->store( $newObjectDataMap[$key] );
-                        break;
-                    case 'ezkeyword':
-                        $newObjectDataMap[$key]->fromString( $http->postVariable( $base ) );
-                        $newObjectDataMap[$key]->store();
+                        // validation has been done by eZContentUpload
+                        $content = $attr->attribute( 'content' );
+                        $content->setAttribute( 'alternative_text', $postVar );
+                        $content->store( $attr );
                         break;
                     case 'ezxmltext':
-                        $text = trim( $http->postVariable( $base ) );
                         $parser = new eZOEInputParser();
-                        $document = $parser->process( $text );
+                        $document = $parser->process( $postVar );
                         $xmlString = eZXMLTextType::domString( $document );
-                        $newObjectDataMap[$key]->setAttribute( 'data_text', $xmlString );
-                        $newObjectDataMap[$key]->store();
+                        $attr->setAttribute( 'data_text', $xmlString );
+                        $attr->store();
                         break;
                 }
             }
         }
 
-        $object->addContentObjectRelation( $newObjectID, $objectVersion, 0, eZContentObject::RELATION_EMBED );
+        $operationResult = eZOperationHandler::execute(
+            'content', 'publish',
+            array(
+                'object_id' => $newObjectID,
+                'version' => $uploadVersion->attribute( 'version' )
+            )
+        );
+        $newObject = eZContentObject::fetch( $newObjectID );
+        $newObjectName = $newObject->attribute( 'name' );
+        $newObjectNodeID = (int)$newObject->attribute( 'main_node_id' );
+
+        $object->addContentObjectRelation(
+            $newObjectID,
+            $uploadVersion->attribute( 'version' ),
+            0,
+            eZContentObject::RELATION_EMBED
+        );
         echo '<html><head><title>HiddenUploadFrame</title><script type="text/javascript">';
         echo 'window.parent.eZOEPopupUtils.selectByEmbedId( ' . $newObjectID . ', ' . $newObjectNodeID . ', "' . $newObjectName . '" );';
         echo '</script></head><body></body></html>';
     }
-    else
+    catch ( InvalidArgumentException $e )
+    {
+        $uploadedOk['contentobject']->purge();
+        echo '<html><head><title>HiddenUploadFrame</title><script type="text/javascript">';
+        echo 'window.parent.document.getElementById("upload_in_progress").style.display = "none";';
+        echo '</script></head><body><div style="position:absolute; top: 0px; left: 0px;background-color: white; width: 100%;">';
+        echo '<p style="margin: 0; padding: 3px; color: red">' . htmlspecialchars( $e->getMessage() ) . '</p>';
+        echo '</div></body></html>';
+    }
+    catch ( RuntimeException $e )
     {
         echo '<html><head><title>HiddenUploadFrame</title><script type="text/javascript">';
         echo 'window.parent.document.getElementById("upload_in_progress").style.display = "none";';
         echo '</script></head><body><div style="position:absolute; top: 0px; left: 0px;background-color: white; width: 100%;">';
         foreach( $result['errors'] as $err )
-            echo '<p style="margin: 0; padding: 3px; color: red">' . $err['description'] . '</p>';
+            echo '<p style="margin: 0; padding: 3px; color: red">' . htmlspecialchars( $err['description'] ) . '</p>';
         echo '</div></body></html>';
     }
     eZDB::checkTransactionCounter();
