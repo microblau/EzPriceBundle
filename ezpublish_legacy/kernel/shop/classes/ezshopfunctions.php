@@ -112,8 +112,7 @@ class eZShopFunctions
     */
     static function productDatatypeStringList()
     {
-        return array( 'ezprice',
-                      'ezmultiprice' );
+        return eZINI::instance()->variable('ShopSettings', 'productDatatypeStringLings' );
     }
 
     static function productClassList()
