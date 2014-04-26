@@ -41,6 +41,7 @@ ActiveExtensions[]=eflvaloraciones
 ActiveExtensions[]=googlesitemapgenerator
 ActiveExtensions[]=ez_network
 #ActiveExtensions[]=ezpaypal
+ActiveExtensions[]=envdata
 
 [Session]
 SessionNameHandler=default
@@ -77,6 +78,7 @@ RemoveSiteAccessIfDefaultAccess=enabled
 HostMatchMapItems[]=eflweb;site;
 HostMatchMapItems[]=www.efl.es;newhome;
 HostMatchMapItems[]=formacion.efl.es;forma
+HostMatchMapItems[]=formacion.efl.local;forma
 HostMatchMapItems[]=formacion.eflweb.local;forma
 HostMatchMapItems[]=eflweb.local;site
 

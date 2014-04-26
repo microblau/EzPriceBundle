@@ -65,16 +65,8 @@ PolicyOmitList[]=newsletter/track
 PolicyOmitList[]=utils
 PolicyOmitList[]=google
 
-
-
-
 [TemplateSettings]
 ExtensionAutoloadPath[]=utils
-
-[EFLSettings]
-FormationSubdomain=formacionefl47.tantacom.com
-WWWSubdomain=efl47.tantacom.com
-#WWWSubdomain=www.testefl.es
 
 [Cache]
 CacheItems[]=feeds
