@@ -1,8 +1,8 @@
- 
 {def $zone_id = ''
      $block_id = ''
      $item_id = ''
-     $zone_names = ezini( $attribute.content.zone_layout, 'ZoneName', 'zone.ini' )
+     $zone_names = array()
+     $zone_layout = cond( $attribute.content.zone_layout, $attribute.content.zone_layout, '' )
      $allowed_zones = fetch('ezflow', 'allowed_zones')
      $can_change_layout = fetch( 'user', 'has_access_to', hash( 'module', 'ezflow', 'function', 'changelayout' ) )
      $current_user = fetch( 'user', 'current_user' )
@@ -30,6 +30,10 @@
         {/if}
      {/foreach}
 
+    {if $zone_layout|ne( '' )}
+        {set $zone_names = ezini( $zone_layout, 'ZoneName', 'zone.ini' )}
+    {/if}
+
 <div id="page-datatype-container" class="yui-skin-sam yui-skin-ezflow">
 {if and( $can_change_layout, $layout_for_current_class )}
 <div class="zones float-break">
@@ -39,14 +43,14 @@
         <div class="zone-label">{$allowed_zone['name']|wash()}</div>
         <div class="zone-thumbnail"><img src={concat( "ezpage/thumbnails/", $allowed_zone['thumbnail'] )|ezimage()} alt="{$allowed_zone['name']|wash()}" /></div>
         <div class="zone-selector">
-            <input type="radio" class="zone-type-selector" name="ContentObjectAttribute_ezpage_zone_allowed_type_{$attribute.id}" value="{$allowed_zone['type']}" {if eq( $allowed_zone['type'], $attribute.content.zone_layout )}checked="checked"{/if} />
+            <input type="radio" class="zone-type-selector" name="ContentObjectAttribute_ezpage_zone_allowed_type_{$attribute.id}" value="{$allowed_zone['type']}" {if eq( $allowed_zone['type'], $zone_layout )}checked="checked"{/if} />
         </div>
     </div>
 {/if}
 {/foreach}
     <div class="break"></div>
 
-    <div id="zone-map-container" class="hidden float-break">
+    <div id="zone-map-container" class="hide float-break">
         <div id="zone-map-type"></div>
         <p>{'The total number of zones in the new layout is less than the number of zones in the previous layout. Therefore, you must map the previous zones to new zones. Unmapped zones will be removed!'|i18n( 'design/standard/datatype/ezpage' )}</p>
         <div id="zone-map-placeholder"></div>
@@ -65,9 +69,11 @@
 
 <script type="text/javascript">
 (function() {ldelim}
-    YUILoader.onSuccess = function() {ldelim}
+    var loader = new YAHOO.util.YUILoader(YUI2_config);
+
+    loader.onSuccess = function() {ldelim}
         YAHOO.ez.ZoneLayout.cfg = {ldelim} 'allowedzones': '{$allowed_zones|json()}',
-                                           'zonelayout': '{$attribute.content.zone_layout}' {rdelim};
+                                           'zonelayout': '{$zone_layout}' {rdelim};
         YAHOO.ez.ZoneLayout.init();
 
         var tabView = new YAHOO.widget.TabView();
@@ -129,41 +135,41 @@
         tabView.appendTo('zone-tabs-container');
         {/literal}
     {rdelim}
-    
-    YUILoader.addModule({ldelim}
+
+    loader.addModule({ldelim}
         name: 'blocktools',
         type: 'js',
         fullpath: '{"javascript/blocktools.js"|ezdesign( 'no' )}'
     {rdelim});
 
-    YUILoader.addModule({ldelim}
+    loader.addModule({ldelim}
         name: 'zonetools',
         type: 'js',
         fullpath: '{"javascript/zonetools.js"|ezdesign( 'no' )}'
     {rdelim});
 
-    YUILoader.addModule({ldelim}
+    loader.addModule({ldelim}
         name: 'scheduledialog',
         type: 'js',
         fullpath: '{"javascript/scheduledialog.js"|ezdesign( 'no' )}'
     {rdelim});
 
-    YUILoader.addModule({ldelim}
+    loader.addModule({ldelim}
         name: 'scheduledialog-css',
         type: 'css',
         fullpath: '{"stylesheets/scheduledialog.css"|ezdesign( 'no' )}'
     {rdelim});
 
-    YUILoader.addModule({ldelim}
+    loader.addModule({ldelim}
         name: 'pagedatatype-css',
         type: 'css',
         fullpath: '{"stylesheets/ezpage/ezpage.css"|ezdesign( 'no' )}'
     {rdelim});
 
-    YUILoader.require(["button","calendar","container","cookie","get","json","tabview","utilities","blocktools","zonetools","scheduledialog","scheduledialog-css", "pagedatatype-css"]);
+    loader.require(["button","calendar","container","cookie","get","json","tabview","utilities","blocktools","zonetools","scheduledialog","scheduledialog-css", "pagedatatype-css"]);
 
-    // Load the files using the insert() method.
-    YUILoader.insert();
+    loader.insert();
+
 {rdelim})();
 
 function confirmDiscard( question )
@@ -171,5 +177,4 @@ function confirmDiscard( question )
     // Ask user if he really wants to do it.
     return confirm( question );
 {rdelim}
-{/literal}
 </script>

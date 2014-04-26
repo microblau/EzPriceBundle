@@ -36,20 +36,21 @@
     <meta http-equiv="{$HTTP:key|wash}" content="{$HTTP:item|wash}" />
 
     {/section}
+    {if is_set( $module_result.node_id )}
+        {def $meta_data_list = fetch( fezmetadata, list_by_node_id, hash( node_id, $module_result.node_id, 'as_object', false() ) )}
+        {foreach $meta_data_list as $meta_data}
+            <meta name="{$meta_data.meta_name|wash}" content="{$meta_data.meta_value|wash}" />
+        {/foreach}
+        {undef $meta_data_list}
 
-	{def $meta_data_list = fetch( fezmetadata, list_by_node_id, hash( node_id, $module_result.node_id ) )}
-	{foreach $meta_data_list as $meta_data}
-		<meta name="{$meta_data.meta_name|wash}" content="{$meta_data.meta_value|wash}" />
-	{/foreach}
-	{undef $meta_data_list}
-
-	{def $available_meta_data=ezini( 'MetaData', 'AvailablesMetaData', 'ezmetadata.ini' )}
-    {section name=meta loop=$site.meta}
-		{if not( $available_meta_data|contains( $meta:key ) )}
-		    <meta name="{$meta:key|wash}" content="{$meta:item|wash}" />
-		{/if}
-    {/section}
-	{undef $available_meta_data}
+        {def $available_meta_data=ezini( 'MetaData', 'AvailablesMetaData', 'ezmetadata.ini' )}
+        {section name=meta loop=$site.meta}
+            {if not( $available_meta_data|contains( $meta:key ) )}
+                <meta name="{$meta:key|wash}" content="{$meta:item|wash}" />
+            {/if}
+        {/section}
+        {undef $available_meta_data}
+    {/if}
 
     <meta name="MSSmartTagsPreventParsing" content="TRUE" />
     <meta name="generator" content="eZ Publish" />

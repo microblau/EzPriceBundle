@@ -95,27 +95,11 @@
         <source>Discard the draft that is being edited. This will also remove the translations that belong to the draft (if any).</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Store draft and exit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Store the draft that is being edited and exit from edit mode. Use when you need to exit your work and return later to continue.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle fullscreen editing!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit &lt;%object_name&gt; (%class_name)</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>design/admin/contextsubmenu</name>
     <message>
-        <source>Push to block</source>
+        <source>Add to block in frontpage</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -181,6 +165,10 @@
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No search results found for:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/ezflow/edit/frontpage</name>
@@ -233,10 +221,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edit %1 - %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Translating content from %from_lang to %to_lang</source>
         <translation type="unfinished"></translation>
     </message>
@@ -254,6 +238,10 @@
     </message>
     <message>
         <source>Discard draft</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit &lt;%object_name&gt; (%class_name)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -278,7 +266,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Push to block</source>
+        <source>Add to block in frontpage</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -471,6 +459,18 @@
         <source>Rotating item.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current source:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Publishing schedule for: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/block/view</name>
@@ -501,23 +501,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Block name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Expand</source>
+        <source>Expand All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Collapse</source>
+        <source>Collapse All</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -560,6 +552,13 @@
     <name>ezflow/push</name>
     <message>
         <source>Push to block</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>kernel/workflow/event</name>
+    <message>
+        <source>eZ Page swap workflow event</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

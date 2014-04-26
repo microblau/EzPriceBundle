@@ -1,4 +1,62 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
+<context>
+    <name>design/admin/content/datatype</name>
+    <message>
+        <source>Year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Month</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minute</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/node/view/full</name>
+    <message>
+        <source>Remove selected</source>
+        <translation>Remover selecionado</translation>
+    </message>
+</context>
+<context>
+    <name>design/ezdemo/content/datatype</name>
+    <message>
+        <source>Year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Month</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show calendar to select a date.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/content/datatype</name>
+    <message>
+        <source>Second</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 <context>
     <name>design/standard/content/edit</name>
     <message>
@@ -11,7 +69,7 @@
     </message>
     <message>
         <source>Store and exit</source>
-        <translation>Salvar e sair</translation>
+        <translation type="obsolete">Salvar e sair</translation>
     </message>
     <message>
         <source>Preview</source>
@@ -25,12 +83,44 @@
         <source>Translate</source>
         <translation>Traduzir</translation>
     </message>
+    <message>
+        <source>Publish the contents of the draft that is being edited. The draft will become the published version of the object.</source>
+        <translation>Publicar os conteúdos do rascunho que está sendo editado. O rascunho tornará a versão publicada do objeto.</translation>
+    </message>
+    <message>
+        <source>Store draft</source>
+        <translation>Armazenar rascunho</translation>
+    </message>
+    <message>
+        <source>Store the contents of the draft that is being edited and continue editing. Use this button to periodically save your work while editing.</source>
+        <translation>Armazenar os conteúdos do rascunho que está sendo editado e continuar editando. Use este botão periodicamente para salvar seu trabalho enquanto estiver editando.</translation>
+    </message>
+    <message>
+        <source>Store draft and exit</source>
+        <translation>Armazenar rascunho e sair</translation>
+    </message>
+    <message>
+        <source>Store the draft that is being edited and exit from edit mode. Use when you need to exit your work and return later to continue.</source>
+        <translation>Armazenar o rascunho que está sendo editado e sair do modo de edição. Use quando você precisa sair de seu trabalho e retornar mais tarde para continuar.</translation>
+    </message>
+    <message>
+        <source>Discard draft</source>
+        <translation>Descartar rascunho</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to discard the draft?</source>
+        <translation>Você tem certeza que deseja descartar o rascunho?</translation>
+    </message>
+    <message>
+        <source>Discard the draft that is being edited. This will also remove the translations that belong to the draft (if any).</source>
+        <translation>Descartar o rascunho que está sendo editado. Isto irá remover as traduções que pertencem para o rascunho (se existir alguma).</translation>
+    </message>
 </context>
 <context>
     <name>design/standard/content/view/versionview</name>
     <message>
         <source>Manage versions</source>
-        <translation>Gerenciar versões</translation>
+        <translation type="obsolete">Gerenciar versões</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -49,7 +139,7 @@
     </message>
     <message>
         <source>Edit: %node_name [%class_name]</source>
-        <translation>Editar: %node_name [%class_name]</translation>
+        <translation type="obsolete">Editar: %node_name [%class_name]</translation>
     </message>
     <message>
         <source>Move</source>
@@ -94,6 +184,14 @@
     <message>
         <source>Toggle menu link type edit.</source>
         <translation>Alternar tipo de link.</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Editar</translation>
+    </message>
+    <message>
+        <source>Go to admin interface.</source>
+        <translation>Ir para interface administrativa</translation>
     </message>
 </context>
 <context>
@@ -229,6 +327,10 @@
     <message>
         <source>Automatic update</source>
         <translation>Atualização automática</translation>
+    </message>
+    <message>
+        <source>Path String</source>
+        <translation>Caminho</translation>
     </message>
 </context>
 </TS>

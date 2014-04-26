@@ -2,31 +2,31 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Flow
-// SOFTWARE RELEASE: 1.1-0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 5.3.0-alpha1
+// COPYRIGHT NOTICE: Copyright (C) 1999-2014 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of version 2.0  of the GNU General
+//  Public License as published by the Free Software Foundation.
 //
-//   This program is distributed in the hope that it will be useful,
+//  This program is distributed in the hope that it will be useful,
 //   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
 //
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
+//  You should have received a copy of version 2.0 of the GNU General
+//  Public License along with this program; if not, write to the Free
+//  Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+//  MA 02110-1301, USA.
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 class eZPageType extends eZDataType
 {
     const DATA_TYPE_STRING = 'ezpage';
+
+    const DEFAULT_ZONE_LAYOUT_FIELD = 'data_text1';
 
     /**
      * Constructor
@@ -35,6 +35,50 @@ class eZPageType extends eZDataType
     function __construct()
     {
         parent::__construct( self::DATA_TYPE_STRING, "Layout" );
+    }
+
+    /**
+     * Sets the default values in class attribute
+     *
+     * @param eZContentClassAttribute $classAttribute
+     */
+    function initializeClassAttribute( $classAttribute )
+    {
+        if ( $classAttribute->attribute( self::DEFAULT_ZONE_LAYOUT_FIELD ) === null )
+            $classAttribute->setAttribute( self::DEFAULT_ZONE_LAYOUT_FIELD, '' );
+
+        $classAttribute->store();
+    }
+
+    /**
+     * Serialize contentclass attribute
+     *
+     * @param eZContentClassAttribute $classAttribute
+     * @param DOMNode $attributeNode
+     * @param DOMNode $attributeParametersNode
+     */
+    function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
+    {
+        $defaultZoneLayout = $classAttribute->attribute( self::DEFAULT_ZONE_LAYOUT_FIELD );
+        $dom = $attributeParametersNode->ownerDocument;
+
+        $defaultLayoutNode = $dom->createElement( 'default-layout' );
+        $defaultLayoutNode->appendChild( $dom->createTextNode( $defaultZoneLayout ) );
+        $attributeParametersNode->appendChild( $defaultLayoutNode );
+    }
+
+    /**
+     * Unserialize contentclass attribute
+     *
+     * @param eZContentClassAttribute $classAttribute
+     * @param DOMNode $attributeNode
+     * @param DOMNode $attributeParametersNode
+     */
+    function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
+    {
+        $defaultZoneLayout = $attributeParametersNode->getElementsByTagName( 'default-layout' )->item( 0 )->textContent;
+        if ( $defaultZoneLayout !== false )
+            $classAttribute->setAttribute( self::DEFAULT_ZONE_LAYOUT_FIELD, $defaultZoneLayout );
     }
 
     /**
@@ -50,8 +94,13 @@ class eZPageType extends eZDataType
         {
             $contentObjectID = $contentObjectAttribute->attribute( 'contentobject_id' );
             $originalContentObjectID = $originalContentObjectAttribute->attribute( 'contentobject_id' );
+            $languageMask = $contentObjectAttribute->attribute( 'language_id' ) & ~1;
+            $originalLanguageMask = $originalContentObjectAttribute->attribute( 'language_id' ) & ~1;
 
-            if ( $contentObjectID != $originalContentObjectID )
+            // Case when content object was copied or when new translation has been added to the existing one
+            if ( ( $contentObjectID != $originalContentObjectID )
+                    || ( ( $contentObjectID == $originalContentObjectID )
+                       && ( $languageMask != $originalLanguageMask ) ) )
             {
                 $page = $originalContentObjectAttribute->content();
                 $clonedPage = clone $page;
@@ -67,7 +116,7 @@ class eZPageType extends eZDataType
         else
         {
             $contentClassAttribute = $contentObjectAttribute->contentClassAttribute();
-            $defaultLayout = $contentClassAttribute->attribute( "data_text1" );
+            $defaultLayout = $contentClassAttribute->attribute( self::DEFAULT_ZONE_LAYOUT_FIELD );
             $zoneINI = eZINI::instance( 'zone.ini' );
             $page = new eZPage();
             $zones = array();
@@ -98,12 +147,12 @@ class eZPageType extends eZDataType
                     $availableForClasses = array();
                     if ( $zoneINI->hasVariable( $allowedZone, 'AvailableForClasses' ) )
                         $availableForClasses = $zoneINI->variable( $allowedZone, 'AvailableForClasses' );
-                    
+
                     if ( in_array( $class->attribute( 'identifier' ), $availableForClasses ) )
                     {
                         if ( $zoneINI->hasVariable( $allowedZone, 'Zones' ) )
                             $zones = $zoneINI->variable( $allowedZone, 'Zones' );
-                            
+
                         $page->setAttribute( 'zone_layout', $allowedZone );
                         foreach ( $zones as $zoneIdentifier )
                         {
@@ -133,13 +182,15 @@ class eZPageType extends eZDataType
     {
         $page = $contentObjectAttribute->content();
         $zones = $page->attribute( 'zones' );
-        
+        if ( !is_array( $zones ) )
+            return false;
+
         foreach ( $zones as $zone )
         {
             if ( $zone->getBlockCount() > 0 )
                 return true;
         }
-        
+
         return false;
     }
 
@@ -172,7 +223,7 @@ class eZPageType extends eZDataType
         if ( $http->hasPostVariable( $base . '_ezpage_default_layout_' . $classAttribute->attribute( 'id' ) ) )
         {
             $defaultLayout = $http->postVariable( $base . '_ezpage_default_layout_' . $classAttribute->attribute( 'id' ) );
-            $classAttribute->setAttribute( 'data_text1', $defaultLayout );
+            $classAttribute->setAttribute( self::DEFAULT_ZONE_LAYOUT_FIELD, $defaultLayout );
         }
         return true;
     }
@@ -228,7 +279,7 @@ class eZPageType extends eZDataType
                     }
 
                     $block->setAttribute( 'fetch_params', serialize( $fetchParams ) );
-                    
+
                     if ( $fetchParams !== $tmpFetchParams )
                     {
                         $persBlockObject = eZFlowBlock::fetch( $block->attribute( 'id' ) );
@@ -399,17 +450,6 @@ class eZPageType extends eZDataType
     }
 
     /**
-     * Returns the meta data used for storing search indeces.
-     *
-     * @param eZContentObjectAttribute $contentObjectAttribute
-     * @return string
-     */
-    function metaData( $contentObjectAttribute )
-    {
-        return $contentObjectAttribute->attribute( 'data_text' );
-    }
-
-    /**
      * Returns the value as it will be shown if this attribute is used in the object name pattern.
      *
      * @param eZContentObjectAttribute $contentObjectAttribute
@@ -445,21 +485,21 @@ class eZPageType extends eZDataType
                     $zoneINI = eZINI::instance( 'zone.ini' );
                     $page = $contentObjectAttribute->content();
                     $zoneAllowedType = $http->postVariable( 'ContentObjectAttribute_ezpage_zone_allowed_type_' . $contentObjectAttribute->attribute( 'id' ) );
-                    
+
                     if ( $zoneAllowedType == $page->attribute('zone_layout') )
                         return false;
-                    
+
                     $allowedZones = $zoneINI->variable( $zoneAllowedType, 'Zones' );
                     $allowedZonesCount = count( $allowedZones );
-                    
+
                     $page->setAttribute( 'zone_layout', $zoneAllowedType );
                     $existingZoneCount = $page->getZoneCount();
-                    
+
                     $zoneCountDiff = 0;
                     if ( $allowedZonesCount < $existingZoneCount )
                         $zoneCountDiff = $existingZoneCount - $allowedZonesCount;
 
-                    if ( count( $zoneMap ) > 0 )
+                    if ( !empty( $zoneMap ) )
                     {
                         foreach( $page->attribute( 'zones' ) as $zoneIndex => $zone )
                         {
@@ -484,7 +524,7 @@ class eZPageType extends eZDataType
                         foreach ( $allowedZones as $index => $zoneIdentifier )
                         {
                             $existingZone = $page->getZone($index);
-                        
+
                             if ( $existingZone instanceof eZPageZone )
                             {
                                 $existingZone->setAttribute( 'action', 'modify' );
@@ -505,17 +545,17 @@ class eZPageType extends eZDataType
                             {
                                 $existingZoneIndex = $existingZoneCount - $zoneCountDiff;
                                 $existingZone = $page->getZone( $existingZoneIndex );
-                    
+
                                 if ( $existingZone->toBeAdded() )
                                     $page->removeZone( $existingZoneIndex );
                                 else
                                     $existingZone->setAttribute( 'action', 'remove' );
-                    
+
                                 $zoneCountDiff -= 1;
                             }
                         }
                     }
-                    
+
                     $page->sortZones();
                 }
                 break;
@@ -528,12 +568,22 @@ class eZPageType extends eZDataType
                 $rotationUnit = $http->postVariable( 'RotationUnit_' . $params[2] );
                 $rotationSuffle = $http->postVariable( 'RotationShuffle_' . $params[2] );
 
-                if ( $rotationValue == '' )
+                if ( trim( $rotationValue ) == '' || $rotationValue == 0 )
                 {
                     $block->setAttribute( 'rotation', array( 'interval' => 0,
                                                              'type' => 0,
                                                              'value' => '',
                                                              'unit' => '' ) );
+                    $waitingItems = $block->attribute( 'waiting' );
+                    foreach ( $waitingItems as $item )
+                    {
+                        $item->setAttribute( 'ts_publication', time() );
+                        $item->setAttribute( 'ts_visible', time() );
+                        $item->setAttribute( 'ts_hidden', '0' );
+                        $item->setAttribute( 'action', 'add' );
+                        $item->setXMLStorable( true );
+                        $block->addItem( $item );
+                    }
                 }
                 else
                 {
@@ -583,17 +633,17 @@ class eZPageType extends eZDataType
                 $page = $contentObjectAttribute->content();
                 $zone = $page->getZone( $params[1] );
 
-                if ( $http->hasPostVariable( 'ContentObjectAttribute_ezpage_block_type_' . $contentObjectAttribute->attribute( 'id' ) . '_' . $params[1] ) )
-                    $blockType = $http->postVariable( 'ContentObjectAttribute_ezpage_block_type_' . $contentObjectAttribute->attribute( 'id' ) . '_' . $params[1] );
-
-                if ( $http->hasPostVariable( 'ContentObjectAttribute_ezpage_block_name_' . $contentObjectAttribute->attribute( 'id' ) . '_' . $params[1] ) )
-                    $blockName = $http->postVariable( 'ContentObjectAttribute_ezpage_block_name_' . $contentObjectAttribute->attribute( 'id' ) . '_' . $params[1] );
+                $blockType = $http->hasPostVariable( 'ContentObjectAttribute_ezpage_block_type_' . $contentObjectAttribute->attribute( 'id' ) . '_' . $params[1] ) ? $http->postVariable( 'ContentObjectAttribute_ezpage_block_type_' . $contentObjectAttribute->attribute( 'id' ) . '_' . $params[1] ) : '';
+                $blockName = $http->hasPostVariable( 'ContentObjectAttribute_ezpage_block_name_' . $contentObjectAttribute->attribute( 'id' ) . '_' . $params[1] ) ? $http->postVariable( 'ContentObjectAttribute_ezpage_block_name_' . $contentObjectAttribute->attribute( 'id' ) . '_' . $params[1] ) : '';
 
                 $block = $zone->addBlock( new eZPageBlock( $blockName ) );
                 $block->setAttribute( 'action', 'add' );
                 $block->setAttribute( 'id', md5( mt_rand() . microtime() . $zone->getBlockCount() ) );
                 $block->setAttribute( 'zone_id', $zone->attribute( 'id' ) );
                 $block->setAttribute( 'type', $blockType );
+
+                $blockState = 'id_' . $block->attribute( 'id' ) . '=1';
+                setrawcookie( 'eZPageBlockState', isset( $_COOKIE['eZPageBlockState'] ) ? $_COOKIE['eZPageBlockState'] . '&' . $blockState : $blockState, time() + 3600, '/' );
                 break;
             case 'move_block_up':
                 $page = $contentObjectAttribute->content();
@@ -652,7 +702,7 @@ class eZPageType extends eZDataType
                                             $itemValid = $validItem;
                                         }
                                     }
-                                    
+
                                     //judge if the item will be removed
                                     $itemToBeRemoved = false;
                                     if ( $block->getItemCount() > 0 )
@@ -669,7 +719,7 @@ class eZPageType extends eZDataType
                                             }
                                         }
                                     }
-                                    
+
                                     if( $itemAdded || $itemToBeRemoved )
                                     {
                                         //if there is same item in history, or item to be removed (in history or valid), set the item in history to be modified
@@ -701,7 +751,7 @@ class eZPageType extends eZDataType
                                     }
                                 }
                             }
-                            
+
                             $contentObjectAttribute->setContent( $page );
                             $contentObjectAttribute->store();
                         }
@@ -722,13 +772,20 @@ class eZPageType extends eZDataType
                 if( $blockINI->hasVariable( $type, 'AllowedClasses' ) )
                     $classArray = $blockINI->variable( $type, 'AllowedClasses' );
 
-                eZContentBrowse::browse( array( 'class_array' => $classArray,
-                                                'action_name' => 'AddNewBlockItem',
-                                                'browse_custom_action' => array( 'name' => 'CustomActionButton[' . $contentObjectAttribute->attribute( 'id' ) . '_new_item-' . $params[1] . '-' . $params[2] . ']',
-                                                                                 'value' => $contentObjectAttribute->attribute( 'id' ) ),
-                                                'from_page' => $redirectionURI,
-                                                'cancel_page' => $redirectionURI,
-                                                'persistent_data' => array( 'HasObjectInput' => 0 ) ), $module );
+                $browseParameters = array( 'class_array' => $classArray,
+                                           'action_name' => 'AddNewBlockItem',
+                                           'browse_custom_action' => array( 'name' => 'CustomActionButton[' . $contentObjectAttribute->attribute( 'id' ) . '_new_item-' . $params[1] . '-' . $params[2] . ']',
+                                                                            'value' => $contentObjectAttribute->attribute( 'id' ) ),
+                                           'from_page' => $redirectionURI,
+                                           'cancel_page' => $redirectionURI,
+                                           'persistent_data' => array( 'HasObjectInput' => 0 ) );
+
+                if( $blockINI->hasVariable( $block->attribute( 'type' ), 'ManualBlockStartBrowseNode' ) )
+                {
+                    $browseParameters['start_node'] = $blockINI->variable( $block->attribute( 'type' ), 'ManualBlockStartBrowseNode' );
+                }
+
+                eZContentBrowse::browse( $browseParameters, $module );
                 break;
             case 'new_source':
                 $page = $contentObjectAttribute->content();
@@ -741,7 +798,7 @@ class eZPageType extends eZDataType
                     $selectedNodeIDArray = $http->postVariable( 'SelectedNodeIDArray' );
                     $blockINI = eZINI::instance( 'block.ini' );
 
-                    $fetchParametersSelectionType = $blockINI->variable( $block->attribute('type'), 'FetchParametersSelectionType' );
+                    $fetchParametersSelectionType = $blockINI->variable( $block->attribute( 'type' ), 'FetchParametersSelectionType' );
                     $fetchParams = unserialize( $block->attribute( 'fetch_params' ) );
 
                     if ( $fetchParametersSelectionType['Source'] == 'single' )
@@ -750,9 +807,9 @@ class eZPageType extends eZDataType
                         $fetchParams['Source'] = $selectedNodeIDArray;
 
                     $block->setAttribute( 'fetch_params', serialize( $fetchParams ) );
-                    
+
                     $persBlockObject = eZFlowBlock::fetch( $block->attribute( 'id' ) );
-                    
+
                     if ( $persBlockObject instanceof eZFlowBlock )
                     {
                         $persBlockObject->setAttribute( 'last_update', 0 );
@@ -770,19 +827,25 @@ class eZPageType extends eZDataType
 
                 $blockINI = eZINI::instance( 'block.ini' );
 
-                $fetchParametersSelectionType = $blockINI->variable( $block->attribute('type'), 'FetchParametersSelectionType' );
+                $fetchParametersSelectionType = $blockINI->variable( $block->attribute( 'type' ), 'FetchParametersSelectionType' );
 
                 $module = $parameters['module'];
                 $redirectionURI = $redirectionURI = $parameters['current-redirection-uri'];
 
+                $browseParameters = array( 'action_name' => 'AddNewBlockSource',
+                                           'selection' => $fetchParametersSelectionType['Source'],
+                                           'browse_custom_action' => array( 'name' => 'CustomActionButton[' . $contentObjectAttribute->attribute( 'id' ) . '_new_source-' . $params[1] . '-' . $params[2] . ']',
+                                                                            'value' => $contentObjectAttribute->attribute( 'id' ) ),
+                                           'from_page' => $redirectionURI,
+                                           'cancel_page' => $redirectionURI,
+                                           'persistent_data' => array( 'HasObjectInput' => 0 ) );
 
-                eZContentBrowse::browse( array( 'action_name' => 'AddNewBlockSource',
-                                                'selection' => $fetchParametersSelectionType['Source'],
-                                                'browse_custom_action' => array( 'name' => 'CustomActionButton[' . $contentObjectAttribute->attribute( 'id' ) . '_new_source-' . $params[1] . '-' . $params[2] . ']',
-                                                                                 'value' => $contentObjectAttribute->attribute( 'id' ) ),
-                                                'from_page' => $redirectionURI,
-                                                'cancel_page' => $redirectionURI,
-                                                'persistent_data' => array( 'HasObjectInput' => 0 ) ), $module );
+                if( $blockINI->hasVariable( $block->attribute( 'type' ), 'DynamicBlockStartBrowseNode' ) )
+                {
+                    $browseParameters['start_node'] = $blockINI->variable( $block->attribute( 'type' ), 'DynamicBlockStartBrowseNode' );
+                }
+
+                eZContentBrowse::browse( $browseParameters, $module );
                 break;
             case 'custom_attribute':
                 $page = $contentObjectAttribute->content();
@@ -807,14 +870,29 @@ class eZPageType extends eZDataType
             case 'custom_attribute_browse':
                 $module = $parameters['module'];
                 $redirectionURI = $redirectionURI = $parameters['current-redirection-uri'];
+                $page = $contentObjectAttribute->content();
+                $zone = $page->getZone( $params[1] );
+                $block = $zone->getBlock( $params[2] );
+                $blockINI = eZINI::instance( 'block.ini' );
 
+                $browseParameters = array( 'action_name' => 'CustomAttributeBrowse',
+                                           'browse_custom_action' => array( 'name' => 'CustomActionButton[' . $contentObjectAttribute->attribute( 'id' ) . '_custom_attribute-' . $params[1] . '-' . $params[2] . '-' . $params[3] . ']',
+                                                                            'value' => $contentObjectAttribute->attribute( 'id' ) ),
+                                           'from_page' => $redirectionURI,
+                                           'cancel_page' => $redirectionURI,
+                                           'persistent_data' => array( 'HasObjectInput' => 0 ) );
 
-                eZContentBrowse::browse( array( 'action_name' => 'CustomAttributeBrowse',
-                                                'browse_custom_action' => array( 'name' => 'CustomActionButton[' . $contentObjectAttribute->attribute( 'id' ) . '_custom_attribute-' . $params[1] . '-' . $params[2] . '-' . $params[3] . ']',
-                                                                                 'value' => $contentObjectAttribute->attribute( 'id' ) ),
-                                                'from_page' => $redirectionURI,
-                                                'cancel_page' => $redirectionURI,
-                                                'persistent_data' => array( 'HasObjectInput' => 0 ) ), $module );
+                if( $blockINI->hasVariable( $block->attribute( 'type' ), 'CustomAttributeStartBrowseNode' ) )
+                {
+                    $customAttributeStartBrowseNode = $blockINI->variable( $block->attribute( 'type' ), 'CustomAttributeStartBrowseNode' );
+                    $customAttributeIdentifier = $params[3];
+                    if( isset( $customAttributeStartBrowseNode[$customAttributeIdentifier] ) )
+                    {
+                        $browseParameters['start_node'] = $customAttributeStartBrowseNode[$customAttributeIdentifier];
+                    }
+                }
+
+                eZContentBrowse::browse( $browseParameters, $module );
                 break;
             case 'remove_item':
                 $page = $contentObjectAttribute->content();
@@ -890,18 +968,15 @@ class eZPageType extends eZDataType
                             }
                         }
 
+                        $newItems = array();
+
                         foreach ( $zone->attribute( 'blocks' ) as $block )
                         {
                             $blockID = $block->attribute( 'id' );
-                            $blockType = $block->attribute( 'type' );
-                            $escapedBlockType = $db->escapeString( $blockType );
-                            $action = $block->attribute( 'action' );
                             $fetchParams = $block->attribute( 'fetch_params' );
-                            $zoneID = $block->attribute( 'zone_id' );
-                            $blockName = $block->attribute( 'name' );
-                            $escapedBlockName = $db->escapeString( $blockName );
+                            $escapedBlockName = $db->escapeString( $block->attribute( 'name' ) );
 
-                            switch ( $action )
+                            switch ( $block->attribute( 'action' ) )
                             {
                                 case 'remove':
                                     $db->query( "UPDATE ezm_block SET is_removed='1' WHERE id='" . $blockID . "'" );
@@ -930,11 +1005,11 @@ class eZPageType extends eZDataType
 
                                         $db->query( "INSERT INTO ezm_block ( id, zone_id, name, node_id, overflow_id, block_type, fetch_params, rotation_type, rotation_interval )
                                                                     VALUES ( '" . $blockID . "',
-                                                                             '" . $zoneID . "',
+                                                                             '" . $block->attribute( 'zone_id' ) . "',
                                                                              '" . $escapedBlockName . "',
                                                                              '" . $nodeID . "',
                                                                              '" . $overflowID . "',
-                                                                             '" . $escapedBlockType . "',
+                                                                             '" . $db->escapeString( $block->attribute( 'type' ) ) . "',
                                                                              '" . $fetchParams . "',
                                                                              '" . $rotationType . "',
                                                                              '" . $rotationInterval . "' )" );
@@ -955,7 +1030,7 @@ class eZPageType extends eZDataType
                                     }
 
                                     if ( $block->hasAttribute( 'overflow_id' ) )
-                                    $overflowID = $block->attribute( 'overflow_id' );
+                                        $overflowID = $block->attribute( 'overflow_id' );
 
                                     $db->query( "UPDATE ezm_block SET name='" . $escapedBlockName . "',
                                                                       overflow_id='" . $overflowID . "',
@@ -970,9 +1045,7 @@ class eZPageType extends eZDataType
                             {
                                 foreach ( $block->attribute( 'items' ) as $item )
                                 {
-                                    $action = $item->attribute( 'action' );
-
-                                    switch ( $action )
+                                    switch ( $item->attribute( 'action' ) )
                                     {
                                         case 'remove':
 
@@ -982,46 +1055,65 @@ class eZPageType extends eZDataType
                                             break;
 
                                         case 'add':
-                                            $itemCount = $db->arrayQuery( "SELECT COUNT( * ) as count FROM ezm_pool
-                                                              WHERE block_id='" . $blockID ."'
-                                                                 AND object_id='" . $item->attribute( 'object_id' ) . "'" );
-
-                                            if ( $itemCount[0]['count'] == 0 )
-                                            {
-                                                $db->query( "INSERT INTO ezm_pool ( block_id, object_id, node_id, priority, ts_publication )
-                                            VALUES ( '" . $blockID . "',
-                                                     '" . $item->attribute( 'object_id' )  . "',
-                                                     '" . $item->attribute( 'node_id' ) . "',
-                                                     '" . $item->attribute( 'priority' ) . "',
-                                                     '" . $item->attribute( 'ts_publication' ) . "'  )" );
-                                            }
+                                            $newItems[] =  array(
+                                                'blockID' => $blockID,
+                                                'objectID' => $item->attribute( 'object_id' ),
+                                                'nodeID' => $item->attribute( 'node_id' ),
+                                                'priority' => $item->attribute( 'priority' ),
+                                                'timestamp' => $item->attribute( 'ts_publication' ),
+                                            );
                                             break;
 
                                         case 'modify':
+                                            $updateQuery = array();
+
                                             if ( $item->hasAttribute( 'ts_publication' ) )
                                             {
-                                                $db->query( "UPDATE ezm_pool SET ts_publication='" . $item->attribute( 'ts_publication' ) . "'
-                                                                WHERE object_id='" . $item->attribute( 'object_id' ) . "'
-                                                                    AND block_id='" . $blockID ."'" );
+                                                $updateQuery[] = " ts_publication="
+                                                    . (int)$item->attribute( 'ts_publication' );
                                             }
+
+                                            //make sure to update different node locations of the same object
+                                            if ( $item->hasAttribute( 'node_id' ) )
+                                            {
+                                                $updateQuery[] = " node_id="
+                                                    . (int)$item->attribute( 'node_id' );
+                                            }
+
                                             if ( $item->hasAttribute( 'priority' ) )
                                             {
-                                                $db->query( "UPDATE ezm_pool SET priority='" . $item->attribute( 'priority' ) . "'
-                                                                WHERE object_id='" . $item->attribute( 'object_id' ) . "'
-                                                                    AND block_id='" . $blockID ."'" );
+                                                $updateQuery[] = " priority="
+                                                    . (int)$item->attribute( 'priority' );
                                             }
+
                                             //if there is ts_hidden and ts_visible, update the two fields. This is the case when add items from history
                                             if ( $item->hasAttribute( 'ts_hidden' ) && $item->hasAttribute( 'ts_visible' ) )
                                             {
-                                                $db->query( "UPDATE ezm_pool SET ts_hidden='" . $item->attribute( 'ts_hidden' ) . "',
-                                                             ts_visible='" . $item->attribute('ts_visible') . "' 
-                                                                WHERE object_id='" . $item->attribute( 'object_id' ) . "'
-                                                                    AND block_id='" . $blockID ."'" );
+                                                $updateQuery[] = " ts_hidden="
+                                                    . (int)$item->attribute( 'ts_hidden' )
+                                                    . ", ts_visible="
+                                                    . (int)$item->attribute( 'ts_visible' );
+                                            }
+
+                                            if ( !empty( $updateQuery ) )
+                                            {
+                                                $db->query(
+                                                    "UPDATE ezm_pool SET "
+                                                    . join( ", ", $updateQuery )
+                                                    . " WHERE object_id="
+                                                    . (int)$item->attribute( 'object_id' )
+                                                    . " AND block_id='" . $blockID ."'"
+                                                );
                                             }
                                             break;
                                     }
                                 }
                             }
+                        }
+
+                        if ( !empty( $newItems ) )
+                        {
+                            eZFlowPool::insertItems( $newItems );
                         }
                     }
                 }
@@ -1050,16 +1142,6 @@ class eZPageType extends eZDataType
         $contentObjectAttribute->content( $page );
         $contentObjectAttribute->store();
 
-        return true;
-    }
-
-    /**
-     * return true if the datatype can be indexed
-     *
-     * @return bool
-     */
-    function isIndexable()
-    {
         return true;
     }
 

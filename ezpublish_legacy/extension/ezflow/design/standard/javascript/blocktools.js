@@ -60,7 +60,11 @@ YAHOO.ez.BlockDD = function() {
             a.animate();
 
             var tableBody = srcEl.parentNode;
-            var postData = "";
+            var postData = "",
+                _tokenNode = document.getElementById('ezxform_token_js');
+            if ( _tokenNode ) {
+                postData = 'ezxform_token=' + _tokenNode.getAttribute('title') + '&';
+            }
             var items = Dom.getElementsByClassName("handler", "td", tableBody);
             
             for (i=0;i<items.length;i++) {
@@ -169,15 +173,34 @@ YAHOO.ez.BlockDD = function() {
 
 }();
 
+// function taken from the modernizr library
+YAHOO.ez.hasStorage = (function() {
+    var mod = '_ez_ls_check';
+
+    try {
+        localStorage.setItem(mod, mod);
+        localStorage.removeItem(mod);
+        return true;
+    } catch(e) {
+        return false;
+    }
+}());
+
 YAHOO.ez.BlockCollapse = function(){
     var Dom = YAHOO.util.Dom,
         Event = YAHOO.util.Event,
+        Cookie;
+
+    if ( !YAHOO.ez.hasStorage )
+    {
         Cookie = YAHOO.util.Cookie;
+    }
 
     var getTriggers = function() {
         var emTriggers = Dom.getElementsByClassName( "trigger", "em", "zone-tabs-container" );
         var aTriggers = Dom.getElementsByClassName( "trigger", "a", "zone-tabs-container" );
-        var triggers = emTriggers.concat(aTriggers);
+        var buttonTriggers = Dom.getElementsByClassName( "trigger", "button", "zone-tabs-container" );
+        var triggers = emTriggers.concat(aTriggers).concat(buttonTriggers);
 
         return triggers;
     };
@@ -237,6 +260,39 @@ YAHOO.ez.BlockCollapse = function(){
         
         return id;
     };
+
+    function setStorageItem(item) {
+
+        if( YAHOO.ez.hasStorage ){
+            localStorage.setItem( "eZPBS_" + item, "1" );
+        }
+        else{
+            Cookie.setSub("eZPageBlockState", item, "0", {path: "/"});
+        }
+    };
+
+    function removeStorageItem(item) {
+
+        if( YAHOO.ez.hasStorage ){
+            localStorage.removeItem( "eZPBS_" + item );
+        }
+        else{
+            Cookie.removeSub("eZPageBlockState", item, {path: "/"});
+        }
+    };
+    
+    function getStorageItemState(item) {
+
+        if( YAHOO.ez.hasStorage ){
+            return ( localStorage.getItem( "eZPBS_" + item ) === null )? "0" : "1";
+        }
+        else if (Cookie){
+            return (Cookie.getSub("eZPageBlockState", item) === null)? "0" : "1";
+        }
+        else{
+            return "0";
+        }
+    };
     
     var expandBlock = function(o) {
         Dom.replaceClass(o,"expand", "collapse" );
@@ -247,7 +303,8 @@ YAHOO.ez.BlockCollapse = function(){
             Dom.replaceClass( collapsedEl, "collapsed", "expanded" );
         }
         
-        Cookie.setSub("eZPageBlockState", getBlockID(o), "1", {path: "/"});
+        // we save only expanded blocks
+        setStorageItem(getBlockID(o));
     };
     
     var collapseBlock = function(o) {
@@ -259,16 +316,19 @@ YAHOO.ez.BlockCollapse = function(){
             Dom.replaceClass( expandedEl, "expanded", "collapsed" );
         }
         
-        Cookie.setSub("eZPageBlockState", getBlockID(o), "0", {path: "/"});
-    }
+        removeStorageItem(getBlockID(o));
+    };
     
     var updateBlockView = function(o) {
-        var id = getBlockID(o);
+        var state = getStorageItemState(getBlockID(o));
 
-        var state = Cookie.getSub("eZPageBlockState", id);
-
-        if(state == "1") {
+        if(state == "1")
+        {
             expandBlock(o);
+        }
+        else
+        {
+            collapseBlock(o);
         }
     };
     
@@ -326,10 +386,15 @@ var BlockDDInit = function() {
             
             if (drop.get('tagName').toLowerCase() === 'div' && drop.get('parentNode').get('id') === drag.get('parentNode').get('id') ) {
                 if (!goingUp) {
-                    drop = drop.get('nextSibling');
+                    var dropSibling = drop.get('nextSibling');
+                    if (!dropSibling) {
+                        drop.get('parentNode').append(drag);
+                    } else {
+                        drop.get('parentNode').insertBefore(drag, dropSibling);
+                    }
+                } else {
+                    drop.get('parentNode').insertBefore(drag, drop);
                 }
-
-                drop.get('parentNode').insertBefore(drag, drop);
                 e.drop.sizeShim();
             }
         });
@@ -381,21 +446,21 @@ var BlockDDInit = function() {
             data += '&zone=' + BlockDDInit.cfg.zone;
             Y.io.ez( 'ezflow::updateblockorder', { on: { success: _callBack }, method: 'POST', data: data } );
 
-            var newOrder = drag.get('node').get('parentNode').queryAll('.block-container');
+            var newOrder = drag.get('node').get('parentNode').all('.block-container');
             var index = 0;
             newOrder.each(function(v, k) {
-                var inputList = v.queryAll('.block-control');
+                var inputList = v.all('.block-control');
 
                 for(var i = 0; i < inputList.size(); i++) {
                     var input = inputList.item(i);
                     var name = input.get('name');
 
-                    if( name.match(/([\a-z]+)+_([\d]+)\[([\d]+)\]\[([\d]+)\]/) ) {
-                        name = name.replace( /([\a-z]+)+_([\d]+)\[([\d]+)\]\[([\d]+)\]/, "$1_$2[$3][" + index + "]" );
+                    if( name.match(/([a-z]+)+_([\d]+)\[([\d]+)\]\[([\d]+)\]/) ) {
+                        name = name.replace( /([a-z]+)+_([\d]+)\[([\d]+)\]\[([\d]+)\]/, "$1_$2[$3][" + index + "]" );
                     } else if ( name.match(/([a-zA-Z+]+)\[([\d-\w_]+)-([\d]+)+(-[\w_]+)?\]/) ) {
                         name = name.replace( /([a-zA-Z+]+)\[([\d-\w_]+)-([\d]+)+(-[\w_]+)?\]/, "$1[$2-" + index + "$4]" );
-                    } else if ( name.match(/([\a-zA-Z]+)+\_+([0-9])/) ) {
-                        name = name.replace( /([\a-zA-Z]+)+\_+([0-9])/, "$1_" + index );
+                    } else if ( name.match(/([a-zA-Z]+)+\_+([0-9])/) ) {
+                        name = name.replace( /([a-zA-Z]+)+\_+([0-9])/, "$1_" + index );
                     }
 
                     input.set('name', name);

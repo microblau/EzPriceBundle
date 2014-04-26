@@ -1,7 +1,5 @@
 <?php
 
-include_once( 'kernel/common/template.php' );
-
 $Module = $Params['Module'];
 $nodeID = $Params['NodeID'];
 
@@ -12,38 +10,36 @@ if ( $node instanceof eZContentObjectTreeNode )
 else
     $object = false;
 
-if ( $Module->isCurrentAction( 'Store' ) )
+if ( $Module->isCurrentAction( 'Store' ) && $Module->hasActionParameter( 'PlacementList' ) )
 {
-     $placementList = $Module->actionParameter( 'PlacementList' );
-     $db = eZDB::instance();
+    $newItems = array();
 
-     foreach( $placementList as $frontpageID => $zones )
-     {
-         foreach( $zones as $zoneID => $blocks)
-         {
-             foreach( $blocks as $blockID => $timestamp )
-             {
-                 $itemCount = $db->arrayQuery( "SELECT COUNT( * ) as count FROM ezm_pool
-                                   WHERE block_id='" . $blockID ."'
-                                      AND object_id='" . $object->attribute( 'id' ) . "'" );
+    foreach ( $Module->actionParameter( 'PlacementList' ) as $zones )
+    {
+        foreach ( $zones as $blocks)
+        {
+            foreach ( $blocks as $blockID => $timestamp )
+            {
+                $newItems[] = array(
+                    'blockID' => $blockID,
+                    'objectID' => $object->attribute( 'id' ),
+                    'nodeID' => $node->attribute( 'node_id' ),
+                    'priority' => 0,
+                    'timestamp' => $timestamp,
+                );
+            }
+        }
+    }
 
-                 if ( $itemCount[0]['count'] == 0 )
-                 {
-                     $db->query( "INSERT INTO ezm_pool ( block_id, object_id, node_id, priority, ts_publication )
-                                        VALUES ( '" . $blockID . "',
-                                                 '" . $object->attribute( 'id' )  . "',
-                                                 '" . $node->attribute( 'node_id' ) . "',
-                                                 '0',
-                                                 '" . $timestamp . "'  )" );
-                 }
-             }
-         }
-     }
+    if ( !empty( $newItems ) )
+    {
+        eZFlowPool::insertItems( $newItems );
+    }
 
     $Module->redirectTo( $node->urlAlias() );
 }
- 
-$tpl = templateInit();
+
+$tpl = eZTemplate::factory();
 
 $tpl->setVariable( 'node', $node );
 

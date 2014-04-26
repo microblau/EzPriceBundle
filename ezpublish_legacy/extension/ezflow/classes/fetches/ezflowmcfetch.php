@@ -20,7 +20,7 @@ class eZFlowMCFetch implements eZFlowFetchInterface
 
         $subTreeParameters = array();
         $subTreeParameters['AsObject'] = false;
-        $subTreeParameters['SortBy'] = array( 'published', true ); // first the oldest
+        $subTreeParameters['SortBy'] = array( 'published', false ); // first the latest
         $subTreeParameters['AttributeFilter'] = array(
             'and',
             array( 'published', '>', $publishedAfter ),
@@ -44,7 +44,7 @@ class eZFlowMCFetch implements eZFlowFetchInterface
         $fetchResult = array();
         foreach( $nodes as $node )
         {
-            $fetchResult[] = array( 'object_id' => $node['contentobject_id'],
+            $fetchResult[] = array( 'object_id' => $node['id'],
                                     'node_id' => $node['node_id'],
                                     'ts_publication' => $node['published'] );
         }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="de_DE" sourcelanguage="en">
+<TS version="2.0">
 <context>
     <name>design/admin/content/edit</name>
     <message>
@@ -95,27 +95,11 @@
         <source>Discard the draft that is being edited. This will also remove the translations that belong to the draft (if any).</source>
         <translation>Den aktuellen Entwurf verwerfen. Dies wird auch die zum Entwurf gehörende Übersetzungen löschen, wenn welche vorhanden sind.</translation>
     </message>
-    <message>
-        <source>Store draft and exit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Store the draft that is being edited and exit from edit mode. Use when you need to exit your work and return later to continue.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle fullscreen editing!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit &lt;%object_name&gt; (%class_name)</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>design/admin/contextsubmenu</name>
     <message>
-        <source>Push to block</source>
+        <source>Add to block in frontpage</source>
         <translation>Zu Block hinzufügen</translation>
     </message>
 </context>
@@ -181,6 +165,10 @@
         <source>Search</source>
         <translation type="unfinished">Suche</translation>
     </message>
+    <message>
+        <source>No search results found for:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/ezflow/edit/frontpage</name>
@@ -233,10 +221,6 @@
         <translation>Zu Block hinzufügen</translation>
     </message>
     <message>
-        <source>Edit %1 - %2</source>
-        <translation>%1 - %2 bearbeiten</translation>
-    </message>
-    <message>
         <source>Translating content from %from_lang to %to_lang</source>
         <translation>Übersetze Content von %from_lang nach %to_lang</translation>
     </message>
@@ -256,6 +240,10 @@
         <source>Discard draft</source>
         <translation>Entwurf verwerfen</translation>
     </message>
+    <message>
+        <source>Edit &lt;%object_name&gt; (%class_name)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/ezflow/embed/poll</name>
@@ -274,7 +262,7 @@
 <context>
     <name>design/ezflow/parts/website_toolbar</name>
     <message>
-        <source>Push to block</source>
+        <source>Add to block in frontpage</source>
         <translation>Zu Block hinzufügen</translation>
     </message>
     <message>
@@ -471,6 +459,18 @@
         <source>Rotating item.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current source:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Publishing schedule for: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/block/view</name>
@@ -502,11 +502,11 @@
     </message>
     <message>
         <source>Block name:</source>
-        <translation>Block Name:</translation>
+        <translation type="obsolete">Block Name:</translation>
     </message>
     <message>
         <source>Block type:</source>
-        <translation>Block Typ:</translation>
+        <translation type="obsolete">Block Typ:</translation>
     </message>
     <message>
         <source>Add block</source>
@@ -514,11 +514,19 @@
     </message>
     <message>
         <source>Expand</source>
-        <translation>Aufklappen</translation>
+        <translation type="obsolete">Aufklappen</translation>
     </message>
     <message>
         <source>Collapse</source>
-        <translation>Zuklappen</translation>
+        <translation type="obsolete">Zuklappen</translation>
+    </message>
+    <message>
+        <source>Expand All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collapse All</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -559,9 +567,19 @@
 <context>
     <name>ezflow/push</name>
     <message>
-        <location filename="push.php" line="51"/>
+        <source>Add to block in frontpage</source>
+        <translation type="obsolete">Zu Block hinzufügen</translation>
+    </message>
+    <message>
         <source>Push to block</source>
-        <translation>Zu Block hinzufügen</translation>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>kernel/workflow/event</name>
+    <message>
+        <source>eZ Page swap workflow event</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

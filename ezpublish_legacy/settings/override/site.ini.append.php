@@ -16,6 +16,7 @@ ActiveExtensions[]=objectrelationbrowse
 ActiveExtensions[]=utils
 ActiveExtensions[]=ezjscore
 ActiveExtensions[]=ezfind
+ActiveExtensions[]=ezdemo
 ActiveExtensions[]=ezflow
 ActiveExtensions[]=ezwebin
 ActiveExtensions[]=ezoe
@@ -39,7 +40,7 @@ ActiveExtensions[]=eflyoutube
 ActiveExtensions[]=cjw_newsletter
 ActiveExtensions[]=eflvaloraciones
 ActiveExtensions[]=googlesitemapgenerator
-ActiveExtensions[]=ez_network
+#ActiveExtensions[]=ez_network
 #ActiveExtensions[]=ezpaypal
 ActiveExtensions[]=envdata
 

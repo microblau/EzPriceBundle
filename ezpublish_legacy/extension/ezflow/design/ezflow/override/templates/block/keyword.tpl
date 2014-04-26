@@ -1,4 +1,5 @@
-{def $valid_nodes = $block.valid_nodes}
+{def $valid_nodes = $block.valid_nodes
+     $valid_node = false()}
 
 <div class="block-type-5items block-view-{$block.view}">
 
@@ -21,6 +22,7 @@
 
 </div>
 </div>
+{if $valid_nodes|count|gt( 1 )}
 <div class="col-2">
 <div class="col-content float-break">
 
@@ -39,15 +41,16 @@
 
 </div>
 </div>
+{/if}
 </div>
-
+{if $valid_nodes|count|gt( 2 )}
 {foreach $valid_nodes as $valid_node offset 2}
 
 {node_view_gui view='block_item' image_class='articlethumbnail' content_node=$valid_node}
 
 {/foreach}
-
+{/if}
 
 </div>
 
-{undef $valid_nodes}
+{undef $valid_nodes $valid_node}

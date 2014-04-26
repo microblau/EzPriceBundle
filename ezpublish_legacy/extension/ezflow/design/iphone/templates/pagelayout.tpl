@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$site.http_equiv.Content-language|wash}" lang="{$site.http_equiv.Content-language|wash}">
+<!DOCTYPE html>
+<html lang="{$site.http_equiv.Content-language|wash}">
 <head>
     
     {include uri='design:page_head.tpl'}
@@ -62,7 +62,7 @@
                 {ezscript_require( 'ezjsc::yui3' )}
                 <script type="text/javascript">
                 {literal}
-                    YUI().use('node','dom','event','anim', function(Y)  {
+                    YUI(YUI3_config).use('node','dom','event','anim', function(Y)  {
                         Y.one('#nav-menu-handler').on('click', function(e) {
                             var node = Y.one('#nav-menu-items');
                             node.setStyle( 'display', 'block' );

@@ -2,7 +2,8 @@
    and that list will change independently of this object. *}
 {set-block scope=root variable=cache_ttl}0{/set-block}
 
-{def $valid_node = $block.valid_nodes[0]}
+{def $valid_node = $block.valid_nodes[0]
+     $name = ''}
 
 {* Define default settings for the broadcaster flash *}
 {def $width=266
@@ -27,7 +28,6 @@
     
     <div class="content-media" id="flash-{$block.zone_id}-{$block.id}">
         <script type="text/javascript">
-        <!--
             var flash_id="flash-{$block.zone_id}-{$block.id}";
         
             var flashString = '<object type="application/x-shockwave-flash" data="{$flash}?{$flash_var}" width="{$width}" height="{$height}"> ';
@@ -43,8 +43,7 @@
             flashString += '<p>No <a href="http://www.macromedia.com/go/getflashplayer">Flash player</a> avaliable!</p>';
             flashString += '</object>' ;
             
-            insertMedia2( flash_id, flashString );            
-        //-->
+            insertMedia2( flash_id, flashString );
         </script>
 
         <noscript>
@@ -76,3 +75,4 @@
     
     
 </div>
+{undef $valid_node $width $height $flash $fileserver $streamserver $key $flash_list $flash_var $name}

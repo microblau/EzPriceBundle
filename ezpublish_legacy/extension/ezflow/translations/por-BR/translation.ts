@@ -95,27 +95,11 @@
         <source>Discard the draft that is being edited. This will also remove the translations that belong to the draft (if any).</source>
         <translation>Descartar o rascunho que está sendo editado. Também serão removidas as traduções que pertencem ao rascunho (se existirem).</translation>
     </message>
-    <message>
-        <source>Store draft and exit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Store the draft that is being edited and exit from edit mode. Use when you need to exit your work and return later to continue.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle fullscreen editing!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit &lt;%object_name&gt; (%class_name)</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>design/admin/contextsubmenu</name>
     <message>
-        <source>Push to block</source>
+        <source>Add to block in frontpage</source>
         <translation>Colocar em um bloco</translation>
     </message>
 </context>
@@ -179,7 +163,11 @@
     <name>design/ezflow/block/search</name>
     <message>
         <source>Search</source>
-        <translation type="unfinished">Pesquisar</translation>
+        <translation>Pesquisar</translation>
+    </message>
+    <message>
+        <source>No search results found for:</source>
+        <translation>Nenhum resultado foi encontrado para:</translation>
     </message>
 </context>
 <context>
@@ -233,10 +221,6 @@
         <translation>Adicionar ao bloco</translation>
     </message>
     <message>
-        <source>Edit %1 - %2</source>
-        <translation>Editar %1 - %2</translation>
-    </message>
-    <message>
         <source>Translating content from %from_lang to %to_lang</source>
         <translation>Traduzindo o conteúdo de %from_lang para %to_lang</translation>
     </message>
@@ -255,6 +239,10 @@
     <message>
         <source>Discard draft</source>
         <translation>Descartar o rascunho</translation>
+    </message>
+    <message>
+        <source>Edit &lt;%object_name&gt; (%class_name)</source>
+        <translation>Editar &lt;%object_name&gt; (%class_name)</translation>
     </message>
 </context>
 <context>
@@ -278,7 +266,7 @@
         <translation>Linha de tempo</translation>
     </message>
     <message>
-        <source>Push to block</source>
+        <source>Add to block in frontpage</source>
         <translation>Colocar em um bloco</translation>
     </message>
 </context>
@@ -339,22 +327,22 @@
     <name>design/iphone/page_footer</name>
     <message>
         <source>Visit:</source>
-        <translation type="unfinished"></translation>
+        <translation>Visite:</translation>
     </message>
     <message>
         <source>mobile site</source>
-        <translation type="unfinished"></translation>
+        <translation>site para celular</translation>
     </message>
     <message>
         <source>full site</source>
-        <translation type="unfinished"></translation>
+        <translation>site completo</translation>
     </message>
 </context>
 <context>
     <name>design/iphone/pagelayout</name>
     <message>
         <source>Navigation</source>
-        <translation type="unfinished"></translation>
+        <translation>Navegação</translation>
     </message>
 </context>
 <context>
@@ -465,11 +453,23 @@
     </message>
     <message>
         <source>Add item</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar item</translation>
     </message>
     <message>
         <source>Rotating item.</source>
-        <translation type="unfinished"></translation>
+        <translation>Item rotativo.</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nome:</translation>
+    </message>
+    <message>
+        <source>Current source:</source>
+        <translation>Fonte atual:</translation>
+    </message>
+    <message>
+        <source>Publishing schedule for: </source>
+        <translation>Programação de publicação para:</translation>
     </message>
 </context>
 <context>
@@ -502,11 +502,11 @@
     </message>
     <message>
         <source>Block name:</source>
-        <translation>Nome do bloco:</translation>
+        <translation type="obsolete">Nome do bloco:</translation>
     </message>
     <message>
         <source>Block type:</source>
-        <translation>Tipo de bloco:</translation>
+        <translation type="obsolete">Tipo de bloco:</translation>
     </message>
     <message>
         <source>Add block</source>
@@ -514,11 +514,19 @@
     </message>
     <message>
         <source>Expand</source>
-        <translation>Expandir</translation>
+        <translation type="obsolete">Expandir</translation>
     </message>
     <message>
         <source>Collapse</source>
-        <translation>Recolher</translation>
+        <translation type="obsolete">Recolher</translation>
+    </message>
+    <message>
+        <source>Expand All</source>
+        <translation>Expandir tudo</translation>
+    </message>
+    <message>
+        <source>Collapse All</source>
+        <translation>Contrair tudo</translation>
     </message>
 </context>
 <context>
@@ -559,8 +567,19 @@
 <context>
     <name>ezflow/push</name>
     <message>
+        <source>Add to block in frontpage</source>
+        <translation type="obsolete">Colocar em um bloco</translation>
+    </message>
+    <message>
         <source>Push to block</source>
-        <translation>Colocar em um bloco</translation>
+        <translation>Empurrar para o bloco</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/workflow/event</name>
+    <message>
+        <source>eZ Page swap workflow event</source>
+        <translation>Evento de workflow eZ Page swap</translation>
     </message>
 </context>
 </TS>

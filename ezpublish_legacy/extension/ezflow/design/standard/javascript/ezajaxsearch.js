@@ -14,9 +14,18 @@ var eZAJAXSearch = function()
                 {
                     var itemCount = response.content.SearchResult.length;
 
-                    var resultsTarget = Y.get(ret.cfg.searchresults);
+                    var resultsTarget = Y.one(ret.cfg.searchresults);
                     resultsTarget.set('innerHTML', '');
                     resultsTarget.addClass('loading');
+
+                    if( itemCount == 0 )
+                    {
+                        var template = ret.cfg.noresulttemplate;
+                        template = template.replace(/\{+search_string+\}/, response.content.SearchString);
+
+                        var itemContainer = Y.Node.create(template);
+                        resultsTarget.appendChild(itemContainer);
+                    }
 
                     for(var i = 0; i < itemCount; i++)
                     {
@@ -41,9 +50,10 @@ var eZAJAXSearch = function()
 
                         var itemContainer = Y.Node.create(template);
 
-                        resultsTarget.removeClass('loading');
                         resultsTarget.appendChild(itemContainer);
                     }
+
+                    resultsTarget.removeClass('loading');
                 }
             }
         }
@@ -117,7 +127,7 @@ var eZAJAXSearch = function()
             {
                 for ( var i = 0, l = ret.cfg.customSearchAttributes.length; i < l; i++ )
                 {
-                    data += '&' + Y.get( ret.cfg.customSearchAttributes[i] ).get('name') + '=' + Y.get( ret.cfg.customSearchAttributes[i] ).get('value'); 
+                    data += '&' + Y.one( ret.cfg.customSearchAttributes[i] ).get('name') + '=' + Y.one( ret.cfg.customSearchAttributes[i] ).get('value'); 
                 }
             }
 
@@ -146,8 +156,8 @@ var eZAJAXSearch = function()
             }
         }
 
-        Y.get(ret.cfg.searchbutton).on('click', handleClick);
-        Y.get(ret.cfg.searchstring).on('keypress', handleKeyPress);
+        Y.one(ret.cfg.searchbutton).on('click', handleClick);
+        Y.one(ret.cfg.searchstring).on('keypress', handleKeyPress);
     }
     ret.cfg = {};
 

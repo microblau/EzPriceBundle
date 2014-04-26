@@ -3,8 +3,8 @@
 // Definition of eZGmapLocation class
 //
 // SOFTWARE NAME: Blend Gmap Location Class
-// SOFTWARE RELEASE: 0.5
-// COPYRIGHT NOTICE: Copyright (C) 2006-2009 Blend Interactive
+// SOFTWARE RELEASE: 5.3.0-alpha1
+// COPYRIGHT NOTICE: Copyright (C) 2006-2009 Blend Interactive, 1999-2013 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -55,7 +55,10 @@ class eZGmapLocation extends eZPersistentObject
                                                         'name' => 'contentobject_attribute_id',
                                                         'datatype' => 'integer',
                                                         'default' => 0,
-                                                        'required' => true ),
+                                                        'required' => true,
+                                                        'foreign_class' => 'eZContentObjectAttribute',
+                                                        'foreign_attribute' => 'id',
+                                                        'multiplicity' => '1..*' ),
                                          'contentobject_version' => array( 
                                                         'name' => 'contentobject_version',
                                                         'datatype' => 'integer',

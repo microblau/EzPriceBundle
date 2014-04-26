@@ -2,25 +2,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Flow
-// SOFTWARE RELEASE: 2.0-0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 5.3.0-alpha1
+// COPYRIGHT NOTICE: Copyright (C) 1999-2014 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of version 2.0  of the GNU General
+//  Public License as published by the Free Software Foundation.
 //
-//   This program is distributed in the hope that it will be useful,
+//  This program is distributed in the hope that it will be useful,
 //   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
 //
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
+//  You should have received a copy of version 2.0 of the GNU General
+//  Public License along with this program; if not, write to the Free
+//  Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+//  MA 02110-1301, USA.
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -29,12 +27,12 @@ class eZFlowKeywordsFetch implements eZFlowFetchInterface
     public function fetch( $parameters, $publishedAfter, $publishedBeforeOrAt )
     {
         $ini = eZINI::instance( 'block.ini' );
-        
+
         $limit = 5;
         if ( $ini->hasVariable( 'Keywords', 'NumberOfValidItems' ) )
             $limit = $ini->variable( 'Keywords', 'NumberOfValidItems' );
-        
-        if ( isset( $parameters['Source'] ) )
+
+        if ( isset( $parameters['Source'] ) && $parameters['Source'] != '' )
         {
             $nodeID = $parameters['Source'];
             $node = eZContentObjectTreeNode::fetch( $nodeID, false, false ); // not as an object
@@ -45,19 +43,22 @@ class eZFlowKeywordsFetch implements eZFlowFetchInterface
         }
         else
         {
-            $nodeID = 0;
+            $nodeID = false;
         }
 
         $sortBy = array( 'published', false );
 
-        if ( isset( $parameters['Classes'] ) )
+        $classIDs =  array();
+        if ( isset( $parameters['Classes'] ) && $parameters['Classes'] != '' )
         {
             $classIdentifiers = explode( ',', $parameters['Classes'] );
-            $classIDs =  array();
             foreach( $classIdentifiers as $classIdentifier )
             {
                 $class = eZContentClass::fetchByIdentifier( $classIdentifier, false ); // not as an object
-                $classIDs[] = $class['id'];
+                if( $class )
+                {
+                    $classIDs[] = $class['id'];
+                }
             }
         }
 
@@ -74,6 +75,9 @@ class eZFlowKeywordsFetch implements eZFlowFetchInterface
                                                                           'include_duplicates' => false,
                                                                           'sort_by' => $sortBy,
                                                                           'strict_matching' => false ) );
+
+        if ( $result === null )
+            return array();
 
         $fetchResult = array();
         foreach( $result as $item )

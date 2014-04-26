@@ -2,25 +2,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Flow
-// SOFTWARE RELEASE: 2.0-0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 5.3.0-alpha1
+// COPYRIGHT NOTICE: Copyright (C) 1999-2014 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of version 2.0  of the GNU General
+//  Public License as published by the Free Software Foundation.
 //
-//   This program is distributed in the hope that it will be useful,
+//  This program is distributed in the hope that it will be useful,
 //   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
 //
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
+//  You should have received a copy of version 2.0 of the GNU General
+//  Public License along with this program; if not, write to the Free
+//  Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+//  MA 02110-1301, USA.
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -32,20 +30,20 @@ class eZFlowOperations
 
     /**
      * Checks if time based operations are enabled for publishing operation
-     * 
+     *
      * @static
      * @return bool
      */
     public static function updateOnPublish()
     {
         $ini = eZINI::instance('ezflow.ini');
-        
+
         return ( $ini->hasGroup( 'eZFlowOperations' ) && ( $ini->variable( 'eZFlowOperations', 'UpdateOnPublish' ) == 'enabled' ) );
     }
 
     /**
      * Update block pool for block with given $blockID
-     * 
+     *
      * @static
      * @param string $blockID
      * @param integer $publishedBeforeOrAt
@@ -69,9 +67,12 @@ class eZFlowOperations
             return 0;
         }
 
-        $fetchClass = $blockINI->variable( $block['block_type'], 'FetchClass' );
-        @include_once( "extension/ezflow/classes/fetches/$fetchClass.php" );
-        $fetchInstance = new $fetchClass();
+        $fetchClassOptions = new ezpExtensionOptions();
+        $fetchClassOptions->iniFile = 'block.ini';
+        $fetchClassOptions->iniSection = $block['block_type'];
+        $fetchClassOptions->iniVariable = 'FetchClass';
+
+        $fetchInstance = eZExtension::getHandlerClass( $fetchClassOptions );
 
         if ( !( $fetchInstance instanceof eZFlowFetchInterface ) )
         {
@@ -93,34 +94,37 @@ class eZFlowOperations
         }
         $parameters = array_merge( $fetchFixedParameters, $fetchParameters );
 
-        $newItems = $fetchInstance->fetch( $parameters, $block['last_update'], $publishedBeforeOrAt );
+        $newItems = array();
 
-        // Update pool
-        $db->begin();
-
-        foreach( $newItems as $item )
+        foreach ( $fetchInstance->fetch( $parameters, $block['last_update'], $publishedBeforeOrAt ) as $item )
         {
-            $objectID = $item['object_id'];
-            $nodeID = $item['node_id'];
-            $publicationTS = $item['ts_publication'];
-
-            $duplicityCheck = $db->arrayQuery( "SELECT object_id
-                                                FROM ezm_pool
-                                                WHERE block_id='" . $block['id'] . "'
-                                                  AND object_id=$objectID", array( 'limit' => 1 ) );
-            if ( $duplicityCheck )
-            {
-                eZDebug::writeNotice( "Object $objectID is already available in the block " . $block['id'] . ".", 'eZFlowOperations' );
-            }
-            else
-            {
-                $db->query( "INSERT INTO ezm_pool(block_id,object_id,node_id,ts_publication) VALUES ('" . $block['id'] . "',$objectID,$nodeID,$publicationTS)" );
-            }
+            $newItems[] = array(
+                'blockID' => $block['id'],
+                'objectID' => $item['object_id'],
+                'nodeID' => $item['node_id'],
+                'priority' => 0,
+                'timestamp' => $item['ts_publication'],
+            );
         }
 
-        $db->query( "UPDATE ezm_block SET last_update=$publishedBeforeOrAt WHERE id='" . $block['id'] . "'" );
+        $itemsToRemove = 0;
+        if ( isset( $parameters['Limit'] ) ) {
+            $count = $db->arrayQuery( "SELECT count(*) as count FROM ezm_pool WHERE block_id='".$block['id']."'" );
+            $itemsToRemove = (int)$count[0]['count'] + count($newItems) - (int)$parameters['Limit'];
+        }
 
-        $db->commit();
+        if ( !empty( $newItems ) || ( $itemsToRemove > 0 ) )
+        {
+            $db->begin();
+
+            if ( $itemsToRemove > 0 )
+                $db->query( "DELETE FROM ezm_pool WHERE block_id='".$block['id']."' ORDER BY ts_publication ASC LIMIT " . $itemsToRemove);
+            if ( !empty( $newItems ) )
+                eZFlowPool::insertItems( $newItems );
+
+            $db->query( "UPDATE ezm_block SET last_update=$publishedBeforeOrAt WHERE id='" . $block['id'] . "'" );
+            $db->commit();
+        }
 
         return count( $newItems );
     }
@@ -128,11 +132,21 @@ class eZFlowOperations
     /**
      * Do all time based operations on block pool such as rotation, updating
      * the queue, overflow as well as executes fetch interfaces.
-     * 
+     *
      * @static
      */
     public static function update( $nodeArray = array() )
     {
+        // log in user as anonymous if another user is logged in
+        if ( eZUser::isCurrentUserRegistered() )
+        {
+            $loggedInUser = eZUser::currentUser();
+            $anonymousUserId = eZUser::anonymousId();
+            $anonymousUser = eZUser::fetch( $anonymousUserId );
+            eZUser::setCurrentlyLoggedInUser( $anonymousUser, $anonymousUserId );
+            unset( $anonymousUser, $anonymousUserId );
+        }
+
         include_once( 'kernel/classes/ezcontentcache.php' );
 
         $ini = eZINI::instance( 'block.ini' );
@@ -166,7 +180,10 @@ class eZFlowOperations
 
         foreach ( $nodeArray as $nodeID )
         {
-            $time = time() - 5; // a safety margin
+            // a safety margin
+            $delay = intval( eZINI::instance( 'ezflow.ini' )->variable( 'SafetyDelay', 'DelayInSeconds' ) );
+
+            $time = time() - $delay;
 
             $nodeChanged = false;
 
@@ -181,7 +198,7 @@ class eZFlowOperations
 
             foreach ( $blocks as $block )
             {
-                $next[$block['id']] = $block['overflow_id'];
+                $next[$block['id']] = trim( $block['overflow_id'] ); // Make sure that block ID does not any have spaces
                 $blockByID[$block['id']] = $block;
             }
 
@@ -205,12 +222,12 @@ class eZFlowOperations
                 {
                     if ( !in_array( $nextID, $nextIDs, true ) )
                     {
-                        eZDebug::writeWarning( "Overflow for $currentID is $nextID, but no such block was found for the given node", 'eZ Flow Update Cronjob' );
+                        eZDebug::writeWarning( "Overflow for $currentID is $nextID, but no such block was found for the given node", __METHOD__ );
                         break;
                     }
                     if ( in_array( $nextID, $subCorrectOrder, true ) )
                     {
-                        eZDebug::writeWarning( "Loop detected, ignoring ($nextID should be after $currentID and vice versa)", 'eZ Flow Update Cronjob' );
+                        eZDebug::writeWarning( "Loop detected, ignoring ($nextID should be after $currentID and vice versa)", __METHOD__ );
                         break;
                     }
                     if ( in_array( $nextID, $correctOrder, true ) )
@@ -330,7 +347,7 @@ class eZFlowOperations
                     {
                         $numberOfValidItems = 20;
                         eZDebug::writeWarning( 'Number of valid items for ' . $block['block_type'] .
-                                               ' is not set; using the default value (' . $numberOfValidItems . ')', 'eZ Flow Update Cronjob' );
+                                               ' is not set; using the default value (' . $numberOfValidItems . ')', __METHOD__ );
                     }
 
                     $countToRemove = $countValid - $numberOfValidItems;
@@ -399,7 +416,7 @@ class eZFlowOperations
                                                                       AND object_id=$itemObjectID", array( 'limit' => 1 ) );
                                         if ( $duplicityCheck )
                                         {
-                                            eZDebug::writeNotice( "Object $itemObjectID is already available in the block $overflowID.", 'eZ Flow Update Cronjob' );
+                                            eZDebug::writeNotice( "Object $itemObjectID is already available in the block $overflowID.", __METHOD__ );
                                         }
                                         else
                                         {
@@ -441,7 +458,7 @@ class eZFlowOperations
                     {
                         $numberOfArchivedItems = 50;
                         eZDebug::writeWarning( 'Number of archived items for ' . $block['block_type'] .
-                    ' is not set; using the default value (' . $numberOfArchivedItems . ')', 'eZ Flow Update Cronjob' );
+                    ' is not set; using the default value (' . $numberOfArchivedItems . ')', __METHOD__ );
                     }
                     $countToRemove = $countArchived - $numberOfArchivedItems;
 
@@ -484,11 +501,16 @@ class eZFlowOperations
             }
         }
 
+        // log the previously logged in user if it was changed to anonymous earlier
+        if ( isset( $loggedInUser ) )
+        {
+            eZUser::setCurrentlyLoggedInUser( $loggedInUser, $loggedInUser->attribute( 'contentobject_id' ) );
+        }
     }
 
     /**
      * Clean up removed items from pool
-     * 
+     *
      * @static
      * @return integer Number of removed items from pool
      */
@@ -501,16 +523,15 @@ class eZFlowOperations
         $limit = 50;
         do
         {
-            $items = $db->arrayQuery( 'SELECT object_id FROM ezm_pool', array( 'offset' => $offset, 'limit' => $limit ) );
-            if ( count( $items ) == 0 )
+            $items = $db->arrayQuery( 'SELECT node_id FROM ezm_pool', array( 'offset' => $offset, 'limit' => $limit ) );
+            if ( empty( $items ) )
                 break;
 
             foreach( $items as $item )
             {
-                $rows = $db->arrayQuery( 'SELECT id, status FROM ezcontentobject WHERE id = ' . $item['object_id'] );
-                if ( count( $rows ) == 0 or // deleted
-                     ( count( $rows ) == 1 and $rows[0]['status'] == 2 ) ) // trashed
-                    $itemArray[] = $item['object_id'];
+                $rows = $db->arrayQuery( 'SELECT node_id FROM ezcontentobject_tree WHERE node_id = ' . $item['node_id'] );
+                if ( empty( $rows ) )
+                    $itemArray[] = $item['node_id'];
             }
 
             $offset += $limit;
@@ -521,12 +542,11 @@ class eZFlowOperations
         if ( $itemArrayCount > 0 )
         {
             $db->begin();
-            $db->query( 'DELETE FROM ezm_pool WHERE ' . $db->generateSQLINStatement( $itemArray, 'object_id' ) );
+            $db->query( 'DELETE FROM ezm_pool WHERE ' . $db->generateSQLINStatement( $itemArray, 'node_id' ) );
             $db->commit();
         }
-        
+
         return $itemArrayCount;
     }
 }
-
 ?>

@@ -2,29 +2,25 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Flow
-// SOFTWARE RELEASE: 1.1-0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 5.3.0-alpha1
+// COPYRIGHT NOTICE: Copyright (C) 1999-2014 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of version 2.0  of the GNU General
+//  Public License as published by the Free Software Foundation.
 //
-//   This program is distributed in the hope that it will be useful,
+//  This program is distributed in the hope that it will be useful,
 //   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
 //
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
+//  You should have received a copy of version 2.0 of the GNU General
+//  Public License along with this program; if not, write to the Free
+//  Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+//  MA 02110-1301, USA.
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
-
-include_once( 'kernel/common/template.php' );
 
 define( 'ROTATION_NONE', 0 );
 define( 'ROTATION_SIMPLE', 1 );
@@ -46,8 +42,8 @@ if( isset( $Params['NodeID'] ) )
 if( isset( $Params['Time'] ) )
     $time = (int)$Params['Time'];
 
-$db->createTempTable( 'CREATE TEMPORARY TABLE ' . $blockTMPTable . 
-                        ' AS SELECT * FROM ' . $blockTableDef['name'] . 
+$db->createTempTable( 'CREATE TEMPORARY TABLE ' . $blockTMPTable .
+                        ' AS SELECT * FROM ' . $blockTableDef['name'] .
                             ' WHERE node_id=\'' . $nodeID . '\'' );
 
 $tmpBlocks = $db->arrayQuery( 'SELECT id FROM ' . $blockTMPTable );
@@ -61,8 +57,8 @@ foreach ( $tmpBlocks as $tmpBlock )
     $tmpBlockIDArray[] = "'" . $tmpBlock['id'] . "'";
 }
 
-$db->createTempTable( 'CREATE TEMPORARY TABLE ' . $poolTMPTable . 
-                        ' AS SELECT * FROM ' . $poolTableDef['name'] . 
+$db->createTempTable( 'CREATE TEMPORARY TABLE ' . $poolTMPTable .
+                        ' AS SELECT * FROM ' . $poolTableDef['name'] .
                             ' WHERE ' . $db->generateSQLINStatement( $tmpBlockIDArray, 'block_id' ) );
 
 /* OPERATIONS CODE: START */
@@ -104,12 +100,12 @@ foreach ( $nextIDs as $id )
     {
         if ( !in_array( $nextID, $nextIDs, true ) )
         {
-            eZDebug::writeWarning( "Overflow for $currentID is $nextID, but no such block was found for the given node", 'eZ Flow Update Cronjob' );
+            eZDebug::writeWarning( "Overflow for $currentID is $nextID, but no such block was found for the given node", 'eZ Flow Preview view' );
             break;
         }
         if ( in_array( $nextID, $subCorrectOrder, true ) )
         {
-            eZDebug::writeWarning( "Loop detected, ignoring ($nextID should be after $currentID and vice versa)", 'eZ Flow Update Cronjob' );
+            eZDebug::writeWarning( "Loop detected, ignoring ($nextID should be after $currentID and vice versa)", 'eZ Flow Preview view' );
             break;
         }
         if ( in_array( $nextID, $correctOrder, true ) )
@@ -229,7 +225,7 @@ foreach ( $correctOrder as $blockID )
         {
             $numberOfValidItems = 20;
             eZDebug::writeWarning( 'Number of valid items for ' . $block['block_type'] .
-                                   ' is not set; using the default value (' . $numberOfValidItems . ')', 'eZ Flow Update Cronjob' );
+                                   ' is not set; using the default value (' . $numberOfValidItems . ')', 'eZ Flow Preview view' );
         }
 
         $countToRemove = $countValid - $numberOfValidItems;
@@ -298,7 +294,7 @@ foreach ( $correctOrder as $blockID )
                                                                   AND object_id=$objectID", array( 'limit' => 1 ) );
                             if ( $duplicityCheck )
                             {
-                                eZDebug::writeNotice( "Object $objectID is already available in the block $overflowID.", 'eZ Flow Update Cronjob' );
+                                eZDebug::writeNotice( "Object $objectID is already available in the block $overflowID.", 'eZ Flow Preview view' );
                             }
                             else
                             {
@@ -340,7 +336,7 @@ foreach ( $correctOrder as $blockID )
         {
             $numberOfArchivedItems = 50;
             eZDebug::writeWarning( 'Number of archived items for ' . $block['block_type'] .
-                                    ' is not set; using the default value (' . $numberOfArchivedItems . ')', 'eZ Flow Update Cronjob' );
+                                    ' is not set; using the default value (' . $numberOfArchivedItems . ')', 'eZ Flow Preview view' );
         }
         $countToRemove = $countArchived - $numberOfArchivedItems;
 
@@ -371,7 +367,7 @@ foreach ( $correctOrder as $blockID )
 
 /* OPERATIONS CODE: END */
 $timelineINI = eZINI::instance('timeline.ini');
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $httpCharset = eZTextCodec::httpCharset();
 $node = eZContentObjectTreeNode::fetch( $nodeID );
 

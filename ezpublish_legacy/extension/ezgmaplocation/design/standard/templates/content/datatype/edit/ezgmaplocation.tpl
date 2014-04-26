@@ -2,36 +2,41 @@
 {if is_set( $attribute_base )|not}
   {def $attribute_base = 'ContentObjectAttribute'}
 {/if}
+{* Make sure to normalize floats from db  *}
+{def $latitude  = $attribute.content.latitude|explode(',')|implode('.')
+     $longitude = $attribute.content.longitude|explode(',')|implode('.')}
 <div class="block">
 
 <div class="element">
 {run-once}
-{def $keys = ezini('SiteSettings','GMapsKey')}
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$keys[ezsys( 'hostname' )]}&amp;sensor=true" type="text/javascript"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor={ezini('GMapSettings', 'UseSensor', 'ezgmaplocation.ini')}"></script>
 <script type="text/javascript">
 {literal}
 function eZGmapLocation_MapControl( attributeId, latLongAttributeBase )
 {
-    var mapid = 'ezgml-map-' + attributeId, latid  = 'ezcoa-' + latLongAttributeBase + '_latitude', longid = 'ezcoa-' + latLongAttributeBase + '_longitude';
-    var geocoder = null, addressid = 'ezgml-address-' + attributeId;
+    var mapid = 'ezgml-map-' + attributeId;
+    var latid  = 'ezcoa-' + latLongAttributeBase + '_latitude';
+    var longid = 'ezcoa-' + latLongAttributeBase + '_longitude';
+    var geocoder = null;
+    var addressid = 'ezgml-address-' + attributeId;
+    var zoommax = 13;
 
     var showAddress = function()
     {
         var address = document.getElementById( addressid ).value;
         if ( geocoder )
         {
-            geocoder.getLatLng( address, function( point )
+            geocoder.geocode( {'address' : address}, function( results, status )
             {
-                if ( !point )
+                if ( status == google.maps.GeocoderStatus.OK )
                 {
-                    alert( address + " not found" );
+                    map.setOptions( { center: results[0].geometry.location, zoom : zoommax } );
+										marker.setPosition(  results[0].geometry.location );
+                    updateLatLngFields( results[0].geometry.location );
                 }
                 else
                 {
-                    map.setCenter( point, 13 );
-                    map.clearOverlays();
-                    map.addOverlay( new GMarker( point ) );
-                    updateLatLngFields( point );
+                     alert( address + " not found" );
                 }
             });
         }
@@ -52,10 +57,9 @@ function eZGmapLocation_MapControl( attributeId, latLongAttributeBase )
         document.getElementById( addressid ).value = document.getElementById('ezgml_hidden_address_' + attributeId ).value;
         if ( document.getElementById( latid ).value && document.getElementById( latid ).value != 0 )
         {
-            var point = new GLatLng( document.getElementById( latid ).value, document.getElementById( longid ).value );
+            var point = new google.maps.LatLng( document.getElementById( latid ).value, document.getElementById( longid ).value );
             //map.setCenter(point, 13);
-            map.clearOverlays();
-            map.addOverlay( new GMarker(point) );
+            marker.setPosition( point );
             map.panTo( point );
         }
         document.getElementById( 'ezgml-restore-button-' + attributeId ).disabled = true;
@@ -67,7 +71,8 @@ function eZGmapLocation_MapControl( attributeId, latLongAttributeBase )
     {
         navigator.geolocation.getCurrentPosition( function( position )
         {
-            var location = '', point = new GLatLng(  position.coords.latitude, position.coords.longitude );
+            var location = '';
+            var point = new google.maps.LatLng( position.coords.latitude, position.coords.longitude );
 
             if ( navigator.geolocation.type == 'Gears' && position.gearsAddress )
                 location = [position.gearsAddress.city, position.gearsAddress.region, position.gearsAddress.country].join(', ');
@@ -75,9 +80,8 @@ function eZGmapLocation_MapControl( attributeId, latLongAttributeBase )
                 location = [position.address.city, position.address.region, position.address.country].join(', ');
 
             document.getElementById( addressid ).value = location;
-            map.setCenter( point, 13 );
-            map.clearOverlays();
-            map.addOverlay( new GMarker(point) );
+            map.setOptions( {zoom: zoommax, center: point} );
+            marker.setPosition( point );
             updateLatLngFields( point );
         },
         function( e )
@@ -87,56 +91,58 @@ function eZGmapLocation_MapControl( attributeId, latLongAttributeBase )
         { 'gearsRequestAddress': true });
     };
 
-    if (GBrowserIsCompatible())
+		var startPoint = null;
+		var zoom = 0;
+		var map = null;
+		var marker = null;
+        
+    if ( document.getElementById( latid ).value && document.getElementById( latid ).value != 0 )
     {
-        var startPoint = null, zoom = 0, map = new GMap2( document.getElementById( mapid ) );
-        if ( document.getElementById( latid ).value && document.getElementById( latid ).value != 0 )
-        {
-            startPoint = new GLatLng( document.getElementById( latid ).value, document.getElementById( longid ).value );
-            zoom = 13;
-        }
-        else
-        {
-            startPoint = new GLatLng(0,0);
-        }
-        map.addControl( new GSmallMapControl() );
-        map.addControl( new GMapTypeControl() );
-        map.setCenter( startPoint, zoom );
-        map.addOverlay( new GMarker( startPoint ) );
-        geocoder = new GClientGeocoder();
-        GEvent.addListener( map, 'click', function( newmarker, point )
-        {
-            map.clearOverlays();
-            map.addOverlay( new GMarker( point ) );
-            map.panTo( point );
-            updateLatLngFields( point );
-            document.getElementById( addressid ).value = '';
-        });
-
-        document.getElementById( 'ezgml-address-button-' + attributeId ).onclick = showAddress;
-        document.getElementById( 'ezgml-restore-button-' + attributeId ).onclick = restoretLatLngFields;
-
-        if ( navigator.geolocation )
-        {
-            document.getElementById( 'ezgml-mylocation-button-' + attributeId ).onclick = getUserPosition;
-            document.getElementById( 'ezgml-mylocation-button-' + attributeId ).className = 'button';
-            document.getElementById( 'ezgml-mylocation-button-' + attributeId ).disabled = false;
-        }
+        startPoint = new google.maps.LatLng( document.getElementById( latid ).value, document.getElementById( longid ).value );
+        zoom = zoommax;
     }
+    else
+    {
+        startPoint = new google.maps.LatLng( 0, 0 );
+    }
+    
+    map = new google.maps.Map( document.getElementById( mapid ), { center: startPoint, zoom : zoom, mapTypeId: google.maps.MapTypeId.ROADMAP } );
+    marker = new google.maps.Marker({ map: map, position: startPoint, draggable: true });
+    google.maps.event.addListener( marker, 'dragend', function( event ){
+    	updateLatLngFields( event.latLng );
+			document.getElementById( addressid ).value = '';
+    })
+    
+    geocoder = new google.maps.Geocoder();
+    google.maps.event.addListener( map, 'click', function( event )
+    {
+			marker.setPosition( event.latLng );
+			map.panTo( event.latLng );
+			updateLatLngFields( event.latLng );
+			document.getElementById( addressid ).value = '';
+     });
+
+
+    document.getElementById( 'ezgml-address-button-' + attributeId ).onclick = showAddress;
+    document.getElementById( 'ezgml-restore-button-' + attributeId ).onclick = restoretLatLngFields;
+
+    if ( navigator.geolocation )
+    {
+        document.getElementById( 'ezgml-mylocation-button-' + attributeId ).onclick = getUserPosition;
+        document.getElementById( 'ezgml-mylocation-button-' + attributeId ).className = 'button';
+        document.getElementById( 'ezgml-mylocation-button-' + attributeId ).disabled = false;
+    }
+ 
 }
 {/literal}
 </script>
 {/run-once}
 
 <script type="text/javascript">
-<!--
-
 if ( window.addEventListener )
     window.addEventListener('load', function(){ldelim} eZGmapLocation_MapControl( {$attribute.id}, "{if ne( $attribute_base, 'ContentObjectAttribute' )}{$attribute_base}-{/if}{$attribute.contentclassattribute_id}_{$attribute.contentclass_attribute_identifier}" ) {rdelim}, false);
 else if ( window.attachEvent )
     window.attachEvent('onload', function(){ldelim} eZGmapLocation_MapControl( {$attribute.id}, "{if ne( $attribute_base, 'ContentObjectAttribute' )}{$attribute_base}-{/if}{$attribute.contentclassattribute_id}_{$attribute.contentclass_attribute_identifier}" ) {rdelim} );
-
--->
 </script>
 
     <input type="text" id="ezgml-address-{$attribute.id}" size="62" name="{$attribute_base}_data_gmaplocation_address_{$attribute.id}" value="{$attribute.content.address}"/>
@@ -144,20 +150,20 @@ else if ( window.attachEvent )
     <input class="button-disabled" type="button" id="ezgml-restore-button-{$attribute.id}" value="{'Restore'|i18n('extension/ezgmaplocation/datatype')}" onclick="javascript:void( null ); return false" disabled="disabled"  title="{'Restores location and address values to what it was on page load.'|i18n('extension/ezgmaplocation/datatype')}" />
 
     <input id="ezgml_hidden_address_{$attribute.id}" type="hidden" name="ezgml_hidden_address_{$attribute.id}" value="{$attribute.content.address}" disabled="disabled" />
-    <input id="ezgml_hidden_latitude_{$attribute.id}" type="hidden" name="ezgml_hidden_latitude_{$attribute.id}" value="{$attribute.content.latitude}" disabled="disabled" />
-    <input id="ezgml_hidden_longitude_{$attribute.id}" type="hidden" name="ezgml_hidden_longitude_{$attribute.id}" value="{$attribute.content.longitude}" disabled="disabled" />
+    <input id="ezgml_hidden_latitude_{$attribute.id}" type="hidden" name="ezgml_hidden_latitude_{$attribute.id}" value="{$latitude}" disabled="disabled" />
+    <input id="ezgml_hidden_longitude_{$attribute.id}" type="hidden" name="ezgml_hidden_longitude_{$attribute.id}" value="{$longitude}" disabled="disabled" />
     <div id="ezgml-map-{$attribute.id}" style="width: 500px; height: 280px; margin-top: 2px;"></div>
 </div>
 
 <div class="element">
   <div class="block">
     <label>{'Latitude'|i18n('extension/ezgmaplocation/datatype')}:</label>
-    <input id="ezcoa-{if ne( $attribute_base, 'ContentObjectAttribute' )}{$attribute_base}-{/if}{$attribute.contentclassattribute_id}_{$attribute.contentclass_attribute_identifier}_latitude" class="box ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" type="text" name="{$attribute_base}_data_gmaplocation_latitude_{$attribute.id}" value="{$attribute.content.latitude}" />
+    <input id="ezcoa-{if ne( $attribute_base, 'ContentObjectAttribute' )}{$attribute_base}-{/if}{$attribute.contentclassattribute_id}_{$attribute.contentclass_attribute_identifier}_latitude" class="box ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" type="text" name="{$attribute_base}_data_gmaplocation_latitude_{$attribute.id}" value="{$latitude}" />
   </div>
   
   <div class="block">
     <label>{'Longitude'|i18n('extension/ezgmaplocation/datatype')}:</label>
-    <input id="ezcoa-{if ne( $attribute_base, 'ContentObjectAttribute' )}{$attribute_base}-{/if}{$attribute.contentclassattribute_id}_{$attribute.contentclass_attribute_identifier}_longitude" class="box ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" type="text" name="{$attribute_base}_data_gmaplocation_longitude_{$attribute.id}" value="{$attribute.content.longitude}" />
+    <input id="ezcoa-{if ne( $attribute_base, 'ContentObjectAttribute' )}{$attribute_base}-{/if}{$attribute.contentclassattribute_id}_{$attribute.contentclass_attribute_identifier}_longitude" class="box ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" type="text" name="{$attribute_base}_data_gmaplocation_longitude_{$attribute.id}" value="{$longitude}" />
   </div>
 
   <div class="block">

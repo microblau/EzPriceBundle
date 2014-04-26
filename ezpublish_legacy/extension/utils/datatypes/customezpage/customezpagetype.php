@@ -329,7 +329,6 @@ class customEZPageType extends eZPageType
                         $page = $contentObjectAttribute->content();
                         $zone = null;
                         $block = null;
-die( 'nanan' );  
                         if( isset( $params[1] ) )
                             $zone = $page->getZone( $params[1] );
 

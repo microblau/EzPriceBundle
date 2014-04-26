@@ -2,30 +2,25 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Flow
-// SOFTWARE RELEASE: 1.1-0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 5.3.0-alpha1
+// COPYRIGHT NOTICE: Copyright (C) 1999-2014 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
+//  This program is free software; you can redistribute it and/or
+//  modify it under the terms of version 2.0  of the GNU General
+//  Public License as published by the Free Software Foundation.
 //
-//   This program is distributed in the hope that it will be useful,
+//  This program is distributed in the hope that it will be useful,
 //   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
 //
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
+//  You should have received a copy of version 2.0 of the GNU General
+//  Public License along with this program; if not, write to the Free
+//  Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+//  MA 02110-1301, USA.
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
-
-include_once( 'extension/ezflow/classes/ezflowpool.php' );
-include_once( 'extension/ezflow/classes/ezpageblockitem.php' );
 
 $http = eZHTTPTool::instance();
 
@@ -56,6 +51,7 @@ if ( $zone )
     $block = $zone->getBlock( $blockID );
 
 $validCount = count( $block->attribute('valid') );
+$waitingCount = count( $block->attribute('waiting') );
 
 foreach( $items as $key => $item )
 {
@@ -87,6 +83,8 @@ foreach( $items as $key => $item )
                 {
                     $tmpItem = $block->addItem( new eZPageBlockItem() );
                     $tmpItem->setAttribute( 'priority', $validCount );
+                    $tmpItem->setAttribute( 'ts_visible', $blockItem->attribute( 'ts_visible' ) );
+                    $tmpItem->setAttribute( 'ts_hidden', $blockItem->attribute( 'ts_hidden' ) );
                     $tmpItem->setAttribute( 'object_id', $blockItem->attribute( 'object_id' ) );
                     $tmpItem->setAttribute( 'action', 'modify' );
                 }
@@ -99,15 +97,19 @@ foreach( $items as $key => $item )
         {
             if( $blockItem->attribute( 'object_id' ) == $itemParams['i'] )
             {
+                $waitingCount -= 1;
+
                 if( $blockItem->toBeAdded() )
                 {
-                    $blockItem->setAttribute( 'priority', $key + 1 );
+                    $blockItem->setAttribute( 'priority', $waitingCount );
                 }
                 else
                 {
                     $tmpItem = $block->addItem( new eZPageBlockItem() );
-                    $tmpItem->setAttribute( 'priority', $key + 1 );
+                    $tmpItem->setAttribute( 'priority', $waitingCount );
                     $tmpItem->setAttribute( 'object_id', $blockItem->attribute( 'object_id' ) );
+                    $tmpItem->setAttribute( 'ts_visible', $blockItem->attribute( 'ts_visible' ) );
+                    $tmpItem->setAttribute( 'ts_hidden', $blockItem->attribute( 'ts_hidden' ) );
                     $tmpItem->setAttribute( 'ts_publication', $blockItem->attribute( 'ts_publication' ) );
                     $tmpItem->setAttribute( 'action', 'modify' );
                 }
@@ -127,7 +129,7 @@ function createParamsFromStr( $str )
 
     foreach( explode( '_', $str ) as $id )
     {
-        $elem = split( ':', $id );
+        $elem = explode( ':', $id );
 
         $key = isset( $elem[0] ) ? $elem[0] : null;
         $value = isset( $elem[1] ) ? $elem[1] : null;
