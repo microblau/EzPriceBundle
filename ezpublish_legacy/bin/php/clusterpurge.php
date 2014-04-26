@@ -2,13 +2,13 @@
 /**
  * Cluster files purge script
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
-require 'autoload.php';
+require_once 'autoload.php';
 
 $cli = eZCLI::instance();
 $script = eZScript::instance( array( 'description' => ( "eZ Publish cluster files purge\n" .
@@ -26,8 +26,8 @@ $options = $script->getOptions( "[dry-run][iteration-sleep:][iteration-limit:][m
 array( 'dry-run' => 'Test mode, output the list of affected files without removing them',
        'iteration-sleep' => 'Amount of seconds to sleep between each iteration when performing a purge operation, can be a float. Default is one second.',
        'iteration-limit' => 'Amount of items to remove in each iteration when performing a purge operation. Default is 100.',
-       'memory-monitoring' => 'If set, memory usage will be logged in var/log/clusterpurge.log.',
-       'scopes' => 'Comma separated list of file types to purge. Possible values are: classattridentifiers, classidentifiers, content, expirycache, statelimitations, template-block, user-info-cache, viewcache, wildcard-cache-index, image, binaryfile, media',
+       'memory-monitoring' => 'Generates memory monitoring output. If set, memory usage will be logged in var/log/clusterpurge.log.',
+       'scopes' => 'Comma separated list of file types to purge. Possible values are: classattridentifiers, classidentifiers, content, expirycache, statelimitations, user-info-cache, viewcache, wildcard-cache-index, image, binaryfile, media.',
        'expiry' => 'Number of days since the file was expired. Only files older than this will be purged. Default is 30, minimum is 1.' ) );
 $sys = eZSys::instance();
 

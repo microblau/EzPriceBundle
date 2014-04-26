@@ -1,4 +1,4 @@
-/* 
+/*
  * Styles specific for the setup wizard for Etna
  *
  * Uses some html5 and css3 features, but with safe defaults to be able to be also work on older browsers.
@@ -25,7 +25,7 @@ section {
 body {
     text-align: center;
     /* Photo attributed (under CC for commercial use) to gnuckx, source: http://www.flickr.com/photos/gnuckx/5350361507/  */
-    background: #030101 url('../images/setup/2/etna_black_lava.png') no-repeat right top;
+    background: #fff url('../images/setup/2/ez-ecosystem-virtuous-circle.png') no-repeat right top;
 }
 
 
@@ -36,12 +36,12 @@ section#page {
     text-align: left;
     font-family: Verdana, sans-serif;
     border-radius: 10px;
-    background-color: #fafafa;
-    background-color: rgba(255,255,255,0.85);
+    background-color: #f0f0f0;
+    background-color: rgba(245,245,245,0.85);
 }
 
 header {
-    background: transparent url('../images/setup/2/ez-publish-enterprise-40x460-png-24.png') no-repeat 24px 20px;
+    background: transparent url('../images/setup/2/ez-publish-logo-title.png') no-repeat 24px 20px;
     height: 60px;
 }
 
@@ -155,6 +155,13 @@ h1, h2, h3, h4, h5, h6, th.label, legend {
 
 fieldset {
     margin-top: 1em;
+}
+
+div.information {
+    background-color: #eeeeee;
+    border-radius: 5px;
+    padding: 1% 2%;
+    border: 1px solid #c6c6c6;
 }
 
 a, a:link, a:link.setup_final, div.setup_help a:link,

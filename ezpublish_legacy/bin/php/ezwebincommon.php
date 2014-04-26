@@ -2,9 +2,9 @@
 /**
  * File containing the ezwebincommon.php script.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -530,7 +530,7 @@ function templateLookObjectData( $params )
                                 "language_settings" => array( "MatrixTitle" => "Language settings",
                                                               "MatrixDefinition" => $languageSettingsMatrixDefinition,
                                                               "MatrixCells" => $siteaccessAliasTable ),
-                                "footer_text" => array( "DataText" => "Copyright &#169; 1999-2010 eZ Systems AS. All rights reserved." ),
+                                "footer_text" => array( "DataText" => "Copyright &#169; 1999-2014 eZ Systems AS. All rights reserved." ),
                                 "hide_powered_by" => array( "DataInt" => 0 ),
                                 "footer_script" => array( "DataText" => "" ) );
 

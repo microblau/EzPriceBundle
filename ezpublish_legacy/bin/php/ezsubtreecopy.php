@@ -3,9 +3,9 @@
 /**
  * File containing the ezsubtreecopy.php script.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -13,7 +13,7 @@
 // file  bin/php/ezsubtreecopy.php
 
 // script initializing
-require 'autoload.php';
+require_once 'autoload.php';
 
 $cli = eZCLI::instance();
 $script = eZScript::instance( array( 'description' => ( "\n" .
@@ -50,7 +50,7 @@ function copyPublishContentObject( $sourceObject,
                                    &$syncObjectIDListSrc, &$syncObjectIDListNew,
                                    $allVersions = false, $keepCreator = false, $keepTime = false )
 {
-    global $cli;
+    $cli = eZCLI::instance();
 
     $sourceObjectID = $sourceObject->attribute( 'id' );
 
@@ -199,20 +199,6 @@ function copyPublishContentObject( $sourceObject,
         {
             die( "Copy Subtree Error: Algoritm ERROR! Cannot find source parent node ID in source parent node ID's list of contentobject being copied." );
         }
-        // Create unique remote_id
-        $newRemoteID = eZRemoteIdUtility::generate( 'node' );
-        $oldRemoteID = $newNode->attribute( 'remote_id' );
-        $newNode->setAttribute( 'remote_id', $newRemoteID );
-        // Change parent_remote_id for object assignments
-        foreach ( $objAssignments as $assignment )
-        {
-            if ( $assignment->attribute( 'parent_remote_id' ) == $oldRemoteID )
-            {
-                 $assignment->setAttribute( 'parent_remote_id', $newRemoteID );
-                 $assignment->store();
-            }
-        }
-        $newNode->store();
     }
 
     // Update "is_invisible" attribute for the newly created node.
@@ -359,7 +345,7 @@ while ( count( $sourceNodeList ) > 0 )
             array_splice( $sourceNodeList, $i, 1 );
         else
         {
-            $sourceObject =& $sourceNodeList[ $i ]->object();
+            $sourceObject = $sourceNodeList[$i]->object();
             $srcSubtreeNodeIDlist = ($sourceNodeID == $sourceSubTreeMainNodeID) ? $syncNodeIDListSrc : $sourceNodeIDList;
 
             $copyResult = copyPublishContentObject( $sourceObject,
