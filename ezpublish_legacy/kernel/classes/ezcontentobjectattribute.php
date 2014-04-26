@@ -2,9 +2,9 @@
 /**
  * File containing the eZContentObjectAttribute class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -30,6 +30,7 @@ class eZContentObjectAttribute extends eZPersistentObject
         $this->InputParameters = false;
         $this->HasValidationError = false;
         $this->DataTypeCustom = null;
+        $this->DataTypeString = null;
         $this->eZPersistentObject( $row );
     }
 
@@ -188,15 +189,19 @@ class eZContentObjectAttribute extends eZPersistentObject
                                                 $asObject );
     }
 
-    /*!
-     Fetches all contentobject attributes which relates to the contentclass attribute \a $contentClassAttributeID.
-     \return An array with contentobject attributes.
-     \param $contentClassAttributeID The ID of the contentclass attribute
-     \param $asObject If \c true objects will be returned, otherwise associative arrays are returned.
-     \param $version The version the of contentobject attributes to fetch or all version if \c false.
-     \param $contentObjectID The ID the of contentobject to fetch or all objects if \c false.
-    */
-    static function fetchSameClassAttributeIDList( $contentClassAttributeID, $asObject = true, $version = false, $contentObjectID = false )
+    /**
+     * Fetches all contentobject attributes which relate to the contentclass attribute $contentClassAttributeID.
+     *
+     * @param int $contentClassAttributeID  The ID of the contentclass attribute
+     * @param bool $asObject                If true objects will be returned, otherwise associative arrays are returned.
+     * @param int|bool $version             The version the of contentobject attributes to fetch, or all versions if false.
+     * @param int|bool $contentObjectID     The ID the of contentobject to fetch, or all objects if false.
+     * @param array|null $limit             An associative array with limitiations, can contain
+     *                                      - 'offset': Numerical value defining the start offset for the fetch
+     *                                      - 'length': Numerical value defining the max number of items to return
+     * @return eZContentObjectAttribute[]|array|null    An array with contentobject attributes.
+     */
+    static function fetchSameClassAttributeIDList( $contentClassAttributeID, $asObject = true, $version = false, $contentObjectID = false, $limit = null )
     {
         $conditions = array( "contentclassattribute_id" => $contentClassAttributeID );
         if ( $version !== false )
@@ -207,7 +212,7 @@ class eZContentObjectAttribute extends eZPersistentObject
                                                     null,
                                                     $conditions,
                                                     null,
-                                                    null,
+                                                    $limit,
                                                     $asObject);
     }
 
@@ -274,7 +279,7 @@ class eZContentObjectAttribute extends eZPersistentObject
             // store the content data for this attribute
             $dataType->storeObjectAttribute( $this );
 
-            eZPersistentObject::store( $fieldFilters );
+            parent::store( $fieldFilters );
             $dataType->postStore( $this );
             $db->commit();
         }
@@ -301,7 +306,7 @@ class eZContentObjectAttribute extends eZPersistentObject
         $this->setAttribute( 'data_type_string', $classAttribute->attribute( 'data_type_string' ) );
         $this->updateSortKey( false );
 
-        eZPersistentObject::store();
+        parent::store();
     }
 
     /*!
@@ -338,7 +343,7 @@ class eZContentObjectAttribute extends eZPersistentObject
             if ( $storeData )
             {
                 $dataType->storeObjectAttribute( $this );
-                $return = eZPersistentObject::store();
+                $return = parent::store();
             }
         }
 
@@ -352,7 +357,7 @@ class eZContentObjectAttribute extends eZPersistentObject
     */
     function storeNewRow()
     {
-        return eZPersistentObject::store();
+        return parent::store();
     }
 
     /*!
@@ -638,7 +643,7 @@ class eZContentObjectAttribute extends eZPersistentObject
 
     /*!
       Tries to fixup the input text to be acceptable.
-    �*/
+    ???*/
     function fixupInput( $http, $base )
     {
         $dataType = $this->dataType();
@@ -660,7 +665,7 @@ class eZContentObjectAttribute extends eZPersistentObject
 
     /*!
       Validates the information collection data.
-   �*/
+   ???*/
     function validateInformation( $http, $base,
                                   &$inputParameters, $validationParameters = array() )
     {
@@ -884,11 +889,11 @@ class eZContentObjectAttribute extends eZPersistentObject
             $dataType->postInitializeObjectAttribute( $this, $currentVersion, $originalContentObjectAttribute );
     }
 
-    /*!
-     Remove the attribute by using the datatype.
-     \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
-     the calls within a db transaction; thus within db->begin and db->commit.
-    */
+    /**
+     * Remove the attribute $id by using the datatype.
+     * @param int $id
+     * @param int $currentVersion Version number to remove the attribute for. If null, all versions are removed.
+     */
     function removeThis( $id, $currentVersion = null )
     {
         $dataType = $this->dataType();
@@ -1026,9 +1031,10 @@ class eZContentObjectAttribute extends eZPersistentObject
         return $tmp;
     }
 
-    /*!
-     Returns the data type class for the current attribute.
-    */
+    /**
+     * Returns the data type class for the current attribute.
+     * @return eZDataType
+     */
     function dataType()
     {
         $dataType = null;
@@ -1472,6 +1478,8 @@ class eZContentObjectAttribute extends eZPersistentObject
     public $ContentClassAttributeName;
     public $ContentClassAttributeIsInformationCollector;
     public $ContentClassAttributeIsRequired;
+
+    public $ValidationParameters = array();
 }
 
 ?>

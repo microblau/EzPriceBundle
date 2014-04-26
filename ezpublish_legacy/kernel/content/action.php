@@ -1,17 +1,13 @@
 <?php
 /**
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
 $http = eZHTTPTool::instance();
 $module = $Params['Module'];
-
-/* We retrieve the class ID for users as this is used in many places in this
- * code in order to be able to cleanup the user-policy cache. */
-$userClassIDArray = eZUser::contentClassIDs();
 
 if ( $module->hasActionParameter( 'LanguageCode' ) )
     $languageCode = $module->actionParameter( 'LanguageCode' );
@@ -390,7 +386,6 @@ else if ( $module->isCurrentAction( 'SwapNode' ) )
     if ( !$object )
         return $module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel', array() );
     $objectID = $object->attribute( 'id' );
-    $objectVersion = $object->attribute( 'current_version' );
 
     if ( $module->hasActionParameter( 'NewNode' ) )
     {
@@ -420,8 +415,6 @@ else if ( $module->isCurrentAction( 'SwapNode' ) )
     eZContentCacheManager::clearContentCacheIfNeeded( $objectID );
 
     $selectedObject = $selectedNode->object();
-    $selectedObjectID = $selectedObject->attribute( 'id' );
-    $selectedObjectVersion = $selectedObject->attribute( 'current_version' );
     $selectedNodeParentNodeID = $selectedNode->attribute( 'parent_node_id' );
 
 
@@ -1004,7 +997,6 @@ else if ( $http->hasPostVariable( 'MoveButton' ) )
             if ( !$parentObject )
                 return $module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel', array() );
             $parentObjectID = $parentObject->attribute( 'id' );
-            $parentClass = $parentObject->contentClass();
 
             $ignoreNodesSelect = array_unique( $ignoreNodesSelect );
             $ignoreNodesSelectSubtree = array_unique( $ignoreNodesSelectSubtree );
@@ -1132,8 +1124,6 @@ else if ( $http->hasPostVariable( "ActionAddToNotification" ) )
 else if ( $http->hasPostVariable( "ContentObjectID" )  )
 {
     $objectID = $http->postVariable( "ContentObjectID" );
-    $action = $http->postVariable( "ContentObjectID" );
-
 
     // Check which action to perform
     if ( $http->hasPostVariable( "ActionAddToBasket" ) )
@@ -1152,8 +1142,7 @@ else if ( $http->hasPostVariable( "ContentObjectID" )  )
     }
     else if ( $http->hasPostVariable( "ActionAddToWishList" ) )
     {
-        $user = eZUser::currentUser();
-        if ( !$user->isLoggedIn() )
+        if ( !eZUser::isCurrentUserRegistered() )
             return $module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
 
         $shopModule = eZModule::exists( "shop" );
@@ -1416,33 +1405,8 @@ else if ( $module->isCurrentAction( 'ClearViewCache' ) or
         {
             return $module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
         }
-        $limit = 50;
-        $offset = 0;
-        $params = array( 'AsObject' => false,
-                         'Depth' => false,
-                         'Limitation' => array() ); // Empty array means no permission checking
-        $subtreeCount = $node->subTreeCount( $params );
-        while ( $offset < $subtreeCount )
-        {
-            $params['Offset'] = $offset;
-            $params['Limit'] = $limit;
-            $subtree = $node->subTree( $params );
-            $offset += count( $subtree );
-            if ( count( $subtree ) == 0 )
-            {
-                break;
-            }
-            $objectIDList = array();
-            foreach ( $subtree as $subtreeNode )
-            {
-                $objectIDList[] = $subtreeNode['contentobject_id'];
-            }
-            $objectIDList = array_unique( $objectIDList );
-            unset( $subtree );
 
-            foreach ( $objectIDList as $objectID )
-                eZContentCacheManager::clearContentCacheIfNeeded( $objectID );
-        }
+        eZContentObjectTreeNode::clearViewCacheForSubtree( $node );
     }
 
     if ( $module->hasActionParameter( 'CurrentURL' ) )

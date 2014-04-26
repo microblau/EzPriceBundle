@@ -2,9 +2,9 @@
 /**
  * File containing the eZPreferences class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -64,8 +64,8 @@ class eZPreferences
         // We must store the database changes if:
         // a - The current user is logged in (ie. not anonymous)
         // b - We have specified a specific user (not the current).
-        //    in which case isLoggedIn() will fail.
-        if ( $storeUserID !== false or $user->isLoggedIn() )
+        //    in which case isRegistered() will fail.
+        if ( $storeUserID !== false or $user->isRegistered() )
         {
             // Only store in DB if user is logged in or we have
             // a specific user ID defined

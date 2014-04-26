@@ -2,9 +2,9 @@
 /**
  * File containing the eZDFSFileHandlerDFSBackend class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -85,6 +85,11 @@ class eZDFSFileHandlerDFSBackend
             $ret = $this->createFile( $dstFilePath, file_get_contents( $srcFilePath ) );
         }
 
+        if ( $ret )
+        {
+            $ret = $this->copyTimestamp( $srcFilePath, $dstFilePath );
+        }
+
         $this->accumulatorStop();
 
         return $ret;
@@ -95,19 +100,41 @@ class eZDFSFileHandlerDFSBackend
      * if specified
      *
      * @param string $srcFilePath Local file path to copy from
-     * @param string $dstFilePath
+     * @param bool|string $dstFilePath
      *        Optional path to copy to. If not specified, $srcFilePath is used
+     * @return bool
      */
     public function copyToDFS( $srcFilePath, $dstFilePath = false )
     {
         $this->accumulatorStart();
 
+        $srcFileContents = file_get_contents( $srcFilePath );
+        if ( $srcFileContents === false )
+        {
+            $this->accumulatorStop();
+            eZDebug::writeError( "Error getting contents of file 'FS://$srcFilePath'.", __METHOD__ );
+            return false;
+        }
+
         if ( $dstFilePath === false )
         {
             $dstFilePath = $srcFilePath;
         }
+
         $dstFilePath = $this->makeDFSPath( $dstFilePath );
-        $ret = $this->createFile( $dstFilePath, file_get_contents( $srcFilePath ), true );
+        $ret = $this->createFile( $dstFilePath, $srcFileContents, true );
+        if ( $ret )
+        {
+            // Double checking if the file has been correctly created
+            $srcFileSize = strlen( $srcFileContents );
+            clearstatcache( true, $dstFilePath );
+            $dstFileSize = filesize( $dstFilePath );
+            if ( $dstFileSize != $srcFileSize )
+            {
+                eZDebug::writeError( "Size ($dstFileSize) of written data for file FS://$dstFilePath does not match expected size of original DFS file ($srcFileSize)", __METHOD__ );
+                return false;
+            }
+        }
 
         $this->accumulatorStop();
 
@@ -158,7 +185,7 @@ class eZDFSFileHandlerDFSBackend
      *
      * @param string $filePath File path
      * @param int $startOffset Starting offset
-     * @param false|int $length Length to transmit, false means everything
+     * @param bool|int $length Length to transmit, false means everything
      * @return bool true, or false if operation failed
      */
     public function passthrough( $filePath, $startOffset = 0, $length = false )
@@ -280,14 +307,47 @@ class eZDFSFileHandlerDFSBackend
         chmod( $filePath, $this->filePermissionMask );
     }
 
+    /**
+     * copies the timestamp from the original file to the destination file
+     * @param string $srcFilePath
+     * @param string $dstFilePath
+     * @return bool False if the timestamp is not set with success on target file
+     */
+    protected function copyTimestamp( $srcFilePath, $dstFilePath )
+    {
+        clearstatcache( true, $srcFilePath );
+        $originalTimestamp = filemtime( $srcFilePath );
+        if ( !$originalTimestamp )
+        {
+            return false;
+        }
+
+        return touch( $dstFilePath, $originalTimestamp);
+    }
+
     protected function createFile( $filePath, $contents, $atomic = true )
     {
+        // $contents can result from a failed file_get_contents(). In this case
+        if ( $contents === false )
+            return false;
+
         $createResult = eZFile::create( basename( $filePath ), dirname( $filePath ), $contents, $atomic );
 
         if ( $createResult )
             $this->fixPermissions( $filePath );
 
         return $createResult;
+    }
+
+    /**
+     * Returns size of a file in the DFS backend, from a relative path.
+     *
+     * @param string $filePath The relative file path we want to get size of
+     * @return int
+     */
+    public function getDfsFileSize( $filePath )
+    {
+        return filesize( $this->makeDFSPath( $filePath ) );
     }
 
     /**

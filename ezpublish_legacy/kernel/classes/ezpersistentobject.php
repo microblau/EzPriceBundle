@@ -2,9 +2,9 @@
 /**
  * File containing the eZPersistentObject class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -28,7 +28,6 @@
  * </code>
  * 
  * @package eZKernel
- * @method fetch
  */
 class eZPersistentObject
 {
@@ -99,7 +98,7 @@ class eZPersistentObject
      * @param array $fields
      * @return void
      */
-    public static function replaceFieldsWithShortNames( $db, $fieldDefs, &$fields )
+    public static function replaceFieldsWithShortNames( eZDBInterface $db, array $fieldDefs, &$fields )
     {
         if ( !$db->useShortNames() || !$fields )
             return;
@@ -131,6 +130,37 @@ class eZPersistentObject
 
         }
         $fields = $short_fields_names;
+    }
+
+    /**
+     * For the given array $fields treats its keystable fields names and replaces them
+     * with long names if there is an alias in $fieldDefs.
+     *
+     * @access protected
+     * @param eZDBInterface $db
+     * @param array $fieldDefs
+     * @param array $fields
+     * @return void
+     */
+    protected static function replaceFieldsWithLongNames( eZDBInterface $db, array $fieldDefs, &$fields )
+    {
+        if ( !$db->useShortNames() || !$fields )
+            return;
+
+        foreach ( $fieldDefs as $fieldName => $fieldDefinition )
+        {
+            if ( !isset( $fieldDefinition['short_name'] ) )
+            {
+                continue;
+            }
+            $shortName = $fieldDefinition['short_name'];
+            if ( !isset( $fields[$shortName] ) )
+            {
+                continue;
+            }
+            $fields[$fieldName] = $fields[$shortName];
+            unset( $fields[$shortName] );
+        }
     }
 
     /**
@@ -370,15 +400,13 @@ class eZPersistentObject
             if ( $value !== null                                &&
                  $field_def['datatype'] === 'string'            &&
                  array_key_exists( 'max_length', $field_def )   &&
-                 $field_def['max_length'] > 0                   &&
-                 strlen( $value ) > $field_def['max_length'] )
+                 $field_def['max_length'] > 0 )
             {
-                $obj->setAttribute( $field_name, substr( $value, 0, $field_def['max_length'] ) );
-                eZDebug::writeDebug( $value, "truncation of $field_name to max_length=". $field_def['max_length'] );
+                $obj->setAttribute( $field_name, $db->truncateString( $value, $field_def['max_length'], $field_name ) );
             }
             $bindDataTypes = array( 'text' );
             if ( $db->bindingType() != eZDBInterface::BINDING_NO &&
-                 strlen( $value ) > 2000 &&
+                 $db->countStringSize( $value ) > 2000 &&
                  is_array( $field_def ) &&
                  in_array( $field_def['datatype'], $bindDataTypes  )
                  )
@@ -918,6 +946,17 @@ class eZPersistentObject
      */
     public static function handleRows( $rows, $class_name, $asObject )
     {
+        $objectDefinition = $class_name::definition();
+
+        if ( is_array( $rows ) )
+        {
+            $db = eZDB::instance();
+            foreach( $rows as $row )
+            {
+                self::replaceFieldsWithLongNames( $db, $objectDefinition['fields'], $row );
+            }
+        }
+
         if ( $asObject )
         {
             $objects = array();
@@ -1181,7 +1220,7 @@ class eZPersistentObject
 
             $bindDataTypes = array( 'text' );
             if ( $db->bindingType() != eZDBInterface::BINDING_NO &&
-                 strlen( $value ) > 2000 &&
+                 $db->countStringSize( $value ) > 2000 &&
                  is_array( $fieldDef ) &&
                  in_array( $fieldDef['datatype'], $bindDataTypes  )
                  )
@@ -1300,7 +1339,7 @@ class eZPersistentObject
 
         if ( isset( $def["functions"][$attr] ) )
         {
-            return $this->$functions[$attr]();
+            return $this->$def["functions"][$attr]();
         }
 
         eZDebug::writeError( "Attribute '$attr' does not exist", $def['class_name'] . '::attribute' );

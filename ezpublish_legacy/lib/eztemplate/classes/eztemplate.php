@@ -2,9 +2,9 @@
 /**
  * File containing the eZTemplate class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package lib
  */
 
@@ -901,6 +901,8 @@ class eZTemplate
         if ( $returnResourceData )
         {
             $resourceData['result'] = $result;
+            $resourceData['errors'] = $this->ErrorLog();
+            $resourceData['warnings'] = $this->WarningLog();
             return $resourceData;
         }
         return $result;
@@ -1494,21 +1496,6 @@ class eZTemplate
         }
 
         $this->Variables[$namespace][$var] = $val;
-    }
-
-    /**
-     * Sets the template variable $var to the value $val by ref
-     *
-     * @deprecated Since 4.4, have not used references since 3.10
-     * @uses eZTemplate::setVariable()
-     *
-     * @param string $var
-     * @param string $val
-     * @param string $namespace (optional)
-     */
-    function setVariableRef( $var, $val, $namespace = '' )
-    {
-        $this->setVariable( $var, $val, $namespace );
     }
 
     /**
@@ -2398,15 +2385,17 @@ class eZTemplate
             if (!isset($GLOBALS['eZTemplateDebugInternalsEnabled']) && $ini->variable( 'TemplateSettings', 'Debug' ) == 'enabled' )
                 eZTemplate::setIsDebugEnabled( true );
 
-            $compatAutoLoadPath = $ini->variableArray( 'TemplateSettings', 'AutoloadPath' );
-            $autoLoadPathList   = $ini->variable( 'TemplateSettings', 'AutoloadPathList' );
-
-            $extensionAutoloadPath = $ini->variable( 'TemplateSettings', 'ExtensionAutoloadPath' );
-            $extensionPathList     = eZExtension::expandedPathList( $extensionAutoloadPath, 'autoloads/' );
-
-            $autoLoadPathList = array_unique( array_merge( $compatAutoLoadPath, $autoLoadPathList, $extensionPathList ) );
-
-            $instance->setAutoloadPathList( $autoLoadPathList );
+            $instance->setAutoloadPathList(
+                array_unique(
+                    array_merge(
+                        $ini->variable( 'TemplateSettings', 'AutoloadPathList' ),
+                        eZExtension::expandedPathList(
+                            $ini->variable( 'TemplateSettings', 'ExtensionAutoloadPath' ),
+                            'autoloads/'
+                        )
+                    )
+                )
+            );
             $instance->autoload();
 
             $instance->registerResource( eZTemplateDesignResource::instance() );

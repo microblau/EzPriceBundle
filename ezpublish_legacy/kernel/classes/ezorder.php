@@ -2,9 +2,9 @@
 /**
  * File containing the eZOrder class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -394,6 +394,7 @@ class eZOrder extends eZPersistentObject
 
         // add last product info
         if ( !empty( $productArray ) )
+        {
             $productItemArray[] = array(
                 'name' => $name,
                 // Reference to the entry that will contain the ContentObject at the end
@@ -401,10 +402,11 @@ class eZOrder extends eZPersistentObject
                 'product_info' => $productInfo
             );
         
-        // Fetching all ContentObject ids in one query, filling the hash with the corresponding ContentObject
-        foreach ( eZContentObject::fetchList( true, array( "id" => array( array_keys( $contentObjectIDHash ) ) ) ) as $contentObject )
-        {
-            $contentObjectIDHash[$contentObject->ID] = $contentObject;
+            // Fetching all ContentObject ids in one query, filling the hash with the corresponding ContentObject
+            foreach ( eZContentObject::fetchList( true, array( "id" => array( array_keys( $contentObjectIDHash ) ) ) ) as $contentObject )
+            {
+                $contentObjectIDHash[$contentObject->ID] = $contentObject;
+            }
         }
 
         return array(

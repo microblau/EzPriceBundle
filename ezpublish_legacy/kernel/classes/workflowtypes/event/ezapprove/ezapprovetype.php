@@ -2,9 +2,9 @@
 /**
  * File containing the eZApproveType class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -291,7 +291,7 @@ class eZApproveType extends eZWorkflowEventType
             $approveUserIDArray = array_unique( $approveUserIDArray );
 
             $collaborationID = false;
-            $db = eZDb::instance();
+            $db = eZDB::instance();
             $taskResult = $db->arrayQuery( 'select workflow_process_id, collaboration_id from ezapprove_items where workflow_process_id = ' . $process->attribute( 'id' )  );
             if ( count( $taskResult ) > 0 )
                 $collaborationID = $taskResult[0]['collaboration_id'];
@@ -378,6 +378,14 @@ class eZApproveType extends eZWorkflowEventType
         return $returnState;
     }
 
+    /**
+     * @param eZHTTPTool $http
+     * @param $base
+     * @param eZWorkflowEvent $workflowEvent
+     * @param $validation
+     *
+     * @return bool|int
+     */
     function validateHTTPInput( $http, $base, $workflowEvent, &$validation )
     {
         $returnState = eZInputValidator::STATE_ACCEPTED;
@@ -385,6 +393,15 @@ class eZApproveType extends eZWorkflowEventType
 
         if ( !$http->hasSessionVariable( 'BrowseParameters' ) )
         {
+            // No validation when deleting to avoid blocking deletion of invalid items
+            if (
+                $http->hasPostVariable( 'DeleteApproveUserIDArray_' . $workflowEvent->attribute( 'id' ) ) ||
+                $http->hasPostVariable( 'DeleteApproveGroupIDArray_' . $workflowEvent->attribute( 'id' ) )
+            )
+            {
+                return eZInputValidator::STATE_ACCEPTED;
+            }
+
             // check approve-users
             $approversIDs = array_unique( $this->attributeDecoder( $workflowEvent, 'approve_users' ) );
             if ( is_array( $approversIDs ) and
@@ -597,7 +614,7 @@ class eZApproveType extends eZWorkflowEventType
         $authorID = $userID;
         $collaborationItem = eZApproveCollaborationHandler::createApproval( $contentobjectID, $contentobjectVersion,
                                                                             $authorID, $editors );
-        $db = eZDb::instance();
+        $db = eZDB::instance();
         $db->query( 'INSERT INTO ezapprove_items( workflow_process_id, collaboration_id )
                        VALUES(' . $process->attribute( 'id' ) . ',' . $collaborationItem->attribute( 'id' ) . ' ) ' );
     }
@@ -692,7 +709,7 @@ class eZApproveType extends eZWorkflowEventType
               case 'DeleteContentObject':
               {
                      $contentObjectID = (int)$attr[ $attrKey ];
-                     $db = eZDb::instance();
+                     $db = eZDB::instance();
                      // Cleanup "User who approves content"
                      $db->query( "UPDATE ezworkflow_event
                                   SET    data_int1 = '0'
@@ -725,7 +742,7 @@ class eZApproveType extends eZWorkflowEventType
 
     function checkApproveCollaboration( $process, $event )
     {
-        $db = eZDb::instance();
+        $db = eZDB::instance();
         $taskResult = $db->arrayQuery( 'select workflow_process_id, collaboration_id from ezapprove_items where workflow_process_id = ' . $process->attribute( 'id' )  );
         $collaborationID = $taskResult[0]['collaboration_id'];
         $collaborationItem = eZCollaborationItem::fetch( $collaborationID );

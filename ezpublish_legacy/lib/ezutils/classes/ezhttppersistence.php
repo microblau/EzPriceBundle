@@ -2,9 +2,9 @@
 /**
  * File containing the eZHTTPPersistence class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package lib
  */
 
@@ -83,6 +83,15 @@ class eZHTTPPersistence
                     $post_value = $http->postVariable( $post_var );
                     if ( $index === false )
                     {
+                        if ( $post_value !== null                              &&
+                             $field_member['datatype'] === 'string'            &&
+                             array_key_exists( 'max_length', $field_member )   &&
+                             $field_member['max_length'] > 0                   &&
+                             strlen( $post_value ) > $field_member['max_length'] )
+                        {
+                            $post_value = substr( $post_value, 0, $field_member['max_length'] );
+                            eZDebug::writeDebug( $post_value, "truncation of $field_name to max_length=". $field_member['max_length'] );
+                        }
                         $object->setAttribute( $field_name, $post_value );
                     }
                     else if ( is_string( $index ) )
@@ -93,79 +102,6 @@ class eZHTTPPersistence
                     {
                         $object->setAttribute( $field_name, $post_value[$index] );
                     }
-                }
-            }
-        }
-    }
-
-    /**
-     * This function has some serious flaws and will be removed in a future release
-     * Goes trough all fields defined in \a $def and tries to find a post variable
-     * which is named \a $base_name, field name and "checked" with _ between items.
-     * If the post variable is an array the id of the current object is matched against
-     * that array, if one is found the matched field is set to be true otherwise false.
-     * If no post variable was found with that signature the field is ignored.
-     * Example of name:
-     * <code>
-     *   In the HTML code use:<br/>
-     *   <input type="checkbox" name="ContentClassAttribute_is_searchable_checked[]" value="some_id" />
-     * </code>
-     *
-     * @deprecated
-     * @param string $base_name
-     * @param array $def
-     * @param object|object[] $objects
-     * @param eZHTTPTool $http
-     * @param bool $is_array
-     */
-    static function handleChecked( $base_name, array $def, $objects, eZHTTPTool $http, $is_array = true )
-    {
-        if ( $is_array )
-        {
-            foreach( $objects as $object )
-            {
-                eZHTTPPersistence::handleCheckedElement( $base_name, $def, $object, $http );
-            }
-        }
-        else
-        {
-            eZHTTPPersistence::handleCheckedElement( $base_name, $def, $objects, $http );
-        }
-    }
-
-    /**
-     * Helper function for handleChecked().
-     *
-     * @deprecated This function has some serious flaws and will be removed in a future release
-     * @param string $base_name
-     * @param array $def
-     * @param object $object
-     * @param eZHTTPTool $http
-     */
-    static function handleCheckedElement( $base_name, array $def, $object, eZHTTPTool $http )
-    {
-        $fields = $def["fields"];
-        $keys = $def["keys"];
-        $id = $object->attribute( "id" );
-        foreach ( $fields as $field_name => $field_member )
-        {
-            if ( !in_array( $field_name, $keys ) )
-            {
-                $post_var = $base_name . "_" . $field_name . "_checked";
-                if ( $http->hasPostVariable( $post_var ) or $field_name == "is_searchable" or $field_name == "is_required"   )
-                {
-                    $value = false;
-                    $post_value = $http->postVariable( $post_var );
-                    if ( is_array( $post_value ) &&
-                         in_array( $id, $post_value ) )
-                    {
-                        $value = true;
-                    }
-                    else
-                    {
-                         $value = false;
-                    }
-                    $object->setAttribute( $field_name, $value );
                 }
             }
         }

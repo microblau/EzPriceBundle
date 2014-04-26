@@ -1,12 +1,10 @@
 <?php
 /**
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
-
-$http = eZHTTPTool::instance();
 
 $tpl = eZTemplate::factory();
 
@@ -93,11 +91,16 @@ if ( isset( $keys['layout'] ) )
 else
     $layout = false;
 
-$viewParameters = array( 'offset' => $Offset,
-                         'year' => $Year,
-                         'month' => $Month,
-                         'day' => $Day,
-                         'namefilter' => false );
+$viewParameters = array(
+    'offset' => $Offset,
+    'year' => $Year,
+    'month' => $Month,
+    'day' => $Day,
+    'namefilter' => false,
+    '_custom' => $UserParameters
+);
+// Keep the following array_merge for BC
+// All user parameters will be exposed as direct variables in template.
 $viewParameters = array_merge( $viewParameters, $UserParameters );
 
 $user = eZUser::currentUser();
@@ -158,34 +161,47 @@ if ( ( isset( $operationResult['status'] ) && $operationResult['status'] != eZMo
 }
 else
 {
-    $localVars = array( "cacheFileArray", "NodeID",   "Module", "tpl",
-                        "LanguageCode",   "ViewMode", "Offset", "ini",
-                        "cacheFileArray", "viewParameters",  "collectionAttributes",
-                        "validation" );
+    $args = compact(
+        array(
+            "NodeID", "Module", "tpl", "LanguageCode", "ViewMode", "Offset", "ini", "viewParameters", "collectionAttributes", "validation"
+        )
+    );
     if ( $viewCacheEnabled )
     {
-        $user = eZUser::currentUser();
+        $cacheFileArray = eZNodeviewfunctions::generateViewCacheFile(
+            eZUser::currentUser(),
+            $NodeID,
+            $Offset,
+            $layout,
+            $LanguageCode,
+            $ViewMode,
+            $viewParameters,
+            false
+        );
 
-        $cacheFileArray = eZNodeviewfunctions::generateViewCacheFile( $user, $NodeID, $Offset, $layout, $LanguageCode, $ViewMode, $viewParameters, false );
+        $result = eZClusterFileHandler::instance( $cacheFileArray['cache_path'] )
+            ->processCache(
+                array( 'eZNodeviewfunctions', 'contentViewRetrieve' ),
+                array( 'eZNodeviewfunctions', 'contentViewGenerate' ),
+                null,
+                null,
+                $args
+            );
 
-        $cacheFilePath = $cacheFileArray['cache_path'];
+        // check if $result is an array (could also be eZClusterFileFailure) and contains responseHeaders
+        if ( is_array( $result ) && !empty( $result['responseHeaders'] ) )
+        {
+            foreach ( $result['responseHeaders'] as $header )
+            {
+                header( $header );
+            }
+        }
 
-        $cacheFile = eZClusterFileHandler::instance( $cacheFilePath );
-        $args = compact( $localVars );
-        $Result = $cacheFile->processCache( array( 'eZNodeviewfunctions', 'contentViewRetrieve' ),
-                                            array( 'eZNodeviewfunctions', 'contentViewGenerate' ),
-                                            null,
-                                            null,
-                                            $args );
-        return $Result;
+        return $result;
     }
-    else
-    {
-        $cacheFileArray = array( 'cache_dir' => false, 'cache_path' => false );
-        $args = compact( $localVars );
-        $data = eZNodeviewfunctions::contentViewGenerate( false, $args ); // the false parameter will disable generation of the 'binarydata' entry
-        return $data['content']; // Return the $Result array
-    }
+
+    $data = eZNodeviewfunctions::contentViewGenerate( false, $args ); // the false parameter will disable generation of the 'binarydata' entry
+    return $data['content']; // Return the $Result array
 }
 
 // Looking for some view-cache code?

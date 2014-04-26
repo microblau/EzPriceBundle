@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -15,10 +15,29 @@ require 'kernel/content/section_edit.php';
 initializeSectionEdit( $Module );
 require 'kernel/content/state_edit.php';
 initializeStateEdit( $Module );
+
+$http = eZHTTPTool::instance();
+
 $obj = eZContentObject::fetch( $ObjectID );
 
 if ( !$obj )
     return $Module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
+
+if ( $http->hasPostVariable( 'ChangeSectionOnly' ) )
+{
+    if ( $http->hasPostVariable( 'SelectedSectionId' ) )
+    {
+        $section = eZSection::fetch( (int)$http->postVariable( 'SelectedSectionId' ) );
+        if ( $section instanceof eZSection )
+            $section->applyTo( $obj );
+    }
+    $Module->redirectTo(
+        $Module->hasActionParameter( 'RedirectRelativeURI' )
+        ? $Module->actionParameter( 'RedirectRelativeURI' )
+        : '/'
+    );
+    return eZModule::HOOK_STATUS_CANCEL_RUN;
+}
 
 // If the object has status Archived (trash) we redirect to content/restore
 // which can handle this status properly.
@@ -35,7 +54,6 @@ eZSSLZone::checkObject( 'content', 'edit', $obj );
 $isAccessChecked = false;
 $classID = $obj->attribute( 'contentclass_id' );
 $class = eZContentClass::fetch( $classID );
-$http = eZHTTPTool::instance();
 
 // Action for the edit_draft.tpl/edit_languages.tpl page.
 // CancelDraftButton is set for the Cancel button.
@@ -371,13 +389,16 @@ if ( !is_numeric( $EditVersion ) )
                 }
             }
 
+            $section = eZSection::fetch( $obj->attribute( 'section_id' ) );
             $tpl = eZTemplate::factory();
             $res = eZTemplateDesignResource::instance();
             $res->setKeys( array( array( 'object', $obj->attribute( 'id' ) ),
                                 array( 'remote_id', $obj->attribute( 'remote_id' ) ),
                                 array( 'class', $class->attribute( 'id' ) ),
                                 array( 'class_identifier', $class->attribute( 'identifier' ) ),
-                                array( 'class_group', $class->attribute( 'match_ingroup_id_list' ) ) ) );
+                                array( 'class_group', $class->attribute( 'match_ingroup_id_list' ) ),
+                                array( 'section', $obj->attribute( 'section_id' ) ),
+                                array( 'section_identifier', $section->attribute( 'identifier' ) ) ) );
 
             $tpl->setVariable( 'edit_language', $EditLanguage );
             $tpl->setVariable( 'from_language', $FromLanguage );
@@ -388,7 +409,6 @@ if ( !is_numeric( $EditVersion ) )
 
             $Result = array();
             $Result['content'] = $tpl->fetch( 'design:content/edit_draft.tpl' );
-            $section = eZSection::fetch( $obj->attribute( 'section_id' ) );
             if ( $section )
             {
                 $Result['navigation_part'] = $section->attribute( 'navigation_part_identifier' );
@@ -414,13 +434,16 @@ if ( !is_numeric( $EditVersion ) )
                 }
             }
 
+            $section = eZSection::fetch( $obj->attribute( 'section_id' ) );
             $tpl = eZTemplate::factory();
             $res = eZTemplateDesignResource::instance();
             $res->setKeys( array( array( 'object', $obj->attribute( 'id' ) ),
                                 array( 'remote_id', $obj->attribute( 'remote_id' ) ),
                                 array( 'class', $class->attribute( 'id' ) ),
                                 array( 'class_identifier', $class->attribute( 'identifier' ) ),
-                                array( 'class_group', $class->attribute( 'match_ingroup_id_list' ) ) ) );
+                                array( 'class_group', $class->attribute( 'match_ingroup_id_list' ) ),
+                                array( 'section', $obj->attribute( 'section_id' ) ),
+                                array( 'section_identifier', $section->attribute( 'identifier' ) ) ) );
 
             $tpl->setVariable( 'edit_language', $EditLanguage );
             $tpl->setVariable( 'from_language', $FromLanguage );
@@ -431,7 +454,6 @@ if ( !is_numeric( $EditVersion ) )
 
             $Result = array();
             $Result['content'] = $tpl->fetch( 'design:content/edit_draft.tpl' );
-            $section = eZSection::fetch( $obj->attribute( 'section_id' ) );
             if ( $section )
             {
                 $Result['navigation_part'] = $section->attribute( 'navigation_part_identifier' );
@@ -617,12 +639,51 @@ if ( !function_exists( 'checkContentActions' ) )
                 }
                 else if ( $node !== null )
                 {
-                    $parentNode = $node->attribute( 'parent_node_id' );
-                    if ( $parentNode == 1 )
+                    $ini = eZINI::instance( 'site.ini' );
+                    $redirection = $ini->variable( "ContentSettings", "RedirectAfterPublish" );
+
+                    switch ( $redirection )
                     {
-                        $parentNode = $node->attribute( 'node_id' );
+                        case 'node':
+                            $nodeNode = $node->attribute( 'node_id' );
+                            $module->redirectToView( 'view', array( 'full', $nodeNode ) );
+                            break;
+
+                        case 'mainNode':
+                            $mainNode = $node->attribute( 'main_node_id' );
+                            $module->redirectToView( 'view', array( 'full', $mainNode ) );
+                            break;
+
+                        case 'rootNode':
+                            $contentINI = eZINI::instance( 'content.ini' );
+                            $rootNodeID = $contentINI->variable( 'NodeSettings', 'RootNode' );
+                            $module->redirectToView( 'view', array( 'full', $rootNodeID ) );
+                            break;
+
+                        case 'uri':
+                            $http = eZHTTPTool::instance();
+                            $uri = $http->postVariable(
+                                'RedirectAfterPublishUri',
+                                $ini->variable( 'ContentSettings', 'RedirectAfterPublishUri' )
+                            );
+
+                            if ( !empty( $uri ) )
+                            {
+                                $module->redirectTo( $uri );
+                                // Intentionally break inside the if condition block. Will fallback to the next case if $uri is empty.
+                                break;
+                            }
+
+                        case 'parentNode':
+                        default:
+                            $parentNode = $node->attribute( 'parent_node_id' );
+                            if ( $parentNode == 1 )
+                            {
+                                $parentNode = $node->attribute( 'node_id' );
+                            }
+                            $module->redirectToView( 'view', array( 'full', $parentNode ) );
+                            break;
                     }
-                    $module->redirectToView( 'view', array( 'full', $parentNode ) );
                 }
                 else
                 {

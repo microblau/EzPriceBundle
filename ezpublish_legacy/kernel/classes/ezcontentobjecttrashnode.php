@@ -2,28 +2,34 @@
 /**
  * File containing the eZContentObjectTrashNode class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
-/*!
-  \class eZContentObjectTrashNode ezcontentobjecttrashnode.php
-  \brief The class eZContentObjectTrashNode
-*/
-
-//class eZContentObjectTrashNode extends eZPersistentObject
+/**
+ * Encapsulates data about and methods to work with content objects which reside in the trash
+ */
 class eZContentObjectTrashNode extends eZContentObjectTreeNode
 {
-    /*!
-     Constructor
-    */
+    /**
+     * Initializes the object with the $row.
+     *
+     * It will try to set each field taken from the database row. Calls fill
+     * to do the job. If $row is an integer, it will try to fetch it from the
+     * database using it as the unique ID.
+     *
+     * @param int|array $row
+     */
     function eZContentObjectTrashNode( $row = array() )
     {
         $this->eZPersistentObject( $row );
     }
 
+    /**
+     * @inheritdoc
+     */
     static function definition()
     {
         return array( 'fields' => array( 'node_id' => array( 'name' => 'NodeID',
@@ -115,7 +121,12 @@ class eZContentObjectTrashNode extends eZContentObjectTreeNode
                       'name' => 'ezcontentobject_trash' );
     }
 
-
+    /**
+     * Creates a new eZContentObjectTrashNode based on an eZContentObjectTreeNode
+     *
+     * @param eZContentObjectTreeNode $node
+     * @return eZContentObjectTrashNode
+     */
     static function createFromNode( $node )
     {
         $row = array( 'node_id' => $node->attribute( 'node_id' ),
@@ -139,6 +150,13 @@ class eZContentObjectTrashNode extends eZContentObjectTreeNode
         return $trashNode;
     }
 
+    /**
+     * Stores this object to the trash
+     *
+     * Loops through all attributes of the object and stores them to the trash
+     *
+     * @see eZDataType::trashStoredObjectAttribute()
+     */
     function storeToTrash()
     {
         $this->store();
@@ -146,19 +164,36 @@ class eZContentObjectTrashNode extends eZContentObjectTreeNode
         $db = eZDB::instance();
         $db->begin();
 
+        /** @var eZContentObject $contentObject */
         $contentObject = $this->attribute( 'object' );
-        $contentobjectAttributes = $contentObject->allContentObjectAttributes( $contentObject->attribute( 'id' ) );
-        foreach ( $contentobjectAttributes as $contentobjectAttribute )
+        $offset = 0;
+        $limit = 20;
+        while (
+            $contentobjectAttributes = $contentObject->allContentObjectAttributes(
+                $contentObject->attribute( 'id' ), true,
+                array( 'limit' => $limit, 'offset' => $offset )
+            )
+        )
         {
-            $dataType = $contentobjectAttribute->dataType();
-            if ( !$dataType )
-                continue;
-            $dataType->trashStoredObjectAttribute( $contentobjectAttribute );
+            foreach ( $contentobjectAttributes as $contentobjectAttribute )
+            {
+                $dataType = $contentobjectAttribute->dataType();
+                if ( !$dataType )
+                    continue;
+                $dataType->trashStoredObjectAttribute( $contentobjectAttribute );
+            }
+            $offset += $limit;
         }
 
         $db->commit();
     }
 
+    /**
+     * Purges an object from the trash, effectively deleting it from the database
+     *
+     * @param int $contentObjectID
+     * @return bool
+     */
     static function purgeForObject( $contentObjectID )
     {
         if ( !is_numeric( $contentObjectID ) )
@@ -169,14 +204,15 @@ class eZContentObjectTrashNode extends eZContentObjectTreeNode
         $db->commit();
     }
 
-    static function fetchListForObject( $objectID, $asObject = true, $offset = false, $limit = false )
-    {
-        return false;
-    }
-
-    /*
-      Analog of eZContentObjectTreeNode::subTreeByNodeID(Count)() method, see it for extending this method
-    */
+    /**
+     * Returns a list or the number of nodes from the trash
+     *
+     * @see eZContentObjectTreeNode::subTreeByNodeID()
+     *
+     * @param array|bool $params
+     * @param bool $asCount If true, returns the number of items in the trash
+     * @return array|int|null
+     */
     static function trashList( $params = false, $asCount = false )
     {
         if ( $params === false )
@@ -209,13 +245,6 @@ class eZContentObjectTrashNode extends eZContentObjectTreeNode
             return null;
         }
 
-        $useVersionName     = true;
-        $versionNameTables  = eZContentObjectTreeNode::createVersionNameTablesSQLString ( $useVersionName );
-        $versionNameTargets = eZContentObjectTreeNode::createVersionNameTargetsSQLString( $useVersionName );
-        $versionNameJoins   = eZContentObjectTreeNode::createVersionNameJoinsSQLString  ( $useVersionName, false, false, false, 'ezcot' );
-
-        $languageFilter = ' AND ' . eZContentLanguage::languagesSQLFilter( 'ezcontentobject' );
-
         $objectNameFilterSQL = eZContentObjectTreeNode::createObjectNameFilterConditionSQLString( $objectNameFilter );
 
         $limitation = ( isset( $params['Limitation']  ) && is_array( $params['Limitation']  ) ) ? $params['Limitation']: false;
@@ -232,29 +261,30 @@ class eZContentObjectTrashNode extends eZContentObjectTreeNode
                         ezcontentobject.*,
                         ezcot.*,
                         ezcontentclass.serialized_name_list as class_serialized_name_list,
-                        ezcontentclass.identifier as class_identifier
-                        $versionNameTargets
+                        ezcontentclass.identifier as class_identifier,
+                        ezcontentobject_name.name as name,
+                        ezcontentobject_name.real_translation
                         $sortingInfo[attributeTargetSQL] ";
         }
         $query .= "FROM
-                        ezcontentobject_trash ezcot,
-                        ezcontentobject,
-                        ezcontentclass
-                        $versionNameTables
+                        ezcontentobject_trash ezcot
+                        INNER JOIN ezcontentobject ON ezcot.contentobject_id = ezcontentobject.id
+                        INNER JOIN ezcontentclass ON ezcontentclass.version = 0 AND ezcontentclass.id = ezcontentobject.contentclass_id
+                        INNER JOIN ezcontentobject_name ON (
+                            ezcot.contentobject_id = ezcontentobject_name.contentobject_id AND
+                            ezcot.contentobject_version = ezcontentobject_name.content_version
+                        )
                         $sortingInfo[attributeFromSQL]
                         $attributeFilter[from]
                         $sqlPermissionChecking[from]
                    WHERE
-                        ezcontentclass.version=0 AND
-                        ezcot.contentobject_id = ezcontentobject.id  AND
-                        ezcontentclass.id = ezcontentobject.contentclass_id AND
                         $sortingInfo[attributeWhereSQL]
                         $attributeFilter[where]
-                        $versionNameJoins
+                        " . eZContentLanguage::sqlFilter( 'ezcontentobject_name', 'ezcontentobject' ) . "
                         $sqlPermissionChecking[where]
                         $objectNameFilterSQL
-                        $languageFilter
-                        ";
+                        AND " . eZContentLanguage::languagesSQLFilter( 'ezcontentobject' );
+
         if ( !$asCount && $sortingInfo['sortingFields'] && strlen( $sortingInfo['sortingFields'] ) > 5  )
             $query .= " ORDER BY $sortingInfo[sortingFields]";
 
@@ -288,11 +318,23 @@ class eZContentObjectTrashNode extends eZContentObjectTreeNode
         }
     }
 
+    /**
+     * Returns the number of nodes in the trash
+     *
+     * @param array|bool $params
+     * @return int
+     */
     static function trashListCount( $params = false )
     {
         return eZContentObjectTrashNode::trashList( $params, true );
     }
 
+    /**
+     * Returns the parent of the current node in the tree before it has been moved to the trash or null when the
+     * original parent couldn't be retrieved (e.g. because it has been deleted, too, or moved)
+     *
+     * @return eZContentObjectTreeNode|null
+     */
     function originalParent()
     {
         if ( $this->originalNodeParent === 0 )
@@ -319,6 +361,13 @@ class eZContentObjectTrashNode extends eZContentObjectTreeNode
         return null;
     }
 
+    /**
+     * Returns the path identification string of the node's parent, if available. Otherwise returns
+     * the node's path identification string
+     *
+     * @see originalParent()
+     * @return string
+     */
     function originalParentPathIdentificationString()
     {
         $originalParent = $this->originalParent();
@@ -332,7 +381,38 @@ class eZContentObjectTrashNode extends eZContentObjectTreeNode
         return $path;
     }
 
+    /**
+     * Fetches a trash node by its content object id
+     *
+     * @param int $contentObjectID
+     * @param bool $asObject
+     * @param int|bool $contentObjectVersion
+     * @return eZContentObjectTrashNode|null
+     */
+    public static function fetchByContentObjectID( $contentObjectID, $asObject = true, $contentObjectVersion = false )
+    {
+        $conds = array( 'contentobject_id' => $contentObjectID );
+        if ( $contentObjectVersion !== false )
+        {
+            $conds['contentobject_version'] = $contentObjectVersion;
+        }
+
+        return self::fetchObject(
+            self::definition(),
+            null,
+            $conds,
+            $asObject
+        );
+    }
+
+    /**
+     * @var eZContentObjectTreeNode|int|null The current trash node's original parent in the node tree
+     */
     protected $originalNodeParent = 0;
+
+    /**
+     * @var array
+     */
     protected $pathArray = 0;
 }
 

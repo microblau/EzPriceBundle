@@ -2,9 +2,9 @@
 /**
  * File containing the eZSSLZone class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -223,11 +223,18 @@ class eZSSLZone
         if ( !isset( $inSSL ) )
             return;
 
+        // Disable any further redirection/usage of SSLZones, see EZP-22204
+        // Prevents inner modules from redirecting to SSL if requested
+        $GLOBALS['eZSSLZoneEnabled'] = false;
+
         // $nowSSl is true if current access mode is HTTPS.
         $nowSSL = eZSys::isSSLNow();
 
         $requestURI = eZSys::requestURI();
         $indexDir = eZSys::indexDir( false );
+
+        // If there are any $_GET parameters, those should be passed into the new URI
+        $getString = eZSys::queryString();
 
         $sslZoneRedirectionURL = false;
         if ( $nowSSL && !$inSSL )
@@ -235,7 +242,12 @@ class eZSSLZone
             // switch to plain HTTP
             $ini = eZINI::instance();
             $host = $ini->variable( 'SiteSettings', 'SiteURL' );
-            $sslZoneRedirectionURL = "http://" . $host . $indexDir . $requestURI;
+            $port = parse_url( "http://$host", PHP_URL_PORT );
+            $host = eZSys::serverVariable( 'HTTP_HOST' );
+            $host = preg_replace( '/:\d+$/', '', $host );
+            if ( $port && $port != 80 )
+                $host .= ":$port";
+            $sslZoneRedirectionURL = "http://" . $host . $indexDir . $requestURI . $getString;
         }
         elseif ( !$nowSSL && $inSSL )
         {
@@ -246,7 +258,7 @@ class eZSSLZone
             $ini = eZINI::instance();
             $sslPort = $ini->variable( 'SiteSettings', 'SSLPort' );
             $sslPortString = ( $sslPort == eZSSLZone::DEFAULT_SSL_PORT ) ? '' : ":$sslPort";
-            $sslZoneRedirectionURL = "https://" . $host  . $sslPortString . $indexDir . $requestURI;
+            $sslZoneRedirectionURL = "https://" . $host  . $sslPortString . $indexDir . $requestURI . $getString;
         }
 
         if ( $sslZoneRedirectionURL ) // if a redirection URL is found
@@ -311,7 +323,7 @@ class eZSSLZone
          * i.e. it cannot choose access mode itself,
          * then do nothing.
          */
-        if ( !$redirect && !eZSSLZone::isKeepModeView( $module, $view ) )
+        if ( !eZSSLZone::isKeepModeView( $module, $view ) )
             return;
 
         $pathString = $node->attribute( 'path_string' );

@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -48,20 +48,6 @@ $ViewList['password'] = array(
     'default_navigation_part' => 'ezmynavigationpart',
     'params' => array( 'UserID' ) );
 
-/// \deprecated This view is kept for compatibility
-$ViewList['forgetpassword'] = array(
-    'functions' => array( 'password' ),
-    'script' => 'forgotpassword.php',
-    'deprecated' => true,
-    'params' => array( ),
-    'ui_context' => 'administration',
-    'ui_component' => 'forgotpassword',
-    'single_post_actions' => array( 'GenerateButton' => 'Generate' ),
-    'post_action_parameters' => array( 'Generate' => array( 'Login' => 'UserLogin',
-                                                            'Email' => 'UserEmail' ) ),
-    'params' => array( 'HashKey' ) );
-
-/// Note the function above is misspelled and should be removed
 $ViewList['forgotpassword'] = array(
     'functions' => array( 'password' ),
     'script' => 'forgotpassword.php',

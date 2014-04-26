@@ -1,9 +1,9 @@
 #!/usr/bin/env php
 <?php
 /**
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -22,7 +22,7 @@ if ( !ini_get( "date.timezone" ) )
     date_default_timezone_set( "UTC" );
 }
 
-require 'autoload.php';
+require_once 'autoload.php';
 require_once( 'kernel/common/i18n.php' );
 
 eZContentLanguage::setCronjobMode();
@@ -50,31 +50,30 @@ function help()
                   "  -s,--siteaccess    selected siteaccess for operations, if not specified default siteaccess is used\n" .
                   "  -d,--debug         display debug output at end of execution\n" .
                   "  -c,--colors        display output using ANSI colors\n" .
-                  "  --sql              display sql queries\n" .
+                  "  --sql              display sql queries (must be used in conjunction with debug option)\n" .
                   "  --logfiles         create log files\n" .
                   "  --no-logfiles      do not create log files (default)\n" .
+                  "  --list             list all cronjobs parts and the scripts contained by each one\n" .
                   "  --no-colors        do not use ANSI coloring (default)\n" );
 }
 
 function changeSiteAccessSetting( &$siteaccess, $optionData )
 {
-    global $cronPart;
     $cli = eZCLI::instance();
     if ( file_exists( 'settings/siteaccess/' . $optionData ) )
     {
         $siteaccess = $optionData;
-        $cli->output( "Using siteaccess $siteaccess for cronjob" );
+        return "Using siteaccess $siteaccess for cronjob";
     }
     elseif ( isExtensionSiteaccess( $optionData ) )
     {
         $siteaccess = $optionData;
-        $cli->output( "Using extension siteaccess $siteaccess for cronjob" );
-
         eZExtension::prependExtensionSiteAccesses( $siteaccess );
+        return "Using extension siteaccess $siteaccess for cronjob";
     }
     else
     {
-        $cli->notice( "Siteaccess $optionData does not exist, using default siteaccess" );
+        return "Siteaccess $optionData does not exist, using default siteaccess";
     }
 }
 
@@ -109,13 +108,15 @@ $isQuiet = false;
 $useLogFiles = false;
 $showSQL = false;
 $cronPart = false;
+$listCronjobs = false;
 
 $optionsWithData = array( 's' );
 $longOptionsWithData = array( 'siteaccess' );
 
 $readOptions = true;
+$siteAccessSet = false;
 
-for ( $i = 1; $i < count( $argv ); ++$i )
+for ( $i = 1, $count = count( $argv ); $i < $count; ++$i )
 {
     $arg = $argv[$i];
     if ( $readOptions and
@@ -138,7 +139,7 @@ for ( $i = 1; $i < count( $argv ); ++$i )
             }
             else if ( $flag == 'siteaccess' )
             {
-                changeSiteAccessSetting( $siteaccess, $optionData );
+                $siteAccessSet = $optionData;
             }
             else if ( $flag == 'debug' )
             {
@@ -163,6 +164,10 @@ for ( $i = 1; $i < count( $argv ); ++$i )
             else if ( $flag == 'logfiles' )
             {
                 $useLogFiles = true;
+            }
+            else if ( $flag == 'list' )
+            {
+                $listCronjobs = true;
             }
             else if ( $flag == 'sql' )
             {
@@ -244,7 +249,7 @@ for ( $i = 1; $i < count( $argv ); ++$i )
             }
             else if ( $flag == 's' )
             {
-                changeSiteAccessSetting( $siteaccess, $optionData );
+                $siteAccessSet = $optionData;
             }
         }
     }
@@ -264,6 +269,13 @@ $script->setUseDebugTimingPoints( $useDebugTimingpoints );
 $script->setUseIncludeFiles( $useIncludeFiles );
 $script->setIsQuiet( $isQuiet );
 
+$siteAccessChangeMessage = false;
+
+if ( $siteAccessSet )
+{
+    $siteAccessChangeMessage = changeSiteAccessSetting( $siteaccess, $siteAccessSet );
+}
+
 if ( $webOutput )
     $useColors = true;
 
@@ -279,11 +291,22 @@ if ( !$script->isInitialized() )
     $script->shutdown( 0 );
 }
 
+if ( $siteAccessChangeMessage )
+{
+    $cli->output( $siteAccessChangeMessage );
+}
+else
+{
+    $cli->output( "Using siteaccess $siteaccess for cronjob" );
+}
+
 if ( $cronPart )
 {
     $cli->output( "Running cronjob part '$cronPart'" );
 }
 
+$db = eZDB::instance();
+$db->setIsSQLOutputEnabled( $showSQL );
 
 $ini = eZINI::instance( 'cronjob.ini' );
 $scriptDirectories = $ini->variable( 'CronjobSettings', 'ScriptDirectories' );
@@ -291,6 +314,35 @@ $scriptDirectories = $ini->variable( 'CronjobSettings', 'ScriptDirectories' );
 /* Include extension directories */
 $extensionDirectories = $ini->variable( 'CronjobSettings', 'ExtensionDirectories' );
 $scriptDirectories = array_merge( $scriptDirectories, eZExtension::expandedPathList( $extensionDirectories, 'cronjobs' ) );
+
+if ( $listCronjobs )
+{
+    foreach ( $ini->groups() as $block => $blockValues )
+    {
+        if ( strpos( $block, 'Cronjob' ) !== false )
+        {
+            $cli->output( $cli->endLineString() );
+            $cli->output( "{$block}:" );
+
+            foreach ( $blockValues['Scripts'] as $fileName )
+            {
+                $fileExists = false;
+                foreach ( $scriptDirectories as $scriptDirectory )
+                {
+                    $filePath = $scriptDirectory . "/" . $fileName;
+                    if ( file_exists( $filePath ) )
+                    {
+                        $fileExists = true;
+                        $cli->output( "{$cli->goToColumn( 4 )} {$filePath}" );
+                    }
+                }
+                if ( !$fileExists )
+                    $cli->output( "{$cli->goToColumn( 4 )} Error: No {$fileName} file in any of configured directories!" );
+            }
+        }   
+    }
+    $script->shutdown( 0 );
+}
 
 $scriptGroup = 'CronjobSettings';
 if ( $cronPart !== false )

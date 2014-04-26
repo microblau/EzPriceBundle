@@ -45,11 +45,13 @@ INSERT INTO ezcobj_state_group_language (
   contentobject_state_group_id,
   description,
   language_id,
+  real_language_id,
   name
 ) VALUES (
   2,
   '',
   3,
+  2,
   'Lock'
 );
 
@@ -6025,7 +6027,7 @@ INSERT INTO ezcontentobject_attribute (
   54,
   0,
   0,
-  '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<ezimage serial_number=\"1\" is_valid=\"\" filename=\"ez_publish.\" suffix=\"\" basename=\"ez_publish\" dirpath=\"var/storage/images/setup/ez_publish/172-1-eng-GB\" url=\"var/storage/images/setup/ez_publish/172-1-eng-GB/ez_publish.\" original_filename=\"\" mime_type=\"\" width=\"\" height=\"\" alternative_text=\"\" alias_key=\"1293033771\" timestamp=\"1082016632\"><original attribute_id=\"172\" attribute_version=\"2\" attribute_language=\"eng-GB\"/></ezimage>\n',
+  '<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<ezimage serial_number=\"1\" is_valid=\"\" filename=\"\" suffix=\"\" basename=\"\" dirpath=\"\" url=\"\" original_filename=\"\" mime_type=\"\" width=\"\" height=\"\" alternative_text=\"\" alias_key=\"1293033771\" timestamp=\"1082016632\"><original attribute_id=\"172\" attribute_version=\"2\" attribute_language=\"eng-GB\"/></ezimage>\n',
   'ezimage',
   172,
   'eng-GB',
@@ -7647,16 +7649,6 @@ INSERT INTO ezcontentobject_version (
   1,
   0,
   6,
-  1
-);
-
-INSERT INTO ezimagefile (
-  contentobject_attribute_id,
-  filepath,
-  id
-) VALUES (
-  172,
-  'var/storage/images/setup/ez_publish/172-1-eng-GB/ez_publish.',
   1
 );
 
@@ -25417,7 +25409,9 @@ INSERT INTO eznode_assignment (
   parent_remote_id,
   remote_id,
   sort_field,
-  sort_order
+  sort_order,
+  priority,
+  is_hidden
 ) VALUES (
   8,
   2,
@@ -25429,331 +25423,8 @@ INSERT INTO eznode_assignment (
   '',
   0,
   1,
-  1
-);
-INSERT INTO eznode_assignment (
-  contentobject_id,
-  contentobject_version,
-  from_node_id,
-  id,
-  is_main,
-  op_code,
-  parent_node,
-  parent_remote_id,
-  remote_id,
-  sort_field,
-  sort_order
-) VALUES (
-  42,
   1,
   0,
-  5,
-  1,
-  2,
-  5,
-  '',
-  0,
-  9,
-  1
-);
-INSERT INTO eznode_assignment (
-  contentobject_id,
-  contentobject_version,
-  from_node_id,
-  id,
-  is_main,
-  op_code,
-  parent_node,
-  parent_remote_id,
-  remote_id,
-  sort_field,
-  sort_order
-) VALUES (
-  10,
-  2,
-  -1,
-  6,
-  1,
-  2,
-  44,
-  '',
-  0,
-  9,
-  1
-);
-INSERT INTO eznode_assignment (
-  contentobject_id,
-  contentobject_version,
-  from_node_id,
-  id,
-  is_main,
-  op_code,
-  parent_node,
-  parent_remote_id,
-  remote_id,
-  sort_field,
-  sort_order
-) VALUES (
-  4,
-  1,
-  0,
-  7,
-  1,
-  2,
-  1,
-  '',
-  0,
-  1,
-  1
-);
-INSERT INTO eznode_assignment (
-  contentobject_id,
-  contentobject_version,
-  from_node_id,
-  id,
-  is_main,
-  op_code,
-  parent_node,
-  parent_remote_id,
-  remote_id,
-  sort_field,
-  sort_order
-) VALUES (
-  12,
-  1,
-  0,
-  8,
-  1,
-  2,
-  5,
-  '',
-  0,
-  1,
-  1
-);
-INSERT INTO eznode_assignment (
-  contentobject_id,
-  contentobject_version,
-  from_node_id,
-  id,
-  is_main,
-  op_code,
-  parent_node,
-  parent_remote_id,
-  remote_id,
-  sort_field,
-  sort_order
-) VALUES (
-  13,
-  1,
-  0,
-  9,
-  1,
-  2,
-  5,
-  '',
-  0,
-  1,
-  1
-);
-INSERT INTO eznode_assignment (
-  contentobject_id,
-  contentobject_version,
-  from_node_id,
-  id,
-  is_main,
-  op_code,
-  parent_node,
-  parent_remote_id,
-  remote_id,
-  sort_field,
-  sort_order
-) VALUES (
-  41,
-  1,
-  0,
-  11,
-  1,
-  2,
-  1,
-  '',
-  0,
-  1,
-  1
-);
-INSERT INTO eznode_assignment (
-  contentobject_id,
-  contentobject_version,
-  from_node_id,
-  id,
-  is_main,
-  op_code,
-  parent_node,
-  parent_remote_id,
-  remote_id,
-  sort_field,
-  sort_order
-) VALUES (
-  11,
-  1,
-  0,
-  12,
-  1,
-  2,
-  5,
-  '',
-  0,
-  1,
-  1
-);
-INSERT INTO eznode_assignment (
-  contentobject_id,
-  contentobject_version,
-  from_node_id,
-  id,
-  is_main,
-  op_code,
-  parent_node,
-  parent_remote_id,
-  remote_id,
-  sort_field,
-  sort_order
-) VALUES (
-  45,
-  1,
-  -1,
-  16,
-  1,
-  2,
-  1,
-  '',
-  0,
-  9,
-  1
-);
-INSERT INTO eznode_assignment (
-  contentobject_id,
-  contentobject_version,
-  from_node_id,
-  id,
-  is_main,
-  op_code,
-  parent_node,
-  parent_remote_id,
-  remote_id,
-  sort_field,
-  sort_order
-) VALUES (
-  49,
-  1,
-  0,
-  27,
-  1,
-  2,
-  43,
-  '',
-  0,
-  9,
-  1
-);
-INSERT INTO eznode_assignment (
-  contentobject_id,
-  contentobject_version,
-  from_node_id,
-  id,
-  is_main,
-  op_code,
-  parent_node,
-  parent_remote_id,
-  remote_id,
-  sort_field,
-  sort_order
-) VALUES (
-  50,
-  1,
-  0,
-  28,
-  1,
-  2,
-  43,
-  '',
-  0,
-  9,
-  1
-);
-INSERT INTO eznode_assignment (
-  contentobject_id,
-  contentobject_version,
-  from_node_id,
-  id,
-  is_main,
-  op_code,
-  parent_node,
-  parent_remote_id,
-  remote_id,
-  sort_field,
-  sort_order
-) VALUES (
-  51,
-  1,
-  0,
-  29,
-  1,
-  2,
-  43,
-  '',
-  0,
-  9,
-  1
-);
-INSERT INTO eznode_assignment (
-  contentobject_id,
-  contentobject_version,
-  from_node_id,
-  id,
-  is_main,
-  op_code,
-  parent_node,
-  parent_remote_id,
-  remote_id,
-  sort_field,
-  sort_order
-) VALUES (
-  52,
-  1,
-  0,
-  30,
-  1,
-  2,
-  48,
-  '',
-  0,
-  1,
-  1
-);
-INSERT INTO eznode_assignment (
-  contentobject_id,
-  contentobject_version,
-  from_node_id,
-  id,
-  is_main,
-  op_code,
-  parent_node,
-  parent_remote_id,
-  remote_id,
-  sort_field,
-  sort_order
-) VALUES (
-  56,
-  1,
-  0,
-  34,
-  1,
-  2,
-  1,
-  '',
-  0,
-  2,
   0
 );
 INSERT INTO eznode_assignment (
@@ -25767,7 +25438,386 @@ INSERT INTO eznode_assignment (
   parent_remote_id,
   remote_id,
   sort_field,
-  sort_order
+  sort_order,
+  priority,
+  is_hidden
+) VALUES (
+  42,
+  1,
+  0,
+  5,
+  1,
+  2,
+  5,
+  '',
+  0,
+  9,
+  1,
+  0,
+  0
+);
+INSERT INTO eznode_assignment (
+  contentobject_id,
+  contentobject_version,
+  from_node_id,
+  id,
+  is_main,
+  op_code,
+  parent_node,
+  parent_remote_id,
+  remote_id,
+  sort_field,
+  sort_order,
+  priority,
+  is_hidden
+) VALUES (
+  10,
+  2,
+  -1,
+  6,
+  1,
+  2,
+  44,
+  '',
+  0,
+  9,
+  1,
+  0,
+  0
+);
+INSERT INTO eznode_assignment (
+  contentobject_id,
+  contentobject_version,
+  from_node_id,
+  id,
+  is_main,
+  op_code,
+  parent_node,
+  parent_remote_id,
+  remote_id,
+  sort_field,
+  sort_order,
+  priority,
+  is_hidden
+) VALUES (
+  4,
+  1,
+  0,
+  7,
+  1,
+  2,
+  1,
+  '',
+  0,
+  1,
+  1,
+  0,
+  0
+);
+INSERT INTO eznode_assignment (
+  contentobject_id,
+  contentobject_version,
+  from_node_id,
+  id,
+  is_main,
+  op_code,
+  parent_node,
+  parent_remote_id,
+  remote_id,
+  sort_field,
+  sort_order,
+  priority,
+  is_hidden
+) VALUES (
+  12,
+  1,
+  0,
+  8,
+  1,
+  2,
+  5,
+  '',
+  0,
+  1,
+  1,
+  0,
+  0
+);
+INSERT INTO eznode_assignment (
+  contentobject_id,
+  contentobject_version,
+  from_node_id,
+  id,
+  is_main,
+  op_code,
+  parent_node,
+  parent_remote_id,
+  remote_id,
+  sort_field,
+  sort_order,
+  priority,
+  is_hidden
+) VALUES (
+  13,
+  1,
+  0,
+  9,
+  1,
+  2,
+  5,
+  '',
+  0,
+  1,
+  1,
+  0,
+  0
+);
+INSERT INTO eznode_assignment (
+  contentobject_id,
+  contentobject_version,
+  from_node_id,
+  id,
+  is_main,
+  op_code,
+  parent_node,
+  parent_remote_id,
+  remote_id,
+  sort_field,
+  sort_order,
+  priority,
+  is_hidden
+) VALUES (
+  41,
+  1,
+  0,
+  11,
+  1,
+  2,
+  1,
+  '',
+  0,
+  1,
+  1,
+  0,
+  0
+);
+INSERT INTO eznode_assignment (
+  contentobject_id,
+  contentobject_version,
+  from_node_id,
+  id,
+  is_main,
+  op_code,
+  parent_node,
+  parent_remote_id,
+  remote_id,
+  sort_field,
+  sort_order,
+  priority,
+  is_hidden
+) VALUES (
+  11,
+  1,
+  0,
+  12,
+  1,
+  2,
+  5,
+  '',
+  0,
+  1,
+  1,
+  0,
+  0
+);
+INSERT INTO eznode_assignment (
+  contentobject_id,
+  contentobject_version,
+  from_node_id,
+  id,
+  is_main,
+  op_code,
+  parent_node,
+  parent_remote_id,
+  remote_id,
+  sort_field,
+  sort_order,
+  priority,
+  is_hidden
+) VALUES (
+  45,
+  1,
+  -1,
+  16,
+  1,
+  2,
+  1,
+  '',
+  0,
+  9,
+  1,
+  0,
+  0
+);
+INSERT INTO eznode_assignment (
+  contentobject_id,
+  contentobject_version,
+  from_node_id,
+  id,
+  is_main,
+  op_code,
+  parent_node,
+  parent_remote_id,
+  remote_id,
+  sort_field,
+  sort_order,
+  priority,
+  is_hidden
+) VALUES (
+  49,
+  1,
+  0,
+  27,
+  1,
+  2,
+  43,
+  '',
+  0,
+  9,
+  1,
+  0,
+  0
+);
+INSERT INTO eznode_assignment (
+  contentobject_id,
+  contentobject_version,
+  from_node_id,
+  id,
+  is_main,
+  op_code,
+  parent_node,
+  parent_remote_id,
+  remote_id,
+  sort_field,
+  sort_order,
+  priority,
+  is_hidden
+) VALUES (
+  50,
+  1,
+  0,
+  28,
+  1,
+  2,
+  43,
+  '',
+  0,
+  9,
+  1,
+  0,
+  0
+);
+INSERT INTO eznode_assignment (
+  contentobject_id,
+  contentobject_version,
+  from_node_id,
+  id,
+  is_main,
+  op_code,
+  parent_node,
+  parent_remote_id,
+  remote_id,
+  sort_field,
+  sort_order,
+  priority,
+  is_hidden
+) VALUES (
+  51,
+  1,
+  0,
+  29,
+  1,
+  2,
+  43,
+  '',
+  0,
+  9,
+  1,
+  0,
+  0
+);
+INSERT INTO eznode_assignment (
+  contentobject_id,
+  contentobject_version,
+  from_node_id,
+  id,
+  is_main,
+  op_code,
+  parent_node,
+  parent_remote_id,
+  remote_id,
+  sort_field,
+  sort_order,
+  priority,
+  is_hidden
+) VALUES (
+  52,
+  1,
+  0,
+  30,
+  1,
+  2,
+  48,
+  '',
+  0,
+  1,
+  1,
+  0,
+  0
+);
+INSERT INTO eznode_assignment (
+  contentobject_id,
+  contentobject_version,
+  from_node_id,
+  id,
+  is_main,
+  op_code,
+  parent_node,
+  parent_remote_id,
+  remote_id,
+  sort_field,
+  sort_order,
+  priority,
+  is_hidden
+) VALUES (
+  56,
+  1,
+  0,
+  34,
+  1,
+  2,
+  1,
+  '',
+  0,
+  2,
+  0,
+  0,
+  0
+);
+INSERT INTO eznode_assignment (
+  contentobject_id,
+  contentobject_version,
+  from_node_id,
+  id,
+  is_main,
+  op_code,
+  parent_node,
+  parent_remote_id,
+  remote_id,
+  sort_field,
+  sort_order,
+  priority,
+  is_hidden
 ) VALUES (
   14,
   3,
@@ -25779,7 +25829,9 @@ INSERT INTO eznode_assignment (
   '',
   0,
   1,
-  1
+  1,
+  0,
+  0
 );
 INSERT INTO eznode_assignment (
   contentobject_id,
@@ -25792,7 +25844,9 @@ INSERT INTO eznode_assignment (
   parent_remote_id,
   remote_id,
   sort_field,
-  sort_order
+  sort_order,
+  priority,
+  is_hidden
 ) VALUES (
   54,
   2,
@@ -25804,7 +25858,9 @@ INSERT INTO eznode_assignment (
   '',
   0,
   1,
-  1
+  1,
+  0,
+  0
 );
 INSERT INTO eznode_assignment (
   contentobject_id,
@@ -25817,7 +25873,9 @@ INSERT INTO eznode_assignment (
   parent_remote_id,
   remote_id,
   sort_field,
-  sort_order
+  sort_order,
+  priority,
+  is_hidden
 ) VALUES (
   1,
   6,
@@ -25829,7 +25887,9 @@ INSERT INTO eznode_assignment (
   '',
   0,
   8,
-  1
+  1,
+  0,
+  0
 );
 
 INSERT INTO ezorder_status (
@@ -36889,7 +36949,7 @@ INSERT INTO ezsite_data (
   value
 ) VALUES (
   'ezpublish-version',
-  '4.7.0'
+  '5.3.0alpha1'
 );
 
 INSERT INTO ezurl (

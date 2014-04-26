@@ -2,16 +2,16 @@
 /**
  * File containing the eZContentObjectStateGroup class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
 /**
  * Class respresenting a content object state group
  *
- * @version 4.7.0
+ * @version  2014.3
  * @package kernel
  */
 class eZContentObjectStateGroup extends eZPersistentObject
@@ -207,7 +207,7 @@ class eZContentObjectStateGroup extends eZPersistentObject
 
                 if ( !array_key_exists( $languageID, $allTranslations ) )
                 {
-                    $row = array( 'language_id' => $languageID );
+                    $row = array( 'real_language_id' => $languageID );
                     if ( isset( $this->ID ) )
                     {
                         $row['contentobject_state_group_id'] = $this->ID;
@@ -231,7 +231,7 @@ class eZContentObjectStateGroup extends eZPersistentObject
             $translations = $this->allTranslations();
             foreach ( $translations as $translation )
             {
-                if ( $translation->realLanguageID() == $languageID )
+                if ( $translation->attribute( 'real_language_id' ) == $languageID )
                 {
                     return $translation;
                 }
@@ -307,7 +307,7 @@ class eZContentObjectStateGroup extends eZPersistentObject
         {
             if ( $translation->hasData() )
             {
-                $languageID = $translation->attribute( 'language_id' );
+                $languageID = $translation->attribute( 'real_language_id' );
                 if ( empty( $this->DefaultLanguageID ) )
                 {
                     $this->DefaultLanguageID = $languageID & ~1;
@@ -318,7 +318,7 @@ class eZContentObjectStateGroup extends eZPersistentObject
                     $translation->setAttribute( 'language_id', $languageID | 1 );
                 }
                 // otherwise, remove always available flag if it's set
-                else if ( $languageID & 1 )
+                else
                 {
                     $translation->setAttribute( 'language_id',  $languageID & ~1 );
                 }

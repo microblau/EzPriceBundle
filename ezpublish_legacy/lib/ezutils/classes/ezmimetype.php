@@ -2,9 +2,9 @@
 /**
  * File containing the eZMimeType class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package lib
  */
 
@@ -341,27 +341,6 @@ class eZMimeType
             $instance = new eZMimeType();
         }
         return $instance;
-    }
-
-    /*!
-     \deprecated
-     \static
-     \return the MIME-Type name for the file \a $file.
-    */
-    static function mimeTypeFor( $path, $file )
-    {
-        eZDebug::writeWarning( 'eZMimeType::mimeTypeFor() is deprecated, use eZMimeType::findByURL() instead',
-                               'DEPRECATED FUNCTION eZMimeType::mimeTypeFor' );
-        $url = $path;
-        if ( $url )
-            $url .= '/' . $file;
-        else
-            $url = $file;
-        $match = eZMimeType::findByURL( $url, false );
-        if ( $match )
-            return $match['name'];
-        else
-            return false;
     }
 
     /*!

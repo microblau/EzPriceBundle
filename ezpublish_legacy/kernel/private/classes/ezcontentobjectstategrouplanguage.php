@@ -2,9 +2,9 @@
 /**
  * File containing the eZContentObjectStateGroupLanguage class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -13,7 +13,7 @@
  *
  * Instances of this class contain the name and description of a content object state group in a specific language.
  *
- * @version 4.7.0
+ * @version  2014.3
  * @package kernel
  * @see eZContentObjectStateGroup
  */
@@ -38,14 +38,16 @@ class eZContentObjectStateGroupLanguage extends eZPersistentObject
                                          "description" => array( "name" => "Description",
                                                                  "datatype" => "text",
                                                                  "required" => false ),
+                                         "real_language_id" => array( "name" => "RealLanguageID",
+                                                                      "datatype" => "integer",
+                                                                      "required" => true ),
                                          "language_id" => array( "name" => "LanguageID",
                                                                  "datatype" => "integer",
                                                                  "required" => false ) ),
                       "keys" => array( "contentobject_state_group_id",
-                                       "language_id" ),
+                                       "real_language_id" ),
                       "function_attributes" => array( "language" => "language",
-                                                      "is_valid" => "isValid",
-                                                      "real_language_id" => "realLanguageID",
+                                                      "is_valid" => "isValid"
                                                     ),
                       "increment_key" => false,
                       "class_name" => "eZContentObjectStateGroupLanguage",
@@ -96,7 +98,7 @@ class eZContentObjectStateGroupLanguage extends eZPersistentObject
      */
     public function language()
     {
-        return eZContentLanguage::fetch( $this->LanguageID & ~1 );
+        return eZContentLanguage::fetch( $this->RealLanguageID );
     }
 
     /**
@@ -116,7 +118,9 @@ class eZContentObjectStateGroupLanguage extends eZPersistentObject
      */
     public function realLanguageID()
     {
-        return $this->LanguageID & ~1;
+        return $this->RealLanguageID;
     }
+
+
 }
 ?>

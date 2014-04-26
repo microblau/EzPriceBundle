@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -289,20 +289,6 @@ function copyPublishContentObject( $sourceObject,
             eZDebug::writeError( "Cannot find source parent node in list of nodes already copied.",
                                  "Subtree Copy Error!" );
         }
-        // Create unique remote_id
-        $newRemoteID = eZRemoteIdUtility::generate( 'node' );
-        $oldRemoteID = $newNode->attribute( 'remote_id' );
-        $newNode->setAttribute( 'remote_id', $newRemoteID );
-        // Change parent_remote_id for object assignments
-        foreach ( $objAssignments as $assignment )
-        {
-            if ( $assignment->attribute( 'parent_remote_id' ) == $oldRemoteID )
-            {
-                 $assignment->setAttribute( 'parent_remote_id', $newRemoteID );
-                 $assignment->store();
-            }
-        }
-        $newNode->store();
     }
 
     // if $keepCreator == true then keep owner of contentobject being

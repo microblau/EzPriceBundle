@@ -2,9 +2,9 @@
 /**
  * File containing the eZCollaborationItemParticipantLink class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -144,26 +144,32 @@ class eZCollaborationItemParticipantLink extends eZPersistentObject
                                           'limit' => false,
                                           'sort_by' => false ),
                                    $parameters );
+
+        $cacheHashKey = md5( serialize( $parameters ) );
+
+        if ( isset( $GLOBALS['eZCollaborationItemParticipantLinkListCache'][$cacheHashKey] ) )
+        {
+            return $GLOBALS['eZCollaborationItemParticipantLinkListCache'][$cacheHashKey];
+        }
+
         $itemID = $parameters['item_id'];
         $asObject = $parameters['as_object'];
         $offset = $parameters['offset'];
         $limit = $parameters['limit'];
         $linkList = null;
-        if ( !$offset and !$limit )
-        {
-            if ( !empty( $GLOBALS['eZCollaborationItemParticipantLinkListCache'] ) )
-            {
-                return $GLOBALS['eZCollaborationItemParticipantLinkListCache'];
-            }
-        }
         $limitArray = null;
+
         if ( $offset and $limit )
+        {
             $limitArray = array( 'offset' => $offset, 'length' => $limit );
+        }
+
         $linkList = eZPersistentObject::fetchObjectList( eZCollaborationItemParticipantLink::definition(),
                                                           null,
                                                           array( "collaboration_id" => $itemID ),
                                                           null, $limitArray,
                                                           $asObject );
+
         foreach( $linkList as $linkItem )
         {
             if ( $asObject )
@@ -174,12 +180,13 @@ class eZCollaborationItemParticipantLink extends eZPersistentObject
             {
                 $participantID = $linkItem['participant_id'];
             }
-            if ( empty( $GLOBALS["eZCollaborationItemParticipantLinkCache"][$itemID][$participantID] ) )
+            if ( !isset( $GLOBALS["eZCollaborationItemParticipantLinkCache"][$itemID][$participantID] ) )
             {
                 $GLOBALS["eZCollaborationItemParticipantLinkCache"][$itemID][$participantID] = $linkItem;
             }
         }
-        return $GLOBALS['eZCollaborationItemParticipantLinkListCache'] = $linkList;
+
+        return $GLOBALS['eZCollaborationItemParticipantLinkListCache'][$cacheHashKey] = $linkList;
     }
 
     static function fetchParticipantMap( $originalParameters = array() )

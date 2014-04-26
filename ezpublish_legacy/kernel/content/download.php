@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -69,6 +69,11 @@ if ( $version != $currentVersion || $isContentDraft )
     if ( is_object( $versionObj ) and !$versionObj->canVersionRead() )
         return $Module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
 }
+
+ezpEvent::getInstance()->notify(
+    'content/download',
+    array( 'contentObjectID' => $contentObjectID,
+           'contentObjectAttributeID' => $contentObjectAttributeID ) );
 
 $fileHandler = eZBinaryFileHandler::instance();
 $result = $fileHandler->handleDownload( $contentObject, $contentObjectAttribute, eZBinaryFileHandler::TYPE_FILE );

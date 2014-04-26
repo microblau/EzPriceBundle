@@ -2,9 +2,9 @@
 /**
  * File containing (site)access functionality
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -18,7 +18,7 @@ class eZSiteAccess
     /**
      * Integer constants that identify the siteaccess matching used
      *
-     * @since 4.4 Was earlier in access.php as normal constants
+     * @since 4.4
      */
     const TYPE_DEFAULT = 1;
     const TYPE_URI = 2;
@@ -29,6 +29,7 @@ class eZSiteAccess
     const TYPE_SERVER_VAR = 7;
     const TYPE_URL = 8;
     const TYPE_HTTP_HOST_URI = 9;
+    const TYPE_CUSTOM = 10;
 
     const SUBTYPE_PRE = 1;
     const SUBTYPE_POST = 2;
@@ -374,12 +375,28 @@ class eZSiteAccess
 
             if ( isset( $name ) && $name != '' )
             {
-                $name = preg_replace( array( '/[^a-zA-Z0-9]+/', '/_+/', '/^_/', '/_$/' ),
-                                      array( '_', '_', '', '' ),
-                                      $name );
+                $nameClean = self::washName( $name );
 
-                if ( in_array( $name, $siteAccessList ) )
+                if ( in_array( $nameClean, $siteAccessList ) )
                 {
+                    if ( $nameClean !== $name )
+                    {
+                        if ( !$ini->hasVariable( 'SiteAccessSettings', 'NormalizeSANames' ) || $ini->variable( 'SiteAccessSettings', 'NormalizeSANames' ) == 'enabled' )
+                        {
+                            $name = $nameClean;
+                            if ( $ini->hasVariable( 'SiteAccessSettings', 'RedirectOnNormalize' ) && $ini->variable( 'SiteAccessSettings', 'RedirectOnNormalize' ) == 'enabled' )
+                            {
+                                header( $_SERVER['SERVER_PROTOCOL'] .  " 301 Moved Permanently" );
+                                header( "Status: 301 Moved Permanently" );
+                                $uriSlice = $uri->URIArray;
+                                array_shift( $uriSlice );
+                                $newUri = $name . '/' . implode( '/' , $uriSlice );
+                                $location = eZSys::indexDir() . "/" . eZURI::encodeIRI( $newUri );
+                                header( "Location: " . $location );
+                                eZExecution::cleanExit();
+                            }
+                        }
+                    }
                     if ( $type == eZSiteAccess::TYPE_URI )
                     {
                         if ( $match_type == 'element' )
@@ -514,7 +531,7 @@ class eZSiteAccess
         if ( $siteINI === null )
         {
             eZSys::clearAccessPath();
-            if ( !isset( $access['uri_part'] ) || $access['uri_part'] === null )
+            if ( empty( $access['uri_part'] ) || $access['uri_part'] === null )
             {
                 if ( $ini->hasVariable('SiteSettings', 'SiteUriParts') )
                     $access['uri_part'] = $ini->variable('SiteSettings', 'SiteUriParts');
@@ -523,6 +540,11 @@ class eZSiteAccess
                 else
                     $access['uri_part'] = array();
             }
+            else
+            {
+                $access['uri_part'] = self::washName( $access['uri_part'] );
+            }
+
             eZSys::setAccessPath( $access['uri_part'], $name );
 
             eZUpdateDebugSettings();
@@ -530,6 +552,27 @@ class eZSiteAccess
         }
 
         return $access;
+    }
+
+    /**
+     * Washes site access name
+     *
+     * Allowed characters are [a-z], [A-Z] and [0-9], and the "_" (underscore). The washing rules are:
+     * - Characters not in the previous list (alphanumerical and underscore) are replaced by an "_" (underscore);
+     * - Multiple consecutive "_" (underscores) are replaced by a single underscore;
+     * - Leading and trailing "_" are removed.
+     *
+     * @since 5.3
+     * @param string $name The site access name, as received from the browser
+     * @return string The washed name
+     */
+    private static function washName( $name )
+    {
+        return preg_replace(
+            array( '/[^a-zA-Z0-9]+/', '/_+/', '/^_/', '/_$/' ),
+            array( '_', '_', '', '' ),
+            $name
+        );
     }
 
     /**
@@ -679,32 +722,4 @@ class eZSiteAccess
         eZDebug::writeWarning("Tried to find siteaccess based on '$language' but '$sa' is not a valid RelatedSiteAccessList[]", __METHOD__ );
         return null;
     }
-
-    /**
-     * Checks if site access debug is enabled
-     *
-     * @since 4.4
-     * @deprecated Should use debug.ini conditions instead of extra settings
-     * @return bool
-     */
-    static function debugEnabled()
-    {
-        $ini = eZINI::instance();
-        return $ini->variable( 'SiteAccessSettings', 'DebugAccess' ) === 'enabled';
-    }
-
-    /**
-     * Checks if extra site access debug is enabled
-     *
-     * @since 4.4
-     * @deprecated Should use debug.ini conditions instead of extra settings
-     * @return bool
-     */
-    static function extraDebugEnabled()
-    {
-        $ini = eZINI::instance();
-        return $ini->variable( 'SiteAccessSettings', 'DebugExtraAccess' ) === 'enabled';
-    }
 }
-
-?>

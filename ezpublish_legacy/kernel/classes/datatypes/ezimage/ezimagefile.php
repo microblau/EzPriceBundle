@@ -2,9 +2,9 @@
 /**
  * File containing the eZImageFile class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -80,10 +80,7 @@ class eZImageFile extends eZPersistentObject
      * @param string $filePath file path to look up as URL in the XML string
      * @param int $contentObjectAttributeID
      *
-     * @return array An array of content object attribute ids and versions of
-     *               image files where the url is referenced
-     *
-     * @todo Rewrite ! A where data_text LIKE '%xxx%' is a resource hog !
+     * @return array An array with a series of ezcontentobject_attribute's id, version and language_code
      */
     static function fetchImageAttributesByFilepath( $filepath, $contentObjectAttributeID )
     {
@@ -104,22 +101,48 @@ class eZImageFile extends eZPersistentObject
 
         $contentObjectID = (int)( $rows[0]['contentobject_id'] );
         $contentClassAttributeID = (int)( $rows[0]['contentclassattribute_id'] );
-        $filepath = $db->escapeString( $filepath );
+        // Transform ", &, < and > to entities since they are being transformed in entities by DOM
+        // See eZImageAliasHandler::initialize()
+        // Ref https://jira.ez.no/browse/EZP-20090
+        $filepath = $db->escapeString(
+            htmlspecialchars(
+                $filepath,
+                // Forcing default flags to be able to specify encoding. See http://php.net/htmlspecialchars
+                version_compare( PHP_VERSION, '5.4.0', '>=' ) ? ENT_COMPAT | ENT_HTML401 : ENT_COMPAT,
+                'UTF-8'
+            )
+        );
         // Escape _ in like to avoid it to act as a wildcard !
         $filepath = addcslashes( $filepath, "_" );
-        $query = "SELECT id, version
+        $query = "SELECT id, version, language_code
                   FROM   ezcontentobject_attribute
-                  WHERE  contentobject_id = $contentObjectID and
-                         contentclassattribute_id = $contentClassAttributeID and
-                         data_text like '%url=\"$filepath\"%'";
+                  WHERE  contentobject_id = $contentObjectID AND
+                         contentclassattribute_id = $contentClassAttributeID AND
+                         data_text LIKE '%url=\"$filepath\"%'";
+        if ( $db->databaseName() == 'oracle' )
+        {
+            $query .= " ESCAPE '\'";
+        }
         $rows = $db->arrayQuery( $query );
         return $rows;
     }
 
+    /**
+     * Fetches the eZImageFile objects matching $filepath, optionally filtered by content object attribute id
+     *
+     * @param int $contentObjectAttributeId Optional content object attribute id to filter on. Set to false to disable.
+     * @param string $filepath
+     * @param bool $asObject
+     *
+     * @return eZImageFile
+     *
+     * @todo This method is actually wrong: the method could return multiple objects (EZP-21324)
+     */
     static function fetchByFilepath( $contentObjectAttributeID, $filepath, $asObject = true )
     {
         // Fetch by file path without $contentObjectAttributeID
         if ( $contentObjectAttributeID === false )
+
             return eZPersistentObject::fetchObject( eZImageFile::definition(),
                                                     null,
                                                     array( 'filepath' => $filepath ),
@@ -130,6 +153,25 @@ class eZImageFile extends eZPersistentObject
                                                 array( 'contentobject_attribute_id' => $contentObjectAttributeID,
                                                        'filepath' => $filepath ),
                                                 $asObject );
+    }
+
+    /**
+     * Fetches unique eZImageFile data (as an array) for $filePath
+     *
+     * @param string $filePath
+     *
+     * @return array array of hash. Keys: contentobject_attribute_id, filepath
+     */
+    static function fetchListByFilePath( $filePath )
+    {
+        return eZPersistentObject::fetchObjectList(
+            eZImageFile::definition(),
+            array( 'contentobject_attribute_id', 'filepath' ),
+            array( 'filepath' => $filePath ),
+            null,
+            null,
+            false
+        );
     }
 
     static function moveFilepath( $contentObjectAttributeID, $oldFilepath, $newFilepath )
@@ -183,7 +225,6 @@ class eZImageFile extends eZPersistentObject
 
 
     /// \privatesection
-    public $ID;
     public $ContentObjectAttributeID;
     public $Filepath;
 }

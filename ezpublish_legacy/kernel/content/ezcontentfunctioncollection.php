@@ -2,9 +2,9 @@
 /**
  * File containing the eZContentFunctionCollection class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -782,7 +782,8 @@ class eZContentFunctionCollection
                                 $owner = false,
                                 $parentNodeID = false,
                                 $includeDuplicates = true,
-                                $strictMatching = false )
+                                $strictMatching = false,
+                                $depth = 1 )
     {
         $classIDArray = array();
         if ( is_numeric( $classid ) )
@@ -804,7 +805,16 @@ class eZContentFunctionCollection
         $alphabet = $db->escapeString( $alphabet );
 
         $sqlOwnerString = is_numeric( $owner ) ? "AND ezcontentobject.owner_id = '$owner'" : '';
-        $parentNodeIDString = is_numeric( $parentNodeID ) ? "AND ezcontentobject_tree.parent_node_id = '$parentNodeID'" : '';
+        $parentNodeIDString = '';
+        if ( is_numeric( $parentNodeID ) )
+        {
+            $notEqParentString  = '';
+            // If the node(s) doesn't exist we return null.
+            if ( !eZContentObjectTreeNode::createPathConditionAndNotEqParentSQLStrings( $parentNodeIDString, $notEqParentString, $parentNodeID, $depth ) )
+            {
+                return null;
+            }
+        }
 
         $sqlClassIDs = '';
         if ( $classIDArray != null )
@@ -828,23 +838,23 @@ class eZContentFunctionCollection
         }
 
         $query = "SELECT COUNT($sqlToExcludeDuplicates ezcontentobject.id) AS count
-                  FROM ezkeyword, ezkeyword_attribute_link,ezcontentobject_tree,ezcontentobject,ezcontentclass, ezcontentobject_attribute
+                  FROM ezkeyword
+                      INNER JOIN ezkeyword_attribute_link ON (ezkeyword_attribute_link.keyword_id = ezkeyword.id)
+                      INNER JOIN ezcontentobject_attribute ON (ezcontentobject_attribute.id = ezkeyword_attribute_link.objectattribute_id)
+                      INNER JOIN ezcontentobject ON (ezcontentobject.id = ezcontentobject_attribute.contentobject_id AND ezcontentobject.current_version = ezcontentobject_attribute.version)
+                      INNER JOIN ezcontentobject_tree ON (ezcontentobject_tree.contentobject_id = ezcontentobject.id)
+                      INNER JOIN ezcontentclass ON (ezcontentclass.id = ezcontentobject.contentclass_id)
                        $sqlPermissionChecking[from]
-                  WHERE $sqlMatching
+                  WHERE 
+                  $parentNodeIDString
+                  $sqlMatching
                   $showInvisibleNodesCond
                   $sqlPermissionChecking[where]
                   $sqlClassIDs
                   $sqlOwnerString
-                  $parentNodeIDString
-                  AND ezcontentclass.version=0
-                  AND ezcontentobject.status=".eZContentObject::STATUS_PUBLISHED."
-                  AND ezcontentobject_attribute.version=ezcontentobject.current_version
-                  AND ezcontentobject_tree.main_node_id=ezcontentobject_tree.node_id
-                  AND ezcontentobject_attribute.contentobject_id=ezcontentobject.id
-                  AND ezcontentobject_tree.contentobject_id = ezcontentobject.id
-                  AND ezcontentclass.id = ezcontentobject.contentclass_id
-                  AND ezcontentobject_attribute.id=ezkeyword_attribute_link.objectattribute_id
-                  AND ezkeyword_attribute_link.keyword_id = ezkeyword.id";
+                  AND ezcontentclass.version = 0
+                  AND ezcontentobject.status = " . eZContentObject::STATUS_PUBLISHED . "
+                  AND ezcontentobject_tree.main_node_id = ezcontentobject_tree.node_id";
 
         $keyWords = $db->arrayQuery( $query );
         // cleanup temp tables
@@ -871,7 +881,8 @@ class eZContentFunctionCollection
                            $sortBy = array(),
                            $parentNodeID = false,
                            $includeDuplicates = true,
-                           $strictMatching = false )
+                           $strictMatching = false,
+                           $depth = 1 )
     {
         $classIDArray = array();
         if ( is_numeric( $classid ) )
@@ -910,8 +921,7 @@ class eZContentFunctionCollection
         $alphabet = $db->escapeString( $alphabet );
 
         $sortingInfo = array();
-        $sortingInfo['attributeFromSQL'] = ', ezcontentobject_attribute a1';
-        $sortingInfo['attributeWhereSQL'] = '';
+        $sortingInfo['attributeFromSQL'] = '';
         $sqlTarget = $sqlKeyword.',ezcontentobject_tree.node_id';
 
         if ( is_array( $sortBy ) && count ( $sortBy ) > 0 )
@@ -920,12 +930,10 @@ class eZContentFunctionCollection
             {
                 case 'keyword':
                 case 'name':
-                {
                     $sortingString = '';
                     if ( $sortBy[0] == 'name' )
                     {
                         $sortingString = 'ezcontentobject.name';
-                        $sortingInfo['attributeTargetSQL'] = ', ' . $sortingString;
                     }
                     elseif ( $sortBy[0] == 'keyword' )
                     {
@@ -933,7 +941,6 @@ class eZContentFunctionCollection
                             $sortingString = 'ezkeyword.keyword';
                         else
                             $sortingString = 'keyword';
-                        $sortingInfo['attributeTargetSQL'] = '';
                     }
 
                     $sortOrder = true; // true is ascending
@@ -941,27 +948,25 @@ class eZContentFunctionCollection
                         $sortOrder = $sortBy[1];
                     $sortingOrder = $sortOrder ? ' ASC' : ' DESC';
                     $sortingInfo['sortingFields'] = $sortingString . $sortingOrder;
-                } break;
+                    break;
                 default:
-                {
                     $sortingInfo = eZContentObjectTreeNode::createSortingSQLStrings( $sortBy );
+            }
 
-                    if ( $sortBy[0] == 'attribute' )
-                    {
-                        // if sort_by is 'attribute' we should add ezcontentobject_name to "FromSQL" and link to ezcontentobject
-                        $sortingInfo['attributeFromSQL']  .= ', ezcontentobject_name, ezcontentobject_attribute a1';
-                        $sortingInfo['attributeWhereSQL'] .= ' ezcontentobject.id = ezcontentobject_name.contentobject_id AND';
-                        $sqlTarget = 'DISTINCT ezcontentobject_tree.node_id, '.$sqlKeyword;
-                    }
-                    else // for unique declaration
-                    {
-                        $sortByArray = explode( ' ', $sortingInfo['sortingFields'] );
-                        $sortingInfo['attributeTargetSQL'] .= ', ' . $sortByArray[0];
-
-                        $sortingInfo['attributeFromSQL']  .= ', ezcontentobject_attribute a1';
-                    }
-
-                } break;
+            // Fixing the attributeTargetSQL
+            switch ( $sortBy[0] )
+            {
+                case 'keyword':
+                    $sortingInfo['attributeTargetSQL'] = '';
+                    break;
+                case 'name':
+                    $sortingInfo['attributeTargetSQL'] = ', ezcontentobject.name';
+                    break;
+                case 'attribute':
+                case 'class_name':
+                    break;
+                default:
+                    $sortingInfo['attributeTargetSQL'] .= ', ' . strtok( $sortingInfo["sortingFields"], " " );
             }
 
             $sqlTarget .= $sortingInfo['attributeTargetSQL'];
@@ -970,8 +975,6 @@ class eZContentFunctionCollection
         {
             $sortingInfo['sortingFields'] = 'ezkeyword.keyword ASC';
         }
-        $sortingInfo['attributeWhereSQL'] .= " a1.version=ezcontentobject.current_version
-                                             AND a1.contentobject_id=ezcontentobject.id AND";
 
         //Adding DISTINCT to avoid duplicates,
         //check if DISTINCT keyword was added before providing clauses for sorting.
@@ -981,7 +984,16 @@ class eZContentFunctionCollection
         }
 
         $sqlOwnerString = is_numeric( $owner ) ? "AND ezcontentobject.owner_id = '$owner'" : '';
-        $parentNodeIDString = is_numeric( $parentNodeID ) ? "AND ezcontentobject_tree.parent_node_id = '$parentNodeID'" : '';
+        $parentNodeIDString = '';
+        if ( is_numeric( $parentNodeID ) )
+        {
+            $notEqParentString  = '';
+            // If the node(s) doesn't exist we return null.
+            if ( !eZContentObjectTreeNode::createPathConditionAndNotEqParentSQLStrings( $parentNodeIDString, $notEqParentString, $parentNodeID, $depth ) )
+            {
+                return null;
+            }
+        }
 
         $sqlClassIDString = '';
         if ( is_array( $classIDArray ) and count( $classIDArray ) )
@@ -998,24 +1010,25 @@ class eZContentFunctionCollection
         }
 
         $query = "SELECT $sqlTarget
-                  FROM ezkeyword, ezkeyword_attribute_link,ezcontentobject_tree,ezcontentobject,ezcontentclass
+                  FROM ezkeyword
+                       INNER JOIN ezkeyword_attribute_link ON (ezkeyword_attribute_link.keyword_id = ezkeyword.id)
+                       INNER JOIN ezcontentobject_attribute ON (ezcontentobject_attribute.id = ezkeyword_attribute_link.objectattribute_id)
+                       INNER JOIN ezcontentobject ON (ezcontentobject_attribute.version = ezcontentobject.current_version AND ezcontentobject_attribute.contentobject_id = ezcontentobject.id)
+                       INNER JOIN ezcontentobject_tree ON (ezcontentobject_tree.contentobject_id = ezcontentobject.id)
+                       INNER JOIN ezcontentclass ON (ezcontentclass.id = ezcontentobject.contentclass_id)
                        $sortingInfo[attributeFromSQL]
                        $sqlPermissionChecking[from]
                   WHERE
-                  $sortingInfo[attributeWhereSQL]
+                  $parentNodeIDString
                   $sqlMatching
                   $showInvisibleNodesCond
                   $sqlPermissionChecking[where]
                   $sqlClassIDString
                   $sqlOwnerString
-                  $parentNodeIDString
-                  AND ezcontentclass.version=0
-                  AND ezcontentobject.status=".eZContentObject::STATUS_PUBLISHED."
-                  AND ezcontentobject_tree.main_node_id=ezcontentobject_tree.node_id
-                  AND ezcontentobject_tree.contentobject_id = ezcontentobject.id
-                  AND ezcontentclass.id = ezcontentobject.contentclass_id
-                  AND a1.id=ezkeyword_attribute_link.objectattribute_id
-                  AND ezkeyword_attribute_link.keyword_id = ezkeyword.id ORDER BY {$sortingInfo['sortingFields']}";
+                  AND ezcontentclass.version = 0
+                  AND ezcontentobject.status = ".eZContentObject::STATUS_PUBLISHED."
+                  AND ezcontentobject_tree.main_node_id = ezcontentobject_tree.node_id
+                  ORDER BY {$sortingInfo['sortingFields']}";
 
         $keyWords = $db->arrayQuery( $query, $db_params );
 

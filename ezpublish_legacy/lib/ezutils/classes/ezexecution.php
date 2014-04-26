@@ -2,9 +2,9 @@
 /**
  * File containing the eZExecution class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package lib
  */
 
@@ -25,9 +25,9 @@ class eZExecution
      Sets the clean exit flag to on,
      this notifies the exit handler that everything finished properly.
     */
-    static function setCleanExit()
+    static function setCleanExit( $hasCleanExit = true )
     {
-        self::$hasCleanExit = true;
+        self::$hasCleanExit = $hasCleanExit;
     }
 
     /*!
@@ -113,13 +113,19 @@ class eZExecution
     {
         // Need to change the current directory, since this information is lost
         // when the callbackfunction is called. eZDocumentRoot is set in ::registerShutdownHandler
+        // Getting the previous current working directory as we might need to get back there (i.e. Symfony web/ directory).
+        $previousCwd = getcwd();
         if ( self::$eZDocumentRoot !== null )
         {
             chdir( self::$eZDocumentRoot );
         }
 
         if ( eZExecution::isCleanExit() )
+        {
+            chdir( $previousCwd );
             return;
+        }
+
         eZExecution::cleanup();
         $handlers = eZExecution::fatalErrorHandlers();
         foreach ( $handlers as $handler )
@@ -130,6 +136,8 @@ class eZExecution
 
                 eZDebug::writeError('Could not call fatal error handler, is it a static public function?', __METHOD__ );
         }
+
+        chdir( $previousCwd );
     }
 
     /*!

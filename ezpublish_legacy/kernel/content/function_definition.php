@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -521,7 +521,7 @@ $FunctionList['search'] = array( 'name' => 'search',
                                                         array( 'name' => 'ignore_visibility',
                                                                'type' => 'bool',
                                                                'required' => false,
-                                                               'default' => false ),
+                                                               'default' => null ),
                                                         array( 'name' => 'limitation',
                                                                'type' => 'array',
                                                                'required' => false,
@@ -942,14 +942,18 @@ $FunctionList['keyword'] = array( 'name' => 'keyword',
                                                                 'type' => 'integer',
                                                                 'required' => false,
                                                                 'default' => false ),
-                                                        array( 'name' => 'include_duplicates',
+                                                         array( 'name' => 'include_duplicates',
                                                                 'type' => 'bool',
                                                                 'required' => false,
                                                                 'default' => true ),
                                                          array( 'name' => 'strict_matching',
-                                                                 'type' => 'bool',
-                                                                 'required' => false,
-                                                                 'default' => false ) ) );
+                                                                'type' => 'bool',
+                                                                'required' => false,
+                                                                'default' => false ),
+                                                         array( 'name' => 'depth',
+                                                                'type' => 'integer',
+                                                                'required' => false,
+                                                                'default' => 1 ) ) );
 
 
 $FunctionList['keyword_count'] = array( 'name' => 'keyword_count',
@@ -979,7 +983,11 @@ $FunctionList['keyword_count'] = array( 'name' => 'keyword_count',
                                                                array( 'name' => 'strict_matching',
                                                                       'type' => 'bool',
                                                                       'required' => false,
-                                                                      'default' => false ) ) );
+                                                                      'default' => false ),
+                                                               array( 'name' => 'depth',
+                                                                      'type' => 'integer',
+                                                                      'required' => false,
+                                                                      'default' => 1 ) ) );
 
 $FunctionList['access'] = array( 'name' => 'access',
                                  'operation_types' => array( 'read' ),

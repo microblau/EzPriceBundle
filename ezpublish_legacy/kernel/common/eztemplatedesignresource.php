@@ -2,9 +2,9 @@
 /**
  * File containing the eZTemplateDesignResource class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -667,22 +667,10 @@ class eZTemplateDesignResource extends eZTemplateFileResource
             }
         }
 
-        $designLocationCache = false;
-        $ini = eZINI::instance( 'site.ini' );
-        if( $ini->variable( 'DesignSettings', 'DesignLocationCache' ) == 'enabled' )
-            $designLocationCache = true;
-
-        /*
-         * We disable design cache in case of DB clustering
-         * because it will add 2 SQL queries per HTTP request
-         */
-        $ini = eZINI::instance( 'file.ini' );
-        if( $ini->variable( 'ClusteringSettings', 'FileHandler' ) == 'eZDBFileHandler')
-            $designLocationCache = false;
-
-        if( $designLocationCache )
+        if ( eZINI::instance( 'site.ini' )->variable( 'DesignSettings', 'DesignLocationCache' ) === 'enabled' )
         {
-            $siteAccessName = $GLOBALS['eZCurrentAccess']['name'];
+            // Using current SA if none given
+            $siteAccessName = $siteAccess !== false ? $siteAccess : $GLOBALS['eZCurrentAccess']['name'];
 
             $cachePath = eZSys::cacheDirectory()
                          . '/'
@@ -701,7 +689,7 @@ class eZTemplateDesignResource extends eZTemplateFileResource
             else
             {
                 // find design locations
-                $designBaseList = self::findDesignBase( $ini, $siteAccess );
+                $designBaseList = self::findDesignBase( eZINI::instance( 'file.ini' ), $siteAccess );
 
                 // stores it on the disk
                 $clusterFileHandler->fileStoreContents( $cachePath,
@@ -715,7 +703,7 @@ class eZTemplateDesignResource extends eZTemplateFileResource
         else
         {
             // find design locations
-            $designBaseList = self::findDesignBase( $ini, $siteAccess );
+            $designBaseList = self::findDesignBase( eZINI::instance( 'file.ini' ), $siteAccess );
 
             self::savesMemoryCache( $designBaseList, $siteAccess );
         }
@@ -879,6 +867,10 @@ class eZTemplateDesignResource extends eZTemplateFileResource
 
         foreach ( $overrideSettingGroups as $overrideName => $overrideSetting )
         {
+            if( !isset( $overrideSetting['Source'] ) )
+            {
+                continue;
+            }
             $overrideSource = "/" . $overrideSetting['Source'];
             $overrideMatchFile = $overrideSetting['MatchFile'];
 

@@ -2,9 +2,9 @@
 /**
  * File containing the eZLDAPUser class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -329,7 +329,7 @@ class eZLDAPUser extends eZUser
                         {
                             foreach ( array_keys( $LDAPUserGroup ) as $key )
                             {
-                                $groupName = $LDAPUserGroup[$key];
+                                $groupName = $db->escapeString( $LDAPUserGroup[$key] );
                                 $groupQuery = "SELECT ezcontentobject_tree.node_id
                                                  FROM ezcontentobject, ezcontentobject_tree
                                                 WHERE ezcontentobject.name like '$groupName'
@@ -348,7 +348,7 @@ class eZLDAPUser extends eZUser
                         }
                         else
                         {
-                            $groupName = $LDAPUserGroup;
+                            $groupName = $db->escapeString( $LDAPUserGroup );
                             $groupQuery = "SELECT ezcontentobject_tree.node_id
                                              FROM ezcontentobject, ezcontentobject_tree
                                             WHERE ezcontentobject.name like '$groupName'
@@ -495,7 +495,7 @@ class eZLDAPUser extends eZUser
                                     // remap group name and check that group exists
                                     if ( array_key_exists( $ldapGroupName, $LDAPUserGroupMap ) )
                                     {
-                                        $remmapedGroupName = $LDAPUserGroupMap[ $ldapGroupName ];
+                                        $remmapedGroupName = $db->escapeString( $LDAPUserGroupMap[ $ldapGroupName ] );
                                         $groupQuery = "SELECT ezcontentobject_tree.node_id
                                                          FROM ezcontentobject, ezcontentobject_tree
                                                         WHERE ezcontentobject.name like '$remmapedGroupName'
@@ -855,8 +855,10 @@ class eZLDAPUser extends eZUser
                 $newNodeAssignment = eZNodeAssignment::create( array( 'contentobject_id' => $contentObjectID,
                                                                       'contentobject_version' => 1,
                                                                       'parent_node' => $parentNodeID,
+                                                                      // parent_remote_id in node assignment holds remote id of the tree node,
+                                                                      // not of the parent location or of the node assignment itself
+                                                                      'parent_remote_id' => uniqid( 'LDAP_' ),
                                                                       'is_main' => ( $defaultUserPlacement == $parentNodeID ? 1 : 0 ) ) );
-                $newNodeAssignment->setAttribute( 'parent_remote_id', uniqid( 'LDAP_' ) );
                 $newNodeAssignment->store();
             }
 
@@ -995,8 +997,10 @@ class eZLDAPUser extends eZUser
         $nodeAssignment = eZNodeAssignment::create( array( 'contentobject_id' => $contentObjectID,
                                                            'contentobject_version' => 1,
                                                            'parent_node' => $defaultPlacement,
+                                                           // parent_remote_id in node assignment holds remote id of the tree node,
+                                                           // not of the parent location or of the node assignment itself
+                                                           'parent_remote_id' => uniqid( 'LDAP_' ),
                                                            'is_main' => 1 ) );
-        $nodeAssignment->setAttribute( 'parent_remote_id', uniqid( 'LDAP_' ) );
         $nodeAssignment->store();
 
         foreach( $parentNodeIDs as $parentNodeID )
@@ -1004,8 +1008,10 @@ class eZLDAPUser extends eZUser
             $newNodeAssignment = eZNodeAssignment::create( array( 'contentobject_id' => $contentObjectID,
                                                                   'contentobject_version' => 1,
                                                                   'parent_node' => $parentNodeID,
+                                                                  // parent_remote_id in node assignment holds remote id of the tree node,
+                                                                  // not of the parent location or of the node assignment itself
+                                                                  'parent_remote_id' => uniqid( 'LDAP_' ),
                                                                   'is_main' => 0 ) );
-            $newNodeAssignment->setAttribute( 'parent_remote_id', uniqid( 'LDAP_' ) );
             $newNodeAssignment->store();
         }
 
@@ -1342,9 +1348,10 @@ class eZLDAPUser extends eZUser
         $ini = eZINI::instance();
         $userGroupClassID = $ini->variable( "UserSettings", "UserGroupClassID" );
 
+        $groupNameEscaped = $db->escapeString( $groupName );
         $groupQuery = "SELECT ezcontentobject_tree.node_id
                        FROM ezcontentobject, ezcontentobject_tree
-                       WHERE ezcontentobject.name like '$groupName'
+                       WHERE ezcontentobject.name like '$groupNameEscaped'
                        AND ezcontentobject.id = ezcontentobject_tree.contentobject_id
                        AND ezcontentobject.contentclass_id = $userGroupClassID";
         $groupRows = $db->arrayQuery( $groupQuery );

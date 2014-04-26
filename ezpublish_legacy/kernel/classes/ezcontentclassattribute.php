@@ -2,9 +2,9 @@
 /**
  * File containing the eZContentClassAttribute class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -87,7 +87,8 @@ class eZContentClassAttribute extends eZPersistentObject
                                          'identifier' => array( 'name' => 'Identifier',
                                                                 'datatype' => 'string',
                                                                 'default' => '',
-                                                                'required' => true ),
+                                                                'required' => true,
+                                                                'max_length' => 50 ),
                                          'placement' => array( 'name' => 'Position',
                                                                'datatype' => 'integer',
                                                                'default' => 0,
@@ -292,7 +293,7 @@ class eZContentClassAttribute extends eZPersistentObject
         $this->setAttribute( 'serialized_description_list', $this->DescriptionList->serializeNames() );
         $this->setAttribute( 'serialized_data_text', $this->DataTextI18nList->serializeNames() );
 
-        $stored = eZPersistentObject::store( $fieldFilters );
+        $stored = parent::store( $fieldFilters );
 
         // store the content data for this attribute
         $dataType->storeClassAttribute( $this, $this->attribute( 'version' ) );
@@ -341,7 +342,7 @@ class eZContentClassAttribute extends eZPersistentObject
         $this->setAttribute( 'serialized_description_list', $this->DescriptionList->serializeNames() );
         $this->setAttribute( 'serialized_data_text', $this->DataTextI18nList->serializeNames() );
 
-        eZPersistentObject::store();
+        parent::store();
 
         // store the content data for this attribute
         $dataType->storeVersionedClassAttribute( $this, $version );
@@ -362,7 +363,7 @@ class eZContentClassAttribute extends eZPersistentObject
             $db = eZDB::instance();
             $db->begin();
             $dataType->deleteStoredClassAttribute( $this, $this->Version );
-            eZPersistentObject::remove();
+            $this->remove();
             $db->commit();
             return true;
         }
@@ -1026,7 +1027,7 @@ class eZContentClassAttribute extends eZPersistentObject
         }
         else
         {
-            $limit = 1000;
+            $limit = 100;
             $offset = 0;
             while ( true )
             {

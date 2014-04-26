@@ -2,9 +2,9 @@
 /**
  * File containing the eZExtension class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package lib
  */
 
@@ -57,7 +57,7 @@ class eZExtension
      * @note Default extensions are those who are loaded before a siteaccess are determined while access extensions
      *       are loaded after siteaccess is set.
      *
-     * @param false|string $extensionType Decides which extension to include in the list, the follow values are possible:
+     * @param bool|string $extensionType Decides which extension to include in the list, the follow values are possible:
      *                                    - false - Means add both default and access extensions
      *                                    - 'default' - Add only default extensions
      *                                    - 'access' - Add only access extensions

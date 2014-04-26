@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -12,6 +12,8 @@ $module = $Params['Module'];
 $errorType = $Params['Type'];
 $errorNumber = $Params['Number'];
 $extraErrorParameters = $Params['ExtraParameters'];
+$httpErrorCode = null;
+$httpErrorName = null;
 
 $tpl->setVariable( 'parameters', $extraErrorParameters );
 
@@ -73,8 +75,13 @@ $GLOBALS["eZRequestError"] = true;
                     }
                     else
                     {
-                        header( eZSys::serverVariable( 'SERVER_PROTOCOL' ) . " $httpErrorString" );
-                        header( "Status: $httpErrorString" );
+                        // we need to store the header so that they are listed in view cache data ()
+                        $responseHeaders = array(
+                            eZSys::serverVariable( 'SERVER_PROTOCOL' ) . " $httpErrorString",
+                            "Status: $httpErrorString"
+                        );
+                        header( $responseHeaders[0] );
+                        header( $responseHeaders[1] );
                     }
                 }
             }
@@ -178,5 +185,8 @@ $Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/error', 'Error' )
                                 'url' => false ),
                          array( 'text' => "$errorType ($errorNumber)",
                                 'url' => false ) );
+$Result['errorCode'] = $httpErrorCode;
+$Result['errorMessage'] = $httpErrorName;
 
-?>
+if ( isset( $responseHeaders ) )
+    $Result['responseHeaders'] = $responseHeaders;

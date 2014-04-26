@@ -2,18 +2,14 @@
 /**
  * File containing the eZFSFileHandler class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
-class eZFSFileHandler
+class eZFSFileHandler implements eZClusterFileHandlerInterface
 {
-    /**
-     * This should be defined in eZFS2FileHandler, but due to static members
-     * limitations in PHP < 5.3, it is declared here
-     */
     const EXPIRY_TIMESTAMP = 233366400;
 
     /**
@@ -598,62 +594,10 @@ class eZFSFileHandler
     }
 
     /**
-     * Delete files matching regex $fileRegex under directory $dir.
-     *
-     * \public
-     * \static
-     * \sa fileDeleteByWildcard()
-     */
-    function fileDeleteByRegex( $dir, $fileRegex )
-    {
-        eZDebugSetting::writeDebug( 'kernel-clustering', "fs::fileDeleteByRegex( '$dir', '$fileRegex' )", __METHOD__ );
-
-        eZDebug::accumulatorStart( 'dbfile', false, 'dbfile' );
-
-        if ( !file_exists( $dir ) )
-        {
-            //eZDebugSetting::writeDebug( 'kernel-clustering', "Dir '$dir' does not exist", __METHOD__ );
-            eZDebug::accumulatorStop( 'dbfile' );
-            return;
-        }
-
-        $dirHandle = opendir( $dir );
-        if ( !$dirHandle )
-        {
-            eZDebug::writeError( "opendir( '$dir' ) failed." );
-            eZDebug::accumulatorStop( 'dbfile' );
-            return;
-        }
-
-        while ( ( $file = readdir( $dirHandle ) ) !== false )
-        {
-            if ( $file == '.' or
-                 $file == '..' )
-                continue;
-            if ( preg_match( "/^$fileRegex/", $file ) )
-            {
-                //eZDebugSetting::writeDebug( 'kernel-clustering', "\$file = eZDir::path( array( '$dir', '$file' ) );", __METHOD__ );
-                $file = eZDir::path( array( $dir, $file ) );
-                eZDebugSetting::writeDebug( 'kernel-clustering', "Removing cache file '$file'", __METHOD__ );
-                unlink( $file );
-
-                // Write log message to storage.log
-                eZLog::writeStorageLog( $file );
-            }
-        }
-        closedir( $dirHandle );
-
-        eZDebug::accumulatorStop( 'dbfile' );
-    }
-
-    /**
      * Delete files matching given wildcard.
      *
-     * Note that this method is faster than fileDeleteByRegex().
-     *
      * \public
      * \static
-     * \sa fileDeleteByRegex()
      */
     function fileDeleteByWildcard( $wildcard )
     {
@@ -675,21 +619,22 @@ class eZFSFileHandler
      *
      * \public
      * \static
-     * \sa fileDeleteByRegex()
      */
     function fileDeleteByDirList( $dirList, $commonPath, $commonSuffix )
     {
-        $dirs = implode( ',', $dirList );
-        $wildcard = $commonPath .'/{' . $dirs . '}/' . $commonSuffix . '*';
-
-        eZDebugSetting::writeDebug( 'kernel-clustering', "fs::fileDeleteByDirList( '$dirs', '$commonPath', '$commonSuffix' )", __METHOD__ );
+        eZDebugSetting::writeDebug( 'kernel-clustering', "fs::fileDeleteByDirList( '" . implode( ",", $dirList ) . "', '$commonPath', '$commonSuffix' )", __METHOD__ );
 
         eZDebug::accumulatorStart( 'dbfile', false, 'dbfile' );
-        $unlinkArray = eZSys::globBrace( $wildcard );
-        if ( $unlinkArray !== false and ( count( $unlinkArray ) > 0 ) )
+
+        foreach ( $dirList as $dir )
         {
-            array_map( 'unlink', $unlinkArray );
+            $unlinkArray = eZSys::globBrace( "$commonPath/$dir/$commonSuffix*" );
+            if ( $unlinkArray !== false )
+            {
+                array_map( 'unlink', $unlinkArray );
+            }
         }
+
         eZDebug::accumulatorStop( 'dbfile' );
     }
 
@@ -842,7 +787,7 @@ class eZFSFileHandler
                 $globResult = glob( $file . "/*" );
                 if ( is_array( $globResult ) )
                 {
-                    $list = array_merge( $list, $globResult );
+                    $list = array_merge( $globResult, $list );
                 }
             }
 
@@ -943,7 +888,7 @@ class eZFSFileHandler
         eZDebugSetting::writeDebug( 'kernel-clustering', "fs::fileMove( '$srcPath', '$dstPath' )", __METHOD__ );
 
         eZDebug::accumulatorStart( 'dbfile', false, 'dbfile' );
-        eZFileHandler::move( $srcPath, $dstPath );
+        eZFile::rename( $srcPath, $dstPath, true );
         eZDebug::accumulatorStop( 'dbfile' );
     }
 
@@ -982,7 +927,7 @@ class eZFSFileHandler
     /**
      * Ends the cache generation started by startCacheGeneration().
      */
-    public function endCacheGeneration()
+    public function endCacheGeneration( $rename = true )
     {
         return true;
     }
@@ -1022,19 +967,6 @@ class eZFSFileHandler
      * eZFS does not require binary purge.
      * Files are stored on plain FS and removed using FS functions
      *
-     * @since 4.3
-     * @deprecated Deprecated as of 4.5, use {@link eZFSFileHandler::requiresPurge()} instead.
-     * @return bool
-     */
-    public function requiresBinaryPurge()
-    {
-        return false;
-    }
-
-    /**
-     * eZFS does not require binary purge.
-     * Files are stored on plain FS and removed using FS functions
-     *
      * @since 4.5.0
      * @return bool
      */
@@ -1046,6 +978,21 @@ class eZFSFileHandler
     public function hasStaleCacheSupport()
     {
         return false;
+    }
+
+    public function getFileList($scopes = false, $excludeScopes = false)
+    {
+        return false;
+    }
+
+    public function isDBFileExpired($expiry, $curtime, $ttl)
+    {
+        return self::isFileExpired( $this->filePath, @filemtime( $this->filePath ), $expiry, $curtime, $ttl );
+    }
+
+    public function isLocalFileExpired($expiry, $curtime, $ttl)
+    {
+        return self::isFileExpired( $this->filePath, @filemtime( $this->filePath ), $expiry, $curtime, $ttl );
     }
 
     public $metaData = null;

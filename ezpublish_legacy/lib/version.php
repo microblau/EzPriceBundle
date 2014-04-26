@@ -2,9 +2,9 @@
 /**
  * File containing the eZPublishSDK class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package lib
  */
 
@@ -14,12 +14,13 @@
 
 class eZPublishSDK
 {
-    const VERSION_MAJOR = 4;
-    const VERSION_MINOR = 7;
+    const VERSION_MAJOR = 2014;
+    const VERSION_MINOR = 3;
     const VERSION_RELEASE = 0;
-    const VERSION_STATE = '';
-    const VERSION_DEVELOPMENT = false;
-    const VERSION_ALIAS = '4.7';
+    const VERSION_STATE = 'alpha1';
+    const VERSION_DEVELOPMENT = true;
+    const VERSION_ALIAS = '5.3';
+    const EDITION = 'eZ Publish Community Project';
 
     /*!
       \return the SDK version as a string
@@ -36,14 +37,10 @@ class eZPublishSDK
         }
         else
         {
-            $versionText = eZPublishSDK::majorVersion() . '.' . eZPublishSDK::minorVersion();
+            $versionText = 'Community Project ' . eZPublishSDK::majorVersion() . '.' . eZPublishSDK::minorVersion();
 //            $development = eZPublishSDK::developmentVersion();
 //            if ( $development !== false )
 //                $versionText .= '.' . $development;
-            if ( $withRelease )
-                $versionText .= "." . eZPublishSDK::release();
-            if ( $withState )
-                $versionText .= eZPublishSDK::state();
         }
         return $versionText;
     }

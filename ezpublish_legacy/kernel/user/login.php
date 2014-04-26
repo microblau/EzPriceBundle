@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -50,7 +50,11 @@ if ( $Module->isCurrentAction( 'Login' ) and
         $requireUserLogin = ( $ini->variable( "SiteAccessSettings", "RequireUserLogin" ) == "true" );
         if ( !$requireUserLogin )
         {
-            $userRedirectURI = $http->postVariable( 'RedirectURI', $http->sessionVariable( 'LastAccessesURI', '/' ) );
+            $userRedirectURI = trim( $http->postVariable( 'RedirectURI', '' ) );
+            if ( empty( $userRedirectURI ) )
+            {
+                $userRedirectURI = $http->sessionVariable( 'LastAccessesURI', '/' );
+            }
         }
 
         if ( $http->hasSessionVariable( "RedirectAfterLogin", false ) )
@@ -95,7 +99,7 @@ if ( $Module->isCurrentAction( 'Login' ) and
             && ( $rememberMeTimeout = $ini->variable( 'Session', 'RememberMeTimeout' ) )
         )
         {
-            eZSession::setCookieParams( $rememberMeTimeout );
+            eZSession::setCookieLifetime( $rememberMeTimeout );
         }
 
         foreach ( array_keys ( $loginHandlers ) as $key )
@@ -285,7 +289,7 @@ $tpl = eZTemplate::factory();
 $tpl->setVariable( 'login', $userLogin, 'User' );
 $tpl->setVariable( 'post_data', $postData, 'User' );
 $tpl->setVariable( 'password', $userPassword, 'User' );
-$tpl->setVariable( 'redirect_uri', $userRedirectURI, 'User' );
+$tpl->setVariable( 'redirect_uri', $userRedirectURI . eZSys::queryString(), 'User' );
 $tpl->setVariable( 'warning', array( 'bad_login' => $loginWarning ), 'User' );
 
 $tpl->setVariable( 'site_access', array( 'allowed' => $siteAccessAllowed,

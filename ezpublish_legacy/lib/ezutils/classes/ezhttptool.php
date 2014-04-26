@@ -2,9 +2,9 @@
 /**
  * File containing the eZHTTPTool class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package lib
  */
 
@@ -28,12 +28,6 @@ class eZHTTPTool
     function eZHTTPTool()
     {
         $this->UseFullUrl = false;
-        $magicQuote = get_magic_quotes_gpc();
-
-        if ( $magicQuote == 1 )
-        {
-            eZHTTPTool::removeMagicQuotes();
-        }
     }
 
     /*!
@@ -225,7 +219,7 @@ class eZHTTPTool
         if ( $uriPort && !$port )
             $port = $uriPort;
         else if ( !$port )
-            $port = 80;
+            $port = ( $protocol === 'https://' ? 443 : 80 );
 
         if ( !$path )
         {
@@ -549,20 +543,11 @@ class eZHTTPTool
             $host = eZSys::hostname();
         if ( !is_string( $protocol ) )
         {
-            $protocol = 'http';
+            $protocol = eZSys::serverProtocol();
+
             // Default to https if SSL is enabled
-
-            // Check if SSL port is defined in site.ini
-            $ini = eZINI::instance();
-            $sslPort = 443;
-            if ( $ini->hasVariable( 'SiteSettings', 'SSLPort' ) )
+            if ( eZSys::isSSLNow() )
             {
-                $sslPort = $ini->variable( 'SiteSettings', 'SSLPort' );
-            }
-
-            if ( eZSys::serverPort() == $sslPort )
-            {
-                $protocol = 'https';
                 $port = false;
             }
         }
@@ -589,17 +574,19 @@ class eZHTTPTool
     }
 
     /**
-     * \static
      * Performs an HTTP redirect.
      *
-     * \param  $path  The path to redirect
-     * \param  $parameters  \see createRedirectUrl()
-     * \param  $status  The HTTP status code as a string
-     * \param  $encodeURL  Encode the URL. This should normally be true, but
-     * may be set to false to avoid double encoding when redirect() is called
-     * twice.
+     * @param string $path The path to redirect to
+     * @param array $parameters See createRedirectUrl(). Defaults to empty array.
+     * @param bool $status The HTTP status code as a string (code + text, e.g. "302 Found"). Defaults to false.
+     * @param bool $encodeURL Encodes the URL.
+     *                        This should normally be true, but may be set to false to avoid double encoding when redirect() is called twice.
+     *                        Defaults to true
+     * @param bool $returnRedirectObject If true, will return an ezpKernelRedirect object.
+     *
+     * @return null|ezpKernelRedirect
      */
-    static function redirect( $path, $parameters = array(), $status = false, $encodeURL = true )
+    static function redirect( $path, $parameters = array(), $status = false, $encodeURL = true, $returnRedirectObject = false )
     {
         $url = eZHTTPTool::createRedirectUrl( $path, $parameters );
         if ( strlen( $status ) > 0 )
@@ -614,12 +601,21 @@ class eZHTTPTool
         }
 
         eZHTTPTool::headerVariable( 'Location', $url );
-
         /* Fix for redirecting using workflows and apache 2 */
-        echo '<HTML><HEAD>';
-        echo '<META HTTP-EQUIV="Refresh" Content="0;URL='. htmlspecialchars( $url ) .'">';
-        echo '<META HTTP-EQUIV="Location" Content="'. htmlspecialchars( $url ) .'">';
-        echo '</HEAD><BODY></BODY></HTML>';
+        $escapedUrl = htmlspecialchars( $url );
+        $content = <<<EOT
+<HTML><HEAD>
+<META HTTP-EQUIV="Refresh" Content="0;URL=$escapedUrl">
+<META HTTP-EQUIV="Location" Content="$escapedUrl">
+</HEAD><BODY></BODY></HTML>
+EOT;
+
+        if ( $returnRedirectObject )
+        {
+            return new ezpKernelRedirect( $url, $status ?: null, $content );
+        }
+
+        echo $content;
     }
 
     /*!
@@ -630,46 +626,6 @@ class eZHTTPTool
     static function headerVariable( $headerName, $headerData )
     {
         header( $headerName .': '. $headerData );
-    }
-
-    static function removeMagicQuotes()
-    {
-        foreach ( array_keys( $_POST ) as $key )
-        {
-            if ( !is_array( $_POST[$key] ) )
-            {
-                $_POST[$key] = str_replace( "\'", "'", $_POST[$key] );
-                $_POST[$key] = str_replace( '\"', '"', $_POST[$key] );
-                $_POST[$key] = str_replace( '\\\\', '\\', $_POST[$key] );
-            }
-            else
-            {
-                foreach ( array_keys( $_POST[$key] ) as $arrayKey )
-                {
-                    $_POST[$key][$arrayKey] = str_replace( "\'", "'", $_POST[$key][$arrayKey] );
-                    $_POST[$key][$arrayKey] = str_replace( '\"', '"', $_POST[$key][$arrayKey] );
-                    $_POST[$key][$arrayKey] = str_replace( '\\\\', '\\', $_POST[$key][$arrayKey] );
-                }
-            }
-        }
-        foreach ( array_keys( $_GET ) as $key )
-        {
-            if ( !is_array( $_GET[$key] ) )
-            {
-                $_GET[$key] = str_replace( "\'", "'", $_GET[$key] );
-                $_GET[$key] = str_replace( '\"', '"', $_GET[$key] );
-                $_GET[$key] = str_replace( '\\\\', '\\', $_GET[$key] );
-            }
-            else
-            {
-                foreach ( array_keys( $_GET[$key] ) as $arrayKey )
-                {
-                    $_GET[$key][$arrayKey] = str_replace( "\'", "'", $_GET[$key][$arrayKey] );
-                    $_GET[$key][$arrayKey] = str_replace( '\"', '"', $_GET[$key][$arrayKey] );
-                    $_GET[$key][$arrayKey] = str_replace( '\\\\', '\\', $_GET[$key][$arrayKey] );
-                }
-            }
-        }
     }
 
     function createPostVarsFromImageButtons()
@@ -698,29 +654,6 @@ class eZHTTPTool
                 }
             }
         }
-    }
-
-    /**
-     * Return the session id
-     *
-     * @deprecated Since 4.4, use ->sessionID instead!
-     * @return string
-     */
-    function getSessionKey()
-    {
-        return session_id();
-    }
-
-    /**
-     * Sets a new session id
-     *
-     * @deprecated Since 4.4, use ->setSessionID instead!
-     * @param string $sessionKey Allowed characters in the range a-z A-Z 0-9 , (comma) and - (minus)
-     * @return string Current(old) session id
-    */
-    function setSessionKey( $sessionKey )
-    {
-        return session_id( $sessionKey );
     }
 
     /**

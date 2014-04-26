@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -298,12 +298,16 @@ if ( $storingAllowed && $hasObjectInput)
         $Module->setExitStatus( eZModule::STATUS_OK );
 
     $db = eZDB::instance();
-    if ( $inputValidated and count( $attributeInputMap ) > 0 )
+    if ( !empty( $attributeInputMap ) )
     {
-        if ( $Module->runHooks( 'pre_commit', array( $class, $object, $version, $contentObjectAttributes, $EditVersion, $EditLanguage, $FromLanguage ) ) )
-            return;
+        if ( $inputValidated )
+        {
+            if ( $Module->runHooks( 'pre_commit', array( $class, $object, $version, $contentObjectAttributes, $EditVersion, $EditLanguage, $FromLanguage ) ) )
+                return;
+            $version->setAttribute( 'status', eZContentObjectVersion::STATUS_DRAFT );
+        }
+
         $version->setAttribute( 'modified', time() );
-        $version->setAttribute( 'status', eZContentObjectVersion::STATUS_DRAFT );
 
         $db->begin();
         $version->store();

@@ -2,9 +2,9 @@
 /**
  * File containing the eZURLWildcard class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -426,23 +426,8 @@ class eZURLWildcard extends eZPersistentObject
     }
 
     /**
-     * Checks if the wildcard cache is expired
-     *
-     * @param int $timestamp Timestamp expiry should be checked against
-     *
-     * @return bool true if cache is expired
-     * @deprecated since 4.2.0
-     */
-    public static function isCacheExpired( $timestamp )
-    {
-        return ( self::expiryTimestamp() > $timestamp );
-    }
-
-    /**
      * Assign function names to input variables. Generates the wildcard cache if
      * expired.
-     *
-     * @param $regexpArrayCallback function to get an array of regexps
      *
      * @return array The wildcards index, as an array of regexps
      */
@@ -453,16 +438,16 @@ class eZURLWildcard extends eZPersistentObject
             $cacheIndexFile = self::loadCacheFile();
 
             // if NULL is returned, the cache doesn't exist or isn't valid
-            $wildcardsIndex = $cacheIndexFile->processFile( array( __CLASS__, 'fetchCacheFile' ), self::expiryTimestamp() );
-            if ( $wildcardsIndex === null )
+            self::$wildcardsIndex = $cacheIndexFile->processFile( array( __CLASS__, 'fetchCacheFile' ), self::expiryTimestamp() );
+            if ( self::$wildcardsIndex === null )
             {
                 // This will generate and return the index, and store the cache
                 // files for the different wildcards for later use
-                $wildcardsIndex = self::createWildcardsIndex();
+                self::$wildcardsIndex = self::createWildcardsIndex();
             }
         }
 
-        return $wildcardsIndex;
+        return self::$wildcardsIndex;
     }
 
     /**
@@ -475,7 +460,8 @@ class eZURLWildcard extends eZPersistentObject
      *   ...
      *   'wildcard_<md5>_N.php': contains cached wildcards.
      * Each file has info about eZURLWildcard::WILDCARDS_PER_CACHE_FILE wildcards.
-     * @return void
+     *
+     * @return array
      */
     protected static function createWildcardsIndex()
     {
@@ -676,12 +662,13 @@ class eZURLWildcard extends eZPersistentObject
     public static function wildcardExists( $uriString )
     {
         $wildcardIndex = self::wildcardsIndex();
-        $uriString = self::matchRegexpCode( array( 'source_url' => $uriString ) );
-        if ( in_array( $uriString, $wildcardIndex ) )
+        foreach ( $wildcardIndex as $preg )
         {
-            return true;
+            if ( preg_match( $preg, $uriString ) )
+            {
+                return true;
+            }
         }
-
         return false;
     }
 }

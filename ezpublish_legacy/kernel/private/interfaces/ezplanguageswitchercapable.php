@@ -2,9 +2,9 @@
 /**
  * File containing the ezpLanguageSwitcherCapable interface
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -19,7 +19,10 @@ interface ezpLanguageSwitcherCapable
      * Constructs a ezpLanguageSwitcherCapable object.
      *
      * The $params array is the module-params array returned in the switchlanguage/to
-     * view. This is used to construct the destination URL.
+     * view. In addition, the value in $params['QueryString'] might also be taken
+     * into account (if present) to keep the query string while redirecting to
+     * another language.
+     * This is used to construct the destination URL.
      *
      * @param array $params
      * @return ezpLanguageSwitcherCapable
@@ -67,17 +70,17 @@ interface ezpLanguageSwitcherCapable
      * <code>
      *     Array
      *    (
-     *        [eng] => Array
-     *            (
-     *                [url] => /switchlanguage/to/eng/Demo-content
-     *                [text] => Eng
-     *            )
+     *    ????????[eng] => Array
+     *    ????????????????(
+     *    ????????????????????????[url] => /switchlanguage/to/eng/Demo-content
+     *    ????????????????????????[text] => Eng
+     *    ????????????????)
      *
-     *        [nor] => Array
-     *            (
-     *                [url] => /switchlanguage/to/nor/Demo-content
-     *                [text] => Nor
-     *            )
+     *    ????????[nor] => Array
+     *    ????????????????(
+     *    ????????????????????????[url] => /switchlanguage/to/nor/Demo-content
+     *    ????????????????????????[text] => Nor
+     *    ????????????????)
      *    )
      *
      * </code>

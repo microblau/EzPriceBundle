@@ -2,9 +2,9 @@
 /**
  * File containing the ezpMobileDeviceRegexpFilter class
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -47,8 +47,17 @@ class ezpMobileDeviceRegexpFilter implements ezpMobileDeviceDetectFilterInterfac
      */
     public function __construct()
     {
-        $this->httpUserAgent = $_SERVER['HTTP_USER_AGENT'];
-        $this->httpAccept = $_SERVER['HTTP_ACCEPT'];
+        $this->httpUserAgent = '';
+        if ( isset( $_SERVER['HTTP_USER_AGENT'] ) )
+        {
+            $this->httpUserAgent = $_SERVER['HTTP_USER_AGENT'];
+        }
+
+        $this->httpAccept = '';
+        if ( isset( $_SERVER['HTTP_ACCEPT'] ) )
+        {
+            $this->httpAccept = $_SERVER['HTTP_ACCEPT'];
+        }
     }
 
     /**
@@ -109,7 +118,24 @@ class ezpMobileDeviceRegexpFilter implements ezpMobileDeviceDetectFilterInterfac
         if ( !isset( $_COOKIE['eZMobileDeviceDetect'] )
                 && !in_array( $currentSiteAccess['name'], eZINI::instance()->variable( 'SiteAccessSettings', 'MobileSiteAccessList'  ) ) )
         {
-            $http->redirect( eZINI::instance()->variable( 'SiteAccessSettings', 'MobileSiteAccessURL' ) );
+            $currentUrl = eZSys::serverURL() . eZSys::requestURI();
+            $redirectUrl = eZINI::instance()->variable( 'SiteAccessSettings', 'MobileSiteAccessURL' );
+
+            // Do not redirect if already on the redirect url
+            if ( strpos( $currentUrl, $redirectUrl ) !== 0 )
+            {
+                // Default siteaccess name needs to be removed from the uri when redirecting
+                $uri = explode( '/', ltrim( eZSys::requestURI(), '/' ) );
+
+                if ( array_shift( $uri ) == $currentSiteAccess['name'] )
+                {
+                    $http->redirect( $redirectUrl . '/' . implode( '/', $uri ) );
+                }
+                else
+                {
+                    $http->redirect( $redirectUrl . eZSys::requestURI() );
+                }
+            }
 
             eZExecution::cleanExit();
         }

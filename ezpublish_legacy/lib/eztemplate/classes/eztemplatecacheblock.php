@@ -2,9 +2,9 @@
 /**
  * File containing the eZTemplateCacheBlock class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package lib
  */
 
@@ -49,9 +49,36 @@ class eZTemplateCacheBlock
      */
     static function retrieve( $keys, $subtreeExpiry, $ttl, $useGlobalExpiry = true )
     {
+        $keys = (array)$keys;
+        self::filterKeys( $keys );
         $nodeID = $subtreeExpiry ? eZTemplateCacheBlock::decodeNodeID( $subtreeExpiry ) : false;
         $cachePath = eZTemplateCacheBlock::cachePath( eZTemplateCacheBlock::keyString( $keys ), $nodeID );
         return eZTemplateCacheBlock::handle( $cachePath, $nodeID, $ttl, $useGlobalExpiry );
+    }
+
+    /**
+     * Filters cache keys when needed.
+     * Useful to avoid having current URI as a cache key if an error has occurred and has been caught by error module.
+     *
+     * @param array $keys
+     */
+    static private function filterKeys( array &$keys )
+    {
+        if ( isset( $GLOBALS['eZRequestError'] ) && $GLOBALS['eZRequestError'] === true )
+        {
+            $requestUri = eZSys::requestURI();
+            foreach ( $keys as $i => &$key )
+            {
+                if ( is_array( $key ) )
+                {
+                    self::filterKeys( $key );
+                }
+                else if ( $key === $requestUri )
+                {
+                    unset( $keys[$i] );
+                }
+            }
+        }
     }
 
     /*!
@@ -73,7 +100,7 @@ class eZTemplateCacheBlock
         // Perform an extra check if the DB handler is in use,
         // get the modified_subnode value from the specified node ($nodeID)
         // and use it as an extra expiry value.
-        if ( $cacheHandler instanceof eZDBFileHandler or $cacheHandler instanceof eZDFSFileHandler )
+        if ( $cacheHandler instanceof eZDFSFileHandler )
         {
             $subtreeExpiry = eZTemplateCacheBlock::getSubtreeModification( $nodeID );
         }

@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -39,7 +39,8 @@ $ViewList['edit'] = array(
     'post_action_parameters' => array( 'EditLanguage' => array( 'SelectedLanguage' => 'EditSelectedLanguage' ),
                                        'FromLanguage' => array( 'FromLanguage' => 'FromLanguage' ),
                                        'TranslateLanguage' => array( 'SelectedLanguage' => 'EditSelectedLanguage' ),
-                                       'UploadFileRelation' => array( 'UploadRelationLocation' => 'UploadRelationLocationChoice' ) ),
+                                       'UploadFileRelation' => array( 'UploadRelationLocation' => 'UploadRelationLocationChoice' ),
+                                       'SectionEdit' => array( 'RedirectRelativeURI' => 'RedirectRelativeURI' ) ),
     'post_actions' => array( 'BrowseActionName' ),
     'script' => 'edit.php',
     'params' => array( 'ObjectID', 'EditVersion', 'EditLanguage', 'FromLanguage' ) );
@@ -471,6 +472,7 @@ $ViewList['translation'] = array(
 
 $ViewList['treemenu'] = array(
     'functions' => array( 'read' ),
+    'ui_context' => 'ajax',
     'script' => 'treemenu.php',
     'default_navigation_part' => 'ezmynavigationpart',
     'params' => array( 'NodeID', 'Modified', 'Expiry', 'Perm' ) );

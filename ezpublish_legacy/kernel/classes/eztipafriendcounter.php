@@ -2,9 +2,9 @@
 /**
  * File containing the eZTipafriendCounter class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -61,26 +61,6 @@ class eZTipafriendCounter extends eZPersistentObject
     {
         eZPersistentObject::removeObject( eZTipafriendCounter::definition(),
                                           array( 'node_id' => $nodeID ) );
-    }
-
-    /*!
-     \deprecated
-     Use removeForNode instead
-     \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
-     the calls within a db transaction; thus within db->begin and db->commit.
-     */
-    function clear( $nodeID )
-    {
-        eZTipafriendCounter::removeForNode( $nodeID );
-    }
-
-    /*!
-     \deprecated, will be removed in future versions of eZP
-     \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
-     the calls within a db transaction; thus within db->begin and db->commit.
-     */
-    function increase()
-    {
     }
 
     static function fetch( $nodeID, $asObject = true )

@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -113,19 +113,20 @@ web-based applications.
 Standard CMS functionality (such as news publishing, e-commerce and
 forums) are already implemented and ready to use. Standalone libraries
 can be used for cross-platform database-independent browser-neutral
-PHP projects. Because eZ Publish 4 is a web-based application, it can
+PHP projects. Because eZ Publish is a web-based application, it can
 be accessed from anywhere you have an internet connection.';
 
 $license =
 ## BEGIN LICENSE INFO ##
 'This copy of eZ Publish is distributed under the terms and conditions of
-the eZ Business Use License Agreement (eZ BUL). Briefly summarized, the
-eZ BUL allows you to run the subscribed number of eZ Publish site
-accesses or instances.  You may modify a copy of the software solely for
-your internal use. For the complete legal terms and conditions of your
-eZ BUL license, see the file named LICENSE in the root directory of this
-eZ Publish distribution.
-';
+the GNU General Public License (GPL). Briefly summarized, the GPL gives
+you the right to use, modify and share this copy of eZ Publish. If you
+choose to share eZ Publish, you may only share it under the terms and
+conditions of the GPL. If you share a modified version of eZ Publish,
+these modifications must also be placed under the GPL. Read the
+complete legal terms and conditions of the GPL at
+http://www.gnu.org/licenses/gpl.txt or see the file named LICENSE in
+the root directory of this eZ Publish distribution.';
 ## END LICENSE INFO ##
 
 $contributors = getContributors( EZ_ABOUT_CONTRIBUTORS_DIR );

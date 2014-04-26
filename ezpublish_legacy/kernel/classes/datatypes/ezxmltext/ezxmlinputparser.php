@@ -2,9 +2,9 @@
 /**
  * File containing the eZXMLInputParser class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -591,7 +591,7 @@ class eZXMLInputParser
         $nameStartChar = ':A-Z_a-z\\xC0-\\xD6\\xD8-\\xF6\\xF8-\\x{2FF}\\x{370}-\\x{37D}\\x{37F}-\\x{1FFF}\\x{200C}-\\x{200D}\\x{2070}-\\x{218F}\\x{2C00}-\\x{2FEF}\\x{3001}-\\x{D7FF}\\x{F900}-\\x{FDCF}\\x{FDF0}-\\x{FFFD}\\x{10000}-\\x{EFFFF}';
         if (
             preg_match_all(
-                "/\s+([$nameStartChar][$nameStartChar\-.0-9\\xB7\\x{0300}-\\x{036F}\\x{203F}-\\x{2040}]*)\s*=\s*(?:(?:\"([^\"]+?)\")|(?:'([^']+?)')|(?: *([^\"'\s]+)\s*))/u",
+                "/\s+([$nameStartChar][$nameStartChar\-.0-9\\xB7\\x{0300}-\\x{036F}\\x{203F}-\\x{2040}]*)\s*=\s*(?:(?:\"([^\"]+?)\")|(?:'([^']+?)')|(?: *([^\"'\s]+)))/u",
                 " " . $attributeString,
                 $attributeArray,
                 PREG_SET_ORDER
@@ -604,7 +604,7 @@ class eZXMLInputParser
                 // Value of '0' is valid ( eg. border='0' )
                 if ( $value !== '' && $value !== false && $value !== null )
                 {
-                    $attributes[strtolower( $attribute[1] )] = $value;
+                    $attributes[$attribute[1]] = $value;
                 }
             }
         }
@@ -731,7 +731,7 @@ class eZXMLInputParser
         while ( $pos < strlen( $text ) - 1 )
         {
             $startPos = $pos;
-            while( !( $text[$pos] == '&' && $text[$pos + 1] == '#' ) && $pos < strlen( $text ) - 1 )
+            while( !( $text[$pos] == '&' && isset($text[$pos + 1]) && $text[$pos + 1] == '#' ) && $pos < strlen( $text ) - 1 )
             {
                 $pos++;
             }
@@ -743,7 +743,6 @@ class eZXMLInputParser
                 $endPos = strpos( $text, ';', $pos + 2 );
                 if ( $endPos === false )
                 {
-                    $convertedText .= '&#';
                     $pos += 2;
                     continue;
                 }

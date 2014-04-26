@@ -2,9 +2,9 @@
 /**
  * File containing the eZURLType class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -146,15 +146,25 @@ class eZURLType extends eZDataType
         if ( trim( $urlValue ) != '' )
         {
             $urlID = eZURL::registerURL( $urlValue );
-            //$urlID = $objectAttribute->attribute( 'data_int' );+
             $objectAttributeID = $objectAttribute->attribute( 'id' );
             $objectAttributeVersion = $objectAttribute->attribute( 'version' );
 
-            if ( !eZURLObjectLink::fetch( $urlID, $objectAttributeID, $objectAttributeVersion, false ) )
+            $db = eZDB::instance();
+            $db->begin();
+
+            $objectLinkList = eZURLObjectLink::fetchLinkObjectList( $objectAttributeID, $objectAttributeVersion );
+
+            // In order not to have duplicated links, delete existing ones that have been created during the version creation process
+            // and create a clean one (we can't update url_id since there's no primary key). This fixes EZP-20988
+            if ( !empty( $objectLinkList ) )
             {
-                $linkObjectLink = eZURLObjectLink::create( $urlID, $objectAttributeID, $objectAttributeVersion );
-                $linkObjectLink->store();
+                eZURLObjectLink::removeURLlinkList( $objectAttributeID, $objectAttributeVersion );
             }
+
+            $linkObjectLink = eZURLObjectLink::create( $urlID, $objectAttributeID, $objectAttributeVersion );
+            $linkObjectLink->store();
+
+            $db->commit();
         }
     }
 

@@ -2,9 +2,9 @@
 /**
  * File containing the eZSection class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -165,43 +165,6 @@ class eZSection extends eZPersistentObject
         return $countArray[0]['count'];
     }
 
-    /**
-     * Makes sure the global section ID is propagated to the template override key.
-     * @deprecated since 4.4, global section support has been removed
-     *
-     * @return false
-     */
-    static function initGlobalID()
-    {
-        return false;
-    }
-
-    /**
-     * Sets the current global section ID to \a $sectionID in the session and
-     * the template override key
-     * @deprecated since 4.4, global section support has been removed this
-     *             function only sets value to override values for bc.
-     *
-     *  @param int $sectionID
-     */
-    static function setGlobalID( $sectionID )
-    {
-        // eZTemplateDesignResource will read this global variable
-        $GLOBALS['eZDesignKeys']['section'] = $sectionID;
-    }
-
-    /**
-     * Return the global section ID or \c null if it is not set yet.
-     * @deprecated since 4.4, global section support has been removed and
-     *             null is always returned.
-     *
-     * @return null
-     */
-    static function globalID()
-    {
-        return null;
-    }
-
     /*!
      Will remove the current section from the database.
      \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
@@ -209,7 +172,7 @@ class eZSection extends eZPersistentObject
     */
     function removeThis( $conditions = null, $extraConditions = null )
     {
-        eZPersistentObject::remove( array( "id" => $this->ID ), $extraConditions );
+        $this->remove( array( "id" => $this->ID ), $extraConditions );
     }
 
     /*
@@ -239,6 +202,59 @@ class eZSection extends eZPersistentObject
         }
     }
 
+    public function applyTo( eZContentObject $object )
+    {
+        $sectionID = $this->attribute( "id" );
+
+        $currentUser = eZUser::currentUser();
+        if ( !$currentUser->canAssignSectionToObject( $sectionID, $object ) )
+        {
+            eZDebug::writeError(
+                "You do not have permissions to assign the section <" . $selectedSection->attribute( "name" ) .  "> to the object <" . $object->attribute( "name" ) . ">."
+            );
+            return false;
+        }
+
+        $db = eZDB::instance();
+        $db->begin();
+        $assignedNodes = $object->attribute( "assigned_nodes" );
+        if ( !empty( $assignedNodes ) )
+        {
+            if ( eZOperationHandler::operationIsAvailable( "content_updatesection" ) )
+            {
+                foreach ( $assignedNodes as $node )
+                {
+                    eZOperationHandler::execute(
+                        "content",
+                        "updatesection",
+                        array(
+                            "node_id" => $node->attribute( "node_id" ),
+                            "selected_section_id" => $sectionID
+                        ),
+                        null,
+                        true
+                    );
+                }
+            }
+            else
+            {
+                foreach ( $assignedNodes as $node )
+                {
+                    eZContentOperationCollection::updateSection( $node->attribute( "node_id" ), $sectionID );
+                }
+            }
+        }
+        else
+        {
+            // If there are no assigned nodes we should update db for the current object.
+            $objectID = $object->attribute( "id" );
+            $db->query( "UPDATE ezcontentobject SET section_id='$sectionID' WHERE id = '$objectID'" );
+            $db->query( "UPDATE ezsearch_object_word_link SET section_id='$sectionID' WHERE  contentobject_id = '$objectID'" );
+        }
+        eZContentCacheManager::clearContentCacheIfNeeded( $object->attribute( "id" ) );
+        $object->expireAllViewCache();
+        $db->commit();
+    }
 }
 
 ?>

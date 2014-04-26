@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -43,7 +43,7 @@ EOF;
 // default values
 if ( !defined( 'CLUSTER_ENABLE_HTTP_RANGE' ) )     define( 'CLUSTER_ENABLE_HTTP_RANGE', true );
 if ( !defined( 'CLUSTER_ENABLE_HTTP_CACHE' ) )     define( 'CLUSTER_ENABLE_HTTP_CACHE', true );
-if ( !defined( 'CLUSTER_HEADER_X_POWERED_BY' ) )   define( 'CLUSTER_HEADER_X_POWERED_BY', true );
+if ( !defined( 'CLUSTER_HEADER_X_POWERED_BY' ) )   define( 'CLUSTER_HEADER_X_POWERED_BY', 'eZ Publish' );
 if ( !defined( 'CLUSTER_ENABLE_DEBUG' ) )          define( 'CLUSTER_ENABLE_DEBUG', false );
 if ( !defined( 'CLUSTER_PERSISTENT_CONNECTION' ) ) define( 'CLUSTER_PERSISTENT_CONNECTION', false );
 if ( !defined( 'CLUSTER_STORAGE_USER' ) )          define( 'CLUSTER_STORAGE_USER', '' );
@@ -86,4 +86,10 @@ EOF;
 // We use require_once as the gateway file may have been included before for initialization purpose
 require_once $clusterGatewayFile;
 $gateway = ezpClusterGateway::getGateway();
-$gateway->retrieve( ltrim( $_SERVER['SCRIPT_URL'], '/' ) );
+
+// Use rawurldecode() because if the file contains " characters, they are url encoded.
+$filename = rawurldecode( ltrim( $_SERVER['REQUEST_URI'], '/' ) );
+if ( ( $queryPos = strpos( $filename, '?' ) ) !== false )
+    $filename = substr( $filename, 0, $queryPos );
+
+$gateway->retrieve( $filename );

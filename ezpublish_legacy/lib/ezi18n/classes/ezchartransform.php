@@ -2,9 +2,9 @@
 /**
  * File containing the eZCharTransform class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package lib
  */
 
@@ -394,8 +394,8 @@ class eZCharTransform
     {
         $sep  = eZCharTransform::wordSeparator();
         $sepQ = preg_quote( $sep );
-        $text = preg_replace( array( "#[^a-zA-Z0-9_!.-]+#",
-                                     "#^[.]+|[!.]+$#", # Remove dots at beginning/end
+        $text = preg_replace( array( "#[^a-zA-Z0-9_!\.-]+#",
+                                     "#^[\.]+|[!\.]+$#", # Remove dots at beginning/end
                                      "#\.\.+#", # Remove double dots
                                      "#[{$sepQ}]+#", # Turn multiple separators into one
                                      "#^[{$sepQ}]+|[{$sepQ}]+$#" ), # Strip separator from beginning/end
@@ -411,10 +411,10 @@ class eZCharTransform
     static function commandUrlCleanupIRI( $text, $charsetName )
     {
         // With IRI support we keep all characters except some reserved ones,
-        // they are space, ampersand, semi-colon, forward slash, colon, equal sign, question mark,
+        // they are space, tab, ampersand, semi-colon, forward slash, colon, equal sign, question mark,
         //          square brackets, parenthesis, plus.
         //
-        // Note: Space is turned into a dash to make it easier for people to
+        // Note: Spaces and tabs are turned into a dash to make it easier for people to
         //       paste urls from the system and have the whole url recognized
         //       instead of being broken off
         $sep  = eZCharTransform::wordSeparator();
@@ -422,8 +422,8 @@ class eZCharTransform
         $prepost = " ." . $sepQ;
         if ( $sep != "-" )
             $prepost .= "-";
-        $text = preg_replace( array( "#[ \\\\%\#&;/:=?\[\]()+]+#",
-                                     "#^[.]+|[!.]+$#", # Remove dots at beginning/end
+        $text = preg_replace( array( "#[ \t\\\\%\#&;/:=?\[\]()+]+#",
+                                     "#^[\.]+|[!\.]+$#", # Remove dots at beginning/end
                                      "#\.\.+#", # Remove double dots
                                      "#[{$sepQ}]+#", # Turn multiple separators into one
                                      "#^[{$prepost}]+|[{$prepost}]+$#" ),

@@ -2,9 +2,9 @@
 /**
  * File containing the eZUser class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -27,8 +27,6 @@ class eZUser extends eZPersistentObject
     const PASSWORD_HASH_MYSQL = 4;
     /// Passwords in plaintext, should not be used for real sites
     const PASSWORD_HASH_PLAINTEXT = 5;
-    // Crypted passwords
-    const PASSWORD_HASH_CRYPT = 6;
 
     /// Authenticate by matching the login field
     const AUTHENTICATE_LOGIN = 1;
@@ -90,7 +88,7 @@ class eZUser extends eZPersistentObject
                                                       'roles' => 'roles',
                                                       'role_id_list' => 'roleIDList',
                                                       'limited_assignment_value_list' => 'limitValueList',
-                                                      'is_logged_in' => 'isLoggedIn',
+                                                      'is_logged_in' => 'isRegistered',
                                                       'is_enabled' => 'isEnabled',
                                                       'is_locked' => 'isLocked',
                                                       'last_visit' => 'lastVisit',
@@ -130,10 +128,6 @@ class eZUser extends eZPersistentObject
             {
                 return 'plaintext';
             } break;
-            case self::PASSWORD_HASH_CRYPT:
-            {
-                return 'crypt';
-            } break;
         }
     }
 
@@ -164,10 +158,6 @@ class eZUser extends eZPersistentObject
             case 'plaintext':
             {
                 return self::PASSWORD_HASH_PLAINTEXT;
-            } break;
-            case 'crypt':
-            {
-                return self::PASSWORD_HASH_CRYPT;
             } break;
         }
     }
@@ -206,7 +196,7 @@ class eZUser extends eZPersistentObject
         unset( $GLOBALS['eZUserObject_' . $userID] );
         $GLOBALS['eZUserObject_' . $userID] = $this;
         self::purgeUserCacheByUserId( $userID );
-        eZPersistentObject::store( $fieldFilters );
+        parent::store( $fieldFilters );
     }
 
     function originalPassword()
@@ -556,14 +546,7 @@ WHERE user_id = '" . $userID . "' AND
         eZUserAccountKey::removeByUserID( $userID );
         eZForgotPassword::removeByUserID( $userID );
         eZWishList::removeByUserID( $userID );
-
-        // only remove general digest setting if there are no other users with the same e-mail
-        $email = $user->attribute( 'email' );
-        $usersWithEmailCount = eZPersistentObject::count( eZUser::definition(), array( 'email' => $email ) );
-        if ( $usersWithEmailCount == 1 )
-        {
-            eZGeneralDigestUserSettings::removeByAddress( $email );
-        }
+        eZGeneralDigestUserSettings::removeByUserId( $userID );
 
         eZPersistentObject::removeObject( eZUser::definition(),
                                           array( 'contentobject_id' => $userID ) );
@@ -602,8 +585,6 @@ WHERE user_id = '" . $userID . "' AND
             return self::PASSWORD_HASH_MD5_USER;
         else if ( $type == 'plaintext' )
             return self::PASSWORD_HASH_PLAINTEXT;
-        else if ( $type == 'crypt' )
-            return self::PASSWORD_HASH_CRYPT;
         else
             return self::PASSWORD_HASH_MD5_PASSWORD;
     }
@@ -1057,13 +1038,32 @@ WHERE user_id = '" . $userID . "' AND
         $db->commit();
 
         if ( $contentObjectID )
+        {
+            //set last visit to minus
+            self::updateLastVisitByLogout( $contentObjectID );
+            //clean up sessions
             self::cleanup();
+        }
 
         // give user new session id
         eZSession::regenerate();
 
         // set the property used to prevent SSO from running again
         self::$userHasLoggedOut = true;
+    }
+
+    /**
+     * Update LastVisit When a user logout. Logout will set current_visit_timestamp to -current_visit_timestamp.
+     * If the user relogin, the last_visit_timestamp will get ABS(current_visit_timestamp).
+     * @static
+     * @param $userID
+     * @since 5.1
+     * @see eZUser::updateLastVisit
+     */
+    static function updateLastVisitByLogout( $userID )
+    {
+        $db = eZDB::instance();
+        $db->query( "UPDATE ezuservisit SET current_visit_timestamp=-ABS(current_visit_timestamp) WHERE user_id=$userID" );
     }
 
     /**
@@ -1126,7 +1126,7 @@ WHERE user_id = '" . $userID . "' AND
         // - the user has not logged out,
         // - the user is not logged in,
         // - and if a automatic single sign on plugin is enabled.
-        if ( !self::$userHasLoggedOut and is_object( $currentUser ) and !$currentUser->isLoggedIn() )
+        if ( !self::$userHasLoggedOut && is_object( $currentUser ) && !$currentUser->isRegistered() )
         {
             $ssoHandlerArray = $ini->variable( 'UserSettings', 'SingleSignOnHandlerArray' );
             if ( !empty( $ssoHandlerArray ) )
@@ -1134,53 +1134,39 @@ WHERE user_id = '" . $userID . "' AND
                 $ssoUser = false;
                 foreach ( $ssoHandlerArray as $ssoHandler )
                 {
-                    // Load handler
-                    $handlerFile = 'kernel/classes/ssohandlers/ez' . strtolower( $ssoHandler ) . 'ssohandler.php';
-                    if ( file_exists( $handlerFile ) )
+                    $className = 'eZ' . $ssoHandler . 'SSOHandler';
+                    if( class_exists( $className ) )
                     {
-                        include_once( $handlerFile );
-                        $className = 'eZ' . $ssoHandler . 'SSOHandler';
                         $impl = new $className();
                         $ssoUser = $impl->handleSSOLogin();
-                    }
-                    else // check in extensions
-                    {
-                        $extensionDirectories = $ini->variable( 'UserSettings', 'ExtensionDirectory' );
-                        $directoryList = eZExtension::expandedPathList( $extensionDirectories, 'sso_handler' );
-                        foreach( $directoryList as $directory )
+                        // If a user was found via SSO, then use it
+                        if ( $ssoUser !== false )
                         {
-                            $handlerFile = $directory . '/ez' . strtolower( $ssoHandler ) . 'ssohandler.php';
-                            if ( file_exists( $handlerFile ) )
-                            {
-                                include_once( $handlerFile );
-                                $className = 'eZ' . $ssoHandler . 'SSOHandler';
-                                $impl = new $className();
-                                $ssoUser = $impl->handleSSOLogin();
-                            }
+                            $currentUser = $ssoUser;
+                            $userId = $currentUser->attribute( 'contentobject_id' );
+
+                            $userInfo = array();
+                            $userInfo[$userId] = array( 
+                                'contentobject_id' => $userId,
+                                'login' => $currentUser->attribute( 'login' ),
+                                'email' => $currentUser->attribute( 'email' ),
+                                'password_hash' => $currentUser->attribute( 'password_hash' ),
+                                'password_hash_type' => $currentUser->attribute( 'password_hash_type' )
+                            );
+                            eZSession::setUserID( $userId );
+                            $http->setSessionVariable( 'eZUserLoggedInID', $userId );
+
+                            eZUser::updateLastVisit( $userId );
+                            eZUser::setCurrentlyLoggedInUser( $currentUser, $userId );
+                            eZHTTPTool::redirect( eZSys::wwwDir() . eZSys::indexFile( false ) . eZSys::requestURI() . eZSys::queryString(), array(), 302 );
+                            eZExecution::cleanExit();
                         }
                     }
-                }
-                // If a user was found via SSO, then use it
-                if ( $ssoUser !== false )
-                {
-                    $currentUser = $ssoUser;
-                    $userId = $currentUser->attribute( 'contentobject_id' );
-
-                    $userInfo = array();
-                    $userInfo[$userId] = array( 'contentobject_id' => $userId,
-                                            'login' => $currentUser->attribute( 'login' ),
-                                            'email' => $currentUser->attribute( 'email' ),
-                                            'password_hash' => $currentUser->attribute( 'password_hash' ),
-                                            'password_hash_type' => $currentUser->attribute( 'password_hash_type' )
-                                            );
-                    eZSession::setUserID( $userId );
-                    $http->setSessionVariable( 'eZUserLoggedInID', $userId );
-
-                    eZUser::updateLastVisit( $userId );
-                    eZUser::setCurrentlyLoggedInUser( $currentUser, $userId );
-                    eZHTTPTool::redirect( eZSys::wwwDir() . eZSys::indexFile( false ) . eZSys::requestURI(), array(), 302 );
-                    eZExecution::cleanExit();
-                }
+                    else
+                    {
+                        eZDebug::writeError( "Undefined ssoHandler class: $className", __METHOD__ );
+                    }
+                }                
             }
         }
 
@@ -1274,8 +1260,11 @@ WHERE user_id = '" . $userID . "' AND
      */
     static public function purgeUserCacheByUserId( $userId )
     {
-        $cacheFilePath = eZUser::getCacheDir( $userId ). "/user-data-{$userId}.cache.php" ;
-        eZClusterFileHandler::instance()->fileDelete( $cacheFilePath );
+        if ( eZINI::instance()->variable( 'RoleSettings', 'EnableCaching' ) === 'true' )
+        {
+            $cacheFilePath = eZUser::getCacheDir( $userId ). "/user-data-{$userId}.cache.php" ;
+            eZClusterFileHandler::instance()->fileDelete( $cacheFilePath );
+        }
     }
 
     /**
@@ -1300,13 +1289,25 @@ WHERE user_id = '" . $userID . "' AND
      */
     static protected function getUserCacheByUserId( $userId )
     {
-        $cacheFilePath = eZUser::getCacheDir( $userId ). "/user-data-{$userId}.cache.php" ;
-        $cacheFile = eZClusterFileHandler::instance( $cacheFilePath );
-        return $cacheFile->processCache( array( 'eZUser', 'retrieveUserCacheFromFile' ),
-                                         array( 'eZUser', 'generateUserCacheForFile' ),
-                                         null,
-                                         self::userInfoExpiry(),
-                                         $userId );
+        $userCache = null;
+
+        if ( eZINI::instance()->variable( 'RoleSettings', 'EnableCaching' ) === 'true' )
+        {
+            $cacheFilePath = eZUser::getCacheDir( $userId ) . "/user-data-{$userId}.cache.php";
+            $cacheFile = eZClusterFileHandler::instance( $cacheFilePath );
+            $userCache = $cacheFile->processCache( array( 'eZUser', 'retrieveUserCacheFromFile' ),
+                                                   array( 'eZUser', 'generateUserCacheForFile' ),
+                                                   null,
+                                                   self::userInfoExpiry(),
+                                                   $userId );
+        }
+
+        if ( $userCache === null || $userCache instanceof eZClusterFileFailure )
+        {
+            $userCache = self::generateUserCacheContent( $userId );
+        }
+
+        return $userCache;
     }
 
     /**
@@ -1318,11 +1319,99 @@ WHERE user_id = '" . $userID . "' AND
      */
     static function retrieveUserCacheFromFile( $filePath, $mtime, $userId )
     {
-        return include( $filePath );
+        $userCache = include( $filePath );
+
+        // check that the returned array is not corrupted
+        if ( is_array( $userCache )
+          && isset( $userCache['info'] )
+          && isset( $userCache['info'][$userId] )
+          && is_numeric( $userCache['info'][$userId]['contentobject_id'] )
+          && isset( $userCache['groups'] )
+          && isset( $userCache['roles'] )
+          && isset( $userCache['role_limitations'] )
+          && isset( $userCache['access_array'] )
+          && isset( $userCache['discount_rules'] ) )
+        {
+            return $userCache;
+        }
+
+        eZDebug::writeError( 'Cache file ' . $filePath . ' is corrupted, forcing generation.', __METHOD__ );
+        return new eZClusterFileFailure( 1, 'Cache file ' . $filePath . ' is corrupted, forcing generation.' );
     }
 
     /**
-     * Callback which generates user cache for user
+     * Generate cache content or fallback to an empty array (for BC)
+     *
+     * @since 5.3
+     * @param int $userId
+     * @return array
+     */
+    private static function generateUserCacheContent( $userId )
+    {
+        $cacheData = self::generateUserCacheData( $userId );
+
+        if ( $cacheData === null )
+        {
+            $cacheData = array( 'info' => array(),
+                                'groups' => array(),
+                                'roles' => array(),
+                                'role_limitations' => array(),
+                                'access_array' => array(),
+                                'discount_rules' => array() );
+        }
+
+        return $cacheData;
+    }
+
+    /**
+     * Generate cache content
+     *
+     * @since 5.3
+     * @param int $userId
+     * @return array|null
+     */
+    private static function generateUserCacheData( $userId )
+    {
+        $user = eZUser::fetch( $userId );
+        if ( !$user instanceof eZUser )
+        {
+            return null;
+        }
+
+        // user info (session: eZUserInfoCache)
+        $data['info'][$userId] = array( 'contentobject_id'   => $user->attribute( 'contentobject_id' ),
+                                        'login'              => $user->attribute( 'login' ),
+                                        'email'              => $user->attribute( 'email' ),
+                                        'is_enabled'         => $user->isEnabled( false ),
+                                        'password_hash'      => $user->attribute( 'password_hash' ),
+                                        'password_hash_type' => $user->attribute( 'password_hash_type' ) );
+
+        // user groups list (session: eZUserGroupsCache)
+        $groups = $user->generateGroupIdList();
+        $data['groups'] = $groups;
+
+        // role list (session: eZRoleIDList)
+        $groups[] = $userId;
+        $data['roles'] = eZRole::fetchIDListByUser( $groups );
+
+        // role limitation list (session: eZRoleLimitationValueList)
+        $limitList = $user->limitList( false );
+        foreach ( $limitList as $limit )
+        {
+            $data['role_limitations'][] = $limit['limit_value'];
+        }
+
+        // access array (session: AccessArray)
+        $data['access_array'] = $user->generateAccessArray();
+
+        // discount rules (session: eZUserDiscountRules<userId>)
+        $data['discount_rules'] = eZUserDiscountRule::generateIDListByUserID( $userId );
+
+        return $data;
+    }
+
+    /**
+     * Callback which generates user cache for user, returns null on invalid user
      *
      * @internal
      * @since 4.4
@@ -1330,48 +1419,17 @@ WHERE user_id = '" . $userID . "' AND
      */
     static function generateUserCacheForFile( $filePath, $userId )
     {
-        $data = array( 'info' => array(),
-                       'groups' => array(),
-                       'roles' => array(),
-                       'role_limitations' => array(),
-                       'access_array' => array(),
-                       'discount_rules' => array() );
-        $user = eZUser::fetch( $userId );
-        if ( $user instanceOf eZUser )
+        $cacheData = self::generateUserCacheData( $userId );
+
+        if ( $cacheData !== null )
         {
-            // user info (session: eZUserInfoCache)
-            $data['info'][$userId] = array( 'contentobject_id'   => $user->attribute( 'contentobject_id' ),
-                                            'login'              => $user->attribute( 'login' ),
-                                            'email'              => $user->attribute( 'email' ),
-                                            'is_enabled'         => $user->isEnabled( false ),
-                                            'password_hash'      => $user->attribute( 'password_hash' ),
-                                            'password_hash_type' => $user->attribute( 'password_hash_type' ) );
-
-            // user groups list (session: eZUserGroupsCache)
-            $groups = $user->generateGroupIdList();
-            $data['groups'] = $groups;
-
-            // role list (session: eZRoleIDList)
-            $groups[] = $userId;
-            $data['roles'] = eZRole::fetchIDListByUser( $groups );
-
-            // role limitation list (session: eZRoleLimitationValueList)
-            $limitList = $user->limitList( false );
-            foreach ( $limitList as $limit )
-            {
-                $data['role_limitations'][] = $limit['limit_value'];
-            }
-
-            // access array (session: AccessArray)
-            $data['access_array'] = $user->generateAccessArray();
-
-            // discount rules (session: eZUserDiscountRules<userId>)
-            $data['discount_rules'] = eZUserDiscountRule::generateIDListByUserID( $userId );
+            $cacheData = array( 'content'  => $cacheData,
+                                'scope'    => 'user-info-cache',
+                                'datatype' => 'php',
+                                'store'    => true );
         }
-        return array( 'content'  => $data,
-                      'scope'    => 'user-info-cache',
-                      'datatype' => 'php',
-                      'store'    => true );
+
+        return $cacheData;
     }
 
     /*!
@@ -1390,7 +1448,7 @@ WHERE user_id = '" . $userID . "' AND
         if ( isset( $userVisitArray[0] ) )
         {
             $loginCountSQL = $updateLoginCount ? ', login_count=login_count+1' : '';
-            $db->query( "UPDATE ezuservisit SET last_visit_timestamp=current_visit_timestamp, current_visit_timestamp=$time$loginCountSQL WHERE user_id=$userID" );
+            $db->query( "UPDATE ezuservisit SET last_visit_timestamp=ABS(current_visit_timestamp), current_visit_timestamp=$time$loginCountSQL WHERE user_id=$userID" );
         }
         else
         {
@@ -1713,17 +1771,6 @@ WHERE user_id = '" . $userID . "' AND
         else if ( $type == self::PASSWORD_HASH_PLAINTEXT )
         {
             $str = $password;
-        }
-        else if ( $type == self::PASSWORD_HASH_CRYPT )
-        {
-            if ( $hash )
-            {
-                $str = crypt( $password, $hash );
-            }
-            else
-            {
-                $str = crypt( $password );
-            }
         }
         else // self::PASSWORD_HASH_MD5_PASSWORD
         {
@@ -2348,18 +2395,33 @@ WHERE user_id = '" . $userID . "' AND
         return eZUserAccountKey::fetchByUserID( $this->ContentObjectID );
     }
 
-    /*!
-     Returns true if it's a real user which is logged in. False if the user
-     is the default user or the fallback buildtin user.
-    */
-    function isLoggedIn()
+    /**
+     * Returns true if the user is a registered and not anonymous user.
+     *
+     * @deprecated since 5.1 Use isRegistered() / isUserLoggedIn() instead.
+     */
+    public function isLoggedIn()
     {
-        if ( $this->ContentObjectID == self::anonymousId() or
-             $this->ContentObjectID == -1 )
-        {
-            return false;
-        }
-        return true;
+        eZDebug::writeStrict( "Method " . __METHOD__ . " has been deprecated in 5.1. Use isRegistered() / isUserLoggedIn() instead.", "Deprecation" );
+        return $this->isRegistered();
+    }
+
+    /**
+     * Returns true if the user is a registered and not anonymous user.
+     */
+    public function isRegistered()
+    {
+        return $this->ContentObjectID != self::anonymousId() && $this->ContentObjectID != -1;
+    }
+
+    /**
+     * Returns whether the current user is a registered user.
+     *
+     * @since 5.1
+     */
+    static public function isCurrentUserRegistered()
+    {
+        return self::currentUser()->isRegistered();
     }
 
     /*!
@@ -2607,32 +2669,6 @@ WHERE user_id = '" . $userID . "' AND
         $handler = eZExpiryHandler::instance();
         $handler->setTimestamp( 'user-info-cache', time() );
         $handler->store();
-    }
-
-    /**
-     * Returns the filename for a cache file with user information
-     *
-     * @deprecated In 4.4.0
-     * @params int $userId
-     * @return string|false Filename of the cachefile, or false when the user should not be cached
-     */
-    static function getCacheFilename( $userId )
-    {
-        $ini = eZINI::instance();
-        $cacheUserPolicies = $ini->variable( 'RoleSettings', 'UserPolicyCache' );
-        if ( $cacheUserPolicies === 'enabled' )
-        {
-            return eZUser::getCacheDir( $userId ). '/user-'. $userId . '.cache.php';
-        }
-        else if ( $cacheUserPolicies !== 'disabled' )
-        {
-            $cachableIDs = explode( ',', $cacheUserPolicies );
-            if ( in_array( $userId, $cachableIDs ) )
-            {
-                return eZUser::getCacheDir( $userId ). '/user-'. $userId . '.cache.php';
-            }
-        }
-        return false;
     }
 
     static function fetchUserClassList( $asObject = false, $fields = false )

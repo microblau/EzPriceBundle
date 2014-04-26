@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
- * @version 4.7.0
+ * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2014.3
  * @package kernel
  */
 
@@ -22,14 +22,11 @@ $http = eZHTTPTool::instance();
 
 $Module = $Params['Module'];
 
-$wfINI = eZINI::instance( 'workflow.ini' );
-$operations = $wfINI->variableArray( 'OperationSettings', 'AvailableOperations' );
-$operations = array_unique( array_merge( $operations, $wfINI->variable( 'OperationSettings', 'AvailableOperationList' ) ) );
 $possibleTriggers = array();
 
 $triggers = makeTriggerArray( eZTrigger::fetchList() );
 
-foreach ( $operations as $operation )
+foreach ( array_unique( eZINI::instance( 'workflow.ini' )->variable( 'OperationSettings', 'AvailableOperationList' ) ) as $operation )
 {
     if ( $operation == '' )
     {
