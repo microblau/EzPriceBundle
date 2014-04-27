@@ -1,5 +1,5 @@
 						<h3>{cond( is_set( $title ), $title, 'Hemos encontrado para usted...')}</h3>
-				<div class="carrousel">
+				<div class="carrousel jcarousel tops">
                             	
                                 <ul class="carrousel" id="itemscarrousel">
 				

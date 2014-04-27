@@ -8,7 +8,7 @@
         var links = new Array( 'stats::news', 'stats::bestsell', 'stats::bestviewed' );
         var itemsTab = $("#tabsNov li");
 
-        $("#tabsNov a").live("click",function(event){
+        $("#tabsNov").on("click",'a',function(event){
             
             var aux = $(this);
             var parentt = aux.parent();
@@ -21,8 +21,9 @@
 			parentCurrent.html("<a href='" + links[itemsTab.index(parentCurrent)] + "'>" + textCurrent + "</a>");
             
             parentt.html( '<h3>' + text + '</h3>' );
-            
-            jQuery.ez( url, false, _callBack );	
+            jQuery('.jcarousel.tops').jcarousel('destroy',{});
+
+            jQuery.ez( url, false, _callBack );
             
             event.preventDefault();
             event.stopPropagation();
@@ -35,12 +36,24 @@
             {
                 if ( data.content.result )
                 {
-                    $("#modNovedades").html( data.content.result );
-                    if($("#home #modNovedades .multim").length != 0) {
-									behaviours.controlHeight("#home #modNovedades .multim");
-								}
-                       cestaCompra.init();   
-                       $(".carrousel ul").jcarousel({ scroll: 3 });              
+                    $("#modNovedades").html( data.content.result).promise().done( function(){
+                        if($("#home #modNovedades .multim").length != 0) {
+                            behaviours.controlHeight("#home #modNovedades .multim");
+                        }
+                        $('.jcarousel.tops').jcarousel({
+                            'wrap':'circular',
+
+                        }).jcarouselAutoscroll({
+                            interval: 6000,
+                            target: '+=3',
+                            autostart: true
+                        });
+
+
+                    });
+
+                       cestaCompra.init();
+
                 }
             }               
             else

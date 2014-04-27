@@ -4,8 +4,7 @@
 DesignExtensions[]=ngsuggest
 
 [JavaScriptSettings]
-JavaScriptList[]=jquery.jsonSuggest-dev.js
-JavaScriptList[]=json2.js
+JavaScriptList[]=jquery.jsonSuggest-2.min.js
 JavaScriptList[]=ngSuggest.js
 
 [StylesheetSettings]

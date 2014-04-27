@@ -9,6 +9,7 @@ RequireUserLogin=false
 [DesignSettings]
 SiteDesign=newhome
 AdditionalSiteDesignList[]=common
+AdditionalSiteDesignList[]=ezdemo
 AdditionalSiteDesignList[]=ezflow
 AdditionalSiteDesignList[]=ezwebin
 AdditionalSiteDesignList[]=standard

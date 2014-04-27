@@ -10,7 +10,7 @@
 {/if}
 
 {if $module_result.node_id|eq( 2 )}
-{ezscript_require( array( 'jquery.jcarousel.js' ) )} 
+{ezscript_require( array( 'jquery.jcarousel.min.js' ) )}
 {/if}
 
 {if $module_result.uri|eq( '/basket/payment' )}

@@ -1,49 +1,73 @@
-/**
- * This <div> element is wrapped by jCarousel around the list
- * and has the classname "jcarousel-container".
- */
-.jcarousel-container {
+/*
+This is the visible area of you carousel.
+Set a width here to define how much items are visible.
+The width can be either fixed in px or flexible in %.
+Position must be relative!
+*/
+.jcarousel {
     position: relative;
+    overflow: hidden;
 }
 
-.jcarousel-clip {
-    z-index: 2;
-    padding:0;
-    margin: 0 0 0 35px;
-    overflow: hidden;
-    position: relative;
+.jcarousel.home-main{
+    width: 653px;
+    height: 393px;
+}
+#promocionPrimaria{
+    position:relative;
+}
+#promocionPrimaria .jcarousel-control-next {
+    position: absolute;
+    top: 150px;
+    right: -10px;
+    width: 41px;
+    height: 42px;
+    cursor: pointer;
+    background: transparent url(../images/bck_arrow-next.png) no-repeat 0 0;
+    z-index: 10000;
+    -webkit-transform: translateZ(0);
+    text-indent: -9999em;
+}
+#promocionPrimaria .jcarousel-control-next.inactive{
+    display:none;
 }
 
-.jcarousel-list {
-    z-index: 1;
-    overflow: hidden;
+#promocionPrimaria .jcarousel-control-prev {
+    position: absolute;
+    top: 150px;
+    left: -10px;
+    width: 41px;
+    height: 42px;
+    cursor: pointer;
+    background: transparent url(../images/bck_arrow-prev.png) no-repeat 0 0;
+    z-index: 10000;
+    -webkit-transform: translateZ(0);
+    text-indent: -9999em;
+}
+
+#promocionPrimaria .jcarousel-control-prev.inactive{
+    display:none;
+}
+/*
+This is the container of the carousel items.
+You must ensure that the position is relative or absolute and
+that the width is big enough to contain all items.
+*/
+.jcarousel ul {
+    width: 20000em;
     position: relative;
-    top: 0;
-    left: 0;
+
+    /* Optional, required in this case since it's a <ul> element */
+    list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.jcarousel-list li,
-.jcarousel-item {
+/*
+These are the item elements. jCarousel works best, if the items
+have a fixed width and height (but it's not required).
+*/
+.jcarousel li {
+    /* Required only for block elements like <li>'s */
     float: left;
-    list-style: none;
-    /* We set the width/height explicitly. No width/height causes infinite loops. */
-    width: 75px;
-    height: 75px;
-}
-
-/**
- * The buttons are added dynamically by jCarousel before
- * the <ul> list (inside the <div> described above) and
- * have the classnames "jcarousel-next" and "jcarousel-prev".
- */
-.jcarousel-next {
-    z-index: 3;
-    display: none;
-}
-
-.jcarousel-prev {
-    z-index: 3;
-    display: none;
 }

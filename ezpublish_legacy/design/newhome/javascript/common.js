@@ -2929,6 +2929,46 @@ jQuery(document).ready(function() {
         if($("#modFormacion #tiposFormacion").length != 0){
                 fixes.resizeContent();
         }
+
+        // init carrouseles
+        $('.jcarousel.home-main').jcarousel({
+            'wrap':'circular'
+        }).jcarouselAutoscroll({
+            interval: 6000,
+            target: '+=1',
+            autostart: true
+        });
+
+        $('.jcarousel.tops').jcarousel({
+            'wrap':'circular',
+
+        }).jcarouselAutoscroll({
+            interval: 6000,
+            target: '+=3',
+            autostart: true
+        });
+
+    $('.jcarousel-control-prev')
+        .on('jcarouselcontrol:active', function() {
+            $(this).removeClass('inactive');
+        })
+        .on('jcarouselcontrol:inactive', function() {
+            $(this).addClass('inactive');
+        })
+        .jcarouselControl({
+            target: '-=1'
+        })
+
+        $('.jcarousel-control-next')
+        .on('jcarouselcontrol:active', function() {
+            $(this).removeClass('inactive');
+        })
+        .on('jcarouselcontrol:inactive', function() {
+            $(this).addClass('inactive');
+        })
+        .jcarouselControl({
+            target: '+=1'
+        });
     /*
         if($(".slider").length != 0){
                 sliders.accesos.init();

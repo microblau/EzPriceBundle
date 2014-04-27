@@ -305,9 +305,9 @@ optgroup
 
 input.button, input.defaultbutton
 {
-    background-image: url(../images/button-bg.png);
+    /*background-image: url(../images/button-bg.png);
     background-repeat: repeat-x;
-    background-position: left top;
+    background-position: left top;*/
     border: 1px solid #b9b7b7;
     font-size: 0.8em;
     color: #787979;

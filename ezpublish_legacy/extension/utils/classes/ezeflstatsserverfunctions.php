@@ -40,18 +40,17 @@
 
 class ezEflStatsServerFunctions extends ezjscServerFunctions
 {
-	/**
-	 * Devuelve el resultado para el bloque en cuestión. 
-	 * Se encargará de devolver los nuevos links y los elementos
-	 * visibles en ese bloque.
-	 * 
-	 * @param unknown_type $args
-	 * @return array
-	 */
-	static function bestsell( $args )
-	{
-		include_once( "kernel/common/template.php" );
-		$tpl = eZTemplate::factory();
+    /**
+     * Devuelve el resultado para el bloque en cuestión.
+     * Se encargará de devolver los nuevos links y los elementos
+     * visibles en ese bloque.
+     *
+     * @param unknown_type $args
+     * @return array
+     */
+    static function bestsell( $args )
+    {
+        $tpl = eZTemplate::factory();
         $start = time() - 86400 * 7;
         $products = array();
         $query = eZShopFunctionCollection::fetchBestSellList( 61, 8, 0, $start, time() );
@@ -61,13 +60,12 @@ class ezEflStatsServerFunctions extends ezjscServerFunctions
         }
         $tpl->setVariable( 'title', 'Las más compradas' );
         $tpl->setVariable( 'products', $products );
-        return array( 'result' => $tpl->fetch( 'design:ajax/resultadoshome.tpl' ) );	 	
-	}
+        return array( 'result' => $tpl->fetch( 'design:ajax/resultadoshome.tpl' ) );
+    }
 
     static function bestviewed( $args )
-	{
-		include_once( "kernel/common/template.php" );
-		$tpl = eZTemplate::factory();
+    {
+        $tpl = eZTemplate::factory();
         $start = time() - 86400 * 7;
         $products = array();
         $query = tantaStatsFunctionCollection::fetchMostViewedTopList( 48, false, false, false, false, 8 );
@@ -77,13 +75,12 @@ class ezEflStatsServerFunctions extends ezjscServerFunctions
         }
         $tpl->setVariable( 'title', 'Las más consultadas' );
         $tpl->setVariable( 'products', $products );
-        return array( 'result' => $tpl->fetch( 'design:ajax/resultadoshome.tpl' ) );	 	
-	}
+        return array( 'result' => $tpl->fetch( 'design:ajax/resultadoshome.tpl' ) );
+    }
 
     static function news( $args )
-	{
-		include_once( "kernel/common/template.php" );
-		$tpl = eZTemplate::factory();
+    {
+        $tpl = eZTemplate::factory();
         $start = time() - 86400 * 290;
         $products = array();
         $data = eZContentObjectTreeNode::fetch( 2 )->dataMap();
@@ -91,9 +88,9 @@ class ezEflStatsServerFunctions extends ezjscServerFunctions
         $blocks = $zones[1]->attribute( 'blocks' );
         $products = $blocks[1]->attribute( 'valid_nodes' ) ;
         $tpl->setVariable( 'products', $products );
-        return array( 'result' => $tpl->fetch( 'design:ajax/ultimas_novedades_manual.tpl' ) );	 	
-	}
-	
+        return array( 'result' => $tpl->fetch( 'design:ajax/ultimas_novedades_manual.tpl' ) );
+    }
+
 }
 
 ?>

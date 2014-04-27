@@ -1,7 +1,7 @@
 
             
              <h3>Últimas novedades</h3>
-                            <div class="carrousel">
+                            <div class="carrousel jcarousel tops">
                             	
                                 <ul class="carrousel" id="itemscarrousel">
                                 	{foreach $products as $node}
