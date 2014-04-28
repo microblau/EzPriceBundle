@@ -28,7 +28,19 @@ Position must be relative!
     -webkit-transform: translateZ(0);
     text-indent: -9999em;
 }
-#promocionPrimaria .jcarousel-control-next.inactive{
+
+#modNovedades .jcarousel-control-next {
+    position: absolute;
+    top: 334px;
+    right: 10px;
+    width: 39px;
+    height: 42px;
+    cursor: pointer;
+    background: transparent url(../images/carrousel_novedades-r.gif) no-repeat 0 0;
+    text-indent: -9999em;
+}
+
+.jcarousel-control-next.inactive{
     display:none;
 }
 
@@ -45,7 +57,18 @@ Position must be relative!
     text-indent: -9999em;
 }
 
-#promocionPrimaria .jcarousel-control-prev.inactive{
+#modNovedades .jcarousel-control-prev {
+    position: absolute;
+    top: 334px;
+    left: 10px;
+    width: 39px;
+    height: 42px;
+    cursor: pointer;
+    background: transparent url(../images/carrousel_novedades-l.gif) no-repeat 0 0;
+    text-indent: -9999em;
+}
+
+.jcarousel-control-prev.inactive{
     display:none;
 }
 /*
@@ -70,4 +93,7 @@ have a fixed width and height (but it's not required).
 .jcarousel li {
     /* Required only for block elements like <li>'s */
     float: left;
+}
+.jcarousel.tops{
+    width: 550px;
 }

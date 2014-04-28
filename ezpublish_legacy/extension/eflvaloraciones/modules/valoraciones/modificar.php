@@ -1,8 +1,6 @@
 <?php
-
 $direcc =$_SERVER['HTTP_REFERER'];
-include_once( "kernel/common/template.php" );
-include_once( 'kernel/common/i18n.php' );
+
 
 function createElement( $class, $parent_node_id, $nombre )
 {
@@ -66,7 +64,7 @@ foreach ($_POST as $k=>$valor){
 //print "UPDATE valoraciones_productos SET visible=".$valor." WHERE node_producto=".$node_producto." and user_id=".$user_id."";
 
 
-$tpl=templateInit();
+$tpl=eZTemplate::factory();
 $http=eZHTTPTool::instance();
 $parametros=$Params['UserParameters'];
 

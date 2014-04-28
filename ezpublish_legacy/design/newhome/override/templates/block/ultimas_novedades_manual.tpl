@@ -38,4 +38,6 @@
                                    {/foreach}
                                 </ul>
                             </div>
+                            <a class="jcarousel-control-prev" href="#">anterior</a>
+                            <a class="jcarousel-control-next" href="#">Next</a>
                         </div>

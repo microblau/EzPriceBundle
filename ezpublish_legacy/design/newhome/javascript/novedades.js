@@ -40,14 +40,30 @@
                         if($("#home #modNovedades .multim").length != 0) {
                             behaviours.controlHeight("#home #modNovedades .multim");
                         }
-                        $('.jcarousel.tops').jcarousel({
-                            'wrap':'circular',
+                        $('.jcarousel.tops').jcarousel({});
 
-                        }).jcarouselAutoscroll({
-                            interval: 6000,
-                            target: '+=3',
-                            autostart: true
-                        });
+                        $('#modNovedades .jcarousel-control-prev')
+                            .on('jcarouselcontrol:active', function() {
+                                $(this).removeClass('inactive');
+                            })
+                            .on('jcarouselcontrol:inactive', function() {
+                                $(this).addClass('inactive');
+                            })
+                            .jcarouselControl({
+                                target: '-=3'
+                            })
+
+                        $('#modNovedades .jcarousel-control-next')
+                            .on('jcarouselcontrol:active', function() {
+                                $(this).removeClass('inactive');
+                            })
+                            .on('jcarouselcontrol:inactive', function() {
+                                $(this).addClass('inactive');
+                            })
+                            .jcarouselControl({
+                                target: '+=3'
+                            });
+
 
 
                     });

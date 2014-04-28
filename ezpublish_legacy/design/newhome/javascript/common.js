@@ -2931,6 +2931,8 @@ jQuery(document).ready(function() {
         }
 
         // init carrouseles
+
+        // main
         $('.jcarousel.home-main').jcarousel({
             'wrap':'circular'
         }).jcarouselAutoscroll({
@@ -2939,16 +2941,34 @@ jQuery(document).ready(function() {
             autostart: true
         });
 
-        $('.jcarousel.tops').jcarousel({
-            'wrap':'circular',
+        $('.home-main .jcarousel-control-prev')
+            .on('jcarouselcontrol:active', function() {
+                $(this).removeClass('inactive');
+            })
+            .on('jcarouselcontrol:inactive', function() {
+                $(this).addClass('inactive');
+            })
+            .jcarouselControl({
+                target: '-=1'
+            })
 
-        }).jcarouselAutoscroll({
-            interval: 6000,
-            target: '+=3',
-            autostart: true
-        });
+        $('home-main .jcarousel-control-next')
+            .on('jcarouselcontrol:active', function() {
+                $(this).removeClass('inactive');
+            })
+            .on('jcarouselcontrol:inactive', function() {
+                $(this).addClass('inactive');
+            })
+            .jcarouselControl({
+                target: '+=1'
+            });
 
-    $('.jcarousel-control-prev')
+    /***
+     *  Carruseles top
+     */
+        $('.jcarousel.tops').jcarousel({});
+
+    $('#modNovedades .jcarousel-control-prev')
         .on('jcarouselcontrol:active', function() {
             $(this).removeClass('inactive');
         })
@@ -2956,10 +2976,10 @@ jQuery(document).ready(function() {
             $(this).addClass('inactive');
         })
         .jcarouselControl({
-            target: '-=1'
+            target: '-=3'
         })
 
-        $('.jcarousel-control-next')
+        $('#modNovedades .jcarousel-control-next')
         .on('jcarouselcontrol:active', function() {
             $(this).removeClass('inactive');
         })
@@ -2967,18 +2987,9 @@ jQuery(document).ready(function() {
             $(this).addClass('inactive');
         })
         .jcarouselControl({
-            target: '+=1'
+            target: '+=3'
         });
-    /*
-        if($(".slider").length != 0){
-                sliders.accesos.init();
-        }
-       
-        if($("#accesoMementos input").length != 0){                                    
-                $("#accesoMementos input").click(function(){
-                        cuentaChecks.init();
-                });
-        }*/
+
         if($("#home #promocionPrimaria .wrapAjaxContent").length != 0){
                 AjaxRequest.destacadoHome.init("#promocionPrimaria .columnType2");
         }

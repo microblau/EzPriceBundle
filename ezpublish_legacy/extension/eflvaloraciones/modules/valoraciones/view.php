@@ -1,7 +1,5 @@
 <?php
-include_once( "kernel/common/template.php" );
-include_once( 'kernel/common/i18n.php' );
-$tpl=templateInit();
+$tpl= eZTemplate::factory();
 
 $parametros=$Params['UserParameters'];
 $Result=array();

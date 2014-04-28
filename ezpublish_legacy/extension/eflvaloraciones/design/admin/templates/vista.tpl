@@ -1,28 +1,10 @@
 {set-block scope=root variable=cache_ttl}0{/set-block} 
 {ezpagedata_set( 'vistawidth', 'no')}
 
-<div class="content-view-full">
-	<div class="context-block">
-		<div class="box-header">
-			<div class="box-tc">
-				<div class="box-ml">
-					<div class="box-mr">
-						<div class="box-tl">
-							<div class="box-tr">
+
 								<h2 class="context-title">Lista de valoraciones</h2>
 								<div class="header-subline"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	<div class="box-bc">
-		<div class="box-ml">
-			<div class="box-mr">
-				<div class="box-bl">
-					<div class="box-br">
-						<div class="box-content">
+
 
 {def $limite=10}
 {if is_set($params.offset)}
@@ -63,7 +45,7 @@
 {def $damevaloraciones = fetch('producto','damevaloraciones', hash( 'orden', $orden,'limite' ,$limite, 'offset', $offset) )} 
 
 {def $cuantasvaloraciones=fetch('producto','damevaloraciones', hash( 'orden', $orden,'limite' ,0, 'offset', 0))}
-
+<div class="block">
 {include name=navigator
 									uri='design:navigator/google.tpl'
 									page_uri= 'valoraciones/view'
@@ -71,7 +53,7 @@
 									item_count=$cuantasvaloraciones|count()
 									view_parameters=$params
 									item_limit=$limite}  
-   					
+</div>
     						<table class="list" cellspacing="0">
 								<tr>
 									<th>Usuario</th>
@@ -152,11 +134,3 @@
   							     </form>
 							</table>
                        
-                            
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
