@@ -3,8 +3,8 @@
 // Definition of ezsrRatingObject class
 //
 // SOFTWARE NAME: eZ Star Rating
-// SOFTWARE RELEASE: 2.x
-// COPYRIGHT NOTICE: Copyright (C) 2008 Bruce Morrison, 2009-2010 eZ Systems AS
+// SOFTWARE RELEASE: 5.3.0-alpha1
+// COPYRIGHT NOTICE: Copyright (C) 2008 Bruce Morrison, 2009-2013 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,16 +25,16 @@
 
 class ezsrRatingDataObject extends eZPersistentObject
 {
-	 /**
+     /**
      * Used by {@link ezsrRatingDataObject::userHasRated()} to cache value.
-     * 
+     *
      * @var bool $currentUserHasRated
      */
-	protected $currentUserHasRated = null;
+    protected $currentUserHasRated = null;
 
      /**
      * Construct, use {@link ezsrRatingDataObject::create()} to create new objects.
-     * 
+     *
      * @param array $row
      */
     protected function __construct( $row )
@@ -59,7 +59,10 @@ class ezsrRatingDataObject extends eZPersistentObject
                       'name' => 'user_id',
                       'datatype' => 'integer',
                       'default' => 0,
-                      'required' => true ),
+                      'required' => true,
+                      'foreign_class' => 'eZUser',
+                      'foreign_attribute' => 'contentobject_id',
+                      'multiplicity' => '0..1' ),
                     'session_key' => array(
                       'name' => 'session_key',
                       'datatype' => 'string',
@@ -74,12 +77,18 @@ class ezsrRatingDataObject extends eZPersistentObject
                       'name' => 'contentobject_id',
                       'datatype' => 'integer',
                       'default' => 0,
-                      'required' => true ),
+                      'required' => true,
+                      'foreign_class' => 'eZContentObject',
+                      'foreign_attribute' => 'id',
+                      'multiplicity' => '1..*' ),
                     'contentobject_attribute_id' => array(
                       'name' => 'contentobject_attribute_id',
                       'datatype' => 'integer',
                       'default' => 0,
-                      'required' => true ),
+                      'required' => true,
+                      'foreign_class' => 'eZContentObjectAttribute',
+                      'foreign_attribute' => 'id',
+                      'multiplicity' => '1..*' ),
                   ),
                   'keys' => array( 'id' ),
                   'function_attributes' => array(
@@ -94,7 +103,7 @@ class ezsrRatingDataObject extends eZPersistentObject
     /**
      * Fetch Average Rating
      * Will create a unstored one if none could be fetched ( it will have rating_avrage and rating_count of 0 )
-     * 
+     *
      * @return ezsrRatingObject
      */
     function getAverageRating()
@@ -114,7 +123,7 @@ class ezsrRatingDataObject extends eZPersistentObject
      * 1. Session variable 'ezsrRatedAttributeIdList' for list of attribute_id's
      * 2a. (annonymus user) check against session key
      * 2b. (logged in user) check against user id
-     * 
+     *
      * @param bool $returnRatedObject Return object if user has rated and [eZStarRating]AllowChangeRating=enabled
      * @return bool|ezsrRatingDataObject
      */
@@ -122,18 +131,19 @@ class ezsrRatingDataObject extends eZPersistentObject
     {
         if ( $this->currentUserHasRated === null )
         {
+            $ini = eZINI::instance();
+            $useUserSession =  $ini->variable( 'eZStarRating', 'UseUserSession' ) === 'enabled';
+
             $http = eZHTTPTool::instance();
-            if ( $http->hasSessionVariable('ezsrRatedAttributeIdList') )
-            	$attributeIdList = explode( ',', $http->sessionVariable('ezsrRatedAttributeIdList') );
+            if ( $http->hasSessionVariable( 'ezsrRatedAttributeIdList', $useUserSession ) )
+                $attributeIdList = explode( ',', $http->sessionVariable('ezsrRatedAttributeIdList') );
             else
                 $attributeIdList = array();
 
-            
-            $ini = eZINI::instance();
             $contentobjectAttributeId = $this->attribute('contentobject_attribute_id');
-            if ( in_array( $contentobjectAttributeId, $attributeIdList ) && $ini->variable( 'eZStarRating', 'UseUserSession' ) === 'enabled' )
+            if ( in_array( $contentobjectAttributeId, $attributeIdList ) && $useUserSession )
             {
-            	$this->currentUserHasRated = true;
+                $this->currentUserHasRated = true;
             }
 
             $returnRatedObject = $returnRatedObject && $ini->variable( 'eZStarRating', 'AllowChangeRating' ) === 'enabled';
@@ -166,22 +176,25 @@ class ezsrRatingDataObject extends eZPersistentObject
                     $this->currentUserHasRated = eZPersistentObject::count( self::definition(), $cond, 'id' ) != 0;
                 }
             }
-        }    	
+        }
         return $this->currentUserHasRated;
     }
 
     /**
-     * Override store function to add some custom logic for setting create time and 
+     * Override store function to add some custom logic for setting create time and
      * store contentobject_attribute_id in session to avoid several ratings from same user.
-     * 
+     *
      * @param array $fieldFilters
      */
     function store( $fieldFilters = null )
     {
-        if ( $this->attribute( 'user_id' ) == eZUser::currentUserID() )
+        if (
+            $this->attribute( 'user_id' ) == eZUser::currentUserID()
+            && eZINI::instance()->variable( 'eZStarRating', 'UseUserSession' ) === 'enabled'
+        )
         {
             // Store attribute id in session to avoid multiple ratings by same user even if he logs out (gets new session key)
-        	$http = eZHTTPTool::instance();
+            $http = eZHTTPTool::instance();
             $attributeIdList = $this->attribute( 'contentobject_attribute_id' );
             if ( $http->hasSessionVariable('ezsrRatedAttributeIdList') )
             {
@@ -194,7 +207,7 @@ class ezsrRatingDataObject extends eZPersistentObject
 
     /**
      * Remove rating data by content object id and optionally attribute id.
-     * 
+     *
      * @param int $contentobjectID
      * @param int $contentobjectAttributeId
      */
@@ -210,7 +223,7 @@ class ezsrRatingDataObject extends eZPersistentObject
 
     /**
      * Fetch rating by rating id!
-     * 
+     *
      * @param int $id
      * @return null|ezsrRatingDataObject
      */
@@ -223,7 +236,7 @@ class ezsrRatingDataObject extends eZPersistentObject
 
     /**
      * Fetch rating data by content object id and optionally attribute id!
-     * 
+     *
      * @param int $contentobjectID
      * @param int $contentobjectAttributeId
      * @return null|ezsrRatingDataObject
@@ -242,7 +255,7 @@ class ezsrRatingDataObject extends eZPersistentObject
     /**
      * Create a ezsrRatingDataObject and store it.
      * Note: No access checks or input validation is done other then on rating
-     * 
+     *
      * @param int $contentobjectId
      * @param int $contentobjectAttributeId
      * @param int $rate (above 0 and  bellow or equal 5)
@@ -281,7 +294,7 @@ class ezsrRatingDataObject extends eZPersistentObject
      *     contentobject_id
      *     contentobject_attribute_id
      *     rating (this is only requried if you plan to store the object)
-     * 
+     *
      * @param array $row
      * @return ezsrRatingDataObject
      */
@@ -290,14 +303,24 @@ class ezsrRatingDataObject extends eZPersistentObject
         if ( !isset( $row['session_key'] ) )
         {
             $http = eZHTTPTool::instance();
-            $row['session_key'] = $http->getSessionKey();
+
+            if (
+                eZINI::instance()->variable( 'eZStarRating', 'UseUserSession' ) === 'enabled'
+                && !eZSession::hasStarted()
+            )
+            {
+                // Creates a session for anonymous
+                eZSession::start();
+            }
+
+            $row['session_key'] = $http->sessionID();
         }
 
         if ( !isset( $row['user_id'] ) )
         {
             $row['user_id'] = eZUser::currentUserID();
         }
-    
+
         if ( !isset( $row['created_at'] ) )
         {
             $row['created_at'] = time();
@@ -319,7 +342,7 @@ class ezsrRatingDataObject extends eZPersistentObject
 
     /**
      * Fetch rating ( avrage + total + raw rating data ) by conditions
-     * 
+     *
      * @param array $params (see inline doc for possible conditions)
      * @return array Array of rating data
      */
@@ -332,7 +355,7 @@ class ezsrRatingDataObject extends eZPersistentObject
          *   int 'user_id'
          *   string 'session_key'
          *   bool 'as_object' By default: true
-         *   
+         *
          *   Conditions can be combined as you wish,
          */
         $conds = array();
@@ -382,7 +405,7 @@ class ezsrRatingDataObject extends eZPersistentObject
             else
                 $sorts[ $params['sort_by'] ] = 'asc';
         }
-        
+
         $rows = eZPersistentObject::fetchObjectList( self::definition(), null, $conds, $sorts, $limit, $asObject );
 
         if ( $rows === null )

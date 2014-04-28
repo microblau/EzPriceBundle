@@ -3,8 +3,8 @@
 // Definition of ezsrRatingType class
 //
 // SOFTWARE NAME: eZ Star Rating
-// SOFTWARE RELEASE: 2.x
-// COPYRIGHT NOTICE: Copyright (C) 2008 Bruce Morrison, 2009-2010 eZ Systems AS
+// SOFTWARE RELEASE: 5.3.0-alpha1
+// COPYRIGHT NOTICE: Copyright (C) 2008 Bruce Morrison, 2009-2013 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,7 +25,7 @@
 
 class ezsrRatingType extends eZDataType
 {
-	const DATA_TYPE_STRING = 'ezsrrating';
+    const DATA_TYPE_STRING = 'ezsrrating';
 
     /*!
      Construction of the class, note that the second parameter in eZDataType 
@@ -33,7 +33,7 @@ class ezsrRatingType extends eZDataType
     */
     function __construct()
     {
-        parent::__construct( self::DATA_TYPE_STRING, ezpI18n::tr( 'extension/ezstarrating/datatype', 'Star Rating', 'Datatype name' ) );
+        parent::__construct( self::DATA_TYPE_STRING, ezpI18n::tr( 'extension/ezstarrating/datatype', 'Star Rating', 'Datatype name' ), array( 'serialize_supported' => true ) );
     }
 
     /*!

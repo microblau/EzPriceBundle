@@ -3,8 +3,8 @@
 // Definition of ezsrRatingObject class
 //
 // SOFTWARE NAME: eZ Star Rating
-// SOFTWARE RELEASE: 2.x
-// COPYRIGHT NOTICE: Copyright (C) 2008 Bruce Morrison, 2009-2010 eZ Systems AS
+// SOFTWARE RELEASE: 5.3.0-alpha1
+// COPYRIGHT NOTICE: Copyright (C) 2008 Bruce Morrison, 2009-2013 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -27,7 +27,7 @@ class ezsrRatingObject extends eZPersistentObject
 {
      /**
      * Construct, use {@link ezsrRatingObject::create()} to create new objects.
-     * 
+     *
      * @param array $row
      */
     protected function __construct( $row )
@@ -42,12 +42,18 @@ class ezsrRatingObject extends eZPersistentObject
                       'name' => 'contentobject_id',
                       'datatype' => 'integer',
                       'default' => 0,
-                      'required' => true ),
+                      'required' => true,
+                      'foreign_class' => 'eZContentObject',
+                      'foreign_attribute' => 'id',
+                      'multiplicity' => '1..*' ),
                     'contentobject_attribute_id' => array(
                       'name' => 'contentobject_attribute_id',
                       'datatype' => 'integer',
                       'default' => 0,
-                      'required' => true ),
+                      'required' => true,
+                      'foreign_class' => 'eZContentObjectAttribute',
+                      'foreign_attribute' => 'id',
+                      'multiplicity' => '1..*' ),
                     'rating_average' => array(
                       'name' => 'rating_average',
                       'datatype' => 'float',
@@ -62,6 +68,7 @@ class ezsrRatingObject extends eZPersistentObject
                   'keys' => array( 'contentobject_id', 'contentobject_attribute_id' ),
                   'function_attributes' => array(
                       'rounded_average' => 'getRoundedAverage',
+                      'rating' => 'getRating',
                       'rating_data' => 'getRatingData',
                       'current_user_has_rated' => 'currentUserHasRated',
                   ),
@@ -72,7 +79,7 @@ class ezsrRatingObject extends eZPersistentObject
 
     /**
      * Get a rounded (nearest 0.5) version of 'rating_average'
-     * 
+     *
      * @return float
      */
     function getRoundedAverage()
@@ -83,8 +90,18 @@ class ezsrRatingObject extends eZPersistentObject
     }
 
     /**
+     * Returns the rating, rounded to one digit
+     *
+     * @return float
+     */
+    public function getRating()
+    {
+        return round( $this->attribute( 'rating_average' ), 1 );
+    }
+
+    /**
      * Fetch rating data
-     * 
+     *
      * @return array
      */
     function getRatingData()
@@ -94,7 +111,7 @@ class ezsrRatingObject extends eZPersistentObject
 
     /**
      * Check if current user has rated on this content attribute or not!
-     * 
+     *
      * @return bool
      */
     function currentUserHasRated()
@@ -107,7 +124,7 @@ class ezsrRatingObject extends eZPersistentObject
 
     /**
      * Remove calculated ratings by content object id and optionally attribute id.
-     * 
+     *
      * @param int $contentobjectID
      * @param int $contentobjectAttributeId
      */
@@ -120,13 +137,13 @@ class ezsrRatingObject extends eZPersistentObject
         }
         eZPersistentObject::removeObject( self::definition(), $cond );
     }
-    
+
     /**
      * Create a ezsrRatingObject by definition data (but do not store it, thats up to you!)
      * NOTE: you have to provide the following attributes:
      *     contentobject_id
      *     contentobject_attribute_id
-     * 
+     *
      * @param array $row
      * @return ezsrRatingDataObject
      */
@@ -150,7 +167,7 @@ class ezsrRatingObject extends eZPersistentObject
 
     /**
      * Fetch rating data by content object id and optionally attribute id!
-     * 
+     *
      * @param int $contentobjectID
      * @return null|ezsrRatingObject
      */
@@ -164,11 +181,11 @@ class ezsrRatingObject extends eZPersistentObject
         $return = eZPersistentObject::fetchObject( self::definition(), null, $cond );
         return $return;
     }
-    
+
     /**
      * Update rating_average and rating_count from rating data.
      * Note: Does not store the change!
-     * 
+     *
      * @return bool False if no rating data was returned so no updates could be done
      */
     function updateFromRatingData()
@@ -188,11 +205,11 @@ class ezsrRatingObject extends eZPersistentObject
         }
         return false;
     }
-    
+
     /**
      * Fetch and cache rating stats pr object id.
      * ( usefull when you have several rating attributes pr object )
-     * 
+     *
      * @param int $ContentObjectID
      * @return array (with count and average values)
      */
@@ -222,7 +239,7 @@ class ezsrRatingObject extends eZPersistentObject
 
     /**
      * Fetch top/bottom content (nodes) by rating++
-     * 
+     *
      * @param array $params (see inline doc for details)
      * @return array Returs array of nodes (either objects or raw db output based on as_object param)
      */
@@ -232,7 +249,7 @@ class ezsrRatingObject extends eZPersistentObject
          * Works like fetch list/tree, except:
          * 1. Attribute filter is not supported (because of dependency on normal sort_by param)
          * 2. Supported sorting: rating, rating_count, object_count, published, modified and view_count.
-         * 3. parent_node_id only works for list fetch, if you want tree fetch use 
+         * 3. parent_node_id only works for list fetch, if you want tree fetch use
          *    parent_node_path (format is like $node.path_string, as in '/1/2/144/256/').
          * 4. depth and depth_operator are not supported (so parent_node_path gives you unlimited depth).
          * 5. There are additional advance params to see rating, rating_count, object_count pr user / group
@@ -253,14 +270,16 @@ class ezsrRatingObject extends eZPersistentObject
         $classFilterArray = isset( $params['class_filter_array'] ) ? $params['class_filter_array'] : false;
         $includeNotRated  = isset( $params['include_not_rated'] )  ? $params['include_not_rated']  : false;
         $selectSql   = 'ezcontentobject.*, ezcontentobject_tree.*,';
-        $groupBySql  = 'GROUP BY ezcontentobject_tree.node_id';
+        $groupBySql  = '';
         $orderBySql  = 'ORDER BY rating DESC, rating_count DESC';// default sorting
-        
+        $ratingFields = 'ezstarrating.rating_average as rating, ezstarrating.rating_count as rating_count,';
+
         // WARNING: group_by_owner only works as intended if user is owner of him self..
         if ( isset( $params['group_by_owner'] ) && $params['group_by_owner'] )
         {
             // group by owner instead of content object and fetch users instead of content objects
             $selectSql  = 'ezcontentobject.*, owner_tree.*,';
+            $ratingFields = 'AVG( ezstarrating.rating_average ) as rating, SUM( ezstarrating.rating_count ) as rating_count,';
             $groupBySql = 'GROUP BY owner_tree.node_id';
         }
 
@@ -373,7 +392,7 @@ class ezsrRatingObject extends eZPersistentObject
                         $selectSql  .= 'ezview_counter.count as view_count,';
                         $fromSql    .= ', ezview_counter';
                         $whereSql[]  = 'ezcontentobject_tree.node_id = ezview_counter.node_id';
-                        $orderBySqlPart = 'view_count ' . ( $direction ? 'ASC' : 'DESC');                        
+                        $orderBySqlPart = 'view_count ' . ( $direction ? 'ASC' : 'DESC');
                     }break;
                     default:
                     {
@@ -416,8 +435,7 @@ class ezsrRatingObject extends eZPersistentObject
         $db  = eZDB::instance();
         $sql = "SELECT
                              $selectSql
-                             AVG( ezstarrating.rating_average ) as rating,
-                             SUM( ezstarrating.rating_count ) as rating_count,
+                             $ratingFields
                              ezcontentclass.serialized_name_list as class_serialized_name_list,
                              ezcontentclass.identifier as class_identifier,
                              ezcontentclass.is_container as is_container
@@ -426,12 +444,12 @@ class ezsrRatingObject extends eZPersistentObject
                             FROM
                              ezcontentobject_tree,
                              ezcontentobject_tree owner_tree,
-                             ezcontentclass
+                             ezcontentclass,
+                             ezcontentobject
                              $fromSql
                              $versionNameTables
                              $extendedAttributeFilter[tables]
                              $sqlPermissionChecking[from]
-                             ,ezcontentobject
                              $ratingFromSql
                             WHERE
                              $extendedAttributeFilter[joins]
@@ -462,7 +480,7 @@ class ezsrRatingObject extends eZPersistentObject
 
         unset($db);
 
-        if ( isset( $rows[0] ) && is_array( $rows ) )
+        if ( is_array( $rows ) && !empty( $rows ) )
         {
             if ( $asObject )
             {
