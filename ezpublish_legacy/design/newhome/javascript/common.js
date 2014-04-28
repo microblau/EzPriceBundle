@@ -2930,65 +2930,6 @@ jQuery(document).ready(function() {
                 fixes.resizeContent();
         }
 
-        // init carrouseles
-
-        // main
-        $('.jcarousel.home-main').jcarousel({
-            'wrap':'circular'
-        }).jcarouselAutoscroll({
-            interval: 6000,
-            target: '+=1',
-            autostart: true
-        });
-
-        $('.home-main .jcarousel-control-prev')
-            .on('jcarouselcontrol:active', function() {
-                $(this).removeClass('inactive');
-            })
-            .on('jcarouselcontrol:inactive', function() {
-                $(this).addClass('inactive');
-            })
-            .jcarouselControl({
-                target: '-=1'
-            })
-
-        $('home-main .jcarousel-control-next')
-            .on('jcarouselcontrol:active', function() {
-                $(this).removeClass('inactive');
-            })
-            .on('jcarouselcontrol:inactive', function() {
-                $(this).addClass('inactive');
-            })
-            .jcarouselControl({
-                target: '+=1'
-            });
-
-    /***
-     *  Carruseles top
-     */
-        $('.jcarousel.tops').jcarousel({});
-
-    $('#modNovedades .jcarousel-control-prev')
-        .on('jcarouselcontrol:active', function() {
-            $(this).removeClass('inactive');
-        })
-        .on('jcarouselcontrol:inactive', function() {
-            $(this).addClass('inactive');
-        })
-        .jcarouselControl({
-            target: '-=3'
-        })
-
-        $('#modNovedades .jcarousel-control-next')
-        .on('jcarouselcontrol:active', function() {
-            $(this).removeClass('inactive');
-        })
-        .on('jcarouselcontrol:inactive', function() {
-            $(this).addClass('inactive');
-        })
-        .jcarouselControl({
-            target: '+=3'
-        });
 
         if($("#home #promocionPrimaria .wrapAjaxContent").length != 0){
                 AjaxRequest.destacadoHome.init("#promocionPrimaria .columnType2");

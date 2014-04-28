@@ -29,7 +29,7 @@
                 <span class="comments">
                 {def $cuantasvaloracionestotales = fetch('producto','cuantasvaloraciones' , hash( 'node_id', $node.node_id ))}
                 {if $cuantasvaloracionestotales|gt(0)}
-                    <span><a href={concat($node.url_alias, '/(ver)/valoraciones')|url()}>{$cuantasvaloracionestotales} {if $cuantasvaloracionestotales|eq(1)} comentario{else} comentarios{/if}</a></span>
+                    <span><a href={concat($node.url_alias, '/(ver)/valoraciones')|ezurl()}>{$cuantasvaloracionestotales} {if $cuantasvaloracionestotales|eq(1)} comentario{else} comentarios{/if}</a></span>
                 {/if}
                 {undef $cuantasvaloracionestotales}
                     <a href={concat( 'basket/ajaxadd/', $node.object.id, '/1')|ezurl}class="boton loQuiero"><img src={"btn_lo-quiero.png"|ezimage} alt="Lo quiero" /></a></span>

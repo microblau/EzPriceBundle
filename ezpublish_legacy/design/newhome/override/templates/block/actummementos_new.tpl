@@ -1,5 +1,4 @@
                 {ezcss_require( array( 'css::tabscss' ) ) }
-                {ezscript_require( array( 'home.js' ) ) }
                 <div id="modActum">
                     <h2>{$block.custom_attributes.titulo}</h2>
                     <div id="categoriesTabs">

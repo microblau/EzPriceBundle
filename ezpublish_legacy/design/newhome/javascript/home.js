@@ -246,7 +246,18 @@ jQuery(document).ready(function() {
         });
     }
 
-  
+
+    jQuery('.jcarousel.home-main').carousel({
+        target:1,
+        root:$('#promocionPrimaria'),
+        wrap: 'circular',
+        auto: true
+    });
+
+    jQuery('.jcarousel.tops').carousel({
+        target:3,
+        root:$('#modNovedades')
+    });
 
 
 

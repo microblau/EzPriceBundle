@@ -9,10 +9,6 @@
 	{ezscript_require( array( 'filtros.js' ) )}  
 {/if}
 
-{if $module_result.node_id|eq( 2 )}
-{ezscript_require( array( 'jquery.jcarousel.min.js' ) )}
-{/if}
-
 {if $module_result.uri|eq( '/basket/payment' )}
 {ezscript_require( array( 'pagos.js' ) )} 
 {/if}
