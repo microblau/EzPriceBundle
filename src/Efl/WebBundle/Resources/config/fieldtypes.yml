@@ -1,0 +1,9 @@
+parameters:
+    ezpublish.fieldType.customezpage.class: eZ\Publish\Core\FieldType\Page\Type
+
+services:
+    ezpublish.fieldType.customezpage:
+            class: %ezpublish.fieldType.customezpage.class%
+            parent: ezpublish.fieldType
+            tags:
+                - {name: ezpublish.fieldType, alias: customezpage}

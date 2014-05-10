@@ -16,11 +16,11 @@ http://yuilibrary.com/license/
     border-radius:3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
-        background-color:#808080;
-        opacity:0.3;
-        filter:alpha(opacity=30); /*IE*/
+	background-color:#808080;
+	opacity:0.3;
+	filter:alpha(opacity=30); /*IE*/
 
-        
+	
 /*    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAABCAYAAAD9yd/wAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABJJREFUeNpiZGBgSGPAAgACDAAIkABoFyloZQAAAABJRU5ErkJggg==);
 */
 }

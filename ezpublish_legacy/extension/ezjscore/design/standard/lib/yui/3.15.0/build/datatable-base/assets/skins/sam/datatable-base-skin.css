@@ -33,7 +33,7 @@ http://yuilibrary.com/license/
     border-width: 0 0 0 1px;
     font-size: inherit;
     margin: 0;
-        overflow: visible; /*to make ths where the title is really long work*/
+	overflow: visible; /*to make ths where the title is really long work*/
     padding: 4px 10px 4px 10px; /* cell padding */
 }
 .yui3-skin-sam .yui3-datatable-cell:first-child,

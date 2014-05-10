@@ -5,24 +5,26 @@
 // Created on: <5-Aug-2007 00:00:00 ar>
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish Community Project
-// SOFTWARE RELEASE:  2014.3
+// SOFTWARE NAME: eZ JSCore extension for eZ Publish
+// SOFTWARE RELEASE: 1.x
 // COPYRIGHT NOTICE: Copyright (C) 1999-2014 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2
+// SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-// 
+//
 //   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-// 
+//
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
+//
+//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -225,24 +227,24 @@ class ezjscAjaxContent
         if (  !isset( $params['imageDataTypes'] ) )
             $params['imageDataTypes'] = $ini->variable( 'ImageDataTypeSettings', 'AvailableImageDataTypes' );
 
-        $ret                                    = array();
-        $attrtibuteArray                        = array();
-        $ret['name']                            = htmlentities( $contentObject->attribute( 'name' ), ENT_QUOTES, "UTF-8" );
-        $ret['contentobject_id']                = $ret['id'] = (int) $contentObject->attribute( 'id' );
-        $ret['contentobject_remote_id']         = $contentObject->attribute( 'remote_id' );
-        $ret['contentobject_state']             = implode( ", ", $contentObject->attribute( 'state_identifier_array' ) );
-        $ret['main_node_id']                    = (int)$contentObject->attribute( 'main_node_id' );
-        $ret['version']                         = (int)$contentObject->attribute( 'current_version' );
-        $ret['modified']                        = $contentObject->attribute( 'modified' );
-        $ret['published']                       = $contentObject->attribute( 'published' );
-        $ret['section_id']                      = (int) $contentObject->attribute( 'section_id' );
-        $ret['current_language']                = $contentObject->attribute( 'current_language' );
-        $ret['owner_id']                        = (int) $contentObject->attribute( 'owner_id' );
-        $ret['class_id']                        = (int) $contentObject->attribute( 'contentclass_id' );
-        $ret['class_name']                      = $contentObject->attribute( 'class_name' );
-        $ret['path_identification_string']      = $node ? $node->attribute( 'path_identification_string' ) : '';
-        $ret['translations']                    = eZContentLanguage::decodeLanguageMask($contentObject->attribute( 'language_mask' ), true);
-        $ret['can_edit']                        = $contentObject->attribute( 'can_edit' );
+        $ret                            	= array();
+        $attrtibuteArray                	= array();
+        $ret['name']                    	= htmlentities( $contentObject->attribute( 'name' ), ENT_QUOTES, "UTF-8" );
+        $ret['contentobject_id']        	= $ret['id'] = (int) $contentObject->attribute( 'id' );
+        $ret['contentobject_remote_id'] 	= $contentObject->attribute( 'remote_id' );
+        $ret['contentobject_state']     	= implode( ", ", $contentObject->attribute( 'state_identifier_array' ) );
+        $ret['main_node_id']            	= (int)$contentObject->attribute( 'main_node_id' );
+        $ret['version']                 	= (int)$contentObject->attribute( 'current_version' );
+        $ret['modified']                	= $contentObject->attribute( 'modified' );
+        $ret['published']               	= $contentObject->attribute( 'published' );
+        $ret['section_id']              	= (int) $contentObject->attribute( 'section_id' );
+        $ret['current_language']        	= $contentObject->attribute( 'current_language' );
+        $ret['owner_id']                	= (int) $contentObject->attribute( 'owner_id' );
+        $ret['class_id']                	= (int) $contentObject->attribute( 'contentclass_id' );
+        $ret['class_name']              	= $contentObject->attribute( 'class_name' );
+        $ret['path_identification_string'] 	= $node ? $node->attribute( 'path_identification_string' ) : '';
+        $ret['translations']            	= eZContentLanguage::decodeLanguageMask($contentObject->attribute( 'language_mask' ), true);
+        $ret['can_edit']                	= $contentObject->attribute( 'can_edit' );
 
         if ( isset( $params['formatDate'] ) )
         {

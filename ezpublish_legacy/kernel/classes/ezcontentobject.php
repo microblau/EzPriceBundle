@@ -4,7 +4,7 @@
  *
  * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
  * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
- * @version  2014.3
+ * @version //autogentag//
  * @package kernel
  */
 
@@ -4578,6 +4578,13 @@ class eZContentObject extends eZPersistentObject
     // This code is automatically generated from templates/classlistfrompolicy.ctpl
     // DO NOT EDIT THIS CODE DIRECTLY, CHANGE THE TEMPLATE FILE INSTEAD
 
+    /**
+     * Returns an array of classes the current user has access to
+     *
+     * @param array $policy
+     * @param array|bool $allowedLanguageCodes
+     * @return array
+     */
     function classListFromPolicy( $policy, $allowedLanguageCodes = false )
     {
         $canCreateClassIDListPart = array();
@@ -4743,19 +4750,16 @@ class eZContentObject extends eZPersistentObject
     // This code is automatically generated from templates/classcreatelist.ctpl
     // DO NOT EDIT THIS CODE DIRECTLY, CHANGE THE TEMPLATE FILE INSTEAD
 
-    /*!
-     Finds all classes that the current user can create objects from and returns.
-     It is also possible to filter the list event more with \a $includeFilter and \a $groupList.
-
-     \param $asObject If \c true then it return eZContentClass objects, if not it will
-                      be an associative array with \c name and \c id keys.
-     \param $includeFilter If \c true then it will include only from class groups defined in
-                           \a $groupList, if not it will exclude those groups.
-     \param $groupList An array with class group IDs that should be used in filtering, use
-                       \c false if you do not wish to filter at all.
-     \param $fetchID A unique name for the current fetch, this must be supplied when filtering is
-                     used if you want caching to work.
-    */
+    /**
+     * Finds all classes that the current user can create objects from and returns.
+     * It is also possible to filter the list event more with $includeFilter and $groupList.
+     *
+     * @param bool $asObject If true then it return eZContentClass objects, if not it will be an associative array
+     * @param bool $includeFilter If true then it will include only from class groups defined in $groupList, if not it will exclude those groups.
+     * @param bool $groupList An array with class group IDs that should be used in filtering, use false if you do not wish to filter at all.
+     * @param bool $fetchID A unique name for the current fetch, this must be supplied when filtering is used if you want caching to work.
+     * @return array|eZPersistentObject[]
+     */
     function canCreateClassList( $asObject = false, $includeFilter = true, $groupList = false, $fetchID = false )
     {
         $ini = eZINI::instance();

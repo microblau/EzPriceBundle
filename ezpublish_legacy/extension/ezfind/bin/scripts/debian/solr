@@ -19,7 +19,7 @@
 
 # Replace with the java directory of your eZ Find extension
 # (example: /var/www/ezpublish/extension/ezfind/java)
-SOLR_HOME=/home/carlos/workspace/efl/ezpublish_legacy/extension/ezfind/java
+SOLR_HOME=/usr/local/solr/java
 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="Solr indexing server"

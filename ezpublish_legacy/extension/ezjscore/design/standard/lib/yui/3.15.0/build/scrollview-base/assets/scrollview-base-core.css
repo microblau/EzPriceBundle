@@ -6,7 +6,7 @@ http://yuilibrary.com/license/
 */
 
 .yui3-scrollview {
-        position: relative;
+	position: relative;
     overflow: hidden;
     -webkit-user-select: none;
     -moz-user-select: none;

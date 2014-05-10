@@ -1,0 +1,2 @@
+parameters:
+   efl.cache.feed_reader_ttl: 3600

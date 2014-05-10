@@ -12,11 +12,11 @@ http://yuilibrary.com/license/
 }
 
 .yui3-calendar-column-hidden, .yui3-calendar-hidden {
-        display:none;
+	display:none;
 }
 
 .yui3-calendar-day {
-        cursor: pointer;
+	cursor: pointer;
 }
 
 .yui3-calendar-selection-disabled {
@@ -28,7 +28,7 @@ http://yuilibrary.com/license/
 }
 
 .yui3-calendar-nextmonth-day {
-        cursor: default;
+	cursor: default;
 }
 
 .yui3-calendar-content:hover .yui3-calendar-day,

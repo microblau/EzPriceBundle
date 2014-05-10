@@ -33,12 +33,12 @@ http://yuilibrary.com/license/
     font-weight: bold;
     color: white;
     background-color: #555658;
-        background: -moz-linear-gradient(
-                0% 100% 90deg,
-                #343536 0%,
-                #555658 96%,
-                #3E3F41 100%
-        );
+	background: -moz-linear-gradient(
+		0% 100% 90deg,
+		#343536 0%,
+		#555658 96%,
+		#3E3F41 100%
+	);
     background: -webkit-gradient(
         linear,
         left bottom,

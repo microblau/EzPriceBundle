@@ -13,6 +13,7 @@ use eZ\Bundle\EzPublishDebugBundle\EzPublishDebugBundle;
 use eZ\Bundle\EzPublishLegacyBundle\EzPublishLegacyBundle;
 use eZ\Bundle\EzPublishRestBundle\EzPublishRestBundle;
 use EzSystems\CommentsBundle\EzSystemsCommentsBundle;
+use Efl\WebBundle\EflWebBundle;
 use EzSystems\DemoBundle\EzSystemsDemoBundle;
 use EzSystems\BehatBundle\EzSystemsBehatBundle;
 use eZ\Bundle\EzPublishCoreBundle\Kernel;
@@ -62,6 +63,7 @@ class EzPublishKernel extends Kernel
             new EzSystemsNgsymfonytoolsBundle(),
             new WhiteOctoberPagerfantaBundle(),
             new NelmioCorsBundle(),
+            new EflWebBundle()
         );
 
         switch ( $this->getEnvironment() )

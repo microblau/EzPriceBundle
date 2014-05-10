@@ -1,0 +1,5 @@
+siteaccess:
+    groups:
+        efl_frontend_group:
+            - newhome
+            - formacion

@@ -16,7 +16,6 @@ ActiveExtensions[]=objectrelationbrowse
 ActiveExtensions[]=utils
 ActiveExtensions[]=ezjscore
 ActiveExtensions[]=ezfind
-ActiveExtensions[]=ezdemo
 ActiveExtensions[]=ezflow
 ActiveExtensions[]=ezwebin
 ActiveExtensions[]=ezoe
@@ -40,9 +39,8 @@ ActiveExtensions[]=eflyoutube
 ActiveExtensions[]=cjw_newsletter
 ActiveExtensions[]=eflvaloraciones
 ActiveExtensions[]=googlesitemapgenerator
-#ActiveExtensions[]=ez_network
+ActiveExtensions[]=ez_network
 #ActiveExtensions[]=ezpaypal
-ActiveExtensions[]=envdata
 
 [Session]
 SessionNameHandler=default
@@ -79,7 +77,6 @@ RemoveSiteAccessIfDefaultAccess=enabled
 HostMatchMapItems[]=eflweb;site;
 HostMatchMapItems[]=www.efl.es;newhome;
 HostMatchMapItems[]=formacion.efl.es;forma
-HostMatchMapItems[]=formacion.efl.local;forma
 HostMatchMapItems[]=formacion.eflweb.local;forma
 HostMatchMapItems[]=eflweb.local;site
 
@@ -139,8 +136,10 @@ AdminEmail=lidia.valle@tantacom.com
 EmailSender=
 
 [EmbedViewModeSettings]
+AvailableViewModes[]
 AvailableViewModes[]=embed
 AvailableViewModes[]=embed-inline
+InlineViewModes[]
 InlineViewModes[]=embed-inline
 EmailReceiver=asistenciaclientes@efl.es
 
@@ -154,4 +153,6 @@ Rules[]=Module;user/register
 Rules[]=Module;user/forgotpassword
 #Rules[]=Module;ezinfo/about
 
+[TemplateSettings]
+ShowUsedTemplates=enabled
 */ ?>

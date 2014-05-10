@@ -4,7 +4,7 @@
  *
  * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
  * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
- * @version  2014.3
+ * @version //autogentag//
  * @package kernel
  */
 
@@ -787,18 +787,18 @@ class eZContentCacheManager
 
         eZDebug::accumulatorStart( 'node_cleanup', '', 'Node cleanup' );
 
+        $nodeList = ezpEvent::getInstance()->filter( 'content/cache', $nodeList );
+
         eZContentObject::expireComplexViewModeCache();
         $cleanupValue = eZContentCache::calculateCleanupValue( count( $nodeList ) );
 
         if ( eZContentCache::inCleanupThresholdRange( $cleanupValue ) )
         {
-            $nodeList = ezpEvent::getInstance()->filter( 'content/cache', $nodeList );
             eZContentCache::cleanup( $nodeList );
         }
         else
         {
             eZDebug::writeDebug( "Expiring all view cache since list of nodes({$cleanupValue}) exceeds site.ini\[ContentSettings]\CacheThreshold", __METHOD__ );
-            ezpEvent::getInstance()->notify( 'content/cache/all' );
             eZContentObject::expireAllViewCache();
         }
 
@@ -1006,7 +1006,7 @@ class eZContentCacheManager
             $ini = eZINI::instance();
             $useURLAlias =& $GLOBALS['eZContentObjectTreeNodeUseURLAlias'];
             $pathPrefix = $ini->variable( 'SiteAccessSettings', 'PathPrefix' );
-
+            
             // get staticCacheHandler instance
             $optionArray = array( 'iniFile'      => 'site.ini',
                                   'iniSection'   => 'ContentSettings',

@@ -21,7 +21,7 @@ http://yuilibrary.com/license/
 
 .yui3-skin-night .yui3-menu .yui3-menu .yui3-menu-content {
 
-        font-size: 100%;
+	font-size: 100%;
     
 }
 
@@ -32,12 +32,12 @@ http://yuilibrary.com/license/
     line-height: 2;  /* ~24px */
     *line-height: 1.9; /* For IE */
     background-color:#3b3c3d;
-        background: -moz-linear-gradient(
-                0% 100% 90deg, 
-                #242526 0%, 
-                #3b3c3d 96%,
-                #2C2D2F 100%
-        );
+	background: -moz-linear-gradient(
+		0% 100% 90deg, 
+		#242526 0%, 
+		#3b3c3d 96%,
+		#2C2D2F 100%
+	);
     background: -webkit-gradient(
         linear,
         left bottom,
@@ -54,8 +54,8 @@ http://yuilibrary.com/license/
 .yui3-skin-night .yui3-menu ul,
 .yui3-skin-night .yui3-menu ul ul {
 
-        margin-top: 3px;
-        padding-top: 3px;
+	margin-top: 3px;
+	padding-top: 3px;
     border-top: solid 1px #303030;
 
 }
@@ -63,16 +63,16 @@ http://yuilibrary.com/license/
 .yui3-skin-night .yui3-menu ul.first-of-type {
 
     border: 0;
-        margin: 0;
-        padding: 0;    
+	margin: 0;
+	padding: 0;    
 
 }
 
 .yui3-skin-night .yui3-menu-horizontal ul {
 
-        padding: 0;
-        margin: 0;
-        border: 0;
+	padding: 0;
+	margin: 0;
+	border: 0;
 
 }
 
@@ -82,9 +82,9 @@ http://yuilibrary.com/license/
 
     /*
         For and IE 6 (Strict Mode and Quirks Mode) and IE 7 (Quirks Mode only): 
-                Used to collapse superfluous white space between <li> elements that is 
-                triggered by the "display" property of the <a> elements being set to 
-                "block" by node-menunav-core.css file.
+		Used to collapse superfluous white space between <li> elements that is 
+		triggered by the "display" property of the <a> elements being set to 
+		"block" by node-menunav-core.css file.
     */
 
     _border-bottom: solid 1px #151515;
@@ -93,7 +93,7 @@ http://yuilibrary.com/license/
 
 .yui3-skin-night .yui3-menu-horizontal li {
 
-        _border-bottom: 0;
+	_border-bottom: 0;
 
 }
 
@@ -112,7 +112,7 @@ http://yuilibrary.com/license/
 .yui3-skin-night .yui3-menubuttonnav li li,
 .yui3-skin-night .yui3-splitbuttonnav li li {
 
-        border-right: 0;
+	border-right: 0;
 
 }
 
@@ -138,14 +138,14 @@ http://yuilibrary.com/license/
     text-decoration: none;
     cursor: default;
 
-        /*
-                Necessary specify values for border, position and margin to override 
-                values specified in the selectors that follow. 
-        */
+	/*
+		Necessary specify values for border, position and margin to override 
+		values specified in the selectors that follow. 
+	*/
 
-        float: none;
-        border: 0;
-        margin: 0;
+	float: none;
+	border: 0;
+	margin: 0;
 
 }
 
@@ -158,9 +158,9 @@ http://yuilibrary.com/license/
     border-width: 1px 0;
     margin: -1px 0;
 
-    float: left;        /*      Ensures that menu labels clear floated descendents. 
-                                        Also gets negative margins working in IE 7 
-                                                (Strict Mode). */
+    float: left; 	/*	Ensures that menu labels clear floated descendents. 
+    					Also gets negative margins working in IE 7 
+						(Strict Mode). */
     width: auto;
 
 }
@@ -168,7 +168,7 @@ http://yuilibrary.com/license/
 .yui3-skin-night .yui3-menu-label,
 .yui3-skin-night .yui3-menu .yui3-menu .yui3-menu-label {
 
-        background: url(vertical-menu-submenu-indicator.png) right center no-repeat;
+	background: url(vertical-menu-submenu-indicator.png) right center no-repeat;
 
 }
 
@@ -181,7 +181,7 @@ http://yuilibrary.com/license/
 .yui3-skin-night .yui3-menubuttonnav .yui3-menu-label,
 .yui3-skin-night .yui3-splitbuttonnav .yui3-menu-label {
 
-        background-image: none;
+	background-image: none;
 
 }
 
@@ -193,8 +193,8 @@ http://yuilibrary.com/license/
 
 .yui3-skin-night .yui3-menubuttonnav .yui3-menu-label em {
 
-        font-style: normal;
-        padding-right: 20px;
+	font-style: normal;
+	padding-right: 20px;
     display: block;
     background: url(horizontal-menu-submenu-indicator.png) right center no-repeat;
 
@@ -203,30 +203,30 @@ http://yuilibrary.com/license/
 
 .yui3-skin-night .yui3-splitbuttonnav .yui3-menu-label {
 
-        padding: 0;
+	padding: 0;
 
 }
 
 .yui3-skin-night .yui3-splitbuttonnav .yui3-menu-label a {
 
-        float: left;
-        width: auto;
+	float: left;
+	width: auto;
     color: #fff;
     text-decoration: none;
     cursor: default;
-        padding: 0 5px 0 10px;
+	padding: 0 5px 0 10px;
 
 }
 
 .yui3-skin-night .yui3-splitbuttonnav .yui3-menu-label .yui3-menu-toggle {
-        
-        padding: 0;     /* Overide padding applied by the preceeding rule. */
-        border-left: solid 1px #303030; 
-        width: 15px;
-        overflow: hidden;
-        text-indent: -1000px;
-    background: url(horizontal-menu-submenu-indicator.png) 3px center no-repeat;        
-        
+	
+	padding: 0;	/* Overide padding applied by the preceeding rule. */
+	border-left: solid 1px #303030; 
+	width: 15px;
+	overflow: hidden;
+	text-indent: -1000px;
+    background: url(horizontal-menu-submenu-indicator.png) 3px center no-repeat;	
+	
 }
 
 
@@ -237,20 +237,20 @@ http://yuilibrary.com/license/
 .yui3-skin-night .yui3-menu .yui3-menu .yui3-menu-label-active,
 .yui3-skin-night .yui3-menu .yui3-menu .yui3-menu-label-menuvisible {
 
-        background-color: #292a2a;
+	background-color: #292a2a;
 
 }
 
 .yui3-skin-night .yui3-menuitem-active .yui3-menuitem-content,
 .yui3-skin-night .yui3-menu .yui3-menu .yui3-menuitem-active .yui3-menuitem-content {
 
-        background-image: none;
+	background-image: none;
     background-color: #292a2a;
     background: -moz-linear-gradient(
-                0% 100% 90deg,
-                #252626 0%,
-                #333434 100%
-        );
+		0% 100% 90deg,
+		#252626 0%,
+		#333434 100%
+	);
     background: -webkit-gradient(
         linear,
         left top,
@@ -260,11 +260,11 @@ http://yuilibrary.com/license/
     );
     
     /*
-        Undo values set for "border-left-width" and "margin-left" when the root 
-        menu has a class of "yui-menubuttonnav" or "yui-splitbuttonnav" applied.
+    	Undo values set for "border-left-width" and "margin-left" when the root 
+    	menu has a class of "yui-menubuttonnav" or "yui-splitbuttonnav" applied.
     */
 
-        border-left-width: 0;
+	border-left-width: 0;
     margin-left: 0;
 
 }
@@ -274,13 +274,13 @@ http://yuilibrary.com/license/
 .yui3-skin-night .yui3-menu-horizontal .yui3-menu-label-menuvisible {
 
     border-color: #303030;
-        background-color:#555658;
-        background: -moz-linear-gradient(
-                0% 100% 90deg, 
-                #343536 0%, 
-                #555658 96%,
-                #3E3F41 100%
-        );
+	background-color:#555658;
+	background: -moz-linear-gradient(
+		0% 100% 90deg, 
+		#343536 0%, 
+		#555658 96%,
+		#3E3F41 100%
+	);
     background: -webkit-gradient(
         linear,
         left bottom,
@@ -349,9 +349,9 @@ http://yuilibrary.com/license/
 /* For IE7 - needs zoom, otherwise clipped content is not rendered */
 .yui3-skin-night .yui3-scrollview-vert .yui3-scrollview-content .yui3-scrollview-list {
     *zoom:1;
-        list-style:none; /*need these since reset is not required*/
-        padding:0; /*need these since reset is not required*/
-        margin:0; /*need these since reset is not required*/
+	list-style:none; /*need these since reset is not required*/
+	padding:0; /*need these since reset is not required*/
+	margin:0; /*need these since reset is not required*/
 }
 
 .yui3-skin-night .yui3-scrollview-vert .yui3-scrollview-content .yui3-scrollview-item {
@@ -360,16 +360,16 @@ http://yuilibrary.com/license/
     font-size: 100%;
     font-weight: bold;
     background-color:#151515;
-        cursor:pointer;
+	cursor:pointer;
 }
 
 .yui3-skin-night .yui3-scrollview-vert .yui3-scrollview-content .yui3-scrollview-list.selected{
-        background-color:#2C2D2E;
-        background: -moz-linear-gradient(
-                0% 100% 90deg,  
-                #252626 0%, 
-                #333434 100%
-        );
+	background-color:#2C2D2E;
+	background: -moz-linear-gradient(
+		0% 100% 90deg,	
+		#252626 0%, 
+		#333434 100%
+	);
     background: -webkit-gradient(
         linear,
         left top,
@@ -377,9 +377,9 @@ http://yuilibrary.com/license/
         from(#333434),
         to(#252626)     
     );
-        border-top:solid 1px #4b4b4b;
-        border-bottom:solid 1px #3e3f3f;
-        margin-top:-1px;
+	border-top:solid 1px #4b4b4b;
+	border-bottom:solid 1px #3e3f3f;
+	margin-top:-1px;
 }
 
 /*
@@ -422,22 +422,22 @@ http://yuilibrary.com/license/
 }
 
 .yui3-skin-night .yui3-aclist-content {
-        font-size: 100%;
+	font-size: 100%;
     background-color: #151515;
-        color: #ccc;
+	color: #ccc;
     border: 1px solid #303030;
-        -moz-box-shadow: 0 0 17px rgba(0,0,0,0.58);
-        -webkit-box-shadow: 0 0 17px rgba(0,0,0,0.58);
-        box-shadow: 0 0 17px rgba(0,0,0,0.58);
+	-moz-box-shadow: 0 0 17px rgba(0,0,0,0.58);
+	-webkit-box-shadow: 0 0 17px rgba(0,0,0,0.58);
+	box-shadow: 0 0 17px rgba(0,0,0,0.58);
 }
 
 .yui3-skin-night .yui3-aclist-item-active {
     background-color: #2F3030;
     background: -moz-linear-gradient(
-                0% 100% 90deg,
-                #252626 0%,
-                #333434 100%
-        );
+		0% 100% 90deg,
+		#252626 0%,
+		#333434 100%
+	);
     background: -webkit-gradient(
         linear,
         left top,
@@ -449,10 +449,10 @@ http://yuilibrary.com/license/
 .yui3-skin-night .yui3-aclist-item-hover {
     background-color: #262727;
     background: -moz-linear-gradient(
-                0% 100% 90deg,
-                #202121 0%,
-                #282929 100%
-        );
+		0% 100% 90deg,
+		#202121 0%,
+		#282929 100%
+	);
     background: -webkit-gradient(
         linear,
         left top,
@@ -484,19 +484,19 @@ http://yuilibrary.com/license/
 .yui3-resize-handle-inner-br,
 .yui3-resize-handle-inner-tl,
 .yui3-resize-handle-inner-bl {
-        background-repeat: no-repeat;
-        background: url(arrows.png) no-repeat 0 0;
-        display: block;
-        height: 15px;
-        overflow: hidden;
-        text-indent: -99999em;
-        width: 15px;
+	background-repeat: no-repeat;
+	background: url(arrows.png) no-repeat 0 0;
+	display: block;
+	height: 15px;
+	overflow: hidden;
+	text-indent: -99999em;
+	width: 15px;
 }
 
 .yui3-resize-handle-inner-br {
-        background-position: -30px 0;
-        bottom: -2px;
-        right: -2px;
+	background-position: -30px 0;
+	bottom: -2px;
+	right: -2px;
 }
 
 .yui3-resize-handle-inner-tr {
@@ -507,9 +507,9 @@ http://yuilibrary.com/license/
 }
 
 .yui3-resize-handle-inner-bl {
-        background-position: -75px 0;
-        bottom: -2px;
-        right: -2px;
+	background-position: -75px 0;
+	bottom: -2px;
+	right: -2px;
 }
 
 .yui3-resize-handle-inner-tl {
@@ -520,7 +520,7 @@ http://yuilibrary.com/license/
 }
 
 .yui3-resize-handle-inner-b,.yui3-resize-handle-inner-t {
-        background-position: -15px 0;
+	background-position: -15px 0;
 }
 
 /*
@@ -533,7 +533,7 @@ http://yuilibrary.com/license/
 .yui3-skin-sam .yui3-datatable-scroll-columns {
     border-collapse: separate;
     border-spacing: 0;
-        font-family: HelveticaNeue,arial,helvetica,clean,sans-serif;
+	font-family: HelveticaNeue,arial,helvetica,clean,sans-serif;
     margin: 0;
     padding: 0;
     top: 0;
@@ -777,7 +777,7 @@ http://yuilibrary.com/license/
 .yui3-skin-night .yui3-calendarnav-month-disabled, .yui3-skin-night .yui3-calendarnav-month-disabled:hover {
   background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAOCAYAAAA1+Nx+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAQhJREFUeNqs0yGLAlEUhuHrKoIgCFbBJghb3F+g0WrVarEqLIhBEEFYWKNNMBktU4z6C5RNkwyCyWQSTPuOfCOCrHNnxwMPyOGe73DAiTmOYywrhy/9/sTBZujN4k0KPbioi6teKuqCmsKGSN/10+q5ehN6QQkrLJB/Mp/Xm5VmAhdkMcEGZWNfZc1MlPGwII42dmiZ/1dLGW1lXhdU8YNvZEz0yijLy6z6FyTN6yvpX7DEOzo4vSD4pCwvc+lfcMEYBUwjhE+VMVbmw7/oiCY+sA4RvNZMUxmB38EWFTSwfxK815uKZkJ/yXMU0cf5rn9Wr6g3f1bC4nwvbIAZRup1Ay671a8AAwC3OzOqxK+rkwAAAABJRU5ErkJggg==);
   cursor: default;
-  color: #CCCCCC;       
+  color: #CCCCCC;	
 }
 
 .yui3-skin-night .yui3-calendarnav-prevmonth, .yui3-skin-night .yui3-calendarnav-prevmonth:hover {
@@ -829,12 +829,12 @@ http://yuilibrary.com/license/
     font-weight: bold;
     color: white;
     background-color: #555658;
-        background: -moz-linear-gradient(
-                0% 100% 90deg,
-                #343536 0%,
-                #555658 96%,
-                #3E3F41 100%
-        );
+	background: -moz-linear-gradient(
+		0% 100% 90deg,
+		#343536 0%,
+		#555658 96%,
+		#3E3F41 100%
+	);
     background: -webkit-gradient(
         linear,
         left bottom,
@@ -949,25 +949,25 @@ http://yuilibrary.com/license/
 */
 
 .yui3-skin-night{    
-        background-color:#000;
+	background-color:#000;
     font-family: HelveticaNeue,arial,helvetica,clean,sans-serif;
-        color:#fff;
+	color:#fff;
 }
 
 .yui3-skin-night .yui3-overlay-content ul, ol, li {
     margin: 0;
     padding: 0;
-        list-style:none;
-        zoom:1;
+	list-style:none;
+	zoom:1;
 }
 .yui3-skin-night .yui3-overlay-content li{
-        *float:left;
+	*float:left;
 }
 .yui3-skin-night .yui3-overlay-content {
     background-color:#6d6e6e;
-        -moz-box-shadow:0 0 17px rgba(0,0,0,0.58);
-        -webkit-box-shadow:0 0 17px rgba(0,0,0,0.58);
-        box-shadow:0 0 17px rgba(0,0,0,0.58);
+	-moz-box-shadow:0 0 17px rgba(0,0,0,0.58);
+	-webkit-box-shadow:0 0 17px rgba(0,0,0,0.58);
+	box-shadow:0 0 17px rgba(0,0,0,0.58);
     -moz-border-radius:7px;
     -webkit-border-radius:7px;
     border-radius:7px;
@@ -978,62 +978,62 @@ http://yuilibrary.com/license/
     -moz-border-radius:7px 7px 0 0;
     -webkit-border-radius:7px 7px 0 0;
     border-radius:7px 7px 0 0;
-        color: #fff;
+	color: #fff;
 
     margin:0;
-        padding:20px 22px 0;
-        font-size:147%;
+	padding:20px 22px 0;
+	font-size:147%;
 }
 
 
 /*** background of bd and ft ***/
 .yui3-skin-night .yui3-overlay-content .yui3-widget-bd {
-        padding:11px 22px 17px;
-        font-size:92%;
-        /*margin-bottom:-1px;  this was needed on ipad to close gap between ft and bd*/
+	padding:11px 22px 17px;
+	font-size:92%;
+	/*margin-bottom:-1px;  this was needed on ipad to close gap between ft and bd*/
 }
 .yui3-skin-night .yui3-overlay .yui3-widget-bd li{
-        margin: 0.04em;
+	margin: 0.04em;
 }
 /*.yui3-skin-night .yui3-widget-bd li:last-child{
-        margin-bottom:0.4em;
+	margin-bottom:0.4em;
 }*/
 .yui3-skin-night .yui3-overlay-content .yui3-widget-ft{
-        background-color:#575858;
-        border-top:solid 1px #494a4a;
-        -moz-border-radius:0 0 7px 7px;
-        -webkit-border-radius:0 0 7px 7px;
-        border-radius:0 0 7px 7px;
-        padding:17px 25px 20px;
-        text-align:center;
-        /*font-size:92%;*/
+	background-color:#575858;
+	border-top:solid 1px #494a4a;
+	-moz-border-radius:0 0 7px 7px;
+	-webkit-border-radius:0 0 7px 7px;
+	border-radius:0 0 7px 7px;
+	padding:17px 25px 20px;
+	text-align:center;
+	/*font-size:92%;*/
 }
 /* For Buttons */
 
 .yui3-skin-night .yui3-overlay-content .yui3-widget-ft li {
-        margin:3px;
-        display:inline-block;
+	margin:3px;
+	display:inline-block;
 }
 .yui3-skin-night .yui3-overlay-content .yui3-widget-ft li a{
-        border:solid 1px #1B1C1C;
-        border-radius: 6px;
+	border:solid 1px #1B1C1C;
+	border-radius: 6px;
 
-        -moz-box-shadow: 0 1px #677478; 
-        -webkit-box-shadow: 0 1px #677478;
-        box-shadow: 0 1px #677478; 
+	-moz-box-shadow: 0 1px #677478; 
+	-webkit-box-shadow: 0 1px #677478;
+	box-shadow: 0 1px #677478; 
 
     text-shadow: 0 -1px 0 rgba(0,0,0,0.7);
-        font-size:85%;
-        text-align:center;
-        color: #fff;
-        padding: 6px 28px;
-        background-color:#2B2D2D;
-        background: -moz-linear-gradient(
-                0% 100% 90deg, 
-                #242526 0%, 
-                #3b3c3d 96%,
-                #2C2D2F 100%
-        );
+	font-size:85%;
+	text-align:center;
+	color: #fff;
+	padding: 6px 28px;
+	background-color:#2B2D2D;
+	background: -moz-linear-gradient(
+		0% 100% 90deg, 
+		#242526 0%, 
+		#3b3c3d 96%,
+		#2C2D2F 100%
+	);
     background: -webkit-gradient(
         linear,
         left bottom,
@@ -1044,24 +1044,24 @@ http://yuilibrary.com/license/
     );
 }
 .yui3-skin-night .yui3-overlay .yui3-widget-ft li:first-child {
-        margin-left:0;
+	margin-left:0;
 }
 
 .yui3-skin-night .yui3-overlay .yui3-widget-ft li:last-child {
-        margin-right:0;
+	margin-right:0;
 }
 
 .yui3-skin-night .yui3-overlay .yui3-widget-ft li:last-child a {
-        border:solid 1px #520E00;
-        -moz-box-shadow: 0 1px #7D5D57; 
-        -webkit-box-shadow: 0 1px #7D5D57;
-        box-shadow: 0 1px #7D5D57; 
-        background-color:#901704;
-        background: -moz-linear-gradient(
-        100% 0% 270deg,
-        #ab1c0b, 
-        #7b1400
-        );
+	border:solid 1px #520E00;
+	-moz-box-shadow: 0 1px #7D5D57; 
+	-webkit-box-shadow: 0 1px #7D5D57;
+	box-shadow: 0 1px #7D5D57; 
+	background-color:#901704;
+	background: -moz-linear-gradient(
+	100% 0% 270deg,
+	#ab1c0b, 
+	#7b1400
+	);
     background: -webkit-gradient(
         linear,
         left top,
@@ -1069,23 +1069,23 @@ http://yuilibrary.com/license/
         from(#ab1c0b),
         to(#7b1400)     
     );
-        margin-right: 0;
+	margin-right: 0;
 }
 
 
 /*
 .yui3-skin-night .yui3-overlay .yui3-widget-ft li{
-        display:inline-block;
-        -moz-border-radius:6px;
-        -webkit-border-radius:6px;
-        border-radius:6px;
-        background-color:#252525;
-        background: -moz-linear-gradient(
-        100% 0% 270deg,
-        #3f3f3f, 
-        #0e0e0e
-        );
-        background: -webkit-gradient(
+	display:inline-block;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	background-color:#252525;
+	background: -moz-linear-gradient(
+	100% 0% 270deg,
+	#3f3f3f, 
+	#0e0e0e
+	);
+	background: -webkit-gradient(
         linear,
         left top,
         left bottom,
@@ -1093,20 +1093,20 @@ http://yuilibrary.com/license/
         to(#0e0e0e)     
     );
 
-        line-height:32px;
-        width:100px;
-        margin:0px 5px 0px 5px;
+	line-height:32px;
+	width:100px;
+	margin:0px 5px 0px 5px;
 }
 .yui3-skin-night .yui3-overlay .yui3-widget-ft li:first-child {
-        margin-left:0px;
+	margin-left:0px;
 }
 .yui3-skin-night .yui3-overlay .yui3-widget-ft li:last-child {
-        background-color:#901704;
-        background: -moz-linear-gradient(
-        100% 0% 270deg,
-        #ab1c0b, 
-        #7b1400
-        );
+	background-color:#901704;
+	background: -moz-linear-gradient(
+	100% 0% 270deg,
+	#ab1c0b, 
+	#7b1400
+	);
     background: -webkit-gradient(
         linear,
         left top,
@@ -1114,12 +1114,12 @@ http://yuilibrary.com/license/
         from(#ab1c0b),
         to(#7b1400)     
     );
-        margin-right: 0px;
+	margin-right: 0px;
 }
 */
 #yui3-widget-mask{
-        background-color:#000;
-        opacity:0.5;
+	background-color:#000;
+	opacity:0.5;
 }
 
 /*
@@ -1130,24 +1130,24 @@ http://yuilibrary.com/license/
 */
 
 .yui3-skin-night .yui3-tabview-panel{
-        background-color:#333333;
-        color:#808080;
-        padding:1px;
+	background-color:#333333;
+	color:#808080;
+	padding:1px;
 }
 .yui3-skin-night .yui3-tab-panel p{
-        margin:10px;
+	margin:10px;
 }
 .yui3-skin-night .yui3-tabview-list {
     background-color:#0f0f0f;
     border-top:1px solid #000;
-        text-align:center;
+	text-align:center;
     height:46px;
     background: -moz-linear-gradient(
-                0% 100% 90deg, 
-                #0f0f0f 0%, 
-                #1e1e1e 96%,
-                #292929 100%
-        );
+		0% 100% 90deg, 
+		#0f0f0f 0%, 
+		#1e1e1e 96%,
+		#292929 100%
+	);
     background: -webkit-gradient(
         linear,
         left bottom,
@@ -1159,28 +1159,28 @@ http://yuilibrary.com/license/
 }
 
 .yui3-skin-night .yui3-tabview-list li {
-        margin-top:8px;
+	margin-top:8px;
 }
 .yui3-skin-night .yui3-tabview-list li a{
-        border:solid 1px #0c0c0c;
-        border-right-style:none;
+	border:solid 1px #0c0c0c;
+	border-right-style:none;
 
-        -moz-box-shadow: 0 1px #222222; 
-        -webkit-box-shadow: 0 1px #222222;
-        box-shadow: 0 1px #222222; 
+	-moz-box-shadow: 0 1px #222222; 
+	-webkit-box-shadow: 0 1px #222222;
+	box-shadow: 0 1px #222222; 
 
     text-shadow: 0 -1px 0 rgba(0,0,0,0.7);
-        font-size:85%;
-        text-align:center;
-        color: #fff;
-        padding: 6px 28px;
-        background-color:#555658;
-        background: -moz-linear-gradient(
-                0% 100% 90deg, 
-                #343536 0%, 
-                #555658 96%,
-                #3E3F41 100%
-        );
+	font-size:85%;
+	text-align:center;
+	color: #fff;
+	padding: 6px 28px;
+	background-color:#555658;
+	background: -moz-linear-gradient(
+		0% 100% 90deg, 
+		#343536 0%, 
+		#555658 96%,
+		#3E3F41 100%
+	);
     background: -webkit-gradient(
         linear,
         left bottom,
@@ -1191,13 +1191,13 @@ http://yuilibrary.com/license/
     );
 }
 .yui3-skin-night .yui3-tabview-list li.yui3-tab-selected a {
-        background-color:#2B2D2D;
-        background: -moz-linear-gradient(
-                0% 100% 90deg, 
-                #242526 0%, 
-                #3b3c3d 96%,
-                #2C2D2F 100%
-        );
+	background-color:#2B2D2D;
+	background: -moz-linear-gradient(
+		0% 100% 90deg, 
+		#242526 0%, 
+		#3b3c3d 96%,
+		#2C2D2F 100%
+	);
     background: -webkit-gradient(
         linear,
         left bottom,
@@ -1208,15 +1208,15 @@ http://yuilibrary.com/license/
     );
 }
 .yui3-skin-night .yui3-tabview-list li:first-child a{
-        -moz-border-radius:6px 0 0 6px;
-        -webkit-border-radius:6px 0 0 6px;
-        border-radius:6px 0 0 6px;
+	-moz-border-radius:6px 0 0 6px;
+	-webkit-border-radius:6px 0 0 6px;
+	border-radius:6px 0 0 6px;
 }
 .yui3-skin-night .yui3-tabview-list li:last-child a{
-        border-right-style:solid;
-        -moz-border-radius:0 6px 6px 0;
-        -webkit-border-radius:0 6px 6px 0;
-        border-radius:0 6px 6px 0;
+	border-right-style:solid;
+	-moz-border-radius:0 6px 6px 0;
+	-webkit-border-radius:0 6px 6px 0;
+	border-radius:0 6px 6px 0;
 }
 
 /*
@@ -1372,11 +1372,11 @@ http://yuilibrary.com/license/
     border-radius:3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
-        background-color:#808080;
-        opacity:0.3;
-        filter:alpha(opacity=30); /*IE*/
+	background-color:#808080;
+	opacity:0.3;
+	filter:alpha(opacity=30); /*IE*/
 
-        
+	
 /*    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAABCAYAAAD9yd/wAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABJJREFUeNpiZGBgSGPAAgACDAAIkABoFyloZQAAAABJRU5ErkJggg==);
 */
 }
@@ -1465,84 +1465,84 @@ http://yuilibrary.com/license/
 */
 
 .yui3-skin-night .yui3-dial {    
-        color:#fff;
+	color:#fff;
 }
 
 .yui3-skin-night .yui3-dial-handle{ /*container. top left corner used for trig positioning*/
-        background:#439EDE;
-        opacity:0.3;
-        -moz-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.9) inset;
-        -webkit-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.9) inset; /*Chrome 7/Win bug*/
-        box-shadow:1px 1px 1px rgba(0, 0, 0, 0.9) inset;
-        cursor:pointer;
-        font-size:1px;
+	background:#439EDE;
+	opacity:0.3;
+	-moz-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.9) inset;
+	-webkit-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.9) inset; /*Chrome 7/Win bug*/
+	box-shadow:1px 1px 1px rgba(0, 0, 0, 0.9) inset;
+	cursor:pointer;
+	font-size:1px;
 }
 .yui3-skin-night .yui3-dial-ring {
     background:#595B5B;
-        background:-moz-linear-gradient(0% 100% 315deg, #5E6060, #2D2E2F);
-        background:-webkit-gradient(linear, 50% 0%, 100% 100%, from(#636666), to(#424344));
-        -moz-box-shadow:1px 1px 2px rgba(0, 0, 0, 0.7) inset;
-        -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7) inset; /*Chrome 7/Win bug*/
-        box-shadow:1px 1px 5px rgba(0, 0, 0, 0.4) inset;
+	background:-moz-linear-gradient(0% 100% 315deg, #5E6060, #2D2E2F);
+	background:-webkit-gradient(linear, 50% 0%, 100% 100%, from(#636666), to(#424344));
+	-moz-box-shadow:1px 1px 2px rgba(0, 0, 0, 0.7) inset;
+	-webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7) inset; /*Chrome 7/Win bug*/
+	box-shadow:1px 1px 5px rgba(0, 0, 0, 0.4) inset;
 }
 .yui3-skin-night .yui3-dial-center-button{
-        -moz-box-shadow:-1px -1px 2px rgba(0, 0, 0, 0.3) inset, 1px 1px 2px rgba(0, 0, 0, 0.5);
-        -webkit-box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.3) inset, 1px 1px 2px rgba(0, 0, 0, 0.5); /*Chrome 7/Win bug*/
-        box-shadow:-1px -1px 2px rgba(0, 0, 0, 0.3) inset, 1px 1px 2px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow:-1px -1px 2px rgba(0, 0, 0, 0.3) inset, 1px 1px 2px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.3) inset, 1px 1px 2px rgba(0, 0, 0, 0.5); /*Chrome 7/Win bug*/
+	box-shadow:-1px -1px 2px rgba(0, 0, 0, 0.3) inset, 1px 1px 2px rgba(0, 0, 0, 0.5);
     background:#DDDBD4;
-        background:-moz-radial-gradient(
-                30% 30% 0deg, 
-                circle farthest-side, 
-                #999C9C 24%, 
-                #898989 41%, 
-                #535555 87%) 
-                repeat scroll 0 0 transparent;
-        background:-webkit-gradient(
-                radial, 15 15, 15, 30 30, 40, 
-                from(#999C9C), 
-                to(#535555), 
-                color-stop(.2,#898989));
-        cursor:pointer;
-        opacity:0.7;
-        /*text-align:center;*/
+	background:-moz-radial-gradient(
+		30% 30% 0deg, 
+		circle farthest-side, 
+		#999C9C 24%, 
+		#898989 41%, 
+		#535555 87%) 
+		repeat scroll 0 0 transparent;
+	background:-webkit-gradient(
+		radial, 15 15, 15, 30 30, 40, 
+		from(#999C9C), 
+		to(#535555), 
+		color-stop(.2,#898989));
+	cursor:pointer;
+	opacity:0.7;
+	/*text-align:center;*/
 }
 .yui3-skin-night .yui3-dial-reset-string{
-        color:#fff;
-        font-size:72%;
-        text-decoration:none;
+	color:#fff;
+	font-size:72%;
+	text-decoration:none;
 }
 .yui3-skin-night .yui3-dial-label{
-        color:#CBCBCB;
-        margin-bottom:0.8em;
+	color:#CBCBCB;
+	margin-bottom:0.8em;
 }
 .yui3-skin-night .yui3-dial-value-string{
-        margin-left:0.5em;
-        color:#DCDCDC;
-        font-size:130%;
+	margin-left:0.5em;
+	color:#DCDCDC;
+	font-size:130%;
 }
 .yui3-skin-night .yui3-dial-value {
-        visibility:hidden;
-        position:absolute;
-        top:0;
-        left:102%;
-        width:4em;
+	visibility:hidden;
+	position:absolute;
+	top:0;
+	left:102%;
+	width:4em;
 }
 .yui3-skin-night .yui3-dial-north-mark{
-        position:absolute;
-        border-left:2px solid #434343;
-        height:5px;
-        left:50%;
-        top:-7px;
-        font-size:1px;  
+	position:absolute;
+	border-left:2px solid #434343;
+	height:5px;
+	left:50%;
+	top:-7px;
+	font-size:1px;	
 }
 .yui3-skin-night .yui3-dial-marker { 
-        background-color:#A0D8FF;
-        opacity:0.2;
-        font-size:1px;
+	background-color:#A0D8FF;
+	opacity:0.2;
+	font-size:1px;
 }
 .yui3-skin-night .yui3-dial-marker-max-min{
-        background-color:#FF0404;
-        opacity:0.6;
+	background-color:#FF0404;
+	opacity:0.6;
 }
 .yui3-skin-night .yui3-dial-ring-vml,
 .yui3-skin-night .yui3-dial-center-button-vml,
@@ -1629,8 +1629,8 @@ http://yuilibrary.com/license/
 
 .yui3-skin-night .yui3-calendar-weekday {
     color: #4F4F4F;
-        font-weight: bold;
-        text-align: center;
+	font-weight: bold;
+	text-align: center;
 }
 
 .yui3-skin-night .yui3-calendar-prevmonth-day, .yui3-skin-night .yui3-calendar-nextmonth-day {
@@ -1685,14 +1685,14 @@ http://yuilibrary.com/license/
 
 /* basic skin styles */
 .yui3-skin-night .yui3-datatable {
-        color:#8E8E8E;
-        font-family: HelveticaNeue,arial,helvetica,clean,sans-serif;
+	color:#8E8E8E;
+	font-family: HelveticaNeue,arial,helvetica,clean,sans-serif;
 }
 .yui3-skin-night .yui3-datatable-table {
     border: 1px solid #323434;
     border-collapse: separate;
     border-spacing: 0;
-        color: #8E8E8E;
+	color: #8E8E8E;
     margin: 0;
     padding: 0;
 }
@@ -1710,7 +1710,7 @@ http://yuilibrary.com/license/
     border-width: 0 0 0 1px;
     font-size: inherit;
     margin: 0;
-        overflow: visible; /*to make ths where the title is really long work*/
+	overflow: visible; /*to make ths where the title is really long work*/
     padding: 4px 10px 4px 10px; /* cell padding */
 }
 .yui3-skin-night .yui3-datatable-cell:first-child,
@@ -1722,12 +1722,12 @@ http://yuilibrary.com/license/
     /* header gradient */
     background-color:#3b3c3d;
 
-        background: -moz-linear-gradient(
-                0% 100% 90deg, 
-                #242526 0%, 
-                #3b3c3d 96%,
-                #2C2D2F 100%
-        );
+	background: -moz-linear-gradient(
+		0% 100% 90deg, 
+		#242526 0%, 
+		#3b3c3d 96%,
+		#2C2D2F 100%
+	);
     background: -webkit-gradient(
         linear,
         left bottom,

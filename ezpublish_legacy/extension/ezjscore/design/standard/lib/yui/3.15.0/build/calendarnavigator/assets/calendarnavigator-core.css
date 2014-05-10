@@ -6,18 +6,18 @@ http://yuilibrary.com/license/
 */
 
 .yui3-calendar-header {
-        padding-left:15px;
-        padding-right:15px;
+	padding-left:15px;
+	padding-right:15px;
 }
 
 .yui3-calendar-header-label {
-        width:100%;
+	width:100%;
 }
 
 .yui3-calendarnav-prevmonth {
-        cursor: pointer;
+	cursor: pointer;
 }
 
 .yui3-calendarnav-nextmonth {
-        cursor: pointer;
+	cursor: pointer;
 }
