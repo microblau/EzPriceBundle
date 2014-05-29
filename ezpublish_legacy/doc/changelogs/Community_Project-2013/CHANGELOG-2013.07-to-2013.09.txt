@@ -1,0 +1,142 @@
+Bugfixes
+========
+eZ Publish Legacy Stack (LS)
+
+- EZP-19904: Admin interface redirection to raw treemenu JSON output
+- EZP-20880: Cache not cleared on role edits
+- EZP-20933: unexpected substractive policies
+- EZP-20988: Stale links using non-translatable attribute
+- EZP-21038: Treemenu breaks with non latin char Since b768d2f22bae527eaa659d16fba84c3e63507e5c, treemenu is broken because htmlentities() needs to know the charset used, especially when it is not UTF-8 (PHP 5.4) or ISO-8859-1 (PHP 5.3). Also use mb_strlen() instead of strlen(), and specify the charset in the Content-Type HTTP header.
+- EZP-21304: REST api does not parse siteaccess in request uri
+- EZP-21396: exif Warning in php 5.3.3 Rhel
+- EZP-21397: Anchor tag removed if anchor text is only content in line, or immediately adjacent lines
+- EZP-21400: Discard draft, removes image file
+- EZP-21410: object name limit does not support multibyte charset
+- EZP-21411: eZOracle: Link management doesn't show Objects using URL
+- EZP-21420: Added zetacomponents/event-log to composer.json
+- EZP-21443: Debug log displayed when using long japaneese strings in name
+- EZP-21446: Limit for object name trim adds +1
+- EZP-21465: Cleanup extra lines in the ezurl_object_link table
+- EZP-21467: PHP Notice in ezurlaliasquery.php
+- EZP-21469: [API] language mask on ezcontentobject incorreclty set
+- EZP-21471: JS error on versionview of unpublished object.
+- EZP-21509: error in clear view cache for subtree.
+- EZP-21510: Performance in ClearViewCacheSubtree content action.
+- EZP-21547: HttpError for "Access denied" (1) is cached, returns "200 OK" instead
+- EZP-21563: fatal error w/ approval wf + ezoe upload
+
+eZ Publish 5
+
+- EZP-20018: Failing LanguageCode Criterion
+- EZP-20899: FieldDefinition appears unsorted while they should be ordered by placement
+- EZP-21095: SPI split loading user by login and email
+- EZP-21219: Check version read on all drafts instead of by input parameter
+- EZP-21495: (Persistence) cache does not support multi repository setup
+- EZP-21515: Missing Legacy Converter for UserMetaData Criterion
+- EZP-21550: Changing owner, clearing cache needed for Owner(Self) to work
+- EZP-21578: Matching siteaccess on http header does not work
+- EZP-21581: content_view_provider.configured service uses wrong matcher factory
+
+
+Enhancements
+============
+eZ Publish Kernel & APIs
+
+- EZP-21169: As a Tester I want access to a self installing BDD test suite
+
+eZ Publish Legacy Stack (LS)
+
+- EZP-15040: Support for more than 30 languages
+- EZP-21323: Add instructions / link to older webin/flow/plain packages in setup wizard
+- EZP-21425: Add sudo to directory permissions commands in install process
+
+eZ Publish 5
+
+- EZP-15040: Support for more than 30 languages
+- EZP-20851: Setup Travis tests to also test prostgres for ezpublish-kernel & -legacy
+- EZP-21095: API add UserService::loadByLogin
+- EZP-21169: Add Command to init test database on ci
+
+
+Pull requests
+=============
+eZ Publish Kernel & APIs
+
+- 72: from ezsystems/behat_travis
+- 73: from jeromegamez/EZP-21408
+- 74: from ezsystems/remove_composer_lock
+
+eZ Publish Legacy Stack (LS)
+
+- 381: from Heliopsis-HQ/ezurlaliasml_getpath_fix
+- 615: from gbentley/translated-country-lists
+- 691: from joaoinacio/restapi_sa
+- 692: from peterkeung/object-name-pattern-object-relation
+- 698: from ballinette/PR-340-redirectpublish
+- 700: from jeromegamez/ezptestrunner
+- 711: from ezsystems/EZP-21323
+- 712: from jeromegamez/EZP-21408_ezpgenerateautoloads
+- 715: from ezsystems/EZP-21410
+- 716: from ezsystems/EZP-19904
+- 717: from jeromegamez/EZP-21420_composer
+- 718: from crevillo/EZP-21425
+- 719: from ezsystems/EZP-20880_missing_cache_clear_event
+- 720: from jeromegamez/travis_status
+- 728: from patrickallaert/EZP-21411
+- 729: from patrickallaert/EZP-21457
+- 730: from patrickallaert/EZP-21357
+- 732: from jeromegamez/EZP-21467_array_diff_notice
+- 733: from patrickallaert/EZP-21411
+- 740: from patrickallaert/EZP-21469
+- 746: from patrickallaert/EZP-15040
+- 747: from ezsystems/phpextensions_composer
+- 749: from ezsystems/js_52_upgrade
+- 755: from pedroresende/FixYUI
+- 756: from joaoinacio/ezp-21510-deleteviewcache
+
+eZ Publish 5
+
+- 352: from ezsystems/phpextensions_composer
+- 364: from patrickallaert/EZP-20851
+- 434: from ezsystems/loadByLogin_and_Email_EZP-21095
+- 466: from ezsystems/fix-EZP-21035-issingular
+- 479: from ezsystems/EZP21219_part2
+- 485: from ezsystems/EZP-20018-language-fix
+- 486: from ezsystems/init_test_db_command
+- 487: from MLoureiro/ezp21035_integration_test
+- 491: from ezsystems/multi_repo_cache
+- 493: from patrickallaert/EZP-15040
+- 495: from ezsystems/field-case-insensitivity-raw
+- 498: from MLoureiro/ezp21219_integration_test
+- 499: from ezsystems/fix-EZP-21533-incorrect-noname-slug
+- 500: from ezsystems/rest_spec_typo
+- 501: from patrickallaert/EZP-21515
+- 502: from ezsystems/content_name_doc
+- 504: from ezsystems/EZP-21550
+- 506: from pborreli/typos-sat
+- 508: from patrickallaert/FailTestsOnDBConnectionIssue
+- 509: from patrickallaert/FixIncorrectPostgreSQLFixtureSchema
+- 510: from pborreli/patch-1
+- 511: from ezsystems/fix-EZP-21278-rest-current-version
+- 512: from ezsystems/fix-EZP-21125-language-not-visible
+- 513: from ezsystems/header_siteaccess_match
+- 514: from patrickallaert/FixPostgreSQLUnitTestsFailing
+- 516: from pborreli/patch-2
+
+
+Miscellaneous
+=============
+eZ Publish Kernel & APIs
+
+- Updated Symfony to 2.3.4 + other deps
+
+eZ Publish Legacy Stack (LS)
+
+
+- EZP-18865: Separate DFS binary & cache tables and make it configurable
+- EZP-21412: Improvements in DFS under concurrency load
+- EZP-21421: Refactored ezpTestRunner
+- EZP-21357: Wildcards '*' not escaped for shell commands when using 'urlalias_iri' transformation group
+- EZP-21457: eZSys::escapeShellArgument() escapes "\" while the shell escape character is the simple quote
+- EZP-21408: Use eZ Components from composer in standalone install
+- EZP-21305: Object name pattern doesn't support object relation datatype as first condition in a fallback

@@ -1,0 +1,110 @@
+Bugfixes
+========
+eZ Publish Legacy Stack (LS)
+
+- EZP-20311: Query parameters get lost when being redirected after login
+- EZP-20482: In IE8, "Enter" key does not work when creating a custom tag
+- EZP-20676: JS error inserting embed-inline tag on empty XML block in ezoe
+- EZP-20802: auto-login after account activation does not increase the login count
+- EZP-20874: ezsys() operator bad behavior with the "querystring" parameter
+- EZP-20888: session is created regardless of ForceStart value
+- EZP-20895: Small Typo in eZContentOperationCollection::updatePriority phpdoc
+
+eZ Publish 5
+
+- EZP-20575: Setup wizard fails to generate yml config when using kickstart.ini
+- EZP-20576: add use case when there is a custom pagelayout defined in legacy
+- EZP-20860: Improve unit test code coverage of EzPublishRestBundle
+- EZP-20877: Improve unit test code coverage of eZ\Publish\Core\SignalSlot
+- EZP-20929: XML Field Type - Error 500 when passing a default value
+- EZP-20969: REST v2 "Update location" request is not working as intended
+- EZP-20982: UrlAlias matcher not working correctly
+- EZP-20985: excluded_uri_prefixes throwing 503
+- EZP-20987: Notice preventing the completion of creating a FieldType draft with null fieldSettings
+- EZP-21016: REST: 500 error using an incorrect FieldDefinition element
+- EZP-20831: Properly handle path to images variants in REST responses
+- EZP-20642: Legacy_mode:true ignored inside a siteaccess configuration group
+
+
+Enhancements
+============
+eZ Publish Legacy Stack (LS)
+
+- EZP-19411: Avoid file_exists and include calls for registering datatypes and workflows
+
+eZ Publish 5
+
+- EZP-19120: 5.x expose isEmptyValue() in API for template needs
+- EZP-20039: Automate install steps in composer post install/update cmd
+
+
+Pull requests
+=============
+eZ Publish Kernel & APIs
+
+- 59: from gggeek/EZP-19760
+- 61: from Plopix/fix-doc-getting-started
+
+eZ Publish Legacy Stack (LS)
+
+- 344: from crevillo/avoid-fileexists-include-calls-for-registering-datatypes-workflows
+- 593: from ezsystems/5.2-dev
+- 624: from joaoinacio/EZP-20802
+- 631: from ezsystems/leftmenu_enabled_tweaks
+- 640: from crevillo/EZP_20895
+- 642: from jeromegamez/ezcontentobject_fixes
+- 643: from jeromegamez/phpdoc_ezcontentobjecttreenode
+- 644: from alafon/add-download-listener
+- 650: from ezsystems/fix-EZP-20943-op_code-removal-regression
+- 654: from ezsystems/ezp_20311
+- 655: from ezsystems/ezp_20874
+- 659: from harmstyler/add_section_override_to_edit_draft
+- 661: from gggeek/EZP-19760
+- 663: from jeromegamez/EZP-21006_engine_check
+
+eZ Publish 5
+
+- 351: from ezsystems/fix-20822-service-phpdoc-input-validation
+- 372: from ezsystems/fix-EZP-20223-integration-tests-repository
+- 373: from patrickallaert/AuthorizeFailurePHP-5.3.3
+- 374: from masev/39be2e36e26a4d1fd92bc65552f0d0da1497f62e
+- 375: from ezsystems/fix-EZP-20530-incomplete-tests
+- 376: from ezsystems/fix-EZP-20530-incomplete-tests-2
+- 377: from patrickallaert/EZP-20575
+- 379: from ezsystems/fix-EZP-20530-incomplete-tests-3
+- 380: from ezsystems/composer_script_handlers
+- 381: from MLoureiro/master
+- 383: from ezsystems/xslindent
+- 386: from ezsystems/embed_align2
+- 387: from patrickallaert/EZP-20642
+- 388: from ezsystems/fix-20978-content-service-tests
+- 389: from ezsystems/ezp_20982
+- 390: from ezsystems/ezp_20985
+- 392: from ezsystems/EZP-19120
+- 393: from patrickallaert/EZP-20987
+- 398: from patrickallaert/EZP-20929
+- 400: from patrickallaert/EZP-21016
+- 401: from patrickallaert/EZP-20969
+- 402: from MLoureiro/Updated
+- 406: from ezsystems/fix-EZP-20970-rest-create-view
+- 407: from masev/Fix-EZP-21048-anchor
+
+Miscellaneous
+=============
+eZ Publish Kernel & APIs
+
+- Update GETTING_STARTED.md
+- Removed ezsystems/ezpublish-legacy from composer.json and updated dependencies
+- Add dependency on ezpublish legacy, now that we have an installer
+- Update versions in composer.json
+- Fix eZP CP mistake, format & missing note on SetupWizard+upgrade
+- Update assetic-bundle to version 2.3.* to fix "Assetic\AssetWriter::getCombinations() does not exist"
+
+
+eZ Publish 5
+
+- EZP-20657: Fixed missing wrapper around embed in XMLText XSL
+- Re-indented XSL stylesheets for XMLText field type
+- Updated: internal services are now injected through constructors of the API services requiring them
+- Fixed: delete trash item after recover
+- Changed: small refactoring of the LegacySetupController

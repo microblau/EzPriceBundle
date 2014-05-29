@@ -1,0 +1,115 @@
+Bugfixes
+========
+eZ Publish Legacy Stack (LS)
+
+- EZP-19122: Faulty embed-inline handling
+- EZP-20949: Make sure parent is an object This patch insures the parent was an object to avoid fatal errors if the database is slighly corrupted.
+- EZP-20957: Removed misplaced semicolon which breaks the flow
+- EZP-21046: View cache is not expiring in one node
+- EZP-21150: Sql parameter not implemented in runcronjobs
+- EZP-21155: DebugByUser is not working correctly in preview
+- EZP-21237: Debug by user feature blocks the login process
+- ezp-21121: runcrojobs.php -s always prints warnings
+
+eZ Publish 5
+
+- EZP-20890: Headers overriden by LegacyKernelController
+- EZP-20955: Issues with create permission with Section limitation
+- EZP-21048: Change anchor handling to append to url
+- EZP-21057: Unable to delete a content with an empty file attribute (cherry picked from commit dafe993265680b840042fd75df9c045466bde17e)
+- EZP-21064: Added module_result in a LegacyResponse call The module_result can be used after the legacy controller.
+- EZP-21088: Publishing content with API doesn't trigger indexing correctly
+- EZP-21094: POST /user/sessions misses the location header
+- EZP-21133: POST /content/views has a wrong media-type
+- EZP-21176: Prevent REST hrefs without prefixes in payloads
+- EZP-21188: "Notice: Undefined variable: response" triggered when viewing a content with ezobjectrelationlist
+- EZP-21206: Disable key normalization for children of 'system' configuration
+- EZP-21055: creating content using API causes memory leaks
+- EZP-20948: Missing support for binary files URI
+- EZP-20867: Invalid Argument error when creating Image field without setting (optional) validator configuration
+
+
+
+Enhancements
+============
+eZ Publish Legacy Stack (LS)
+
+- EZP-21240: unpublish cronjob does not need to activate extensions on his own
+
+eZ Publish 5
+
+- EZP-21168: Remove API InMemory (Stub) implementation and test suite
+- EZP-21036: Fallback default value of some of the FieldTypes can not be used to create Content
+- EZP-20829: Make the REST APILoader\Factory dynamic
+- EZP-21018: Replace RMF Url management with Symfony's
+- EZP-21035: User can not be properly created from inside storage
+- EZP-20438: Make it possible to use a custom controller to handle a content/location
+- EZP-21115: Remove IOService from Image field type
+- EZP-20936: FieldType integration tests need to be updated with tests for updating Content on changing ContentType
+
+
+
+Pull requests
+=============
+eZ Publish Kernel & APIs
+
+- 34: from ezsystems/merge_from_sf_standard
+- 64: from patrickallaert/EZP-21027
+- 65: from lolautruche/userHashAware
+- 66: from ezsystems/symfony2.3
+
+eZ Publish Legacy Stack (LS)
+
+- 647: from jeromegamez/phpdoc_ezcontenttrashnode
+- 658: from Tharkun/ezp-20262-include-issue
+- 664: from jeromegamez/deprecated_ezsearch_removeobject
+- 666: from Heliopsis-HQ/Add-injected-settings-in-ezpkerneltreemenu.php
+- 677: from ezsystems/EZP-20949_additional_fix
+- 686: from gggeek/EZP-21240
+- 687: from ezsystems/ezp_21237
+- 688: from ezsystems/ezp_20949
+
+eZ Publish 5
+
+- 368: from lolautruche/userHashAware
+- 396: from ezsystems/fix-EZP-20979-content-integration-tests
+- 397: from ezsystems/spi_logger_improve_memory_use
+- 399: from ezsystems/fix-EZP-20530-incomplete-tests-4
+- 403: from ezsystems/fix-EZP-20936-fieldtype-integration-tests
+- 404: from ezsystems/fix-EZP-21030-location-handler-return
+- 405: from ezsystems/fix-EZP-20971-rest-update-role
+- 409: from ezsystems/EZP-20955
+- 412: from ezsystems/configurator_service
+- 417: from ezsystems/EZP-21057
+- 418: from ezsystems/fix-EZP-20867-validator-configuration
+- 420: from ezsystems/ezp_21088_legacy_slots
+- 421: from ezsystems/fix-21094-rest_create_session_location
+- 422: from ezsystems/fix-EZP-21035-add-ezuser-field
+- 423: from patrickallaert/FixSearchHandlerTestOrder
+- 425: from ezsystems/impl-EZP-21099-rest_field_type_processor_service_tags
+- 426: from ezsystems/ezp_20438
+- 429: from ezsystems/fix-EZP-21036-fieldtype-fallback-value
+- 432: from ezsystems/fix-EZP-21115-ezimage-remove-ioservice
+- 433: from ezsystems/fix-EZP-21053-rest-json-fielddefinitions
+- 438: from ezsystems/secret_fix
+- 439: from ezsystems/EZP-21048_additional_fix
+- 440: from ezsystems/signalSlotExposed
+- 441: from ezsystems/coverageCoreBundle
+- 444: from ezsystems/ezp_21188
+- 445: from ezsystems/symfony2.3
+- 447: from patrickallaert/EZP-21168
+
+
+
+Miscellaneous
+=============
+eZ Publish Kernel & APIs
+
+- EZP-21019: Upgrade to Symfony 2.3
+- EZP-20071: Use new base Kernel to generate user hash properly
+- EZP-21027: Cleanup Behat branch and make it ready for use by Bundles
+
+eZ Publish 5
+
+- EZP-20069 - Expose SignalSlot repository properly
+- EZP-21143: Do not execute legacy pagelayout when using eZ5 one

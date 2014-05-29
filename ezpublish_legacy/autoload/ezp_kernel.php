@@ -4,7 +4,7 @@
  *
  * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
  * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
- * @version //autogentag//
+ * @version  2014.3
  * @package kernel
  *
  */
@@ -590,7 +590,6 @@ return array(
       'ezpContentSortingCriteria'                          => 'kernel/private/api/content/criteria/sorting.php',
       'ezpContentXHTMLRenderer'                            => 'kernel/private/rest/classes/renderers/xhtml_content_renderer.php',
       'ezpDatabaseBasedClusterFileHandler'                 => 'kernel/private/interfaces/ezpdatabasebasedclusterfilehandler.php',
-      'ezpDbMySQLiClusterGateway'                          => 'kernel/clustering/dbmysqli.php',
       'ezpDfsMySQLiClusterGateway'                         => 'kernel/clustering/dfsmysqli.php',
       'ezpEvent'                                           => 'kernel/private/classes/ezpevent.php',
       'ezpExtension'                                       => 'kernel/private/classes/ezpextension.php',
@@ -709,7 +708,7 @@ return array(
       'ezpTopologicalSortNode'                             => 'kernel/private/classes/ezptopologicalsortnode.php',
       'ezpUpdatedContent'                                  => 'kernel/private/rest/classes/sync/updates.php',
       'ezpUserNotFoundException'                           => 'kernel/private/rest/classes/exceptions/user_not_found.php',
-      'ezpWebBasedKernelHandler'                          => 'kernel/private/interfaces/ezpwebbasedkernelhandler.php',
+      'ezpWebBasedKernelHandler'                           => 'kernel/private/interfaces/ezpwebbasedkernelhandler.php',
     );
 
 ?>

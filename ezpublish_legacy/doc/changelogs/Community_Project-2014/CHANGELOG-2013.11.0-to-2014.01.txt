@@ -1,0 +1,220 @@
+Bugfixes
+========
+
+eZ Publish Kernel & APIs
+------------------------
+- EZP-20930: added dependency on hautelook/templated-uri-bundle
+- EZP-21044: Added OPTIONS routes loading to routing.yml
+- EZP-22186: PHP Fatal error: Allowed memory size of 536870912 bytes exhausted running composer install
+- EZP-22257: BDD: PHP Warning: preg_match(): No ending delimiter '/' found in
+
+eZ Publish Legacy Stack (LS)
+----------------------------
+- EZP-16372: deleting of content lasts very long
+- EZP-21411: eZOracle: Link management doesn't show Objects using URL" (cherry picked from commit 4e948aaef7ae93f5b90f14fe71503757cd0ccb38)
+- EZP-21728: Put extension test classes into correct autoload file
+- EZP-21768: Changed var comparison to assignment
+- EZP-21820: eZUser::getUserCacheByUserId() may return an eZClusterFileFailure instead of an array
+- EZP-21829: Avoid notice when overriding a nonexisting variable
+- EZP-21930: searchreplace plugin generates an infinite loop while changing the case in IE9/10
+- EZP-21982: Updated linkcheck.php https warning message
+- EZP-21986: Removing an underline removes the surrounding custom tag
+- EZP-21988: async publishing should generate static cache
+- EZP-22085: "Tab" characters in node name error (urlalias_iri)
+- EZP-22128: Copyright still in 2013
+- EZP-22174: Respect site.ini\[RoleSettings]\EnableCaching setting in eZUser::purgeUserCacheByUserId() and eZUser::getUserCacheByUserId()
+- EZP-22177: eZPersistentObject::handleRows() adds bogus rows
+- EZP-22178: Updating main node doesn't update search engine
+- EZP-22181: eZUser: do not generate cache content for invalid user
+- EZP-22232: Fatal Error when calling eZContentOperationCollection::removeOldNodes() with inexistant object/object version
+- EZP-22234: Only show published users in multiplexer edit
+- EZP-22236: quotes in object name breaks state change
+- EZP-22245: Copyright still in 2013 in some legacy templates
+- EZP-22256: Copyright still shows 2013 in a bunch of files of legacy stack
+
+eZ Publish 5
+------------
+- EZP-20930: Added missing ressources links
+- EZP-21044: Implemented REST OPTIONS
+- EZP-21045: deprecate removePolicy() and add InvalidArgumentException
+- EZP-21046: deduplicated code
+- EZP-21048: update integration tests
+- EZP-21438: handle view_embed permission in XMLText converter
+- EZP-21554: double / in REST root uris
+- EZP-21798: Role changes not working correctly on Postgres 9.1
+- EZP-21817: update non-translatable fields instead of copying
+- EZP-21906: Search API returns wrong number of total objects with content having multiple locations
+- EZP-21952: deprecated loadAnonymousUser()
+- EZP-21976: Fix empty binary file field returning "()"
+- EZP-22013: updated copyright headers to 2014
+- EZP-22036: Legacy Aware Route missing
+- EZP-22040: : Link title is not rendered in XMLText Field type
+- EZP-22101: Tweaked DefaultRouter param loading
+- EZP-22116: Install wizard throws ezcBaseValueException
+- EZP-22128: Copyright still in 2013
+- EZP-22133: Define ezpublish.api.repository as a lazy service
+- EZP-22156: make CSRF provider optional
+- EZP-22188: : Untranslated content can be viewed even when default language is not activated in current siteaccess
+- EZP-22227: fail test instead of skipping when Repoistory can't be created
+- EZP-22228: NotFoundException thrown when not all requested languages are present
+- EZP-22239: When the preview siteaccess runs in legacy mode, it falls back into ezpublish_legacy.default.view_default_layout
+
+Enhancements
+============
+
+eZ Publish Kernel & APIs
+------------------------
+- EZP-21118: Dependency: nelmio/cors-bundle:~1.0
+- EZP-22045: As a developer, I want user login to be fully handled by Symfony stack
+- EZP-22139: require nelmio/cors-bundle @dev
+
+eZ Publish Legacy Stack (LS)
+----------------------------
+- EZP-20433: Updated clusterpurge.php's help
+- EZP-20809: ezuser: allow user to log in even when userinfocache is corrupted
+- EZP-21713: Added extension/*/tests/settings to override dirs for Unit Tests
+- EZP-21774: Added loadMetaData() and storeCache() methods
+- EZP-21872: Check system user before executing script
+- EZP-21966: eZUser now supports basic drafts
+
+eZ Publish 5
+------------
+- EZP-20172: Refactored object visiting
+- EZP-20418: Location Search Handler
+- EZP-21021: Changed Image FieldType legacy file naming
+- EZP-21118: Implemented CORS support for the REST API
+- EZP-21191: enable string 'null' as null value alias
+- EZP-21317: Create XML schema for XHTML5 input
+- EZP-21418: cleanup: criterion handlers whre moved to LocationSearchHandler
+- EZP-21562: Added API & SPI files for split repos
+- EZP-21678: Make unimplemented REST features return a 501 error
+- EZP-21908: add Content info to hide and unhide Location signal
+- EZP-21909: enable indexing Content states
+- EZP-21994: use TRUSTED_PROXIES by default for user-hash generation.
+- EZP-22045: Implemented base login in Symfony security context
+- EZP-22049: As a developer, I want to be able to configure IndexPage
+- EZP-22051: Implemented base preview mechanism
+- EZP-22061: Refactored REST listeners
+- EZP-22066: Removed lazy repository in UrlAliasRouter
+- EZP-22081: As a developer, I want to be able to seamlessly use multiple user providers
+- EZP-22099: Added support for legacy SSOHandlers
+- EZP-22103: remove deprecated dependencies
+- EZP-22126: Not possible to install/use ezpublish5 using git installation
+- EZP-22139: require nelmio/cors-bundle: dev-master
+- EZP-22143: Removed dead code in ExceptionConversion gateway
+
+Pull requests
+=============
+
+eZ Publish Kernel & APIs
+------------------------
+- 86: from ezsystems
+- 87: from ezsystems
+- 90: from pedroresende
+- 91: from pedroresende
+- 92: from pedroresende
+- 93: from ezsystems
+- 98: from cleverti
+- 101: from cleverti
+
+eZ Publish Legacy Stack (LS)
+----------------------------
+- 734: from jeromegamez
+- 782: from emodric
+- 783: from jeromegamez
+- 784: from jeromegamez
+- 794: from jeromegamez
+- 795: from jeromegamez
+- 797: from jeromegamez
+- 812: from jeromegamez
+- 822: from jeromegamez
+- 842: from ezsystems
+- 844: from guillaumelecerf
+- 845: from ezsystems
+- 846: from ezsystems
+- 847: from ezsystems
+- 848: from ezsystems
+- 850: from killerwolf
+- 853: from ezsystems
+- 854: from pedroresende
+- 856: from ezsystems
+- 858: from ezsystems
+- 859: from guillaumelecerf
+- 860: from guillaumelecerf
+- 861: from guillaumelecerf
+- 862: from guillaumelecerf
+- 863: from jeromegamez
+- 864: from guillaumelecerf
+- 867: from guillaumelecerf
+- 870: from ezsystems
+- 871: from joaoinacio
+- 872: from ezsystems
+- 873: from crevillo
+- 874: from crevillo
+
+eZ Publish 5
+------------
+- 497: from ezsystems
+- 573: from ezsystems
+- 597: from ezsystems
+- 601: from pedroresende
+- 604: from ezsystems
+- 615: from ezsystems
+- 631: from joaoinacio
+- 636: from StephaneDiot
+- 638: from ezsystems
+- 639: from Plopix
+- 640: from ezsystems
+- 641: from ezsystems
+- 642: from ezsystems
+- 643: from Heliopsis-HQ
+- 644: from ezsystems
+- 647: from ezsystems
+- 648: from pedroresende
+- 649: from ezsystems
+- 650: from ezsystems
+- 653: from ezsystems
+- 654: from ezsystems
+- 655: from ezsystems
+- 656: from ezsystems
+- 659: from ezsystems
+- 662: from ezsystems
+- 665: from ezsystems
+- 666: from pedroresende
+- 670: from StephaneDiot
+- 673: from ezsystems
+- 674: from ezsystems
+- 676: from ezsystems
+- 678: from ezsystems
+- 680: from ezsystems
+- 683: from ezsystems
+- 686: from Heliopsis-HQ
+- 688: from ezsystems
+- 691: from ezsystems
+- 692: from ezsystems
+- 696: from ezsystems
+- 699: from ezsystems
+- 702: from ezsystems
+
+Miscellaneous
+=============
+
+eZ Publish Kernel & APIs
+------------------------
+- Added Selenium 2 driver to composer.json
+- Welcome to 2014, Copyright updated to 1999-2014
+
+eZ Publish Legacy Stack (LS)
+----------------------------
+- Fix 22079: Order of ezobjectlist doesn't save
+- Fix EZP-22092: Update TinyMCE to 3.5.10
+- Fix EZP-22060: Update YUI to 3.14.0
+- Fix 22030: Object Relations order changed upon concurrent edition
+
+eZ Publish 5
+------------
+- EZP-215612: Fixed autoload in api & spi composer.json
+- Update authentication_symfony.md
+- Implemented: Allow setting custom fields for field and fulltext search queries
+- Implemented: Direct query to custom field definition
+- Implemented: MatchAll criterion visitor

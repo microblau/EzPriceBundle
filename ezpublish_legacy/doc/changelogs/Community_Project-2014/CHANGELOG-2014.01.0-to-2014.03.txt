@@ -1,0 +1,479 @@
+Bugfixes
+========
+
+eZ Publish Kernel & APIs
+------------------------
+- EZP-22277: eZ Publish Production log is too verbose
+- EZP-22378: Reflect new repository configuration in SetupWizard
+
+eZ Publish Legacy Stack (LS)
+----------------------------
+- EZP-18990: add missing changelogs
+- EZP-20570: ezcsvimport uses the storage-dir as filename if an ezimage is empty
+- EZP-20815: Enter key in setup wizard activates wrong action: back instead of next
+- EZP-21124: Checkbox custom attributes on custom tags are not stored
+- EZP-21802: Execute test when one of the image libs is present
+- EZP-22027: location/url alias SPI cache not updated.
+- EZP-22032: don't create an empty ezmedia row
+- EZP-22124: inline image alignment is not respected
+- EZP-22131: handle exceptions in legacy kernel callback
+- EZP-22204: Make sure first Module/View AccessMode != 'keep' is final
+- EZP-22221: Modified alt. pagelayout to use ezjscore
+- EZP-22313: HTML pasted into literal ends up outside literal tag
+- EZP-22321: Fix ezjscore cache not cleared on DFS
+- EZP-22372: Workflow cannot be edited if you remove a user and/or a group
+- EZP-22399: : When calling the method eZContentObject::relatedObjectCount with the IgnoreVisibility parameter, the count is not correct
+- EZP-22414: Session is lost when redirecting from a legacy module
+- EZP-22426: DetectMobileDevice redirection fails for URI
+- EZP-22435: Set a default checkbox value so it is saved when the editor is disabled and re-enabled
+- EZP-22446: AllowedRedirectHosts fix won't work with ports
+- EZP-22447: Removed content still shows on frontend until http cache expires
+- EZP-22466: adv. obj. relation list edits not saved
+- EZP-22472: Incorrect handling of dfs cache error
+- EZP-22480: Object creation does not respect attribute constraints in ezoe
+- EZP-22487: paragraph drops its class when alignment is applied in ezoe
+- EZP-22504: Notice: Undefined variable: moduleName in ezfunctionhandler.php
+- EZP-22509: HTML pasted into literal ends up outside literal tag when the source is not plaintext
+- EZP-22519: Duplicating a content version results in an empty draft if maximum versions is reached
+- EZP-22569: Removed Location still shows on frontend until http cache expires
+- EZP-22579: Function call recursion on eZIni cache generation with PHP 5.5
+- EZP-22656: PHP Notice: Undefined property: eZSOAPClient::$TimeOut in /var/www/html/ezpublish5/ezpublish_legacy/lib/ezsoap/classes/ezsoapclient.php on line 167
+- EZP-22660: : mtime generated empty
+- EZP-2881: AcceptPathInfo Test bug
+
+eZ Publish 5
+------------
+- EZP-20505: Additional check for empty fileName on field template.
+- EZP-20575: Setup wizard fails to generate yml config when using kickstart.ini
+- EZP-20682: Fixed update user rest doc error
+- EZP-20898: Fixed legacy URL generation irt _fragment
+- EZP-20923: Make legacy ConfigurationConverter dump Stash settings with crc32 keyHashFunction
+- EZP-21104: Making session while already logged must give 409
+- EZP-21207: Creating a view with the wrong schema must return an error 400 instead of error 500
+- EZP-21344: [doc]  updating documentation to reflect real behavior
+- EZP-21681: Implement ContentTypeList without Identifier or RemoteId using sort's parameters
+- EZP-21751: kernel::runcallback() does not always return to correct directory
+- EZP-21969: Added test for BinaryFileUpdateStruct
+- EZP-21977: Fixed output binary file size display
+- EZP-21991: UserHash should be cached tied to user session id, not user cookies
+- EZP-22055: A partial pathString loads a REST location/group
+- EZP-22062: Fixed error 500 on /api/ezp/v2/content/locations/1
+- EZP-22098: Made sure Float/integer value of 0 !== false
+- EZP-22131: handle exceptions in legacy kernel callback
+- EZP-22180: complete integration test cases for loading relations
+- EZP-22198: fix unhide location signal
+- EZP-22235: windows IO  Exception "
+- EZP-22272: Image alias generator throws exception if original file is not present
+- EZP-22290: Avoid PHP notice because of uninitialized variable
+- EZP-22353: Travis database error on ezpublish-community
+- EZP-22360: clear use role cache when moving locations from legacy
+- EZP-22378: Reflect new repository configuration in SetupWizard
+- EZP-22387: Error rendering a page block with trashed content
+- EZP-22397: Page converter major testing and debug
+- EZP-22404: resource paths are relative to kernel.root_dir
+- EZP-22409: Creating an object with relationlist fails when target class is being edited.
+- EZP-22414: Session is lost when redirecting from a legacy module
+- EZP-22419: Clearing cache in CLI when eZ Publish is not yet installed leads to database error
+- EZP-22427: ez_is_field_empty broken on Object Relation fields
+- EZP-22430: redirect for custom forwarding Location alias
+- EZP-22437: JSON decode result is not checked in the input parser
+- EZP-22456: check all potential user groups for inheritance
+- EZP-22471: do not join with ezcontentobject_tree on version number
+- EZP-22474: Preview controller authorization checks for non-existing function "content/versionview". Signed-off-by: Markus Mahner <mm@it-agenten.com>
+- EZP-22507: Unable to run any php ezpublish/console commands on builds
+- EZP-22513: Exception not thrown when twig template does not exist
+- EZP-22516: make uniformly testable
+- EZP-22525: On preview, JS and CSS is broken when using host-match mapping
+- EZP-22531: Unable to install eZ Publish 5.3-dev using dev environment
+- EZP-22542: update test for priority sorting
+- EZP-22625: Circular reference on ezsettings.default.session_name
+- EZP-22632: Made request optional in CachedValue visitor
+- EZP-22634: URIText SiteAccess matcher doesn't implement URILexer
+
+Enhancements
+============
+
+eZ Publish Kernel & APIs
+------------------------
+- EZP-22110: Loads DemoBundle routing.yml In order to demo ajax requests in the DemoBundle we need to be able to add custom routes.
+- EZP-22152: Added EzPublishDebugBundle
+- EZP-22210: Injected kernel into EzPublishLegacyBundle
+- EZP-22279: Added DoctrineBundle dependency
+- EZP-22415: Upgrade dependency on Stash bundle to 0.3
+
+eZ Publish Legacy Stack (LS)
+----------------------------
+- EZP-19695: Enabling non automatic conversion of siteaccess names
+- EZP-21775: Implement eZClusterFileHandlerInterface
+- EZP-21966: eZUser now supports basic drafts""
+- EZP-22210: Syntax
+- EZP-22260: fix casting of remote_id
+- EZP-22318: Allow to deactivate settings
+- EZP-22592: Setup wizard should check for php-xsl and php-intl
+
+eZ Publish 5
+------------
+- EZP-20305: Fixed phpDoc in MatcherBuilder
+- EZP-21294: UrlAlias Criterion
+- EZP-21315: added embed tags to schemas
+- EZP-21319: allow mulitple titles on the same level
+- EZP-21387: implemented embed views
+- EZP-21893: handle matching always available Content
+- EZP-21980: Fixed IO\Handler\Filesystem::update()
+- EZP-22015: fixed argument mutation
+- EZP-22065: Make SiteAccess a synchronized service
+- EZP-22105: Location search API
+- EZP-22146: fixed: assert assignment type
+- EZP-22151: sync with interim changes
+- EZP-22152: Added dedicated EzPublishDebugBundle
+- EZP-22163: Implemented user/sessions/<id>/refresh plus refactoring of user/sessions. Specifications have also been updated
+- EZP-22193: Added dedicated controller
+- EZP-22210: Added specifications for legacy bundles
+- EZP-22217: new REST ressource returning countryList
+- EZP-22260: fix using wrong node assignment column for Location remote id
+- EZP-22279: Added dependency on DoctrineBundle
+- EZP-22315: Use ez_is_field_empty to do the checks in content_fields.html.twig
+- EZP-22318: Make Symfony session options SiteAccess aware
+- EZP-22337: Hidden state on Locations is not taken into account in ViewController
+- EZP-22415: Upgrade dependency to stash bundle to 0.3
+- EZP-22443: replace interleaving to make external interleaving possible
+- EZP-22479: SiteAccessLimitation support for use in new login system
+- EZP-22560: Deprecate the Regex SiteAccess matchers
+- EZP-22562: Create missing value object visitors and input parsers services
+- EZP-22597: Use composition on extended FragmentRenderers
+
+Pull requests
+=============
+
+eZ Publish Kernel & APIs
+------------------------
+- 85: from ezsystems
+- 96: from ezsystems
+- 100: from cleverti
+- 103: from cleverti
+- 104: from cleverti
+- 106: from ezsystems
+- 107: from cleverti
+- 108: from cleverti
+- 109: from ezsystems
+- 113: from ezsystems
+- 114: from ezsystems
+- 115: from MLoureiro
+- 117: from cleverti
+- 124: from ezsystems
+- 125: from MLoureiro
+
+eZ Publish Legacy Stack (LS)
+----------------------------
+- 575: from charlycoste
+- 790: from jeromegamez
+- 804: from jeromegamez
+- 838: from ezsystems
+- 839: from joaoinacio
+- 840: from ezsystems
+- 855: from ezsystems
+- 857: from crevillo
+- 866: from joaoinacio
+- 869: from dymissy
+- 877: from ezsystems
+- 878: from crevillo
+- 879: from ezsystems
+- 880: from ezsystems
+- 882: from pitpit
+- 883: from ezsystems
+- 884: from crevillo
+- 885: from ezsystems
+- 886: from peterkeung
+- 889: from achasseux
+- 890: from ezsystems
+- 891: from gggeek
+- 892: from ezsystems
+- 894: from ezsystems
+- 895: from guillaumelecerf
+- 896: from ezsystems
+- 897: from peterkeung
+- 898: from ezsystems
+- 901: from joaoinacio
+- 904: from ezsystems
+- 905: from ezsystems
+- 908: from ezsystems
+- 909: from glye
+- 910: from trolek
+- 911: from ezsystems
+- 912: from ezsystems
+- 913: from ezsystems
+- 914: from ezsystems
+- 915: from ezsystems
+- 918: from ezsystems
+- 919: from ezsystems
+- 920: from glye
+- 921: from peterkeung
+- 922: from ezsystems
+- 924: from ezsystems
+- 925: from ezsystems
+- 927: from ezsystems
+- 928: from emodric
+- 929: from ezsystems
+- 930: from ezsystems
+- 932: from ezsystems
+- 933: from pedroresende
+- 934: from ezsystems
+- 935: from Plopix
+
+eZ Publish 5
+------------
+- 594: from ezsystems
+- 626: from ezsystems
+- 646: from StephaneDiot
+- 651: from ezsystems
+- 668: from StephaneDiot
+- 669: from ezsystems
+- 681: from idriss69
+- 693: from StephaneDiot
+- 695: from ezsystems
+- 697: from ezsystems
+- 701: from ezsystems
+- 704: from ezsystems
+- 705: from StephaneDiot
+- 706: from crevillo
+- 710: from ezsystems
+- 711: from ezsystems
+- 712: from ezsystems
+- 714: from jeromegamez
+- 717: from ezsystems
+- 718: from ezsystems
+- 719: from ezsystems
+- 720: from ezsystems
+- 722: from joaoinacio
+- 723: from ezsystems
+- 724: from pborreli
+- 728: from ezsystems
+- 729: from ezsystems
+- 730: from ezsystems
+- 733: from ezsystems
+- 734: from ezsystems
+- 736: from ezsystems
+- 737: from crevillo
+- 738: from crevillo
+- 739: from crevillo
+- 740: from ezsystems
+- 741: from hhamon
+- 742: from crevillo
+- 743: from ezsystems
+- 744: from joaoinacio
+- 745: from cleverti
+- 749: from joaoinacio
+- 751: from joaoinacio
+- 752: from ezsystems
+- 753: from StephaneDiot
+- 754: from idriss69
+- 755: from ezsystems
+- 756: from ezsystems
+- 758: from ezsystems
+- 759: from cleverti
+- 760: from gabriperego
+- 761: from crevillo
+- 764: from ezsystems
+- 765: from ezsystems
+- 766: from bdunogier
+- 767: from ezsystems
+- 768: from ezsystems
+- 769: from ezsystems
+- 770: from ezsystems
+- 771: from ezsystems
+- 772: from mere-teresa
+- 773: from idriss69
+- 774: from ezsystems
+- 775: from ezsystems
+- 776: from rolebi
+- 778: from itagenten
+- 779: from ezsystems
+- 780: from ezsystems
+- 782: from ezsystems
+- 783: from cleverti
+- 785: from ezsystems
+- 787: from ezsystems
+- 788: from cleverti
+- 791: from stof
+- 793: from ezsystems
+- 794: from MLoureiro
+- 795: from MLoureiro
+- 796: from MLoureiro
+- 797: from MLoureiro
+- 799: from ezsystems
+- 802: from ezsystems
+- 804: from ezsystems
+- 805: from ezsystems
+- 806: from MLoureiro
+- 807: from MLoureiro
+
+Miscellaneous
+=============
+
+eZ Publish Kernel & APIs
+------------------------
+- Git Install Doc: Composer before folder rights
+- BDD: big refactor on BrowserContext to simplify maintenance
+- BDD: add get repository function
+- [Behat] Move priorSearchPhrase prop to BrowserContext
+- [Behat] Add temp class alias to be able to get tests running
+- BDD: update single identifier sentences with ""
+- BDD: add create ContentTypeGroup feature file and sentences
+- Add dependency on legacy so project can be installed purly with composer
+- Made interactive debugging more convenient
+- Added Eclipse project files to .gitignore
+- BDD DemoContent: Added common methods to context files
+- Revert "Remove stash-bundle from main composer.json as it's already present in ezpublish-kernel's"
+- Upgraded egulias/listeners-debug-command-bundle to ~1.9
+- Remove stash-bundle from main composer.json as it's already present in ezpublish-kernel's
+- Fix the bundle class name to actually correspond to the bundle
+- Updated req. nelmio/cors-bundle to ~1.3
+- Fix Typos
+- routing.yml: s/pattern/path
+- Fix cs issues in bin/.travis/ezrouter.php
+- Fix missing brackets in if conditions
+- Fix Coding Standards
+- Added I am logged in as "<user>" sentence
+
+eZ Publish Legacy Stack (LS)
+----------------------------
+- Enabled asynchronous publishing from preview
+- Fix debug output HTML validation when using HTML5 doctype
+- Merge branch 'EZP-22466-advanced_object_relation_list_editing-take_2'
+- Fix community dashboard widget month display
+- Improved the plain text conversion in Firefox when the source is a <pre> tag content
+- Fixed: make sure long lines inside literal tag do not overflow the literal area
+- Fix EZP-22423: Update YUI to 3.15
+- Fixed EZP-21959: Security: Siteaccess matching is loose, in legacy stack
+- Enhance eztemplatecheck.php: display error details for invalid template
+- Support textarea custom attributes in the Online Editor
+- Merge branch 'master', remote-tracking branch 'upstream/master'
+- Fix [EZP-22358]: SiteAccessRules setting doesn't work well in the Symfony Stack
+- Ignoring siteaccess cache and log sub-directories
+- Implemented merged injected-settings
+- Fix [EZP-22328] Inline doc in logfile.ini can lead to error in updateviewcount script
+- Fixed regression: wizard sets password to publish
+- Fixed 'PHP Notice:  Undefined index: REQUEST_METHOD' notice in unit test
+- Fixed 'PHP Warning:  strpos(): Empty delimiter' warning in unit test
+- [EZP-22153] eZDemo install does not respect "leave data and do nothing in the db" selection
+- Update phpdoc on ezpEvent:filter to reflect actual implementation
+
+eZ Publish 5
+------------
+- Fix minor cs stuff
+- Removed unused use statement
+- Removed unused variables
+- Fixed WebsiteToolbarController being executable
+- BDD: update the BrowserContext namespace
+- Removed @return void in SiteAccess matchers
+- Removed useless @covers in SiteAccess matcher tests
+- [Doc] Add deprecation doc for deprecated SortClauses and Criteria
+- Un-deprecate Location based Content criteria that works as intended
+- CS fix in GuzzleClient.php
+- SetupWizard: fix bdd sentence to press buton
+- BDD: add rest internal sentences (interface + implementation)
+- Move REST Input Parser to REST/Common
+- Revert "[eZPublishLegacyBundle] refactored the LegacyResponseManager to move some code into the LegacyResponse class where it is more appropriate."
+- Revert "[EzPublishLegacyBundle] renamed LegacyResponse::setHeaders() to LegacyResponse::setLegacyHeaders()"
+- Merge branch 'EZP-20682-rest_update_user_doc_fix'
+- BDD RestClient: add basic REST client for REST testing
+- BDD: add object 'manipulation'
+- BDD: add rest server FeatureContext
+- Fixed missing ";" in EzPublishRestExtension
+- Add bc doc on RESTv2 POST /user/sessions changes (cherry picked from commit eb842709ebe1dd99d48084d7395d9a42ac511b1d)
+- Add tracking of the prepended config file
+- Made REST output indenting optional
+- SetupWizard: add 'System check' step for travis
+- phpdoc fix
+- BDD: change database credentials to 'ezp' with 'ezp'
+- BDD: remove socket from DB step (to work on pgsql also)
+- BDD: add coverage for each package and their version
+- BDD: add SetupWizard tests for Demo with and without content
+- Update LoaderStringTest.php
+- Renamed EzLinkToHtml5 to Link converter
+- Fixed outdated docblock comments
+- Minor cleanup in fieldtypes.yml to make it clear ezrecommendation is null type
+- Update multiple_user_providers.md
+- Update repository_config.md
+- Update doctrine_bundle.md
+- Remove @covers use in Limitation tests as asked for in #775
+- Fix overlapped Identity name definition
+- Update and rename doctrine-dbal.rst to doctrine-dbal.md
+- Fixed REST API specifications after fixing EZP-21312
+- Removed covers annotations causing failures on CI
+- Fixed exception message
+- [SensioLabsInsight]: Fixed unused variable in ConfigurationConverter
+- [SensioLabsInsight]: Fixed unsused use statements
+- [SensioLabsInsight]: Fixed unreachable test
+- Typo in default vars of ezgmaplocation_field
+- Added possibility to control draggable option on ezgmaplocation_field
+- Fixed a possible error in ContentViewLayoutDecorator
+- Fix get database parameters ny using ezpublish.connection
+- Simplify .travis.yml test matrix & add inline doc to explain it
+- Added Regression Test for EZP-22409
+- Added 'is_hidden' and 'priority' columns to 'eznode_assignement' table
+- Fix: suggestion Array uses 'driverOptions' as one of its key, but this option is not recognized
+- Fixed unused use statements (yes again !)
+- Fixed non-executing tests with Solr
+- Changed "or" logical operator usage to "||"
+- Fixed unused use statements
+- Update link to new DB connection handler
+- Simplified inivisible Location condition
+- [EzPublishLegacyBundle] renamed LegacyResponse::setHeaders() to LegacyResponse::setLegacyHeaders()
+- [eZPublishLegacyBundle] refactored the LegacyResponseManager to move some code into the LegacyResponse class where it is more appropriate.
+- Added getConnection() to DatabaseHandler interface
+- Fix [EZP-22358]: SiteAccessRules setting doesn't work well in the Symfony Stack
+- Fixed [EZP-22356]: Unused use statements in ContentService
+- Fixed [EZP-22357]: ContentSearchAdapter and ContentSearchHitAdapter have some errors in inline documentation
+- Added datadumper script used to generate initial demo_data.php
+- Fixed unused use statement
+- Bumped CorsBundle version to 1.3.*
+- Update .travis.yml to use Solr 4.6.1
+- Changed dependency on Symfony to 2.3.*
+- Remove InMemory Persistence handler
+- Fix EZP-22225; Publishing content in a symfony command throws InactiveScopeException
+- Fixed minor mistakes in io.yml
+- Improve Query and MapLocation criterion and sort clause docs
+- Fix missing UrlAlias criterion removal from 6dca23d1c374562d8cb4867e46479c59c5890b83 reported by @crevillo
+- Fixed RichText conversion failure on CI
+- Add Postgres related connection code
+- Add more docblocks and missing getName() method on DatabaseHandler
+- Add docblocks for some new classes that were missing them
+- Fix some bugs in test setup to run against MySQL and PostgreSQL
+- Fix an exception referencing ezcQueryVariableParameterException
+- Fix more references to ezcDbException to use DBALException in ExceptionConversion
+- Fix references to ezcQuery to use new eZ\Publish\Core\Persistence\Database abstraction.
+- Fix ExceptionConversion Gateways
+- Change eZ\Publish\Core\Persistence\Legacy\Handler to accept a DatabaseHandler and change services.ini to provide Doctrine as implementation. Adjust tests.
+- Add ConnectionHandler::createFromDSN() method with tests for the travis connection data.
+- Fix last issues to make integration tests run on SQLite
+- Allow delete without WHERE as its actually used to empty the trash.
+- Add SqliteConnectionHandler + fix bug in DoctrineExpression.
+- More small adjustments to new API
+- ezcQuerySelect => SelectQuery replacements
+- Fix one more reference to EzcDbHandler and implement binding valudes.
+- More EzcDbHandler => DatabaseHandler replacements
+- Active doctrine to see the breakages.
+- Replace EzcDatabase API to accept DatabaseHandlers and make EzcDbHandler a DatabaseHandler that fullfills the API.
+- Added Expression support.
+- Add DeleteQuery for Doctrine implementation
+- Add UpdateQuery Doctrine implementation
+- Copy Subselect support from Zeta Components
+- Implementation for SelectDoctrineQuery and tests for the SQL generation (not execution yet).
+- Missing docblock documentation
+- Remove TableGateway API
+- Revert "Showing one insert+select statements with Doctrine API, for evaluation of refactoring towards DBAL API or writing abstraction that mimics ez Query APIs."
+- Add Interfaces for query api from Zeta Components database
+- Specify both refactoring approaches explicitly.
+- Showing one insert+select statements with Doctrine API, for evaluation of refactoring towards DBAL API or writing abstraction that mimics ez Query APIs.
+- Introduce DoctrineDbalGateway accepting only the connection now, adjusting the Handler to provide it.
+- Document TableGateway
+- Introduce TableGateway abstraction + integration tests
+- Introduce doctrine/dbal ~2.4 dependency
+- API example for TableGateways to be introduced as abstraction.
+- Specification for Refactoring towards Doctrine DBAL
+- Merge branch 'dev-toolbar' of git://github.com/dspe/ezp-next into dspe-dev-toolbar
+- Rename SPIPersistenceDataCollector to EzPublishDataCollector
+- Add support for legacy template
+- Add Template List to Collector
+
