@@ -46,6 +46,7 @@ if ( $useDebugging )
 
 $kernel = new EzPublishKernel( $environment, $useDebugging );
 
+
 // we don't want to use the classes cache if we are in a debug session
 if ( !$useDebugging )
 {
