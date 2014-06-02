@@ -40,6 +40,8 @@ ActiveExtensions[]=eflyoutube
 ActiveExtensions[]=cjw_newsletter
 ActiveExtensions[]=eflvaloraciones
 ActiveExtensions[]=googlesitemapgenerator
+ActiveExtensions[]=ggwebservices
+ActiveExtensions[]=products
 #ActiveExtensions[]=ezpaypal
 
 [Session]

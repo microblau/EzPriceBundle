@@ -1,0 +1,3 @@
+efl_web_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: EflWebBundle:Default:index }

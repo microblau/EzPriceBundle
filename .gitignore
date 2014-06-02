@@ -6,7 +6,7 @@
 /bin/phpunit
 /ezpublish/cache/
 /ezpublish/logs/
-#/ezpublish_legacy
+/ezpublish_legacy/var
 /ezpublish/config/parameters.yml
 /ezpublish/config/ezpublish_prod.yml
 /ezpublish/config/ezpublish_dev.yml
