@@ -1,0 +1,56 @@
+CSS Drodown Extension INSTALL
+
+Introduction
+============
+
+What is the CSS Dropdown extension?
+------------------------------------------------
+
+CSS dropdown extension menu for ezPublish
+
+A dynamic menu, which show the childs when you pass over an element of the menu.
+CSS Dropdown Top menu is based on the original works of;
+- http://ez.no/community/contribs/template_plugins/suckerfish_dropdown_menu by Heliopsis
+- http://www.cssplay.co.uk/menus/drop_examples.html CSS menu by Stu Nicholls
+It is fully CSS based (no Javascript) and tested under all major browsers (IE 5, 6, 7, 8 - Firefox - Opera) on Windows and Linux.
+
+Getting eZ publish
+==================
+
+You can download a version of eZ publish from ez.no, you will find the
+various versions at:
+http://ez.no/download
+
+Information on the installation of eZ publish can be found at:
+http://ez.no/ez_publish/documentation/installation
+
+
+Installing Topdrop extension
+==============================================
+
+1. Copy the package into the `extension' directory in the root of your eZ publish installation.
+
+2. Unpack the files in the extension directory
+
+3. Activate the extension using the eZ publish admin interface 
+
+4. Patching the pagelayout.tpl
+   In order have the CSS Dropdown menu working with IE 8, the css_dropdown extension include an override template for page_head.tpl
+   This template include
+       <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+   To force IE 8 to work as IE 7
+
+5. Clear the cache....
+
+6. Tune your menu.
+   Each fetch has a filter like class_filter_array, array(1)
+   This will only display folders
+   In eZwebin, replace by class_filter_array, array(1,19,20,31) to get all needed classes.
+
+   This parameter can be configured level by level
+
+   Overflow direction
+   A multi level menu on the right of a webpage might go out of the screen. To prevent it, topdrop has a parameter that tell the sub menu if it should expand on the left or on the right
+   In settings/design.ini.append.php you will find a goleft setting
+   goleft=4 means that the first 4 menu will drop on the right, while the next will drop on the left.
+

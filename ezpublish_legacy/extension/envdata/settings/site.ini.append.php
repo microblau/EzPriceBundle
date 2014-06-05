@@ -1,6 +1,6 @@
 <?php /*
 [Session]
-CookieDomain=.tantacom.com
+#CookieDomain=.efl5legacy
 
 [EFLSettings]
 FormationSubdomain=formacion.efl.local
