@@ -2,8 +2,8 @@
 /**
  * File containing the eZContentObjectTrashNode class.
  *
- * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
- * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  * @package kernel
  */
@@ -348,8 +348,8 @@ class eZContentObjectTrashNode extends eZContentObjectTreeNode
             $realParentPathArray = $this->originalNodeParent->attribute( 'path_array' );
             $realParentPath = implode( '/', $realParentPathArray );
 
-            array_pop( $this->pathArray );
-            $thisParentPath = implode( '/', $this->pathArray );
+            $thisParentPathArray = array_slice( $this->pathArray, 0, -1 );
+            $thisParentPath = implode( '/', $thisParentPathArray );
 
             if ( $thisParentPath == $realParentPath )
             {

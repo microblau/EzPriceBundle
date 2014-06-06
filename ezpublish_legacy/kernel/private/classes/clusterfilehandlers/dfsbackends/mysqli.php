@@ -2,8 +2,8 @@
 /**
  * File containing the eZDFSFileHandlerMySQLiBackend class.
  *
- * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
- * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  * @package kernel
  */
@@ -1630,6 +1630,13 @@ class eZDFSFileHandlerMySQLiBackend implements eZClusterEventNotifier
                 return false;
             }
             $generatingMetaData = mysqli_fetch_assoc( $res );
+            
+            if ( empty( $generatingMetaData ) )
+            {
+                eZDebug::writeError("An error occured while ending cache generation,  $generatingFilePath", $fname );
+                $this->_rollback( $fname );
+                return false;
+            }
 
             // the original file does not exist: we move the generating file
             $res = $this->_query( "SELECT * FROM " . $this->dbTable( $filePath ) . " WHERE name_hash = " . $this->_md5( $filePath ) . " FOR UPDATE", $fname, false );
@@ -1954,7 +1961,7 @@ class eZDFSFileHandlerMySQLiBackend implements eZClusterEventNotifier
 
     /**
      * Distributed filesystem backend
-     * @var eZDFSFileHandlerDFSBackend
+     * @var eZDFSFileHandlerDFSBackendInterface
      */
     protected $dfsbackend = null;
 

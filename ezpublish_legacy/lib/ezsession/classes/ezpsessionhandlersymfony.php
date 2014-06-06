@@ -2,8 +2,8 @@
 /**
  * File containing Symfony session handler
  *
- * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
- * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  * @package lib
  */
@@ -57,7 +57,7 @@ class ezpSessionHandlerSymfony extends ezpSessionHandler
     public function regenerate( $updateBackendData = true )
     {
         $oldSessionId = session_id();
-        $this->storage->regenerate();
+        $this->storage->regenerate( $updateBackendData );
         $newSessionId = session_id();
 
         ezpEvent::getInstance()->notify( 'session/regenerate', array( $oldSessionId, $newSessionId ) );

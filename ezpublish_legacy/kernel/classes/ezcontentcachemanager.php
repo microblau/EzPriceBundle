@@ -2,8 +2,8 @@
 /**
  * File containing the eZContentCacheManager class.
  *
- * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
- * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  * @package kernel
  */
@@ -664,15 +664,14 @@ class eZContentCacheManager
         return $nodeList;
     }
 
-    /*!
-     \static
-     Clears view caches of nodes, parent nodes and relating nodes
-     of content objects with id \a $objectID.
-     It will use 'viewcache.ini' to determine additional nodes.
-
-     \param $versionNum The version of the object to use or \c true for current version
-     \param $additionalNodeList An array with node IDs to add to clear list,
-                                or \c false for no additional nodes.
+    /**
+     * Clears view caches of nodes, parent nodes and relating nodes
+     * of content object with $objectID.
+     * It will use 'viewcache.ini' to determine additional nodes.
+     *
+     * @param int    $objectID           The object ID
+     * @param int    $versionNum         The version of the object to use, or true for current version
+     * @param array  $additionalNodeList An array with node IDs to add to clear list, or false for no additional nodes.
     */
     static function clearObjectViewCache( $objectID, $versionNum = true, $additionalNodeList = false )
     {
@@ -693,49 +692,11 @@ class eZContentCacheManager
             array_splice( $nodeList, count( $nodeList ), 0, $additionalNodeList );
         }
 
-        if ( count( $nodeList ) == 0 )
-        {
-            return false;
-        }
-
         $nodeList = array_unique( $nodeList );
 
         eZDebug::accumulatorStop( 'node_cleanup_list' );
 
-        eZDebugSetting::writeDebug( 'kernel-content-edit', count( $nodeList ), "count in nodeList" );
-
-        $ini = eZINI::instance();
-        if ( $ini->variable( 'ContentSettings', 'StaticCache' ) == 'enabled' )
-        {
-            $optionArray = array( 'iniFile'      => 'site.ini',
-                                  'iniSection'   => 'ContentSettings',
-                                  'iniVariable'  => 'StaticCacheHandler' );
-
-            $options = new ezpExtensionOptions( $optionArray );
-
-            $staticCacheHandler = eZExtension::getHandlerClass( $options );
-
-            $staticCacheHandler->generateAlwaysUpdatedCache();
-            $staticCacheHandler->generateNodeListCache( $nodeList );
-        }
-
-        eZDebug::accumulatorStart( 'node_cleanup', '', 'Node cleanup' );
-
-        $nodeList = ezpEvent::getInstance()->filter( 'content/cache', $nodeList );
-
-        eZContentObject::expireComplexViewModeCache();
-        $cleanupValue = eZContentCache::calculateCleanupValue( count( $nodeList ) );
-
-        if ( eZContentCache::inCleanupThresholdRange( $cleanupValue ) )
-            eZContentCache::cleanup( $nodeList );
-        else
-        {
-            eZDebug::writeDebug( "Expiring all view cache since list of nodes({$cleanupValue}) related to object({$objectID}) exeeds site.ini\[ContentSettings]\CacheThreshold", __METHOD__ );
-            eZContentObject::expireAllViewCache();
-        }
-
-        eZDebug::accumulatorStop( 'node_cleanup' );
-        return true;
+        return self::clearNodeViewCacheArray( $nodeList );
     }
 
     /**
@@ -767,6 +728,22 @@ class eZContentCacheManager
 
         eZDebug::accumulatorStop( 'node_cleanup_list' );
 
+        return self::clearNodeViewCacheArray( $nodeList );
+    }
+
+    /**
+     * Clears view caches for an array of nodes.
+     *
+     * @param  array   $nodeList List of node IDs to clear
+     * @return boolean returns true on success
+     */
+    public static function clearNodeViewCacheArray( array $nodeList )
+    {
+        if ( count( $nodeList ) == 0 )
+        {
+            return false;
+        }
+
         eZDebugSetting::writeDebug( 'kernel-content-edit', count( $nodeList ), "count in nodeList" );
 
         if ( eZINI::instance()->variable( 'ContentSettings', 'StaticCache' ) === 'enabled' )
@@ -787,18 +764,18 @@ class eZContentCacheManager
 
         eZDebug::accumulatorStart( 'node_cleanup', '', 'Node cleanup' );
 
-        $nodeList = ezpEvent::getInstance()->filter( 'content/cache', $nodeList );
-
         eZContentObject::expireComplexViewModeCache();
         $cleanupValue = eZContentCache::calculateCleanupValue( count( $nodeList ) );
 
         if ( eZContentCache::inCleanupThresholdRange( $cleanupValue ) )
         {
+            $nodeList = ezpEvent::getInstance()->filter( 'content/cache', $nodeList );
             eZContentCache::cleanup( $nodeList );
         }
         else
         {
             eZDebug::writeDebug( "Expiring all view cache since list of nodes({$cleanupValue}) exceeds site.ini\[ContentSettings]\CacheThreshold", __METHOD__ );
+            ezpEvent::getInstance()->notify( 'content/cache/all' );
             eZContentObject::expireAllViewCache();
         }
 
@@ -1006,7 +983,7 @@ class eZContentCacheManager
             $ini = eZINI::instance();
             $useURLAlias =& $GLOBALS['eZContentObjectTreeNodeUseURLAlias'];
             $pathPrefix = $ini->variable( 'SiteAccessSettings', 'PathPrefix' );
-            
+
             // get staticCacheHandler instance
             $optionArray = array( 'iniFile'      => 'site.ini',
                                   'iniSection'   => 'ContentSettings',

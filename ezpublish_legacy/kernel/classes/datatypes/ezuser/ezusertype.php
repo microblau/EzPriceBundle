@@ -2,8 +2,8 @@
 /**
  * File containing the eZUserType class.
  *
- * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
- * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  * @package kernel
  */
@@ -250,6 +250,13 @@ class eZUserType extends eZDataType
         }
         else
         {
+            // No "draft" for version 1 to avoid regression for existing code creating new users.
+            if ( $contentObjectAttribute->attribute( 'version' ) == '1' )
+            {
+                $user->store();
+                $contentObjectAttribute->setContent( $user );
+            }
+
             // saving information in the object attribute data_text field to simulate a draft
             $contentObjectAttribute->setAttribute( 'data_text', $this->serializeDraft( $user ) );
         }

@@ -5996,6 +5996,10 @@
         <source>Removal failed because there is pending sub object under the node. Please finish the relevant process then redo the removal.</source>
         <translation>因为在这个节点下有待处理的子对象，移除失败，请完成相关的处理然后再重新移除。</translation>
     </message>
+    <message>
+        <source>Objects containing ezuser attributes can not be sent to trash</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/node/view</name>
@@ -25032,7 +25036,7 @@ To fix this problem you must do one of the following:</source>
     </message>
     <message>
         <source>Site registration</source>
-        <translation>站点注册</translation>
+        <translation type="obsolete">站点注册</translation>
     </message>
     <message>
         <source>If you wish you can register your installation by sending some information to eZ systems. No confidential data will be transmitted and eZ systems will not use or sell your personal details for unsolicited emails.</source>
@@ -25336,31 +25340,31 @@ If you do not have the possibility to use virtualhost mode you should follow the
     </message>
     <message>
         <source>Send registration</source>
-        <translation>发送注册信息</translation>
+        <translation type="obsolete">发送注册信息</translation>
     </message>
     <message>
         <source>System details (OS type, etc)</source>
-        <translation>系统详细信息（操作系统类型等）</translation>
+        <translation type="obsolete">系统详细信息（操作系统类型等）</translation>
     </message>
     <message>
         <source>The test results</source>
-        <translation>测试结果</translation>
+        <translation type="obsolete">测试结果</translation>
     </message>
     <message>
         <source>The database type</source>
-        <translation>数据库类型</translation>
+        <translation type="obsolete">数据库类型</translation>
     </message>
     <message>
         <source>The site name</source>
-        <translation>站点名称</translation>
+        <translation type="obsolete">站点名称</translation>
     </message>
     <message>
         <source>The url of the site</source>
-        <translation>站点网址</translation>
+        <translation type="obsolete">站点网址</translation>
     </message>
     <message>
         <source>Languages chosen</source>
-        <translation>选择的语言</translation>
+        <translation type="obsolete">选择的语言</translation>
     </message>
     <message>
         <source>Site security</source>
@@ -25933,7 +25937,7 @@ It is possible to change these settings at a later time.</source>
     </message>
     <message>
         <source>By sending registration the following data will be sent to eZ Systems</source>
-        <translation>通过发送注册信息，下列数据将被发送到eZ Systems</translation>
+        <translation type="obsolete">通过发送注册信息，下列数据将被发送到eZ Systems</translation>
     </message>
     <message>
         <source>Your site is not running in a virtual host mode, this is insecure. It is recommended to run eZ Publish in virtual host mode. If you do not have the possibility to use virtual host mode, you should follow the instructions below about how to install an .htaccess file. The .htaccess file tells the web server to restrict the access to certain files.</source>
@@ -26055,7 +26059,7 @@ This functionality is also available at a later time from the Administration Int
     </message>
     <message>
         <source>This data will help to improve future releases of eZ Publish.</source>
-        <translation>此数据将帮助改进eZ Publish以后的发行版本。</translation>
+        <translation type="obsolete">此数据将帮助改进eZ Publish以后的发行版本。</translation>
     </message>
     <message>
         <source>The problems are usually file-system related and can be easily fixed by copy / paste / running the suggested commands in a system shell.</source>
@@ -26103,48 +26107,12 @@ This functionality is also available at a later time from the Administration Int
         <translation type="unfinished">国家</translation>
     </message>
     <message>
-        <source>In order to provide you with the best service in the future, we need some statistics to know a bit about your usage of eZ Publish and its underlying platform.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>In return this will also provide you with heads-up on security issues, notifications about updates, upgrades and other important news.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This happens periodically, and you will always be able to opt-out of this at anytime.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not send registration data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Required data is either missing or is invalid</source>
-        <translation type="unfinished">所需数据丢失或无效</translation>
-    </message>
-    <message>
-        <source>Registration information email:</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">所需数据丢失或无效</translation>
     </message>
     <message>
         <source>Company</source>
-        <translation type="unfinished">公司</translation>
-    </message>
-    <message>
-        <source>Is this the first time you are installing eZ Publish?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Included some simple technical information?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Contents of registration email</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>We care for your privacy. Read more &lt;a href=&apos;%link&apos; target=&apos;_blank&apos;&gt;here&lt;/a&gt;. This data will be treated securely and not shared with third parties without your permission.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">公司</translation>
     </message>
     <message>
         <source>Welcome to %edition %version</source>
@@ -26156,6 +26124,48 @@ This functionality is also available at a later time from the Administration Int
     </message>
     <message>
         <source>Looking for other packages? Full archive of all packages can be found &lt;a href=&quot;%packages_url&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notice: The out of the box front-end site often relies on data within a package. This is why it is strongly suggested to map the package language to your primary language, otherwise you&apos;ll need to adjust the configuration and template files to get it working.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open source software is nothing without a vibrant community!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;If you need to share knowledge, exchange tips with developers or simply find some improvement tricks, the eZ Community is the place to go.&lt;/p&gt;
+
+&lt;p&gt;
+How do you access it?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Go on &lt;a href=&quot;http://share.ez.no/&quot; title=&quot;eZ Community&quot;&gt;share.ez.no&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Click on Register (top of the page) and create your profile&lt;/li&gt;
+&lt;li&gt;Here you can check out the &lt;a href=&quot;http://share.ez.no/blogs&quot;&gt;blog posts&lt;/a&gt;,
+    &lt;a href=&quot;http://share.ez.no/events&quot;&gt;events&lt;/a&gt;, &lt;a href=&quot;http://share.ez.no/members-partners/find-a-partner&quot;&gt;partners&lt;/a&gt;...&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;
+&lt;p&gt;We<byte value="x19"/>re looking forward to seeing what you share with the Community!&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Discover the eZ Publish Platform forums</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>eZ Publish 5 platform</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Installation &amp; configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Setup and design</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -26668,11 +26678,11 @@ This functionality is also available at a later time from the Administration Int
     </message>
     <message>
         <source>AcceptPathInfo disabled or running in CGI mode</source>
-        <translation>AcceptPathInfo已禁用或在CGI模式下运行</translation>
+        <translation type="obsolete">AcceptPathInfo已禁用或在CGI模式下运行</translation>
     </message>
     <message>
         <source>enter the following into your httpd.conf file.</source>
-        <translation>在您的httpd.conf文件中输入下列设置。</translation>
+        <translation type="obsolete">在您的httpd.conf文件中输入下列设置。</translation>
     </message>
     <message>
         <source>Remember to restart your web server afterwards.</source>
@@ -26774,7 +26784,7 @@ This is a security problem and should be changed to another global temporary dir
     </message>
     <message>
         <source>You need to enable AcceptPathInfo in your Apache config file, if you&apos;re using apache 2.x.</source>
-        <translation> 如果您正在使用的是apache2.x，您需要在您的Apache配置文件中启用AcceptPathInfo。</translation>
+        <translation type="obsolete"> 如果您正在使用的是apache2.x，您需要在您的Apache配置文件中启用AcceptPathInfo。</translation>
     </message>
     <message>
         <source>allow_url_fopen ini setting is disabled</source>
@@ -26822,7 +26832,7 @@ Without this the setup cannot finish and parts of eZ Publish will fail.</source>
     </message>
     <message>
         <source>If you&apos;re running apache 1.3, eZ Publish will not run in CGI mode.</source>
-        <translation>如果您当前运行的是apache1.3，eZ Publish将不能在CGI模式下运行。</translation>
+        <translation type="obsolete">如果您当前运行的是apache1.3，eZ Publish将不能在CGI模式下运行。</translation>
     </message>
     <message>
         <source>Your PHP does not have support for all databases that eZ Publish support.</source>
@@ -27082,6 +27092,26 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
     <message>
         <source>To fix this, edit your php.ini configuration and add E to the variables_order setting and restart your webserver.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing intl extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The intl extension, required for internationalization, is not installed or enabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>More information on installing it is available at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing xsl extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The xsl extension, required by rich text handling, is not installed or enabled.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -2,8 +2,8 @@
 /**
  * File containing the eZUserDiscountRule class.
  *
- * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
- * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  * @package kernel
  */
@@ -62,7 +62,6 @@ class eZUserDiscountRule extends eZPersistentObject
         }
         else
         {
-            eZExpiryHandler::registerShutdownFunction();
             $handler = eZExpiryHandler::instance();
             $handler->setTimestamp( 'user-discountrules-cache', time() );
             $handler->store();
@@ -100,7 +99,6 @@ class eZUserDiscountRule extends eZPersistentObject
         {
             $http = eZHTTPTool::instance();
 
-            eZExpiryHandler::registerShutdownFunction();
             $handler = eZExpiryHandler::instance();
             $expiredTimeStamp = 0;
             if ( $handler->hasTimestamp( 'user-discountrules-cache' ) )

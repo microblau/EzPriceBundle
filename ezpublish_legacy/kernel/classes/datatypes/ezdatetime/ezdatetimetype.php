@@ -2,8 +2,8 @@
 /**
  * File containing the eZDateTimeType class.
  *
- * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
- * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  * @package kernel
  */
@@ -147,7 +147,7 @@ class eZDateTimeType extends eZDataType
 
             if ( ( $year == '' and $month == '' and $day == '' and
                    $hour == '' and $minute == '' and ( !$useSeconds or $second == '' ) ) or
-                 !checkdate( $month, $day, $year ) or $year < 1970 )
+                 !checkdate( $month, $day, $year ) )
             {
                     $dateTime->setTimeStamp( 0 );
             }
@@ -239,7 +239,7 @@ class eZDateTimeType extends eZDataType
             $contentClassAttribute = $contentObjectAttribute->contentClassAttribute();
             if ( ( $year == '' and $month == ''and $day == '' and
                    $hour == '' and $minute == '' and ( !$useSeconds or $second == '' ) ) or
-                 !checkdate( $month, $day, $year ) or $year < 1970 )
+                 !checkdate( $month, $day, $year ) )
             {
                     $dateTime->setTimeStamp( 0 );
             }

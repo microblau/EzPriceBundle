@@ -2,8 +2,8 @@
 /**
  * File containing the eZRSSFunctionCollection class.
  *
- * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
- * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  * @package kernel
  */
@@ -23,7 +23,7 @@ class eZRSSFunctionCollection
                                             'error_code' => eZError::KERNEL_NOT_FOUND ) );
 
         $db = eZDB::instance();
-        $res = $db->arrayQuery( "SELECT id FROM ezrss_export WHERE node_id='$nodeID' AND status=" . eZRSSExport::STATUS_VALID );
+        $res = $db->arrayQuery( "SELECT id FROM ezrss_export WHERE node_id = " . (int)$nodeID . " AND status = " . eZRSSExport::STATUS_VALID );
 
         return array( 'result' => isset( $res[0] ) ? true : false );
     }

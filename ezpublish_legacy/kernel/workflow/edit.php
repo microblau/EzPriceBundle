@@ -1,7 +1,7 @@
 <?php
 /**
- * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
- * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  * @package kernel
  */
@@ -19,9 +19,19 @@ case "down":
         {
             if ( isset( $Params["EventID"] ) )
             {
-                $event = eZWorkflowEvent::fetch( $Params["EventID"], true, 1,
-                                                 array( "workflow_id", "version", "placement" ) );
-                $event->move( $Params["FunctionName"] == "up" ? false : true );
+                /** @var eZWorkflowEvent $event */
+                $event = eZWorkflowEvent::fetch(
+                    $Params["EventID"],
+                    true,
+                    1,
+                    array( "workflow_id", "version", "placement" )
+                );
+
+                if ( $event instanceof eZWorkflowEvent )
+                {
+                    $event->move( $Params["FunctionName"] == "up" ? false : true );
+                }
+
                 $Module->redirectTo( $Module->functionURI( 'edit' ) . '/' . $WorkflowID );
                 return;
             }
@@ -309,19 +319,19 @@ else if ( $http->hasPostVariable( "DeleteButton" ) )
 // Add new workflow event
 else if ( $http->hasPostVariable( "NewButton" ) )
 {
-    $new_event = eZWorkflowEvent::create( $WorkflowID, $cur_type );
-    $new_event_type = $new_event->eventType();
-    $db = eZDB::instance();
-    $db->begin();
+    if ( $canStore )
+    {
+        $new_event = eZWorkflowEvent::create( $WorkflowID, $cur_type );
+        $new_event_type = $new_event->eventType();
+        $db = eZDB::instance();
+        $db->begin();
 
-    if ($canStore)
-        $workflow->store( $event_list );
+        $new_event_type->initializeEvent( $new_event );
+        $new_event->store();
 
-    $new_event_type->initializeEvent( $new_event );
-    $new_event->store();
-
-    $db->commit();
-    $event_list[] = $new_event;
+        $db->commit();
+        $event_list[] = $new_event;
+    }
 }
 else if ( $canStore )
 {

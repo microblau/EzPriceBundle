@@ -2,8 +2,8 @@
 /**
  * File containing the eZPHPCreatorRegression class
  *
- * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
- * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  * @package tests
  */
@@ -63,7 +63,6 @@ class eZPHPCreatorRegression extends ezpDatabaseTestCase
                                       '',
                                       array( 'clustering' => 'classidentifiers' ) );
 
-        eZExpiryHandler::registerShutdownFunction();
         $handler = eZExpiryHandler::instance();
         $expiryTime = 0;
         if ( $handler->hasTimestamp( 'class-identifier-cache' ) )

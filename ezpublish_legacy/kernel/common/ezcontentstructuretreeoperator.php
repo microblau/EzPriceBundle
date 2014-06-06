@@ -2,8 +2,8 @@
 /**
  * File containing the eZContentStructureTreeOperator class.
  *
- * @copyright Copyright (C) 1999-2014 eZ Systems AS. All rights reserved.
- * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @version //autogentag//
  * @package kernel
  */
@@ -177,7 +177,7 @@ class eZContentStructureTreeOperator
                              ezcontentclass.version=0 AND
                              $notEqParentString
                              $classCondition
-                             ezcontentobject_tree.contentobject_is_published = 1
+                             ezcontentobject_tree.contentobject_is_published = 1 AND
                              " . eZContentLanguage::sqlFilter( 'ezcontentobject_name', 'ezcontentobject' ) . "
                              $showInvisibleNodesCond
                              $permissionChecking[where]
