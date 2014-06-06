@@ -50,6 +50,12 @@ class wsProductType extends eZDataType
      */
     function validateObjectAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
+        if ( $http->postVariable( $base . '_ezstring_data_int_' . $contentObjectAttribute->attribute( 'id' ) ) === '' )
+        {
+            $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes', 'Debe seleccionarse uno de los valores sugeridos.' ) );
+            return eZInputValidator::STATE_INVALID;
+        }
+
         return eZInputValidator::STATE_ACCEPTED;
     }
 

@@ -11,17 +11,28 @@ class wsProductServerFunctions extends ezjscServerFunctions
     {
         $params = array(
             'StrName' => $args[0],
-            'IntPageSize' => 10,
+            'IntPageSize' => 15,
         );
 
         $client = new SoapClient( eZINI::instance( 'eflsoapserver.ini')->variable( 'SoapServer', 'WSDL' ) );
         $result = $client->RecuperarProductos( $params );
+
         $ret = array();
-        foreach ( $result->RecuperarProductosResult->data->Producto as $p )
+        if ( is_array( $result->RecuperarProductosResult->data->Producto ) )
+        {
+            foreach ( $result->RecuperarProductosResult->data->Producto as $p )
+            {
+                $ret[] = array(
+                    'cod' => $p->_codProductoCC,
+                    'name' => $p->_name,
+                );
+            }
+        }
+        elseif ( is_object( $result->RecuperarProductosResult->data->Producto ) )
         {
             $ret[] = array(
-                'cod' => $p->_codProductoCC,
-                'name' => $p->_name,
+                'cod' => $result->RecuperarProductosResult->data->Producto->_codProductoCC,
+                'name' => $result->RecuperarProductosResult->data->Producto->_name
             );
         }
 
