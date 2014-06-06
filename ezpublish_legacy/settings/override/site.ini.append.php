@@ -20,7 +20,6 @@ ActiveExtensions[]=ezjscore
 ActiveExtensions[]=ezfind
 ActiveExtensions[]=ezflow
 ActiveExtensions[]=ezoe
-ActiveExtensions[]=ezxmlexport
 ActiveExtensions[]=ezwt
 ActiveExtensions[]=ezstarrating
 ActiveExtensions[]=shareit
@@ -41,7 +40,7 @@ ActiveExtensions[]=cjw_newsletter
 ActiveExtensions[]=eflvaloraciones
 ActiveExtensions[]=googlesitemapgenerator
 ActiveExtensions[]=ggwebservices
-ActiveExtensions[]=products
+ActiveExtensions[]=efldatatypes
 #ActiveExtensions[]=ezpaypal
 
 [Session]

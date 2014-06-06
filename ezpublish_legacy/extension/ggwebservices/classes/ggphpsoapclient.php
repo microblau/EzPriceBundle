@@ -133,6 +133,8 @@ class ggPhpSOAPClient extends ggWebservicesClient
             }
             else
             {
+                print $rname;
+                print_r( $request->parameters() );
                 $results = $client->__soapCall( $rname, $request->parameters(), array(), array(), $output_headers );
             }
 

@@ -10,7 +10,7 @@ class wsProductType extends eZDataType
     function __construct()
     {
         $this->eZDataType( self::DATA_TYPE_STRING, ezpI18n::tr( 'kernel/classes/datatypes', 'Producto de Webservice', 'Datatype name' ),
-            array( 'serialize_supported' => true,
+            array( 'serialize_supported' => false,
                 'object_serialize_map' => array( 'data_text' => 'text' ) ) );
     }
 
@@ -25,10 +25,8 @@ class wsProductType extends eZDataType
     {
         if ( $currentVersion != false )
         {
-            $dataText = $originalContentObjectAttribute->attribute( "data_text" );
-            $dataInt = $originalContentObjectAttribute->attribute( "data_int" );
-            $contentObjectAttribute->setAttribute( "data_text", $dataText );
-            $contentObjectAttribute->setAttribute( "data_int", $dataInt );
+            $data = $originalContentObjectAttribute->attribute( "data_text" );
+            $contentObjectAttribute->setAttribute( "data_text", $data );
         }
     }
 
@@ -83,7 +81,7 @@ class wsProductType extends eZDataType
         {
             $data = $http->postVariable( $base . '_ezstring_data_text_' . $contentObjectAttribute->attribute( 'id' ) );
             $data_int = $http->postVariable( $base . '_ezstring_data_int_' . $contentObjectAttribute->attribute( 'id' ) );
-            $contentObjectAttribute->setAttribute( 'data_int', $data_int );
+            $contentObjectAttribute->setAttribute( 'data_text', $data_int . '|'  . $data );
             return true;
         }
         return false;
@@ -151,14 +149,17 @@ class wsProductType extends eZDataType
     /**
      * Devuelve el contenido. Un array con el nombre y el id
      *
+     * los valores los obtiene de un explode del data_text
+     *
      * @param $contentObjectAttribute
      * @return array
      */
     function objectAttributeContent( $contentObjectAttribute )
     {
+        $data = explode( '|', $contentObjectAttribute->attribute( 'data_text' ) );
         return array(
-            'name' => $contentObjectAttribute->attribute( 'data_text' ),
-            'id' => $contentObjectAttribute->attribute( 'data_int' )
+            'name' => $data[1],
+            'id' => $$data[0]
         );
     }
 
@@ -170,7 +171,8 @@ class wsProductType extends eZDataType
      */
     function metaData( $contentObjectAttribute )
     {
-        return $contentObjectAttribute->attribute( 'data_text' );
+        $data = explode( '|', $contentObjectAttribute->attribute( 'data_text' ) );
+        return $data[1];
     }
 
     /**
@@ -181,11 +183,11 @@ class wsProductType extends eZDataType
      */
     function toString( $contentObjectAttribute )
     {
-        return $contentObjectAttribute->attribute( 'data_text' ) . '|' . $contentObjectAttribute->attribute( 'data_int' );
+        return $contentObjectAttribute->attribute( 'data_text' );
     }
 
     /**
-     * Puede recibir un valor en el formato nombreenws|idenws
+     * Puede recibir un valor en el formato idenws|nombre
      *
      * @param $contentObjectAttribute
      * @param $string
@@ -194,9 +196,7 @@ class wsProductType extends eZDataType
      */
     function fromString( $contentObjectAttribute, $string )
     {
-        $data = explode('|', $string );
-        $contentObjectAttribute->setAttribute( 'data_text', $data[0] );
-        $contentObjectAttribute->setAttribute( 'data_int', $data[1] );
+        $contentObjectAttribute->setAttribute( 'data_text', $string );
         return true;
     }
 
@@ -209,7 +209,8 @@ class wsProductType extends eZDataType
      */
     function title( $contentObjectAttribute, $name = null )
     {
-        return $contentObjectAttribute->attribute( 'data_text' );
+        $data = explode( '|', $contentObjectAttribute->attribute( 'data_text' ) );
+        return $data[1];
     }
 
     /**
@@ -244,38 +245,14 @@ class wsProductType extends eZDataType
         return 'string';
     }
 
-    function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
-    {
-        $maxLength = $classAttribute->attribute( self::MAX_LEN_FIELD );
-        $defaultString = $classAttribute->attribute( self::DEFAULT_STRING_FIELD );
-        $dom = $attributeParametersNode->ownerDocument;
-        $maxLengthNode = $dom->createElement( 'max-length' );
-        $maxLengthNode->appendChild( $dom->createTextNode( $maxLength ) );
-        $attributeParametersNode->appendChild( $maxLengthNode );
-        $defaultStringNode = $dom->createElement( 'default-string' );
-        if ( $defaultString )
-        {
-            $defaultStringNode->appendChild( $dom->createTextNode( $defaultString ) );
-        }
-        $attributeParametersNode->appendChild( $defaultStringNode );
-    }
-
-    function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
-    {
-        $maxLength = $attributeParametersNode->getElementsByTagName( 'max-length' )->item( 0 )->textContent;
-        $defaultString = $attributeParametersNode->getElementsByTagName( 'default-string' )->item( 0 )->textContent;
-        $classAttribute->setAttribute( self::MAX_LEN_FIELD, $maxLength );
-        $classAttribute->setAttribute( self::DEFAULT_STRING_FIELD, $defaultString );
-    }
-
     function diff( $old, $new, $options = false )
     {
         $diff = new eZDiff();
         $diff->setDiffEngineType( $diff->engineType( 'text' ) );
         $diff->initDiffEngine();
-        $oldData = $old->content();
-        $newData = $new->content();
-        $diffObject = $diff->diff( $oldData['name'], $newData['name'] );
+        $oldData = explode('|', $old->content() );
+        $newData = explode('|', $old->content() );
+        $diffObject = $diff->diff( $oldData[1], $newData[1] );
         return $diffObject;
     }
 }

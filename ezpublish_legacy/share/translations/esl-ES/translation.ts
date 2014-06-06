@@ -394,7 +394,7 @@
     </message>
     <message>
         <source>Use this field to configure how the url alias of the objects are generated (applies to nice URLs). Type in the identifiers of the attributes that should be used. The identifiers must be enclosed in angle brackets. Text outside angle brackets will be included as is.</source>
-        <translation>Usar este campo para configurar cómo se generarán los alias de la url de los objetos (se aplica a las URLs bonitas). Escribir los identificadores de los atributos que se deben usar. Los identificadores deben estar englobados con paréntesis angulares &quot;&lt;&gt;&quot;. El texto que esté fuera de los paréntesis angulares será incluido tal cual.</translation>
+        <translation>Usar este campo para configurar cómo se generarán los alias de la url de los objetos (se aplica a las URLs bonitas). Escribir los identificadores de los atributos que se deben usar. Los identificadores deben estar englobados con paréntesis angulares. El texto que esté fuera de los paréntesis angulares será incluido tal cual.</translation>
     </message>
     <message>
         <source>Use this field to set the internal name of the class. The identifier will be used in templates and in PHP code. Allowed characters are letters, numbers and underscores.</source>
@@ -402,7 +402,7 @@
     </message>
     <message>
         <source>Use this field to configure how the name of the objects are generated. Type in the identifiers of the attributes that should be used. The identifiers must be enclosed in angle brackets. Text outside angle brackets will be included as it is shown here.</source>
-        <translation>Usar este campo para configurar como se generarán los nombres de los objetos. Poner los identificadores de los atributos que deben ser usados. Los identificadores tienen que estar entre paréntesis angulares (&quot;&lt;&gt;&quot;). El texto fuera de los paréntesis angulares será incluido de forma literal.</translation>
+        <translation>Usar este campo para configurar como se generarán los nombres de los objetos. Poner los identificadores de los atributos que deben ser usados. Los identificadores tienen que estar entre paréntesis angulares El texto fuera de los paréntesis angulares será incluido de forma literal.</translation>
     </message>
     <message>
         <source>Use this checkbox to allow instances of the class to have sub items. If checked, it will be possible to create new sub items. If not checked, the sub items will not be displayed.</source>
