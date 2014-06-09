@@ -2,6 +2,8 @@ extension/*
 !extension/ezoe/
 !extension/ezjscore/
 !extension/ezformtoken/
+!extension/efldatatypes/
+!extension/bump/
 settings/override/
 settings/siteaccess/*
 !settings/siteaccess/admin/

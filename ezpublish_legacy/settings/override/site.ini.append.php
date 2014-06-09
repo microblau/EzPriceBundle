@@ -41,6 +41,7 @@ ActiveExtensions[]=eflvaloraciones
 ActiveExtensions[]=googlesitemapgenerator
 ActiveExtensions[]=ggwebservices
 ActiveExtensions[]=efldatatypes
+ActiveExtensions[]=bump
 #ActiveExtensions[]=ezpaypal
 
 [Session]
