@@ -165,7 +165,7 @@ class wsProductType extends eZDataType
         $data = explode( '|', $contentObjectAttribute->attribute( 'data_text' ) );
         return array(
             'name' => $data[1],
-            'id' => $$data[0]
+            'id' => $data[0]
         );
     }
 
@@ -243,7 +243,8 @@ class wsProductType extends eZDataType
     function sortKey( $contentObjectAttribute )
     {
         $trans = eZCharTransform::instance();
-        return $trans->transformByGroup( $contentObjectAttribute->attribute( 'data_text' ), 'lowercase' );
+        $aux = explode( '|', $contentObjectAttribute->attribute( 'data_text' ) );
+        return $trans->transformByGroup( $aux[1], 'lowercase' );
     }
 
     function sortKeyType()

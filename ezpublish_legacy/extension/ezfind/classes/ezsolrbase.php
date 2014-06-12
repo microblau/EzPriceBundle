@@ -363,7 +363,7 @@ class eZSolrBase
     /**
      * Removes an array of docID's from the Solr index
      *
-     * @param array $docsID List of document IDs to delete. If set to <empty>,
+     * @param array $docsIDs List of document IDs to delete. If set to <empty>,
      *              $query will be used to delete documents instead.
      * @param string $query Solr Query. This will be ignored if $docIDs is set.
      * @param bool $optimize set to true to perform a solr optimize after delete
