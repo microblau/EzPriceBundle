@@ -2,8 +2,8 @@
 /**
  * File containing the eZPaEx class
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @package ezmbpaex
  */
 
@@ -52,10 +52,10 @@ class eZPaEx extends eZPersistentObject
                       'keys' => array( 'contentobject_id' ),
                       'function_attributes' => array( 'contentobject' => 'contentObject',
                                                       'is_expired' => 'isExpired',
-                                                                                                          'is_user' => 'isUser',
-                                                                                                          'has_regexp' => 'hasRegexp',
-                                                                                                          'has_lifetime' => 'hasLifeTime',
-                                                                                                          'has_notification' => 'hasNotification',
+													  'is_user' => 'isUser',
+													  'has_regexp' => 'hasRegexp',
+													  'has_lifetime' => 'hasLifeTime',
+													  'has_notification' => 'hasNotification',
                                                       'can_edit' => 'canEdit',
                                                       'is_updatechildrenpending' => 'isUpdateChildrenPending' ),
                       'relations' => array( 'contentobject_id' => array( 'class' => 'ezcontentobject',
@@ -65,12 +65,12 @@ class eZPaEx extends eZPersistentObject
     }
 
     /**
-         * Creates a default ezpaex object for the corresponding contentobject_id
+	 * Creates a default ezpaex object for the corresponding contentobject_id
      *
-         * @param int $contentObjectID contentobject id of the ezpaex object
-         * @return eZPaEx object
-         */
-        static function create( $contentObjectID )
+	 * @param int $contentObjectID contentobject id of the ezpaex object
+	 * @return eZPaEx object
+	 */
+	static function create( $contentObjectID )
     {
         // Still missing data for paex, try to complete it from user groups
         $ini = eZINI::instance( 'mbpaex.ini' );
@@ -117,10 +117,10 @@ class eZPaEx extends eZPersistentObject
         $this->setAttribute( "expirationnotification_sent", $expirationnotification_sent );
     }
 
-        /**
-         * Store the content of the ezpaex object in the database
-         */
-        function store( $fieldFilters = null )
+	/**
+	 * Store the content of the ezpaex object in the database
+	 */
+	function store( $fieldFilters = null )
     {
         eZPersistentObject::store();
     }
@@ -136,15 +136,15 @@ class eZPaEx extends eZPersistentObject
                                           array( 'contentobject_id' => $paexID ) );
     }
 
-        /**
-         *      Fetch the eZPaEx persitentobject
+	/**
+	 *	Fetch the eZPaEx persitentobject
      *
-         * @param int $id contentobject_id to fetch
-         * @param bool $asObject        return the PO as an object or as an array
+	 * @param int $id contentobject_id to fetch
+	 * @param bool $asObject	return the PO as an object or as an array
      *
-         * @return eZPaEx as PO or array
-         */
-        static function fetch( $id, $asObject = true )
+	 * @return eZPaEx as PO or array
+	 */
+	static function fetch( $id, $asObject = true )
     {
         if ( !$id )
             return null;
@@ -155,14 +155,14 @@ class eZPaEx extends eZPersistentObject
                                                 $asObject );
     }
 
-        /**
-         * Check if the password in the current paex object is expired
+	/**
+	 * Check if the password in the current paex object is expired
      *
      * @return true if the difference between today and password_last_updated date is
      *         greater than the value set in passwordlifetime
-         */
-        function isExpired()
-        {
+	 */
+	function isExpired()
+	{
         eZDebug::writeDebug( 'Check expiration', __METHOD__ );
 
         // If passwordlifetime is not defined or 0 (zero, infinite lifetime) passwords never expire.
@@ -183,78 +183,78 @@ class eZPaEx extends eZPersistentObject
             return true;
         }
 
-                return false;
-        }
+		return false;
+	}
 
-        /**
-         * Check if the object that contains the ezpaex attribute is an user
+	/**
+	 * Check if the object that contains the ezpaex attribute is an user
      *
-         * @return bool if the contentobject is a user or not
-         */
-        function isUser()
-        {
-                $ezpo = eZPersistentObject::fetchObject( eZContentObject::definition(),
+	 * @return bool if the contentobject is a user or not
+	 */
+	function isUser()
+	{
+		$ezpo = eZPersistentObject::fetchObject( eZContentObject::definition(),
                                                 null,
                                                 array( 'id' => $this->attribute('contentobject_id') ),
                                                 true );
-                return eZUser::isUserObject( $ezpo );
-        }
+		return eZUser::isUserObject( $ezpo );
+	}
 
-        /**
-         * Check if validation regexp is defined or not
+	/**
+	 * Check if validation regexp is defined or not
      *
-         * @return true/false
-         */
-        function hasRegexp()
-        {
-                if ( !is_null( $this->attribute('passwordvalidationregexp' ) ) &&
-                        ( $this->attribute( 'passwordvalidationregexp' ) != self::NOT_DEFINED ) &&
-                        ( $this->attribute( 'passwordvalidationregexp' ) != '' ) )
-                {
-                        return true;
-                }
-                else
-                {
-                    return false;
-                }
-        }
+	 * @return true/false
+  	 */
+	function hasRegexp()
+	{
+		if ( !is_null( $this->attribute('passwordvalidationregexp' ) ) &&
+			( $this->attribute( 'passwordvalidationregexp' ) != self::NOT_DEFINED ) &&
+			( $this->attribute( 'passwordvalidationregexp' ) != '' ) )
+		{
+			return true;
+		}
+		else
+		{
+		    return false;
+		}
+	}
 
-        /**
-         * Check if default password lifetime is defined or not
+	/**
+	 * Check if default password lifetime is defined or not
      *
-         * @return bool
-         */
-        function hasLifeTime()
-        {
-                if ( !is_null($this->attribute( 'passwordlifetime' ) ) &&
-                        ( $this->attribute( 'passwordlifetime' ) != self::NOT_DEFINED ) &&
-                        ( $this->attribute( 'passwordlifetime' ) != '' ) )
-                        return true;
-                else
-                        return false;
-        }
+	 * @return bool
+	 */
+	function hasLifeTime()
+	{
+		if ( !is_null($this->attribute( 'passwordlifetime' ) ) &&
+			( $this->attribute( 'passwordlifetime' ) != self::NOT_DEFINED ) &&
+			( $this->attribute( 'passwordlifetime' ) != '' ) )
+			return true;
+		else
+			return false;
+	}
 
-        /**
-         * Check if expiration notification is defined or not
+	/**
+	 * Check if expiration notification is defined or not
      *
-         * @return bool
-         */
-        function hasNotification()
-        {
-                if (!is_null( $this->attribute( 'expirationnotification' ) ) &&
-                        ( $this->attribute( 'expirationnotification' ) != self::NOT_DEFINED ) &&
-                        ( $this->attribute( 'expirationnotification' ) != '' ) )
-                        return true;
-                else
-                        return false;
-        }
+	 * @return bool
+	 */
+	function hasNotification()
+	{
+		if (!is_null( $this->attribute( 'expirationnotification' ) ) &&
+			( $this->attribute( 'expirationnotification' ) != self::NOT_DEFINED ) &&
+			( $this->attribute( 'expirationnotification' ) != '' ) )
+			return true;
+		else
+			return false;
+	}
 
-        /**
-         * Check if password matches regexp validation
+	/**
+	 * Check if password matches regexp validation
      *
      * @param string $password Actual password to check
-         * @return bool
-        */
+	 * @return bool
+	*/
     function validatePassword( $password )
     {
         eZDebug::writeDebug( 'Validate Password Start','eZPaEx::validatePassword' );
@@ -340,11 +340,11 @@ class eZPaEx extends eZPersistentObject
      */
     public static function canEdit()
     {
-                // Get current user
-                $user = eZUser::currentUser();
-                $user_has_access = $user->hasAccessTo( 'userpaex', 'editpaex' );
+		// Get current user
+		$user = eZUser::currentUser();
+		$user_has_access = $user->hasAccessTo( 'userpaex', 'editpaex' );
 
-                if ( $user_has_access['accessWord'] == "yes" )
+		if ( $user_has_access['accessWord'] == "yes" )
             return true;
 
         return false;
@@ -375,7 +375,7 @@ class eZPaEx extends eZPersistentObject
             eZDebug::writeDebug( 'Going to update subtree starting at node ' . $mainNodeID . '.', __METHOD__ );
 
             // Fetch the full subtree array to update
-            $fullSubtree = eZContentObjectTreeNode::subTreeByNodeID( array( "MainNodeOnly" => true,
+            $fullSubtree = eZContentObjectTreeNode::subTreeByNodeID( array( "MainNodeOnly" => false,
                                                                             "AsObject" => false ),
                                                                     $mainNodeID );
 
@@ -394,7 +394,7 @@ class eZPaEx extends eZPersistentObject
                 }
                 else
                 {
-                    eZDebug::writeDebug( 'Skipping object ' . $add_paex_to_update->attribute( 'contentobject_id' ) , __METHOD__ );
+                    eZDebug::writeDebug( 'Skipping object ' . $add_paex_to_update['contentobject_id'] , __METHOD__ );
                 }
             }
         }
@@ -514,7 +514,6 @@ class eZPaEx extends eZPersistentObject
     function sendExpiryNotification( $user )
     {
         $userToSendEmail = $user;
-        require_once( "kernel/common/template.php" );
         $receiver = $userToSendEmail->attribute( 'email' );
 
         $mail = new eZMail();
@@ -523,7 +522,7 @@ class eZPaEx extends eZPersistentObject
             eZDebug::writeError( 'Invalid email address set in user ' . $user->attribute( 'contentobject_id' ), 'sendExpiryNotification' );
             return false;
         }
-        $tpl = templateInit();
+        $tpl = eZTemplate::factory();
         $tpl->setVariable( 'user', $userToSendEmail );
 
         $http = eZHTTPTool::instance();

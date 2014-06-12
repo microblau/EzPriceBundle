@@ -1,33 +1,9 @@
 <?php
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish Community Project
-// SOFTWARE RELEASE:  2014.3
-// COPYRIGHT NOTICE: Copyright (C) 1999-2014 eZ Systems AS
-// EXTENDED COPYRIGHT NOTICE :
-//      Part of this class was inspired from the following contributors' work :
-//      * Kristof Coomans <kristof[dot]coomans[at]telenet[dot]be>
-//      * Paul Borgermans <pb[at]ez[dot]no> ( when not employed yet by eZ Systems )
-//      * SCK-CEN as a legal entity <http://www.sckcen.be/>
-// SOFTWARE LICENSE: GNU General Public License v2
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-
+/**
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ * @version //autogentag//
+ */
 
 /**
  * Solr search plugin for eZ publish
@@ -613,9 +589,11 @@ class eZSolr implements ezpSearchEngine
             }
 
 
+            // Get url alias in specific language
+            $urlAlias = eZFunctionHandler::execute( 'switchlanguage', 'url_alias', array( 'node_id' => $mainNodeID, 'locale' => $languageCode ) );
             // Add main url_alias
-            $doc->addField( ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_url_alias' ), $mainNode->attribute( 'url_alias' ) );
-
+            $doc->addField( ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_url_alias' ), $urlAlias );
+            
             // Add main path_string
             $doc->addField( ezfSolrDocumentFieldBase::generateMetaFieldName( 'main_path_string' ), $mainNode->attribute( 'path_string' ) );
 
@@ -998,7 +976,7 @@ class eZSolr implements ezpSearchEngine
         {
             $searchCount = $resultArray[ 'response' ][ 'numFound' ];
             $objectRes = $this->buildResultObjects(
-                $resultArray, $searchCount, $asObjects, $params['FieldsToReturn']
+                $resultArray, $searchCount, $asObjects, $params
             );
 
             $stopWordArray = array();
@@ -1083,7 +1061,7 @@ class eZSolr implements ezpSearchEngine
         {
             $searchCount = $resultArray[ 'response' ][ 'numFound' ];
             $objectRes = $this->buildResultObjects(
-                $resultArray, $searchCount, $asObjects
+                $resultArray, $searchCount, $asObjects, $params
             );
 
             $stopWordArray = array();
@@ -1287,7 +1265,7 @@ class eZSolr implements ezpSearchEngine
         $extensionInfo = ezpExtension::getInstance( 'ezfind' )->getInfo();
         return ezpI18n::tr(
             'ezfind',
-            'eZ Find %version search plugin &copy; 1999-2013 eZ Systems AS, powered by Apache Solr 4.7.0',
+            'eZ Find %version search plugin &copy; 1999-2014 eZ Systems AS, powered by Apache Solr 4.7.0',
             null,
             array( '%version' => $extensionInfo['version'] )
         );
@@ -1499,7 +1477,7 @@ class eZSolr implements ezpSearchEngine
      * @see eZSolrBase::search
      * @see eZSolrBase::moreLikeThis
      */
-    protected function buildResultObjects( $resultArray, &$searchCount, $asObjects = true, $fieldsToReturn = array() )
+    protected function buildResultObjects( $resultArray, &$searchCount, $asObjects = true, $params = array() )
     {
         $objectRes = array();
         $highLights = array();
@@ -1577,7 +1555,7 @@ class eZSolr implements ezpSearchEngine
                         }
                         // it may be a field originating from the explicit fieldlist to return, so it should be added for template consumption
                         // note that the fieldname will be kept verbatim in a substructure 'fields'
-                        elseif( in_array( $fieldName, $fieldsToReturn ) )
+                        elseif( in_array( $fieldName, $params['FieldsToReturn'] ) )
                         {
                             $emit['fields'][$fieldName] = $fieldValue;
                         }

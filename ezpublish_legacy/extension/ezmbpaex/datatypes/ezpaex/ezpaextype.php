@@ -2,8 +2,8 @@
 /**
  * File containing the ezpaextype class
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @package ezmbpaex
  */
 
@@ -43,7 +43,7 @@ class ezpaextype extends eZDataType
         }
     }
 
-        /**
+	/**
      * Validates input on content object level
      *
      * @return eZInputValidator::STATE_ACCEPTED or eZInputValidator::STATE_INVALID if
@@ -253,7 +253,7 @@ class ezpaextype extends eZDataType
             }
         }
 
-                if ( $paex->canEdit() )
+		if ( $paex->canEdit() )
         {
             // If user has permission, update full paex object with possible new values
             $paex->setInformation( $contentObjectID, $passwordvalidationregexp, $passwordlifetime, $expirationnotification, $passwordLastUpdated, $updatechildren, $expirationnotificationSent );
@@ -269,7 +269,7 @@ class ezpaextype extends eZDataType
         return true;
     }
 
-        /**
+	/**
      * Store the content.
      */
     function storeObjectAttribute( $contentObjectAttribute )
@@ -277,7 +277,7 @@ class ezpaextype extends eZDataType
         $paex = $contentObjectAttribute->content();
         if ( !$paex instanceof eZPaEx )
         {
-                        // create a default paex object
+			// create a default paex object
             $paex = eZPaEx::create( $contentObjectAttribute->attribute( "contentobject_id" ) );
         }
         $paex->store();
@@ -322,7 +322,7 @@ class ezpaextype extends eZDataType
         return false;
     }
 
-        /**
+	/**
      * Returns the content.
      */
     function objectAttributeContent( $contentObjectAttribute )
@@ -337,16 +337,16 @@ class ezpaextype extends eZDataType
      */
     function metaData( $contentObjectAttribute )
     {
-                return $contentObjectAttribute->attribute('id');
-        }
+		return $contentObjectAttribute->attribute('id');
+	}
 
     /**
      * Returns the value as it will be shown if this attribute is used in the
-         * object name pattern.
+	 * object name pattern.
      */
     function title( $contentObjectAttribute, $name = null )
     {
-                return $contentObjectAttribute->attribute('id');
+		return $contentObjectAttribute->attribute('id');
     }
 
     /**

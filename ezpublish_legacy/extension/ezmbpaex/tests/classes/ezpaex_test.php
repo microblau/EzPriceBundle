@@ -2,8 +2,8 @@
 /**
  * File containing the eZPaExTest class
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPLv2
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @package tests
  */
 
@@ -59,12 +59,12 @@ class eZPaExTest extends ezpDatabaseTestCase
     **/
     public function testeZPaEx()
     {
-        $this->assertType( 'eZPaEx', $this->paex );
+        $this->assertInstanceOf( 'eZPaEx', $this->paex );
 
         $this->assertEquals( 14,              $this->paex->attribute( 'contentobject_id' ) );
         $this->assertEquals( '',              $this->paex->attribute( 'passwordvalidationregexp' ) );
         $this->assertEquals( 3,               $this->paex->attribute( 'passwordlifetime' ) );
-        $this->assertEquals( 0,               $this->paex->attribute( 'expirationnotification' ) );
+        $this->assertEquals( eZPaEx::NOT_DEFINED, $this->paex->attribute( 'expirationnotification' ) );
         $this->assertEquals( $this->paexTime, $this->paex->attribute( 'password_last_updated' ) );
         $this->assertEquals( 0,               $this->paex->attribute( 'updatechildren' ) );
         $this->assertEquals( 0,               $this->paex->attribute( 'expirationnotification_sent' ) );
@@ -80,7 +80,7 @@ class eZPaExTest extends ezpDatabaseTestCase
 
         // Create a paex instanced based on this user's content object ID
         $paex = eZPaEx::create( $user->attribute( 'contentobject_id' ) );
-        $this->assertType( 'eZPaEx', $paex );
+        $this->assertInstanceOf( 'eZPaEx', $paex );
         $this->assertEquals( $this->paexINI->variable( 'mbpaexSettings', 'PasswordValidationRegexp' ),
             $paex->attribute( 'passwordvalidationregexp' ),
             "Password validation regexp value doesn't match" );
@@ -145,7 +145,7 @@ class eZPaExTest extends ezpDatabaseTestCase
         // store, and try to fetch again
         $paex->store();
         $fetchedPaex = eZPaEx::fetch( $contentObjectID );
-        $this->assertType( 'eZPaEx', $fetchedPaex,
+        $this->assertInstanceOf( 'eZPaEx', $fetchedPaex,
             "PaEx #$contentObjectID has been stored, fetch() should have returned the object" );
     }
 
@@ -162,7 +162,7 @@ class eZPaExTest extends ezpDatabaseTestCase
         unset( $paex );
 
         // fetch again to be sure it is stored
-        $this->assertType( 'eZPaEx', eZPaEx::fetch( $id ),
+        $this->assertInstanceOf( 'eZPaEx', eZPaEx::fetch( $id ),
             "eZPaEx::fetch() should have returned an object" );
 
         // remove, and check if fetch fails as expected
@@ -188,7 +188,7 @@ class eZPaExTest extends ezpDatabaseTestCase
         eZPaEx::create( $contentObjectID )->store();
 
         // Try fetching it again
-        $this->assertType( 'eZPaEx', eZPaEx::fetch( $contentObjectID ) );
+        $this->assertInstanceOf( 'eZPaEx', eZPaEx::fetch( $contentObjectID ) );
     }
 
     /**

@@ -3,3 +3,14 @@ siteaccess:
         efl_frontend_group:
             - newhome
             - formacion
+system:
+    efl_frontend_group:
+        location_view:
+            full:
+                producto:
+                    template: "eflWebBundle:full:product.html.twig"
+                    match:
+                        Identifier\ContentType: [producto]
+    global:
+        field_templates:
+            - {template: "eflWebBundle::content_fields.html.twig", priority: 10}

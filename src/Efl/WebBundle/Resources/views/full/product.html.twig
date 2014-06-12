@@ -1,0 +1,8 @@
+{% extends "eflWebBundle::pagelayout.html.twig" %}
+
+{% block content %}
+    <p>{{ ez_render_field( content, 'keywords' ) }}</p>
+    <p>{{ ez_render_field( content, 'referencia' ) }}</p>
+    <p>{{ ez_render_field( content, 'precio' ) }}</p>
+    <p>{{ ez_render_field( content, 'precio_test' ) }}</p>
+{% endblock %}

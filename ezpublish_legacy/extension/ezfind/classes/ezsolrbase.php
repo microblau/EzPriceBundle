@@ -1,28 +1,9 @@
 <?php
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish Community Project
-// SOFTWARE RELEASE:  2014.3
-// COPYRIGHT NOTICE: Copyright (C) 1999-2014 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-
+/**
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ * @version //autogentag//
+ */
 
 /*!
  eZSolrBase is a PHP library for connecting and performing operations
@@ -112,7 +93,7 @@ class eZSolrBase
 
      \return POST part of HTML request
      */
-        function buildPostString( $queryParams )
+	function buildPostString( $queryParams )
     {
         foreach ( $queryParams as $name => $value )
         {
@@ -176,7 +157,7 @@ class eZSolrBase
         {
             return false;
         }
-                $params['wt'] = $wt;
+		$params['wt'] = $wt;
         $paramsAsString = $this->buildPostString( $params );
         $data = $this->postQuery( $request, $paramsAsString );
         $resultArray = array();
@@ -363,7 +344,7 @@ class eZSolrBase
     /**
      * Removes an array of docID's from the Solr index
      *
-     * @param array $docsIDs List of document IDs to delete. If set to <empty>,
+     * @param array $docsID List of document IDs to delete. If set to <empty>,
      *              $query will be used to delete documents instead.
      * @param string $query Solr Query. This will be ignored if $docIDs is set.
      * @param bool $optimize set to true to perform a solr optimize after delete

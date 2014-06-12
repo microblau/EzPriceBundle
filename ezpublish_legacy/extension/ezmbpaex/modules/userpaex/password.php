@@ -2,8 +2,8 @@
 /**
  * File containing the password view
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @package ezmbpaex
  */
 
@@ -158,8 +158,7 @@ if ( $http->hasPostVariable( "CancelButton" ) || !$user )
 
 $Module->setTitle( "Edit user information" );
 // Template handling
-require_once( "kernel/common/template.php" );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( "module", $Module );
 $tpl->setVariable( "http", $http );
 $tpl->setVariable( "userID", $UserID );

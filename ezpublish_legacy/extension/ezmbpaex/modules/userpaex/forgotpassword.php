@@ -2,13 +2,12 @@
 /**
  * File containing the forgotpassword view
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
- * @license http://ez.no/Resources/Software/Licenses/eZ-Business-Use-License-Agreement-eZ-BUL-Version-2.1 eZ Business Use License Agreement eZ BUL Version 2.1
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @package ezmbpaex
  */
 
-require_once( "kernel/common/template.php" );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( 'generated', false );
 $tpl->setVariable( 'wrong_email', false );
 $tpl->setVariable( 'link', false );
@@ -99,14 +98,13 @@ if ( $module->isCurrentAction( "Generate" ) )
             $forgotPasswdObj->store();
 
             $userToSendEmail = $user;
-            require_once( "kernel/common/template.php" );
             $receiver = $email;
 
             $mail = new eZMail();
             if ( !$mail->validate( $receiver ) )
             {
             }
-            $tpl = templateInit();
+            $tpl = eZTemplate::factory();
             $tpl->setVariable( 'user', $userToSendEmail );
             $tpl->setVariable( 'object', $userToSendEmail->attribute( 'contentobject' ) );
             $tpl->setVariable( 'password', $password );

@@ -1,10 +1,33 @@
 parameters:
     ezpublish.fieldType.customezpage.class: eZ\Publish\Core\FieldType\Page\Type
+    ezpublish.fieldType.customezprice.class: eZ\Publish\Core\FieldType\Null\Type
+    ezpublish.fieldType.dummy.class: eZ\Publish\Core\FieldType\Null\Type
+    ezpublish.fieldType.ezobjectrelationbrowse.class: eZ\Publish\Core\FieldType\RelationList\Type
 
 services:
     ezpublish.fieldType.customezpage:
-            class: %ezpublish.fieldType.customezpage.class%
-            parent: ezpublish.fieldType
-            arguments: [@ezpublish.fieldType.ezpage.pageService, @ezpublish.fieldType.ezpage.hashConverter]
-            tags:
-                - {name: ezpublish.fieldType, alias: customezpage}
+        class: %ezpublish.fieldType.customezpage.class%
+        parent: ezpublish.fieldType
+        arguments: [@ezpublish.fieldType.ezpage.pageService, @ezpublish.fieldType.ezpage.hashConverter]
+        tags:
+            - {name: ezpublish.fieldType, alias: customezpage}
+
+    ezpublish.fieldType.customezprice:
+        class: %ezpublish.fieldType.customezprice.class%
+        parent: ezpublish.fieldType
+        arguments: [ "customezprice" ]
+        tags:
+            - {name: ezpublish.fieldType, alias: customezprice}
+
+    ezpublish.fieldType.dummy:
+        class: %ezpublish.fieldType.dummy.class%
+        parent: ezpublish.fieldType
+        arguments: [ "dummy" ]
+        tags:
+            - {name: ezpublish.fieldType, alias: dummy}
+
+    ezpublish.fieldType.ezobjectrelationbrowse:
+        class: %ezpublish.fieldType.ezobjectrelationbrowse.class%
+        parent: ezpublish.fieldType
+        tags:
+            - {name: ezpublish.fieldType, alias: ezobjectrelationbrowse}

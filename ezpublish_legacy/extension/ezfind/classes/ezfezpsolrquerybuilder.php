@@ -1,36 +1,9 @@
 <?php
-//
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish Community Project
-// SOFTWARE RELEASE:  2014.3
-// COPYRIGHT NOTICE: Copyright (C) 1999-2014 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file ezfezpsolrquerybuilder.php
-*/
-
-/*!
-  \class ezfeZPSolrQueryBuilder ezfezpsolrquerybuilder.php
-  \brief The class ezfeZPSolrQueryBuilder does
-
-*/
+/**
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ * @version //autogentag//
+ */
 
 class ezfeZPSolrQueryBuilder
 {
@@ -231,34 +204,34 @@ class ezfeZPSolrQueryBuilder
             $filterQuery[] = $policyLimitationFilterQuery;
         }
 
-                // Add time/date query filter
-        if ( $dateFilter > 0 )
-                {
-                switch ( $dateFilter )
-                        {
-                                // last day
-                                case 1:
-                                        $searchTimestamp = strtotime( '-1 day' );
-                                break;
-                                // last week
-                                case 2:
-                                        $searchTimestamp = strtotime( '-1 week' );
-                                        break;
-                                // last month
-                                case 3:
-                                        $searchTimestamp = strtotime( '-1 month' );
-                                        break;
-                                // last three month
-                                case 4:
-                                        $searchTimestamp = strtotime( '-3 month' );
-                                        break;
-                                // last year
-                                case 5:
-                                        $searchTimestamp = strtotime( '-1 year' );
-                                break;
-                        }
-                        $filterQuery[] = eZSolr::getMetaFieldName( 'published' ) . ':[' . ezfSolrDocumentFieldBase::preProcessValue( $searchTimestamp, 'date' ) .'/DAY TO *]';
-                }
+		// Add time/date query filter
+    	if ( $dateFilter > 0 )
+		{
+    		switch ( $dateFilter )
+			{
+				// last day
+				case 1:
+					$searchTimestamp = strtotime( '-1 day' );
+				break;
+				// last week
+				case 2:
+					$searchTimestamp = strtotime( '-1 week' );
+					break;
+				// last month
+				case 3:
+					$searchTimestamp = strtotime( '-1 month' );
+					break;
+				// last three month
+				case 4:
+					$searchTimestamp = strtotime( '-3 month' );
+					break;
+				// last year
+				case 5:
+					$searchTimestamp = strtotime( '-1 year' );
+				break;
+			}
+			$filterQuery[] = eZSolr::getMetaFieldName( 'published' ) . ':[' . ezfSolrDocumentFieldBase::preProcessValue( $searchTimestamp, 'date' ) .'/DAY TO *]';
+		}
 
         if ( (!eZContentObjectTreeNode::showInvisibleNodes() || !$ignoreVisibility ) && ( self::$FindINI->variable( 'SearchFilters', 'FilterHiddenFromDB' ) == 'enabled' ) )
         {
@@ -326,7 +299,7 @@ class ezfeZPSolrQueryBuilder
         //the array_unique below is necessary because attribute identifiers are not unique .. and we get as
         //much highlight snippets as there are duplicate attribute identifiers
         //these are also in the list of query fields (dismax, ezpublish) request handlers
-        $queryFields = array_unique( $this->getClassAttributes( $contentClassID, $contentClassAttributeID, $fieldTypeExcludeList ) );
+	$queryFields = array_unique( $this->getClassAttributes( $contentClassID, $contentClassAttributeID, $fieldTypeExcludeList ) );
 
         //highlighting only in the attributes, otherwise the object name is repeated in the highlight, which is already
         //partly true as it is mostly composed of one or more attributes.
@@ -648,9 +621,9 @@ class ezfeZPSolrQueryBuilder
         }
         switch ( $handlerParameters['qt'] )
         {
-                case 'ezpublish' :
-                {
-                // The edismax based handler which takes its own boost parameters
+        	case 'ezpublish' :
+        	{
+        	// The edismax based handler which takes its own boost parameters
                 // Push the boost expression in the 'bf' parameter, if it is not empty.
                 //
                 // for the fields to boost, modify the qf parameter for edismax
@@ -692,18 +665,18 @@ class ezfeZPSolrQueryBuilder
                 }
 
                 return $boostReturnArray;
-                } break;
+        	} break;
 
-                default:
-                {
-                    // Simplestandard or standard search handlers.
-                    // Append the boost expression to the 'q' parameter.
-                    // Alter the $handlerParameters array ( passed as reference )
-                    // @TODO : Handle query-time field boosting through the buildMultiFieldQuery() method.
-                    //         Requires a modified 'heuristic' mode.
-                    $boostString = implode( ' ', $processedBoostFunctions['functions'] );
+        	default:
+        	{
+        	    // Simplestandard or standard search handlers.
+        	    // Append the boost expression to the 'q' parameter.
+        	    // Alter the $handlerParameters array ( passed as reference )
+        	    // @TODO : Handle query-time field boosting through the buildMultiFieldQuery() method.
+        	    //         Requires a modified 'heuristic' mode.
+        	    $boostString = implode( ' ', $processedBoostFunctions['functions'] );
                 $handlerParameters['q'] .= ' _val_:' . trim( $boostString );
-                } break;
+        	} break;
         }
         return array();
     }
@@ -1490,7 +1463,7 @@ class ezfeZPSolrQueryBuilder
      */
     protected function getContentClassFilterQuery( $contentClassIdent )
     {
-                if ( empty( $contentClassIdent ) )
+		if ( empty( $contentClassIdent ) )
         {
             return null;
         }
@@ -1516,10 +1489,10 @@ class ezfeZPSolrQueryBuilder
                         $classQueryParts[] = eZSolr::getMetaFieldName( 'contentclass_id' ) . ':' . $class->attribute( 'id' );
                     }
                 }
-                else
-                                {
-                                        eZDebug::writeError( "Unknown class_id filtering parameter: $classID", __METHOD__ );
-                                }
+            	else
+				{
+					eZDebug::writeError( "Unknown class_id filtering parameter: $classID", __METHOD__ );
+				}
             }
 
             return implode( ' OR ', $classQueryParts );

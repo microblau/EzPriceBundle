@@ -15,7 +15,7 @@
 /web/index_cluster.php
 /web/bundles/
 /web/design
-/web/extension
+#/web/extension
 /web/share
 /web/var
 /web/.htaccess
