@@ -1,10 +1,9 @@
 <?php
 /**
- * File containing the Price converter
+ * This file is part of the EzPriceBundle package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
- * @version //autogentag//
  */
 
 namespace EzSystems\EzPriceBundle\eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter;
@@ -22,7 +21,7 @@ class Price implements Converter
      *
      * @note Class should instead be configured as service if it gains dependencies.
      *
-     * @return Float
+     * @return \EzSystems\EzPriceBundle\eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter\Price
      */
     public static function create()
     {
