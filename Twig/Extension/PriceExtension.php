@@ -9,11 +9,25 @@
 namespace EzSystems\EzPriceBundle\Twig\Extension;
 
 use eZ\Publish\API\Repository\Values\Content\Field;
+use eZ\Publish\API\Repository\Values\Content\VersionInfo;
+use EzSystems\EzPriceBundle\API\Price\PriceValueWithVatDataCalculator;
+use EzSystems\EzPriceBundle\API\Price\VatService;
 use Twig_Extension;
 use Twig_SimpleFunction;
 
 class PriceExtension extends Twig_Extension
 {
+    /** @var \EzSystems\EzPriceBundle\API\Price\VatService */
+    private $vatService;
+
+    /** @var \EzSystems\EzPriceBundle\API\Price\PriceValueWithVatDataCalculator */
+    private $calculator;
+
+    public function __construct( VatService $vatService, PriceValueWithVatDataCalculator $calculator )
+    {
+        $this->vatService = $vatService;
+        $this->calculator = $calculator;
+    }
     /**
      * Returns the name of the extension.
      *
@@ -47,7 +61,12 @@ class PriceExtension extends Twig_Extension
      *
      * @return string
      */
-    public function priceValue( Field $price )
+    public function priceValue( VersionInfo $versionInfo, Field $price )
     {
+        return $this->calculator->getValueWithVatData(
+            $price->value,
+            $this->vatService->loadVatRate( $price->id, $versionInfo->versionNo )
+        );
+
     }
 }
