@@ -1,18 +1,17 @@
 <?php
 /**
- * This file is part of the eZ Publish Legacy package
+ * This file is part of the EzPriceBundle package.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
- * @license For full copyright and license information view LICENSE file distributd with this source code.
- * @version //autogentag//
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
+
 namespace EzSystems\EzPriceBundle\Tests\Core\Price;
 
 use EzSystems\EzPriceBundle\API\Price\Values\PriceWithVatData;
 use EzSystems\EzPriceBundle\API\Price\Values\VatRate;
 use EzSystems\EzPriceBundle\eZ\Publish\Core\FieldType\Price\Value as PriceValue;
 use EzSystems\EzPriceBundle\Core\Price\PriceValueWithVatDataCalculator;
-use EzSystems\EzPriceBundle\eZ\Publish\Core\FieldType\Price\Value as PriceValue;
 use PHPUnit_Framework_TestCase;
 
 /**
