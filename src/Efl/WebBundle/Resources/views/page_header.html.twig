@@ -1,21 +1,43 @@
-<header>
-    <div class="container">
-        <div class="navbar extra-navi">
-            <div class="nav-collapse row">
-
-                {% block userlinks %}
-                    {{ render_hinclude( controller( 'eZDemoBundle:Demo:userLinks' ) ) }}
-                {% endblock %}
+<section class="hBar cl">
+    <div class="wrapper">
+        <div class="flt">
+            <span class="phone"><a href="tel:912108000">912 108 000</a></span>
+            <h1 class="offscreen">Francis Lefebvre. Información jurídica para empresas y asesores.</h1>
+        </div>
+        <div class="frt">
+            <span class="login"><a href="#">Acceder a mi cuenta</a></span>
+            <div class="cart">
+                <a href="#">
+                    <span class="link">Finalizar compra</span>
+                    <span class="price">999,99 €</span>
+                    <span class="amount">2</span>
+                </a>
             </div>
         </div>
-        <div class="row">
-            {% block logo %}
-                {% include 'EflWebBundle::page_header_logo.html.twig' %}
-            {% endblock %}
+    </div>
+</section>
+<section class="cont">
+    <div class="wrapper cl">
+        <div class="cl">
+            <div class="logo">
+                <a href=""><img src="{{ asset('bundles/eflweb/images/logo_mobile.png') }}" alt="Logo Grupo Francis Lefebvre" /></a>
+            </div>
 
-            {% block searchbox %}
-                {% include 'eZDemoBundle::page_header_searchbox.html.twig' %}
-            {% endblock %}
+            <div class="busy">
+                <form action="{{ path( 'ez_legacy', {'module_uri': '/content/search'} ) }}" method="post">
+                    <label for="busy" class="offscreen">Término a buscar</label>
+                    <input id="busy" type="text" class="text" placeholder="Escribe el título, área del derecho o ley concreta para encontrar la publicación" />
+                    <a href="{{ path( 'ez_legacy', {'module_uri': '/content/advancedsearch'} ) }}" class="advanced">Búsqueda avanzada</a>
+                    <input type="submit" class="submit" value="Buscar" />
+                </form>
+            </div>
         </div>
     </div>
-</header>
+    <nav>
+        <div class="wrapper">
+            <span class="menu"><a href="#">Mostar menú</a></span>
+            {{ render( controller( "EflWebBundle:Header:mainMenu" ) ) }}
+
+        </div>
+    </nav>
+</section>

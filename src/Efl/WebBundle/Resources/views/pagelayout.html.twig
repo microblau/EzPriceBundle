@@ -13,7 +13,7 @@
 <!--[if IE 8]> <body class="ie8 home"> <![endif]-->
 <!--[if IE 7]> <body class="ie7 home"> <![endif]-->
 <!--[if !IE]><!-->
-<body class="home">
+<body class="home js">
 <!--<![endif]-->
 <!-- Complete page area: START -->
 {% if location is defined %}
@@ -21,7 +21,7 @@
 {% endif %}
 <div id="outer-wrap">
     <div id="inner-wrap">
-        <header>
+        <header class="header">
             {% block header %}
                 {% include 'EflWebBundle::page_header.html.twig' %}
             {% endblock %}

@@ -7,6 +7,11 @@ parameters:
     eflweb.social_links.youtube: https://www.youtube.com/user/fmourelle
 
     eflweb.catalog.location_id: 61
+    eflweb.catalog.mementos.location_id: 64
+    eflweb.catalog.bases_datos.location_id: 13373
+    eflweb.catalog.qmemento.location_id: 70
+    eflweb.catalog.imemento.location_id: 11152
+    eflweb.catalog.qmementix.location_id: 69
     eflweb.aviso_legal.location_id: 292
     eflweb.politica_privacidad.location_id: 19526
     eflweb.politica_cookies.location_id: 20410
