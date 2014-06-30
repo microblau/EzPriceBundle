@@ -1,0 +1,67 @@
+@media (min-width:450px) {
+	.header .flt { float:left; text-align: center;}
+	.header .frt { float:right; text-align: center;}
+	.cart .amount { float: none; padding-bottom:.45em; }
+}
+
+@media (min-width:580px) {
+
+}
+
+@media (min-width:760px) {
+	
+}
+
+
+@media (min-width: 980px) {
+	.header .cont > .wrapper { position: static;}
+	.header { border-bottom: none;}
+		.header .login { display:inline-block; margin: .8em 0 .6em; padding-left: 2.1em; background:url("../images/sprite_header.png") no-repeat -64px -26px;}
+			.header .login a { font-size: 1.2em; color: #578ef2; text-decoration: underline;}
+			.header .login a:hover { text-decoration: none;}
+		.header .cart { display: inline-block; margin-left:2.1em;}
+
+		.header .logo { float: left; margin-top: 1.6em;}
+
+		nav .menu, .header .busy .submit { position: static;}
+
+		/*busy form*/
+		.header .busy { float: right; max-width: 58%; margin:1em 0 0; border: 1px solid #e8e9ec; padding: 0;}
+			.header .busy input[type="text"], .header .busy .advanced, .header .busy .submit { display: inline-block; vertical-align: middle;}
+			.header .busy input[type="text"] { width: 38.3em; margin-right: 1.4em; border: none;}
+			.header .busy .advanced { margin-right: 1em; font-family: 'proxima_nova_rgbold', Arial, Helvetica, sans-serif; font-size: 1.1em; color: #2d90f6;}
+			.header .busy .advanced:hover { text-decoration: none;}
+			.header .busy .submit { border: none; border-left: 1px solid #e8e9ec;}
+		.header .menu { display: none;}
+		nav { margin-top: 2.5em; background-color:#2b90f6;}
+			nav ul { display:block;}
+				nav li { display: inline-block; vertical-align: middle; margin-right: 1.3em; padding:1.2em 1.7em 1.2em 0; background:url("../images/pipe_type2.png") no-repeat 100% 50%; }
+					nav li a { font-family: 'proxima_nova_rgregular', Arial, Helvetica, sans-serif; font-size: 1.5em; color: #fff; text-decoration: none;}
+					nav li a:hover { text-decoration: underline;}
+				nav li.reset { margin-right: 0; padding-right: 0; background:none;}
+	/*footer*/
+	.wrapperFooter footer .wrapper { padding: 0;}
+	.wrapperFooter .preFooter { display: block;}
+	.wrapperFooter .flt { float: left;}
+		.wrapperFooter .flt .txt { margin-right: 2em;}
+	.wrapperFooter .frt { float: right; text-align:right;}
+		.wrapperFooter .frt .txt { margin-right: 1em;}
+	.wrapperFooter footer .wrapper .flt { margin-bottom: 0;}
+
+	.wrapperFooter .txt { font-size: 1.2em;}
+	.wrapperFooter .row1 { margin-bottom: 1.8em;}
+	.wrapperFooter .row2 { margin-bottom: 2.4em;}
+	.wrapperFooter .row1 .frt { width: 65%; text-decoration: right;}
+		.wrapperFooter .row1 .txt, .wrapperFooter .row1 .icons, .wrapperFooter .row1 .flt img { display: inline-block;; vertical-align: middle; margin-bottom: 0;}
+
+	.wrapperFooter .linksFooter { margin-bottom: 0;}
+		.wrapperFooter .linksFooter li { display: inline-block; vertical-align: middle; margin-right: .8em; padding-right: 1.2em; background:url("../images/pipe_type1.gif") no-repeat 100% 50%;}
+			.wrapperFooter .linksFooter a, .wrapperFooter .copy { font-size: 1.2em;}
+	
+		.wrapperFooter .linksFooter li.reset { margin-right: 0; padding-right: 0; background:none; }
+}
+
+@media (min-width: 1100px) {
+	.wrapper { width: 110em; margin:0 auto;}
+
+}
