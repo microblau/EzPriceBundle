@@ -21,7 +21,7 @@ class PriceValueWithVatDataCalculator implements PriceValueWithVatDataCalculator
      * Returns an object adding the price with and without Vat applied
      *
      * @param \EzSystems\EzPriceBundle\eZ\Publish\Core\FieldType\Price\Value $price
-     * @param VatRate $vatRate
+     * @param \EzSystems\EzPriceBundle\API\Price\Values\VatRate $vatRate
      *
      * @return \EzSystems\EzPriceBundle\API\Price\Values\PriceWithVatData
      */

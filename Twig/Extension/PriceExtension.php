@@ -13,6 +13,7 @@ use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use EzSystems\EzPriceBundle\API\Price\PriceValueWithVatDataCalculator;
 use EzSystems\EzPriceBundle\API\Price\VatService;
 use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Gateway\AutomaticVatHandlerException;
+use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Gateway\VatIdentifierNotFoundException;
 use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\VatNotFoundException;
 use Psr\Log\LoggerInterface;
 use Twig_Extension;
@@ -78,6 +79,13 @@ class PriceExtension extends Twig_Extension
                 $price->value,
                 $this->vatService->loadVatRate( $price->id, $versionInfo->versionNo )
             );
+        }
+        catch ( VatIdentifierNotFoundException $e )
+        {
+            if ( $this->logger )
+            {
+                $this->logger->error( "Couldn't find Vat identifier for Field {$price->id} and Version {$versionInfo->versionNo}. Showing base price instead." );
+            }
         }
         catch ( AutomaticVatHandlerException $e )
         {

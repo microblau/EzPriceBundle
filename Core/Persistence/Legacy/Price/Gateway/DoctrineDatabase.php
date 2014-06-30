@@ -10,7 +10,7 @@ namespace EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Gateway;
 
 use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Gateway;
 use eZ\Publish\Core\Persistence\Database\DatabaseHandler;
-use eZ\Publish\Core\Base\Exceptions\NotFoundException;
+use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Gateway\VatIdentifierNotFoundException;
 use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\VatNotFoundException;
 use PDO;
 
@@ -50,10 +50,13 @@ class DoctrineDatabase extends Gateway
     }
 
     /**
-     * Gets the id of the vat rate associated with Field id $fieldId and version number $versionNo
+     * Gets the id of the vat rate associated with $fieldId and $versionNo
      *
      * @param $fieldId
      * @param $versionNo
+     *
+     * @throws \EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Gateway\VatIdentifierNotFoundException
+     *         when vat_identifier can't be found (empty data_text).
      *
      * @return int;
      */
@@ -79,11 +82,13 @@ class DoctrineDatabase extends Gateway
         $statement = $query->prepare();
         $statement->execute();
 
-        if ( $row = $statement->fetch( PDO::FETCH_ASSOC ) )
-        {
-            $rowVatData = explode( ',', $row['data_text'] );
-            return $rowVatData[0];
-        }
+        $rowDataText = $statement->fetchColumn();
+        if ( empty( $rowDataText ) )
+            throw new VatIdentifierNotFoundException(  'Vat Identifier for ', $fieldId . ' - ' . $versionNo );
+
+        list( $vatTypeId ) = explode( ',', $rowDataText );
+
+        return $vatTypeId;
     }
 
     /**
