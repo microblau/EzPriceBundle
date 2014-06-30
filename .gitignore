@@ -15,6 +15,9 @@
 /web/index_cluster.php
 /web/bundles/
 /web/design
+/web/css
+/web/js
+/ezpublish/sessions
 #/web/extension
 /web/share
 /web/var
@@ -24,3 +27,6 @@ composer.lock
 .buildpath
 .project
 .settings/
+src/EzSystems
+src/Crevillo
+

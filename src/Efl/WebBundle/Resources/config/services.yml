@@ -1,0 +1,17 @@
+parameters:
+    eflweb.location_helper.class: Efl\WebBundle\Helper\LocationHelper
+
+    eflweb.social_links.linkedin: http://www.linkedin.com/company/ediciones-francis-lefebvre
+    eflweb.social_links.twitter: https://twitter.com/edicionesfl
+    eflweb.social_links.facebook: https://www.facebook.com/GrupoEFL
+    eflweb.social_links.youtube: https://www.youtube.com/user/fmourelle
+
+    eflweb.catalog.location_id: 61
+    eflweb.aviso_legal.location_id: 292
+    eflweb.politica_privacidad.location_id: 19526
+    eflweb.politica_cookies.location_id: 20410
+
+services:
+    eflweb.location_helper:
+        class: %eflweb.location_helper.class%
+        arguments: [@ezpublish.api.repository]

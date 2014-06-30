@@ -1,5 +1,5 @@
 efl_web:
-    resource: "@eflWebBundle/Resources/config/routing.yml"
+    resource: "@EflWebBundle/Resources/config/routing.yml"
     prefix:   /
 
 login:

@@ -1,0 +1,40 @@
+<div class="wrapper">
+    <div class="row1 cl">
+        <div class="flt">
+            <p class="txt">Acceda a los Mementos desde las soluciones</p>
+            <img src="{{ asset('bundles/eflweb/images/logo_sage.png') }}" alt="Logo SAGE" />
+        </div>
+        <div class="frt">
+            <p class="txt">Métodos de pago</p>
+            <ul class="icons">
+                <li><img src="{{ asset('bundles/eflweb/images/logo_paypal.png') }}" alt="Logo de Paypal" /></li>
+                <li><img src="{{ asset('bundles/eflweb/images/logo_mastercard.png') }}" alt="Logo Mastercard" /></li>
+                <li><img src="{{ asset('bundles/eflweb/images/logo_visa.png') }}"  alt="Logo Visa" /></li>
+                <li><img src="{{ asset('bundles/eflweb/images/logo_domiciliacion-bancaria.png') }}"  alt="Logo Domiciliación bancaria" /></li>
+            </ul>
+            <p class="txt">Redes Sociales</p>
+            <ul class="icons">
+                <li><a href="{{ data.linkedin_link }}" target="_blank"><img src="{{ asset('bundles/eflweb/images/logo_linkedin.png') }}" alt="Linkedin" /></a></li>
+                <li><a href="{{ data.twitter_link }}" target="_blank"><img src="{{ asset('bundles/eflweb/images/logo_twitter.png') }}" alt="Twitter" /></a></li>
+                <li><a href="{{ data.facebook_link }}" target="_blank"><img src="{{ asset('bundles/eflweb/images/logo_facebook.png') }}" alt="Facebook" /></a></li>
+                <li><a href="{{ data.youtube_link }}" target="_blank"><img src="{{ asset('bundles/eflweb/images/logo_youtube.png') }}" alt="Youtube" /></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row2 cl">
+        <div class="flt">
+            <ul class="linksFooter">
+                <li><a href="#">Sobre nosotros</a></li>
+                <li><a href="{{ path( data.catalog_location ) }}">Catálogo</a></li>
+                <li><a href="#">Envíos</a></li>
+                <li><a href="#">Internacionales</a></li>
+                <li><a href="{{ path( data.aviso_legal_location ) }}">Aviso Legal</a></li>
+                <li><a href="{{ path( data.politica_privacidad_location ) }}">Política de privacidad</a></li>
+                <li class="reset"><a href="{{ path( data.politica_cookies_location ) }}">Política de cookies</a></li>
+            </ul>
+        </div>
+        <div class="frt">
+            <p class="copy">© 2014, EFL. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</div>

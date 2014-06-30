@@ -1,1 +1,5 @@
-{# Override this template and place javascript based statistics here (like Google Analytics) #}
+{% javascripts
+'@EflWebBundle/Resources/public/js/common.js'
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}

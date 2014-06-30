@@ -8,9 +8,9 @@ system:
         location_view:
             full:
                 producto:
-                    template: "eflWebBundle:full:product.html.twig"
+                    template: "EflWebBundle:full:product.html.twig"
                     match:
                         Identifier\ContentType: [producto]
     global:
         field_templates:
-            - {template: "eflWebBundle::content_fields.html.twig", priority: 10}
+            - {template: "EflWebBundle::content_fields.html.twig", priority: 10}

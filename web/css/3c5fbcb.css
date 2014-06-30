@@ -4815,6 +4815,9 @@ a.thumbnail:hover {
 .content-view-aside .block-type-tagcloud .block-content {
   padding: 10px 20px;
 }
+.content-view-aside .block-type-tagcloud a {
+  padding-right: 0.2em;
+}
 .block-type-campaign {
   margin-bottom: 1em;
 }
@@ -5129,6 +5132,9 @@ div.ezcom-setting-mail {
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
+.place-list-item {
+  clear: both;
+}
 .place-list-image {
   margin-left: 0;
   margin-right: 0;
@@ -5151,17 +5157,51 @@ div.ezcom-setting-mail {
   font-weight: bold;
   text-align: center;
 }
+.place-description {
+  text-align: justify;
+  margin-bottom: 20px;
+  margin-top: 30px;
+}
+.place-name {
+  margin-left: 0px;
+  margin-bottom: 25px;
+  margin-top: 15px;
+}
+.place-list-gmap {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+.place-list-item .infobox-content {
+  display: none;
+}
+#place-list-gmap-container img {
+  max-width: none;
+}
+.place-list-map-size {
+  height: 550px;
+}
+.place-list-content-hidden {
+  display: none;
+}
 @media (max-width: 760px) {
   .place-list-form {
     float: none;
     max-width: 100%;
     text-align: center;
   }
+  .place-description {
+    text-align: justify;
+    margin-left: 0px;
+    margin-top: 25px;
+  }
   .place-image {
-    visibility: hidden;
     display: none;
   }
   .place-name {
+    text-align: center;
+  }
+  .place-list-name {
     text-align: center;
   }
 }
@@ -5169,11 +5209,13 @@ div.ezcom-setting-mail {
   display: none;
 }
 .place-image {
-  margin-top: 10px;
-  text-align: center;
+  margin-top: 0px;
+  text-align: left;
   margin-bottom: 15px;
+  margin-left: 0;
 }
-.place-location {
+.place-location img {
+  max-width: none;
   margin-top: 10px;
   margin-bottom: 15px;
 }

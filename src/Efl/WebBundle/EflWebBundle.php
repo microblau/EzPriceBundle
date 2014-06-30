@@ -12,5 +12,5 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EflWebBundle extends Bundle
 {
-    protected $name = 'eflWebBundle';
+    protected $name = 'EflWebBundle';
 }

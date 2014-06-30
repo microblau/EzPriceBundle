@@ -39,7 +39,7 @@ class EflWebExtension extends Extension implements PrependExtensionInterface
         // Fieldtypes
         $loader->load( 'fieldtypes.yml' );
 
-        // Storage Entines
+        // Storage Engines
         $loader->load( 'storage_engines.yml' );
     }
 
