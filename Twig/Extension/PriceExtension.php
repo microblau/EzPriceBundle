@@ -11,9 +11,9 @@ namespace EzSystems\EzPriceBundle\Twig\Extension;
 use eZ\Publish\API\Repository\Values\Content\Field;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use EzSystems\EzPriceBundle\API\Price\PriceValueWithVatDataCalculator;
-use EzSystems\EzPriceBundle\API\Price\VatService;
+use EzSystems\EzPriceBundle\API\Price\ContentVatService;
 use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Gateway\AutomaticVatHandlerException;
-use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Gateway\VatIdentifierNotFoundException;
+use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\ContentVat\Gateway\VatIdentifierNotFoundException;
 use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\VatNotFoundException;
 use Psr\Log\LoggerInterface;
 use Twig_Extension;
@@ -22,21 +22,26 @@ use Twig_SimpleFunction;
 class PriceExtension extends Twig_Extension
 {
     /**
-     * @var \EzSystems\EzPriceBundle\API\Price\VatService
+     * @var \EzSystems\EzPriceBundle\API\Price\ContentVatService
      */
-    private $vatService;
+    private $contentVatService;
 
     /**
      * @var \EzSystems\EzPriceBundle\API\Price\PriceValueWithVatDataCalculator
      */
     private $calculator;
 
-    public function __construct( VatService $vatService, PriceValueWithVatDataCalculator $calculator, LoggerInterface $logger )
+    public function __construct(
+        ContentVatService $contentVatService,
+        PriceValueWithVatDataCalculator $calculator,
+        LoggerInterface $logger = null
+    )
     {
-        $this->vatService = $vatService;
+        $this->contentVatService = $contentVatService;
         $this->calculator = $calculator;
         $this->logger = $logger;
     }
+
     /**
      * Returns the name of the extension.
      *
@@ -77,7 +82,7 @@ class PriceExtension extends Twig_Extension
         {
             return $this->calculator->getValueWithVatData(
                 $price->value,
-                $this->vatService->loadVatRate( $price->id, $versionInfo->versionNo )
+                $this->contentVatService->loadVatRateForField( $price->id, $versionInfo->versionNo )
             );
         }
         catch ( VatIdentifierNotFoundException $e )

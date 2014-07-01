@@ -6,17 +6,17 @@
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
 
-namespace EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price;
+namespace EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\ContentVat;
 
 abstract class Gateway
 {
     /**
-     * Returns an array with Vat Rate data
+     * Returns Vat Rate Id associated with $fieldId and $versionNo
      *
      * @param mixed $fieldId
      * @param int $versionNo
      *
-     * @return array
+     * @return int
      */
-    abstract public function getVatRateData( $fieldId, $versionNo );
+    abstract public function getVatRateId( $fieldId, $versionNo );
 }

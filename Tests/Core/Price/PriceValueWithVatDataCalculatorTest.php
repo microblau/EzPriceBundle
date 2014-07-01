@@ -51,7 +51,8 @@ class PriceValueWithVatDataCalculatorTest extends PHPUnit_Framework_TestCase
                     'isVatIncluded' => true,
                     'price' => 120.6,
                     'priceIncludingVat' => 120.6,
-                    'priceExcludingVat' => 100
+                    'priceExcludingVat' => 100.0,
+                    'vatRate' => 20.6
                 )
             ),
             $priceWithVat
@@ -85,7 +86,8 @@ class PriceValueWithVatDataCalculatorTest extends PHPUnit_Framework_TestCase
                     'isVatIncluded' => false,
                     'price' => 100,
                     'priceIncludingVat' => 120.6,
-                    'priceExcludingVat' => 100
+                    'priceExcludingVat' => 100.0,
+                    'vatRate'=> 20.6
                 )
             ),
             $priceWithVat

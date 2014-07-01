@@ -19,8 +19,6 @@ class VatService implements VatServiceInterface
     protected $vatHandler;
 
     /**
-     * Constructor
-     *
      * @param \EzSystems\EzPriceBundle\SPI\Persistence\Price\VatHandler $vatHandler
      */
     public function __construct( VatHandler $vatHandler )
@@ -29,15 +27,14 @@ class VatService implements VatServiceInterface
     }
 
     /**
-     * Loads the VAT rate for $fieldId in $versionNo
+     * Loads the VAT rate data for $vatRateId
      *
-     * @param mixed $fieldId
-     * @param int $versionNo
+     * @param mixed $vatRateId
      *
      * @return \EzSystems\EzPriceBundle\API\Price\Values\VatRate
      */
-    public function loadVatRate( $fieldId, $versionNo )
+    public function loadVatRate( $vatRateId )
     {
-        return $this->vatHandler->load( $fieldId, $versionNo );
+        return $this->vatHandler->load( $vatRateId );
     }
 }

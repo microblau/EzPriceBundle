@@ -6,16 +6,17 @@
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
 
-namespace EzSystems\EzPriceBundle\SPI\Persistence\Price;
+namespace EzSystems\EzPriceBundle\API\Price;
 
-interface VatHandler
+interface ContentVatService
 {
     /**
-     * Loads the VAT rate data for $vatRateId
+     * Returns the vatRate associated with $fieldId and $versionNo
      *
-     * @param mixed $vatRateId
+     * @param $fieldId
+     * @param $versionNo
      *
      * @return \EzSystems\EzPriceBundle\API\Price\Values\VatRate
      */
-    public function load( $vatRateId );
+    public function loadVatRateForField( $fieldId, $versionNo );
 }

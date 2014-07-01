@@ -6,16 +6,19 @@
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
 
-namespace EzSystems\EzPriceBundle\SPI\Persistence\Price;
+namespace EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Vat;
 
-interface VatHandler
+abstract class Gateway
 {
     /**
      * Loads the VAT rate data for $vatRateId
      *
      * @param mixed $vatRateId
      *
+     * @throws \EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Vat\Gateway\VatNotFoundException
+     *          if there is no data for $vatId
+     *
      * @return \EzSystems\EzPriceBundle\API\Price\Values\VatRate
      */
-    public function load( $vatRateId );
+    abstract public function getVatRateData( $vatRateId );
 }
