@@ -11,10 +11,13 @@ namespace EzSystems\EzPriceBundle\API\Price;
 interface VatService
 {
     /**
-     * Loads the VAT rate for $fieldId in $versionNo
-     * @param mixed $fieldId
-     * @param int $versionNo
+     * Loads the VAT rate data for $vatRateId
+     *
+     * @param mixed $vatRateId
+     *
+     * @throws
+     *
      * @return \EzSystems\EzPriceBundle\API\Price\Values\VatRate
      */
-    public function loadVatRate( $fieldId, $versionNo );
+    public function loadVatRate( $vatRateId );
 }

@@ -10,9 +10,9 @@ namespace EzSystems\EzPriceBundle\ApiLoader;
 
 use eZ\Publish\Core\Persistence\Database\DatabaseHandler;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Vat\Gateway\DoctrineDatabase;
+use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\ContentVat\Gateway\DoctrineDatabase;
 
-class LegacyVatHandlerFactory
+class LegacyContentVatHandlerFactory
 {
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
@@ -28,16 +28,16 @@ class LegacyVatHandlerFactory
     }
 
     /**
-     * Builds the legacy vat handler
+     * Builds the legacy vat finder handler
      *
      * @param \eZ\Publish\Core\Persistence\Database\DatabaseHandler $dbHandler
      *
-     * @return \EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Vat\VatHandler
+     * @return \EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\ContentVat\ContentVatHandler
      */
-    public function buildLegacyVatHandler( DatabaseHandler $dbHandler )
+    public function buildLegacyContentVatHandler( DatabaseHandler $dbHandler )
     {
-        $legacyVatHandlerClass = $this->container->getParameter( "ezprice.api.storage_engine.legacy.handler.ezprice.vathandler.class" );
-        return new $legacyVatHandlerClass(
+        $legacyVatFinderHandlerClass = $this->container->getParameter( "ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler.class" );
+        return new $legacyVatFinderHandlerClass(
             new DoctrineDatabase( $dbHandler )
         );
     }

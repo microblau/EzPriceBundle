@@ -6,10 +6,10 @@
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
 
-namespace EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Gateway;
+namespace EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Vat\Gateway;
 
 use eZ\Publish\Core\Base\Exceptions\NotFoundException;
 
-class VatIdentifierNotFoundException extends NotFoundException
+class VatNotFoundException extends NotFoundException
 {
 }
