@@ -9,6 +9,7 @@
 namespace EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\ContentVat;
 
 use EzSystems\EzPriceBundle\SPI\Persistence\Price\ContentVatHandler as ContentVatHandlerInterface;
+use EzSystems\EzPriceBundle\Core\Price\AutomaticVatService;
 
 class ContentVatHandler implements ContentVatHandlerInterface
 {
@@ -18,11 +19,18 @@ class ContentVatHandler implements ContentVatHandlerInterface
     protected $gateway;
 
     /**
-     * @param \EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\ContentVat\Gateway $gateway
+     * @var \EzSystems\EzPriceBundle\Core\Price\AutomaticVatService $automaticVatService
      */
-    public function __construct( Gateway $gateway )
+    protected $automaticVatService;
+
+    /**
+     * @param \EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\ContentVat\Gateway $gateway
+     * @param \EzSystems\EzPriceBundle\Core\Price\AutomaticVatService $automaticVatService
+     */
+    public function __construct( Gateway $gateway, AutomaticVatService $automaticVatService )
     {
         $this->gateway = $gateway;
+        $this->automaticVatService = $automaticVatService;
     }
 
     /**
@@ -38,6 +46,12 @@ class ContentVatHandler implements ContentVatHandlerInterface
      */
     public function getVatRateIdForField( $fieldId, $versionNo )
     {
-        return $this->gateway->getVatRateId( $fieldId, $versionNo );
+        $vatRateId = $this->gateway->getVatRateId( $fieldId, $versionNo );
+
+        if ( $vatRateId != - 1 )
+            return $vatRateId;
+
+        // automatic vat handling
+        return $this->automaticVatService->chooseVatRateId( $fieldId, $versionNo );
     }
 }

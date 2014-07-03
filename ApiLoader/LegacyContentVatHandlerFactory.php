@@ -9,6 +9,7 @@
 namespace EzSystems\EzPriceBundle\ApiLoader;
 
 use eZ\Publish\Core\Persistence\Database\DatabaseHandler;
+use EzSystems\EzPriceBundle\Core\Price\AutomaticVatService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\ContentVat\Gateway\DoctrineDatabase;
 
@@ -19,12 +20,15 @@ class LegacyContentVatHandlerFactory
      */
     protected $container;
 
+    protected $automaticVatService;
+
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
-    public function __construct( ContainerInterface $container )
+    public function __construct( ContainerInterface $container, $automaticVatService )
     {
         $this->container = $container;
+        $this->automaticVatService = $automaticVatService;
     }
 
     /**
@@ -38,7 +42,8 @@ class LegacyContentVatHandlerFactory
     {
         $legacyVatFinderHandlerClass = $this->container->getParameter( "ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler.class" );
         return new $legacyVatFinderHandlerClass(
-            new DoctrineDatabase( $dbHandler )
+            new DoctrineDatabase( $dbHandler ),
+            $this->automaticVatService
         );
     }
 }

@@ -4,6 +4,8 @@ parameters:
     ezprice.twig.extension.class: EzSystems\EzPriceBundle\Twig\Extension\PriceExtension
     ezprice.api.service.vatservice.class: EzSystems\EzPriceBundle\Core\Price\VatService
     ezprice.api.service.contentvatservice.class: EzSystems\EzPriceBundle\Core\Price\ContentVatService
+    ezprice.api.service.automaticvatservice.class: EzSystems\EzPriceBundle\Core\Price\AutomaticVatService
+    ezprice.api.storage_engine.legacy.handler.ezprice.ezdefaultvathandler.class: EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\VatHandler\EzDefaultVatHandler
     ezprice.api.service.pricewithvatcalculator.class: EzSystems\EzPriceBundle\Core\Price\PriceValueWithVatDataCalculator
     ezprice.api.storage_engine.legacy.handler.ezprice.vathandler.factory.class: EzSystems\EzPriceBundle\ApiLoader\LegacyVatHandlerFactory
     ezprice.api.storage_engine.legacy.handler.ezprice.vathandler.class: EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Vat\VatHandler
@@ -42,6 +44,14 @@ services:
             - @ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler
             - @ezprice.api.service.vatservice
 
+    ezprice.api.service.automaticvatservice:
+        class: %ezprice.api.service.automaticvatservice.class%
+        arguments:
+            - @ezprice.api.storage_engine.legacy.handler.ezprice.ezdefaultvathandler
+
+    ezprice.api.storage_engine.legacy.handler.ezprice.ezdefaultvathandler:
+        class: %ezprice.api.storage_engine.legacy.handler.ezprice.ezdefaultvathandler.class%
+
     ezprice.api.service.pricewithvatcalculator:
         class: %ezprice.api.service.pricewithvatcalculator.class%
 
@@ -54,6 +64,7 @@ services:
         class: %ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler.factory.class%
         arguments:
             - @service_container
+            - @ezprice.api.service.automaticvatservice
 
     ezprice.api.storage_engine.legacy.handler.ezprice.vathandler:
         class: %ezprice.api.storage_engine.legacy.handler.ezprice.vathandler.class%
@@ -68,3 +79,4 @@ services:
         factory_method: buildLegacyContentVatHandler
         arguments:
             - @ezpublish.api.storage_engine.legacy.dbhandler
+            - @ezprice.api.service.automaticvatservice
