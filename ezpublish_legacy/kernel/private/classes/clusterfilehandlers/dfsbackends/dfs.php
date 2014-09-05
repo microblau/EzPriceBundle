@@ -100,6 +100,11 @@ class eZDFSFileHandlerDFSBackend implements eZDFSFileHandlerDFSBackendInterface
             $ret = $this->copyTimestamp( $srcFilePath, $dstFilePath );
         }
 
+        if ( !$ret && file_exists( $dstFilePath ) )
+        {
+            unlink( $dstFilePath );
+        }
+
         $this->accumulatorStop();
 
         return $ret;
@@ -392,6 +397,14 @@ class eZDFSFileHandlerDFSBackend implements eZDFSFileHandlerDFSBackendInterface
             ),
             $this->mountPointPath
         );
+    }
+
+    /**
+     * No transformation is required since files are served from the same host
+     */
+    public function applyServerUri( $filePath )
+    {
+        return $filePath;
     }
 
     /**

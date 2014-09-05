@@ -25643,12 +25643,9 @@ your account.</source>
         <source>Language</source>
         <translation type="unfinished">Jezik</translation>
     </message>
-</context>
-<context>
-    <name>design/starndard/node</name>
     <message>
-        <source>Are you sure you want to remove these items?</source>
-        <translation type="unfinished">Jeste li sigurni da želite ukloniti navedene elemente?</translation>
+        <source>Item can not be found</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

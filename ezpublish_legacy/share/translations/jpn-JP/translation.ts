@@ -26170,12 +26170,9 @@ your account.</source>
         <source>Language</source>
         <translation>言語</translation>
     </message>
-</context>
-<context>
-    <name>design/starndard/node</name>
     <message>
-        <source>Are you sure you want to remove these items?</source>
-        <translation>これらのアイテムを削除してもよろしいですか?</translation>
+        <source>Item can not be found</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

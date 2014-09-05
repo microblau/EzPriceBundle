@@ -488,10 +488,10 @@ class eZSolr implements ezpSearchEngine
             $anonymousUserID = $this->SiteINI->variable( 'UserSettings', 'AnonymousUserID' );
             $currentUserID = eZUser::currentUserID();
             $user = eZUser::instance( $anonymousUserID );
-            eZUser::setCurrentlyLoggedInUser( $user, $anonymousUserID );
+            eZUser::setCurrentlyLoggedInUser( $user, $anonymousUserID, eZUser::NO_SESSION_REGENERATE );
             $anonymousAccess = $contentObject->attribute( 'can_read' );
             $user = eZUser::instance( $currentUserID );
-            eZUser::setCurrentlyLoggedInUser( $user, $currentUserID );
+            eZUser::setCurrentlyLoggedInUser( $user, $currentUserID, eZUser::NO_SESSION_REGENERATE );
             $anonymousAccess = $anonymousAccess ? 'true' : 'false';
         }
         else
@@ -1498,6 +1498,15 @@ class eZSolr implements ezpSearchEngine
         if ( !empty( $resultArray ) )
         {
             $result = $resultArray['response'];
+            if ( !is_array( $result ) ||
+                 !isset( $result['maxScore'] ) ||
+                 !isset( $result['docs'] ) ||
+                 !is_array( $result['docs'] ) )
+            {
+                eZDebug::writeError( 'Unexpected response from Solr: ' . var_export( $result, true ), __METHOD__ );
+                return $objectRes;
+            }
+
             $maxScore = $result['maxScore'];
             $docs = $result['docs'];
             $localNodeIDList = array();

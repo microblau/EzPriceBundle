@@ -26190,12 +26190,9 @@ per attivare il tuo account.</translation>
         <source>Language</source>
         <translation>Lingua</translation>
     </message>
-</context>
-<context>
-    <name>design/starndard/node</name>
     <message>
-        <source>Are you sure you want to remove these items?</source>
-        <translation>Sei sicuro di voler rimuovere questi elementi?</translation>
+        <source>Item can not be found</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -325,6 +325,10 @@ if ( $storingAllowed && $hasObjectInput)
     $db->begin();
     $object->setName( $class->contentObjectName( $object, $version->attribute( 'version' ), $EditLanguage ), $version->attribute( 'version' ), $EditLanguage );
     $db->commit();
+
+    // While being fetched, attributes might have been modified.
+    // The list needs to be refreshed so it is accurately displayed.
+    $contentObjectAttributes = $version->contentObjectAttributes( $EditLanguage );
 }
 elseif ( $storingAllowed )
 {
@@ -488,13 +492,13 @@ $tpl->setVariable( 'class', $class );
 $tpl->setVariable( 'object', $object );
 $tpl->setVariable( 'attribute_base', $attributeDataBaseName );
 
-$locationUIEnabled = true;
+$objectIsDraft = $object->attribute( 'status' ) == eZContentObject::STATUS_DRAFT;
+
 // If the object has been published we disable the location UI
-if ( $object->attribute( 'status' ) != eZContentObject::STATUS_DRAFT )
-{
-    $locationUIEnabled = false;
-}
-$tpl->setVariable( "location_ui_enabled", $locationUIEnabled );
+$tpl->setVariable( "location_ui_enabled", $objectIsDraft );
+
+// Give templates easy access to check if object is draft
+$tpl->setVariable( "object_is_draft", $objectIsDraft );
 
 
 if ( $Module->runHooks( 'pre_template', array( $class, $object, $version, $contentObjectAttributes, $EditVersion, $EditLanguage, $tpl, $FromLanguage ) ) )

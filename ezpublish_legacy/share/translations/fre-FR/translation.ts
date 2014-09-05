@@ -26228,12 +26228,9 @@ your account.</source>
         <source>Language</source>
         <translation>Langue</translation>
     </message>
-</context>
-<context>
-    <name>design/starndard/node</name>
     <message>
-        <source>Are you sure you want to remove these items?</source>
-        <translation>Voulez-vous vraiment supprimer ces éléments ?</translation>
+        <source>Item can not be found</source>
+        <translation>Element introuvable</translation>
     </message>
 </context>
 <context>

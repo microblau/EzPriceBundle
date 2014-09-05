@@ -26775,12 +26775,9 @@ especificado. Siga as instruções do e-mail para ativar a sua conta.</translati
         <source>Language</source>
         <translation>Idioma</translation>
     </message>
-</context>
-<context>
-    <name>design/starndard/node</name>
     <message>
-        <source>Are you sure you want to remove these items?</source>
-        <translation>Tem certeza que deseja remover estes itens?</translation>
+        <source>Item can not be found</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

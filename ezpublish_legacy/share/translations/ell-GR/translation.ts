@@ -25539,12 +25539,9 @@ your account.</source>
         <source>Language</source>
         <translation>Γλώσσα</translation>
     </message>
-</context>
-<context>
-    <name>design/starndard/node</name>
     <message>
-        <source>Are you sure you want to remove these items?</source>
-        <translation>Σίγουρα θέλετε να αφαιρέσετε αυτά τα στοιχεία;</translation>
+        <source>Item can not be found</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
