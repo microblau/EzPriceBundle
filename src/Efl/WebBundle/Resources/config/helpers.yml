@@ -1,0 +1,23 @@
+parameters:
+    eflweb.location_helper.class: Efl\WebBundle\Helper\LocationHelper
+    eflweb.cart_helper.class: Efl\WebBundle\Helper\CartHelper
+    eflweb.newsletter_helper.class: Efl\WebBundle\Helper\NewsletterHelper
+
+services:
+    eflweb.location_helper:
+        class: %eflweb.location_helper.class%
+        arguments: [@ezpublish.api.repository]
+
+    eflweb.cart_helper:
+        class: %eflweb.cart_helper.class%
+        arguments: [@ezpublish_legacy.kernel]
+
+    eflweb.newsletter_helper:
+        class: %eflweb.newsletter_helper.class%
+        arguments:
+            - @ezpublish.api.repository
+            - @ezpublish.api.service.location
+            - @ezpublish.api.service.search
+            - @ezpublish.api.service.content
+            - @ezpublish.fieldtype.ezpage.pageservice
+            - @ezpublish.controller.content.view

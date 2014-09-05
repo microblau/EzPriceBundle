@@ -1,0 +1,6 @@
+{% block _efl_newsletter_subscription_box_save_widget %}
+    {% if label is empty -%}
+        {% set label = name|humanize %}
+    {%- endif -%}
+    <button type="submit" {{ block('button_attributes') }}><i class="ico ico-arrow-right-white"></i> {{ label|trans({}, translation_domain) }}</button>
+{% endblock %}

@@ -36,6 +36,15 @@ class EflWebExtension extends Extension implements PrependExtensionInterface
         // Default settings
         $loader->load( 'default_settings.yml' );
 
+        // Forms
+        $loader->load( 'forms.yml' );
+
+        // Menús
+        $loader->load( 'menus.yml' );
+
+        // Helpers
+        $loader->load( 'helpers.yml' );
+
         // Fieldtypes
         $loader->load( 'fieldtypes.yml' );
 

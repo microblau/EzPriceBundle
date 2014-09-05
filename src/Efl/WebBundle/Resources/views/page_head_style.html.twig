@@ -1,15 +1,18 @@
 {% stylesheets
-    '@EflWebBundle/Resources/public/css/styles.css'
+    'bundles/eflweb/css/styles.css'
+    filter='cssrewrite'
 %}
     <link rel="stylesheet" type="text/css" href="{{ asset_url }}"/>
 {% endstylesheets %}
 {% stylesheets
-    '@EflWebBundle/Resources/public/css/rwd.css'
+    'bundles/eflweb/css/rwd.css'
+    filter='cssrewrite'
 %}
 <link rel="stylesheet" type="text/css" href="{{ asset_url }}" media="(min-width: 350px)"/>
 {% endstylesheets %}
 {% stylesheets
-    '@EflWebBundle/Resources/public/css/print.css'
+    'bundles/eflweb/css/styles.css'
+    filter='cssrewrite'
 %}
 <link rel="stylesheet" type="text/css" href="{{ asset_url }}" media="print"/>
 {% endstylesheets %}

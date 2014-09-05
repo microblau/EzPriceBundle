@@ -5,6 +5,15 @@ siteaccess:
             - formacion
 system:
     efl_frontend_group:
+        user:
+            layout: EflWebBundle::pagelayout.html.twig
+            login_template: eZDemoBundle:Security:login.html.twig
+        content_view:
+            ebook_regalo:
+                ebook:
+                    template: "EflWebBundle:ebook_regalo:ebook_regalo.html.twig"
+                    match:
+                        Identifier\ContentType: [ebook]
         location_view:
             full:
                 producto:

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--[if lt IE 9 ]><html class="unsupported-ie ie" lang="{{ app.request.locale }}"><![endif]-->
+<!--[if IE 9 ]><html class="ie ie9" lang="{{ app.request.locale }}"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="{{ app.request.locale }}"><!--<![endif]-->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    {% include 'EflWebBundle::page_head.html.twig' %}
+    {% include 'EflWebBundle::page_head_style.html.twig' %}
+    {% include 'EflWebBundle::page_head_script.html.twig' %}
+</head>
+<!--[if IE 9]> <body class="ie9 home"> <![endif]-->
+<!--[if IE 8]> <body class="ie8 home"> <![endif]-->
+<!--[if IE 7]> <body class="ie7 home"> <![endif]-->
+<!--[if !IE]><!-->
+<body class="home js">
+<!--<![endif]-->
+<!-- Complete page area: START -->
+{% if location is defined %}
+    {{ render( controller( "ezpublish_legacy.website_toolbar.controller:websiteToolbarAction", { 'locationId': location.id} ) ) }}
+{% endif %}
+<div id="outer-wrap">
+    <div id="inner-wrap">
+        <header class="header">
+            {% block header %}
+                {% include 'EflWebBundle::page_header.html.twig' %}
+            {% endblock %}
+        </header>
+
+        {% block content %}{% endblock %}
+        <div class="wrapperFooter">
+            <div class="preFooter">
+                <div class="wrapper"></div>
+            </div>
+            <footer>
+                {% block footer %}
+                    {{ render( controller( "EflWebBundle:Footer:show" ) ) }}
+                {% endblock %}
+            </footer>
+        </div>
+    </div>
+</div>
+{% block footerScript %}
+    {% include 'EflWebBundle::page_footer_script.html.twig' %}
+{% endblock %}
+</body>
+</html>

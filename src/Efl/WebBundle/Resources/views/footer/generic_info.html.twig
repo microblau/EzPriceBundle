@@ -1,0 +1,12 @@
+{% for block in blocks %}
+<article class="genericInfo-detail">
+    <i class="ico ico-{{ ez_render_field( block, 'icon',
+    {'template': 'EflWebBundle:fields:only_value.html.twig'}) }}-gray"></i>
+    <div class="cont-text">
+        <p class="title"><b>{{ ez_render_field( block, 'title',
+                {'template': 'EflWebBundle:fields:only_value.html.twig'}) }}</b></p>
+        {{ ez_render_field( block, 'body',
+        {'template': 'EflWebBundle:fields:only_value.html.twig'}) }}
+    </div>
+</article>
+{% endfor %}

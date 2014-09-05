@@ -2,48 +2,79 @@
 
 namespace Efl\WebBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use eZ\Bundle\EzPublishCoreBundle\Controller;
+use Symfony\Component\HttpFoundation\Response;
+use Efl\WebBundle\Entity\SimpleSearch;
 
 class HeaderController extends Controller
 {
+    /**
+     * Construye el menú principal
+     *
+     * @return Response
+     */
     public function mainMenuAction()
     {
-        $catalog_location = $this->get( 'eflweb.location_helper' )->loadLocationById(
-            $this->container->getParameter( 'eflweb.catalog.location_id' )
-        );
+        $response = new Response;
 
-        $mementos_location = $this->get( 'eflweb.location_helper' )->loadLocationById(
-            $this->container->getParameter( 'eflweb.catalog.mementos.location_id' )
-        );
+        $menu = $this->getMenu( 'main' );
 
-        $bases_datos_location = $this->get( 'eflweb.location_helper' )->loadLocationById(
-            $this->container->getParameter( 'eflweb.catalog.bases_datos.location_id' )
+        $parameters = array(
+            'menu' => $menu
         );
+        return $this->render( 'EflWebBundle:header:mainmenu.html.twig', $parameters, $response );
+    }
 
-        $qmemento_location = $this->get( 'eflweb.location_helper' )->loadLocationById(
-            $this->container->getParameter( 'eflweb.catalog.qmemento.location_id' )
-        );
+    /**
+     * Pinta links en la zona superior derecha.
+     * Mensaje de bienvenida y acceso a cuenta
+     *
+     * @return Response
+     */
+    public function userLinksAction()
+    {
+        $response = new Response();
+        $response->setSharedMaxAge( 3600 );
+        $response->setVary( 'Cookie' );
 
-        $imemento_location = $this->get( 'eflweb.location_helper' )->loadLocationById(
-            $this->container->getParameter( 'eflweb.catalog.imemento.location_id' )
-        );
-
-        $qmementix_location = $this->get( 'eflweb.location_helper' )->loadLocationById(
-            $this->container->getParameter( 'eflweb.catalog.qmementix.location_id' )
-        );
+        $cart_is_empty = $this->get( 'eflweb.cart_helper' )->isCurrentCartEmpty();
+        $cart_total = $this->get( 'eflweb.cart_helper' )->getCurrentCartTotal();
+        $cart_nItems = $this->get( 'eflweb.cart_helper' )->getCurrentCartNItems();
 
         return $this->render(
-            'EflWebBundle:header:mainmenu.html.twig',
+            "EflWebBundle:header:user_links.html.twig",
             array(
-                'data' => array(
-                    'catalog_location' => $catalog_location,
-                    'mementos_location' => $mementos_location,
-                    'bases_datos_location' => $bases_datos_location,
-                    'qmemento_location' => $qmemento_location,
-                    'imemento_location' => $imemento_location,
-                    'qmementix_location' => $qmementix_location,
-                )
-            )
+                'cart_is_empty' => $cart_is_empty,
+                'cart_total' => $cart_total,
+                'cart_n_items' => $cart_nItems
+            ),
+            $response
         );
+
+    }
+
+    public function searchBoxAction()
+    {
+        $response = new Response();
+
+        $simpleSearch = new SimpleSearch();
+        $form = $this->createForm( $this->get( 'efl.form.type.simple_search' ), $simpleSearch );
+
+        return $this->render(
+            'EflWebBundle:header:searchbox.html.twig',
+            array(
+                'form' => $form->createView()
+            ),
+            $response
+        );
+    }
+
+    /**
+     * @param string $identifier
+     * @return \Knp\Menu\MenuItem
+     */
+    private function getMenu( $identifier )
+    {
+        return $this->container->get( "efl.menu.$identifier" );
     }
 }

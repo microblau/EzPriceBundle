@@ -1,0 +1,8 @@
+parameters:
+    efl.form.type.simple_search.class: Efl\WebBundle\Form\Type\SimpleSearchType
+
+services:
+    efl.form.type.simple_search:
+        class: %efl.form.type.simple_search.class%
+        tags:
+            - { name: form.type, alias: efl_simple_search }

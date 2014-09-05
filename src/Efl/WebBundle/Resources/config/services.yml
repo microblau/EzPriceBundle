@@ -1,5 +1,4 @@
 parameters:
-    eflweb.location_helper.class: Efl\WebBundle\Helper\LocationHelper
 
     eflweb.social_links.linkedin: http://www.linkedin.com/company/ediciones-francis-lefebvre
     eflweb.social_links.twitter: https://twitter.com/edicionesfl
@@ -17,6 +16,3 @@ parameters:
     eflweb.politica_cookies.location_id: 20410
 
 services:
-    eflweb.location_helper:
-        class: %eflweb.location_helper.class%
-        arguments: [@ezpublish.api.repository]

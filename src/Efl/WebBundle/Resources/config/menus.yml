@@ -1,0 +1,186 @@
+parameters:
+    eflweb.main_menu.locations:
+        catalog: 61
+        mementos: 64
+        bases_datos: 13373
+        qmemento: 70
+        imemento: 11152
+        qmementix: 69
+
+    eflweb.footer.groups_menu.locations:
+        mementos: 64
+        mementos_autor: 8840
+        mementos_expertos: 65
+        qmemento: 70
+        imemento: 11152
+        qmementix: 69
+
+    eflweb.footer.aux.locations:
+        catalog: 61
+        aviso: 292
+        privacidad: 19526
+        cookies: 20410
+
+    eflweb.footer.rrss:
+        linkedin:
+            class: 'ln'
+            literal: LinkedIn
+            url: http://www.linkedin.com/company/ediciones-francis-lefebvre
+        twitter:
+            class: 'tw'
+            literal: Twitter
+            url: https://twitter.com/#!/edicionesfl
+        facebook:
+            class: 'fb'
+            literal: Facebook
+            url: https://www.facebook.com/GrupoEFL
+        youtube:
+            class: 'yt'
+            literal: YouTube
+            url: http://www.youtube.com/fmourelle
+
+    #eflweb.catalog.location_id: 61
+    #eflweb.catalog.mementos.location_id: 64
+    #eflweb.catalog.bases_datos.location_id: 13373
+    #eflweb.catalog.qmemento.location_id: 70
+    #eflweb.catalog.imemento.location_id: 11152
+    #eflweb.catalog.qmementix.location_id: 69
+    #eflweb.aviso_legal.location_id: 292
+    #eflweb.politica_privacidad.location_id: 19526
+    #eflweb.politica_cookies.location_id: 20410
+
+services:
+    efl.main.menu.builder:
+        class: Efl\WebBundle\Menu\Main\Builder
+        arguments:
+            - @knp_menu.factory
+            - @router
+            - @ezpublish.config.resolver
+            - @ezpublish.api.service.location
+            - @ezpublish.translation_helper
+            - %eflweb.main_menu.locations%
+
+    efl.footer.external.menu.builder:
+        class: Efl\WebBundle\Menu\Footer\External\Builder
+        arguments:
+            - @knp_menu.factory
+            - @router
+            - @ezpublish.config.resolver
+            - @ezpublish.api.service.location
+            - @ezpublish.api.service.content
+            - @ezpublish.api.service.search
+
+    efl.footer.customerservice.menu.builder:
+        class: Efl\WebBundle\Menu\Footer\Customerservice\Builder
+        arguments:
+            - @knp_menu.factory
+            - @router
+            - @ezpublish.config.resolver
+            - @ezpublish.api.service.location
+            - @ezpublish.api.service.content
+            - @ezpublish.api.service.search
+            - @ezpublish.translation_helper
+
+    efl.footer.grupo.menu.builder:
+        class: Efl\WebBundle\Menu\Footer\Grupo\Builder
+        arguments:
+            - @knp_menu.factory
+            - @router
+            - @ezpublish.config.resolver
+            - @ezpublish.api.service.location
+            - @ezpublish.api.service.content
+            - @ezpublish.api.service.search
+            - @ezpublish.translation_helper
+
+    efl.footer.products.menu.builder:
+        class: Efl\WebBundle\Menu\Footer\Products\Builder
+        arguments:
+            - @knp_menu.factory
+            - @router
+            - @ezpublish.config.resolver
+            - @ezpublish.api.service.location
+            - @ezpublish.translation_helper
+            - %eflweb.footer.groups_menu.locations%
+
+    efl.footer.aux.menu.builder:
+        class: Efl\WebBundle\Menu\Footer\Aux\Builder
+        arguments:
+            - @knp_menu.factory
+            - @router
+            - @ezpublish.config.resolver
+            - @ezpublish.api.service.location
+            - @ezpublish.translation_helper
+            - %eflweb.footer.aux.locations%
+
+    efl.footer.rrss.menu.builder:
+        class: Efl\WebBundle\Menu\Footer\RRSS\Builder
+        arguments:
+            - @knp_menu.factory
+            - @router
+            - @ezpublish.config.resolver
+            - @ezpublish.api.service.location
+            - @ezpublish.translation_helper
+            - %eflweb.footer.rrss%
+
+    efl.menu.main:
+        class: Efl\WebBundle\Menu\Main\Builder
+        factory_service: efl.main.menu.builder
+        factory_method: createMenu
+        arguments: [ @request ]
+        scope: request # needed as we have the request as a dependency here
+        tags:
+            - { name: knp_menu.menu, alias: main } # The alias is what is used to retrieve the menu
+
+    efl.menu.footer.quicklinks:
+        class: Efl\WebBundle\Menu\Footer\External\Builder
+        factory_service: efl.footer.external.menu.builder
+        factory_method: createMenu
+        arguments: [@request]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: footer_quicklinks }
+
+    efl.menu.footer.customerservice:
+        class: Efl\WebBundle\Menu\Footer\Customerservice\Builder
+        factory_service: efl.footer.customerservice.menu.builder
+        factory_method: createMenu
+        arguments: [@request]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: footer_customerservice }
+
+    efl.menu.footer.grupo:
+        class: Efl\WebBundle\Menu\Footer\Grupo\Builder
+        factory_service: efl.footer.grupo.menu.builder
+        factory_method: createMenu
+        arguments: [@request]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: footer_grupo }
+
+    efl.menu.footer.products:
+        class: Efl\WebBundle\Menu\Footer\Products\Builder
+        factory_service: efl.footer.products.menu.builder
+        factory_method: createMenu
+        arguments: [@request]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: footer_products }
+
+    efl.menu.footer.aux:
+        class: Efl\WebBundle\Menu\Footer\Aux\Builder
+        factory_service: efl.footer.aux.menu.builder
+        factory_method: createMenu
+        arguments: [@request]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: footer_aux }
+
+    efl.menu.footer.rrss:
+        class: Efl\WebBundle\Menu\Footer\RRSS\Builder
+        factory_service: efl.footer.rrss.menu.builder
+        factory_method: createMenu
+        arguments: [@request]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: footer_rss }

@@ -1,0 +1,7 @@
+{% form_theme form 'EflWebBundle:forms/newsletter:subscription_box.html.twig' %}
+
+{{ form_start(form, {'attr': {'novalidate':'novalidate' }}) }}
+{{ form_widget( form.email ) }}
+{{ form_widget( form.save ) }}
+{{ form_end( form) }}
+

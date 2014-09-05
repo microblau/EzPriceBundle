@@ -1,18 +1,13 @@
 <section class="hBar cl">
     <div class="wrapper">
         <div class="flt">
-            <span class="phone"><a href="tel:912108000">912 108 000</a></span>
-            <h1 class="offscreen">Francis Lefebvre. Información jurídica para empresas y asesores.</h1>
+            <span class="phone">
+                <i class="ico ico-phone-black"></i>
+                <a href="tel:912108000">912 108 000</a></span>
+            <span class="tagline">Francis Lefebvre. Información jurídica para empresas y asesores.</span>
         </div>
         <div class="frt">
-            <span class="login"><a href="#">Acceder a mi cuenta</a></span>
-            <div class="cart">
-                <a href="#">
-                    <span class="link">Finalizar compra</span>
-                    <span class="price">999,99 €</span>
-                    <span class="amount">2</span>
-                </a>
-            </div>
+            {{ render_hinclude( controller( "EflWebBundle:Header:userLinks" ) ) }}
         </div>
     </div>
 </section>
@@ -20,24 +15,18 @@
     <div class="wrapper cl">
         <div class="cl">
             <div class="logo">
-                <a href=""><img src="{{ asset('bundles/eflweb/images/logo_mobile.png') }}" alt="Logo Grupo Francis Lefebvre" /></a>
+                <a href="{{ path( ezpublish.rootLocation ) }}"><img src="{{ asset('bundles/eflweb/images/logo_desktop.png') }}" alt="Logo Grupo Francis Lefebvre" /></a>
             </div>
 
             <div class="busy">
-                <form action="{{ path( 'ez_legacy', {'module_uri': '/content/search'} ) }}" method="post">
-                    <label for="busy" class="offscreen">Término a buscar</label>
-                    <input id="busy" type="text" class="text" placeholder="Escribe el título, área del derecho o ley concreta para encontrar la publicación" />
-                    <a href="{{ path( 'ez_legacy', {'module_uri': '/content/advancedsearch'} ) }}" class="advanced">Búsqueda avanzada</a>
-                    <input type="submit" class="submit" value="Buscar" />
-                </form>
+                {{ render_esi( controller( "EflWebBundle:Header:searchBox" )) }}
             </div>
         </div>
     </div>
-    <nav>
-        <div class="wrapper">
-            <span class="menu"><a href="#">Mostar menú</a></span>
-            {{ render( controller( "EflWebBundle:Header:mainMenu" ) ) }}
-
-        </div>
-    </nav>
 </section>
+<nav>
+    <div class="wrapper">
+        <span class="menu"><a href="#">Mostar menú</a></span>
+        {{ render_esi( controller( "EflWebBundle:Header:mainMenu" ) ) }}
+    </div>
+</nav>

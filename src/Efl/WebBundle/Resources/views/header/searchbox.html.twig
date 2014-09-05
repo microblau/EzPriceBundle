@@ -1,0 +1,8 @@
+{% form_theme form _self %}
+
+{{ form_start( form, { 'action': path( 'ez_legacy', {'module_uri': '/content/search'} ), 'attr': { 'class': 'span4 form-search' } } ) }}
+    <label for="busy" class="offscreen">Término a buscar</label>
+    {{ form_widget( form.searchText, { 'attr': {'class': 'text', 'placeholder': 'Escribe el título, área del derecho o ley concreta para encontrar la publicación'|trans } } ) }}
+    <a href="{{ path( 'ez_legacy', {'module_uri': '/content/advancedsearch'} ) }}" class="advanced">Búsqueda avanzada</a>
+    {{ form_widget( form.save, {'attr': {'class': 'submit' }} ) }}
+{{ form_end( form ) }}

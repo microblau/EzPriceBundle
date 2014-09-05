@@ -1,0 +1,62 @@
+{% extends "EflWebBundle::pagelayout.html.twig" %}
+
+{% block content %}
+
+    <div class="wrapper cl">
+
+        <div class="twoColsB">
+            <div class="main">
+
+                <article class="highlight cl">
+                    <div class="content">
+                        <p class="super-title">Suscríbase a nuestro boletín de novedades.</p>
+                        <p class="title4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </article>
+
+                {% form_theme form 'EflWebBundle:forms/newsletter:subscription.html.twig' %}
+
+                {{ form_start(form, {'attr': {'novalidate':'novalidate', 'class': 'frm frm-newsletter' }}) }}
+                {{ form_row( form.email ) }}
+
+                <fieldset>
+                    <legend class="offscreen">Indique sus datos personales</legend>
+                    {{ form_row( form.Subscription_FirstName ) }}
+                    {{ form_row( form.Subscription_LastName ) }}
+                    {{ form_row( form.Subscription_LastName_2 ) }}
+                </fieldset>
+
+                <fieldset>
+                    <legend class="offscreen">Otros datos de contacto</legend>
+                    {{ form_row( form.cp ) }}
+                    {{ form_row( form.phone ) }}
+                </fieldset>
+
+                {{ form_row( form.job ) }}
+
+                <fieldset>
+                    {{ form_row( form.areas ) }}
+                </fieldset>
+
+                {{ form_end( form) }}
+            </div>
+
+            <div class="aside">
+                <div class="layer">
+                    <p class="layer-title">¿Necesitas ayuda?</p>
+                    <p class="hasIco">
+                        <i class="ico ico-mail-gray"></i>
+                        <span>Si tiene dudas póngase en contacto con nosotros a través de <a href="mailto:clientes@efl.es">clientes@efl.es</a> o mediante la <a href="#">página de contacto</a>.</span>
+                    </p>
+
+                    <p class="hasIco">
+                        <i class="ico ico-phone-gray2"></i>
+                        <span>Lo más rápido es llamarnos al <b>912 108 000</b> le atenderemos de 9:00h a 20:00h de Lunes a Viernes.</span>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

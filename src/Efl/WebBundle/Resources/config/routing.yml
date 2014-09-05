@@ -1,3 +1,5 @@
-efl_web_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: EflWebBundle:Default:index }
+# Newsletter
+newsletter_subscribe:
+    pattern:  /newsletter/subscribe
+    defaults: { _controller: EflWebBundle:Newsletter:subscribe }
+

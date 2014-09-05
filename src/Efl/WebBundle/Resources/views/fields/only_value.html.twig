@@ -1,0 +1,27 @@
+{% block ezstring_field %}
+{% spaceless %}
+        {% set field_value = field.value.text %}
+        {{ block( 'simple_inline_field' ) }}
+{% endspaceless %}
+{% endblock %}
+
+{% block eztext_field %}
+    {% spaceless %}
+        {% set field_value = field.value|nl2br %}
+        {{ field_value|raw }}
+    {% endspaceless %}
+{% endblock %}
+
+{% block ezxmltext_field %}
+    {% spaceless %}
+        {% set field_value = field.value.xml|xmltext_to_html5 %}
+        {{ field_value|raw }}
+    {% endspaceless %}
+{% endblock %}
+
+{% block simple_inline_field %}
+{% spaceless %}
+        {% set field_value = field_value|default( field.value ) %}
+        {{ field_value }}
+{% endspaceless %}
+{% endblock %}

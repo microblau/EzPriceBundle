@@ -1,0 +1,44 @@
+@page { margin-top: 2cm; margin-bottom: 2cm; }
+  @page:first { margin-top: 1cm; }
+
+.hBar, .busy, nav, .aside, .utils .link-btn, .utils .rrss, .articleItem .portrait .badge, .articleItem .portrait .actions, .utils .reviews-link .ico, .wysiwyg .more, .related-items, .product-collateral .tabs-wrap, .product-collateral .title6, .genericInfo, .quickLinks, .preFooter, .footer .row1, .footer .row2 .flt { display: none; }
+
+.logo { float: left; }
+  .logo img { width: auto; }
+
+#bodyContent { margin-top: 30px; }
+  #bodyContent .wrapper { padding: 0; }
+
+/*Article Item*/
+.articleItem .portrait, .articleItem .wysiwyg blockquote, .articleItem .card { display: block; }
+
+.wysiwyg .more-detail { display: block !important; }
+
+.articleItem .wysiwyg blockquote { border-left: 2px solid #191A1F; margin-bottom: 20px; padding: 10px; font-style: italic; color: #191A1F; }
+
+.articleItem .card { font-size: 12pt;  }
+
+.tabs-content { position: static; }
+
+.card-review .score { padding: 0 13px; background: none; }
+.card-review li.updates b, .card-review li.updates strong { display: inline; width: auto; }
+
+.wysiwyg { font-size: 12pt; }
+
+.articleItem .portrait-img { float: left; margin-right: 20px; width: 180px; }
+
+.utils .reviews-link a { text-decoration: none; }
+.utils .reviews-link::before { content: '★ '; };
+.product-collateral p.tab { float: left; background-image: none;  }
+  .product-collateral p.tab a { padding: 0; background-image: none; background-color: #fff; text-align: left !important; }
+  .product-collateral p.tab a .ico { display: none; }
+.product-collateral .release-detail, .product-collateral .review-detail { background-color: none !important; }
+  .review-detail { display: block !important; }
+  .product-collateral .release-detail .wysiwyg,
+  .product-collateral .review-detail .wysiwyg { display: block !important; font-size: 12pt; font-family: 'ProximaNovaLight', Arial, helvetica, sans-serif; color: #535660 !important; }
+  .product-collateral .release-detail .wysiwyg b,
+  .product-collateral .review-detail .wysiwyg b { font-family: 'ProximaNovaSemibold', Arial, helvetica, sans-serif;  }
+  .authoring, .authoring .author { display: block !important;  color: #191A1F !important; background-color: none !important; }
+
+.footer .wrapper { padding: 0; text-align: left; }
+  .footer small { float: left; font-size: 10pt; color: #191A1F; }

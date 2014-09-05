@@ -1,0 +1,73 @@
+{% block form_label -%}
+    {% if label is not sameas(false) %}
+        {%- if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif -%}
+        {%- if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif -%}
+        {%- if label is empty -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+        <span class="lbl">{{ label|trans({}, translation_domain)|raw }}</span>
+    {%- endif %}
+{% endblock %}
+
+{% block form_row -%}
+
+    <label for="{{ form.vars.id  }}" class="field row">
+        {{- form_label(form) -}}
+        {{- form_errors(form) -}}
+        {{- form_widget(form) -}}
+    </label>
+{%- endblock form_row %}
+
+{% block _efl_newsletter_subscription_areas_row %}
+    <legend>{{ form.vars.label }}</legend>
+    {{- form_errors(form) -}}
+    {{- form_widget(form) -}}
+{% endblock %}
+
+{% block _efl_newsletter_subscription_ebooks_row %}
+    <legend>{{ form.vars.label }}</legend>
+    {{- form_errors(form) -}}
+    {{- form_widget(form) -}}
+{% endblock %}
+
+
+
+{% block _efl_newsletter_subscription_areas_widget -%}
+    {% for i,child in form %}
+        {% if i is even %}
+        <div class="field row">
+        {% endif %}
+        <div class="prettycheck cl">
+        {{- form_widget(child) -}}
+        {{- form_label(child) -}}
+        </div>
+        {% if i is odd or i == form|length -1 %}
+        </div>
+        {% endif %}
+
+    {% endfor %}
+{% endblock %}
+
+{% block _efl_newsletter_subscription_ebooks_widget -%}
+    {% for i,child in form %}
+            {{- form_widget(child) -}}
+            {{- child.vars.label|raw -}}
+    {% endfor %}
+{% endblock %}
+
+
+
+{% block checkbox_widget -%}
+
+        <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+        <label for="{{ id }}" ></label>
+
+{%- endblock checkbox_widget %}
+
+{% block radio_widget -%}
+    <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+{%- endblock radio_widget %}
