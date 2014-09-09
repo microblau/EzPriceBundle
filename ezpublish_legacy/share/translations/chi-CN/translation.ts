@@ -29788,12 +29788,9 @@ your account.</source>
         <source>Language</source>
         <translation>语言</translation>
     </message>
-</context>
-<context>
-    <name>design/starndard/node</name>
     <message>
-        <source>Are you sure you want to remove these items?</source>
-        <translation>您确定要删除这些项目吗?</translation>
+        <source>Item can not be found</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

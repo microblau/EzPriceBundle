@@ -584,11 +584,9 @@ class CjwNewsletterSubscription extends eZPersistentObject
 
         $firstName = $subscriptionDataArr['first_name'];
         $lastName = $subscriptionDataArr['last_name'];
-		$about_info = $subscriptionDataArr['about_info'];
-		$about_materia = $subscriptionDataArr['about_materia'];
-		$organisation = $subscriptionDataArr['organisation'];
-		
-		
+
+        $organisation = $subscriptionDataArr['organisation'];
+
         $eZUserId = (int) $subscriptionDataArr['ez_user_id'];
 
          // new value form POST
@@ -628,8 +626,6 @@ class CjwNewsletterSubscription extends eZPersistentObject
                                                                                $salutation,
                                                                                $firstName,
                                                                                $lastName,
-																			   $about_info,
-																			   $about_materia,
 												                               $organisation,
                                                                                $eZUserId,
                                                                                (int) $newNewsletterUserStatus,
@@ -668,6 +664,7 @@ class CjwNewsletterSubscription extends eZPersistentObject
                 $resultArray['list_remove'][ $listId ] = CjwNewsletterSubscription::removeSubscriptionByNewsletterUserSelf( $listId, $newsletterUserId );
             }
         }
+
         return $resultArray;
     }
 

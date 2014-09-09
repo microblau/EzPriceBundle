@@ -1,11 +1,18 @@
 <article class="basket-gift type2 cl">
+    {% if not ez_is_field_empty( content, 'imagen' ) %}
     <div class="portrait">
-        <img src="images/dummy-images/dummy-portrait-2@2x.png" class="portrait-img">
+        {{ ez_render_field( content, 'imagen', {
+            'template': 'EflWebBundle:fields:portrait_img.html.twig',
+            'parameters': { 'alias' : 'ebook_regalo', 'attrs': {'class':'portrait-img'} }
+        }) }}
     </div>
+    {% endif %}
     <div class="main-content">
         <p class="title-gift upper"><b>{{ ez_render_field( content, 'nombre' ) }}</b></p>
+        {% if not ez_is_field_empty( content, 'description' ) %}
         <div class="wysiwyg">
-            <p>El ebook más completo sobre la nueva ley del IVA para profesionales y autónomos.</p>
+            {{ ez_render_field( content, 'description') }}
         </div>
+        {% endif %}
     </div>
 </article>

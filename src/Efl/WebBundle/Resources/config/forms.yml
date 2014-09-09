@@ -6,3 +6,10 @@ services:
         class: %efl.form.type.simple_search.class%
         tags:
             - { name: form.type, alias: efl_simple_search }
+
+    validator.node.email_already_subscribed:
+        class: Efl\WebBundle\Form\Validator\Constraints\EmailAlreadySubscribedValidator
+        calls:
+            - [setConnection, [@ezpublish.api.storage_engine.legacy.dbhandler]]
+        tags:
+            - { name: validator.constraint_validator, alias: email_already_subscribed }

@@ -5,6 +5,11 @@ siteaccess:
             - formacion
 system:
     efl_frontend_group:
+        image_variations:
+            ebook_regalo:
+                reference: reference
+                filters:
+                    - { name: geometry/scalewithdownonly, params: [480] }
         user:
             layout: EflWebBundle::pagelayout.html.twig
             login_template: eZDemoBundle:Security:login.html.twig
@@ -23,3 +28,4 @@ system:
     global:
         field_templates:
             - {template: "EflWebBundle::content_fields.html.twig", priority: 10}
+

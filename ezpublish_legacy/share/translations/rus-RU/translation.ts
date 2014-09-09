@@ -26125,12 +26125,9 @@ your account.</source>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
-</context>
-<context>
-    <name>design/starndard/node</name>
     <message>
-        <source>Are you sure you want to remove these items?</source>
-        <translation type="unfinished">Вы уверены, что хотите это удалить?</translation>
+        <source>Item can not be found</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

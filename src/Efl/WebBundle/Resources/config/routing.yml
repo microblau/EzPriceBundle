@@ -3,3 +3,7 @@ newsletter_subscribe:
     pattern:  /newsletter/subscribe
     defaults: { _controller: EflWebBundle:Newsletter:subscribe }
 
+newsletter_configure:
+    pattern: /newsletter/configure/{hash}
+    defaults: { _controller: EflWebBundle:Newsletter:configure }
+

@@ -21,3 +21,8 @@ services:
             - @ezpublish.api.service.content
             - @ezpublish.fieldtype.ezpage.pageservice
             - @ezpublish.controller.content.view
+            - @ezpublish_legacy.kernel
+            - @mailer
+            - @templating
+            - @router
+            - %newsletter.subscription_mail%

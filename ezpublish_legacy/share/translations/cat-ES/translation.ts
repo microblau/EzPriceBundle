@@ -26247,12 +26247,9 @@ Segueix les instruccions d&apos;aquest correu per activar el teu compte. </trans
         <source>Language</source>
         <translation>Idioma</translation>
     </message>
-</context>
-<context>
-    <name>design/starndard/node</name>
     <message>
-        <source>Are you sure you want to remove these items?</source>
-        <translation type="unfinished">Estàs segur de voler esborrar aquests elements?</translation>
+        <source>Item can not be found</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

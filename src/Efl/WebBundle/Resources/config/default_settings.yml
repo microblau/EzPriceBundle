@@ -1,2 +1,6 @@
 parameters:
-   efl.cache.feed_reader_ttl: 3600
+    efl.cache.feed_reader_ttl: 3600
+
+    newsletter.subscription_mail:
+        subject: 'Boletín electrónico de Ediciones Francis Lefebvre'
+        sender: 'carlos.revillo@tantacom.com'

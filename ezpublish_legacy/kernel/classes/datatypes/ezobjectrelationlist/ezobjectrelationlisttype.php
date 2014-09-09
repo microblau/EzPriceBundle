@@ -69,6 +69,15 @@ class eZObjectRelationListType extends eZDataType
             }
             return eZInputValidator::STATE_ACCEPTED;
         }
+        else if ( eZINI::instance()->variable( 'BackwardCompatibilitySettings', 'AdvancedObjectRelationList' ) == "disabled" )
+        {
+            // If in browse mode and relations have been added using the search field
+            // items are stored in the post variable
+            if ( count( $http->postVariable( $postVariableName ) ) > 0  )
+            {
+                return eZInputValidator::STATE_ACCEPTED;
+            }
+        }
 
         // The following code is only there for the support of [BackwardCompatibilitySettings]/AdvancedObjectRelationList
         // which happens only when $classContent['selection_type'] == 0

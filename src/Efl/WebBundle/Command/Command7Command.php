@@ -16,7 +16,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\LocationUpdateStruct;
 
 /**
- * Class Command6Command
+ * Class Command7Command
  * @package Efl\WebBundle\Command
  *
  * Además moverá algunas localizaciones a esa zona para así

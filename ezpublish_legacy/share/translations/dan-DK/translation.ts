@@ -25670,12 +25670,9 @@ Log ind-navn</translation>
         <source>Language</source>
         <translation>Sprog</translation>
     </message>
-</context>
-<context>
-    <name>design/starndard/node</name>
     <message>
-        <source>Are you sure you want to remove these items?</source>
-        <translation type="unfinished">Er du sikker på, at du vil fjerne disse emner?</translation>
+        <source>Item can not be found</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

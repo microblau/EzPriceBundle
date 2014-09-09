@@ -24721,11 +24721,8 @@ your account.</source>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>design/starndard/node</name>
     <message>
-        <source>Are you sure you want to remove these items?</source>
+        <source>Item can not be found</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -696,7 +696,12 @@ class eZDFSFileHandlerMySQLiBackend implements eZClusterEventNotifier
 
             if ( $uniqueName !== true )
             {
-                eZFile::rename( $tmpFilePath, $filePath, false, eZFile::CLEAN_ON_FAILURE | eZFile::APPEND_DEBUG_ON_FAILURE );
+                if( !eZFile::rename( $tmpFilePath, $filePath, false, eZFile::CLEAN_ON_FAILURE | eZFile::APPEND_DEBUG_ON_FAILURE ) )
+                {
+                    usleep( self::TIME_UNTIL_RETRY );
+                    ++$loopCount;
+                    continue;
+                }
             }
             $filePath = ($uniqueName) ? $tmpFilePath : $filePath ;
 
@@ -708,6 +713,11 @@ class eZDFSFileHandlerMySQLiBackend implements eZClusterEventNotifier
             {
                 return $filePath;
             }
+            // Sizes might have been corrupted by FS problems. Enforcing temp file removal.
+            else if ( file_exists( $tmpFilePath ) )
+            {
+                unlink( $tmpFilePath );
+            }
 
             usleep( self::TIME_UNTIL_RETRY );
             ++$loopCount;
@@ -715,8 +725,7 @@ class eZDFSFileHandlerMySQLiBackend implements eZClusterEventNotifier
         while ( $dfsFileSize > $localFileSize && $loopCount < $this->maxCopyTries );
 
         // Copy from DFS has failed :-(
-        eZDebug::writeError( "Size ($localFileSize) of written data for file '$tmpFilePath' does not match expected size {$metaData['size']}", __METHOD__ );
-        unlink( $tmpFilePath );
+        eZDebug::writeError( "Size ({$localFileSize}) of written data for file '{$filePath}' does not match expected size {$metaData['size']}", __METHOD__ );
         return false;
     }
 
@@ -1928,6 +1937,16 @@ class eZDFSFileHandlerMySQLiBackend implements eZClusterEventNotifier
         }
 
         return mysqli_affected_rows( $this->db );
+    }
+
+    /**
+     * Transforms $filePath so that it contains a valid href to the file, wherever it is stored.
+     * @param string
+     * @return string
+     */
+    public function applyServerUri( $filePath )
+    {
+        return $this->dfsbackend->applyServerUri( $filePath );
     }
 
     /**

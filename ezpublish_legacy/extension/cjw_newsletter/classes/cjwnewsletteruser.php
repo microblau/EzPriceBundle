@@ -85,14 +85,6 @@ class CjwNewsletterUser extends eZPersistentObject
                                                                 'datatype' => 'string',
                                                                 'default' => '',
                                                                 'required' => false ),
-										 'about_info' => array( 'name' => 'about_info',
-                                                                'datatype' => 'string',
-                                                                'default' => '',
-                                                                'required' => false ),
-										 'about_materia' => array( 'name' => 'about_materia',
-                                                                'datatype' => 'string',
-                                                                'default' => '',
-                                                                'required' => false ),												
                                          'organisation' => array( 'name' => 'Organisation',
                                                                 'datatype' => 'string',
                                                                 'default' => '',
@@ -201,7 +193,7 @@ class CjwNewsletterUser extends eZPersistentObject
      * @param int $status
      * @return object
      */
-    static function create( $email, $salutation, $firstName, $lastName, $about_info, $about_materia , $organisation, $eZUserId, $status = CjwNewsletterUser::STATUS_PENDING, $context = 'default' )
+    static function create( $email, $salutation, $firstName, $lastName, $organisation, $eZUserId, $status = CjwNewsletterUser::STATUS_PENDING, $context = 'default' )
     {
         $rows = array( 'created' => time(),
                        'creator_contentobject_id' => eZUser::currentUserID(),
@@ -209,9 +201,7 @@ class CjwNewsletterUser extends eZPersistentObject
                        'email' => $email,
                        'first_name' => $firstName,
                        'last_name' => $lastName,
-					   'about_info' => $about_info,
-					   'about_materia' => $about_materia,
-					   'organisation' => $organisation,
+                       'organisation' => $organisation,
                        'salutation' => $salutation,
                        'hash' => CjwNewsletterUtils::generateUniqueMd5Hash( $email ),
                        'remote_id' => 'cjwnl:'. $context .':' . CjwNewsletterUtils::generateUniqueMd5Hash( $email ),
@@ -239,8 +229,6 @@ class CjwNewsletterUser extends eZPersistentObject
                                                 $salutation,
                                                 $firstName,
                                                 $lastName,
-												$about_info,
-												$about_materia,
 												$organisation,
 												$eZUserId,
                                                 $newNewsletterUserStatus = CjwNewsletterUser::STATUS_PENDING,
@@ -263,8 +251,6 @@ class CjwNewsletterUser extends eZPersistentObject
             $userObject->setAttribute('salutation', $salutation );
             $userObject->setAttribute('first_name', $firstName );
             $userObject->setAttribute('last_name', $lastName );
-			$userObject->setAttribute('about_info', $about_info );
-			$userObject->setAttribute('about_materia', $about_materia );
 			$userObject->setAttribute('organisation', $organisation );
             $userObject->setAttribute('ez_user_id', (int) $eZUserId );
             $userObject->setAttribute('modified', time() );
@@ -291,8 +277,6 @@ class CjwNewsletterUser extends eZPersistentObject
                                                      $salutation,
                                                      $firstName,
                                                      $lastName,
-													 $about_info,
-													 $about_materia,
 													 $organisation,
                                                      $eZUserId,
                                                      (int) $newNewsletterUserStatus,

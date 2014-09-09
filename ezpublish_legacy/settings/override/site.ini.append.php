@@ -5,7 +5,7 @@ Server=localhost
 User=lefebvre
 Password=lyXyv3Jq
 Database=lefebvre
-SQLOutput=disabled
+SQLOutput=enabled
 
 [DesignSettings]
 AdditionalSiteDesignList[]=googlesitemapgenerator

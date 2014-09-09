@@ -26281,12 +26281,9 @@ tu cuenta.</translation>
         <source>Language</source>
         <translation>Idioma</translation>
     </message>
-</context>
-<context>
-    <name>design/starndard/node</name>
     <message>
-        <source>Are you sure you want to remove these items?</source>
-        <translation>¿Estás seguro de que quieres eliminar estos ítems?</translation>
+        <source>Item can not be found</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

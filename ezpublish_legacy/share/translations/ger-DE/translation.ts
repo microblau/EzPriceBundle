@@ -31709,12 +31709,9 @@ Bitte folgen Sie den Hinweisen in der Email, um Ihr Konto zu aktivieren.</transl
         <source>Language</source>
         <translation>Sprache</translation>
     </message>
-</context>
-<context>
-    <name>design/starndard/node</name>
     <message>
-        <source>Are you sure you want to remove these items?</source>
-        <translation type="unfinished">Sind Sie sicher, dass Sie diese Objekte entfernen wollen?</translation>
+        <source>Item can not be found</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
