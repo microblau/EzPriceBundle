@@ -53,4 +53,28 @@ ez_publish_legacy:
     enabled: true
     root_dir: %kernel.root_dir%/../ezpublish_legacy
 
+swiftmailer:
+    transport: gmail
+    username:  carlos.revillo@tantacom.com
+    password:  space3men76
+
 parameters:
+
+services:
+    twig.text_extension:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - name: twig.extension
+
+jms_translation:
+    configs:
+        app:
+            dirs: [%kernel.root_dir%, %kernel.root_dir%/../src]
+            output_dir: %kernel.root_dir%/../src/Efl/WebBundle/Resources/translations
+
+monolog:
+    handlers:
+        main:
+            type:  rotating_file
+            path:  %kernel.logs_dir%/%kernel.environment%.log
+            level: debug

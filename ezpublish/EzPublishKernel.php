@@ -30,9 +30,11 @@ use Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle;
 use Sensio\Bundle\DistributionBundle\SensioDistributionBundle;
 use Tedivm\StashBundle\TedivmStashBundle;
 use WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle;
+use WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle;
 use Nelmio\CorsBundle\NelmioCorsBundle;
 use Hautelook\TemplatedUriBundle\HautelookTemplatedUriBundle;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
+use Knp\Bundle\MenuBundle\KnpMenuBundle;
 
 class EzPublishKernel extends Kernel
 {
@@ -62,10 +64,17 @@ class EzPublishKernel extends Kernel
             new EzSystemsCommentsBundle(),
             new EzSystemsNgsymfonytoolsBundle(),
             new WhiteOctoberPagerfantaBundle(),
+            new WhiteOctoberBreadcrumbsBundle(),
             new NelmioCorsBundle(),
+            new KnpMenuBundle(),
             new EflWebBundle(),
-            new Crevillo\EzPricesBundle\CrevilloEzPricesBundle()
-           //new BrunoChirez\FieldTypeBundle\BrunoChirezFieldTypeBundle()
+            new \EzSystems\EzPriceBundle\EzSystemsEzPriceBundle(),
+            new \EzSystems\CookbookBundle\EzSystemsCookbookBundle(),
+            new \Blend\EzMatrixBundle\BlendEzMatrixBundle(),
+            new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new \JMS\TranslationBundle\JMSTranslationBundle(),
+            new \JMS\DiExtraBundle\JMSDiExtraBundle( $this ),
+            new \JMS\AopBundle\JMSAopBundle()
         );
 
         switch ( $this->getEnvironment() )
@@ -89,7 +98,8 @@ class EzPublishKernel extends Kernel
      * Loads the container configuration
      *
      * @param LoaderInterface $loader A LoaderInterface instance
-     *
+     * @throws \RuntimeException when config file is not readable
+
      * @api
      */
     public function registerContainerConfiguration( LoaderInterface $loader )
