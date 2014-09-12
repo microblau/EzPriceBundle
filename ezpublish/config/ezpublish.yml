@@ -8,6 +8,8 @@ doctrine:
                 password: lyXyv3Jq
                 dbname: lefebvre
                 charset: UTF8
+                options:
+
 ezpublish:
     http_cache:
         purge_type: local
@@ -783,7 +785,11 @@ ezpublish:
 stash:
     caches:
         default:
-            handlers:
+            drivers:
                 - FileSystem
             inMemory: true
             registerDoctrineAdapter: false
+
+twig:
+    globals:
+        efl_contacto_location_id: 1073
