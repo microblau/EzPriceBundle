@@ -36,8 +36,8 @@ system:
                         Identifier\ContentType: [folder]
                         Id\Section: 10
                 faqs:
-                    controller: "EflWebBundle:Faqs:page"
-                    template: "EflWebBundle:full:faqs.html.twig"
+                    controller: "EflWebBundle:Faqs:category"
+                    template: "EflWebBundle:full:faqs_category.html.twig"
                     match:
                         Id\Location: 80
                 faqs_category:

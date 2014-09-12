@@ -9,42 +9,41 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FaqsController extends Controller
 {
-    public function pageAction( $locationId, $viewType, $layout = false, array $params = array() )
+    public function categoryAction( $locationId, $viewType, $layout = false, array $params = array() )
     {
+        $request = $this->getRequest();
         $response = new Response();
         $response->setSharedMaxAge( 86400 );
+        $helper = $this->get( 'eflweb.faqs_helper' );
 
         $form = $this->createForm(
             new GroupsType(
-                $this->get( 'eflweb.faqs_helper' )
+                $helper,
+                (int)$locationId
             )
         );
 
-        return $this->get( 'ez_content' )->viewLocation(
-            $locationId,
-            $viewType,
-            $layout,
-            array( 'form' => $form->createView() )
-        );
-    }
+        if ( $request->isMethod('POST') )
+        {
+            $form->submit($request);
 
+            if ($form->isValid()) {
+                $groupLocationId = $form->get( 'group' )->getData();
+                $destLocation = $this->getRepository()->getLocationService()->loadLocation( $groupLocationId );
+                return $this->redirect( $this->generateUrl( $destLocation ) );
+            }
+        }
 
-    public function categoryAction( $locationId, $viewType, $layout = false, array $params = array() )
-    {
-        $response = new Response();
-        $response->setSharedMaxAge( 86400 );
-
-        $form = $this->createForm(
-                     new GroupsType(
-                         $this->get( 'eflweb.faqs_helper' )
-                     )
-        );
+        $questions = $this->get( 'eflweb.faqs_helper' )->getQuestions( $locationId );
 
         return $this->get( 'ez_content' )->viewLocation(
             $locationId,
             $viewType,
             $layout,
-            array( 'form' => $form->createView() )
+            array(
+                'form' => $form->createView(),
+                'questions' => $questions
+            )
         );
     }
 }

@@ -13,11 +13,17 @@ class GroupsType extends AbstractType
     /**
      * @var \Efl\WebBundle\Helper\FaqsHelper
      */
-    protected $faqsHelper;
+    private $faqsHelper;
 
-    public function __construct( FaqsHelper $faqsHelper )
+    /**
+     * @var int
+     */
+    private $locationId;
+
+    public function __construct( FaqsHelper $faqsHelper, $locationId )
     {
         $this->faqsHelper = $faqsHelper;
+        $this->locationId = $locationId;
     }
 
     /**
@@ -32,11 +38,12 @@ class GroupsType extends AbstractType
 
         $builder
             ->add(
-            'group',
-            'choice',
+                'group',
+                'choice',
                 array(
                     'label' => 'Seleccione el tipo de preguntas que desea consultar',
-                    'choice_list' => $choices
+                    'choice_list' => $choices,
+                    'data' => $this->locationId
                 )
             );
     }

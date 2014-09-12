@@ -13,6 +13,7 @@ use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
+use eZ\Publish\API\Repository\ContentService;
 use Symfony\Component\Form\Extension\Core\ChoiceList\SimpleChoiceList;
 
 class FaqsHelper
@@ -27,13 +28,20 @@ class FaqsHelper
      */
     private $searchService;
 
+    /**
+     * @var \eZ\Publish\Core\SignalSlot\ContentService
+     */
+    private $contentService;
+
     public function __construct(
         LocationService $locationService,
-        SearchService $searchService
+        SearchService $searchService,
+        ContentService $contentService
     )
     {
         $this->locationService = $locationService;
         $this->searchService = $searchService;
+        $this->contentService = $contentService;
     }
 
     /**
@@ -94,6 +102,34 @@ class FaqsHelper
             }
         }
 
-        return new SimpleChoiceList( $locations );
+        return new SimpleChoiceList( array( '80' => '' ) + $locations );
+    }
+
+    public function getQuestions( $locationId )
+    {
+        $location = $this->locationService->loadLocation( $locationId );
+
+        $query = new LocationQuery();
+
+        $query->query = new Criterion\LogicalAnd(
+            array(
+                new Criterion\Visibility( Criterion\Visibility::VISIBLE ),
+                new Criterion\Location\Depth( Criterion\Operator::EQ, $location->depth + 1 ),
+                new Criterion\Subtree( $location->pathString ),
+                new Criterion\ContentTypeId( array( 50 ) )
+            )
+        );
+
+        $query->sortClauses = array( new Query\SortClause\Location\Priority() );
+
+        $results = $this->searchService->findLocations( $query )->searchHits;
+        $questionsContents = array();
+
+        foreach ( $results as $result )
+        {
+            $questionsContents[] = $this->contentService->loadContent( $result->valueObject->contentInfo->id );
+        }
+
+        return $questionsContents;
     }
 }

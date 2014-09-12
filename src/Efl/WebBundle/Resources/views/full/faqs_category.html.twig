@@ -14,73 +14,35 @@
 
                 {% form_theme form 'EflWebBundle:forms/faqs:groups.html.twig' %}
 
-                {{ form_start(form, {'attr': {'novalidate':'novalidate', 'class': 'frm frm-faq' }}) }}
+                {{ form_start(form, {'attr': {'id': 'faqs-groups', 'novalidate':'novalidate', 'class': 'frm frm-faq' }}) }}
                 {{ form_row( form.group ) }}
                 {{ form_end( form) }}
                 <!-- faqs -->
+                {% if questions|length %}
                 <article class="faqs-wrapper mod-tabs">
 
-                    <p class="faq-detail-title"><b>Envíos</b></p>
+                    <p class="faq-detail-title"><b>{{ ez_render_field( content, 'nombre') }}</b></p>
                     <ul class="faq-detail-summary">
-                        <li><i class="ico ico-arrow-right-blue"></i> <a href="#faq-detail-0">Dirección de envío y facturación</a></li>
-                        <li><i class="ico ico-arrow-right-blue"></i> <a href="#faq-detail-1">Plazos de entrega y gastos de portes</a></li>
-                        <li><i class="ico ico-arrow-right-blue"></i> <a href="#faq-detail-2">Incidencias en la entrega de sus pedidos</a></li>
+                        {% for question in questions %}
+                        <li><i class="ico ico-arrow-right-blue"></i> <a href="#faq-detail-{{ question.id }}">{{ ez_render_field( question, 'texto_pregunta', {'template':'EflWebBundle:fields:only_value.html.twig'})|striptags }}</a></li>
+                        {% endfor %}
                     </ul>
 
-                    <!-- faq detail -->
-                    <article id="faq-detail-0" class="faq-detail">
-                        <p class="tab faq-detail-title"><a href="#faq-detail-0-content">Dirección de envío y facturación</a> <i class="ico ico-arrow-top-gray"></i></p>
+                    {% for question in questions %}
+                    <article id="faq-detail-{{ question.id }}" class="faq-detail">
+                        <p class="tab faq-detail-title"><a href="#faq-detail-0-content">{{ ez_render_field( question, 'texto_pregunta')|striptags }}</a> <i class="ico ico-arrow-top-gray"></i></p>
                         <div id="faq-detail-0-content" class="tabs-content">
                             <div class="wysiwyg">
-                                <p>La dirección de entrega es la dirección para la recepción del paquete. Este dato quedará registrado en su ficha de cliente y será utilizado para posteriores entregas.</p>
-
-                                <p>La dirección de facturación puede ser diferente a la de entrega, ha de especificar claramente este dato y proporcionar los teléfonos de ambas direcciones.</p>
-
-                                <p>El envío de las facturas se realiza por correo postal a la dirección de entrega, si quiere recibir su factura en otra dirección, indíquelo expresamente.</p>
-
-                                <p>Si desea realizar cualquier cambio en las direcciones, póngase en contacto con el Centro de Atención al cliente, <a href="mailto:clientes@efl.es">clientes@efl.es</a>.</p>
+                                {{ ez_render_field( question, 'texto_respuesta', {'template':'EflWebBundle:fields:only_value.html.twig'}) }}
                             </div>
                             <p class="up right"><i class="ico ico-arrow-top-blue"></i> <a href="#frm-top">Subir</a></p>
                         </div>
                     </article>
-                    <!-- //faq detail -->
-
-                    <!-- faq detail -->
-                    <article id="faq-detail-1" class="faq-detail">
-                        <p class="tab faq-detail-title"><a href="#faq-detail-1-content">Plazos de entrega y gastos de portes</a> <i class="ico ico-arrow-top-gray"></i></p>
-                        <div id="faq-detail-1-content" class="tabs-content">
-                            <div class="wysiwyg">
-                                <p>Una vez procesado su pedido, en el caso de obras ya editadas, le será entregado por la mensajería entre 24 o 72 horas.</p>
-
-                                <p>Costes de envío: <br />
-                                    - Península y Baleares 3€ y envío gratuito para pedidos de más de 30€. <br />
-                                    - Canarias, Ceuta y Melilla 8€.</p>
-
-                                <p>Los envíos a Europa supondrán un recargo que dependerá del peso del paquete y la localización exacta.</p>
-
-                                <p>Si desea un envío urgente póngase en contacto con nuestro Centro de Atención al Cliente, <a href="mailto:clientes@efl.es">clientes@efl.es</a>.</p>
-                            </div>
-                            <p class="up right"><i class="ico ico-arrow-top-blue"></i> <a href="#frm-top">Subir</a></p>
-                        </div>
-                    </article>
-                    <!-- //faq detail -->
-
-                    <!-- faq detail -->
-                    <article id="faq-detail-3" class="faq-detail">
-                        <p class="tab faq-detail-title"><a href="#faq-detail-3-content">Incidencias en la entrega de sus pedidos</a> <i class="ico ico-arrow-top-gray"></i></p>
-                        <div id="faq-detail-3-content" class="tabs-content">
-                            <div class="wysiwyg">
-                                <p>Si los productos recibidos no se corresponden con su pedido o son defectuosos, le recomendamos contacte con nuestro centro de Atención al Cliente 91-2108000, que se esforzará por corregir la situación lo antes posible.</p>
-
-                                <p>Si transcurrido el plazo señalado de entrega, usted no ha recibido su paquete contacte con nosotros para revisar el estado de su pedido.</p>
-                            </div>
-                            <p class="up right"><i class="ico ico-arrow-top-blue"></i> <a href="#frm-top">Subir</a></p>
-                        </div>
-                    </article>
-                    <!-- //faq detail -->
+                    {% endfor %}
 
                 </article>
                 <!-- //faqs -->
+                {% endif %}
 
             </div>
 
@@ -120,4 +82,14 @@
 
         </div>
     </section>
+{% endblock %}
+
+{% block footerScript %}
+    <script>
+    $( document ).ready(function() {
+        $("#faqs-groups").find( 'select').bind( 'change', function(){
+           $(this).parents('form').eq(0).submit();
+        });
+    });
+   </script>
 {% endblock %}

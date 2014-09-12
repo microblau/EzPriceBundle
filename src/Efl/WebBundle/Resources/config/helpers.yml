@@ -41,3 +41,4 @@ services:
         arguments:
             - @ezpublish.api.service.location
             - @ezpublish.api.service.search
+            - @ezpublish.api.service.content
