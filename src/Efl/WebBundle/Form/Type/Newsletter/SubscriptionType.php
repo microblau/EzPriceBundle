@@ -213,7 +213,7 @@ class SubscriptionType extends AbstractType
                 'checkbox',
                 array(
                     'required' => true,
-                    'label' => 'Acepto las <a href="#">condiciones del servicio</a> y la <a target="_blank" href="' . $this->router->generate( $politicaPrivacidadLocation ) . '">política de privacidad</a>'
+                    'label' => /** @Ignore*/'Acepto las <a href="#">condiciones del servicio</a> y la <a target="_blank" href="' . $this->router->generate( $politicaPrivacidadLocation ) . '">política de privacidad</a>'
                 )
         );
 

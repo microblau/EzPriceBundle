@@ -2,6 +2,9 @@
 
 namespace Efl\WebBundle\Controller;
 
+use Efl\WebBundle\Exceptions\Newsletter\HashAlreadyUsedException;
+use Efl\WebBundle\Exceptions\Newsletter\HashNotFoundException;
+use Efl\WebBundle\Exceptions\Newsletter\NewsletterAccessDenied;
 use Efl\WebBundle\Form\Type\Newsletter\SubscriptionBoxType;
 use Efl\WebBundle\Form\Type\Newsletter\SubscriptionType;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
@@ -80,6 +83,53 @@ class NewsletterController extends Controller
             ),
             $response
         );
+    }
 
+    /**
+     * Controlador para manejar la confirmación del usuario
+     */
+    public function configureAction( Request $request )
+    {
+        $response = new Response();
+        $hash = $request->get( 'hash' );
+        $vars = array();
+
+        try
+        {
+            $confirmation = $this->get( 'eflweb.newsletter_helper' )->confirmSubscription( $hash );
+
+            if ( !is_null( $confirmation['ebook'] ) )
+            {
+                $downLoadLink = $this->get( 'eflweb.newsletter_helper' )->generateDownloadLinkForEbook( $confirmation['ebook'] );
+                $vars['downloadLink'] = $downLoadLink;
+            }
+        }
+        catch ( HashNotFoundException $e )
+        {
+            $this->get( 'session' )->getFlashBag()->add(
+                 'error',
+                 $this->get( 'translator' )->trans( 'Hash inválido.' )
+            );
+        }
+        catch ( HashAlreadyUsedException $e )
+        {
+            $this->get( 'session' )->getFlashBag()->add(
+                 'error',
+                     $this->get( 'translator' )->trans( 'Este hash ya sido usado.' )
+            );
+        }
+        catch ( NewsletterAccessDenied $e )
+        {
+            $this->get( 'session' )->getFlashBag()->add(
+                 'error',
+                     $this->get( 'translator' )->trans( 'Hay un problema para completar su suscripción, por favor póngase en contacto con nosotros.' )
+            );
+        }
+
+        return $this->render(
+            'EflWebBundle:newsletter:subscription_confirmation.html.twig',
+            $vars,
+            $response
+        );
     }
 }

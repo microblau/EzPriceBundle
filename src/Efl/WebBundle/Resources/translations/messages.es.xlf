@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="es" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="d41d8cd98f00b204e9800998ecf8427e" resname="">
+        <source></source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="3025e0e3b5f7fb3016fadaccb6c1a69a" resname="&lt;p &gt;El formulario se ha enviado correctamente.&lt;/p&gt;&#10;        &lt;p&gt;En breve recibira un email a la dirección que nos ha proporcionado. Para activar su suscripción deberá confirmar el email que le hemos enviado.&lt;/p&gt;">
+        <source>&lt;p &gt;El formulario se ha enviado correctamente.&lt;/p&gt;
+        &lt;p&gt;En breve recibira un email a la dirección que nos ha proporcionado. Para activar su suscripción deberá confirmar el email que le hemos enviado.&lt;/p&gt;</source>
+        <target>&lt;p &gt;El formulario se ha enviado correctamente.&lt;/p&gt;
+        &lt;p&gt;En breve recibira un email a la dirección que nos ha proporcionado. Para activar su suscripción deberá confirmar el email que le hemos enviado.&lt;/p&gt;</target>
+      </trans-unit>
+      <trans-unit id="085a7649f49b3c04c8a64774e33c4a61" resname="&lt;p&gt;&lt;a href=&quot;%downloadLink%&quot;&gt;Descargue el  ebook que ha escogido como regalo&lt;/a&gt;&lt;/p&gt;">
+        <source>&lt;p&gt;&lt;a href="%downloadLink%"&gt;Descargue el  ebook que ha escogido como regalo&lt;/a&gt;&lt;/p&gt;</source>
+        <target>&lt;p&gt;&lt;a href="%downloadLink%"&gt;Descargue el  ebook que ha escogido como regalo&lt;/a&gt;&lt;/p&gt;</target>
+      </trans-unit>
+      <trans-unit id="1fe8826084ea185a2218d9d54ade8613" resname="&lt;p&gt;Usted está suscrito correctamente al Boletín electrónico de Ediciones Francis Lefebvre.">
+        <source>&lt;p&gt;Usted está suscrito correctamente al Boletín electrónico de Ediciones Francis Lefebvre.</source>
+        <target>&lt;p&gt;Usted está suscrito correctamente al Boletín electrónico de Ediciones Francis Lefebvre.</target>
+      </trans-unit>
+      <trans-unit id="093c3de82374b0ca343cf12bf8d77f4f" resname="Actividad">
+        <source>Actividad</source>
+        <target>Actividad</target>
+      </trans-unit>
+      <trans-unit id="f04c54105510249e49af8b509e3f7a42" resname="Correo electrónico">
+        <source>Correo electrónico</source>
+        <target>Correo electrónico</target>
+      </trans-unit>
+      <trans-unit id="355597ca97dccd7adf4ca386182acba9" resname="Código Postal">
+        <source>Código Postal</source>
+        <target>Código Postal</target>
+      </trans-unit>
+      <trans-unit id="30cc00aea30ec70b7c1292b6458181c0" resname="Enviar">
+        <source>Enviar</source>
+        <target>Enviar</target>
+      </trans-unit>
+      <trans-unit id="d2fafce410dc49e288aff2ee4db03a0b" resname="Escribe el título, área del derecho o ley concreta para encontrar la publicación">
+        <source>Escribe el título, área del derecho o ley concreta para encontrar la publicación</source>
+        <target>Escribe el título, área del derecho o ley concreta para encontrar la publicación</target>
+      </trans-unit>
+      <trans-unit id="09459a32cd5d6fe7d850cb4636f331c9" resname="Este hash ya sido usado.">
+        <source>Este hash ya sido usado.</source>
+        <target>Este hash ya sido usado.</target>
+      </trans-unit>
+      <trans-unit id="1e2a41ad691eedbd6cbfebdc51612de5" resname="Hash inválido.">
+        <source>Hash inválido.</source>
+        <target>Hash inválido.</target>
+      </trans-unit>
+      <trans-unit id="db53743dbdad40b212319bcd141a40b5" resname="Hay un problema para completar su suscripción, por favor póngase en contacto con nosotros.">
+        <source>Hay un problema para completar su suscripción, por favor póngase en contacto con nosotros.</source>
+        <target>Hay un problema para completar su suscripción, por favor póngase en contacto con nosotros.</target>
+      </trans-unit>
+      <trans-unit id="e28c61483d9ea0fed2d7768bd3960321" resname="Intereses">
+        <source>Intereses</source>
+        <target>Intereses</target>
+      </trans-unit>
+      <trans-unit id="4777bbaaa0aebe104606b77947d0e22d" resname="Nombre">
+        <source>Nombre</source>
+        <target>Nombre</target>
+      </trans-unit>
+      <trans-unit id="50d2a80a3b52711d6dc306d2d051f35a" resname="Primer Apellido">
+        <source>Primer Apellido</source>
+        <target>Primer Apellido</target>
+      </trans-unit>
+      <trans-unit id="ab7d85f405b6868e647626b0fe8246fc" resname="Segundo Apellido">
+        <source>Segundo Apellido</source>
+        <target>Segundo Apellido</target>
+      </trans-unit>
+      <trans-unit id="d091ea99b6d16d3456d1ac7312417f6c" resname="Teléfono">
+        <source>Teléfono</source>
+        <target>Teléfono</target>
+      </trans-unit>
+      <trans-unit id="cc99c671f9ea86938e2c6cda65a65bc3" resname="Texto">
+        <source>Texto</source>
+        <target>Texto</target>
+      </trans-unit>
+      <trans-unit id="f92a134f7c22ed646f899eff15dce245" resname="Thank you for your message, we will get back to you as soon as possible.">
+        <source>Thank you for your message, we will get back to you as soon as possible.</source>
+        <target>Thank you for your message, we will get back to you as soon as possible.</target>
+      </trans-unit>
+      <trans-unit id="d754ef6ef06421c56f9566ac66f3cc4e" resname="Trabajo 1">
+        <source>Trabajo 1</source>
+        <target>Trabajo 1</target>
+      </trans-unit>
+      <trans-unit id="8d0f0a40e9ff54e224e4b805bc79af65" resname="Trabajo 2">
+        <source>Trabajo 2</source>
+        <target>Trabajo 2</target>
+      </trans-unit>
+      <trans-unit id="a8bafe9b132517cd8569b79b59a38f7b" resname="Trabajo 3">
+        <source>Trabajo 3</source>
+        <target>Trabajo 3</target>
+      </trans-unit>
+      <trans-unit id="92674474f87cfb2329d603245709a8b8" resname="Trabajo 4">
+        <source>Trabajo 4</source>
+        <target>Trabajo 4</target>
+      </trans-unit>
+      <trans-unit id="02a3a357710cc2a5dfdfb74ed012fb59" resname="Url">
+        <source>Url</source>
+        <target>Url</target>
+      </trans-unit>
+      <trans-unit id="c5e024b80282431dc4ef7e25cfa25714" resname="eBook de regalo">
+        <source>eBook de regalo</source>
+        <target>eBook de regalo</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

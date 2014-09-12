@@ -91,7 +91,7 @@ class Builder
             $menu->addChild(
                 "item_{$key}",
                 array(
-                    'label' => $child['label'],
+                    'label' => /** @Ignore */$child['label'],
                     'uri' => $child['url']
                 )
             );
@@ -141,7 +141,7 @@ class Builder
                 foreach ( $rows as $row )
                 {
                     $items[] = array(
-                        'label' => $row['text'],
+                        'label' => /** @Ignore */$row['text'],
                         'url' => $row['url'],
                     );
                 }

@@ -17,6 +17,7 @@ class eZUtilsUser extends eZUser
 	 */
 	static function loginUser( $login, $password, $authenticationMatch = false )
 	{
+        die( 'x');
 	   $eflWS = new eflWS();
 	   $respuesta = $eflWS->validaUsuario( $login, $password );
 	   
@@ -122,7 +123,7 @@ class eZUtilsUser extends eZUser
                $userCreatorID = $ini->variable( "UserSettings", "UserCreatorID" );
                $defaultSectionID = $ini->variable( "UserSettings", "DefaultSectionID" );
                $defaultUserPlacement = ( $placement != null ) ? $placement : $ini->variable( "UserSettings", "DefaultUserPlacement" );
-    
+    die( 'h');
 	           // actualizamos
 	           $userID = $existUser->attribute( 'contentobject_id' );
                $contentObject = eZContentObject::fetch( $userID );

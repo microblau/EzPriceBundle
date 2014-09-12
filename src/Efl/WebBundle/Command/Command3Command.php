@@ -82,8 +82,6 @@ class Command3Command extends ContainerAwareCommand
                 'icon' => 'calendar',
                 'body' => 'Hasta <strong>dos meses</strong> desde que recibe el pedido para devolver la compra si no ha quedado satisfecho.'
             ),
-
-
         );
 
         try

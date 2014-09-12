@@ -86,7 +86,7 @@ class Builder
             $menu->addChild(
                  $rrss['class'],
                 array(
-                    'label' => $rrss['literal'],
+                    'label' => /** @Ignore*/$rrss['literal'],
                     'uri' => $rrss['url'],
                     'linkAttributes' => array( 'class' => $rrss['class'] )
                 )

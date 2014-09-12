@@ -26,7 +26,11 @@ use CjwNewsletterUser;
 use Swift_Mailer;
 use Swift_Message;
 use Symfony\Component\Routing\RouterInterface;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use eZ\Publish\API\Repository\Values\Content\Content;
+use eZ\Bundle\EzPublishLegacyBundle\Routing\FallbackRouter;
+use Efl\WebBundle\Exceptions\Newsletter\HashNotFoundException;
+use Efl\WebBundle\Exceptions\Newsletter\HashAlreadyUsedException;
+use Efl\WebBundle\Exceptions\Newsletter\NewsletterAccessDenied;
 
 class NewsletterHelper
 {
@@ -81,6 +85,11 @@ class NewsletterHelper
     private $router;
 
     /**
+     * @var \eZ\Bundle\EzPublishLegacyBundle\Routing\FallbackRouter;
+     */
+    private $legacyRouter;
+
+    /**
      * @var array
      */
     protected $newsletterConfig;
@@ -96,6 +105,7 @@ class NewsletterHelper
         Swift_Mailer $mailer,
         EngineInterface $templating,
         RouterInterface $router,
+        FallbackRouter $legacyRouter,
         array $newsletterConfig
     )
     {
@@ -109,6 +119,7 @@ class NewsletterHelper
         $this->mailer = $mailer;
         $this->templating = $templating;
         $this->router = $router;
+        $this->legacyRouter = $legacyRouter;
         $this->newsletterConfig = $newsletterConfig;
     }
 
@@ -152,7 +163,7 @@ class NewsletterHelper
             $values[$result->valueObject->contentInfo->id] = $result->valueObject->contentInfo->name;
         }
 
-        return new SimpleChoiceList( array( $values ) );
+        return new SimpleChoiceList(  $values );
     }
 
     public function getEbooksRegalo()
@@ -177,7 +188,7 @@ class NewsletterHelper
             }
         }
 
-        return new SimpleChoiceList( array( $values ) );
+        return new SimpleChoiceList( $values );
     }
 
     /**
@@ -300,4 +311,88 @@ class NewsletterHelper
         return $doc->saveXML();
     }
 
+    /**
+     * Confirma la suscripción vía hash
+     *
+     * @param string $hash
+     */
+    public function confirmSubscription( $hash = '' )
+    {
+        $ebookId = $this->getLegacyKernel()->runCallback(
+            function () use ( $hash )
+            {
+                $newsletterUser = CjwNewsletterUser::fetchByHash( $hash );
+                if ( !$newsletterUser )
+                {
+                    throw new HashNotFoundException( 'Hash', $hash );
+                }
+
+                if ( $newsletterUser->attribute( 'status' ) == CjwNewsletterUser::STATUS_CONFIRMED )
+                {
+                    throw new HashAlreadyUsedException( 'Hash', $hash );
+                }
+                // if user is blacklisted or removed do not show configure view
+                switch ( $newsletterUser->attribute('status') )
+                {
+                    case CjwNewsletterUser::STATUS_BLACKLISTED :
+                    case CjwNewsletterUser::STATUS_REMOVED_ADMIN :
+                    case CjwNewsletterUser::STATUS_REMOVED_SELF :
+                        throw new NewsletterAccessDenied( 'Hash', $hash );
+                        break;
+                }
+
+                if ( $newsletterUser->attribute( 'is_confirmed' ) == false )
+                {
+                    // alle offenen subscription des users setzen
+                    $confirmAllResult = $newsletterUser->confirmAll();
+
+                    $newsletterUser = CjwNewsletterUser::fetchByHash( $hash );
+                }
+
+                $subscriptionDataArray = array( 'first_name' => '' ,
+                                                'last_name' => '',
+                                                'email' => '',
+                                                'salutation' => '',
+                                                'id_array' => array(),
+                                                'list_array' => array(),
+                                                'list_output_format_array' => array()
+                );
+
+                // email + userId aus formular ignorieren
+                $subscriptionDataArray['email'] = $newsletterUser->attribute('email');
+                $subscriptionDataArray['ez_user_id'] = $newsletterUser->attribute('ez_user_id');
+
+                foreach ( $subscriptionDataArray['id_array'] as $listId )
+                {
+                    $defaultOutputFormatId = 0;
+                    $subscriptionDataArray['list_output_format_array'][ $listId ] = array( $defaultOutputFormatId );
+                }
+
+                $subscriptionResultArray = CjwNewsletterSubscription::createSubscriptionByArray( $subscriptionDataArray,
+                    CjwNewsletterUser::STATUS_PENDING,
+                    $subscribeOnlyMode = false,
+                    $context = 'configure' );
+
+                // sacar el ebook que pidió el usuario y devolverlo al sf stack
+                $xml = new \DOMDocument( '1.0', 'utf-8' );
+                $xml->loadXml( $newsletterUser->attribute( 'data_xml' ) );
+                $ebooks = $xml->getElementsByTagName( 'ebook_seleccionado' );
+                return $ebooks->item( 0 )->nodeValue;
+            }
+        );
+
+        $ebook = !empty( $ebookId ) ? $this->contentService->loadContent( $ebookId ) : null;
+        return array( 'ebook' => $ebook );
+    }
+
+    public function generateDownloadLinkForEbook( Content $ebook )
+    {
+        $link = 'ebook/download/' . $ebook->id;
+
+        return $this->legacyRouter->generate(
+            'ez_legacy',
+            array( 'module_uri' => $link ),
+            true
+        );
+    }
 }

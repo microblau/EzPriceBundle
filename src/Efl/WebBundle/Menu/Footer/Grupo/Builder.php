@@ -100,7 +100,7 @@ class Builder
             $menu->addChild(
                 "item_{$child->id}",
                 array(
-                    'label' => $this->translationHelper->getTranslatedContentNameByContentInfo( $child->contentInfo ),
+                    'label' => /** @Ignore*/$this->translationHelper->getTranslatedContentNameByContentInfo( $child->contentInfo ),
                     'uri' => $this->router->generate( $child )
                 )
             );
@@ -118,20 +118,22 @@ class Builder
      */
     private function getMenuItems()
     {
-        // hemos de buscar el contenido
-
         $items = array();
+        $location = $this->locationService->loadLocation( 63 );
+        $nosotrosLocation = $this->locationService->loadLocation( $location->parentLocationId );
 
         try
         {
-            $parent = $this->findParent();
             $query = new LocationQuery();
 
             $query->query = new Criterion\LogicalAnd(
                 array(
                     new Criterion\Visibility( Criterion\Visibility::VISIBLE ),
-                    new Criterion\Location\Depth( Criterion\Operator::EQ, $parent->depth + 1 ),
-                    new Criterion\Subtree( $parent->pathString )
+                    new Criterion\Location\Depth( Criterion\Operator::EQ, $nosotrosLocation->depth + 1 ),
+                    new Criterion\Subtree( $nosotrosLocation->pathString ),
+                    new Criterion\LogicalNot(
+                        new Criterion\LocationId( 63 )
+                    )
                 )
             );
 
@@ -142,7 +144,7 @@ class Builder
             foreach ( $queryResults as $queryResult )
             {
                 $items[] = $this->locationService->loadLocation(
-                  $queryResult->valueObject->id
+                    $queryResult->valueObject->id
                 );
             }
         }
@@ -151,12 +153,5 @@ class Builder
         }
 
         return $items;
-    }
-
-    private function findParent()
-    {
-        $location = $this->locationService->loadLocation( 63 );
-
-        return $location;
     }
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="es" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="35c3c761b8bf568fe6537e92e4eba822" resname="Debe aceptar las condiciones del servicio y la política de privacidad">
+        <source>Debe aceptar las condiciones del servicio y la política de privacidad</source>
+        <target>Debe aceptar las condiciones del servicio y la política de privacidad</target>
+      </trans-unit>
+      <trans-unit id="dbfb38353fed9aa1c174e7cca5e97473" resname="Debe seleccionar al menos un área de interés">
+        <source>Debe seleccionar al menos un área de interés</source>
+        <target>Debe seleccionar al menos un área de interés</target>
+      </trans-unit>
+      <trans-unit id="353fac3bd042874dfef33a5f21c54f83" resname="Debe seleccionar su actividad profesional.">
+        <source>Debe seleccionar su actividad profesional.</source>
+        <target>Debe seleccionar su actividad profesional.</target>
+      </trans-unit>
+      <trans-unit id="ff4750a70544b659b062b223b0889ab4" resname="El campo Primer Apellido es obligatorio.">
+        <source>El campo Primer Apellido es obligatorio.</source>
+        <target>El campo Primer Apellido es obligatorio.</target>
+      </trans-unit>
+      <trans-unit id="3ae2bcf2591d7401c55717d25a5bb7d7" resname="El campo código postal es obligatorio.">
+        <source>El campo código postal es obligatorio.</source>
+        <target>El campo código postal es obligatorio.</target>
+      </trans-unit>
+      <trans-unit id="be5aec8fc3cd0b927a3ec1747ef39210" resname="El campo email es obligatorio.">
+        <source>El campo email es obligatorio.</source>
+        <target>El campo email es obligatorio.</target>
+      </trans-unit>
+      <trans-unit id="023ea30f4aaaf598e47fe0200a3ccdad" resname="El campo nombre es obligatorio.">
+        <source>El campo nombre es obligatorio.</source>
+        <target>El campo nombre es obligatorio.</target>
+      </trans-unit>
+      <trans-unit id="eb07a4c333d9384cefa147af089dd1be" resname="El campo teléfono es obligatorio.">
+        <source>El campo teléfono es obligatorio.</source>
+        <target>El campo teléfono es obligatorio.</target>
+      </trans-unit>
+      <trans-unit id="994acc92244a236e84ab6a2072cb2e9f" resname="El email ya estaba incluído en la lista.">
+        <source>El email ya estaba incluído en la lista.</source>
+        <target>El email ya estaba incluído en la lista.</target>
+      </trans-unit>
+      <trans-unit id="01c86259e60a0e9a788328ae88387646" resname="Email incorrecto.">
+        <source>Email incorrecto.</source>
+        <target>Email incorrecto.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
