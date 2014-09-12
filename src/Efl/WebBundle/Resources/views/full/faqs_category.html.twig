@@ -1,0 +1,123 @@
+{% extends "EflWebBundle::pagelayout.html.twig" %}
+
+{% block content %}
+    <div class="wrapper cl">
+
+        <div class="twoColsB">
+            <div class="main">
+
+                <article class="highlight cl">
+                    <div class="content">
+                        <p class="title3"><b>Preguntas frecuentes</b></p>
+                    </div>
+                </article>
+
+                {% form_theme form 'EflWebBundle:forms/faqs:groups.html.twig' %}
+
+                {{ form_start(form, {'attr': {'novalidate':'novalidate', 'class': 'frm frm-faq' }}) }}
+                {{ form_row( form.group ) }}
+                {{ form_end( form) }}
+                <!-- faqs -->
+                <article class="faqs-wrapper mod-tabs">
+
+                    <p class="faq-detail-title"><b>Envíos</b></p>
+                    <ul class="faq-detail-summary">
+                        <li><i class="ico ico-arrow-right-blue"></i> <a href="#faq-detail-0">Dirección de envío y facturación</a></li>
+                        <li><i class="ico ico-arrow-right-blue"></i> <a href="#faq-detail-1">Plazos de entrega y gastos de portes</a></li>
+                        <li><i class="ico ico-arrow-right-blue"></i> <a href="#faq-detail-2">Incidencias en la entrega de sus pedidos</a></li>
+                    </ul>
+
+                    <!-- faq detail -->
+                    <article id="faq-detail-0" class="faq-detail">
+                        <p class="tab faq-detail-title"><a href="#faq-detail-0-content">Dirección de envío y facturación</a> <i class="ico ico-arrow-top-gray"></i></p>
+                        <div id="faq-detail-0-content" class="tabs-content">
+                            <div class="wysiwyg">
+                                <p>La dirección de entrega es la dirección para la recepción del paquete. Este dato quedará registrado en su ficha de cliente y será utilizado para posteriores entregas.</p>
+
+                                <p>La dirección de facturación puede ser diferente a la de entrega, ha de especificar claramente este dato y proporcionar los teléfonos de ambas direcciones.</p>
+
+                                <p>El envío de las facturas se realiza por correo postal a la dirección de entrega, si quiere recibir su factura en otra dirección, indíquelo expresamente.</p>
+
+                                <p>Si desea realizar cualquier cambio en las direcciones, póngase en contacto con el Centro de Atención al cliente, <a href="mailto:clientes@efl.es">clientes@efl.es</a>.</p>
+                            </div>
+                            <p class="up right"><i class="ico ico-arrow-top-blue"></i> <a href="#frm-top">Subir</a></p>
+                        </div>
+                    </article>
+                    <!-- //faq detail -->
+
+                    <!-- faq detail -->
+                    <article id="faq-detail-1" class="faq-detail">
+                        <p class="tab faq-detail-title"><a href="#faq-detail-1-content">Plazos de entrega y gastos de portes</a> <i class="ico ico-arrow-top-gray"></i></p>
+                        <div id="faq-detail-1-content" class="tabs-content">
+                            <div class="wysiwyg">
+                                <p>Una vez procesado su pedido, en el caso de obras ya editadas, le será entregado por la mensajería entre 24 o 72 horas.</p>
+
+                                <p>Costes de envío: <br />
+                                    - Península y Baleares 3€ y envío gratuito para pedidos de más de 30€. <br />
+                                    - Canarias, Ceuta y Melilla 8€.</p>
+
+                                <p>Los envíos a Europa supondrán un recargo que dependerá del peso del paquete y la localización exacta.</p>
+
+                                <p>Si desea un envío urgente póngase en contacto con nuestro Centro de Atención al Cliente, <a href="mailto:clientes@efl.es">clientes@efl.es</a>.</p>
+                            </div>
+                            <p class="up right"><i class="ico ico-arrow-top-blue"></i> <a href="#frm-top">Subir</a></p>
+                        </div>
+                    </article>
+                    <!-- //faq detail -->
+
+                    <!-- faq detail -->
+                    <article id="faq-detail-3" class="faq-detail">
+                        <p class="tab faq-detail-title"><a href="#faq-detail-3-content">Incidencias en la entrega de sus pedidos</a> <i class="ico ico-arrow-top-gray"></i></p>
+                        <div id="faq-detail-3-content" class="tabs-content">
+                            <div class="wysiwyg">
+                                <p>Si los productos recibidos no se corresponden con su pedido o son defectuosos, le recomendamos contacte con nuestro centro de Atención al Cliente 91-2108000, que se esforzará por corregir la situación lo antes posible.</p>
+
+                                <p>Si transcurrido el plazo señalado de entrega, usted no ha recibido su paquete contacte con nosotros para revisar el estado de su pedido.</p>
+                            </div>
+                            <p class="up right"><i class="ico ico-arrow-top-blue"></i> <a href="#frm-top">Subir</a></p>
+                        </div>
+                    </article>
+                    <!-- //faq detail -->
+
+                </article>
+                <!-- //faqs -->
+
+            </div>
+
+            <div class="aside">
+                {{ render_esi( controller( "EflWebBundle:Aside:contact" )) }}
+            </div>
+        </div>
+
+    </div>
+
+    <section class="customerServices">
+        <div class="wrapper cl">
+
+            <article class="customerServices-detail payments">
+                <p class="txt">Métodos de pago</p>
+                <div class="intro">
+                    <p>Disponemos de una certificación SSL que garantiza que sus datos y transacciones siempre estarán seguros.</p>
+                </div>
+                <ul class="icons">
+                    <li><img src="{{ asset( "bundles/eflweb/images/logo_paypal@2x.png" )}}" alt="Paypal" class="logo-paypal"></li>
+                    <li><img src="{{ asset( "bundles/eflweb/images/logo_mastercard@2x.png" )}}" alt="Mastercard" class="logo-mastercard"></li>
+                    <li><img src="{{ asset( "bundles/eflweb/images/logo_visa@2x.png" )}}" alt="Visa" class="logo-visa"></li>
+                    <li><img src="{{ asset( "bundles/eflweb/images/logo_domiciliacion-bancaria@2x.png" )}}" alt="Domiciliación bancaria" class="logo-debit"></li>
+                </ul>
+            </article>
+
+            <article class="customerServices-detail shipping">
+                <p class="txt">Envío y Devoluciones</p>
+                <div class="intro">
+                    <p>Le damos todas las facilidades para comprar nuestros producto, envío gratis a partir de 30€ y período de devolución de dos meses si no queda satisfecho.</p>
+                </div>
+                <ul>
+                    <li><i class="ico ico-arrow-right-blue"></i> <a href="{{ path( 'ez_urlalias', {'locationId': efl_contacto_location_id} ) }}">Contacta con nosotros</a></li>
+                    <li><i class="ico ico-arrow-right-blue"></i> <a href="{{ path(location) }}">Preguntas frecuentes</a></li>
+                </ul>
+            </article>
+
+        </div>
+    </section>
+{% endblock %}

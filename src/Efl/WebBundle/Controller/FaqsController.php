@@ -27,4 +27,24 @@ class FaqsController extends Controller
             array( 'form' => $form->createView() )
         );
     }
+
+
+    public function categoryAction( $locationId, $viewType, $layout = false, array $params = array() )
+    {
+        $response = new Response();
+        $response->setSharedMaxAge( 86400 );
+
+        $form = $this->createForm(
+                     new GroupsType(
+                         $this->get( 'eflweb.faqs_helper' )
+                     )
+        );
+
+        return $this->get( 'ez_content' )->viewLocation(
+            $locationId,
+            $viewType,
+            $layout,
+            array( 'form' => $form->createView() )
+        );
+    }
 }
