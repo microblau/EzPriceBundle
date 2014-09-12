@@ -60,6 +60,13 @@
 {% endblock %}
 
 
+{% block checkbox_row %}
+<div class="prettycheck legal cl">
+    {{- form_errors(form) -}}
+    {{- form_widget(form) -}}
+    {{- form_label(form) -}}
+</div>
+{% endblock %}
 
 {% block checkbox_widget -%}
 
@@ -71,3 +78,12 @@
 {% block radio_widget -%}
     <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
 {%- endblock radio_widget %}
+
+{% block _efl_newsletter_subscription_send_widget %}
+    {% if label is empty -%}
+        {% set label = name|humanize %}
+    {%- endif -%}
+    <div class="right">
+            <button type="submit" {{ block('button_attributes') }}><i class="ico ico-arrow-right-white"></i> {{ label|trans({}, translation_domain) }}</button>
+    </div>
+{% endblock %}

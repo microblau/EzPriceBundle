@@ -63,10 +63,15 @@ class EflWebExtension extends Extension implements PrependExtensionInterface
         $config = Yaml::parse( file_get_contents( $configFile ) );
         $container->prependExtensionConfig( 'ezpublish', $config );
         $container->addResource( new FileResource( $configFile ) );
+    }
 
-        /*$ezpageConfigFile = __DIR__ . '/../Resources/config/ezpage.yml';
-        $ezpageConfig = Yaml::parse( file_get_contents( $ezpageConfigFile ) );
-        $container->prependExtensionConfig( 'ezpublish', $ezpageConfig );
-        $container->addResource( new FileResource( $ezpageConfigFile ) );*/
+    private function registerRepositoriesConfiguration( array $config, ContainerBuilder $container )
+    {
+        if ( !isset( $config['repositories'] ) )
+        {
+            $config['repositories'] = array();
+        }
+
+        $container->setParameter( 'ezpublish.repositories', $config['repositories'] );
     }
 } 

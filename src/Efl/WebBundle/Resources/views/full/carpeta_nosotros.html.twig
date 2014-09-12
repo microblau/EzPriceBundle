@@ -1,0 +1,68 @@
+{% extends "EflWebBundle::pagelayout.html.twig" %}
+{% set mainClass = 'static' %}
+{% block content %}
+    <div class="wrapper cl">
+
+        <div class="oneCol">
+            <div class="main">
+
+                <article class="highlight cl">
+                    <div class="content">
+                        <p class="title1">Nosotros</p>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+
+        <div class="twoColsC">
+
+            <!-- aside -->
+            <aside class="aside">
+
+                <section class="filter">
+                    <article class="frm-filter">
+                        <article class="field row-item">
+                            <span class="lbl upper"><b>Nosotros</b></span>
+                            {{ render_esi(controller('EflWebBundle:Nosotros:menu', {locationId: location.id})) }}
+                        </article>
+                    </article>
+                </section>
+
+            </aside>
+            <!-- //aside -->
+
+            <!-- main -->
+            <div class="main">
+                <div class="wrap-title">
+                    <p class="title3"><span>Nosotros //</span> <b>{{ ez_render_field( content, 'name', {'template':'EflWebBundle:fields:only_value.html.twig'} ) }}</b></p>
+                </div>
+
+                <div class="wysiwyg">
+                    {{ ez_render_field( content, 'description' ) }}
+                </div>
+
+                <section class="statements twoCols">
+                    {% for testimonio in testimonios %}
+                    <article class="statement-detail">
+                        <div class="layer">
+                            <b>{{ ez_render_field( testimonio.parentObject, 'nombre') }}</b>
+                            {{ ez_render_field( testimonio.content, 'testimonio') }}
+                         </div>
+
+                        <div class="authoring">
+                            {{ ez_render_field( testimonio.imgObject, 'image', {'parameters': { 'alias': 'foto_testimonio'} } ) }}
+                            <p class="author">{{ ez_render_field( testimonio.content, 'nombre_persona') }}</p>
+                        </div>
+
+                    </article>
+
+                    {% endfor %}
+
+                </section>
+
+            </div>
+            <!-- //main -->
+        </div>
+    </div>
+{% endblock %}

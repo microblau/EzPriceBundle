@@ -184,3 +184,23 @@ services:
         scope: request
         tags:
             - { name: knp_menu.menu, alias: footer_rss }
+
+# nosotros
+    efl.nosotros.menu.builder:
+        class: Efl\WebBundle\Menu\Nosotros\Builder
+        arguments:
+            - @knp_menu.factory
+            - @router
+            - @ezpublish.config.resolver
+            - @ezpublish.api.service.location
+            - @ezpublish.translation_helper
+            - @ezpublish.api.service.search
+
+    efl.menu.nosotros:
+        class:  Efl\WebBundle\Menu\Nosotros\Builder
+        factory_service: efl.nosotros.menu.builder
+        factory_method: createMenu
+        arguments: [@request]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: nosotros }

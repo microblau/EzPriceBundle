@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="es" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="0a51fed993ade902e69399da1e8725a4" resname="search.simple.max_size.255">
+        <source>search.simple.max_size.255</source>
+        <target>search.simple.max_size.255</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

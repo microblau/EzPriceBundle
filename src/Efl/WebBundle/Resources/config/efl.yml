@@ -5,6 +5,15 @@ siteaccess:
             - formacion
 system:
     efl_frontend_group:
+        image_variations:
+            ebook_regalo:
+                reference: original
+                filters:
+                    - { name: geometry/scalewithdownonly, params: [480] }
+            foto_testimonio:
+                reference: original
+                filters:
+                    - { name: geometry/scale, params: [162,162] }
         user:
             layout: EflWebBundle::pagelayout.html.twig
             login_template: eZDemoBundle:Security:login.html.twig
@@ -20,6 +29,28 @@ system:
                     template: "EflWebBundle:full:product.html.twig"
                     match:
                         Identifier\ContentType: [producto]
+                carpeta_section_nosotros:
+                    controller: "EflWebBundle:Nosotros:page"
+                    template: "EflWebBundle:full:carpeta_nosotros.html.twig"
+                    match:
+                        Identifier\ContentType: [folder]
+                        Id\Section: 10
+                faqs:
+                    controller: "EflWebBundle:Faqs:page"
+                    template: "EflWebBundle:full:faqs.html.twig"
+                    match:
+                        Id\Location: 80
+                faqs_category:
+                    controller: "EflWebBundle:Faqs:category"
+                    template: "EflWebBundle:full:faqs_category.html.twig"
+                    match:
+                        Id\ContentType: 65
+                pagina_texto:
+                    template: "EflWebBundle:full:pagina_texto.html.twig"
+                    match:
+                        Identifier\ContentType: pagina_texto
+
     global:
         field_templates:
             - {template: "EflWebBundle::content_fields.html.twig", priority: 10}
+

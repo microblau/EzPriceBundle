@@ -8,7 +8,6 @@
     {% include 'EflWebBundle::page_head_script.html.twig' %}
 </head>
 <body>
-
 {% if location is defined %}
     {{ render( controller( "ezpublish_legacy.website_toolbar.controller:websiteToolbarAction", { 'locationId': location.id} ) ) }}
 {% endif %}
@@ -19,17 +18,20 @@
             {% endblock %}
         </header>
 
-        <main role="main" id="bodyContent">
+        <main role="main" id="bodyContent"{% if mainClass is defined %} class="{{ mainClass }}"{% endif %}>
         {% block content %}{% endblock %}
-        <div class="wrapperFooter">
-            <div class="preFooter">
-                <div class="wrapper"></div>
-            </div>
-            <footer role="contentinfo">
-                {% include 'EflWebBundle::page_footer.html.twig' %}
-            </footer>
-        </div>
+            <section class="genericInfo">
+                <div class="wrapper cl">
+                    {{ render_esi( controller( 'EflWebBundle:Footer:genericInfo',
+                    {'locationId': location is defined ? location.id : 2  }))
+                    }}
+                </div>
+            </section>
         </main>
+
+        <footer role="contentinfo">
+            {% include 'EflWebBundle::page_footer.html.twig' %}
+        </footer>
 
 {% block footerScript %}
     {% include 'EflWebBundle::page_footer_script.html.twig' %}

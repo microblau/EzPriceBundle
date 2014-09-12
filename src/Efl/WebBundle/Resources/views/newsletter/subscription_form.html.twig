@@ -1,8 +1,18 @@
 {% extends "EflWebBundle::pagelayout.html.twig" %}
 
 {% block content %}
-
     <div class="wrapper cl">
+    {% set subscriptionDone = app.session.flashbag.get("notice") %}
+
+    {% if (subscriptionDone is not empty) %}
+        <div class="wysiwyg subscription_newsletter ok">
+        {{ "<p >El formulario se ha enviado correctamente.</p>
+        <p>En breve recibira un email a la dirección que nos ha proporcionado. Para activar su suscripción deberá confirmar el email que le hemos enviado.</p>"|trans|raw}}
+        </div>
+
+    {% else %}
+
+
 
         <div class="twoColsB">
             <div class="main">
@@ -42,21 +52,10 @@
             </div>
 
             <div class="aside">
-                <div class="layer">
-                    <p class="layer-title">¿Necesitas ayuda?</p>
-                    <p class="hasIco">
-                        <i class="ico ico-mail-gray"></i>
-                        <span>Si tiene dudas póngase en contacto con nosotros a través de <a href="mailto:clientes@efl.es">clientes@efl.es</a> o mediante la <a href="#">página de contacto</a>.</span>
-                    </p>
-
-                    <p class="hasIco">
-                        <i class="ico ico-phone-gray2"></i>
-                        <span>Lo más rápido es llamarnos al <b>912 108 000</b> le atenderemos de 9:00h a 20:00h de Lunes a Viernes.</span>
-                    </p>
-
-                </div>
+                {{ render_esi( controller( "EflWebBundle:Aside:contact" )) }}
             </div>
         </div>
-    </div>
 
+    {% endif %}
+    </div>
 {% endblock %}

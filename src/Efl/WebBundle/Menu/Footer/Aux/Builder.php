@@ -88,7 +88,7 @@ class Builder
             $menu->addChild(
                 $child->id,
                 array(
-                    'label' => $this->translationHelper->getTranslatedContentNameByContentInfo( $child->contentInfo ),
+                    'label' => /** @Ignore*/$this->translationHelper->getTranslatedContentNameByContentInfo( $child->contentInfo ),
                     'uri' => $this->router->generate( $child )
                 )
             );

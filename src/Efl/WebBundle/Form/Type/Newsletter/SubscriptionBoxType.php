@@ -33,7 +33,7 @@ class SubscriptionBoxType extends AbstractType
                 'email',
                 'text',
                 array(
-                    'label' => null,
+                    'label' => '',
                     'attr' => array(
                         'class' => 'text',
                         'placeholder' => 'Introduzca su email'

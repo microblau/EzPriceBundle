@@ -1,0 +1,28 @@
+{% extends "EflWebBundle::pagelayout.html.twig" %}
+
+{% block content %}
+    <div class="wrapper cl">
+        {% set errors = app.session.flashbag.get("error") %}
+        {% if (errors is not empty) %}
+            <div class="wysiwyg subscription_newsletter error">
+            {% for error in errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+            </div>
+
+        {% else %}
+
+        <div class="wysiwyg subscription_confirmation ok">
+        {{ "<p>Usted está suscrito correctamente al Boletín electrónico de Ediciones Francis Lefebvre."|trans|raw}}
+        {% if downloadLink is defined %}
+        {% trans with {'%downloadLink': downloadLink} %}<p><a href="%downloadLink%">Descargue el  ebook que ha escogido como regalo</a></p>{% endtrans %}
+        {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="aside">
+            {{ render_esi( controller( "EflWebBundle:Aside:contact" )) }}
+        </div>
+
+    </div>
+{% endblock %}

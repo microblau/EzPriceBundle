@@ -1,0 +1,18 @@
+{% extends "EflWebBundle::pagelayout.html.twig" %}
+
+{% block content %}
+    <div class="wrapper cl">
+        <div class="oneCol">
+
+            <div class="main">
+                <div class="wrap-title">
+                    <p class="title3"><b>{{ ez_render_field( content, 'titulo', {'template':'EflWebBundle:fields:only_value.html.twig'} ) }}</b></p>
+                </div>
+
+                <div class="wysiwyg">
+                    {{ ez_render_field( content, 'texto' ) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

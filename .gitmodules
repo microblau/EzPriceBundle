@@ -1,0 +1,3 @@
+[submodule "src/Blend/EzMatrixBundle"]
+	path = src/Blend/EzMatrixBundle
+	url = git@github.com:ezsystems/MatrixFieldTypeBundle.git
