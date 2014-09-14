@@ -793,3 +793,4 @@ stash:
 twig:
     globals:
         efl_contacto_location_id: 1073
+        efl_faqs_location_id: 80
