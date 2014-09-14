@@ -17,4 +17,26 @@ class AsideController extends Controller
             $response
         );
     }
+
+    public function metodosPagoAction()
+    {
+        $response = new Response;
+
+        return $this->render(
+            "EflWebBundle:aside:metodospago.html.twig",
+            array(),
+            $response
+        );
+    }
+
+    public function envioDevolucionesAction()
+    {
+        $response = new Response;
+
+        return $this->render(
+            "EflWebBundle:aside:enviodevoluciones.html.twig",
+            array(),
+            $response
+        );
+    }
 }

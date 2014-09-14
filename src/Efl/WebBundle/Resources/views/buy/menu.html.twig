@@ -1,0 +1,34 @@
+<ul class="auxNav">
+    <li class="hasChilds">
+        <a href=""><span>Catálogo de Publicaciones</span> <i class="ico ico-toggle"></i></a>
+        <ul>
+            <li>Publicacion 1</li>
+            <li>Publicacion 2</li>
+            <li>Publicacion 3</li>
+            <li>Publicacion 4</li>
+        </ul>
+    </li>
+    <li class="hasChilds">
+        <a href=""><span>Productos</span> <i class="ico ico-toggle"></i></a>
+        <ul>
+            <li>Producto 1</li>
+            <li>Producto 2</li>
+            <li>Producto 3</li>
+            <li>Producto 4</li>
+            <li>Producto 5</li>
+        </ul>
+    </li>
+    {% for module in modules %}
+    <li>
+        <a href="#menu-mod{{ module.id }}" class="layer-trigger">{{ ez_render_field( module, 'title', {'template':'EflWebBundle:fields:only_value.html'}) }}</a>
+        <div id="menu-mod{{ module.id }}" class="wrap-layer">
+            <i class="ico ico-arrow-top-layer"></i>
+            <div class="layer">
+                <a href="#" class="close" title="Cerrar"><i class="ico ico-close-gray"></i> <span class="offscreen">Cerrar</span></a>
+                <p class="layer-title">{{ ez_render_field( module, 'title', {'template':'EflWebBundle:fields:only_value.html'}) }}</p>
+                {{ ez_render_field( module, 'body', {'template':'EflWebBundle:fields:only_value.html'}) }}
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>

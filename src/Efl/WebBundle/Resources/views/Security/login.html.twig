@@ -1,0 +1,78 @@
+{% extends "EflWebBundle::pagelayout.html.twig" %}
+{% set mainClass = 'buy login' %}
+{% block content %}
+    <div class="wrapper cl">
+
+        <div class="oneCol">
+
+            <!-- main -->
+            <div class="main">
+                <article class="highlight cl">
+                    <div class="content">
+                        <p class="title1">Iniciar Compra</p>
+                    </div>
+                </article>
+
+                <div class="twoColsContent cl">
+                    <div class="col1">
+                        <p class="title7">Entrar <b>con su email y contraseña</b> si ya ha comprado antes.</p>
+
+                        <div class="layer">
+                            <form action="{{ path( 'login_check' ) }}" method="post" class="frm frm-login">
+
+                                <label for="email" class="field row">
+                                    <span class="lbl">Correo electrónico</span>
+                                    <input type="text" name="_username" id="email" value="{{ last_username }}" />
+                                </label>
+
+                                <label for="password" class="field row">
+                                    <span class="lbl">Contraseña</span>
+                                    <input type="password" name="_password" id="password" value="" />
+                                </label>
+
+                                <div class="right">
+                                    <button type="submit" class="btn type1 hasIco"><i class="ico ico-arrow-right-white"></i> Entrar</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                    <div class="col2">
+                        <p class="title7">Registro o compra como invitado</p>
+
+                        <div class="layer">
+                            <p class="layer-title"><b>¿Para qué registrarse?</b></p>
+                            <p class="lbl">Sus próximas compras serán más rápidas y tendrá acceso a ventajas, promociones y descuentos.</p>
+                            <p class="lbl">Acceda a su histórico de compras y descargue las facturas cuando quiera.</p>
+
+                            <div class="right">
+                                <button type="button" class="btn type1 hasIco"><i class="ico ico-arrow-right-white"></i> Regístrese</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- //main -->
+
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block customerServices %}
+    <section class="customerServices">
+        <div class="wrapper cl">
+            {{ render_esi( controller( "EflWebBundle:Aside:metodosPago" )) }}
+            {{ render_esi( controller( "EflWebBundle:Aside:envioDevoluciones" )) }}
+        </div>
+    </section>
+{% endblock %}
+
+{% block header %}
+<header role="banner" class="header alternative">
+    {% include 'EflWebBundle::page_header_buy.html.twig' %}
+</header>
+{% endblock %}

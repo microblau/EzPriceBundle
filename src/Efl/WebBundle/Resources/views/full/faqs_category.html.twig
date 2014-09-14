@@ -55,31 +55,8 @@
 
     <section class="customerServices">
         <div class="wrapper cl">
-
-            <article class="customerServices-detail payments">
-                <p class="txt">Métodos de pago</p>
-                <div class="intro">
-                    <p>Disponemos de una certificación SSL que garantiza que sus datos y transacciones siempre estarán seguros.</p>
-                </div>
-                <ul class="icons">
-                    <li><img src="{{ asset( "bundles/eflweb/images/logo_paypal@2x.png" )}}" alt="Paypal" class="logo-paypal"></li>
-                    <li><img src="{{ asset( "bundles/eflweb/images/logo_mastercard@2x.png" )}}" alt="Mastercard" class="logo-mastercard"></li>
-                    <li><img src="{{ asset( "bundles/eflweb/images/logo_visa@2x.png" )}}" alt="Visa" class="logo-visa"></li>
-                    <li><img src="{{ asset( "bundles/eflweb/images/logo_domiciliacion-bancaria@2x.png" )}}" alt="Domiciliación bancaria" class="logo-debit"></li>
-                </ul>
-            </article>
-
-            <article class="customerServices-detail shipping">
-                <p class="txt">Envío y Devoluciones</p>
-                <div class="intro">
-                    <p>Le damos todas las facilidades para comprar nuestros producto, envío gratis a partir de 30€ y período de devolución de dos meses si no queda satisfecho.</p>
-                </div>
-                <ul>
-                    <li><i class="ico ico-arrow-right-blue"></i> <a href="{{ path( 'ez_urlalias', {'locationId': efl_contacto_location_id} ) }}">Contacta con nosotros</a></li>
-                    <li><i class="ico ico-arrow-right-blue"></i> <a href="{{ path(location) }}">Preguntas frecuentes</a></li>
-                </ul>
-            </article>
-
+            {{ render_esi( controller( "EflWebBundle:Aside:metodosPago" )) }}
+            {{ render_esi( controller( "EflWebBundle:Aside:envioDevoluciones")) }}
         </div>
     </section>
 {% endblock %}

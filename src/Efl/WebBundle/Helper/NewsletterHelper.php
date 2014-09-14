@@ -176,7 +176,6 @@ class NewsletterHelper
 
         foreach ( $items as $item )
         {
-
             $content = $this->contentService->loadContentInfo( $item->contentId );
             if ( $content->contentTypeId == 138 )
             {

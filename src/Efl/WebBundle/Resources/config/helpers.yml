@@ -4,6 +4,7 @@ parameters:
     eflweb.newsletter_helper.class: Efl\WebBundle\Helper\NewsletterHelper
     eflweb.nosotros_helper.class: Efl\WebBundle\Helper\NosotrosHelper
     eflweb.faqs_helper.class: Efl\WebBundle\Helper\FaqsHelper
+    eflweb.buy_helper.class: Efl\WebBundle\Helper\BuyHelper
 
 services:
     eflweb.location_helper:
@@ -42,3 +43,10 @@ services:
             - @ezpublish.api.service.location
             - @ezpublish.api.service.search
             - @ezpublish.api.service.content
+
+    eflweb.buy_helper:
+        class: %eflweb.buy_helper.class%
+        arguments:
+            - @ezpublish.api.service.content
+            - @ezpublish.api.service.location
+            - @ezpublish.api.service.search
