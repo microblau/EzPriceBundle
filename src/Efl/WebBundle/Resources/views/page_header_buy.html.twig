@@ -1,0 +1,32 @@
+<section class="hBar cl">
+    <div class="wrapper">
+        <div class="flt">
+            <span class="phone">
+                <i class="ico ico-phone-black"></i>
+                <a href="tel:912108000">912 108 000</a></span>
+            <span class="tagline">Francis Lefebvre. Información jurídica para empresas y asesores.</span>
+        </div>
+        <div class="frt">
+            {{ render_hinclude( controller( "EflWebBundle:Header:userLinks" ) ) }}
+        </div>
+    </div>
+</section>
+<section class="cont">
+    <div class="wrapper cl">
+        <div class="cl">
+            <div class="logo">
+                <a href="{{ path( ezpublish.rootLocation ) }}"><img src="{{ asset('bundles/eflweb/images/logo_desktop.png') }}" alt="Logo Grupo Francis Lefebvre" /></a>
+            </div>
+
+            <div class="busy">
+                {{ render_esi( controller( "EflWebBundle:Header:searchBox" )) }}
+            </div>
+        </div>
+    </div>
+</section>
+<nav>
+    <div class="wrapper">
+        <span class="menu"><a href="#">Mostar menú</a></span>
+        {{ render_esi( controller( "EflWebBundle:Header:mainMenu" ) ) }}
+    </div>
+</nav>
