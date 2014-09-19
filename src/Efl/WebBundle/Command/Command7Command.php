@@ -99,6 +99,7 @@ class Command7Command extends ContainerAwareCommand
             $content =  $this->contentService->publishVersion( $contentDraft->versionInfo );
 
             // actualizamos prioridades
+            /*
             $this->locationService->updateLocation(
                 $grupoLocation,
                 new LocationUpdateStruct(
@@ -106,7 +107,7 @@ class Command7Command extends ContainerAwareCommand
                         'priority' => 1
                     )
                 )
-            );
+            );*/
 
             // actualizamos prioridades
             $this->locationService->updateLocation(

@@ -1,8 +1,536 @@
 {% extends "EflWebBundle::pagelayout.html.twig" %}
 
 {% block content %}
-    <p>{{ ez_render_field( content, 'keywords' ) }}</p>
-    <p>{{ ez_render_field( content, 'referencia' ) }}</p>
-    <p>{{ ez_render_field( content, 'precio' ) }}</p>
-    <p>{{ ez_render_field( content, 'precio_test' ) }}</p>
+    <div class="wrapper cl">
+
+    <div class="twoCols">
+    <!-- item -->
+    <article class="articleItem">
+
+    <!-- main -->
+    <div class="main">
+        <div class="portrait">
+            {%  if not ez_is_field_empty( content, 'ebook_gratis' ) %}
+            <span class="badge"><span class="badge-text">ebook gratis</span></span>
+            {% endif %}
+            {{ ez_render_field( image, 'image', {
+                'template':'EflWebBundle:fields:portrait_img.html.twig',
+                'parameters': {
+                    'alias':'portrait',
+                    'attrs': {'class':'portrait-img'}
+                }
+            }) }}
+            <ul class="actions">
+                <li><a href="EFL_catalog_ficha_previsualizacion.html" class="preview">Vista Previa</a></li>
+                <li><a href="#" class="print">Imprimir</a></li>
+                <li><a href="EFL_catalog_ficha_sumario.html" class="list">Listado</a></li>
+                <li><a href="EFL_catalog_ficha_video.html" class="play fancybox" data-fancybox-type="iframe">Reproducir</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <p class="title9 upper">{{ ez_render_field( parentContent, 'name') }}</p>
+            <p class="title5">{{ ez_render_field( content, 'nombre') }}</p>
+            <div class="utils cl">
+                <span class="reviews-link"><i class="ico ico-star-gray"></i> <a href="#reviews">17 recomendaciones</a></span>
+                <a href="EFL_form_valoraciones.html" class="link-btn addReview fancybox" data-fancybox-type="iframe">Valora este memento</a>
+
+                <div class="rrss">
+                    <span>Compartir </span>
+                    <ul>
+                        <li><a href="" class="ln">LinkedIn</a></li>
+                        <li><a href="" class="tw">Twitter</a></li>
+                        <li><a href="" class="fb">Facebook</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="wysiwyg">
+                {{ ez_render_field( content, 'entradilla', {'template':'EflWebBundle:fields:only_value.html.twig'} ) }}
+                {% if not ez_is_field_empty( content, 'mas_info') %}
+                <p class="more"><i class="ico ico-arrow-right-blue"></i> <a href="#more-item">Más detalles sobre el memento</a> <i class="ico ico-arrow-bottom-blue"></i></p>
+
+                <div id="more-item" class="more-detail" style="display: none;">
+                    {{ ez_render_field( content, 'mas_info', {'template':'EflWebBundle:fields:only_value.html.twig'} ) }}
+                </div>
+                {% endif %}
+
+                {% if not ez_is_field_empty( content, 'claim') %}
+                <blockquote>
+                    <i>"{{ ez_render_field( content, 'claim' ) }}"</i>
+                </blockquote>
+                {% endif %}
+
+            </div>
+
+            <div class="card">
+                <p class="title">Ficha</p>
+                <ul>
+                    {% if not ez_is_field_empty( content, 'edicion' ) %}
+                    <li><b>Edición:</b> {{ ez_render_field( content, 'edicion' ) }}</li>
+                    {% endif %}
+                    <li><b>Páginas:</b> {{ ez_render_field( content, 'paginas' ) }} <abbr title="aproximadamente">aprox.</abbr></li>
+                    {% if not ez_is_field_empty( content, 'fecha_aparicion' ) %}
+                    <li><b>Aparición:</b> {{  fecha_aparicion.date|date("d/m/y") }}</li>
+                    {% endif %}
+                    {% if not ez_is_field_empty( content, 'fecha_aparicion' ) %}
+                    <li><b><abbr title="International Standard Book Number">ISBN</abbr>:</b> {{ ez_render_field( content, 'isbn' ) }}</li>
+                    {% endif %}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <!-- //main -->
+
+    <!-- aside -->
+    <aside class="aside">
+
+        <form action="" method="post" class="">
+            <div class="resume">
+                <span class="claim">20% más barato</span>
+                <ins class="price">{{ ez_render_field( content, 'precio' ) }}</ins>
+                <del class="old-price">antes 98,05 &euro;</del>
+            </div>
+
+            <table class="tb-formats">
+                <caption class="title">Procedimientos Tributarios 2012-2013</caption>
+
+                <thead>
+                <tr>
+                    <th>Formato</th>
+                    <th>Precio</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td class="format">
+                        <i class="ico ico-paper-white"></i> <span>En papel</span>
+                    </td>
+                    <td class="price">
+                        <b>72,50 &euro;</b>
+                        <small>+ IVA</small>
+                    </td>
+                    <td>
+                        <div class="prettycheck">
+                            <input type="checkbox" id="paper" name="format" value="paper" checked="checked" />
+                            <label for="paper"></label>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="format">
+                        <i class="ico ico-pc-white"></i> <span>En internet</span>
+                    </td>
+                    <td class="price">
+                        <ins><b>72,50 &euro;</b></ins>
+                        <small>+ IVA</small>
+                        <del>99,70 &euro;</del>
+                    </td>
+                    <td>
+                        <div class="prettycheck">
+                            <input type="checkbox" id="pc" name="format" value="pc" />
+                            <label for="pc"></label>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="text">
+                    <td colspan="3" class="wrap-info-text">
+                        <span class="info-text">Acceda a su Memento siempre que quiera en Internet, siempre actualizados y conectados entre sí con <a href="#qMementix" class="layer-trigger">qMementix</a>.</span>
+
+                        <div id="qMementix" class="wrap-layer">
+                            <i class="ico ico-arrow-top-layer"></i>
+                            <div class="layer">
+                                <a href="#" class="close" title="Cerrar"><i class="ico ico-close-gray"></i> <span class="offscreen">Cerrar</span></a>
+                                <p class="layer-title">qMementix</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adiiscing elit. Ut vel lacus et lectus ornare pota at quis turpis. Praesent vitae tortor nisl. Integer ac quam neque. Aliquam quis me tus vulputate, laoreet velit non, ornare lecs.</p>
+                                <p><a href="#" class="layer-link">Más detalles sobre qMementix</a></p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="format">
+                        <i class="ico ico-tablet-white"></i> <span>Para iPad</span>
+                    </td>
+                    <td class="price">
+                        <ins><b>72,50 &euro;</b></ins>
+                        <small>+ IVA</small>
+                        <del>99,70 &euro;</del>
+                    </td>
+                    <td>
+                        <div class="prettycheck">
+                            <input type="checkbox" id="ipad" name="format" value="ipad" />
+                            <label for="ipad"></label>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="text last">
+                    <td colspan="3" class="wrap-info-text">
+                        <span class="info-text">Sus Mementos en su iPad, con acceso incluso sin conexión a internet a través de <a href="#iMemento" class="layer-trigger">iMemento</a>.</span>
+
+                        <div id="iMemento" class="wrap-layer">
+                            <i class="ico ico-arrow-top-layer"></i>
+                            <div class="layer">
+                                <a href="#" class="close" title="Cerrar"><i class="ico ico-close-gray"></i> <span class="offscreen">Cerrar</span></a>
+                                <p class="layer-title">iMemento</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adiiscing elit. Ut vel lacus et lectus ornare pota at quis turpis. Praesent vitae tortor nisl. Integer ac quam neque. Aliquam quis me tus vulputate, laoreet velit non, ornare lecs.</p>
+                                <p><a href="#" class="layer-link">Más detalles sobre iMemento</a></p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+            <div class="wrap-btn">
+                <button type="submit" class="btn type2 hasIco"><i class="ico ico-arrow-right-white"></i> Comprar ahora</button>
+            </div>
+
+        </form>
+
+        <article class="genericInfo-detail">
+            <i class="ico ico-box-gray"></i>
+            <div class="cont-text">
+                <p class="title">Comprando ahora mismo <br /> <b>lo enviamos gratis</b></p>
+            </div>
+        </article>
+
+
+    </aside>
+    <!-- //aside -->
+
+    <div class="main">
+    <article class="related-items cl">
+
+        <p class="title6">Quien compró este memento también compró</p>
+
+        <div class="tabs-wrap-content cl">
+
+            <!-- item -->
+            <article class="item">
+                <div class="portrait">
+                    <img src="images/publishings/dummy-revista.jpg" alt="" class="portrait-img" />
+                </div>
+
+                <div class="content cl">
+                    <ul class="format">
+                        <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                        <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                        <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                    </ul>
+
+                    <p class="title9 upper">Revistas</p>
+                    <p class="item-title">Procedimientos Tributarios 2012-2013</p>
+
+                      <span class="price">
+                        <b>72,50 €</b>
+                        <small>+ IVA</small>
+                      </span>
+                </div>
+
+                <div class="actions-item">
+                    <i class="ico ico-check-green"></i>
+                    <a href="#" class="remove"><span>Quitar</span> <i class="ico ico-close-red"></i></a>
+                </div>
+
+            </article>
+            <!-- // item -->
+
+            <!-- item -->
+            <article class="item">
+                <div class="portrait">
+                    <img src="images/publishings/dummy-pack.jpg" alt="" class="portrait-img" />
+                </div>
+
+                <div class="content cl">
+                    <ul class="format">
+                        <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                        <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En papel</span></li>
+                    </ul>
+
+                    <p class="title9 upper">Pack</p>
+                    <p class="item-title">Pack Memento Impuesto sobre Sociedades + Claves Prácticas...</p>
+
+                      <span class="price">
+                        <small>Desde</small>
+                        <b>72,50 €</b>
+                        <small>+ IVA</small>
+                      </span>
+                </div>
+
+                <div class="actions-item">
+                      <span class="btn">
+                        <a href="#">Añadir</a>
+                      </span>
+                </div>
+
+            </article>
+            <!-- // item -->
+
+            <!-- item -->
+            <article class="item">
+                <div class="portrait">
+                    <img src="images/publishings/dummy-memento.jpg" alt="" class="portrait-img" />
+                </div>
+
+                <div class="content cl">
+                    <ul class="format">
+                        <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                        <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                    </ul>
+
+                    <p class="title9 upper">Memento de Autor</p>
+                    <p class="item-title">Retribución variable</p>
+                    <p class="item-claim">Ahora un 5% más barato</p>
+
+                    <del class="old-price">
+                        <b>99,10 €</b>
+                        <small>+ IVA</small>
+                    </del>
+                    <ins class="price">
+                        <b>89,10 €</b>
+                        <small>+ IVA</small>
+                    </ins>
+                </div>
+
+                <div class="actions-item">
+                      <span class="btn">
+                        <a href="#">Añadir</a>
+                      </span>
+                </div>
+
+            </article>
+            <!-- // item -->
+
+            <!-- item -->
+            <article class="item">
+                <div class="portrait">
+                    <span class="badge"><span class="badge-text">ebook gratis</span></span>
+                    <img src="images/publishings/dummy-qmementix.jpg" alt="" class="portrait-img" />
+                </div>
+
+                <div class="content cl">
+                    <ul class="format">
+                        <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                        <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                        <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                    </ul>
+
+                    <p class="title9 upper">Qmementix</p>
+                    <p class="item-title">Concursal 2014</p>
+                    <p class="item-claim">Hoy con un ebook de regalo</p>
+
+                      <span class="price">
+                        <small>Desde</small>
+                        <b>96,50 €</b>
+                        <small>+ IVA</small>
+                      </span>
+                </div>
+
+                <div class="actions-item">
+                    <i class="ico ico-check-green"></i>
+                    <a href="#" class="remove"><span>Quitar</span> <i class="ico ico-close-red"></i></a>
+                </div>
+
+            </article>
+            <!-- // item -->
+
+        </div>
+
+    </article>
+
+    <article id="reviews" class="product-collateral mod-tabs">
+
+        <p class="title6">Más sobre {{ ez_render_field( content, 'nombre') }}</p>
+
+        <span class="tabs-wrap"></span>
+
+        <div class="tabs-wrap-content">
+            {% if not ez %}
+            <p class="tab active"><a href="#content-tab-release">Novedades <i class="ico"></i></a></p>
+            <div id="content-tab-release" class="tabs-content active">
+                <div class="utils cl">
+                    <span class="reviews-link">Entre otras muchas novedades analizadas en esta nueva edición destacan las que afectan a las siguientes materias:</span>
+                </div>
+                <article class="release-detail">
+                    <div class="wysiwyg">
+                        {{ ez_render_field( content, 'novedades') }}
+                    </div>
+                </article>
+
+                <div class="right">
+                    <ul class="pagination">
+                        <!--
+                        <li class="prev-all"><span class="btn btn-filter"><a href="#" title="Primera página">&lt;&lt;</a></span></li>
+                        -->
+                        <li class="prev"><span class="btn btn-filter"><a href="#" title="Página anterior">&lt;</a></span></li>
+                        <li><span class="btn btn-filter"><a href="#">1</a></span></li>
+                        <li class="active"><span class="btn btn-filter"><a href="#">2</a></span></li>
+                        <li><span class="btn btn-filter"><a href="#">3</a></span></li>
+                        <li><span class="btn btn-filter"><a href="#">4</a></span></li>
+                        <li><span class="btn btn-filter"><a href="#">5</a></span></li>
+                        <li class="next"><span class="btn btn-filter"><a href="#" title="Página siguiente">&gt;</a></span></li>
+                        <!--
+                        <li class="next-all"><span class="btn btn-filter"><a href="#" title="Última página">&gt;&gt;</a></span></li>
+                        -->
+                    </ul>
+                </div>
+
+            </div>
+
+            <p class="tab"><a href="#content-tab-memento">Sistema Memento <i class="ico"></i></a></p>
+            <div id="content-tab-memento" class="tabs-content">
+                <p class="title10">Sistema Memento</p>
+                <article class="release-detail">
+                    <div class="wysiwyg">
+                        <p class="title9 upper">Sistema Memento</p>
+                        <p class="intro">Reintegro de prestaciones de desempleo coincidentes con salarios de tramitación en caso de readmisión.</p>
+                        <p>En el caso de la readmisión del trabajador, tras la sentencia estimatoria de la demanda de despido, con abono de los salarios de tramitación, las prestaciones de desempleo coincidentes son declaradas indebidas, sin que se considere imputable al trabajador.</p>
+                    </div>
+                </article>
+                <article class="release-detail">
+                    <div class="wysiwyg">
+                        <p class="title9 upper">Sistema Memento</p>
+                        <p class="intro">Reintegro de prestaciones de desempleo coincidentes con salarios de tramitación en caso de readmisión.</p>
+                        <p>En el caso de la readmisión del trabajador, tras la sentencia estimatoria de la demanda de despido, con abono de los salarios de tramitación, las prestaciones de desempleo coincidentes son declaradas indebidas, sin que se considere imputable al trabajador.</p>
+                    </div>
+                </article>
+
+                <div class="right">
+                    <ul class="pagination">
+                        <!--
+                        <li class="prev-all"><span class="btn btn-filter"><a href="#" title="Primera página">&lt;&lt;</a></span></li>
+                        -->
+                        <li class="prev"><span class="btn btn-filter"><a href="#" title="Página anterior">&lt;</a></span></li>
+                        <li><span class="btn btn-filter"><a href="#">1</a></span></li>
+                        <li class="active"><span class="btn btn-filter"><a href="#">2</a></span></li>
+                        <li><span class="btn btn-filter"><a href="#">3</a></span></li>
+                        <li><span class="btn btn-filter"><a href="#">4</a></span></li>
+                        <li><span class="btn btn-filter"><a href="#">5</a></span></li>
+                        <li class="next"><span class="btn btn-filter"><a href="#" title="Página siguiente">&gt;</a></span></li>
+                        <!--
+                        <li class="next-all"><span class="btn btn-filter"><a href="#" title="Última página">&gt;&gt;</a></span></li>
+                        -->
+                    </ul>
+                </div>
+
+            </div>
+
+            <p class="tab"><a href="#content-tab-reviews">Valoración <i class="ico"></i></a></p>
+            <div id="content-tab-reviews" class="tabs-content">
+
+                <div class="utils cl">
+                    <span class="reviews-link"><i class="ico ico-star-gray"></i> 17 recomendaciones de los usuarios</span>
+                </div>
+
+                <article class="review-detail">
+                    <div class="wysiwyg">
+                        <p>Una obra muy buena, aunque, sin embargo, en alguna ocasión me ha conducido a error, al considerar como criterios aceptados unas consultas de la DGT que, o bien habían sido posteriormente rectificadas, mediante otras que no aparecen en la obra, o bien no son tenidas en cuenta por la Admón.</p>
+                    </div>
+                    <div class="card card-review">
+                        <p class="title">Valoración</p>
+                        <ul>
+                            <li><b>Calidad:</b> <span class="score score-0">0</span> <span class="offscreen">estrellas</span></li>
+                            <li class="updates"><b>Actualizaciones:</b> <span class="score score-1">1</span> <span class="offscreen">estrellas</span></li>
+                            <li><b>Calidad:</b> <span class="score score-2">2</span> <span class="offscreen">estrellas</span></li>
+                        </ul>
+                    </div>
+                    <ul class="authoring">
+                        <li class="author">Laura Sánchez-Cañete Moreno</li>
+                        <li class="position">Asesor Fiscal</li>
+                    </ul>
+                </article>
+
+                <article class="review-detail">
+                    <div class="wysiwyg">
+                        <p>Una obra muy buena, aunque, sin embargo, en alguna ocasión me ha conducido a error, al considerar como criterios aceptados unas consultas de la DGT que, o bien habían sido posteriormente rectificadas, mediante otras que no aparecen en la obra, o bien no son tenidas en cuenta por la Admón.</p>
+                    </div>
+                    <div class="card card-review">
+                        <p class="title">Valoración</p>
+                        <ul>
+                            <li><b>Calidad:</b> <span class="score score-3">3</span> <span class="offscreen">estrellas</span></li>
+                            <li class="updates"><b>Actualizaciones:</b> <span class="score score-4">4</span> <span class="offscreen">estrellas</span></li>
+                            <li><b>Calidad2:</b> <span class="score score-5">5</span> <span class="offscreen">estrellas</span></li>
+                        </ul>
+                    </div>
+                    <ul class="authoring">
+                        <li class="author">Laura Sánchez-Cañete Moreno</li>
+                        <li class="position">Asesor Fiscal</li>
+                    </ul>
+                </article>
+
+                <article class="review-detail">
+                    <div class="wysiwyg">
+                        <p>Una obra muy buena, aunque, sin embargo, en alguna ocasión me ha conducido a error, al considerar como criterios aceptados unas consultas de la DGT que, o bien habían sido posteriormente rectificadas, mediante otras que no aparecen en la obra, o bien no son tenidas en cuenta por la Admón.</p>
+                    </div>
+                    <div class="card card-review">
+                        <p class="title">Valoración</p>
+                        <ul>
+                            <li><b>Calidad:</b> <span class="score score-3">3</span> <span class="offscreen">estrellas</span></li>
+                            <li class="updates"><b>Actualizaciones:</b> <span class="score score-2">2</span> <span class="offscreen">estrellas</span></li>
+                            <li><b>Calidad2:</b> <span class="score score-3">3</span> <span class="offscreen">estrellas</span></li>
+                        </ul>
+                    </div>
+                    <ul class="authoring">
+                        <li class="author">Laura Sánchez-Cañete Moreno</li>
+                        <li class="position">Asesor Fiscal</li>
+                    </ul>
+                </article>
+
+                <div class="right">
+                    <ul class="pagination">
+                        <!--
+                        <li class="prev-all"><span class="btn btn-filter"><a href="#" title="Primera página">&lt;&lt;</a></span></li>
+                        -->
+                        <li class="prev"><span class="btn btn-filter"><a href="#" title="Página anterior">&lt;</a></span></li>
+                        <li><span class="btn btn-filter"><a href="#">1</a></span></li>
+                        <li class="active"><span class="btn btn-filter"><a href="#">2</a></span></li>
+                        <li><span class="btn btn-filter"><a href="#">3</a></span></li>
+                        <li><span class="btn btn-filter"><a href="#">4</a></span></li>
+                        <li><span class="btn btn-filter"><a href="#">5</a></span></li>
+                        <li class="next"><span class="btn btn-filter"><a href="#" title="Página siguiente">&gt;</a></span></li>
+                        <!--
+                        <li class="next-all"><span class="btn btn-filter"><a href="#" title="Última página">&gt;&gt;</a></span></li>
+                        -->
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
+    </article>
+    </div>
+
+    </article>
+    <!-- //item -->
+
+    </div>
+    </div>
+{% endblock %}
+
+
+{% block footerScript %}
+    {% javascripts
+    '@EflWebBundle/Resources/public/js/jquery.fancybox.pack.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+   {{ parent() }}
+{% endblock %}
+
+{% block headStyle %}
+    {% stylesheets
+    'bundles/eflweb/css/jquery.fancybox.css'
+    filter='cssrewrite'
+    %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+    {{ parent() }}
 {% endblock %}

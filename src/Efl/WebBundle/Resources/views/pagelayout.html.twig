@@ -4,13 +4,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     {% include 'EflWebBundle::page_head.html.twig' %}
+{% block headStyle %}
     {% include 'EflWebBundle::page_head_style.html.twig' %}
+{% endblock %}
     {% include 'EflWebBundle::page_head_script.html.twig' %}
 </head>
 <body>
-{% if location is defined %}
-    {{ render( controller( "ezpublish_legacy.website_toolbar.controller:websiteToolbarAction", { 'locationId': location.id} ) ) }}
-{% endif %}
+
 {% block header %}
         <header role="banner" class="header">
             {% include 'EflWebBundle::page_header.html.twig' %}

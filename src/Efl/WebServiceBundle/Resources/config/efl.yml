@@ -1,0 +1,5 @@
+system:
+    efl_frontend_group:
+        user:
+            layout: EflWebBundle::pagelayout.html.twig
+            login_template: EflWebBundle:Security:login.html.twig

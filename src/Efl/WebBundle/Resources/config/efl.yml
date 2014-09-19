@@ -9,14 +9,15 @@ system:
             ebook_regalo:
                 reference: original
                 filters:
-                    - { name: geometry/scalewithdownonly, params: [480] }
+                    - { name: geometry/scalewidthdownonly, params: [480] }
+            portrait:
+                reference: original
+                filters:
+                    - { name: geometry/scalewidthdownonly, params: [480] }
             foto_testimonio:
                 reference: original
                 filters:
                     - { name: geometry/scale, params: [162,162] }
-        user:
-            layout: EflWebBundle::pagelayout.html.twig
-            login_template: EflWebBundle:Security:login.html.twig
         content_view:
             ebook_regalo:
                 ebook:
@@ -30,6 +31,7 @@ system:
                     match:
                         Id\Location: 2
                 producto:
+                    controller: "EflWebBundle:Catalog:product"
                     template: "EflWebBundle:full:product.html.twig"
                     match:
                         Identifier\ContentType: [producto]

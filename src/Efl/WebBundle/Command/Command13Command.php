@@ -17,7 +17,7 @@ use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
 
 
 /**
- * Class Command12Command
+ * Class Command13Command
  * @package Efl\WebBundle\Command
  *
  * Crea una nueva clase llamada "módulos menú compra" para gestionarlos. además, les añade textos.

@@ -1,4 +1,12 @@
+{% if app.user %}
+    {%  if app.user.wrappedUser is defined %}
+        <span class="login"><i class="ico ico-user-black"></i> Hola {{ app.user.wrappedUser.nombre }} <a href="{{ path('logout') }}">Salir</a></span>
+    {% else %}
+        <span class="login"><i class="ico ico-user-black"></i> Hola {{ app.user }} <a href="{{ path('logout') }}">Salir</a></span>
+    {% endif %}
+{% else %}
 <span class="login"><i class="ico ico-user-black"></i> <a href="{{ path('login') }}">Acceder a mi cuenta</a></span>
+{% endif %}
 {% if not cart_is_empty %}
 <a href="{{ path( 'ez_legacy', {'module_uri': '/basket/basket'} ) }}">
     <span class="link">Finalizar compra</span>

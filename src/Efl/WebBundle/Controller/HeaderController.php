@@ -5,6 +5,7 @@ namespace Efl\WebBundle\Controller;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Efl\WebBundle\Entity\SimpleSearch;
+use eZ\Publish\Core\MVC\Symfony\Security\UserWrapped;
 
 class HeaderController extends Controller
 {
@@ -40,6 +41,10 @@ class HeaderController extends Controller
         $cart_is_empty = $this->get( 'eflweb.cart_helper' )->isCurrentCartEmpty();
         $cart_total = $this->get( 'eflweb.cart_helper' )->getCurrentCartTotal();
         $cart_nItems = $this->get( 'eflweb.cart_helper' )->getCurrentCartNItems();
+
+        $userObject = $this->getUser() instanceof UserWrapped
+            ? $this->getUser()->getWrappedUser()
+            : $this->getUser();
 
         return $this->render(
             "EflWebBundle:header:user_links.html.twig",

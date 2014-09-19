@@ -1,0 +1,51 @@
+parameters:
+    efl_auth.client.class: Efl\WebServiceBundle\Driver\EflWsConnection
+    efl_auth.client.parameters:
+    efl_auth.ws_manager.class: Efl\WebServiceBundle\Ws\WsManager
+    efl_auth.security.user_provider.class: Efl\WebServiceBundle\Security\User\EflUserProvider
+    efl_auth.security.authentication.provider.class: Efl\WebServiceBundle\Security\Authentication\EflAuthenticationProvider
+    efl_auth.interactive_event_listener.class: Efl\WebServiceBundle\EventListener\InteractiveLoginListener
+    efl_auth.usercreator.class: Efl\WebServiceBundle\Driver\UserCreatorService
+
+services:
+    efl_auth.client:
+        class: %efl_auth.client.class%
+        tags:
+            - { name: monolog.logger, channel: ldap_connection }
+        arguments: ['%efl_auth.client.parameters%', @logger]
+
+    efl_auth.ws_manager.default:
+        class: %efl_auth.ws_manager.class%
+        arguments: [@efl_auth.client, %efl_auth.ws_manager.parameters%]
+
+    efl_auth.security.user_provider:
+        class: %efl_auth.security.user_provider.class%
+        tags:
+            - { name: monolog.logger, channel: security }
+        arguments: [@ezpublish.api.repository, @efl_auth.ws_manager, @logger]
+
+    efl_auth.security.authentication.provider:
+        class: %efl_auth.security.authentication.provider.class%
+        arguments: [@security.user_checker, '', '', @efl_auth.ws_manager]
+
+    security.authentication.factory.efl_auth:
+        class: Efl\WebServiceBundle\Security\Factory\WsFactory
+        public: false
+        tags:
+            - { name: security.listener.factory }
+
+    efl_auth.usercreator:
+        class: %efl_auth.usercreator.class%
+        arguments:
+            - @ezpublish.api.repository
+            - @ezpublish.api.service.user
+            - @ezpublish.api.service.location
+            - @ezpublish.api.service.content_type
+            - @ezpublish.api.service.content
+
+    efl_auth.interactive_event_listener:
+        class: %efl_auth.interactive_event_listener.class%
+        arguments: [@ezpublish.api.service.user, @efl_auth.usercreator]
+        tags:
+            - { name: kernel.event_subscriber }
+
