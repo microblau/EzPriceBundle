@@ -1,10 +1,23 @@
-<title>{{ title|default( 'Home' ) }}</title>
+{% if content is defined and title is not defined %}
+    {% set title = ez_content_name( content ) %}
+{% endif %}
+
+{% set default_meta = ez_fezmetadata( 2 ) %}
+{% set meta_title = default_meta.title is defined ? default_meta.title : title %}
+{% set meta_description = default_meta.description is defined ? default_meta.description : '' %}
+{% set meta_keywords = default_meta.keywords is defined ? default_meta.keywords : '' %}
+
+{% if location is defined %}
+    {% set meta = ez_fezmetadata( location.contentInfo.id ) %}
+    {% set meta_title = meta.title is defined ? meta.title : meta_title %}
+    {% set meta_description = meta.description is defined ? meta.description : meta_description %}
+    {% set meta_keywords = meta.keywords is defined ? meta.keywords : meta_keywords %}
+{% endif %}
+
+<title>{{ meta_title }}</title>
+<meta name="description" content="{{ meta_description }}"/>
+<meta name="keywords" content="{{ meta_keywords }}"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta name="author" content="eZ Systems"/>
-<meta name="copyright" content="eZ Systems"/>
-<meta name="description" content="Content Management System"/>
-<meta name="keywords" content="cms, publish, e-commerce, content management, development framework"/>
-<meta name="MSSmartTagsPreventParsing" content="TRUE"/>
 <meta name="generator" content="eZ Publish"/>
 
 <link rel="Home" href="/" title=" front page"/>
