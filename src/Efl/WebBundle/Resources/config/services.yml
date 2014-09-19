@@ -16,6 +16,7 @@ parameters:
     eflweb.politica_cookies.location_id: 20410
     eflweb.valorations.class: Efl\WebBundle\Reviews\ValorationsService
     eflweb.twig.extension.metadata.class: Efl\WebBundle\Twig\Extensions\FezMetaDataExtension
+    eflweb.basket.class: Efl\WebBundle\Basket\BasketService
 
 services:
     eflweb.valorations:
@@ -41,3 +42,10 @@ services:
         tags:
             - { name: 'twig.extension' }
         arguments : [ @service_container ]
+
+    eflweb.basket:
+        class: %eflweb.basket.class%
+        calls:
+            - [setConnection, [@ezpublish.api.storage_engine.legacy.dbhandler]]
+        arguments:
+            - @ezpublish.api.service.content
