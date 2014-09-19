@@ -95,67 +95,66 @@ function getClassList()
  */
 function restoreXmlRelations( eZContentObject $object, array $classAttributeIdentifiers )
 {
-    if ( $currentVersion = $object->currentVersion() )
+    $currentVersion = $object->currentVersion();
+    $langMask = $currentVersion->attribute( 'language_mask' );
+    $languageList = eZContentLanguage::decodeLanguageMask( $langMask, true );
+    $languageList = $languageList['language_list'];
+
+    // nothing to do if the object isn't translated
+    if ( count( $languageList ) < 2 )
+        return 0;
+
+    $attributeArray = $object->fetchAttributesByIdentifier(
+        $classAttributeIdentifiers,
+        $currentVersion->attribute( 'version' ),
+        $languageList
+    );
+
+    $embedRelationsCount = $object->relatedContentObjectCount( false, 0, array( 'AllRelations' => eZContentObject::RELATION_EMBED ) );
+    $linkRelationsCount = $object->relatedContentObjectCount( false, 0, array( 'AllRelations' => eZContentObject::RELATION_LINK ) );
+
+    $embeddedObjectIdArray = $linkedObjectIdArray = array();
+    foreach ( $attributeArray as $attribute )
     {
-        $langMask = $currentVersion->attribute( 'language_mask' );
-        $languageList = eZContentLanguage::decodeLanguageMask( $langMask, true );
-        $languageList = $languageList['language_list'];
+        $xmlText = eZXMLTextType::rawXMLText( $attribute );
 
-        // nothing to do if the object isn't translated
-        if ( count( $languageList ) < 2 )
-            return 0;
+        $dom = new DOMDocument( '1.0', 'utf-8' );
+        if ( !$dom->loadXML( $xmlText ) )
+            continue;
 
-        $attributeArray = $object->fetchAttributesByIdentifier(
-            $classAttributeIdentifiers,
-            $currentVersion->attribute( 'version' ),
-            $languageList
+        // linked objects
+        $linkedObjectIdArray = array_merge(
+            $linkedObjectIdArray,
+            getRelatedObjectList( $dom->getElementsByTagName( 'link' ) )
         );
 
-        $embedRelationsCount = $object->relatedContentObjectCount( false, 0, array( 'AllRelations' => eZContentObject::RELATION_EMBED ) );
-        $linkRelationsCount = $object->relatedContentObjectCount( false, 0, array( 'AllRelations' => eZContentObject::RELATION_LINK ) );
-
-        $embeddedObjectIdArray = $linkedObjectIdArray = array();
-        foreach ( $attributeArray as $attribute )
-        {
-            $xmlText = eZXMLTextType::rawXMLText( $attribute );
-
-            $dom = new DOMDocument( '1.0', 'utf-8' );
-            if ( !$dom->loadXML( $xmlText ) )
-                continue;
-
-            // linked objects
-            $linkedObjectIdArray = array_merge(
-                $linkedObjectIdArray,
-                getRelatedObjectList( $dom->getElementsByTagName( 'link' ) )
-            );
-
-            // embedded objects
-            $embeddedObjectIdArray = array_merge(
-                $embeddedObjectIdArray,
-                getRelatedObjectList( $dom->getElementsByTagName( 'embed' ) ),
-                getRelatedObjectList( $dom->getElementsByTagName( 'embed-inline' ) )
-            );
-        }
-
-        $doCommit = false;
-        $restoredRelations = 0;
-        if ( !empty( $embeddedObjectIdArray ) )
-        {
-            $object->appendInputRelationList( $embeddedObjectIdArray, eZContentObject::RELATION_EMBED );
-            $restoredRelations += count( $embeddedObjectIdArray ) - $embedRelationsCount;
-            $doCommit = true;
-        }
-
-        if ( !empty( $linkedObjectIdArray ) )
-        {
-            $object->appendInputRelationList( $linkedObjectIdArray, eZContentObject::RELATION_LINK );
-            $restoredRelations += count( $linkedObjectIdArray ) - $linkRelationsCount;
-            $doCommit = true;
-        }
-
-        if ( $doCommit )
-            $object->commitInputRelations( $currentVersion->attribute( 'version' ) );
+        // embedded objects
+        $embeddedObjectIdArray = array_merge(
+            $embeddedObjectIdArray,
+            getRelatedObjectList( $dom->getElementsByTagName( 'embed' ) ),
+            getRelatedObjectList( $dom->getElementsByTagName( 'embed-inline' ) )
+        );
     }
+
+    $doCommit = false;
+    $restoredRelations = 0;
+    if ( !empty( $embeddedObjectIdArray ) )
+    {
+        $object->appendInputRelationList( $embeddedObjectIdArray, eZContentObject::RELATION_EMBED );
+        $restoredRelations += count( $embeddedObjectIdArray ) - $embedRelationsCount;
+        $doCommit = true;
+    }
+
+    if ( !empty( $linkedObjectIdArray ) )
+    {
+        $object->appendInputRelationList( $linkedObjectIdArray, eZContentObject::RELATION_LINK );
+        $restoredRelations += count( $linkedObjectIdArray ) - $linkRelationsCount;
+        $doCommit = true;
+    }
+
+    if ( $doCommit )
+        $object->commitInputRelations( $currentVersion->attribute( 'version' ) );
+
     return $restoredRelations;
 }
 
