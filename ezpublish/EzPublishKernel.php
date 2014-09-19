@@ -68,6 +68,7 @@ class EzPublishKernel extends Kernel
             new NelmioCorsBundle(),
             new KnpMenuBundle(),
             new EflWebBundle(),
+            new \Efl\WebServiceBundle\EflWebServiceBundle(),
             new \EzSystems\EzPriceBundle\EzSystemsEzPriceBundle(),
             new \EzSystems\CookbookBundle\EzSystemsCookbookBundle(),
             new \Blend\EzMatrixBundle\BlendEzMatrixBundle(),

@@ -794,3 +794,8 @@ twig:
     globals:
         efl_contacto_location_id: 1073
         efl_faqs_location_id: 80
+
+efl_auth:
+    client:
+        host: http://wcflibreriavirtual.local/
+        wsdl: ServiceLibreriaVirtual.svc?wsdl
