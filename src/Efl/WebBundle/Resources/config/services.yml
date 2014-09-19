@@ -14,5 +14,22 @@ parameters:
     eflweb.aviso_legal.location_id: 292
     eflweb.politica_privacidad.location_id: 19526
     eflweb.politica_cookies.location_id: 20410
+    eflweb.valorations.class: Efl\WebBundle\Reviews\ValorationsService
 
 services:
+    eflweb.valorations:
+        class: %eflweb.valorations.class%
+        calls:
+            - [setConnection, [@ezpublish.api.storage_engine.legacy.dbhandler]]
+
+    eflweb.socialBarHelper:
+        class : Efl\WebBundle\Templating\Helper\SocialBarHelper
+        tags :
+            - {name : 'templating.helper', alias : 'social-buttons'}
+        arguments : [ @templating ]
+
+    twig.extension.efl_social_bar:
+        class: Efl\WebBundle\Twig\Extensions\EflTwigSocialBar
+        tags:
+            - { name: 'twig.extension' }
+        arguments : [ @service_container ]

@@ -1,0 +1,10 @@
+{% if url is not defined or url == null %}
+    {% set url = app.request.uri %}
+{% endif %}
+
+{% spaceless %}
+    <a href="https://twitter.com/share?text=hola" class="tw"
+
+            >{{text}}</a>
+
+{% endspaceless %}

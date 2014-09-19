@@ -20,7 +20,8 @@ class CatalogController extends Controller
                 'parentContent' => $this->getRepository()->getContentService()->loadContent(
                     $this->getRepository()->getLocationService()->loadLocation( $location->parentLocationId )->contentId
                 ),
-                'fecha_aparicion' => $this->get( 'eflweb.product_helper' )->getFechaAparicionByProductLocationId( $locationId )
+                'fecha_aparicion' => $this->get( 'eflweb.product_helper' )->getFechaAparicionByProductLocationId( $locationId ),
+                'nValoraciones' => $this->get( 'eflweb.valorations' )->getReviewsNumberForLocationId( $locationId )
             )
         );
     }

@@ -32,16 +32,12 @@
             <p class="title9 upper">{{ ez_render_field( parentContent, 'name') }}</p>
             <p class="title5">{{ ez_render_field( content, 'nombre') }}</p>
             <div class="utils cl">
-                <span class="reviews-link"><i class="ico ico-star-gray"></i> <a href="#reviews">17 recomendaciones</a></span>
+                <span class="reviews-link"><i class="ico ico-star-gray"></i> {% if nValoraciones > 0 %}<a href="#reviews">{% transchoice nValoraciones from "product" %}{1} 1 valoración|]1,Inf] %nValoraciones% valoraciones{% endtranschoice %}</a>{% endif %}</span>
                 <a href="EFL_form_valoraciones.html" class="link-btn addReview fancybox" data-fancybox-type="iframe">Valora este memento</a>
 
                 <div class="rrss">
                     <span>Compartir </span>
-                    <ul>
-                        <li><a href="" class="ln">LinkedIn</a></li>
-                        <li><a href="" class="tw">Twitter</a></li>
-                        <li><a href="" class="fb">Facebook</a></li>
-                    </ul>
+                    {{ socialButtons() }}
                 </div>
             </div>
 
@@ -352,8 +348,9 @@
         <span class="tabs-wrap"></span>
 
         <div class="tabs-wrap-content">
-            {% if not ez %}
+            {% if not ez_is_field_empty( content, 'novedades') %}
             <p class="tab active"><a href="#content-tab-release">Novedades <i class="ico"></i></a></p>
+
             <div id="content-tab-release" class="tabs-content active">
                 <div class="utils cl">
                     <span class="reviews-link">Entre otras muchas novedades analizadas en esta nueva edición destacan las que afectan a las siguientes materias:</span>
@@ -363,29 +360,11 @@
                         {{ ez_render_field( content, 'novedades') }}
                     </div>
                 </article>
-
-                <div class="right">
-                    <ul class="pagination">
-                        <!--
-                        <li class="prev-all"><span class="btn btn-filter"><a href="#" title="Primera página">&lt;&lt;</a></span></li>
-                        -->
-                        <li class="prev"><span class="btn btn-filter"><a href="#" title="Página anterior">&lt;</a></span></li>
-                        <li><span class="btn btn-filter"><a href="#">1</a></span></li>
-                        <li class="active"><span class="btn btn-filter"><a href="#">2</a></span></li>
-                        <li><span class="btn btn-filter"><a href="#">3</a></span></li>
-                        <li><span class="btn btn-filter"><a href="#">4</a></span></li>
-                        <li><span class="btn btn-filter"><a href="#">5</a></span></li>
-                        <li class="next"><span class="btn btn-filter"><a href="#" title="Página siguiente">&gt;</a></span></li>
-                        <!--
-                        <li class="next-all"><span class="btn btn-filter"><a href="#" title="Última página">&gt;&gt;</a></span></li>
-                        -->
-                    </ul>
-                </div>
-
             </div>
+            {% endif %}
 
             <p class="tab"><a href="#content-tab-memento">Sistema Memento <i class="ico"></i></a></p>
-            <div id="content-tab-memento" class="tabs-content">
+            <div id="content-tab-memento" class="tabs-content active">
                 <p class="title10">Sistema Memento</p>
                 <article class="release-detail">
                     <div class="wysiwyg">
@@ -401,25 +380,6 @@
                         <p>En el caso de la readmisión del trabajador, tras la sentencia estimatoria de la demanda de despido, con abono de los salarios de tramitación, las prestaciones de desempleo coincidentes son declaradas indebidas, sin que se considere imputable al trabajador.</p>
                     </div>
                 </article>
-
-                <div class="right">
-                    <ul class="pagination">
-                        <!--
-                        <li class="prev-all"><span class="btn btn-filter"><a href="#" title="Primera página">&lt;&lt;</a></span></li>
-                        -->
-                        <li class="prev"><span class="btn btn-filter"><a href="#" title="Página anterior">&lt;</a></span></li>
-                        <li><span class="btn btn-filter"><a href="#">1</a></span></li>
-                        <li class="active"><span class="btn btn-filter"><a href="#">2</a></span></li>
-                        <li><span class="btn btn-filter"><a href="#">3</a></span></li>
-                        <li><span class="btn btn-filter"><a href="#">4</a></span></li>
-                        <li><span class="btn btn-filter"><a href="#">5</a></span></li>
-                        <li class="next"><span class="btn btn-filter"><a href="#" title="Página siguiente">&gt;</a></span></li>
-                        <!--
-                        <li class="next-all"><span class="btn btn-filter"><a href="#" title="Última página">&gt;&gt;</a></span></li>
-                        -->
-                    </ul>
-                </div>
-
             </div>
 
             <p class="tab"><a href="#content-tab-reviews">Valoración <i class="ico"></i></a></p>

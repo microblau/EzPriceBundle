@@ -1,0 +1,9 @@
+{% if url is not defined or url == null %}
+    {% set url = app.request.uri %}
+{% endif %}
+
+{% spaceless %}
+    <a href='http://www.facebook.com/share.php?u={{ url }}' class="fb">
+        Facebook</a>
+
+{% endspaceless %}

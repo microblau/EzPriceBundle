@@ -1,0 +1,17 @@
+<ul>
+{% if twitter is not sameas(false) %}
+    <li>
+        {{ twitterButton(twitter) }}
+    </li>
+{% endif %}
+{% if facebook is not sameas(false) %}
+    <li>
+        {{ facebookButton(facebook) }}
+    </li>
+{% endif %}
+{% if facebook is not sameas(false) %}
+    <li>
+        {{ linkedInButton(linkedin) }}
+    </li>
+{% endif %}
+</ul>
