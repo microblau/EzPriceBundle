@@ -1,0 +1,24 @@
+<div class="portrait">
+    {%  if not ez_is_field_empty( content, 'ebook_gratis' ) %}
+        <span class="badge"><span class="badge-text">ebook gratis</span></span>
+    {% endif %}
+    {{ ez_render_field( image, 'image', {
+    'template':'EflWebBundle:fields:portrait_img.html.twig',
+    'parameters': {
+    'alias':'portrait',
+    'attrs': {'class':'portrait-img'}
+    }
+    }) }}
+    <ul class="actions">
+        {% if not ez_is_field_empty( content, 'preview' ) %}
+        <li {% if viewType == 'preview' %}class="active"{% endif %}><a href="{{ path( 'preview', {'locationId' : location.id}) }}" class="preview">Vista Previa</a></li>
+        {% endif %}
+        <li><a href="#" class="print">Imprimir</a></li>
+        {% if not ez_is_field_empty( content, 'sumario' ) %}
+        <li  {% if viewType == 'summary' %}class="active"{% endif %}><a href="{{ path( 'summary', {'locationId' : location.id}) }}" class="list">Listado</a></li>
+        {% endif %}
+        {% if not ez_is_field_empty( content, 'youtube' ) %}
+        <li><a href="{{ path( 'video', {'locationId' : location.id}) }}" class="play fancybox" data-fancybox-type="iframe">Reproducir</a></li>
+        {% endif %}
+    </ul>
+</div>

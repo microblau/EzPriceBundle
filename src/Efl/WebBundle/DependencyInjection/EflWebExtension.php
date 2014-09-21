@@ -64,14 +64,4 @@ class EflWebExtension extends Extension implements PrependExtensionInterface
         $container->prependExtensionConfig( 'ezpublish', $config );
         $container->addResource( new FileResource( $configFile ) );
     }
-
-    private function registerRepositoriesConfiguration( array $config, ContainerBuilder $container )
-    {
-        if ( !isset( $config['repositories'] ) )
-        {
-            $config['repositories'] = array();
-        }
-
-        $container->setParameter( 'ezpublish.repositories', $config['repositories'] );
-    }
 } 

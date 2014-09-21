@@ -57,3 +57,6 @@ services:
         arguments:
             - @ezpublish.api.service.content
             - @ezpublish.api.service.location
+            - @ezpublish.field_helper
+            - @ezpublish.api.service.search
+            - @eflweb.reviews_service

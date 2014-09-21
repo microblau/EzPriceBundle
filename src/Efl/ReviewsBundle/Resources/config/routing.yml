@@ -1,0 +1,6 @@
+product_reviews:
+    pattern: /reviews/{locationId}/page/{page}
+    defaults: { _controller: EflReviewsBundle:Reviews:pager, page:1 }
+    requirements:
+      page: \d+
+      locationId: \d+

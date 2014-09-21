@@ -14,16 +14,11 @@ parameters:
     eflweb.aviso_legal.location_id: 292
     eflweb.politica_privacidad.location_id: 19526
     eflweb.politica_cookies.location_id: 20410
-    eflweb.valorations.class: Efl\WebBundle\Reviews\ValorationsService
     eflweb.twig.extension.metadata.class: Efl\WebBundle\Twig\Extensions\FezMetaDataExtension
     eflweb.basket.class: Efl\WebBundle\Basket\BasketService
+    pagerfanta.view.efl.class: Efl\WebBundle\PagerFanta\View\EflView
 
 services:
-    eflweb.valorations:
-        class: %eflweb.valorations.class%
-        calls:
-            - [setConnection, [@ezpublish.api.storage_engine.legacy.dbhandler]]
-
     eflweb.twig.extension.metadata:
             class: %eflweb.twig.extension.metadata.class%
             calls:
@@ -49,3 +44,9 @@ services:
             - [setConnection, [@ezpublish.api.storage_engine.legacy.dbhandler]]
         arguments:
             - @ezpublish.api.service.content
+
+    pagerfanta.view.efl:
+        class: %pagerfanta.view.efl.class%
+        public: false
+        tags:
+            - { name: 'pagerfanta.view', alias: 'efl'}

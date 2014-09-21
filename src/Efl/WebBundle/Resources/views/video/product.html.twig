@@ -1,0 +1,30 @@
+{% extends "EflWebBundle::pagelayout_fancy.html.twig" %}
+{% block content %}
+<main role="main" id="bodyContent" class="page-independent page-video">
+
+
+    <!-- main -->
+    <div class="main">
+
+        <div class="main-content">
+            <p class="title9 upper">{{ ez_render_field( parentContent, 'name' ) }}</p>
+            <p class="title5">{{ ez_render_field( content, 'nombre' ) }}</p>
+        </div>
+
+        <div class="tabs-wrap-content">
+
+            <div id="content-tab-reviews" class="tabs-content active">
+                <!-- Video YouTube -->
+                <iframe width="560" height="315" src="{{ ez_render_field( content, 'youtube', {template: "EflWebBundle:fields:only_value.html.twig"}) }}" frameborder="0" allowfullscreen></iframe>
+                <!-- // Video YouTube -->
+            </div>
+
+        </div>
+
+    </div>
+    <!-- //main -->
+
+
+
+</main>
+{% endblock %}

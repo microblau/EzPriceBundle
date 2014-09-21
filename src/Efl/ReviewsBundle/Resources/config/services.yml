@@ -1,0 +1,23 @@
+parameters:
+    # API services
+    eflweb.repository.reviews_service.class: Efl\ReviewsBundle\eZ\Publish\Core\Repository\ReviewsService
+    eflweb.persistence.legacy.reviews.handler.class: Efl\ReviewsBundle\eZ\Publish\Core\Persistence\Legacy\Reviews\Handler
+    eflweb.persistence.legacy.reviews.gateway.class: Efl\ReviewsBundle\eZ\Publish\Core\Persistence\Legacy\Reviews\Gateway\Doctrine
+
+
+services:
+    eflweb.reviews_service:
+        class: %eflweb.repository.reviews_service.class%
+        arguments:
+            - @ezpublish.api.repository
+            - @eflweb.persistence.legacy.reviews.handler
+
+    eflweb.persistence.legacy.reviews.handler:
+        class: %eflweb.persistence.legacy.reviews.handler.class%
+        arguments:
+            - @eflweb.persistence.legacy.reviews.gateway.inner
+
+    eflweb.persistence.legacy.reviews.gateway.inner:
+        class: %eflweb.persistence.legacy.reviews.gateway.class%
+        arguments:
+            - @doctrine.orm.entity_manager

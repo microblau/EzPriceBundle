@@ -25,13 +25,31 @@ system:
                     match:
                         Identifier\ContentType: [ebook]
         location_view:
+            video:
+                producto:
+                    controller: "EflWebBundle:Product:full"
+                    template: "EflWebBundle:video:product.html.twig"
+                    match:
+                        Identifier\ContentType: [producto]
+            summary:
+                producto:
+                    controller: "EflWebBundle:Product:full"
+                    template: "EflWebBundle:full:product.html.twig"
+                    match:
+                        Identifier\ContentType: [producto]
+            preview:
+                producto:
+                    controller: "EflWebBundle:Product:full"
+                    template: "EflWebBundle:full:product.html.twig"
+                    match:
+                        Identifier\ContentType: [producto]
             full:
                 home:
                     template: "EflWebBundle:full:home.html.twig"
                     match:
                         Id\Location: 2
                 producto:
-                    controller: "EflWebBundle:Catalog:product"
+                    controller: "EflWebBundle:Product:full"
                     template: "EflWebBundle:full:product.html.twig"
                     match:
                         Identifier\ContentType: [producto]

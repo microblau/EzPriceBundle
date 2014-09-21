@@ -1,0 +1,34 @@
+<div class="utils cl">
+    <span class="reviews-link"><i class="ico ico-star-gray"></i> {% transchoice nbResults from "product" %}{1} 1 recomendación|]1,Inf] %nbResults% recomendaciones{% endtranschoice %} de los usuarios</span>
+</div>
+
+{% for review in reviews %}
+    <article class="review-detail">
+        <div class="wysiwyg">
+            <p>{{ review.comentario }}</p>
+        </div>
+        <div class="card card-review">
+            <p class="title">Valoración</p>
+            <ul>
+                <li><b>Calidad:</b> <span class="score score-{{ review.calidad }}">{{ review.calidad }}</span> <span class="offscreen">estrellas</span></li>
+                <li class="updates"><b>Actualizaciones:</b> <span class="score score-{{ review.actualizaciones }}">{{ review.actualizaciones }}</span> <span class="offscreen">estrellas</span></li>
+                <li><b>Facilidad:</b> <span class="score score-{{ review.facilidad }}">{{ review.facilidad }}</span> <span class="offscreen">estrellas</span></li>
+            </ul>
+        </div>
+        <ul class="authoring">
+            <li class="author">{{ review.nombre }} {{ review.apellidos }}</li>
+            <li class="position">{{ review.empresa }}</li>
+        </ul>
+    </article>
+{% endfor %}
+<div class="right">
+{% if reviews.haveToPaginate() %}
+    {{ pagerfanta( reviews, 'efl',
+        {
+            'routeName': 'product_reviews', 'routeParams' : { 'locationId': location.id, 'page': page },
+            'prev_message': '&lt;',
+            'next_message': '&gt;',
+            'css_disabled_class': 'btn btn-filter'
+        } ) }}
+{% endif %}
+</div>

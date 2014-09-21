@@ -7,3 +7,14 @@ newsletter_configure:
     pattern: /newsletter/configure/{hash}
     defaults: { _controller: EflWebBundle:Newsletter:configure }
 
+preview:
+    pattern: /preview/{locationId}
+    defaults: { _controller: EflWebBundle:Product:preview }
+
+summary:
+    pattern: /summary/{locationId}
+    defaults: { _controller: EflWebBundle:Product:summary }
+
+video:
+    pattern: /video/{locationId}
+    defaults: { _controller: EflWebBundle:Product:video }

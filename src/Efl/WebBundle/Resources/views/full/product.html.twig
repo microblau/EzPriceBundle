@@ -9,24 +9,7 @@
 
     <!-- main -->
     <div class="main">
-        <div class="portrait">
-            {%  if not ez_is_field_empty( content, 'ebook_gratis' ) %}
-            <span class="badge"><span class="badge-text">ebook gratis</span></span>
-            {% endif %}
-            {{ ez_render_field( image, 'image', {
-                'template':'EflWebBundle:fields:portrait_img.html.twig',
-                'parameters': {
-                    'alias':'portrait',
-                    'attrs': {'class':'portrait-img'}
-                }
-            }) }}
-            <ul class="actions">
-                <li><a href="EFL_catalog_ficha_previsualizacion.html" class="preview">Vista Previa</a></li>
-                <li><a href="#" class="print">Imprimir</a></li>
-                <li><a href="EFL_catalog_ficha_sumario.html" class="list">Listado</a></li>
-                <li><a href="EFL_catalog_ficha_video.html" class="play fancybox" data-fancybox-type="iframe">Reproducir</a></li>
-            </ul>
-        </div>
+        {{ render_esi( controller( 'EflWebBundle:Product:leftPart', {'locationId':location.id, 'viewType': viewType } ) ) }}
 
         <div class="main-content">
             <p class="title9 upper">{{ ez_render_field( parentContent, 'name') }}</p>
@@ -40,7 +23,7 @@
                     {{ socialButtons() }}
                 </div>
             </div>
-
+            {% if viewType == 'full' %}
             <div class="wysiwyg">
                 {{ ez_render_field( content, 'entradilla', {'template':'EflWebBundle:fields:only_value.html.twig'} ) }}
                 {% if not ez_is_field_empty( content, 'mas_info') %}
@@ -56,7 +39,6 @@
                     <i>"{{ ez_render_field( content, 'claim' ) }}"</i>
                 </blockquote>
                 {% endif %}
-
             </div>
 
             <div class="card">
@@ -74,6 +56,27 @@
                     {% endif %}
                 </ul>
             </div>
+            {% elseif viewType == 'preview' %}
+                <div class="right back"><i class="ico ico-arrow-left-blue"></i> <a href="{{ path( location ) }}">Volver</a></div>
+
+                <p class="subtitle">Previsualización</p>
+
+                <div class="wysiwyg">
+                    {{ ez_render_field( content, 'preview') }}
+                </div>
+
+                <div class="right back"><i class="ico ico-arrow-left-blue"></i> <a href="{{ path( location ) }}">Volver</a></div>
+            {% elseif viewType == 'summary' %}
+                <div class="right back"><i class="ico ico-arrow-left-blue"></i> <a href="{{ path( location ) }}">Volver</a></div>
+
+                <p class="subtitle">Sumario</p>
+
+                <div class="wysiwyg">
+                    {{ ez_render_field( content, 'sumario') }}
+                </div>
+
+                <div class="right back"><i class="ico ico-arrow-left-blue"></i> <a href="{{ path( location ) }}">Volver</a></div>
+            {% endif %}
 
         </div>
     </div>
@@ -201,8 +204,9 @@
     </aside>
     <!-- //aside -->
 
+    {%  if viewType == 'full' %}
     <div class="main">
-        {{ render_esi( controller( 'EflWebBundle:Catalog:getRelatedProductsByOrders', { 'contentId': location.contentInfo.id } )) }}
+        {{ render_esi( controller( 'EflWebBundle:Product:getRelatedProductsByOrders', { 'contentId': location.contentInfo.id } )) }}
 
     <article class="related-items cl">
 
@@ -343,17 +347,17 @@
 
     </article>
 
+    {% if tabsInfo.activeTab != 0 %}
     <article id="reviews" class="product-collateral mod-tabs">
-
         <p class="title6">Más sobre {{ ez_render_field( content, 'nombre') }}</p>
 
         <span class="tabs-wrap"></span>
 
         <div class="tabs-wrap-content">
-            {% if not ez_is_field_empty( content, 'novedades') %}
-            <p class="tab active"><a href="#content-tab-release">Novedades <i class="ico"></i></a></p>
+            {% if tabsInfo.hasTab1 %}
+            <p class="tab {% if tabsInfo.activeTab == 1 %}active{% endif %}"><a href="#content-tab-release">Novedades <i class="ico"></i></a></p>
 
-            <div id="content-tab-release" class="tabs-content">
+            <div id="content-tab-release" class="tabs-content {% if tabsInfo.activeTab == 1 %}active{% endif %}">
                 <div class="utils cl">
                     <span class="reviews-link">Entre otras muchas novedades analizadas en esta nueva edición destacan las que afectan a las siguientes materias:</span>
                 </div>
@@ -365,111 +369,40 @@
             </div>
             {% endif %}
 
-            <p class="tab"><a href="#content-tab-memento">Sistema Memento <i class="ico"></i></a></p>
-            <div id="content-tab-memento" class="tabs-conten">
+            {% if tabsInfo.sistemaMemento %}
+            <p class="tab {% if tabsInfo.activeTab == 2 %}active{% endif %}"><a href="#content-tab-memento">Sistema Memento <i class="ico"></i></a></p>
+            <div id="content-tab-memento" class="tabs-content {% if tabsInfo.activeTab == 2 %}active{% endif %}">
                 <p class="title10">Sistema Memento</p>
                 <article class="release-detail">
                     <div class="wysiwyg">
-                        <p class="title9 upper">Sistema Memento</p>
-                        <p class="intro">Reintegro de prestaciones de desempleo coincidentes con salarios de tramitación en caso de readmisión.</p>
-                        <p>En el caso de la readmisión del trabajador, tras la sentencia estimatoria de la demanda de despido, con abono de los salarios de tramitación, las prestaciones de desempleo coincidentes son declaradas indebidas, sin que se considere imputable al trabajador.</p>
-                    </div>
-                </article>
-                <article class="release-detail">
-                    <div class="wysiwyg">
-                        <p class="title9 upper">Sistema Memento</p>
-                        <p class="intro">Reintegro de prestaciones de desempleo coincidentes con salarios de tramitación en caso de readmisión.</p>
-                        <p>En el caso de la readmisión del trabajador, tras la sentencia estimatoria de la demanda de despido, con abono de los salarios de tramitación, las prestaciones de desempleo coincidentes son declaradas indebidas, sin que se considere imputable al trabajador.</p>
+                        <p class="title9 upper">{{ ez_render_field( tabsInfo.sistemaMemento.content, 'titulo') }}</p>
+                        {{ ez_render_field( tabsInfo.sistemaMemento.image, 'image', {
+                        'template':'EflWebBundle:fields:portrait_img.html.twig',
+                        'parameters': {
+                        'alias':'portrait',
+                        'attrs': {'class':'portrait-img'}
+                        }} ) }}
+                        {{ ez_render_field( tabsInfo.sistemaMemento.content, 'texto', {template: 'EflWebBundle:fields:only_value.html.twig'}) }}
                     </div>
                 </article>
             </div>
+            {% endif %}
 
-            <p class="tab"><a href="#content-tab-reviews">Valoración <i class="ico"></i></a></p>
-            <div id="content-tab-reviews" class="tabs-content">
+            {% if tabsInfo.reviews %}
+            <p class="tab {% if tabsInfo.activeTab == 3 %}active{% endif %}"><a href="#content-tab-reviews">Valoración <i class="ico"></i></a></p>
+            <div id="content-tab-reviews" class="tabs-content {% if tabsInfo.activeTab == 3 %}active{% endif %}">
 
-                <div class="utils cl">
-                    <span class="reviews-link"><i class="ico ico-star-gray"></i> 17 recomendaciones de los usuarios</span>
-                </div>
-
-                <article class="review-detail">
-                    <div class="wysiwyg">
-                        <p>Una obra muy buena, aunque, sin embargo, en alguna ocasión me ha conducido a error, al considerar como criterios aceptados unas consultas de la DGT que, o bien habían sido posteriormente rectificadas, mediante otras que no aparecen en la obra, o bien no son tenidas en cuenta por la Admón.</p>
-                    </div>
-                    <div class="card card-review">
-                        <p class="title">Valoración</p>
-                        <ul>
-                            <li><b>Calidad:</b> <span class="score score-0">0</span> <span class="offscreen">estrellas</span></li>
-                            <li class="updates"><b>Actualizaciones:</b> <span class="score score-1">1</span> <span class="offscreen">estrellas</span></li>
-                            <li><b>Calidad:</b> <span class="score score-2">2</span> <span class="offscreen">estrellas</span></li>
-                        </ul>
-                    </div>
-                    <ul class="authoring">
-                        <li class="author">Laura Sánchez-Cañete Moreno</li>
-                        <li class="position">Asesor Fiscal</li>
-                    </ul>
-                </article>
-
-                <article class="review-detail">
-                    <div class="wysiwyg">
-                        <p>Una obra muy buena, aunque, sin embargo, en alguna ocasión me ha conducido a error, al considerar como criterios aceptados unas consultas de la DGT que, o bien habían sido posteriormente rectificadas, mediante otras que no aparecen en la obra, o bien no son tenidas en cuenta por la Admón.</p>
-                    </div>
-                    <div class="card card-review">
-                        <p class="title">Valoración</p>
-                        <ul>
-                            <li><b>Calidad:</b> <span class="score score-3">3</span> <span class="offscreen">estrellas</span></li>
-                            <li class="updates"><b>Actualizaciones:</b> <span class="score score-4">4</span> <span class="offscreen">estrellas</span></li>
-                            <li><b>Calidad2:</b> <span class="score score-5">5</span> <span class="offscreen">estrellas</span></li>
-                        </ul>
-                    </div>
-                    <ul class="authoring">
-                        <li class="author">Laura Sánchez-Cañete Moreno</li>
-                        <li class="position">Asesor Fiscal</li>
-                    </ul>
-                </article>
-
-                <article class="review-detail">
-                    <div class="wysiwyg">
-                        <p>Una obra muy buena, aunque, sin embargo, en alguna ocasión me ha conducido a error, al considerar como criterios aceptados unas consultas de la DGT que, o bien habían sido posteriormente rectificadas, mediante otras que no aparecen en la obra, o bien no son tenidas en cuenta por la Admón.</p>
-                    </div>
-                    <div class="card card-review">
-                        <p class="title">Valoración</p>
-                        <ul>
-                            <li><b>Calidad:</b> <span class="score score-3">3</span> <span class="offscreen">estrellas</span></li>
-                            <li class="updates"><b>Actualizaciones:</b> <span class="score score-2">2</span> <span class="offscreen">estrellas</span></li>
-                            <li><b>Calidad2:</b> <span class="score score-3">3</span> <span class="offscreen">estrellas</span></li>
-                        </ul>
-                    </div>
-                    <ul class="authoring">
-                        <li class="author">Laura Sánchez-Cañete Moreno</li>
-                        <li class="position">Asesor Fiscal</li>
-                    </ul>
-                </article>
-
-                <div class="right">
-                    <ul class="pagination">
-                        <!--
-                        <li class="prev-all"><span class="btn btn-filter"><a href="#" title="Primera página">&lt;&lt;</a></span></li>
-                        -->
-                        <li class="prev"><span class="btn btn-filter"><a href="#" title="Página anterior">&lt;</a></span></li>
-                        <li><span class="btn btn-filter"><a href="#">1</a></span></li>
-                        <li class="active"><span class="btn btn-filter"><a href="#">2</a></span></li>
-                        <li><span class="btn btn-filter"><a href="#">3</a></span></li>
-                        <li><span class="btn btn-filter"><a href="#">4</a></span></li>
-                        <li><span class="btn btn-filter"><a href="#">5</a></span></li>
-                        <li class="next"><span class="btn btn-filter"><a href="#" title="Página siguiente">&gt;</a></span></li>
-                        <!--
-                        <li class="next-all"><span class="btn btn-filter"><a href="#" title="Última página">&gt;&gt;</a></span></li>
-                        -->
-                    </ul>
-                </div>
+                {{ render( controller( 'EflReviewsBundle:Reviews:reviews', {location:location } )) }}
+            {% endif %}
 
             </div>
 
         </div>
 
     </article>
+    {% endif %}
     </div>
-
+    {% endif %}
     </article>
     <!-- //item -->
 
@@ -484,7 +417,30 @@
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
-   {{ parent() }}
+    {{ parent() }}
+    <script  type="text/javascript">
+        (function( $ )
+        {
+            $( document ).ready(function() {
+                $(document).on('click', '.pagination a', function(e){
+                    e.preventDefault();
+                    var aux = $(this).attr('href').split('/');
+                    var locationId = aux[2];
+                    var page = aux[4] ? aux[4] : 1;
+                    loadResults(locationId, page )
+                });
+            });
+
+            function loadResults(locationId, page)
+            {
+                $.ajax({
+                    url: '/reviews/'+ locationId + '/page/' + page,
+                    method: 'POST',
+                    success: function(content) {$("#content-tab-reviews").html(content)}
+                })
+            }
+        })(jQuery);
+    </script>
 {% endblock %}
 
 {% block headStyle %}

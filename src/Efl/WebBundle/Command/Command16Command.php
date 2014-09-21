@@ -83,8 +83,8 @@ class Command16Command extends ContainerAwareCommand
                 array(
                     'identifier' => 'sistema_memento',
                     'mainLanguageCode' => 'esl-ES',
-                    'nameSchema' => '<title>',
-                    'names' => array( 'esl-ES' => 'Módulo de información en pie de página' ),
+                    'nameSchema' => '<titulo>',
+                    'names' => array( 'esl-ES' => 'Sistema Memento' ),
                     'fieldDefinitions' => array( $titulo, $img, $text )
                 )
             );

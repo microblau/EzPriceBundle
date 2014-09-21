@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    {% include 'EflWebBundle::page_head.html.twig' %}
+    {% block headStyle %}
+        {% include 'EflWebBundle::page_head_style.html.twig' %}
+    {% endblock %}
+</head>
+<body>
+    {% block content %}{% endblock %}
+{% block footerScript %}
+    {% include 'EflWebBundle::page_footer_script.html.twig' %}
+{% endblock %}
+</body>
+</html>
