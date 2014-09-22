@@ -56,7 +56,8 @@
         "jms/translation-bundle": "1.1.0",
         "jms/di-extra-bundle": "1.4.*@dev",
         "sensio/framework-extra-bundle": "~3.0",
-        "doctrine/orm": "2.4.*"
+        "doctrine/orm": "2.4.*",
+        "gregwar/captcha-bundle": "dev-master"
     },
     "conflict": {
         "symfony/symfony": "2.3.9 | 2.3.14 | 2.3.15"
