@@ -6,6 +6,7 @@ parameters:
     eflweb.faqs_helper.class: Efl\WebBundle\Helper\FaqsHelper
     eflweb.buy_helper.class: Efl\WebBundle\Helper\BuyHelper
     eflweb.product_helper.class: Efl\WebBundle\Helper\ProductHelper
+    eflweb.utils_helper.class: Efl\WebBundle\Helper\UtilsHelper
 
 services:
     eflweb.location_helper:
@@ -60,3 +61,8 @@ services:
             - @ezpublish.field_helper
             - @ezpublish.api.service.search
             - @eflweb.reviews_service
+
+    eflweb.utils_helper:
+        class: %eflweb.utils_helper.class%
+        arguments:
+            - @ezpublish.api.repository

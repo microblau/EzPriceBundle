@@ -1,0 +1,71 @@
+{% block form_label -%}
+    {% if label is not sameas(false) %}
+        {%- if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif -%}
+        {%- if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif -%}
+        {%- if label is empty -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+        <span class="lbl">{{ label|trans({}, translation_domain)|raw }}</span>
+    {%- endif %}
+{% endblock %}
+
+{% block form_row -%}
+
+    <label for="{{ form.vars.id  }}" class="field row">
+        {{- form_label(form) -}}
+        {{- form_errors(form) -}}
+        {{- form_widget(form) -}}
+    </label>
+{%- endblock form_row %}
+
+{% block _efl_create_review_send_widget %}
+    {% if label is empty -%}
+        {% set label = name|humanize %}
+    {%- endif -%}
+    <div class="center">
+        <button type="submit" {{ block('button_attributes') }}><i class="ico ico-arrow-right-white"></i> {{ label|trans({}, translation_domain) }}</button>
+    </div>
+{% endblock %}
+
+{% block choice_widget_expanded -%}
+    <span class="ratings">
+        {%- for child in form %}
+            {{- form_widget(child) -}}
+        {% endfor -%}
+    </span>
+{% endblock choice_widget_expanded %}
+
+{% block radio_widget -%}
+    <input class="star1" type="radio" {{ block('widget_attributes') }} {% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+{%- endblock radio_widget %}
+
+{% block _efl_create_review_calidad_row %}
+    <b>{{ form.vars.label }}</b>
+    {{- form_errors(form) -}}
+    {{- form_widget(form) -}}
+{% endblock %}
+
+{% block _efl_create_review_actualizaciones_row %}
+    <b>{{ form.vars.label }}</b>
+    {{- form_errors(form) -}}
+    {{- form_widget(form) -}}
+{% endblock %}
+
+{% block _efl_create_review_facilidad_row %}
+    <b>{{ form.vars.label }}</b>
+    {{- form_errors(form) -}}
+    {{- form_widget(form) -}}
+{% endblock %}
+
+{% block captcha_widget %}
+{% spaceless %}
+<label for="captcha" class="lbl-captcha field row">
+        <img src="{{ captcha_code }}" title="captcha" width="{{ captcha_width }}" height="{{ captcha_height }}" />
+        {{ form_widget(form) }}
+</label>
+{% endspaceless %}
+{% endblock %}

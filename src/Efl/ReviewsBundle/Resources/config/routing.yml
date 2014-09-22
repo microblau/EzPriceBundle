@@ -4,3 +4,10 @@ product_reviews:
     requirements:
       page: \d+
       locationId: \d+
+
+create_review:
+    pattern: /review/create/{locationId}
+    defaults: { _controller: EflReviewsBundle:Reviews:createReview }
+    requirements:
+      page: \d+
+      locationId: \d+

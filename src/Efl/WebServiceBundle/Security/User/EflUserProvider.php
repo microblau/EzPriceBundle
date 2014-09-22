@@ -60,7 +60,6 @@ class EflUserProvider implements UserProviderInterface
             } else {
                 $this->logger->info("User $email found on webservice");
             }
-
             return new WebserviceUser( $email );
 
         }
@@ -75,10 +74,12 @@ class EflUserProvider implements UserProviderInterface
      */
     public function refreshUser(UserInterface $user)
     {
+
         if ( !$user instanceof UserInterface )
         {
             throw new UnsupportedUserException( sprintf( 'Instances of "%s" are not supported.', get_class( $user ) ) );
         }
+
 
         $this->repository->setCurrentUser( $user->getAPIUser() );
         return $user;

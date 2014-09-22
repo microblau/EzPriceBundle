@@ -2,6 +2,10 @@ efl_web:
     resource: "@EflWebBundle/Resources/config/routing.yml"
     prefix:   /
 
+efl_reviews:
+    resource: "@EflReviewsBundle/Resources/config/routing.yml"
+    prefix:   /
+
 login:
     path:   /login
     defaults:  { _controller: ezpublish.security.controller:loginAction }

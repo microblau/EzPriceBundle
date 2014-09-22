@@ -47,6 +47,7 @@ class ProductController extends Controller
     public function fullAction( $locationId, $viewType, $layout = false, array $params = array() )
     {
         $location = $this->getRepository()->getLocationService()->loadLocation( $locationId );
+        $currentUserId = $this->get( 'eflweb.utils_helper' )->getCurrentUser()->contentInfo->id;
 
         return $this->get( 'ez_content' )->viewLocation(
             $locationId,
@@ -60,7 +61,8 @@ class ProductController extends Controller
                 ),
                 'fecha_aparicion' => $this->get( 'eflweb.product_helper' )->getFechaAparicionByProductLocationId( $locationId ),
                 'nValoraciones' => $this->get( 'eflweb.reviews_service' )->getReviewsCountForLocation( $location ),
-                'tabsInfo' => $this->get( 'eflweb.product_helper' )->getActiveTab( $locationId )
+                'tabsInfo' => $this->get( 'eflweb.product_helper' )->getActiveTab( $locationId ),
+                'haVotado' => ( $currentUserId != 10 ) && $this->get( 'eflweb.reviews_service' )->userHasReviewedLocation( $currentUserId, $locationId )
             )
         );
     }

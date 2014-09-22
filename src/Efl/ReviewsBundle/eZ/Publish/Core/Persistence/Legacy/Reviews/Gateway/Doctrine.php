@@ -9,6 +9,7 @@
 namespace Efl\ReviewsBundle\eZ\Publish\Core\Persistence\Legacy\Reviews\Gateway;
 
 use Doctrine\ORM\EntityManager;
+use Efl\ReviewsBundle\Entity\ValoracionesProductos;
 use Efl\ReviewsBundle\eZ\Publish\Core\Persistence\Legacy\Reviews\Gateway;
 
 class Doctrine extends Gateway
@@ -31,10 +32,7 @@ class Doctrine extends Gateway
     }
 
     /**
-     * Nº de reviews que tiene un producto
-     *
-     * @param $locationId
-     * @return mixed
+     * @inheritdoc
      */
     public function getReviewsCountForLocationId( $locationId )
     {
@@ -54,11 +52,7 @@ class Doctrine extends Gateway
     }
 
     /**
-     * Reviews que tiene un producto
-     *
-     * @param int $locationId
-     * @param int $limit
-     * @param int $offset
+     * @inheritdoc
      */
     public function getReviewsForLocationId( $locationId, $limit, $offset = 0 )
     {
@@ -78,5 +72,52 @@ class Doctrine extends Gateway
             ->setParameter( 'locationId', $locationId );
 
         return $query->getQuery()->getResult();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function createReview( $locationId, $userId, array $data )
+    {
+        $valoracionProducto = new ValoracionesProductos();
+        $valoracionProducto->setCalidad( $data['calidad'] );
+        $valoracionProducto->setFacilidad( $data['facilidad'] );
+        $valoracionProducto->setActualizaciones( $data['actualizaciones'] );
+        $valoracionProducto->setNodeProducto( $locationId );
+        $valoracionProducto->setEmail( $data['email'] );
+        $valoracionProducto->setComentario( $data['comentario'] );
+        $valoracionProducto->setNombre( $data['nombre'] );
+        $valoracionProducto->setApellidos( $data['apellido1'] );
+        $valoracionProducto->setApellido2( $data['apellido2'] );
+        $valoracionProducto->setVisible( 2 );
+        $valoracionProducto->setUserId( $userId );
+        $valoracionProducto->setFecha( time() );
+        $valoracionProducto->setHaVotado( 1 );
+        $this->em->persist( $valoracionProducto );
+        $this->em->flush();
+    }
+
+    /**
+     * @param int $userId
+     * @param int $locationId
+     *
+     * @return bool
+     */
+    public function userHasReviewedLocation( $userId, $locationId )
+    {
+        $query = $this->em->createQueryBuilder();
+        $query
+            ->select( 'count(v.id) as n' )
+            ->from( 'EflReviewsBundle:ValoracionesProductos','v' )
+            ->where(
+                $query->expr()->andX(
+                    $query->expr()->eq( 'v.nodeProducto', ':locationId' ),
+                    $query->expr()->eq( 'v.visible', 1 ),
+                    $query->expr()->eq( 'v.userId', $userId )
+                )
+            )
+            ->setParameter( 'locationId', $locationId );
+
+        return $query->getQuery()->getScalarResult()[0]['n'];
     }
 }

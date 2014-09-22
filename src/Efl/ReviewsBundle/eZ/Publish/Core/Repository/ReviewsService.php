@@ -48,5 +48,25 @@ class ReviewsService
     {
         return $this->reviewsHandler->getReviewsForLocation( $location, $limit, $offset );
     }
+
+    /**
+     * Creación de una review con los datos q vienen por post
+     *
+     * @param $locationId
+     * @param userId
+     * @param array $data
+     *
+     * @return mixed
+     */
+    public function createReviewFromPost( $locationId, $userId, array $data )
+    {
+        return $this->reviewsHandler->createReviewFromData( $locationId, $userId, $data );
+    }
+
+    public function userHasReviewedLocation( $userId, $locationId )
+    {
+        return $this->reviewsHandler->userHasReviewedLocation( $userId, $locationId );
+    }
+
 }
 

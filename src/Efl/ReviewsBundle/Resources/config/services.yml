@@ -3,6 +3,7 @@ parameters:
     eflweb.repository.reviews_service.class: Efl\ReviewsBundle\eZ\Publish\Core\Repository\ReviewsService
     eflweb.persistence.legacy.reviews.handler.class: Efl\ReviewsBundle\eZ\Publish\Core\Persistence\Legacy\Reviews\Handler
     eflweb.persistence.legacy.reviews.gateway.class: Efl\ReviewsBundle\eZ\Publish\Core\Persistence\Legacy\Reviews\Gateway\Doctrine
+    eflweb.reviews_per_page: 5
 
 
 services:

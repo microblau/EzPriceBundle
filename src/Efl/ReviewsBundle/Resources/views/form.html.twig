@@ -1,0 +1,106 @@
+{% extends "EflWebBundle::pagelayout_fancy.html.twig" %}
+{% set title = 'Crear Valoración' %}
+{% block content %}
+    <main role="main" id="bodyContent" class="page-reviews">
+        <div class="wrapper-inner">
+
+            <!-- main -->
+            <div class="main">
+
+                <div class="main-content">
+                    <p class="title9 upper">{{ ez_render_field( parentContent, 'name' ) }}</p>
+
+                    <p class="title5">{{ ez_render_field( content, 'nombre' ) }}</p>
+                </div>
+                <article id="reviews" class="product-collateral mod-tabs">
+
+                    <div class="tabs-wrap-content">
+
+                        <div id="content-tab-reviews" class="tabs-content active">
+    {%  if not haVotado %}
+
+        {% set revisionDone = app.session.flashbag.get("notice") %}
+
+        {% if (revisionDone is not empty) %}
+            <div class="wysiwyg revision ok">
+                {% for message in revisionDone %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+
+        {% else %}
+
+                            <article class="review-detail">
+                                {% form_theme form 'EflReviewsBundle:forms:create_review.html.twig' %}
+                                {{ form_start(form, {'attr': {'novalidate':'novalidate', 'class': 'frm frm-review' }}) }}
+                                    <div class="wysiwyg">
+                                        <p>Use este formulario para realizar una valoración y
+                                            enviarnos su opinión acerca de la obra.</p>
+
+                                        <p>Indique su valoración por cada uno de los siguientes
+                                            criterios:</p>
+                                    </div>
+                                    <div class="card card-review">
+                                        <p class="title">Valoración</p>
+                                        <ul>
+                                            <li>
+                                                {{ form_row( form.calidad ) }}
+                                            </li>
+                                            <li>
+                                                {{ form_row( form.actualizaciones ) }}
+                                            </li>
+                                            <li>
+                                                {{ form_row( form.facilidad ) }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <fieldset>
+                                        <legend class="offscreen">Indique sus datos personales</legend>
+                                        {{ form_row( form.nombre ) }}
+
+                                        {{ form_row( form.apellido1 ) }}
+
+                                        {{ form_row( form.apellido2 ) }}
+                                    </fieldset>
+                                    <fieldset>
+                                        <legend class="offscreen">Datos de contacto</legend>
+                                        {{ form_row( form.email ) }}
+                                    </fieldset>
+
+                                    {{ form_row( form.comentario ) }}
+
+                                    {{ form_row( form.captcha ) }}
+
+                                    {{ form_row( form.send ) }}
+                                {{ form_end( form) }}
+                            </article>
+                        </div>
+                    </div>
+                </article>
+        {% endif %}
+        {% else %}
+        <div class="wysiwyg revision ok">
+            <p>Ya ha revisado este producto</p>
+        </div>
+        {% endif %}
+            </div>
+        </div>
+    </main>
+{% endblock %}
+{% block footerScript %}
+    {% javascripts
+    '@EflWebBundle/Resources/public/js/jquery.rating.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {{ parent() }}
+{% endblock %}
+{% block headStyle %}
+    {% stylesheets
+    'bundles/eflweb/css/jquery.rating.css'
+    filter='cssrewrite'
+    %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+    {{ parent() }}
+{% endblock %}

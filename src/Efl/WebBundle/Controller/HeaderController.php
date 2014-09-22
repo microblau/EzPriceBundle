@@ -42,10 +42,6 @@ class HeaderController extends Controller
         $cart_total = $this->get( 'eflweb.cart_helper' )->getCurrentCartTotal();
         $cart_nItems = $this->get( 'eflweb.cart_helper' )->getCurrentCartNItems();
 
-        $userObject = $this->getUser() instanceof UserWrapped
-            ? $this->getUser()->getWrappedUser()
-            : $this->getUser();
-
         return $this->render(
             "EflWebBundle:header:user_links.html.twig",
             array(

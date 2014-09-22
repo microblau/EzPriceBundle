@@ -60,14 +60,18 @@ class EflAuthenticationProvider extends UserAuthenticationProvider
     protected function retrieveUser( $username, UsernamePasswordToken $token )
     {
         $user = $token->getUser();
-        if ($user instanceof UserInterface) {
-            return $user;
-        }
 
         try {
-            if( $user = $this->wsManager->existeUsuario( $username ) )
+
+            if( $validate = $this->wsManager->validaUsuario( $username, $token->getCredentials() ) )
             {
-                return new WebserviceUser( $username );
+
+                return new WebserviceUser(
+                    $username,
+                    $token->getCredentials(),
+                    $validate->_nombre,
+                    $validate->_cod_colectivo
+                );
             }
 
         } catch (UsernameNotFoundException $notFound) {
@@ -112,6 +116,7 @@ class EflAuthenticationProvider extends UserAuthenticationProvider
             {
                 return new WebserviceUser(
                     $user->getUsername(),
+                    $presentedPassword,
                     $validation->_nombre,
                     $validation->_cod_colectivo
                 );

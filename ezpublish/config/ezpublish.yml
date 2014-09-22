@@ -9,6 +9,10 @@ doctrine:
                 dbname: lefebvre
                 charset: UTF8
                 options:
+    orm:
+        default_entity_manager:  newhome_repository_connection
+        auto_mapping: true
+
 
 ezpublish:
     http_cache:

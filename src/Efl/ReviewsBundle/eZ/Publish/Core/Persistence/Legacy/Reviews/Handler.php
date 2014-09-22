@@ -45,5 +45,22 @@ class Handler
     {
         return $this->reviewsGateway->getReviewsForLocationId( $location->id, $limit, $offset );
     }
+
+    /**
+     * @param $locationId
+     * @param $userId
+     * @param array $data
+     *
+     * @return mixed
+     */
+    public function createReviewFromData( $locationId, $userId, array $data )
+    {
+        return $this->reviewsGateway->createReview( $locationId, $userId, $data );
+    }
+
+    public function userHasReviewedLocation( $userId, $locationId )
+    {
+        return $this->reviewsGateway->userHasReviewedLocation( $userId, $locationId );
+    }
 }
 

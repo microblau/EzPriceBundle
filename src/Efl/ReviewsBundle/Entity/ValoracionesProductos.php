@@ -72,6 +72,11 @@ class ValoracionesProductos
     /**
      * @var string
      */
+    private $apellido2;
+
+    /**
+     * @var string
+     */
     private $empresa;
 
     /**
@@ -343,6 +348,28 @@ class ValoracionesProductos
         return $this->apellidos;
     }
 
+    /**
+     * Set apellido2
+     *
+     * @param string $apellido2
+     * @return ValoracionesProductos
+     */
+    public function setApellido2($apellido2)
+    {
+        $this->apellido2 = $apellido2;
+
+        return $this;
+    }
+
+    /**
+     * Get apellido2
+     *
+     * @return string
+     */
+    public function getApellido2()
+    {
+        return $this->apellido2;
+    }
     /**
      * Set empresa
      *

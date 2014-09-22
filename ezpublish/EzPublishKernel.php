@@ -69,13 +69,14 @@ class EzPublishKernel extends Kernel
             new KnpMenuBundle(),
             new EflWebBundle(),
             new \Efl\WebServiceBundle\EflWebServiceBundle(),
+            new \Efl\ReviewsBundle\EflReviewsBundle(),
             new \EzSystems\EzPriceBundle\EzSystemsEzPriceBundle(),
-            new \EzSystems\CookbookBundle\EzSystemsCookbookBundle(),
             new \Blend\EzMatrixBundle\BlendEzMatrixBundle(),
             new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new \JMS\TranslationBundle\JMSTranslationBundle(),
             new \JMS\DiExtraBundle\JMSDiExtraBundle( $this ),
-            new \JMS\AopBundle\JMSAopBundle()
+            new \JMS\AopBundle\JMSAopBundle(),
+            new \Gregwar\CaptchaBundle\GregwarCaptchaBundle()
         );
 
         switch ( $this->getEnvironment() )

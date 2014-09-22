@@ -1,5 +1,8 @@
 {% extends "EflWebBundle::pagelayout.html.twig" %}
-
+{% block meta %}
+{% set title = 'hola' %}
+    {{ parent() }}
+{% endblock %}
 {% block content %}
     <div class="wrapper cl">
 
@@ -16,7 +19,11 @@
             <p class="title5">{{ ez_render_field( content, 'nombre') }}</p>
             <div class="utils cl">
                 <span class="reviews-link"><i class="ico ico-star-gray"></i> {% if nValoraciones > 0 %}<a href="#reviews">{% transchoice nValoraciones from "product" %}{1} 1 valoración|]1,Inf] %nValoraciones% valoraciones{% endtranschoice %}</a>{% endif %}</span>
-                <a href="EFL_form_valoraciones.html" class="link-btn addReview fancybox" data-fancybox-type="iframe">Valora este memento</a>
+                {% if not haVotado %}
+                <a href="{{ path( 'create_review', {'locationId': location.id}) }}" class="link-btn addReview fancybox" data-fancybox-type="iframe">Valora este memento</a>
+                {% else %}
+                    <span class="link-btn">Ya has revisado este producto</span>
+                {% endif %}
 
                 <div class="rrss">
                     <span>Compartir </span>
@@ -392,7 +399,7 @@
             <p class="tab {% if tabsInfo.activeTab == 3 %}active{% endif %}"><a href="#content-tab-reviews">Valoración <i class="ico"></i></a></p>
             <div id="content-tab-reviews" class="tabs-content {% if tabsInfo.activeTab == 3 %}active{% endif %}">
 
-                {{ render( controller( 'EflReviewsBundle:Reviews:reviews', {location:location } )) }}
+                {{ render( controller( 'EflReviewsBundle:Reviews:pager', {'locationId':location.id } )) }}
             {% endif %}
 
             </div>

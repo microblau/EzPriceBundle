@@ -75,6 +75,12 @@ Efl\ReviewsBundle\Entity\ValoracionesProductos:
             length: 65535
             fixed: false
             comment: ''
+        apellido2:
+            type: text
+            nullable: true
+            length: 65535
+            fixed: false
+            comment: ''
         empresa:
             type: text
             nullable: true

@@ -1,4 +1,4 @@
-{% if content is defined and title is not defined %}
+{% if title is not defined and content is defined %}
     {% set title = ez_content_name( content ) %}
 {% endif %}
 
@@ -12,8 +12,9 @@
     {% set meta_title = meta.title is defined ? meta.title : meta_title %}
     {% set meta_description = meta.description is defined ? meta.description : meta_description %}
     {% set meta_keywords = meta.keywords is defined ? meta.keywords : meta_keywords %}
+{% else %}
+    {% set meta_title = title %}
 {% endif %}
-
 <title>{{ meta_title }}</title>
 <meta name="description" content="{{ meta_description }}"/>
 <meta name="keywords" content="{{ meta_keywords }}"/>
