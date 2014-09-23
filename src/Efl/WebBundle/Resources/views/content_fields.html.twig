@@ -1,5 +1,15 @@
 {% extends 'EzPublishCoreBundle::content_fields.html.twig' %}
 
 {% block customezprice_field %}
-    hola
+    {% spaceless %}
+        {% if not ez_is_field_empty( content, field ) %}
+            {% set price = ezprice_value( versionInfo, field ) %}
+            {% if price %}
+                Price including VAT: {{ price.priceIncludingVat }}<br/>
+                Price excluding VAT: {{ price.priceExcludingVat }}
+            {% else %}
+                Base Price: {{ field.value.price }}
+            {% endif %}
+        {% endif %}
+    {% endspaceless %}
 {% endblock %}

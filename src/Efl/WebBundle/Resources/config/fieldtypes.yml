@@ -1,8 +1,11 @@
 parameters:
     ezpublish.fieldType.customezpage.class: eZ\Publish\Core\FieldType\Page\Type
-    ezpublish.fieldType.customezprice.class: eZ\Publish\Core\FieldType\Null\Type
+    ezpublish.fieldType.customezprice.class: Efl\WebBundle\eZ\Publish\Core\FieldType\CustomEzPrice\Type
+    ezpublish.fieldType.customezprice.converter.class: Efl\WebBundle\eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter\CustomEzPrice
     ezpublish.fieldType.dummy.class: eZ\Publish\Core\FieldType\Null\Type
     ezpublish.fieldType.ezobjectrelationbrowse.class: eZ\Publish\Core\FieldType\RelationList\Type
+    eflweb.fieldType.wsproduct.class: Efl\WebBundle\eZ\Publish\Core\FieldType\WsProduct\Type
+    eflweb.fieldType.wsproduct.converter.class: Efl\WebBundle\eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter\WsProduct
 
 services:
     ezpublish.fieldType.customezpage:
@@ -12,12 +15,18 @@ services:
         tags:
             - {name: ezpublish.fieldType, alias: customezpage}
 
+    ezpublish.fieldType.customezprice.converter:
+        class: %ezpublish.fieldType.customezprice.converter.class%
+        tags:
+            - {name: ezpublish.storageEngine.legacy.converter, alias: customezprice, lazy: true, callback: '::create'}
+
     ezpublish.fieldType.customezprice:
         class: %ezpublish.fieldType.customezprice.class%
         parent: ezpublish.fieldType
         arguments: [ "customezprice" ]
         tags:
             - {name: ezpublish.fieldType, alias: customezprice}
+
 
     ezpublish.fieldType.dummy:
         class: %ezpublish.fieldType.dummy.class%
@@ -31,3 +40,14 @@ services:
         parent: ezpublish.fieldType
         tags:
             - {name: ezpublish.fieldType, alias: ezobjectrelationbrowse}
+
+    eflweb.fieldType.wsproduct.converter:
+        class: %eflweb.fieldType.wsproduct.converter.class%
+        tags:
+            - {name: ezpublish.storageEngine.legacy.converter, alias: wsproduct, lazy: true, callback: '::create'}
+
+    eflweb.fieldType.wsproduct:
+        class: %eflweb.fieldType.wsproduct.class%
+        parent: ezpublish.fieldType
+        tags:
+            - {name: ezpublish.fieldType, alias: wsproduct }

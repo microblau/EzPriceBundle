@@ -1,6 +1,5 @@
 parameters:
     ezpublish.fieldType.customezpage.converter.class: eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter\Page
-    ezpublish.fieldType.customezprice.converter.class: eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter\Null
     ezpublish.fieldType.dummy.converter.class: eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter\Null
     ezpublish.fieldType.ezobjectrelationbrowse.converter.class: eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter\RelationList
 
@@ -9,11 +8,6 @@ services:
         class: %ezpublish.fieldType.customezpage.converter.class%
         tags:
             - {name: ezpublish.storageEngine.legacy.converter, alias: customezpage}
-
-    ezpublish.fieldType.customezprice.converter:
-            class: %ezpublish.fieldType.customezprice.converter.class%
-            tags:
-                - {name: ezpublish.storageEngine.legacy.converter, alias: customezprice}
 
     ezpublish.fieldType.ezobjectrelationbrowse.converter:
         class: %ezpublish.fieldType.ezobjectrelationbrowse.converter.class%

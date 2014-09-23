@@ -198,12 +198,19 @@ class ProductHelper
      */
     public function buildElementForLineView( Content $content )
     {
-        $location = $this->locationService->loadLocation( $content->contentInfo->mainLocationId  );
-        $parentLocation = $this->locationService->loadLocation( $location->parentLocationId );
+        $location = $this->locationService->loadLocation($content->contentInfo->mainLocationId);
+        $parentLocation = $this->locationService->loadLocation($location->parentLocationId);
         return array(
             'content' => $content,
-            'image' => $this->getImageByProductLocationId( $content->contentInfo->mainLocationId ),
-            'parent' => $this->contentService->loadContent( $parentLocation->contentId )
+            'image' => $this->getImageByProductLocationId($content->contentInfo->mainLocationId),
+            'parent' => $this->contentService->loadContent($parentLocation->contentId)
         );
+    }
+
+    public function contentHasResume( Content $content )
+    {
+        return !$this->fieldHelper->isFieldEmpty( $content, 'texto_oferta' )
+            || !$this->fieldHelper->isFieldEmpty( $content, 'precio' )
+            || !$this->fieldHelper->isFieldEmpty( $content, 'precio_oferta' );
     }
 }

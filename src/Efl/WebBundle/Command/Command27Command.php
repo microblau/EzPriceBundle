@@ -15,6 +15,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
 use eZ\Publish\API\Repository\Values\ContentType\ContentTypeGroupCreateStruct as CreateGroupStruct;
+use eZ\Publish\API\Repository\Exceptions\InvalidArgumentException;
+use Exception;
 
 
 /**
@@ -25,6 +27,21 @@ use eZ\Publish\API\Repository\Values\ContentType\ContentTypeGroupCreateStruct as
  */
 class Command27Command extends ContainerAwareCommand
 {
+    private $classes = array(
+        'formato_ipad' => array(
+            'nombre' => 'Formato IPAD',
+            'vat_id' => 4
+        ),
+        'formato_papel' =>  array(
+            'nombre' => 'Formato Papel',
+            'vat_id' => 1
+        ),
+        'formato_internet' => array(
+            'nombre' => 'Formato Internet',
+            'vat_id' => 4
+        ),
+    );
+
     protected function configure()
     {
         $this->setName( 'efl:web:command27' )->setDefinition(array());
@@ -32,7 +49,26 @@ class Command27Command extends ContainerAwareCommand
 
     protected function execute( InputInterface $input, OutputInterface $output )
     {
-        $this->createGroup( $input, $output );
+        $group = $this->getGroup( $input, $output );
+
+        foreach ( $this->classes as $index => $data )
+        {
+            $this->createClass( $index, $group, $data );
+        }
+
+    }
+
+    private function getGroup( $input, $output )
+    {
+        print_r( $this->getContainer()->get( 'ezpublish.api.repository')->getContentTypeService()->loadContentTypeGroupByIdentifier( 'Formatos de producto' ) );
+        try
+        {
+            return $this->getContainer()->get( 'ezpublish.api.repository')->getContentTypeService()->loadContentTypeGroupByIdentifier( 'Formatos de producto' );
+        }
+        catch ( \Exception $e )
+        {
+            return $this->createGroup( $input, $output );
+        }
     }
 
     private function createGroup( InputInterface $input, OutputInterface $output )
@@ -50,7 +86,8 @@ class Command27Command extends ContainerAwareCommand
 
         try
         {
-            $contentTypeGroupService = $contentTypeService->createContentTypeGroup( $contentTypeGroupStruct );
+            $group = $contentTypeService->createContentTypeGroup( $contentTypeGroupStruct );
+            return $group;
         }
         catch ( InvalidArgumentException $e )
         {
@@ -59,6 +96,76 @@ class Command27Command extends ContainerAwareCommand
         catch ( Exception $e )
         {
             $output->writeln( $e->getMessage() );
+        }
+    }
+
+    private function createClass( $class, $group, $data )
+    {
+        $repository = $this->getContainer()->get( 'ezpublish.api.repository' );
+        $repository->setCurrentUser( $repository->getUserService()->loadUser( 3370 ) );
+
+        $wsProductField = new FieldDefinitionCreateStruct(
+            array(
+                'fieldTypeIdentifier' => 'wsproduct',
+                'identifier' => 'producto',
+                'names' => array( 'esl-ES' => 'Producto WebService' ),
+                'position' => 1,
+                'isRequired' => true,
+                'isSearchable' => false,
+            )
+        );
+
+        $wsPriceField = new FieldDefinitionCreateStruct(
+            array(
+                'fieldTypeIdentifier' => 'ezprice',
+                'identifier' => 'precio',
+                'names' => array( 'esl-ES' => 'Precio' ),
+                'position' => 2,
+                'isRequired' => true,
+                'isSearchable' => false,
+                'fieldSettings' => array(
+                    'is_vat_included' => false
+                )
+            )
+        );
+
+        $wsPriceFieldOferta = new FieldDefinitionCreateStruct(
+            array(
+                'fieldTypeIdentifier' => 'ezprice',
+                'identifier' => 'precio_oferta',
+                'names' => array( 'esl-ES' => 'Precio Oferta' ),
+                'position' => 3,
+                'isRequired' => false,
+                'isSearchable' => false,
+                'fieldSettings' => array(
+                    'is_vat_included' => false
+                )
+            )
+        );
+
+        $contentTypeStruct = new CreateTypeStruct(
+            array(
+                'identifier' => $class,
+                'mainLanguageCode' => 'esl-ES',
+                'nameSchema' => '<producto>',
+                'names' => array( 'esl-ES' => $data['nombre'] ),
+                'fieldDefinitions' => array( $wsProductField, $wsPriceField, $wsPriceFieldOferta )
+            )
+        );
+
+        try
+        {
+            $contentTypeService = $this->getContainer()->get( 'ezpublish.api.repository')->getContentTypeService();
+            $contentType = $contentTypeService->createContentType(
+                $contentTypeStruct,
+                array( $group )
+            );
+
+            $contentTypeService->publishContentTypeDraft( $contentType );
+        }
+        catch ( \Exception $e )
+        {
+            throw $e;
         }
     }
 }

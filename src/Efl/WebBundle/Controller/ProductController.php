@@ -35,6 +35,26 @@ class ProductController extends Controller
         );
     }
 
+    public function rightPartAction( $locationId )
+    {
+        $content = $this->getRepository()->getContentService()->loadContent(
+            $this->getRepository()->getLocationService()->loadLocation( $locationId )->contentId
+        );
+        $response = new Response;
+        $response->setPublic();
+        $response->setSharedMaxAge( 86400 );
+        $response->headers->set('X-Location-Id', $content->contentInfo->mainLocationId );
+
+        return $this->render(
+            'EflWebBundle:product:rightpart.html.twig',
+            array(
+                'content' => $content,
+                'hasResume' => $this->get( 'eflweb.product_helper' )->contentHasResume( $content )
+            ),
+            $response
+        );
+    }
+
     /**
      * Full view para producto
      *

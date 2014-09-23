@@ -52,6 +52,10 @@ system:
                     template: "EflWebBundle:full:home.html.twig"
                     match:
                         Id\Location: 2
+                title:
+                    template: "EflWebBundle:full:test.html.twig"
+                    match:
+                        Identifier\ContentType: [test]
                 producto:
                     controller: "EflWebBundle:Product:full"
                     template: "EflWebBundle:full:product.html.twig"
