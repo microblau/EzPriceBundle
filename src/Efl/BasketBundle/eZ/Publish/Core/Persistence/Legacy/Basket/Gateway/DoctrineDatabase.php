@@ -1,15 +1,18 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: carlos
+ * Date: 23/09/14
+ * Time: 12:36
+ */
 
-namespace Efl\WebBundle\Basket;
+namespace Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Gateway;
 
+use Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Gateway;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\Core\Persistence\Database\DatabaseHandler;
 
-/**
- * funciones para estadísticas en cesta, tales como productos comprados en otras compras o
- * productos más comprados
- */
-class BasketService
+class DoctrineDatabase extends Gateway
 {
     /**
      * @var \eZ\Publish\API\Repository\ContentService

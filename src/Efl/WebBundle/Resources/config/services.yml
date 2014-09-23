@@ -15,7 +15,6 @@ parameters:
     eflweb.politica_privacidad.location_id: 19526
     eflweb.politica_cookies.location_id: 20410
     eflweb.twig.extension.metadata.class: Efl\WebBundle\Twig\Extensions\FezMetaDataExtension
-    eflweb.basket.class: Efl\WebBundle\Basket\BasketService
     pagerfanta.view.efl.class: Efl\WebBundle\PagerFanta\View\EflView
 
 services:
@@ -37,13 +36,6 @@ services:
         tags:
             - { name: 'twig.extension' }
         arguments : [ @service_container ]
-
-    eflweb.basket:
-        class: %eflweb.basket.class%
-        calls:
-            - [setConnection, [@ezpublish.api.storage_engine.legacy.dbhandler]]
-        arguments:
-            - @ezpublish.api.service.content
 
     pagerfanta.view.efl:
         class: %pagerfanta.view.efl.class%

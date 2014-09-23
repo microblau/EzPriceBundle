@@ -66,3 +66,4 @@ services:
         class: %eflweb.utils_helper.class%
         arguments:
             - @ezpublish.api.repository
+            - @security.context

@@ -10,6 +10,10 @@ system:
                 reference: original
                 filters:
                     - { name: geometry/scalewidthdownonly, params: [480] }
+            relatedByOrders:
+                reference: original
+                filters:
+                    - { name: geometry/scalewidthdownonly, params: [163] }
             portrait:
                 reference: original
                 filters:

@@ -11,16 +11,24 @@ class WebserviceUser implements UserInterface, EquatableInterface
 
     private $colective;
 
-    private $password;
-
     private $nombre;
 
-    public function __construct( $username, $password = '', $nombre = '', $colective = '' )
+    private $apellido1;
+
+    private $apellido2;
+
+    public function __construct( $username,
+        $nombre = '',
+        $apellido1 = '',
+        $apellido2 = '',
+        $colective = ''
+    )
     {
         $this->username = $username;
         $this->nombre = $nombre;
         $this->colective = $colective;
-        $this->password = $password;
+        $this->apellido1 = $apellido1;
+        $this->apellido2 = $apellido2;
     }
 
     public function getRoles()
@@ -40,7 +48,27 @@ class WebserviceUser implements UserInterface, EquatableInterface
 
     public function getPassword()
     {
-        return $this->password;
+        return '';
+    }
+
+    public function setApellido1( $apellido1 )
+    {
+        $this->apellido1 = $apellido1;
+    }
+
+    public function getApellido1()
+    {
+        return $this->apellido1;
+    }
+
+    public function setApellido2( $apellido2 )
+    {
+        $this->apellido2 = $apellido2;
+    }
+
+    public function getApellido2()
+    {
+        return $this->apellido2;
     }
 
     public function getSalt()

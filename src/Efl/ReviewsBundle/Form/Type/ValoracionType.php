@@ -8,7 +8,8 @@
 
 namespace Efl\ReviewsBundle\Form\Type;
 
-use Efl\WebServiceBundle\Security\WebserviceUser;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -25,23 +26,15 @@ class ValoracionType extends AbstractType
      */
     private $translator;
 
-    /**
-     * @var
-     */
-    private $currentUser;
-
     public function __construct(
-        Translator $translator,
-        WebserviceUser $user
+        Translator $translator
     )
     {
         $this->translator = $translator;
-        $this->currentUser = $user;
     }
 
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
-        print_r( $this->currentUser );
         $radioOptions = array();
         for ( $i = 1 ; $i <= 5 ; $i++ )
         {
@@ -174,6 +167,33 @@ class ValoracionType extends AbstractType
                 'label' => 'Enviar Opinión',
                 'attr' => array( 'class' => 'btn type2 hasIco' )
             )
+        );
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                $form = $event->getForm();
+
+                // this would be your entity, i.e. SportMeetup
+                $data = $event->getData();
+
+                if ( !empty( $data['nombre'] ) )
+                {
+                    $form->add( 'nombre', 'text', array( 'attr' => array( 'readonly' => true ) ) );
+                }
+                if ( !empty( $data['apellido1'] ) )
+                {
+                    $form->add( 'apellido1', 'text', array( 'attr' => array( 'readonly' => true ) ) );
+                }
+                if ( !empty( $data['apellido2'] ) )
+                {
+                    $form->add( 'apellido2', 'text', array( 'attr' => array( 'readonly' => true ) ) );
+                }
+                if ( !empty( $data['email'] ) )
+                {
+                    $form->add( 'email', 'text', array( 'attr' => array( 'readonly' => true ) ) );
+                }
+            }
         );
     }
 

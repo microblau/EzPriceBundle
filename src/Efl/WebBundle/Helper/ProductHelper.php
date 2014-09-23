@@ -74,6 +74,13 @@ class ProductHelper
      */
     public function getImageByProductLocationId( $locationId )
     {
+        if ( !$this->fieldHelper->isFieldEmpty( $this->getContentByLocationId( $locationId ), 'image_2014' ) )
+        {
+            return $this->contentService->loadContent(
+                $this->getContentByLocationId( $locationId )->getFieldValue( 'image_2014' )->destinationContentId
+            );
+        }
+
         $images = $this->getContentByLocationId( $locationId )->getFieldValue( 'imagen' );
         return $this->contentService->loadContent( $images->destinationContentIds[0] );
     }
@@ -182,5 +189,21 @@ class ProductHelper
         return $this->reviewsService->getReviewsCountForLocation( $location ) > 0
             ? $this->reviewsService->getReviewsForLocation( $location, 3 )
             : false;
+    }
+
+    /**
+     * @param Content $content
+     *
+     * return array
+     */
+    public function buildElementForLineView( Content $content )
+    {
+        $location = $this->locationService->loadLocation( $content->contentInfo->mainLocationId  );
+        $parentLocation = $this->locationService->loadLocation( $location->parentLocationId );
+        return array(
+            'content' => $content,
+            'image' => $this->getImageByProductLocationId( $content->contentInfo->mainLocationId ),
+            'parent' => $this->contentService->loadContent( $parentLocation->contentId )
+        );
     }
 }

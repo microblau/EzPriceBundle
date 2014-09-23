@@ -8,11 +8,10 @@
 
 namespace Efl\ReviewsBundle\Controller;
 
-use Efl\ReviewsBundle\Entity\ValoracionesProductos;
+
 use Efl\ReviewsBundle\Form\Type\ValoracionType;
 use Efl\ReviewsBundle\Pagination\PagerFanta\ReviewsAdapter;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
-use eZ\Publish\API\Repository\Values\Content\Location;
 use Pagerfanta\Pagerfanta;
 
 class ReviewsController extends Controller
@@ -51,16 +50,15 @@ class ReviewsController extends Controller
 
     public function createReviewAction( $locationId )
     {
-        $currentUserId = $this->get( 'eflweb.utils_helper' )->getCurrentUser()->contentInfo->id;
+        $currentUserId = $this->get( 'eflweb.utils_helper' )->getCurrentRepositoryUserId();
         $request = $this->container->get( 'request_stack' )->getCurrentRequest();
         $location = $this->getRepository()->getLocationService()->loadLocation( $locationId );
         $content = $this->getRepository()->getContentService()->loadContent( $location->contentId );
         $parentLocation = $this->getRepository()->getLocationService()->loadLocation( $location->parentLocationId );
         $parentContent = $this->getRepository()->getContentService()->loadContent( $parentLocation->contentId );
-
+        $currentUserData = $this->get( 'eflweb.utils_helper' )->getCurrentUserFriendlyData();
         $form = $this->createForm(
-            new ValoracionType( $this->get( 'translator' ) ),
-            $this->get( 'eflweb.utils_helper')->getCurrentUser()
+            new ValoracionType( $this->get( 'translator' ) ), $currentUserData
         );
 
         if ( $request->isMethod( 'post' ) )
@@ -71,7 +69,7 @@ class ReviewsController extends Controller
             {
                 $this->get( 'eflweb.reviews_service' )->createReviewFromPost(
                     $locationId,
-                    $this->get( 'eflweb.utils_helper' )->getCurrentUser()->contentInfo->id,
+                    $this->get( 'eflweb.utils_helper' )->getCurrentRepositoryUserId(),
                     $form->getData()
                 );
 

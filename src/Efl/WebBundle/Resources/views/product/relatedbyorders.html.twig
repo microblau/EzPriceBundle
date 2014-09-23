@@ -1,1 +1,44 @@
-ssss
+<article class="related-items cl">
+
+    <p class="title6">Quien compró este memento también compró</p>
+
+    <div class="tabs-wrap-content cl">
+        {% for product in products %}
+            <article class="item">
+                {% if not ez_is_field_empty( product.image, 'image') %}
+                <div class="portrait">
+                    {{ ez_render_field( product.image, 'image', {
+                    'template':'EflWebBundle:fields:portrait_img.html.twig',
+                    'parameters': {
+                    'alias':'relatedByOrders',
+                    'attrs': {'class':'portrait-img'}
+                    }
+                    }) }}
+                </div>
+                {% endif %}
+
+                <div class="content cl">
+                    <ul class="format">
+                        <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                        <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                        <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                    </ul>
+
+                    <p class="title9 upper">{{ ez_render_field(product.parent, 'name') }}</p>
+                    <p class="item-title">{{ ez_render_field( product.content, 'nombre' ) }}</p>
+
+                      <span class="price">
+                        <b>72,50 €</b>
+                        <small>+ IVA</small>
+                      </span>
+                </div>
+
+                <div class="actions-item">
+                    <i class="ico ico-check-green"></i>
+                    <a href="#" class="remove"><span>Quitar</span> <i class="ico ico-close-red"></i></a>
+                </div>
+
+            </article>
+        {% endfor %}
+    </div>
+</article>

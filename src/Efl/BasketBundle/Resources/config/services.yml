@@ -1,0 +1,23 @@
+parameters:
+    # API services
+    eflweb.basket_service.class: Efl\BasketBundle\eZ\Publish\Core\Repository\BasketService
+    eflweb.persistence.legacy.basket.handler.class: Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Handler
+    eflweb.persistence.legacy.basket.gateway.class: Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Gateway\DoctrineDatabase
+
+services:
+    eflweb.basket_service:
+        class: %eflweb.basket_service.class%
+        arguments:
+            - @eflweb.persistence.legacy.basket.handler
+
+    eflweb.persistence.legacy.basket.handler:
+        class: %eflweb.persistence.legacy.basket.handler.class%
+        arguments:
+            - @eflweb.persistence.legacy.basket.gateway.inner
+
+    eflweb.persistence.legacy.basket.gateway.inner:
+        class: %eflweb.persistence.legacy.basket.gateway.class%
+        arguments:
+            - @ezpublish.api.service.content
+        calls:
+            - [setConnection, [@ezpublish.api.storage_engine.legacy.dbhandler]]

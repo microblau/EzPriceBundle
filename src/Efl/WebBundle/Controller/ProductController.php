@@ -46,8 +46,13 @@ class ProductController extends Controller
      */
     public function fullAction( $locationId, $viewType, $layout = false, array $params = array() )
     {
+        $response = new Response;
+        $response->setPublic();
+
+        $response->setSharedMaxAge(86400 * 30);
+        $response->headers->set('X-Location-Id', $locationId);
         $location = $this->getRepository()->getLocationService()->loadLocation( $locationId );
-        $currentUserId = $this->get( 'eflweb.utils_helper' )->getCurrentUser()->contentInfo->id;
+        $currentUserId = $this->get( 'eflweb.utils_helper' )->getCurrentRepositoryUserId();
 
         return $this->get( 'ez_content' )->viewLocation(
             $locationId,
@@ -63,7 +68,8 @@ class ProductController extends Controller
                 'nValoraciones' => $this->get( 'eflweb.reviews_service' )->getReviewsCountForLocation( $location ),
                 'tabsInfo' => $this->get( 'eflweb.product_helper' )->getActiveTab( $locationId ),
                 'haVotado' => ( $currentUserId != 10 ) && $this->get( 'eflweb.reviews_service' )->userHasReviewedLocation( $currentUserId, $locationId )
-            )
+            ),
+            $response
         );
     }
 
@@ -76,6 +82,7 @@ class ProductController extends Controller
     public function previewAction( $locationId )
     {
         $location = $this->getRepository()->getLocationService()->loadLocation( $locationId );
+        $currentUserId = $this->get( 'eflweb.utils_helper' )->getCurrentRepositoryUserId();
         $response = new Response;
         $response->setPublic();
         $response->setSharedMaxAge(86400 * 30);
@@ -91,7 +98,8 @@ class ProductController extends Controller
                 'parentContent' => $this->getRepository()->getContentService()->loadContent(
                     $this->getRepository()->getLocationService()->loadLocation( $location->parentLocationId )->contentId
                 ),
-                'nValoraciones' => $this->get( 'eflweb.valorations' )->getReviewsNumberForLocationId( $locationId )
+                'nValoraciones' => $this->get( 'eflweb.valorations' )->getReviewsNumberForLocationId( $locationId ),
+                'haVotado' => ( $currentUserId != 10 ) && $this->get( 'eflweb.reviews_service' )->userHasReviewedLocation( $currentUserId, $locationId )
             ),
             $response
         );
@@ -162,12 +170,20 @@ class ProductController extends Controller
      */
     public function getRelatedProductsByOrdersAction( $contentId )
     {
+        $response = new Response;
         $contentIds = array( $contentId );
-        $products = $this->get( 'eflweb.basket' )->relatedPurchasedListForContentIds( $contentIds, 4 );
+        $result = $this->get( 'eflweb.basket_service' )->getRelatedPurchasedListForContentIds( $contentIds, 4 );
+        $products = array();
+
+        foreach ( $result as $item )
+        {
+            $products[] = $this->get( 'eflweb.product_helper' )->buildElementForLineView( $item );
+        }
 
         return $this->render(
             'EflWebBundle:product:relatedbyorders.html.twig',
-            array()
+            array( 'products' => $products ),
+            $response
         );
     }
 }

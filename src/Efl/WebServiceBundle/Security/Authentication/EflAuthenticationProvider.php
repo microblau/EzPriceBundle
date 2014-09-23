@@ -59,17 +59,15 @@ class EflAuthenticationProvider extends UserAuthenticationProvider
      */
     protected function retrieveUser( $username, UsernamePasswordToken $token )
     {
-        $user = $token->getUser();
-
         try {
 
             if( $validate = $this->wsManager->validaUsuario( $username, $token->getCredentials() ) )
             {
-
                 return new WebserviceUser(
                     $username,
-                    $token->getCredentials(),
                     $validate->_nombre,
+                    $validate->_apellido1,
+                    $validate->_apellido2,
                     $validate->_cod_colectivo
                 );
             }
@@ -116,8 +114,9 @@ class EflAuthenticationProvider extends UserAuthenticationProvider
             {
                 return new WebserviceUser(
                     $user->getUsername(),
-                    $presentedPassword,
                     $validation->_nombre,
+                    $validation->_apellido1,
+                    $validation->_apellido2,
                     $validation->_cod_colectivo
                 );
             }
