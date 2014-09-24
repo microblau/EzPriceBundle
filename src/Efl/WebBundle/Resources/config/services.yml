@@ -16,6 +16,7 @@ parameters:
     eflweb.politica_cookies.location_id: 20410
     eflweb.twig.extension.metadata.class: Efl\WebBundle\Twig\Extensions\FezMetaDataExtension
     pagerfanta.view.efl.class: Efl\WebBundle\PagerFanta\View\EflView
+    lexik_currency.doctrine.orm.entity_manager: newhome_repository_connection
 
 services:
     eflweb.twig.extension.metadata:
@@ -42,3 +43,4 @@ services:
         public: false
         tags:
             - { name: 'pagerfanta.view', alias: 'efl'}
+

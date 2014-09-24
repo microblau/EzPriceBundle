@@ -38,7 +38,7 @@ class NewsletterController extends Controller
         $form = $this->createForm( new SubscriptionBoxType( $this->get( 'router') ) );
         $email = '';
 
-        $form->bind( $request );
+        $form->handleRequest( $request );
         if ( $request->isMethod( 'post' ) && $form->get( 'save' )->isClicked()  )
         {
             $email = $form->get( 'email' )->getData();

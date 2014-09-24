@@ -1,0 +1,15 @@
+{% block _efl_add_to_basket_buy_widget %}
+    {% if label is empty -%}
+        {% set label = name|humanize %}
+    {%- endif -%}
+    <div class="wrap-btn">
+        <button type="submit" {{ block('button_attributes') }}><i class="ico ico-arrow-right-white"></i> {{ label|trans({}, translation_domain) }}</button>
+    </div>
+{% endblock %}
+
+{% block checkbox_widget -%}
+    <div class="prettycheck">
+        <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+        <label for="{{ form.vars.id }}"></label>
+    </div>
+{%- endblock checkbox_widget %}

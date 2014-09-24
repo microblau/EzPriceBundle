@@ -17,15 +17,14 @@ use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 
 /**
  * Class Command1Command
- * @package Efl\WebServiceBundle\Command
+ * @package EflWebService\WebBundle\Command
  *
- * Este comando creará un nuevo grupo de clases para organizar mejor este tema.
  */
-class CreateUserCommand extends ContainerAwareCommand
+class setUsuarioDatosFacturacionCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
-        $this->setName( 'efl:ws:createUser' )->setDefinition(array());
+        $this->setName( 'efl:ws:setUsuarioFacturacion' )->setDefinition(array());
     }
 
     protected function execute( InputInterface $input, OutputInterface $output )
@@ -36,15 +35,24 @@ class CreateUserCommand extends ContainerAwareCommand
                 'wsdl' => 'ServiceLibreriaVirtual.svc?wsdl'
             )
         );
-        print_r( $ws->nuevoUsuario(
+        print_r( $ws->setUsuarioDatosFacturacion(
             array(
-                'email' => 'carlos.revillo' . time() . '@tantacom.com',
-                'password' => 'tanta',
-                'nombre' => 'Carlos',
-                'apellido1' => 'Revillo',
-                'apellido2' => 'Vidales',
-                'pais' => 'ES',
-                'tipo_usuario' => 1
+                'idUsuario' => 35,
+                'nombre_empresa' => '',
+                'nif' => '10204708E',
+                'telefono' => '914401040',
+                'telefono_empresa' => '',
+                'telefono_movil' => '653130759',
+                'fax' => '',
+                'dir_tipo' => 'CALLE',
+                'direccion' => 'Julián Camarillo',
+                'numero' => '26',
+                'dir_resto' => 'Planta 1',
+                'cp' => '28037',
+                'localidad' => 'Madrid',
+                'provincia' => 'Madrid',
+                'direcciones_iguales' => true,
+                'observaciones' => ''
             )
         ) );
     }

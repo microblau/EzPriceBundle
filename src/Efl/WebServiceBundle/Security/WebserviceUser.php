@@ -17,11 +17,17 @@ class WebserviceUser implements UserInterface, EquatableInterface
 
     private $apellido2;
 
+    private $facturacion;
+
+    private $idWs;
+
     public function __construct( $username,
         $nombre = '',
         $apellido1 = '',
         $apellido2 = '',
-        $colective = ''
+        $colective = '',
+        $facturacion = null,
+        $idWs = null
     )
     {
         $this->username = $username;
@@ -29,6 +35,8 @@ class WebserviceUser implements UserInterface, EquatableInterface
         $this->colective = $colective;
         $this->apellido1 = $apellido1;
         $this->apellido2 = $apellido2;
+        $this->facturacion = $facturacion;
+        $this->idWs = $idWs;
     }
 
     public function getRoles()
@@ -108,5 +116,15 @@ class WebserviceUser implements UserInterface, EquatableInterface
         }
 
         return true;
+    }
+
+    public function getFacturacion()
+    {
+        return $this->facturacion;
+    }
+
+    public function getIdWs()
+    {
+        return $this->idWs;
     }
 }

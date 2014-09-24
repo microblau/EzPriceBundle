@@ -3,6 +3,8 @@ parameters:
     eflweb.basket_service.class: Efl\BasketBundle\eZ\Publish\Core\Repository\BasketService
     eflweb.persistence.legacy.basket.handler.class: Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Handler
     eflweb.persistence.legacy.basket.gateway.class: Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Gateway\DoctrineDatabase
+    ezprice.api.storage_engine.legacy.handler.ezprice.eflautomaticvathandler.class: Efl\BasketBundle\Core\Persistence\Legacy\Price\VatHandler\EflAutomaticVatHandler
+    eflweb.cart_helper.class: Efl\BasketBundle\Helper\CartHelper
 
 services:
     eflweb.basket_service:
@@ -21,3 +23,16 @@ services:
             - @ezpublish.api.service.content
         calls:
             - [setConnection, [@ezpublish.api.storage_engine.legacy.dbhandler]]
+
+    ezprice.api.storage_engine.legacy.handler.ezprice.eflautomaticvathandler:
+        class: %ezprice.api.storage_engine.legacy.handler.ezprice.eflautomaticvathandler.class%
+        arguments:
+            - @eflweb.utils_helper
+            - @ezpublish.api.storage_engine.legacy.dbhandler
+            - @ezpublish.api.service.content
+            - ['ceuta', 'melilla', 'palmas, las', 'santa cruz de tenerife']
+
+    ezprice.api.service.automaticvatservice:
+        class: %ezprice.api.service.automaticvatservice.class%
+        arguments:
+            - @ezprice.api.storage_engine.legacy.handler.ezprice.eflautomaticvathandler

@@ -81,7 +81,7 @@ class EflWsConnection implements  EflWsConnectionInterface
             )
         );
 
-        return $nuevoUsuario->nuevoUsuarioResult;
+        return $nuevoUsuario->NuevoUsuarioResult;
     }
 
     /**
@@ -127,6 +127,42 @@ class EflWsConnection implements  EflWsConnectionInterface
         $usuario = $this->ws_res->GetUsuario(
             array(
                 'p_IntIdUsuarioLv' => $idUsuario
+            )
+        );
+
+        return $usuario;
+    }
+
+    /**
+     * Setea los datos de facturación del usuario
+     *
+     * @param $idUsuario
+     */
+    public function setUsuarioDatosFacturacion( $data )
+    {
+        if ( $this->ws_res === null )
+        {
+            $this->connect();
+        }
+
+        $usuario = $this->ws_res->SetUsuarioDatosFacturacion(
+            array(
+                'p_IntIdUsuarioLv' => $data['idUsuario'],
+                'p_StrNombreEmpresa' => $data['nombre_empresa'],
+                'p_StrCifNif' => $data['nif'],
+                'p_StrTlf' => $data['telefono'],
+                'p_StrTlfEmpresa' => $data['telefono_empresa'],
+                'p_StrTlfMovil' => $data['telefono_movil'],
+                'p_StrFax' => $data['fax'],
+                'p_StrDirTipo' => $data['dir_tipo'],
+                'p_StrDirNombre' => $data['direccion'],
+                'p_StrDirNumero' => $data['numero'],
+                'p_StrDirResto' => $data['dir_resto'],
+                'p_StrDirCpostal' => $data['cp'],
+                'p_StrDirLocalidad' => $data['localidad'],
+                'p_StrDirProvincia' => $data['provincia'],
+                'p_IntDirFactIgualEnvio' => (int)$data['direcciones_iguales'],
+                'p_StrObservaciones' => $data['observaciones']
             )
         );
 

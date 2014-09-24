@@ -68,7 +68,9 @@ class EflAuthenticationProvider extends UserAuthenticationProvider
                     $validate->_nombre,
                     $validate->_apellido1,
                     $validate->_apellido2,
-                    $validate->_cod_colectivo
+                    $validate->_cod_colectivo,
+                    $validate->_facturacion,
+                    $validate->_idUsuarioLv
                 );
             }
 
@@ -117,7 +119,9 @@ class EflAuthenticationProvider extends UserAuthenticationProvider
                     $validation->_nombre,
                     $validation->_apellido1,
                     $validation->_apellido2,
-                    $validation->_cod_colectivo
+                    $validation->_cod_colectivo,
+                    $validation->_facturacion,
+                    $validation->_idUsuarioLv
                 );
             }
         }

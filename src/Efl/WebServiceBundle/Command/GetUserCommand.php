@@ -17,15 +17,14 @@ use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 
 /**
  * Class Command1Command
- * @package Efl\WebServiceBundle\Command
+ * @package EflWebService\WebBundle\Command
  *
- * Este comando creará un nuevo grupo de clases para organizar mejor este tema.
  */
-class CreateUserCommand extends ContainerAwareCommand
+class GetUserCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
-        $this->setName( 'efl:ws:createUser' )->setDefinition(array());
+        $this->setName( 'efl:ws:getUser' )->setDefinition(array());
     }
 
     protected function execute( InputInterface $input, OutputInterface $output )
@@ -36,16 +35,8 @@ class CreateUserCommand extends ContainerAwareCommand
                 'wsdl' => 'ServiceLibreriaVirtual.svc?wsdl'
             )
         );
-        print_r( $ws->nuevoUsuario(
-            array(
-                'email' => 'carlos.revillo' . time() . '@tantacom.com',
-                'password' => 'tanta',
-                'nombre' => 'Carlos',
-                'apellido1' => 'Revillo',
-                'apellido2' => 'Vidales',
-                'pais' => 'ES',
-                'tipo_usuario' => 1
-            )
+        print_r( $ws->getUsuario(
+            35
         ) );
     }
 }

@@ -6,7 +6,7 @@
  * Time: 10:21
  */
 
-namespace Efl\WebBundle\Helper;
+namespace Efl\BasketBundle\Helper;
 
 use Closure;
 use eZBasket;

@@ -2,6 +2,7 @@
 
 namespace Efl\WebBundle\Controller;
 
+use Efl\BasketBundle\Form\Type\AddToBasketType;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -35,26 +36,6 @@ class ProductController extends Controller
         );
     }
 
-    public function rightPartAction( $locationId )
-    {
-        $content = $this->getRepository()->getContentService()->loadContent(
-            $this->getRepository()->getLocationService()->loadLocation( $locationId )->contentId
-        );
-        $response = new Response;
-        $response->setPublic();
-        $response->setSharedMaxAge( 86400 );
-        $response->headers->set('X-Location-Id', $content->contentInfo->mainLocationId );
-
-        return $this->render(
-            'EflWebBundle:product:rightpart.html.twig',
-            array(
-                'content' => $content,
-                'hasResume' => $this->get( 'eflweb.product_helper' )->contentHasResume( $content )
-            ),
-            $response
-        );
-    }
-
     /**
      * Full view para producto
      *
@@ -66,15 +47,29 @@ class ProductController extends Controller
      */
     public function fullAction( $locationId, $viewType, $layout = false, array $params = array() )
     {
-        $response = new Response;
-        $response->setPublic();
-
-        $response->setSharedMaxAge(86400 * 30);
-        $response->headers->set('X-Location-Id', $locationId);
         $location = $this->getRepository()->getLocationService()->loadLocation( $locationId );
+        $content = $this->getRepository()->getContentService()->loadContent(
+            $this->getRepository()->getLocationService()->loadLocation( $locationId )->contentId
+        );
+
         $currentUserId = $this->get( 'eflweb.utils_helper' )->getCurrentRepositoryUserId();
 
-        return $this->get( 'ez_content' )->viewLocation(
+        $formats = $this->get( 'eflweb.product_helper' )->getFormatosForLocation( $location );
+        $form = $this->createForm(
+            new AddToBasketType(
+                $formats,
+                $this->get( 'translator' )
+            )
+        );
+
+        $request = $this->container->get( 'request_stack' )->getCurrentRequest();
+
+        if ( $request->isMethod( 'post') )
+        {
+            $form->handleRequest( $request );
+        }
+
+        $response = $this->get( 'ez_content' )->viewLocation(
             $locationId,
             $viewType,
             $layout,
@@ -87,10 +82,37 @@ class ProductController extends Controller
                 'fecha_aparicion' => $this->get( 'eflweb.product_helper' )->getFechaAparicionByProductLocationId( $locationId ),
                 'nValoraciones' => $this->get( 'eflweb.reviews_service' )->getReviewsCountForLocation( $location ),
                 'tabsInfo' => $this->get( 'eflweb.product_helper' )->getActiveTab( $locationId ),
-                'haVotado' => ( $currentUserId != 10 ) && $this->get( 'eflweb.reviews_service' )->userHasReviewedLocation( $currentUserId, $locationId )
-            ),
-            $response
+                'haVotado' => ( $currentUserId != 10 ) && $this->get( 'eflweb.reviews_service' )->userHasReviewedLocation( $currentUserId, $locationId ),
+                'formats' => $formats,
+                'form' => $form->createView(),
+                'hasResume' => $this->get( 'eflweb.product_helper' )->contentHasResume( $content )
+            )
         );
+
+        $response->setSharedMaxAge(5);
+        $response->headers->set('X-Location-Id', $locationId);
+        return $response;
+    }
+
+    public function relatedByOrdersAction( $locationId, $viewType, $layout = false, array $params = array() )
+    {
+        $content = $this->getRepository()->getContentService()->loadContent(
+            $this->getRepository()->getLocationService()->loadLocation( $locationId )->contentId
+        );
+        $data = $this->get( 'eflweb.product_helper' )->buildElementForLineView( $content );
+
+        $response = $this->get( 'ez_content' )->viewLocation(
+            $locationId,
+            $viewType,
+            $layout,
+            array(
+                'product' => $data,
+            )
+        );
+
+        $response->setSharedMaxAge(3600);
+        $response->headers->set('X-Location-Id', $locationId);
+        return $response;
     }
 
     /**
@@ -135,9 +157,6 @@ class ProductController extends Controller
     {
         $location = $this->getRepository()->getLocationService()->loadLocation( $locationId );
         $response = new Response;
-        $response->setPublic();
-        $response->setSharedMaxAge(86400 * 30);
-        $response->headers->set('X-Location-Id', $locationId);
 
         return $this->get( 'ez_content' )->viewLocation(
             $locationId,
@@ -197,7 +216,7 @@ class ProductController extends Controller
 
         foreach ( $result as $item )
         {
-            $products[] = $this->get( 'eflweb.product_helper' )->buildElementForLineView( $item );
+            $products[] = $item->contentInfo->mainLocationId;
         }
 
         return $this->render(

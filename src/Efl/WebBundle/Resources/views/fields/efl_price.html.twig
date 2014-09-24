@@ -1,0 +1,12 @@
+{% block customezprice_field %}
+    {% spaceless %}
+        {% if not ez_is_field_empty( content, field ) %}
+            {% set price = ezprice_value( versionInfo, field ) %}
+            {% if price %}
+                {{ price.priceExcludingVat|currency_convert_format( 'EUR') }}
+            {% else %}
+               {{ field.value.price|currency_convert_format( 'EUR') }}
+            {% endif %}
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}

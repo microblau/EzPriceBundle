@@ -47,6 +47,12 @@ system:
                     template: "EflWebBundle:full:product.html.twig"
                     match:
                         Identifier\ContentType: [producto]
+            relatedByOrders:
+                producto:
+                    controller: "EflWebBundle:Product:relatedByOrders"
+                    template: "EflWebBundle:related_by_orders:product.html.twig"
+                    match:
+                        Identifier\ContentType: [producto]
             full:
                 home:
                     template: "EflWebBundle:full:home.html.twig"
@@ -84,5 +90,5 @@ system:
 
     global:
         field_templates:
-            - {template: "EflWebBundle::content_fields.html.twig", priority: 10}
+            - {template: "EflWebBundle::content_fields.html.twig", priority: 18}
 

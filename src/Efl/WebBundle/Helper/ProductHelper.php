@@ -11,6 +11,8 @@ use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use Efl\ReviewsBundle\eZ\Publish\Core\Repository\ReviewsService;
+use eZ\Publish\API\Repository\Values\Content\Query;
+use eZ\Publish\API\Repository\ContentTypeService;
 
 class ProductHelper
 {
@@ -39,12 +41,18 @@ class ProductHelper
      */
     private $reviewsService;
 
+    /**
+     * @var ContentTypeService
+     */
+    private $contentTypeService;
+
     public function __construct(
         ContentService $contentService,
         LocationService $locationService,
         FieldHelper $fieldHelper,
         SearchService $searchService,
-        ReviewsService $reviewsService
+        ReviewsService $reviewsService,
+        ContentTypeService $contentTypeService
     )
     {
         $this->contentService = $contentService;
@@ -52,6 +60,7 @@ class ProductHelper
         $this->fieldHelper = $fieldHelper;
         $this->searchService = $searchService;
         $this->reviewsService = $reviewsService;
+        $this->contentTypeService = $contentTypeService;
     }
 
     /**
@@ -212,5 +221,57 @@ class ProductHelper
         return !$this->fieldHelper->isFieldEmpty( $content, 'texto_oferta' )
             || !$this->fieldHelper->isFieldEmpty( $content, 'precio' )
             || !$this->fieldHelper->isFieldEmpty( $content, 'precio_oferta' );
+    }
+
+    public function getFormatosForLocation( Location $location )
+    {
+        $formatos = array();
+
+        $query = new LocationQuery();
+
+        $query->query = new Criterion\LogicalAnd(
+            array(
+                new Criterion\Visibility( Criterion\Visibility::VISIBLE ),
+                new Criterion\Location\Depth( Criterion\Operator::EQ, $location->depth + 1 ),
+                new Criterion\Subtree( $location->pathString ),
+                new Criterion\ContentTypeIdentifier(
+                    array(
+                        'formato_papel',
+                        'formato_ipad',
+                        'formato_internet'
+                    )
+                )
+            )
+        );
+
+        $query->sortClauses = array( new Query\SortClause\Location\Priority() );
+
+        $results = $this->searchService->findLocations( $query )->searchHits;
+
+        foreach ( $results as $result )
+        {
+            $content = $this->contentService->loadContent(
+                $result->valueObject->contentId
+            );
+
+            $formatos[] = array(
+                'content' => $content,
+                'data' => $this->getFormatData( $content )
+            );
+        }
+
+        return $formatos;
+    }
+
+    private function getFormatData( Content $content )
+    {
+        $contentTypeService = $this->contentTypeService->loadContentType( $content->contentInfo->contentTypeId );
+        if ( $contentTypeService->identifier )
+        {
+            return array(
+                'icon' => 'paper',
+                'literal' => 'En Papel'
+            );
+        }
     }
 }

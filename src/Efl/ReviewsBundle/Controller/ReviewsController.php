@@ -63,7 +63,7 @@ class ReviewsController extends Controller
 
         if ( $request->isMethod( 'post' ) )
         {
-            $form->bind( $request );
+            $form->handleRequest( $request );
 
             if ( $form->isValid() )
             {

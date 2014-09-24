@@ -1,7 +1,6 @@
 {% extends "EflWebBundle::pagelayout.html.twig" %}
 {% set mainClass='product-sheet' %}
 {% block content %}
-    {{ ez_render_field( content, 'precio' ) }}
     <div class="wrapper cl">
 
     <div class="twoCols">
@@ -89,7 +88,73 @@
 
     <!-- aside -->
     <aside class="aside">
-        {{ render_esi( controller( 'EflWebBundle:Product:rightPart', {'locationId':location.id } ) ) }}
+        {% form_theme form 'EflBasketBundle:forms:addtobasket.html.twig' %}
+        {{ form_start(form, {'attr': {'novalidate':'novalidate' }}) }}
+        {% if hasResume %}
+            <div class="resume">
+                {% if not ez_is_field_empty( content, 'texto_oferta' ) %}
+                    <span class="claim">{{ ez_render_field( content, 'texto_oferta', {'template':'EflWebBundle:fields:only_value.html.twig'}) }}</span>
+                {% endif %}
+
+                <ins class="price">{{ ez_render_field( content, 'precio_oferta' ) }}</ins>
+
+
+
+
+                <del class="old-price">antes {{ ez_render_field( content, 'precio' ) }}</del>
+
+            </div>
+        {% endif %}
+
+
+        <table class="tb-formats">
+            <caption class="title">{{ ez_render_field( content, 'nombre' ) }}</caption>
+
+            <thead>
+            <tr>
+                <th>Formato</th>
+                <th>Precio</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% if not form.vars.valid %}
+                <tr>
+                    <td colspan="3">{{ form_errors( form.formats ) }}</td>
+                </tr>
+            {% endif %}
+            {% for t,format in formats %}
+                <tr>
+                    <td class="format">
+                        <i class="ico ico-{{ format.data.icon }}-white"></i> <span>{{ format.data.literal }}</span>
+                    </td>
+                    <td class="price">
+                        <b>{{ ez_render_field( format.content, 'precio' ) }}</b>
+                        <small>+ IVA</small>
+                    </td>
+                    <td>
+                        {{ form_widget(form.formats[t] ) }}
+                    </td>
+                </tr>
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+
+
+            {{ form_widget( form.buy ) }}
+
+
+        {{ form_end( form) }}
+
+        <article class="genericInfo-detail">
+            <i class="ico ico-box-gray"></i>
+            <div class="cont-text">
+                <p class="title">Comprando ahora mismo <br /> <b>lo enviamos gratis</b></p>
+            </div>
+        </article>
     </aside>
     <!-- //aside -->
 
