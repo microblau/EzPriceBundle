@@ -13,7 +13,6 @@ use eZ\Bundle\EzPublishDebugBundle\EzPublishDebugBundle;
 use eZ\Bundle\EzPublishLegacyBundle\EzPublishLegacyBundle;
 use eZ\Bundle\EzPublishRestBundle\EzPublishRestBundle;
 use EzSystems\CommentsBundle\EzSystemsCommentsBundle;
-use Efl\WebBundle\EflWebBundle;
 use EzSystems\DemoBundle\EzSystemsDemoBundle;
 use EzSystems\BehatBundle\EzSystemsBehatBundle;
 use eZ\Bundle\EzPublishCoreBundle\Kernel;
@@ -67,16 +66,19 @@ class EzPublishKernel extends Kernel
             new WhiteOctoberBreadcrumbsBundle(),
             new NelmioCorsBundle(),
             new KnpMenuBundle(),
-            new EflWebBundle(),
-            new \Efl\WebServiceBundle\EflWebServiceBundle(),
-            new \Efl\ReviewsBundle\EflReviewsBundle(),
             new \EzSystems\EzPriceBundle\EzSystemsEzPriceBundle(),
+            new \Crevillo\ProductCategoryBundle\CrevilloProductCategoryBundle(),
             new \Blend\EzMatrixBundle\BlendEzMatrixBundle(),
             new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new \JMS\TranslationBundle\JMSTranslationBundle(),
             new \JMS\DiExtraBundle\JMSDiExtraBundle( $this ),
             new \JMS\AopBundle\JMSAopBundle(),
-            new \Gregwar\CaptchaBundle\GregwarCaptchaBundle()
+            new \Gregwar\CaptchaBundle\GregwarCaptchaBundle(),
+            new Lexik\Bundle\CurrencyBundle\LexikCurrencyBundle(),
+            new \Efl\WebBundle\EflWebBundle(),
+            new \Efl\WebServiceBundle\EflWebServiceBundle(),
+            new \Efl\ReviewsBundle\EflReviewsBundle(),
+            new \Efl\BasketBundle\EflBasketBundle()
         );
 
         switch ( $this->getEnvironment() )

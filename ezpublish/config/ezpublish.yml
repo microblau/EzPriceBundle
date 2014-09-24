@@ -10,7 +10,7 @@ doctrine:
                 charset: UTF8
                 options:
     orm:
-        default_entity_manager:  newhome_repository_connection
+        default_entity_manager: newhome_repository_connection
         auto_mapping: true
 
 
@@ -71,6 +71,7 @@ ezpublish:
                     - ''
                 local.efl5: newhome
                 local.efl5.dev: newhome
+                admin.efl5: administracion
                 admin.efl5.dev: administracion
                 formacion.efl.es: forma
                 formacion.eflweb.local: forma

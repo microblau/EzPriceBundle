@@ -37,6 +37,7 @@ security:
             efl_auth: ~
             form_login:
                 require_previous_session: false
+                use_referer:        true
             logout: ~
 
 #        secured_area:
