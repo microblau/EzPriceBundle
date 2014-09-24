@@ -15,6 +15,7 @@ use EzSystems\EzPriceBundle\API\Price\ContentVatService;
 use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Gateway\AutomaticVatHandlerException;
 use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\ContentVat\Gateway\VatIdentifierNotFoundException;
 use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Vat\Gateway\VatNotFoundException;
+
 use Psr\Log\LoggerInterface;
 use Twig_Extension;
 use Twig_SimpleFunction;

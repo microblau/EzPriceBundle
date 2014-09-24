@@ -80,3 +80,7 @@ services:
         arguments:
             - @ezpublish.api.storage_engine.legacy.dbhandler
             - @ezprice.api.service.automaticvatservice
+
+    eflweb.cart_helper:
+        class: %eflweb.cart_helper.class%
+        arguments: [@ezpublish_legacy.kernel]

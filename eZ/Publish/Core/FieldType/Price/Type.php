@@ -163,4 +163,9 @@ class Type extends FieldType
     {
         return true;
     }
+
+    public function validateFieldSettings( $fieldSettings )
+    {
+        return array();
+    }
 }
