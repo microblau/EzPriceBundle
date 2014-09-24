@@ -101,6 +101,8 @@ class ProductController extends Controller
         );
         $data = $this->get( 'eflweb.product_helper' )->buildElementForLineView( $content );
 
+        $response = new Response;
+
         $response = $this->get( 'ez_content' )->viewLocation(
             $locationId,
             $viewType,
@@ -110,6 +112,7 @@ class ProductController extends Controller
             )
         );
 
+        $response->setPublic();
         $response->setSharedMaxAge(3600);
         $response->headers->set('X-Location-Id', $locationId);
         return $response;

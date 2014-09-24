@@ -130,8 +130,15 @@
                         <i class="ico ico-{{ format.data.icon }}-white"></i> <span>{{ format.data.literal }}</span>
                     </td>
                     <td class="price">
-                        <b>{{ ez_render_field( format.content, 'precio' ) }}</b>
+                        {% if not ez_is_field_empty( format.content,'precio_oferta' ) %}
+                        <b>{{ ez_render_field( format.content, 'precio_oferta' ) }}</b>
+                        {% else %}
+                            <b>{{ ez_render_field( format.content, 'precio' ) }}</b>
+                        {% endif %}
                         <small>+ IVA</small>
+                {% if not ez_is_field_empty( format.content,'precio_oferta' ) %}
+                    <del>{{ ez_render_field( format.content, 'precio' ) }}</del>
+                {% endif %}
                     </td>
                     <td>
                         {{ form_widget(form.formats[t] ) }}

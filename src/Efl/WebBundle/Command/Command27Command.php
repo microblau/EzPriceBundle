@@ -60,7 +60,6 @@ class Command27Command extends ContainerAwareCommand
 
     private function getGroup( $input, $output )
     {
-        print_r( $this->getContainer()->get( 'ezpublish.api.repository')->getContentTypeService()->loadContentTypeGroupByIdentifier( 'Formatos de producto' ) );
         try
         {
             return $this->getContainer()->get( 'ezpublish.api.repository')->getContentTypeService()->loadContentTypeGroupByIdentifier( 'Formatos de producto' );
@@ -75,7 +74,7 @@ class Command27Command extends ContainerAwareCommand
     {
         /** @var $repository \eZ\Publish\API\Repository\Repository */
         $repository = $this->getContainer()->get( 'ezpublish.api.repository' );
-        $repository->setCurrentUser( $repository->getUserService()->loadUser( 14 ) );
+        $repository->setCurrentUser( $repository->getUserService()->loadUser( 3370 ) );
 
         $contentTypeService = $repository->getContentTypeService();
         $contentTypeGroupStruct = new CreateGroupStruct(
@@ -143,13 +142,24 @@ class Command27Command extends ContainerAwareCommand
             )
         );
 
+        $categoria = new FieldDefinitionCreateStruct(
+            array(
+                'fieldTypeIdentifier' => 'ezproductcategory',
+                'identifier' => 'categoria',
+                'names' => array( 'esl-ES' => 'Categoría' ),
+                'position' => 4,
+                'isRequired' => false,
+                'isSearchable' => false
+            )
+        );
+
         $contentTypeStruct = new CreateTypeStruct(
             array(
                 'identifier' => $class,
                 'mainLanguageCode' => 'esl-ES',
                 'nameSchema' => '<producto>',
                 'names' => array( 'esl-ES' => $data['nombre'] ),
-                'fieldDefinitions' => array( $wsProductField, $wsPriceField, $wsPriceFieldOferta )
+                'fieldDefinitions' => array( $wsProductField, $wsPriceField, $wsPriceFieldOferta, $categoria )
             )
         );
 

@@ -127,4 +127,9 @@ class WebserviceUser implements UserInterface, EquatableInterface
     {
         return $this->idWs;
     }
+
+    public function setFacturacion( $facturacion )
+    {
+        $this->facturacion = $facturacion;
+    }
 }

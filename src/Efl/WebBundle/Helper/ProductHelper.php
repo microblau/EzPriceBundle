@@ -266,12 +266,22 @@ class ProductHelper
     private function getFormatData( Content $content )
     {
         $contentTypeService = $this->contentTypeService->loadContentType( $content->contentInfo->contentTypeId );
-        if ( $contentTypeService->identifier )
+
+        if ( $contentTypeService->identifier == 'formato_papel' )
         {
             return array(
                 'icon' => 'paper',
                 'literal' => 'En Papel'
             );
         }
+
+        if ( $contentTypeService->identifier == 'formato_ipad' )
+        {
+            return array(
+                'icon' => 'tablet',
+                'literal' => 'Para Ipad'
+            );
+        }
+
     }
 }
