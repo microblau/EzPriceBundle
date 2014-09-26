@@ -12,24 +12,40 @@
     {% endif %}
 
     <div class="content cl">
+        {% if formats|length %}
         <ul class="format">
-            <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
-            <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
-            <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+            {% for format in formats %}
+            <li><i class="ico ico-{{ format.data.icon }}-white"></i> <span class="offscreen">{{ format.data.literal }}</span></li>
+            {% endfor %}
         </ul>
+        {% endif %}
 
         <p class="title9 upper">{{ ez_render_field(product.parent, 'name') }}</p>
         <p class="item-title">{{ ez_render_field( product.content, 'nombre' ) }}</p>
-
-                      <span class="price">
-                        <b>72,50 €</b>
-                        <small>+ IVA</small>
-                      </span>
+        {% if not ez_is_field_empty( product.content, 'texto_oferta') %}
+            <p class="item-claim">{{ ez_render_field(product.content, 'texto_oferta') }}</p>
+        {% endif %}
+        {% if ez_is_field_empty( product.content, 'precio_oferta' )%}
+            <span class="price">
+                <b>{{ ez_render_field( product.content, 'precio') }}</b>
+                <small>+ IVA</small>
+            </span>
+        {% else %}
+            <del class="old-price">
+                <b>{{ ez_render_field( product.content, 'precio') }}</b>
+                <small>+ IVA</small>
+            </del>
+            <ins class="price">
+                <b>{{ ez_render_field( product.content, 'precio_oferta') }}</b>
+                <small>+ IVA</small>
+            </ins>
+        {% endif %}
     </div>
 
     <div class="actions-item">
-        <i class="ico ico-check-green"></i>
-        <a href="#" class="remove"><span>Quitar</span> <i class="ico ico-close-red"></i></a>
+        <span class="btn">
+            <a href="{{ path( 'ez_urlalias', {'locationId': product.content.contentInfo.mainLocationId} ) }}">Añadir</a>
+        </span>
     </div>
 
 </article>

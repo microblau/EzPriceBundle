@@ -36,3 +36,7 @@ services:
         class: %ezprice.api.service.automaticvatservice.class%
         arguments:
             - @ezprice.api.storage_engine.legacy.handler.ezprice.eflautomaticvathandler
+
+    eflweb.cart_helper:
+        class: %eflweb.cart_helper.class%
+        arguments: [@ezpublish_legacy.kernel]

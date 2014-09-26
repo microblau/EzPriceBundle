@@ -283,5 +283,13 @@ class ProductHelper
             );
         }
 
+        if ( $contentTypeService->identifier == 'formato_internet' )
+        {
+            return array(
+                'icon' => 'pc',
+                'literal' => 'En Internet'
+            );
+        }
+
     }
 }

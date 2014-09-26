@@ -88,8 +88,6 @@
 
     <!-- aside -->
     <aside class="aside">
-        {% form_theme form 'EflBasketBundle:forms:addtobasket.html.twig' %}
-        {{ form_start(form, {'attr': {'novalidate':'novalidate' }}) }}
         {% if hasResume %}
             <div class="resume">
                 {% if not ez_is_field_empty( content, 'texto_oferta' ) %}
@@ -98,15 +96,12 @@
 
                 <ins class="price">{{ ez_render_field( content, 'precio_oferta' ) }}</ins>
 
-
-
-
                 <del class="old-price">antes {{ ez_render_field( content, 'precio' ) }}</del>
-
             </div>
         {% endif %}
-
-
+        {% if formats is defined %}
+            {% form_theme form 'EflBasketBundle:forms:addtobasket.html.twig' %}
+            {{ form_start(form, {'attr': {'novalidate':'novalidate' }}) }}
         <table class="tb-formats">
             <caption class="title">{{ ez_render_field( content, 'nombre' ) }}</caption>
 
@@ -162,6 +157,7 @@
                 <p class="title">Comprando ahora mismo <br /> <b>lo enviamos gratis</b></p>
             </div>
         </article>
+        {% endif %}
     </aside>
     <!-- //aside -->
 

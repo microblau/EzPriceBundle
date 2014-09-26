@@ -39,30 +39,32 @@ class AddToBasketType extends AbstractType
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
         $formats = array();
-        foreach ( $this->formats as $format )
+        if ( count ($this->formats ) )
         {
-            $formats[$format['content']->id] = $format['content']->id;
-        }
+            foreach ( $this->formats as $format )
+            {
+                $formats[$format['content']->id] = $format['content']->id;
+            }
 
-        $builder->add(
-            'formats',
-            'choice',
-            array(
-                'choices' => $formats,
-                'expanded' => true,
-                'multiple' => true
+            $builder->add(
+                'formats',
+                'choice',
+                array(
+                    'choices' => $formats,
+                    'expanded' => true,
+                    'multiple' => true
                 )
+            );
 
-        );
-
-        $builder->add(
-            'buy',
-            'submit',
-            array(
-                'label' => 'Comprar ahora',
-                'attr' => array( 'class' => 'btn type2 hasIco' )
-            )
-        );
+            $builder->add(
+                'buy',
+                'submit',
+                array(
+                    'label' => 'Comprar ahora',
+                    'attr' => array( 'class' => 'btn type2 hasIco' )
+                )
+            );
+        }
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

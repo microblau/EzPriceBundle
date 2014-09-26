@@ -3,7 +3,14 @@
 
     <div class="tabs-wrap-content cl">
         {% for product in products %}
-            {{ render_esi( controller( 'ez_content:viewLocation', {'locationId': product, 'viewType': 'relatedByOrders'} ) ) }}
+            {{ render_esi(
+                controller(
+                    'ez_content:viewLocation',
+                    {
+                        'locationId': product,
+                        'viewType': 'relatedByOrders'
+                    }
+            ) ) }}
 
         {% endfor %}
     </div>
