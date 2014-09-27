@@ -254,7 +254,10 @@ class ProductHelper
                 $result->valueObject->contentId
             );
 
-            $formatos[] = array(
+            $contentTypeIdentifier = $this->contentTypeService->loadContentType(
+                $content->contentInfo->contentTypeId
+            )->identifier;
+            $formatos[$contentTypeIdentifier] = array(
                 'content' => $content,
                 'data' => $this->getFormatData( $content )
             );
@@ -287,7 +290,8 @@ class ProductHelper
         {
             return array(
                 'icon' => 'pc',
-                'literal' => 'En Internet'
+                'literal' => 'En Internet',
+                'titleInfo' => 'qMementix'
             );
         }
 

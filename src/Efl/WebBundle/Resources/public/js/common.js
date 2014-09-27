@@ -365,6 +365,12 @@ var EFL = function(){
       }
     },
 		behaviours: {
+      calendar:function(){
+        $( '.frm-calendar' ).on( 'change', 'select#month', function(){
+          $( '.listCalendar > li' ).show();
+          $( '.listCalendar > li' ).not('#' + $(this).val() ).hide();
+        })
+      },
       sliderStatements:function(){
         if( $( '.home' ).length && $( '.statements' ).length ){
           $( '.statements' ).flexslider({
@@ -660,19 +666,58 @@ var EFL = function(){
           }
         }
       },
-			equalHeights:function(obj){
+			equalHeights:function(obj, type){
 				/* 
 				 * Function to set higher height to all children
 				 * @param obj <jQuery Object> Object parent to search height childrens
 				 * 
 				 * Put all heights into an Array and get higher height
 				*/
-				var childs = $( obj ).children(),
-						hs = [];
-				childs.each(function(n){
-					hs.push( $( this ).outerHeight() )
-				})
-				childs.height( Math.max.apply(Math, hs) )
+       
+        if( type === 'self' ){
+          var currentTallest = 0,
+              currentRowStart = 0,
+              rowDivs = new Array(),
+              $el,
+              topPosition = 0;
+
+          obj.each(function() {
+
+            $el = $(this);
+            topPostion = $el.position().top;
+             
+            if (currentRowStart != topPostion) {
+              // we just came to a new row.  Set all the heights on the completed row
+              for (currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
+                rowDivs[currentDiv].height(currentTallest);
+              }
+              // set the variables for the new row
+              rowDivs.length = 0; // empty the array
+              currentRowStart = topPostion;
+              currentTallest = $el.height();
+              rowDivs.push($el);
+            }else{
+              // another div on the current row.  Add it to the list and check if it's taller
+              rowDivs.push($el);
+              currentTallest = (currentTallest < $el.height()) ? ($el.height()) : (currentTallest);
+            }
+             
+            // do the last row
+            for (currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
+              rowDivs[currentDiv].height(currentTallest);
+            }
+             
+          });
+
+        }else{
+          var childs = $( obj ).children(),
+              hs = [];
+        
+          childs.each(function(n){
+            hs.push( $( this ).outerHeight() )
+          })
+          childs.height( Math.max.apply(Math, hs) )
+        }
 			}
 			
 		}
@@ -699,6 +744,12 @@ var EFL = function(){
           priv.behaviours.filtersFrom( $( '.frm-filter' ) );
         }
       }
+
+      
+        if( $( '.listCalendar' ).length ){
+          priv.behaviours.equalHeights( $( '.listCalendar > li' ), 'self' );
+        }
+      
       
       if( vp.width >= 980 ) {
         priv.behaviours.replaceWithImg();
@@ -734,6 +785,10 @@ var EFL = function(){
         });
       }
       
+      if( $( '.frm-calendar' ).length ){
+        priv.behaviours.calendar();
+      }
+
       if( $( '.frm-test' ).length ){
         priv.behaviours.toggleFormTest();
       }

@@ -1,7 +1,13 @@
 {% extends "EflWebBundle::pagelayout.html.twig" %}
-
+{% set title = "Confirmación Suscripción a Newsletter"|trans %}
 {% block content %}
     <div class="wrapper cl">
+    <div class="twoColsB">
+    <div class="main">
+
+    <article class="highlight cl">
+    <div class="content">
+        <p class="super-title">Suscríbase a nuestro boletín de novedades.</p>
         {% set errors = app.session.flashbag.get("error") %}
         {% if (errors is not empty) %}
             <div class="wysiwyg subscription_newsletter error">
@@ -20,8 +26,14 @@
         </div>
         {% endif %}
 
+
+        </div>
+        </article>
+        </div>
         <div class="aside">
             {{ render_esi( controller( "EflWebBundle:Aside:contact" )) }}
+        </div>
+        </div>
         </div>
 
     </div>

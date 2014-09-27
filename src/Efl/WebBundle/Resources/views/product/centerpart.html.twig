@@ -1,0 +1,72 @@
+<div class="main-content">
+    <p class="title9 upper">{{ ez_render_field( parentContent, 'name') }}</p>
+    <p class="title5">{{ ez_render_field( content, 'nombre') }}</p>
+    <div class="utils cl">
+        <span class="reviews-link"><i class="ico ico-star-gray"></i> {% if nValoraciones > 0 %}<a href="#reviews">{% transchoice nValoraciones from "product" %}{1} 1 valoración|]1,Inf] %nValoraciones% valoraciones{% endtranschoice %}</a>{% endif %}</span>
+        {% if not haVotado %}
+            <a href="{{ path( 'create_review', {'locationId': location.id}) }}" class="link-btn addReview fancybox" data-fancybox-type="iframe">Valora este memento</a>
+        {% else %}
+            <span class="link-btn">Ya has revisado este producto</span>
+        {% endif %}
+
+        <div class="rrss">
+            <span>Compartir </span>
+            {{ socialButtons() }}
+        </div>
+    </div>
+    {% if viewType == 'full' %}
+        <div class="wysiwyg">
+            {{ ez_render_field( content, 'entradilla', {'template':'EflWebBundle:fields:only_value.html.twig'} ) }}
+            {% if not ez_is_field_empty( content, 'mas_info') %}
+                <p class="more"><i class="ico ico-arrow-right-blue"></i> <a href="#more-item">Más detalles sobre el memento</a> <i class="ico ico-arrow-bottom-blue"></i></p>
+
+                <div id="more-item" class="more-detail" style="display: none;">
+                    {{ ez_render_field( content, 'mas_info', {'template':'EflWebBundle:fields:only_value.html.twig'} ) }}
+                </div>
+            {% endif %}
+
+            {% if not ez_is_field_empty( content, 'claim') %}
+                <blockquote>
+                    <i>"{{ ez_render_field( content, 'claim' ) }}"</i>
+                </blockquote>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <p class="title">Ficha</p>
+            <ul>
+                {% if not ez_is_field_empty( content, 'edicion' ) %}
+                    <li><b>Edición:</b> {{ ez_render_field( content, 'edicion' ) }}</li>
+                {% endif %}
+                <li><b>Páginas:</b> {{ ez_render_field( content, 'paginas' ) }} <abbr title="aproximadamente">aprox.</abbr></li>
+                {% if not ez_is_field_empty( content, 'fecha_aparicion' ) %}
+                    <li><b>Aparición:</b> {{  fecha_aparicion.date|date("d/m/y") }}</li>
+                {% endif %}
+                {% if not ez_is_field_empty( content, 'fecha_aparicion' ) %}
+                    <li><b><abbr title="International Standard Book Number">ISBN</abbr>:</b> {{ ez_render_field( content, 'isbn' ) }}</li>
+                {% endif %}
+            </ul>
+        </div>
+    {% elseif viewType == 'preview' %}
+        <div class="right back"><i class="ico ico-arrow-left-blue"></i> <a href="{{ path( location ) }}">Volver</a></div>
+
+        <p class="subtitle">Previsualización</p>
+
+        <div class="wysiwyg">
+            {{ ez_render_field( content, 'preview') }}
+        </div>
+
+        <div class="right back"><i class="ico ico-arrow-left-blue"></i> <a href="{{ path( location ) }}">Volver</a></div>
+    {% elseif viewType == 'summary' %}
+        <div class="right back"><i class="ico ico-arrow-left-blue"></i> <a href="{{ path( location ) }}">Volver</a></div>
+
+        <p class="subtitle">Sumario</p>
+
+        <div class="wysiwyg">
+            {{ ez_render_field( content, 'sumario') }}
+        </div>
+
+        <div class="right back"><i class="ico ico-arrow-left-blue"></i> <a href="{{ path( location ) }}">Volver</a></div>
+    {% endif %}
+
+</div>

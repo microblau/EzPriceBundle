@@ -1,29 +1,26 @@
 {% extends "EflWebBundle::pagelayout.html.twig" %}
-
+{% set title = "Suscripción a Newsletter"|trans %}
 {% block content %}
     <div class="wrapper cl">
     {% set subscriptionDone = app.session.flashbag.get("notice") %}
-
-    {% if (subscriptionDone is not empty) %}
-        <div class="wysiwyg subscription_newsletter ok">
-        {{ "<p >El formulario se ha enviado correctamente.</p>
-        <p>En breve recibira un email a la dirección que nos ha proporcionado. Para activar su suscripción deberá confirmar el email que le hemos enviado.</p>"|trans|raw}}
-        </div>
-
-    {% else %}
-
-
-
         <div class="twoColsB">
             <div class="main">
 
                 <article class="highlight cl">
                     <div class="content">
                         <p class="super-title">Suscríbase a nuestro boletín de novedades.</p>
-                        <p class="title4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        {% if (subscriptionDone is not empty) %}
+                            <div class="wysiwyg subscription_newsletter ok">
+                                {{ "<p >El formulario se ha enviado correctamente.</p>
+            <p>En breve recibira un email a la dirección que nos ha proporcionado. Para activar su suscripción deberá confirmar el email que le hemos enviado.</p>"|trans|raw}}
+                            </div>
+
+                        {% else %}
+                        <p class="title4">{{ "Texto intro newsletter"|trans }}</p>
+                        {% endif %}
                     </div>
                 </article>
-
+                {% if (subscriptionDone is empty) %}
                 {% form_theme form 'EflWebBundle:forms/newsletter:subscription.html.twig' %}
 
                 {{ form_start(form, {'attr': {'novalidate':'novalidate', 'class': 'frm frm-newsletter' }}) }}
@@ -49,13 +46,12 @@
                 </fieldset>
 
                 {{ form_end( form) }}
+                {% endif %}
             </div>
 
             <div class="aside">
                 {{ render_esi( controller( "EflWebBundle:Aside:contact" )) }}
             </div>
         </div>
-
-    {% endif %}
     </div>
 {% endblock %}

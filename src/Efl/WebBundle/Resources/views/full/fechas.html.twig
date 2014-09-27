@@ -1,0 +1,78 @@
+{% extends "EflWebBundle::pagelayout.html.twig" %}
+{% set mainClass='calendar' %}
+{% block content %}
+    <div class="wrapper cl">
+
+    <div class="oneCol">
+    <div class="main">
+
+    <p class="title3"><b>Calendario de ediciones</b></p>
+
+    <form action="EFL_calendario.html" method="post" class="frm frm-calendar">
+
+        <label for="month" class="field row">
+            <span class="lbl">Seleccione el mes que desea consultar:</span>
+            <select id="month" name="month">
+                <option value="062014" class="prev">Junio 2014</option>
+                <option value="072014" class="prev">Julio 2014</option>
+                <option value="082014" class="prev">Agosto 2014</option>
+                <option value="092014" class="actual" selected="selected">Septiembre 2014</option>
+                <option value="102014">Octubre 2014</option>
+                <option value="112014">Noviembre 2014</option>
+            </select>
+        </label>
+
+    </form>
+
+    <ul class="listCalendar">
+    {% for calendar in calendars %}
+    <li id="{{ calendar.id }}" class="{{ calendar.class }}">
+        <article class="calendarItem">
+            <table cellspacing="2" cellpadding="0" class="calendario">
+                <caption><span>{{ calendar.day|localizeddate(
+                        'none',
+                        'none',
+                        null,
+                        null,
+                        "MMMM"
+                        )|capitalize }}</span></caption>
+                <tbody>
+                {{ calendar.table|raw }}
+                </tbody>
+            </table>
+        </article>
+        {% if calendar.events|length %}
+        <article class="events">
+            <h2 class="title">{{ calendar.day|localizeddate(
+                'none',
+                'none',
+                null,
+                null,
+                "MMMM"
+                )|capitalize }} {{ calendar.day|localizeddate(
+                'none',
+                'none',
+                null,
+                null,
+                "YYYY"
+                )}}</h2>
+            <ul>
+                {% for event in calendar.events %}
+                <li><strong>Día {{ event.day }}:</strong> <a href="{{ path( 'ez_urlalias', {'locationId':event.locationId }  ) }}">{{ event.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </article>
+        {% endif %}
+    </li>
+    {% endfor %}
+
+
+    </ul>
+
+    </div>
+
+    </div>
+
+    </div>
+
+{% endblock %}

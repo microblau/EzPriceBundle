@@ -123,7 +123,8 @@ class Command27Command extends ContainerAwareCommand
                 'isRequired' => true,
                 'isSearchable' => false,
                 'fieldSettings' => array(
-                    'is_vat_included' => false
+                    'is_vat_included' => false,
+                    'vat_id' => -1
                 )
             )
         );
@@ -137,7 +138,8 @@ class Command27Command extends ContainerAwareCommand
                 'isRequired' => false,
                 'isSearchable' => false,
                 'fieldSettings' => array(
-                    'is_vat_included' => false
+                    'is_vat_included' => false,
+                    'vat_id' => -1
                 )
             )
         );
@@ -153,13 +155,61 @@ class Command27Command extends ContainerAwareCommand
             )
         );
 
+        $textoAux1 = new FieldDefinitionCreateStruct(
+            array(
+                'fieldTypeIdentifier' => 'ezxmltext',
+                'identifier' => 'textoAux1',
+                'names' => array( 'esl-ES' => 'Texto debajo del precio' ),
+                'position' => 5,
+                'isRequired' => false,
+                'isSearchable' => false
+            )
+        );
+
+        $textoAux2 = new FieldDefinitionCreateStruct(
+            array(
+                'fieldTypeIdentifier' => 'ezxmltext',
+                'identifier' => 'textoAux2',
+                'names' => array( 'esl-ES' => 'Texto que se despliegue pinchando enlaces en el anterior' ),
+                'position' => 6,
+                'isRequired' => false,
+                'isSearchable' => false
+            )
+        );
+
+        $fechaInicioOferta = new FieldDefinitionCreateStruct(
+            array(
+                'fieldTypeIdentifier' => 'ezdate',
+                'identifier' => 'fecha_inicio_oferta',
+                'names' => array( 'esl-ES' => 'Fecha Inicio Oferta' ),
+                'position' => 7,
+                'isRequired' => false,
+                'isSearchable' => true
+            )
+        );
+
+        $fechaFinOferta = new FieldDefinitionCreateStruct(
+            array(
+                'fieldTypeIdentifier' => 'ezdate',
+                'identifier' => 'fecha_fin_oferta',
+                'names' => array( 'esl-ES' => 'Fecha Fin Oferta' ),
+                'position' => 8,
+                'isRequired' => false,
+                'isSearchable' => true
+            )
+        );
+
         $contentTypeStruct = new CreateTypeStruct(
             array(
                 'identifier' => $class,
                 'mainLanguageCode' => 'esl-ES',
-                'nameSchema' => '<producto>',
+                'nameSchema' => '<producto> - ' . $data['nombre'],
                 'names' => array( 'esl-ES' => $data['nombre'] ),
-                'fieldDefinitions' => array( $wsProductField, $wsPriceField, $wsPriceFieldOferta, $categoria )
+                'fieldDefinitions' => array(
+                    $wsProductField, $wsPriceField, $wsPriceFieldOferta, $categoria, $textoAux1, $textoAux2,
+                    $fechaInicioOferta,
+                    $fechaFinOferta,
+                )
             )
         );
 

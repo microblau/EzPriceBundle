@@ -1,0 +1,58 @@
+<div class="main">
+    {{ render_esi( controller( 'EflWebBundle:Product:getRelatedProductsByOrders', { 'contentId': location.contentInfo.id } )) }}
+
+    {% if tabsInfo.activeTab != 0 %}
+        <article id="reviews" class="product-collateral mod-tabs">
+            <p class="title6">Más sobre {{ ez_render_field( content, 'nombre') }}</p>
+
+            <span class="tabs-wrap"></span>
+
+            <div class="tabs-wrap-content">
+                {% if tabsInfo.hasTab1 %}
+                    <p class="tab {% if tabsInfo.activeTab == 1 %}active{% endif %}"><a href="#content-tab-release">Novedades <i class="ico"></i></a></p>
+
+                    <div id="content-tab-release" class="tabs-content {% if tabsInfo.activeTab == 1 %}active{% endif %}">
+                        <div class="utils cl">
+                            <span class="reviews-link">Entre otras muchas novedades analizadas en esta nueva edición destacan las que afectan a las siguientes materias:</span>
+                        </div>
+                        <article class="release-detail">
+                            <div class="wysiwyg">
+                                {{ ez_render_field( content, 'novedades') }}
+                            </div>
+                        </article>
+                    </div>
+                {% endif %}
+
+                {% if tabsInfo.sistemaMemento %}
+                    <p class="tab {% if tabsInfo.activeTab == 2 %}active{% endif %}"><a href="#content-tab-memento">Sistema Memento <i class="ico"></i></a></p>
+                    <div id="content-tab-memento" class="tabs-content {% if tabsInfo.activeTab == 2 %}active{% endif %}">
+                        <p class="title10">Sistema Memento</p>
+                        <article class="release-detail">
+                            <div class="wysiwyg">
+                                <p class="title9 upper">{{ ez_render_field( tabsInfo.sistemaMemento.content, 'titulo') }}</p>
+                                {{ ez_render_field( tabsInfo.sistemaMemento.image, 'image', {
+                                'template':'EflWebBundle:fields:portrait_img.html.twig',
+                                'parameters': {
+                                'alias':'portrait',
+                                'attrs': {'class':'portrait-img'}
+                                }} ) }}
+                                {{ ez_render_field( tabsInfo.sistemaMemento.content, 'texto', {template: 'EflWebBundle:fields:only_value.html.twig'}) }}
+                            </div>
+                        </article>
+                    </div>
+                {% endif %}
+
+                {% if tabsInfo.reviews %}
+                <p class="tab {% if tabsInfo.activeTab == 3 %}active{% endif %}"><a href="#content-tab-reviews">Valoración <i class="ico"></i></a></p>
+                <div id="content-tab-reviews" class="tabs-content {% if tabsInfo.activeTab == 3 %}active{% endif %}">
+
+                    {{ render( controller( 'EflReviewsBundle:Reviews:pager', {'locationId':location.id } )) }}
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </article>
+    {% endif %}
+</div>

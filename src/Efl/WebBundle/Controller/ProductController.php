@@ -37,6 +37,69 @@ class ProductController extends Controller
     }
 
     /**
+     * Parte central de la ficha
+     *
+     * @param $locationId
+     * @param string $viewType
+     * @return Response
+     */
+    public function centerPartAction( $locationId, $viewType = 'full' )
+    {
+        $currentUserId = $this->get( 'eflweb.utils_helper' )->getCurrentRepositoryUserId();
+        $response = new Response;
+        $response->setPublic();
+        $response->setSharedMaxAge( 86400 * 30 );
+        $response->headers->set('X-Location-Id', $locationId);
+
+        $location = $this->getRepository()->getLocationService()->loadLocation( $locationId );
+        $content = $this->getRepository()->getContentService()->loadContent($location->contentId);
+
+        return $this->render(
+            'EflWebBundle:product:centerpart.html.twig',
+            array(
+                'viewType' => $viewType,
+                'location' => $location,
+                'content' => $content,
+                'image' => $this->get('eflweb.product_helper')->getImageByProductLocationId( $locationId ),
+                'parentContent' => $this->getRepository()->getContentService()->loadContent(
+                    $this->getRepository()->getLocationService()->loadLocation( $location->parentLocationId )->contentId
+                ),
+                'fecha_aparicion' => $this->get( 'eflweb.product_helper' )->getFechaAparicionByProductLocationId( $locationId ),
+                'nValoraciones' => $this->get( 'eflweb.reviews_service' )->getReviewsCountForLocation( $location ),
+                'haVotado' => ( $currentUserId != 10 ) && $this->get( 'eflweb.reviews_service' )->userHasReviewedLocation( $currentUserId, $locationId ),
+            ),
+            $response
+        );
+    }
+
+    /**
+     * Parte inferior de la ficha
+     *
+     * @param $locationId
+     * @return Response
+     */
+    public function downPartAction( $locationId )
+    {
+        $response = new Response;
+        $response->setPublic();
+        $response->setSharedMaxAge( 86400 * 30 );
+        $response->headers->set('X-Location-Id', $locationId);
+
+        $location = $this->getRepository()->getLocationService()->loadLocation( $locationId );
+        $content = $this->getRepository()->getContentService()->loadContent($location->contentId);
+
+        return $this->render(
+            'EflWebBundle:product:downpart.html.twig',
+            array(
+                'location' => $location,
+                'content' => $content,
+                'tabsInfo' => $this->get( 'eflweb.product_helper' )->getActiveTab( $locationId )
+            ),
+            $response
+        );
+    }
+
+    /**
      * Full view para producto
      *
      * @param $locationId
@@ -52,18 +115,8 @@ class ProductController extends Controller
             $this->getRepository()->getLocationService()->loadLocation( $locationId )->contentId
         );
 
-        $currentUserId = $this->get( 'eflweb.utils_helper' )->getCurrentRepositoryUserId();
         $params = array(
             'viewType' => $viewType,
-            'image' => $this->get( 'eflweb.product_helper' )->getImageByProductLocationId( $locationId ),
-            'parentContent' => $this->getRepository()->getContentService()->loadContent(
-                $this->getRepository()->getLocationService()->loadLocation( $location->parentLocationId )->contentId
-            ),
-            'fecha_aparicion' => $this->get( 'eflweb.product_helper' )->getFechaAparicionByProductLocationId( $locationId ),
-            'nValoraciones' => $this->get( 'eflweb.reviews_service' )->getReviewsCountForLocation( $location ),
-            'tabsInfo' => $this->get( 'eflweb.product_helper' )->getActiveTab( $locationId ),
-            'haVotado' => ( $currentUserId != 10 ) && $this->get( 'eflweb.reviews_service' )->userHasReviewedLocation( $currentUserId, $locationId ),
-
             'hasResume' => $this->get( 'eflweb.product_helper' )->contentHasResume( $content )
         );
 
@@ -89,6 +142,7 @@ class ProductController extends Controller
             $params['formats'] = $formats;
         }
 
+        /** @var Response $response */
         $response = $this->get( 'ez_content' )->viewLocation(
             $locationId,
             $viewType,
@@ -96,8 +150,11 @@ class ProductController extends Controller
             $params
         );
 
-        $response->setSharedMaxAge( 3600 );
-        $response->headers->set('X-Location-Id', $locationId);
+        $response->setPrivate();
+        $response->setMaxAge(0);
+        $response->setSharedMaxAge(0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
         return $response;
     }
 
@@ -126,7 +183,7 @@ class ProductController extends Controller
         );
 
         $response->setPublic();
-        $response->setSharedMaxAge( 3600 );
+        $response->setSharedMaxAge( 60 );
         $response->headers->set('X-Location-Id', $locationId);
         return $response;
     }

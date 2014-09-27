@@ -1,0 +1,9 @@
+{% if prices is not null %}
+    {% if prices.offer is defined %}
+    <ins class="price">{{ prices.offer|currency_convert_format( 'EUR' ) }}</ins>
+
+    <del class="old-price">antes {{prices.base|currency_convert_format( 'EUR' ) }}</del>
+    {% else %}
+        <ins class="price">{{ prices.base|currency_convert_format( 'EUR' ) }}</ins>
+    {% endif %}
+{% endif %}

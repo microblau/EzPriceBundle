@@ -43,4 +43,3 @@ services:
         public: false
         tags:
             - { name: 'pagerfanta.view', alias: 'efl'}
-

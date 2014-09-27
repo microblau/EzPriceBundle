@@ -247,13 +247,15 @@ class NewsletterHelper
      */
     private function sendSubscriptionMail( $subscription, $view = '' )
     {
+
         $message = Swift_Message::newInstance();
         $newsletterUserObject = $subscription['newsletter_user_object'];
+
         $message->setSubject(
             $this->newsletterConfig['subject']
         )
             ->setFrom( $this->newsletterConfig['sender'] )
-            ->setTo( 'carlos.revillo@tantacom.com' )
+            ->setTo( $newsletterUserObject->Email )
             ->setBody(
                 $this->templating->render(
                     $view,

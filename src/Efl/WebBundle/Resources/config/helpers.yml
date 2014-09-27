@@ -6,6 +6,8 @@ parameters:
     eflweb.buy_helper.class: Efl\WebBundle\Helper\BuyHelper
     eflweb.product_helper.class: Efl\WebBundle\Helper\ProductHelper
     eflweb.utils_helper.class: Efl\WebBundle\Helper\UtilsHelper
+    eflweb.fechas_helper.class: Efl\WebBundle\Helper\FechasHelper
+    eflweb.price_helper.class: Efl\WebBundle\Helper\PriceHelper
 
 services:
     eflweb.location_helper:
@@ -63,3 +65,23 @@ services:
         arguments:
             - @ezpublish.api.repository
             - @security.context
+
+    eflweb.fechas_helper:
+        class: %eflweb.fechas_helper.class%
+        arguments:
+            - @ezpublish.api.service.location
+            - @ezpublish.api.service.search
+            - @ezpublish.api.service.content
+            - @ezpublish.translation_helper
+        calls:
+            - [setMonthsToShow]
+
+    eflweb.price_helper:
+        class: %eflweb.price_helper.class%
+        arguments:
+            - @ezpublish.api.service.content_type
+            - @ezpublish.api.service.content
+            - @eflweb.product_helper
+            - @ezpublish.api.service.location
+            - @eflweb.discounts_service
+            - @ezpublish.api.repository

@@ -1,0 +1,17 @@
+{% if prices is not null %}
+    {% if prices.offer is defined %}
+        <del class="old-price">
+            <b>{{ prices.base|currency_convert_format('EUR') }}</b>
+            <small>+ IVA</small>
+        </del>
+        <ins class="price">
+            <b>{{ prices.offer|currency_convert_format('EUR') }}</b>
+            <small>+ IVA</small>
+        </ins>
+    {% else %}
+        <span class="price">
+            <b>{{ prices.base|currency_convert_format('EUR') }}</b>
+            <small>+ IVA</small>
+        </span>
+    {% endif %}
+{% endif %}

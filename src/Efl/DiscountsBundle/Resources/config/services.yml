@@ -1,0 +1,23 @@
+parameters:
+    # API services
+    eflweb.repository.discounts_service.class: Efl\DiscountsBundle\eZ\Publish\Core\Repository\DiscountsService
+    eflweb.persistence.legacy.discounts.handler.class: Efl\DiscountsBundle\eZ\Publish\Core\Persistence\Legacy\Discounts\Handler
+    eflweb.persistence.legacy.discounts.gateway.class: Efl\DiscountsBundle\eZ\Publish\Core\Persistence\Legacy\Discounts\Gateway\Doctrine
+
+services:
+    eflweb.discounts_service:
+        class: %eflweb.repository.discounts_service.class%
+        arguments:
+            - @eflweb.persistence.legacy.discounts.handler
+
+    eflweb.persistence.legacy.discounts.handler:
+        class: %eflweb.persistence.legacy.discounts.handler.class%
+        arguments:
+            - @eflweb.persistence.legacy.discounts.gateway.inner
+
+    eflweb.persistence.legacy.discounts.gateway.inner:
+        class: %eflweb.persistence.legacy.discounts.gateway.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @ezpublish.api.service.user
+            - @ezpublish.api.repository

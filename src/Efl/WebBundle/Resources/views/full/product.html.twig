@@ -11,78 +11,7 @@
     <div class="main">
         {{ render_esi( controller( 'EflWebBundle:Product:leftPart', {'locationId':location.id, 'viewType': viewType } ) ) }}
 
-        <div class="main-content">
-            <p class="title9 upper">{{ ez_render_field( parentContent, 'name') }}</p>
-            <p class="title5">{{ ez_render_field( content, 'nombre') }}</p>
-            <div class="utils cl">
-                <span class="reviews-link"><i class="ico ico-star-gray"></i> {% if nValoraciones > 0 %}<a href="#reviews">{% transchoice nValoraciones from "product" %}{1} 1 valoración|]1,Inf] %nValoraciones% valoraciones{% endtranschoice %}</a>{% endif %}</span>
-                {% if not haVotado %}
-                <a href="{{ path( 'create_review', {'locationId': location.id}) }}" class="link-btn addReview fancybox" data-fancybox-type="iframe">Valora este memento</a>
-                {% else %}
-                    <span class="link-btn">Ya has revisado este producto</span>
-                {% endif %}
-
-                <div class="rrss">
-                    <span>Compartir </span>
-                    {{ socialButtons() }}
-                </div>
-            </div>
-            {% if viewType == 'full' %}
-            <div class="wysiwyg">
-                {{ ez_render_field( content, 'entradilla', {'template':'EflWebBundle:fields:only_value.html.twig'} ) }}
-                {% if not ez_is_field_empty( content, 'mas_info') %}
-                <p class="more"><i class="ico ico-arrow-right-blue"></i> <a href="#more-item">Más detalles sobre el memento</a> <i class="ico ico-arrow-bottom-blue"></i></p>
-
-                <div id="more-item" class="more-detail" style="display: none;">
-                    {{ ez_render_field( content, 'mas_info', {'template':'EflWebBundle:fields:only_value.html.twig'} ) }}
-                </div>
-                {% endif %}
-
-                {% if not ez_is_field_empty( content, 'claim') %}
-                <blockquote>
-                    <i>"{{ ez_render_field( content, 'claim' ) }}"</i>
-                </blockquote>
-                {% endif %}
-            </div>
-
-            <div class="card">
-                <p class="title">Ficha</p>
-                <ul>
-                    {% if not ez_is_field_empty( content, 'edicion' ) %}
-                    <li><b>Edición:</b> {{ ez_render_field( content, 'edicion' ) }}</li>
-                    {% endif %}
-                    <li><b>Páginas:</b> {{ ez_render_field( content, 'paginas' ) }} <abbr title="aproximadamente">aprox.</abbr></li>
-                    {% if not ez_is_field_empty( content, 'fecha_aparicion' ) %}
-                    <li><b>Aparición:</b> {{  fecha_aparicion.date|date("d/m/y") }}</li>
-                    {% endif %}
-                    {% if not ez_is_field_empty( content, 'fecha_aparicion' ) %}
-                    <li><b><abbr title="International Standard Book Number">ISBN</abbr>:</b> {{ ez_render_field( content, 'isbn' ) }}</li>
-                    {% endif %}
-                </ul>
-            </div>
-            {% elseif viewType == 'preview' %}
-                <div class="right back"><i class="ico ico-arrow-left-blue"></i> <a href="{{ path( location ) }}">Volver</a></div>
-
-                <p class="subtitle">Previsualización</p>
-
-                <div class="wysiwyg">
-                    {{ ez_render_field( content, 'preview') }}
-                </div>
-
-                <div class="right back"><i class="ico ico-arrow-left-blue"></i> <a href="{{ path( location ) }}">Volver</a></div>
-            {% elseif viewType == 'summary' %}
-                <div class="right back"><i class="ico ico-arrow-left-blue"></i> <a href="{{ path( location ) }}">Volver</a></div>
-
-                <p class="subtitle">Sumario</p>
-
-                <div class="wysiwyg">
-                    {{ ez_render_field( content, 'sumario') }}
-                </div>
-
-                <div class="right back"><i class="ico ico-arrow-left-blue"></i> <a href="{{ path( location ) }}">Volver</a></div>
-            {% endif %}
-
-        </div>
+        {{ render_esi( controller( 'EflWebBundle:Product:centerPart', {'locationId':location.id, 'viewType': viewType } ) ) }}
     </div>
     <!-- //main -->
 
@@ -94,9 +23,7 @@
                     <span class="claim">{{ ez_render_field( content, 'texto_oferta', {'template':'EflWebBundle:fields:only_value.html.twig'}) }}</span>
                 {% endif %}
 
-                <ins class="price">{{ ez_render_field( content, 'precio_oferta' ) }}</ins>
-
-                <del class="old-price">antes {{ ez_render_field( content, 'precio' ) }}</del>
+                {{ render(controller("EflWebBundle:Price:showPrice", {'contentId': content.id, 'twigTemplate':'editorial'} )) }}
             </div>
         {% endif %}
         {% if formats is defined %}
@@ -119,26 +46,37 @@
                     <td colspan="3">{{ form_errors( form.formats ) }}</td>
                 </tr>
             {% endif %}
-            {% for t,format in formats %}
+            {% set n = 0 %}
+            {% for format in formats %}
                 <tr>
                     <td class="format">
                         <i class="ico ico-{{ format.data.icon }}-white"></i> <span>{{ format.data.literal }}</span>
                     </td>
                     <td class="price">
-                        {% if not ez_is_field_empty( format.content,'precio_oferta' ) %}
-                        <b>{{ ez_render_field( format.content, 'precio_oferta' ) }}</b>
-                        {% else %}
-                            <b>{{ ez_render_field( format.content, 'precio' ) }}</b>
-                        {% endif %}
-                        <small>+ IVA</small>
-                {% if not ez_is_field_empty( format.content,'precio_oferta' ) %}
-                    <del>{{ ez_render_field( format.content, 'precio' ) }}</del>
-                {% endif %}
+                        {{ render(controller("EflWebBundle:Price:showPrice", {'contentId': format.content.id, 'twigTemplate':'product_format'} )) }}
                     </td>
                     <td>
-                        {{ form_widget(form.formats[t] ) }}
+                        {{ form_widget(form.formats[n] ) }}
                     </td>
                 </tr>
+                {% if not ez_is_field_empty( format.content, 'textoAux1' ) %}
+                    <tr class="text">
+                        <td colspan="3" class="wrap-info-text">
+                            <div class="info-text">
+                                {{ ez_render_field( format.content, 'textoAux1', {'template':'EflWebBundle:fields:only_value.html.twig'} ) }}
+                            </div>
+                            <div class="wrap-layer">
+                                <i class="ico ico-arrow-top-layer"></i>
+                                <div class="layer">
+                                    <a href="#" class="close" title="Cerrar"><i class="ico ico-close-gray"></i> <span class="offscreen">Cerrar</span></a>
+                                    <p class="layer-title">{{ format.data.titleInfo }}</p>
+                                    {{ ez_render_field( format.content, 'textoAux2', {'template':'EflWebBundle:fields:only_value.html.twig'} ) }}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endif %}
+                {% set n = n +1 %}
             {% endfor %}
 
 
@@ -162,64 +100,7 @@
     <!-- //aside -->
 
     {%  if viewType == 'full' %}
-    <div class="main">
-        {{ render_esi( controller( 'EflWebBundle:Product:getRelatedProductsByOrders', { 'contentId': location.contentInfo.id } )) }}
-
-    {% if tabsInfo.activeTab != 0 %}
-    <article id="reviews" class="product-collateral mod-tabs">
-        <p class="title6">Más sobre {{ ez_render_field( content, 'nombre') }}</p>
-
-        <span class="tabs-wrap"></span>
-
-        <div class="tabs-wrap-content">
-            {% if tabsInfo.hasTab1 %}
-            <p class="tab {% if tabsInfo.activeTab == 1 %}active{% endif %}"><a href="#content-tab-release">Novedades <i class="ico"></i></a></p>
-
-            <div id="content-tab-release" class="tabs-content {% if tabsInfo.activeTab == 1 %}active{% endif %}">
-                <div class="utils cl">
-                    <span class="reviews-link">Entre otras muchas novedades analizadas en esta nueva edición destacan las que afectan a las siguientes materias:</span>
-                </div>
-                <article class="release-detail">
-                    <div class="wysiwyg">
-                        {{ ez_render_field( content, 'novedades') }}
-                    </div>
-                </article>
-            </div>
-            {% endif %}
-
-            {% if tabsInfo.sistemaMemento %}
-            <p class="tab {% if tabsInfo.activeTab == 2 %}active{% endif %}"><a href="#content-tab-memento">Sistema Memento <i class="ico"></i></a></p>
-            <div id="content-tab-memento" class="tabs-content {% if tabsInfo.activeTab == 2 %}active{% endif %}">
-                <p class="title10">Sistema Memento</p>
-                <article class="release-detail">
-                    <div class="wysiwyg">
-                        <p class="title9 upper">{{ ez_render_field( tabsInfo.sistemaMemento.content, 'titulo') }}</p>
-                        {{ ez_render_field( tabsInfo.sistemaMemento.image, 'image', {
-                        'template':'EflWebBundle:fields:portrait_img.html.twig',
-                        'parameters': {
-                        'alias':'portrait',
-                        'attrs': {'class':'portrait-img'}
-                        }} ) }}
-                        {{ ez_render_field( tabsInfo.sistemaMemento.content, 'texto', {template: 'EflWebBundle:fields:only_value.html.twig'}) }}
-                    </div>
-                </article>
-            </div>
-            {% endif %}
-
-            {% if tabsInfo.reviews %}
-            <p class="tab {% if tabsInfo.activeTab == 3 %}active{% endif %}"><a href="#content-tab-reviews">Valoración <i class="ico"></i></a></p>
-            <div id="content-tab-reviews" class="tabs-content {% if tabsInfo.activeTab == 3 %}active{% endif %}">
-
-                {{ render( controller( 'EflReviewsBundle:Reviews:pager', {'locationId':location.id } )) }}
-            {% endif %}
-
-            </div>
-
-        </div>
-
-    </article>
-    {% endif %}
-    </div>
+        {{ render_esi( controller( 'EflWebBundle:Product:downPart', {'locationId':location.id, 'viewType': viewType } ) ) }}
     {% endif %}
     </article>
     <!-- //item -->
@@ -247,6 +128,41 @@
                     var page = aux[4] ? aux[4] : 1;
                     loadResults(locationId, page )
                 });
+
+                $( document ).on( 'click', '.info-text a', function(e){
+                    e.preventDefault();
+                    var layer = $(this).parent().parent().next("div"),
+                            position = $(this).position(),
+                            _l = position.left,
+                            _t = position.top,
+                            _w = $(this).outerWidth(),
+                            _h = $(this).outerHeight(),
+                            _zI = 100;
+
+                    var $ico = $( $(this).parent().next("div") ).find( '.ico-arrow-top-layer' ),
+                            _wI = $ico.outerWidth(),
+                            _hI = $ico.outerHeight();
+
+                    $( '.wrap-layer' ).fadeOut( 200 );
+                    $( layer ).find('.layer').css({
+                        'top' : _t + _h + _hI
+                    });
+                    $( layer ).fadeIn( 200 );
+
+
+
+                    $ico.css({
+                        'display' : 'inline-block',
+                        'position' : 'absolute',
+                        'top' : _t + _h,
+                        'left' : (_l + (_w / 2)) - (_wI / 2) //Left of layer-trigger + half of width and minus half of icon width
+                    })
+                });
+
+                $( document ).on( 'click', '.layer .close', function(e){
+                    e.preventDefault();
+                    $(this).parent().parent().fadeOut( 200 );
+                })
             });
 
             function loadResults(locationId, page)

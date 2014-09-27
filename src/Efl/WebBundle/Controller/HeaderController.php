@@ -17,6 +17,8 @@ class HeaderController extends Controller
     public function mainMenuAction()
     {
         $response = new Response;
+        $response->setPublic();
+        $response->setSharedMaxAge( 86400 );
 
         $menu = $this->getMenu( 'main' );
 

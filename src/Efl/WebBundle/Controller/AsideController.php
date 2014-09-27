@@ -10,6 +10,8 @@ class AsideController extends Controller
     public function contactAction()
     {
         $response = new Response;
+        $response->setPublic();
+        $response->setSharedMaxAge( 86400 );
 
         return $this->render(
             'EflWebBundle:aside:contact.html.twig',
@@ -21,6 +23,8 @@ class AsideController extends Controller
     public function metodosPagoAction()
     {
         $response = new Response;
+        $response->setPublic();
+        $response->setSharedMaxAge( 86400 );
 
         return $this->render(
             "EflWebBundle:aside:metodospago.html.twig",
@@ -32,6 +36,8 @@ class AsideController extends Controller
     public function envioDevolucionesAction()
     {
         $response = new Response;
+        $response->setPublic();
+        $response->setSharedMaxAge( 86400 );
 
         return $this->render(
             "EflWebBundle:aside:enviodevoluciones.html.twig",

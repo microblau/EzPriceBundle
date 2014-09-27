@@ -13,6 +13,7 @@ use Efl\ReviewsBundle\Form\Type\ValoracionType;
 use Efl\ReviewsBundle\Pagination\PagerFanta\ReviewsAdapter;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\HttpFoundation\Response;
 
 class ReviewsController extends Controller
 {
@@ -37,6 +38,10 @@ class ReviewsController extends Controller
         $pager->setMaxPerPage( $this->container->getParameter( 'eflweb.reviews_per_page' ) );
         $pager->setCurrentPage( $page );
 
+        $response = new Response;
+        $response->setPublic();
+        $response->setSharedMaxAge( 3600 );
+
         return $this->render(
             'EflReviewsBundle::reviews.html.twig',
             array(
@@ -44,7 +49,8 @@ class ReviewsController extends Controller
                 'location' => $location,
                 'nbResults' => $pager->getNbResults(),
                 'page' => $page
-            )
+            ),
+            $response
         );
     }
 
@@ -82,7 +88,6 @@ class ReviewsController extends Controller
                     $this->generateUrl( 'create_review', array( 'locationId' => $locationId ))
                 );
             }
-
         }
 
         return $this->render(
