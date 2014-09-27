@@ -1,5 +1,5 @@
 {ezcss_require( array( 'ui-lightness/jquery-ui-1.10.4.custom.min.css', 'wsproducts.css' ))}
-{ezscript_require( array( 'jquery-ui-1.10.3.custom.min.js', 'wsproduct_jquery.js' ))}
+{ezscript_require( array( 'ezjsc::jqueryUI', 'wsproduct_jquery.js' ))}
 {default attribute_base='ContentObjectAttribute'
 html_class='full'}
     {def $value = $attribute.data_text|wash( xhtml )|explode('|')}
