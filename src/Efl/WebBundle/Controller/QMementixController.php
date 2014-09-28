@@ -8,6 +8,7 @@
 
 namespace Efl\WebBundle\Controller;
 
+use Efl\WebBundle\Form\Type\QMementix\QMementixType;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 
 class QMementixController extends Controller
@@ -23,6 +24,17 @@ class QMementixController extends Controller
             $content->getFieldValue( 'img_preview_video_2' )->destinationContentId
         );
 
+        $currentUserData = $this->get( 'eflweb.utils_helper' )->getCurrentUserFriendlyData();
+        $form = $this->createForm(
+            new QMementixType(
+                $this->get( 'translator' ),
+                $this->get( 'ezpublish.api.service.location' ),
+                $this->get( 'router' ),
+                $this->container->getParameter( 'eflweb.politica_privacidad.location_id' )
+            ),
+            $currentUserData
+        );
+
         $testimonios = $this->get( 'eflweb.qmementix_helper' )->getTestimonies();
 
         return $this->render(
@@ -31,7 +43,8 @@ class QMementixController extends Controller
                 'content' => $content,
                 'img' => $img,
                 'preview_img' => $preview,
-                'testimonios' => $testimonios
+                'testimonios' => $testimonios,
+                'form' => $form->createView()
             )
         );
     }

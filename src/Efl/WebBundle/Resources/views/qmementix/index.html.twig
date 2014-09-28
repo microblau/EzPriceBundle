@@ -25,54 +25,30 @@
                         <button type="button" class="btn type2 hasIco twoLines"><i class="ico ico-arrow-right-white"></i> Seleccionar Mementos <small> para qMementix</small></button>
 
                         <article class="wrap-frm-test">
-                            <form action="#" method="post" class="frm-test cl">
+                            {{ form_start(form, {'attr': {'novalidate':'novalidate', 'class': 'frm-test cl' }}) }}
                                 <fieldset>
                                     <legend class="title-form">Solicite una prueba gratis y sin compromiso.</legend>
 
-                                    <label for="name" class="field row">
-                                        <span class="lbl">Nombre</span>
-                                        <input type="text" name="name" id="name" value="" class="" />
-                                    </label>
+                                    {{ form_row( form.nombre ) }}
 
-                                    <label for="surname" class="field row">
-                                        <span class="lbl">Primer apellido</span>
-                                        <input type="text" name="surname" id="surname" value="" class="" />
-                                    </label>
+                                    {{ form_row( form.apellido1 ) }}
 
-                                    <label for="surname2" class="field row">
-                                        <span class="lbl">Segundo apellido</span>
-                                        <input type="text" name="surname2" id="surname2" value="" class="" placeholder="(opcional)" />
-                                    </label>
+                                    {{ form_row( form.apellido2 ) }}
 
-                                    <label for="phone" class="field row">
-                                        <span class="lbl">Teléfono</span>
-                                        <input type="text" name="phone" id="phone" value="" class="" />
-                                    </label>
+                                    {{ form_row( form.telefono ) }}
 
-                                    <label for="email" class="field row">
-                                        <span class="lbl">Correo electrónico</span>
-                                        <input type="text" name="email" id="email" value="" class="" />
-                                    </label>
+                                    {{ form_row( form.email ) }}
 
-                                    <label for="cp" class="field row">
-                                        <span class="lbl">Código Postal</span>
-                                        <input type="text" name="cp" id="cp" value="" class="" />
-                                    </label>
+                                    {{ form_row( form.cp ) }}
 
-                                    <div class="field field-pretty row">
-                          <span class="prettycheck">
-                            <input type="checkbox" id="legal" name="legal" value="" />
-                            <label for="legal"></label>
-                          </span>
-                                        <span class="lbl">Acepto las <a href="#">condiciones de servicio</a> y la <a href="#">política de privacidad</a></span>
-                                    </div>
+                                    {{ form_row( form.conditions ) }}
                                 </fieldset>
 
                                 <div class="wrap-btn">
                                     <button type="submit" class="btn type2 hasIco"><i class="ico ico-arrow-right-white"></i> Continuar</button>
                                 </div>
 
-                            </form>
+                            {{ form_end(form) }}
                         </article>
                     </div>
 

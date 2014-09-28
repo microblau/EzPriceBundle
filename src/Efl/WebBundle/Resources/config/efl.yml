@@ -57,7 +57,7 @@ system:
                 qmementix:
                     controller: "EflWebBundle:QMementix:redirectToIndex"
                     match:
-                        Id\Location: 69
+                        Id\Location: [69, 14851]
                 home:
                     template: "EflWebBundle:full:home.html.twig"
                     match:
