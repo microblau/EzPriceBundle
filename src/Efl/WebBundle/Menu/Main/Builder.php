@@ -86,10 +86,10 @@ class Builder
         foreach ( $children as $child )
         {
             $menu->addChild(
-                $child->id,
+                $child['id'],
                 array(
-                    'label' => /** @Ignore*/$this->translationHelper->getTranslatedContentNameByContentInfo( $child->contentInfo ),
-                    'uri' => $this->router->generate( $child )
+                    'label' => $child['label'],
+                    'uri' => $child['uri']
                 )
             );
         }
@@ -110,7 +110,23 @@ class Builder
 
         foreach (  $this->locationIds as $locationId )
         {
-            $items[] = $this->locationService->loadLocation( $locationId );
+            if ( !is_array( $locationId ) )
+            {
+                $location = $this->locationService->loadLocation( $locationId );
+                $items[] = array(
+                    'id' => $location->id,
+                    'label' => /** @Ignore*/$this->translationHelper->getTranslatedContentNameByContentInfo( $location->contentInfo ),
+                    'uri' => $this->router->generate( $location )
+                );
+            }
+            else
+            {
+                $items[] = array(
+                    'id' => $locationId['id'],
+                    'label' => $locationId['label'],
+                    'uri' => $this->router->generate( $locationId['route'] )
+                );
+            }
         }
 
         return $items;

@@ -20,4 +20,28 @@ class Type extends PriceType
     {
         return 'customezprice';
     }
+
+    protected function createValueFromInput( $inputValue )
+    {
+        if ( is_int( $inputValue ) )
+        {
+            $inputValue = (float)$inputValue;
+        }
+
+        if ( is_float( $inputValue ) )
+        {
+            $inputValue = new Value( $inputValue );
+        }
+
+        return $inputValue;
+    }
+
+    public function fromHash( $hash )
+    {
+        if ( $hash === null )
+        {
+            return $this->getEmptyValue();
+        }
+        return new Value( $hash );
+    }
 }

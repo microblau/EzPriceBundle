@@ -54,6 +54,10 @@ system:
                     match:
                         Identifier\ContentType: [producto]
             full:
+                qmementix:
+                    controller: "EflWebBundle:QMementix:redirectToIndex"
+                    match:
+                        Id\Location: 69
                 home:
                     template: "EflWebBundle:full:home.html.twig"
                     match:

@@ -18,3 +18,7 @@ summary:
 video:
     pattern: /video/{locationId}
     defaults: { _controller: EflWebBundle:Product:video }
+
+qmementix:
+    pattern: /qmementix
+    defaults: { _controller: EflWebBundle:QMementix:index }

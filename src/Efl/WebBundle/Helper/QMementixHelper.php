@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: carlos
- * Date: 12/09/14
- * Time: 10:43
+ * Date: 28/09/14
+ * Time: 11:42
  */
 
 namespace Efl\WebBundle\Helper;
@@ -11,10 +11,10 @@ namespace Efl\WebBundle\Helper;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
-use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
+use eZ\Publish\Core\Repository\ContentService;
 
-class NosotrosHelper
+class QMementixHelper
 {
     /**
      * @var \eZ\Publish\API\Repository\LocationService
@@ -26,42 +26,56 @@ class NosotrosHelper
      */
     private $searchService;
 
+    /**
+     * @var ContentService
+     */
+    private $contentService;
+
     public function __construct(
         LocationService $locationService,
-        SearchService $searchService
+        SearchService $searchService,
+        ContentService $contentService
     )
     {
         $this->locationService = $locationService;
         $this->searchService = $searchService;
+        $this->contentService = $contentService;
     }
 
-    public function getRandomTestimonies()
+    public function getTestimonies()
     {
-        $location = $this->locationService->loadLocation( 2 );
+        $location = $this->locationService->loadLocation( 14851 );
 
         $query = new LocationQuery();
 
         $query->query = new Criterion\LogicalAnd(
             array(
                 new Criterion\Visibility( Criterion\Visibility::VISIBLE ),
-                new Criterion\Location\Depth( Criterion\Operator::LT, $location->depth + 10 ),
+                new Criterion\Location\Depth( Criterion\Operator::EQ, $location->depth + 1 ),
                 new Criterion\Subtree( $location->pathString ),
                 new Criterion\ContentTypeIdentifier( array( 'testimonio') )
             )
         );
 
-        $query->offset = rand( 0, 210 );
+        $query->offset = 0;
         $query->limit = 2;
 
         $results = $this->searchService->findLocations( $query )->searchHits;
 
-        $locations = array();
+        $testimonios = array();
 
         foreach ( $results as $location )
         {
-            $locations[] = $location->valueObject;
+            $content = $this->contentService->loadContent( $location->valueObject->contentInfo->id );
+            $destinationImgObj = $this->contentService->loadContent(
+                    $content->getFieldValue( 'foto_testimonio' )->destinationContentIds[0]
+                );
+            $testimonios[] = array(
+                'content' => $content,
+                'imgObject' => $destinationImgObj
+            );
         }
 
-        return $locations;
+        return $testimonios;
     }
 }

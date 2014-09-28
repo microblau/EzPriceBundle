@@ -1,0 +1,217 @@
+{% extends "EflWebBundle::pagelayout.html.twig" %}
+{% set title = 'QMementix'|trans %}
+{% set mainClass = 'iMemento' %}
+{% block content %}
+<div class="wrapper cl">
+
+    <div class="oneCol">
+
+        <!-- main -->
+        <div class="main">
+
+            <article class="highlight cl">
+                <div class="content">
+                    <span class="badge2"><span class="badge2-text">qMementix</span></span>
+                    <p class="super-title">{{ ez_render_field( content, 'title' ) }}</p>
+                    <div class="title4">
+                        {{ ez_render_field( content, 'text1' ) }}
+                    </div>
+                    <div class="title7">
+                        {{ ez_render_field( content, 'text2' ) }}
+                    </div>
+
+                    <div class="call-to-action">
+                        <span class="claim"><a href="#" class="ask-test">Pruebe gratis durante 15 días</a> o</span>
+                        <button type="button" class="btn type2 hasIco twoLines"><i class="ico ico-arrow-right-white"></i> Seleccionar Mementos <small> para qMementix</small></button>
+
+                        <article class="wrap-frm-test">
+                            <form action="#" method="post" class="frm-test cl">
+                                <fieldset>
+                                    <legend class="title-form">Solicite una prueba gratis y sin compromiso.</legend>
+
+                                    <label for="name" class="field row">
+                                        <span class="lbl">Nombre</span>
+                                        <input type="text" name="name" id="name" value="" class="" />
+                                    </label>
+
+                                    <label for="surname" class="field row">
+                                        <span class="lbl">Primer apellido</span>
+                                        <input type="text" name="surname" id="surname" value="" class="" />
+                                    </label>
+
+                                    <label for="surname2" class="field row">
+                                        <span class="lbl">Segundo apellido</span>
+                                        <input type="text" name="surname2" id="surname2" value="" class="" placeholder="(opcional)" />
+                                    </label>
+
+                                    <label for="phone" class="field row">
+                                        <span class="lbl">Teléfono</span>
+                                        <input type="text" name="phone" id="phone" value="" class="" />
+                                    </label>
+
+                                    <label for="email" class="field row">
+                                        <span class="lbl">Correo electrónico</span>
+                                        <input type="text" name="email" id="email" value="" class="" />
+                                    </label>
+
+                                    <label for="cp" class="field row">
+                                        <span class="lbl">Código Postal</span>
+                                        <input type="text" name="cp" id="cp" value="" class="" />
+                                    </label>
+
+                                    <div class="field field-pretty row">
+                          <span class="prettycheck">
+                            <input type="checkbox" id="legal" name="legal" value="" />
+                            <label for="legal"></label>
+                          </span>
+                                        <span class="lbl">Acepto las <a href="#">condiciones de servicio</a> y la <a href="#">política de privacidad</a></span>
+                                    </div>
+                                </fieldset>
+
+                                <div class="wrap-btn">
+                                    <button type="submit" class="btn type2 hasIco"><i class="ico ico-arrow-right-white"></i> Continuar</button>
+                                </div>
+
+                            </form>
+                        </article>
+                    </div>
+
+                </div>
+
+                <div class="media">
+                    <div id="preview-video" class="wrap-video">
+                        {{ ez_render_field( img, 'image' )}}
+                        <a href="{{ ez_render_field( content, 'url_youtube', {'template':'EflWebBundle:fields:only_value.html.twig'} )}}" class="preview-video" title="Ver vídeo">{{ ez_render_field( preview_img, 'image' ) }}</a>
+                    </div>
+                </div>
+            </article>
+
+
+            <section class="benefits">
+                <article class="benefit-detail">
+                    <i class="ico ico-check-white"></i>
+                    <div class="cont-text">
+                        {{ ez_render_field(content, 'ventaja1') }}
+                    </div>
+                </article>
+
+                <article class="benefit-detail">
+                    <i class="ico ico-check-white"></i>
+                    <div class="cont-text">
+                        {{ ez_render_field(content, 'ventaja2') }}
+                    </div>
+                </article>
+
+                <article class="benefit-detail">
+                    <i class="ico ico-check-white"></i>
+                    <div class="cont-text">
+                        {{ ez_render_field(content, 'ventaja3') }}
+                    </div>
+                </article>
+
+                <article class="benefit-detail">
+                    <i class="ico ico-check-white"></i>
+                    <div class="cont-text">
+                        {{ ez_render_field(content, 'ventaja4') }}
+                    </div>
+                </article>
+            </section>
+
+            {% if testimonios|length %}
+            <section class="statements threeCols">
+                {% for testimonio in testimonios %}
+                <article class="statement-detail">
+                    <div class="layer">
+                        {{ ez_render_field( testimonio.content, 'testimonio') }}
+                    </div>
+
+                    <div class="authoring">
+                        {{ ez_render_field( testimonio.imgObject, 'image', {'parameters': { 'alias': 'foto_testimonio'} } ) }}
+                        <p class="author">{{ ez_render_field( testimonio.content, 'nombre_persona') }}</p>
+                    </div>
+
+                </article>
+                    {% endfor %}
+
+
+            </section>
+            {% endif %}
+
+
+        </div>
+        <!-- //main -->
+
+    </div>
+</div>
+
+<!-- features -->
+<article id="features" class="features mod-tabs">
+
+    <span class="tabs-wrap"></span>
+
+    <div class="tabs-wrap-content">
+        <p class="tab active"><a href="#features-content">Contenidos <i class="ico"></i></a></p>
+        <div id="features-content" class="tabs-content active">
+            <article class="features-detail">
+                <ul class="layout-3cols">
+                    <li class="col1">
+
+                        <div class="wysiwyg">
+                           {{ ez_render_field(content, 'contenidos1') }}
+                        </div>
+
+                    </li>
+                    <li class="col2">
+
+                        <div class="wysiwyg">
+                            {{ ez_render_field(content, 'contenidos2') }}
+                        </div>
+
+                    </li>
+                    <li class="col3">
+
+                        <div class="wysiwyg">
+                            {{ ez_render_field(content, 'contenidos3') }}
+                        </div>
+
+                    </li>
+                </ul>
+
+            </article>
+
+        </div>
+
+        <p class="tab"><a href="#features-functionalities">Funcionalidades <i class="ico"></i></a></p>
+        <div id="features-functionalities" class="tabs-content">
+            <article class="features-detail">
+                <ul class="layout-3cols">
+                    <li class="col1">
+
+                        <div class="wysiwyg">
+                            {{ ez_render_field(content, 'funcionalidad1') }}
+                        </div>
+
+                    </li>
+                    <li class="col2">
+
+                        <div class="wysiwyg">
+                            {{ ez_render_field(content, 'funcionalidad2') }}
+                        </div>
+
+                    </li>
+                    <li class="col3">
+
+                        <div class="wysiwyg">
+                            {{ ez_render_field(content, 'funcionalidad3') }}
+                        </div>
+
+                    </li>
+                </ul>
+            </article>
+
+        </div>
+
+    </div>
+
+</article>
+{% endblock %}

@@ -8,6 +8,7 @@ parameters:
     eflweb.utils_helper.class: Efl\WebBundle\Helper\UtilsHelper
     eflweb.fechas_helper.class: Efl\WebBundle\Helper\FechasHelper
     eflweb.price_helper.class: Efl\WebBundle\Helper\PriceHelper
+    eflweb.qmementix_helper.class: Efl\WebBundle\Helper\QMementixHelper
 
 services:
     eflweb.location_helper:
@@ -35,6 +36,13 @@ services:
         arguments:
             - @ezpublish.api.service.location
             - @ezpublish.api.service.search
+
+    eflweb.qmementix_helper:
+        class: %eflweb.qmementix_helper.class%
+        arguments:
+                - @ezpublish.api.service.location
+                - @ezpublish.api.service.search
+                - @ezpublish.api.service.content
 
     eflweb.faqs_helper:
         class: %eflweb.faqs_helper.class%

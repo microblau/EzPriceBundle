@@ -5,7 +5,10 @@ parameters:
         bases_datos: 13373
         qmemento: 70
         imemento: 11152
-        qmementix: 69
+        qmementix:
+            id: 69
+            label: qMementix
+            route: qmementix
 
     eflweb.footer.groups_menu.locations:
         mementos: 64
