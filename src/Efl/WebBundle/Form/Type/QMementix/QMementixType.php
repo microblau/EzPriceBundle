@@ -13,6 +13,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Collection;
 
 class QMementixType extends AbstractType
 {
@@ -47,9 +51,12 @@ class QMementixType extends AbstractType
             'text',
             array(
                 'label' => 'Nombre',
-                'attr' => array(
-                    'class' => 'text'
+                'label_attr' => array(
+                    'class' => 'field row'
                 ),
+                'attr' => array(
+                    'id' => 'name'
+                )
             )
         );
 
@@ -69,6 +76,9 @@ class QMementixType extends AbstractType
             'text',
             array(
                 'label' => 'Segundo apellido',
+                'attr' => array(
+                    'placeholder' => '(opcional)'
+                ),
                 'label_attr' => array(
                     'class' => 'field row'
                 )
@@ -76,7 +86,7 @@ class QMementixType extends AbstractType
         );
 
         $builder->add(
-            'telefono',
+            'phone',
             'text',
             array(
                 'label' => 'Teléfono',
@@ -104,9 +114,6 @@ class QMementixType extends AbstractType
             array(
                 'label' => 'Código postal',
                 'required' => true,
-                'attr' => array(
-                    'class' => 'text'
-                ),
                 'label_attr' => array(
                     'class' => 'field row'
                 )
@@ -121,6 +128,78 @@ class QMementixType extends AbstractType
             array(
                 'required' => true,
                 'label' => /** @Ignore*/'Acepto las <a href="#">condiciones del servicio</a> y la <a target="_blank" href="' . $this->router->generate( $politicaPrivacidadLocation ) . '">política de privacidad</a>'
+            )
+        );
+
+        $builder->add(
+            'send',
+            'submit',
+            array(
+                'label' => 'Continuar',
+                'attr' => array( 'class' => 'btn type2 hasIco' )
+            )
+        );
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $collectionConstraint = new Collection(
+            array(
+                'email' => array(
+                    new Email(
+                        array(
+                            'message' => $this->translator->trans( 'Email incorrecto.', array(), 'formulario_qmementix' )
+                        )
+                    ),
+                    new NotBlank(
+                        array(
+                            'message' => $this->translator->trans( 'El campo email es obligatorio.', array(), 'formulario_qmementix')
+                        )
+                    ),
+                ),
+                'nombre' => array(
+                    new NotBlank(
+                        array(
+                            'message' => $this->translator->trans( 'El campo nombre es obligatorio.', array(), 'formulario_qmementix')
+                        )
+                    )
+                ),
+                'apellido1' => array(
+                    new NotBlank(
+                        array(
+                            'message' => $this->translator->trans( 'El campo Primer Apellido es obligatorio.', array(), 'formulario_qmementix')
+                        )
+                    )
+                ),
+                'apellido2' => array(),
+                'cp' => array(
+                    new NotBlank(
+                        array(
+                            'message' => $this->translator->trans( 'El campo código postal es obligatorio.', array(), 'formulario_qmementix')
+                        )
+                    )
+                ),
+                'phone' => array(
+                    new NotBlank(
+                        array(
+                            'message' => $this->translator->trans( 'El campo teléfono es obligatorio.', array(), 'formulario_qmementix')
+                        )
+                    )
+                ),
+
+                'conditions' => array(
+                    new NotBlank(
+                        array(
+                            'message' => $this->translator->trans( 'Debe aceptar las condiciones del servicio y la política de privacidad', array(), 'formulario_qmementix')
+                        )
+                    )
+                ),
+            )
+        );
+
+        $resolver->setDefaults(
+            array(
+                'constraints' => $collectionConstraint
             )
         );
     }

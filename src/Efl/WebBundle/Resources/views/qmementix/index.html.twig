@@ -25,28 +25,27 @@
                         <button type="button" class="btn type2 hasIco twoLines"><i class="ico ico-arrow-right-white"></i> Seleccionar Mementos <small> para qMementix</small></button>
 
                         <article class="wrap-frm-test">
+                            {% form_theme form 'EflWebBundle:forms/qmementix:form.html.twig' %}
                             {{ form_start(form, {'attr': {'novalidate':'novalidate', 'class': 'frm-test cl' }}) }}
                                 <fieldset>
                                     <legend class="title-form">Solicite una prueba gratis y sin compromiso.</legend>
 
-                                    {{ form_row( form.nombre ) }}
+                                    {{ form_row( form.nombre,  { 'id': 'name'} ) }}
 
-                                    {{ form_row( form.apellido1 ) }}
+                                    {{ form_row( form.apellido1, { 'id': 'surname' } ) }}
 
-                                    {{ form_row( form.apellido2 ) }}
+                                    {{ form_row( form.apellido2, { 'id': 'surname2' } ) }}
 
-                                    {{ form_row( form.telefono ) }}
+                                    {{ form_row( form.phone, { 'id': 'phone' } ) }}
 
-                                    {{ form_row( form.email ) }}
+                                    {{ form_row( form.email, { 'id': 'email' } ) }}
 
-                                    {{ form_row( form.cp ) }}
+                                    {{ form_row( form.cp, { 'id': 'cp' } ) }}
 
-                                    {{ form_row( form.conditions ) }}
+                                    {{ form_row( form.conditions, { 'id': 'legal' } ) }}
                                 </fieldset>
 
-                                <div class="wrap-btn">
-                                    <button type="submit" class="btn type2 hasIco"><i class="ico ico-arrow-right-white"></i> Continuar</button>
-                                </div>
+                            {{ form_row( form.send ) }}
 
                             {{ form_end(form) }}
                         </article>

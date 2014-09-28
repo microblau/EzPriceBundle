@@ -55,7 +55,7 @@ class NewsletterController extends Controller
 
         if ( $request->isMethod( 'post' ) && !$form->get( 'save' )->isClicked() )
         {
-            $subscriptionForm->bind( $request );
+            $subscriptionForm->handleRequest( $request );
             if ( $subscriptionForm->isValid() )
             {
                 if ( $subscription = $this->get( 'eflweb.newsletter_helper' )->createSubscription(

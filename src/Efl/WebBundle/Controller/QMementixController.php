@@ -35,6 +35,12 @@ class QMementixController extends Controller
             $currentUserData
         );
 
+        $request = $this->get( 'request_stack' )->getCurrentRequest();
+        if ( $request->isMethod( 'post' ) )
+        {
+            $form->handleRequest($request);
+        }
+
         $testimonios = $this->get( 'eflweb.qmementix_helper' )->getTestimonies();
 
         return $this->render(

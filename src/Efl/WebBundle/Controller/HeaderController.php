@@ -21,6 +21,7 @@ class HeaderController extends Controller
         $response->setSharedMaxAge( 86400 );
 
         $menu = $this->getMenu( 'main' );
+        $menu[69]->setCurrent(true);
 
         $parameters = array(
             'menu' => $menu

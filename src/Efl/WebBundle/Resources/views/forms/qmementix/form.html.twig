@@ -1,0 +1,51 @@
+{% block form_label -%}
+    {% if label is not sameas(false) %}
+        {%- if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif -%}
+        {%- if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif -%}
+        {%- if label is empty -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+        <span class="lbl">{{ label|trans({}, translation_domain)|raw }}</span>
+    {%- endif %}
+{% endblock %}
+
+{% block form_row -%}
+
+    <label for="{{ form.vars.id  }}" class="field row">
+        {{- form_label(form) -}}
+        {{- form_errors(form) -}}
+        {{- form_widget(form) -}}
+    </label>
+{%- endblock form_row %}
+
+{% block checkbox_row %}
+    <div class="field field-pretty row">
+
+        {{- form_errors(form) -}}
+        <span class="prettycheck">
+        {{- form_widget(form) -}}
+        </span>
+        {{- form_label(form) -}}
+
+    </div>
+{% endblock %}
+
+{% block checkbox_widget -%}
+
+    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+    <label for="{{ id }}" ></label>
+
+{%- endblock checkbox_widget %}
+
+{% block _efl_qmementix_send_widget %}
+    {% if label is empty -%}
+        {% set label = name|humanize %}
+    {%- endif -%}
+    <div class="wrap-btn">
+        <button type="submit" {{ block('button_attributes') }}><i class="ico ico-arrow-right-white"></i> {{ label|trans({}, translation_domain) }}</button>
+    </div>
+{% endblock %}
