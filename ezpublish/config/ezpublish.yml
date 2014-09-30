@@ -804,3 +804,8 @@ efl_auth:
     client:
         host: http://wcflibreriavirtual.local/
         wsdl: ServiceLibreriaVirtual.svc?wsdl
+
+efl_web:
+    leads_client:
+        host: http://wcfaterrizajes.local/
+        wsdl: ServiceAterrizajes.svc?wsdl
