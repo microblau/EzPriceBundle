@@ -11,7 +11,7 @@
 
             <article class="highlight cl">
                 <div class="content">
-                    <span class="badge2"><span class="badge2-text">qMementix</span></span>
+                    <span class="badge2"><span class="badge2-text">iMemento</span></span>
                     <p class="super-title">{{ ez_render_field( content, 'title' ) }}</p>
                     <div class="title4">
                         {{ ez_render_field( content, 'text1' ) }}
@@ -56,10 +56,10 @@
                 <div class="media">
                     {% if not ez_is_field_empty( content, 'url_youtube') %}
 
-                        <div id="preview-video" class="wrap-video">
-                            {{ ez_render_field( img, 'image' )}}
-                            <a href="{{ ez_render_field( content, 'url_youtube', {'template':'EflWebBundle:fields:only_value.html.twig'} )}}" class="preview-video" title="Ver vídeo">{{ ez_render_field( preview_img, 'image' ) }}</a>
-                        </div>
+                    <div id="preview-video" class="wrap-video">
+                        {{ ez_render_field( img, 'image' )}}
+                        <a href="{{ ez_render_field( content, 'url_youtube', {'template':'EflWebBundle:fields:only_value.html.twig'} )}}" class="preview-video" title="Ver vídeo">{{ ez_render_field( preview_img, 'image' ) }}</a>
+                    </div>
                     {% else %}
                         {{ ez_render_field( img, 'image' )}}
 
@@ -98,6 +98,9 @@
                     </div>
                 </article>
             </section>
+            <section class="appMarket">
+                <a href="{{ ez_render_field(content, 'url_appstore', {'template':'EflWebBundle:fields:only_value.html.twig'} ) }}"><img src="{{ asset ("bundles/eflweb/images/appstore@2x.png")}}" alt="" class="appMarket-img"></a>
+            </section>
 
             {% if testimonios|length %}
             <section class="statements threeCols">
@@ -108,7 +111,7 @@
                     </div>
 
                     <div class="authoring">
-                        {{ ez_render_field( testimonio.imgObject, 'image', {'parameters': { 'alias': 'foto_testimonio'} } )|raw }}
+                        {{ ez_render_field( testimonio.imgObject, 'image', {'parameters': { 'alias': 'foto_testimonio'} } ) }}
                         <p class="author">{{ ez_render_field( testimonio.content, 'nombre_persona') }}</p>
                     </div>
 

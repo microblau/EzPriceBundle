@@ -14,7 +14,7 @@ use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\Core\Repository\ContentService;
 
-class QMementixHelper
+class TestimoniesHelper
 {
     /**
      * @var \eZ\Publish\API\Repository\LocationService
@@ -42,9 +42,16 @@ class QMementixHelper
         $this->contentService = $contentService;
     }
 
-    public function getTestimonies()
+    /**
+     * Obtiene los testimonios para qMementix.
+     * Serán locations (nodes) colgados de su node
+     *
+     * @return array
+     * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
+     */
+    public function getTestimoniesForLocation( $locationId )
     {
-        $location = $this->locationService->loadLocation( 14851 );
+        $location = $this->locationService->loadLocation( $locationId );
 
         $query = new LocationQuery();
 

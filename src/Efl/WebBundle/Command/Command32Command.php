@@ -2,34 +2,37 @@
 /**
  * Created by PhpStorm.
  * User: carlos
- * Date: 08/09/14
- * Time: 08:31
+ * Date: 26/08/14
+ * Time: 15:22
  */
 
 namespace Efl\WebBundle\Command;
 
+use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
+use eZ\Publish\Core\Base\Exceptions\ContentTypeFieldDefinitionValidationException;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentTypeCreateStruct as CreateTypeStruct;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinitionCreateStruct;
-use eZ\Publish\API\Repository\Values\ContentType\ContentTypeGroupCreateStruct as CreateGroupStruct;
-use eZ\Publish\API\Repository\Exceptions\InvalidArgumentException;
-use Exception;
-
+use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 
 /**
- * Class Command27Command
+ * Class Command2Command
  * @package Efl\WebBundle\Command
  *
- * Actualiza la clase producto_qmementix
+ * Creará la clase "info_modules" (Módulos informativos)
+ * Son los que aparecen en el pie
  */
-class Command28Command extends ContainerAwareCommand
+class Command32Command extends ContainerAwareCommand
 {
+    /** @var \eZ\Publish\API\Repository\Repository */
+    protected $repository;
+
+    protected $contentTypeService;
+
     protected function configure()
     {
-        $this->setName( 'efl:web:command28' )->setDefinition(array());
+        $this->setName( 'efl:web:command32' )->setDefinition(array());
     }
 
     protected function execute( InputInterface $input, OutputInterface $output )
@@ -37,20 +40,16 @@ class Command28Command extends ContainerAwareCommand
         /** @var $repository \eZ\Publish\API\Repository\Repository */
         $repository = $this->getContainer()->get( 'ezpublish.api.repository' );
         $repository->setCurrentUser( $repository->getUserService()->loadUser( 3370 ) );
-
         $contentTypeService = $repository->getContentTypeService();
 
         try
         {
-            $repository->beginTransaction();
-            $contentType = $contentTypeService->loadContentTypeByIdentifier( 'producto_qmementix' );
-
             $titleField = new FieldDefinitionCreateStruct(
                 array(
                     'fieldTypeIdentifier' => 'ezstring',
                     'identifier' => 'title',
                     'names' => array( 'esl-ES' => 'Titulo principal' ),
-                    'position' => 26,
+                    'position' => 1,
                     'isRequired' => false,
                     'isSearchable' => true,
                     'fieldGroup' => 'Rediseño Cabecera'
@@ -62,7 +61,7 @@ class Command28Command extends ContainerAwareCommand
                     'fieldTypeIdentifier' => 'ezxmltext',
                     'identifier' => 'text1',
                     'names' => array( 'esl-ES' => 'Texto 1' ),
-                    'position' => 27,
+                    'position' => 2,
                     'isRequired' => false,
                     'isSearchable' => true,
                     'fieldGroup' => 'Rediseño Cabecera'
@@ -74,7 +73,19 @@ class Command28Command extends ContainerAwareCommand
                     'fieldTypeIdentifier' => 'ezxmltext',
                     'identifier' => 'text2',
                     'names' => array( 'esl-ES' => 'Texto 2' ),
-                    'position' => 28,
+                    'position' => 3,
+                    'isRequired' => false,
+                    'isSearchable' => true,
+                    'fieldGroup' => 'Rediseño Cabecera'
+                )
+            );
+
+            $imagen = new FieldDefinitionCreateStruct(
+                array(
+                    'fieldTypeIdentifier' => 'ezobjectrelation',
+                    'identifier' => 'big_image',
+                    'names' => array( 'esl-ES' => 'Imagen' ),
+                    'position' => 4,
                     'isRequired' => false,
                     'isSearchable' => true,
                     'fieldGroup' => 'Rediseño Cabecera'
@@ -86,7 +97,7 @@ class Command28Command extends ContainerAwareCommand
                     'fieldTypeIdentifier' => 'ezobjectrelation',
                     'identifier' => 'img_preview_video',
                     'names' => array( 'esl-ES' => 'Imagen preview video' ),
-                    'position' => 29,
+                    'position' => 5,
                     'isRequired' => false,
                     'isSearchable' => true,
                     'fieldGroup' => 'Rediseño Cabecera'
@@ -99,7 +110,7 @@ class Command28Command extends ContainerAwareCommand
                     'fieldTypeIdentifier' => 'ezobjectrelation',
                     'identifier' => 'img_preview_video_2',
                     'names' => array( 'esl-ES' => 'Imagen preview video 2' ),
-                    'position' => 31,
+                    'position' => 6,
                     'isRequired' => false,
                     'isSearchable' => true,
                     'fieldGroup' => 'Rediseño Cabecera'
@@ -112,19 +123,20 @@ class Command28Command extends ContainerAwareCommand
                     'fieldTypeIdentifier' => 'ezstring',
                     'identifier' => 'url_youtube',
                     'names' => array( 'esl-ES' => 'Vídeo' ),
-                    'position' => 29,
+                    'position' => 7,
                     'isRequired' => false,
                     'isSearchable' => true,
                     'fieldGroup' => 'Rediseño Cabecera'
                 )
             );
 
-            $imagen = new FieldDefinitionCreateStruct(
+
+            $urlAppStore = new FieldDefinitionCreateStruct(
                 array(
-                    'fieldTypeIdentifier' => 'ezobjectrelation',
-                    'identifier' => 'big_image',
-                    'names' => array( 'esl-ES' => 'Imagen' ),
-                    'position' => 29,
+                    'fieldTypeIdentifier' => 'ezstring',
+                    'identifier' => 'url_appstore',
+                    'names' => array( 'esl-ES' => 'AppStore' ),
+                    'position' => 8,
                     'isRequired' => false,
                     'isSearchable' => true,
                     'fieldGroup' => 'Rediseño Cabecera'
@@ -136,7 +148,7 @@ class Command28Command extends ContainerAwareCommand
                     'fieldTypeIdentifier' => 'ezxmltext',
                     'identifier' => 'ventaja1',
                     'names' => array( 'esl-ES' => 'Ventaja 1' ),
-                    'position' => 32,
+                    'position' => 9,
                     'isRequired' => false,
                     'isSearchable' => true,
                     'fieldGroup' => 'Rediseño'
@@ -148,7 +160,7 @@ class Command28Command extends ContainerAwareCommand
                     'fieldTypeIdentifier' => 'ezxmltext',
                     'identifier' => 'ventaja2',
                     'names' => array( 'esl-ES' => 'Ventaja 2' ),
-                    'position' => 32,
+                    'position' => 10,
                     'isRequired' => false,
                     'isSearchable' => true,
                     'fieldGroup' => 'Rediseño'
@@ -159,7 +171,7 @@ class Command28Command extends ContainerAwareCommand
                     'fieldTypeIdentifier' => 'ezxmltext',
                     'identifier' => 'ventaja3',
                     'names' => array( 'esl-ES' => 'Ventaja 3' ),
-                    'position' => 32,
+                    'position' => 11,
                     'isRequired' => false,
                     'isSearchable' => true,
                     'fieldGroup' => 'Rediseño'
@@ -170,7 +182,7 @@ class Command28Command extends ContainerAwareCommand
                     'fieldTypeIdentifier' => 'ezxmltext',
                     'identifier' => 'ventaja4',
                     'names' => array( 'esl-ES' => 'Ventaja 4' ),
-                    'position' => 32,
+                    'position' => 12,
                     'isRequired' => false,
                     'isSearchable' => true,
                     'fieldGroup' => 'Rediseño'
@@ -182,7 +194,7 @@ class Command28Command extends ContainerAwareCommand
                     'fieldTypeIdentifier' => 'ezxmltext',
                     'identifier' => 'contenidos1',
                     'names' => array( 'esl-ES' => 'Contenidos 1' ),
-                    'position' => 32,
+                    'position' => 13,
                     'isRequired' => false,
                     'isSearchable' => true,
                     'fieldGroup' => 'Rediseño'
@@ -194,7 +206,7 @@ class Command28Command extends ContainerAwareCommand
                     'fieldTypeIdentifier' => 'ezxmltext',
                     'identifier' => 'contenidos2',
                     'names' => array( 'esl-ES' => 'Contenidos 2' ),
-                    'position' => 32,
+                    'position' => 14,
                     'isRequired' => false,
                     'isSearchable' => true,
                     'fieldGroup' => 'Rediseño'
@@ -206,7 +218,7 @@ class Command28Command extends ContainerAwareCommand
                     'fieldTypeIdentifier' => 'ezxmltext',
                     'identifier' => 'contenidos3',
                     'names' => array( 'esl-ES' => 'Contenidos 3' ),
-                    'position' => 32,
+                    'position' => 15,
                     'isRequired' => false,
                     'isSearchable' => true,
                     'fieldGroup' => 'Rediseño'
@@ -218,7 +230,7 @@ class Command28Command extends ContainerAwareCommand
                     'fieldTypeIdentifier' => 'ezxmltext',
                     'identifier' => 'funcionalidad1',
                     'names' => array( 'esl-ES' => 'Funcionalidad 1' ),
-                    'position' => 32,
+                    'position' => 16,
                     'isRequired' => false,
                     'isSearchable' => true,
                     'fieldGroup' => 'Rediseño'
@@ -230,7 +242,7 @@ class Command28Command extends ContainerAwareCommand
                     'fieldTypeIdentifier' => 'ezxmltext',
                     'identifier' => 'funcionalidad2',
                     'names' => array( 'esl-ES' => 'Funcionalidad 2' ),
-                    'position' => 32,
+                    'position' => 17,
                     'isRequired' => false,
                     'isSearchable' => true,
                     'fieldGroup' => 'Rediseño'
@@ -242,80 +254,53 @@ class Command28Command extends ContainerAwareCommand
                     'fieldTypeIdentifier' => 'ezxmltext',
                     'identifier' => 'funcionalidad3',
                     'names' => array( 'esl-ES' => 'Funcionalidad 3' ),
-                    'position' => 32,
+                    'position' => 18,
                     'isRequired' => false,
                     'isSearchable' => true,
                     'fieldGroup' => 'Rediseño'
                 )
             );
 
-            $fieldIdentifiers = array();
-            foreach ( $contentType->getFieldDefinitions() as $fieldIdentifier )
-            {
-                $fieldIdentifiers[] = $fieldIdentifier->identifier;
-            }
-            $contentTypeDraft = $contentTypeService->createContentTypeDraft( $contentType );
-            if ( !in_array( 'title', $fieldIdentifiers ) )
-                $contentTypeService->addFieldDefinition( $contentTypeDraft, $titleField );
+            $contentTypeGroup = $contentTypeService->loadContentTypeGroupByIdentifier( 'Clases 2014' );
 
-            if ( !in_array( 'text1', $fieldIdentifiers ))
-                $contentTypeService->addFieldDefinition( $contentTypeDraft, $texto1Field );
+            $contentTypeStruct = new CreateTypeStruct(
+                array(
+                    'identifier' => 'qmemento',
+                    'mainLanguageCode' => 'esl-ES',
+                    'nameSchema' => 'QMemento',
+                    'names' => array( 'esl-ES' => 'QMemento' ),
+                    'fieldDefinitions' => array(
+                        $titleField,
+                        $texto1Field,
+                        $texto2Field,
+                        $imagen,
+                        $imagenPreviewVideo,
+                        $videoYouTube,
+                        $imagenPreviewVideo2,
+                        $ventaja1Field,
+                        $ventaja2Field,
+                        $ventaja3Field,
+                        $ventaja4Field,
+                        $contenidos1Field,
+                        $contenidos2Field,
+                        $contenidos3Field,
+                        $funcionalidad1,
+                        $funcionalidad2,
+                        $funcionalidad3
+                    )
+                )
+            );
 
-            if ( !in_array( 'text2', $fieldIdentifiers ))
-                $contentTypeService->addFieldDefinition( $contentTypeDraft, $texto2Field );
+            $contentType = $contentTypeService->createContentType(
+                $contentTypeStruct,
+                array( $contentTypeGroup )
+            );
 
-            if ( !in_array( 'img_preview_video', $fieldIdentifiers ))
-                $contentTypeService->addFieldDefinition( $contentTypeDraft, $imagenPreviewVideo );
-
-            if ( !in_array( 'url_youtube', $fieldIdentifiers ))
-                $contentTypeService->addFieldDefinition( $contentTypeDraft, $videoYouTube );
-
-            if ( !in_array( 'img_preview_video_2', $fieldIdentifiers ))
-                $contentTypeService->addFieldDefinition( $contentTypeDraft, $imagenPreviewVideo2 );
-
-            if ( !in_array( 'big_image', $fieldIdentifiers ))
-                $contentTypeService->addFieldDefinition( $contentTypeDraft, $imagen );
-
-            if ( !in_array( 'ventaja1', $fieldIdentifiers ))
-                $contentTypeService->addFieldDefinition( $contentTypeDraft, $ventaja1Field );
-
-            if ( !in_array( 'ventaja2', $fieldIdentifiers ))
-                $contentTypeService->addFieldDefinition( $contentTypeDraft, $ventaja2Field );
-
-            if ( !in_array( 'ventaja3', $fieldIdentifiers ))
-                $contentTypeService->addFieldDefinition( $contentTypeDraft, $ventaja3Field );
-
-            if ( !in_array( 'ventaja4', $fieldIdentifiers ))
-                $contentTypeService->addFieldDefinition( $contentTypeDraft, $ventaja4Field );
-
-            if ( !in_array( 'contenidos1', $fieldIdentifiers ))
-                $contentTypeService->addFieldDefinition( $contentTypeDraft, $contenidos1Field );
-
-            if ( !in_array( 'contenidos2', $fieldIdentifiers ))
-                $contentTypeService->addFieldDefinition( $contentTypeDraft, $contenidos2Field );
-
-            if ( !in_array( 'contenidos3', $fieldIdentifiers ))
-                $contentTypeService->addFieldDefinition( $contentTypeDraft, $contenidos3Field );
-
-            if ( !in_array( 'funcionalidad1', $fieldIdentifiers ))
-                $contentTypeService->addFieldDefinition( $contentTypeDraft, $funcionalidad1 );
-
-            if ( !in_array( 'funcionalidad2', $fieldIdentifiers ))
-                $contentTypeService->addFieldDefinition( $contentTypeDraft, $funcionalidad2 );
-
-            if ( !in_array( 'funcionalidad3', $fieldIdentifiers ))
-                $contentTypeService->addFieldDefinition( $contentTypeDraft, $funcionalidad3 );
-
-            $contentTypeService->publishContentTypeDraft( $contentTypeDraft );
-
-            $repository->commit();
-
+            $contentTypeService->publishContentTypeDraft( $contentType );
         }
-        catch ( Exception $e )
+        catch ( InvalidArgumentException $e )
         {
-            $repository->rollback();
             $output->writeln( $e->getMessage() );
         }
-
     }
 }

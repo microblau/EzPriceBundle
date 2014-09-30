@@ -1,0 +1,411 @@
+{% extends "EflWebBundle::pagelayout.html.twig" %}
+{% set title = 'QMementix'|trans %}
+{% set mainClass = 'iMemento' %}
+{% block content %}
+<div class="wrapper cl">
+
+    <div class="oneCol">
+
+        <!-- main -->
+        <div class="main">
+
+            <article class="highlight cl">
+                <div class="content">
+                    <span class="badge2"><span class="badge2-text">qMementix</span></span>
+                    <p class="super-title">{{ ez_render_field( content, 'title' ) }}</p>
+                    <div class="title4">
+                        {{ ez_render_field( content, 'text1' ) }}
+                    </div>
+                    <div class="title7">
+                        {{ ez_render_field( content, 'text2' ) }}
+                    </div>
+
+                </div>
+
+                <div class="media">
+                    <div id="preview-video" class="wrap-video">
+                        {{ ez_render_field( img, 'image' )}}
+                        <a href="{{ ez_render_field( content, 'url_youtube', {'template':'EflWebBundle:fields:only_value.html.twig'} )}}" class="preview-video" title="Ver vídeo">{{ ez_render_field( preview_img, 'image' ) }}</a>
+                    </div>
+                </div>
+            </article>
+
+
+
+        </div>
+        <!-- //main -->
+
+    </div>
+    <div class="twoCols">
+    <div class="main">
+
+    <div class="tabs-wrap-content cl">
+    <!-- related-items -->
+    <article class="related-items cl">
+
+    <!-- row-items -->
+    <div class="row-items cl">
+
+        <!-- item -->
+        <article class="item">
+            <div class="portrait">
+                <img src="images/publishings/dummy-revista.jpg" alt="" class="portrait-img" />
+            </div>
+
+            <div class="content cl">
+                <ul class="format">
+                    <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                    <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                    <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                </ul>
+
+                <p class="title9 upper">Memento</p>
+                <p class="item-title">Memento Fiscal</p>
+
+                      <span class="price">
+                        <b>72,50 €</b>
+                        <small>+ IVA</small>
+                      </span>
+            </div>
+
+            <div class="actions-item">
+                <i class="ico ico-check-green"></i>
+                <a href="#" class="remove"><span>Quitar</span> <i class="ico ico-close-red"></i></a>
+            </div>
+
+        </article>
+        <!-- // item -->
+
+        <!-- item -->
+        <article class="item">
+            <div class="portrait">
+                <img src="images/publishings/dummy-pack.jpg" alt="" class="portrait-img" />
+            </div>
+
+            <div class="content cl">
+                <ul class="format">
+                    <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                    <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En papel</span></li>
+                </ul>
+
+                <p class="title9 upper">Memento</p>
+                <p class="item-title">Memento Social</p>
+
+                      <span class="price">
+                        <small>Desde</small>
+                        <b>72,50 €</b>
+                        <small>+ IVA</small>
+                      </span>
+            </div>
+
+            <div class="actions-item">
+                      <span class="btn">
+                        <a href="#">Añadir</a>
+                      </span>
+            </div>
+
+        </article>
+        <!-- // item -->
+
+        <!-- item -->
+        <article class="item">
+            <div class="portrait">
+                <img src="images/publishings/dummy-memento.jpg" alt="" class="portrait-img" />
+            </div>
+
+            <div class="content cl">
+                <ul class="format">
+                    <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                    <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                </ul>
+
+                <p class="title9 upper">Memento</p>
+                <p class="item-title">Memento Sociedades Mercantiles</p>
+                <p class="item-claim">Ahora un 5% más barato</p>
+
+                <del class="old-price">
+                    <b>99,10 €</b>
+                    <small>+ IVA</small>
+                </del>
+                <ins class="price">
+                    <b>89,10 €</b>
+                    <small>+ IVA</small>
+                </ins>
+            </div>
+
+            <div class="actions-item">
+                      <span class="btn">
+                        <a href="#">Añadir</a>
+                      </span>
+            </div>
+
+        </article>
+        <!-- // item -->
+
+        <!-- item -->
+        <article class="item">
+            <div class="portrait">
+                <span class="badge"><span class="badge-text">ebook gratis</span></span>
+                <img src="images/publishings/dummy-qmementix.jpg" alt="" class="portrait-img" />
+            </div>
+
+            <div class="content cl">
+                <ul class="format">
+                    <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                    <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                    <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                </ul>
+
+                <p class="title9 upper">Memento</p>
+                <p class="item-title">Memento Contable</p>
+                <p class="item-claim">Hoy con un ebook de regalo</p>
+
+                      <span class="price">
+                        <small>Desde</small>
+                        <b>96,50 €</b>
+                        <small>+ IVA</small>
+                      </span>
+            </div>
+
+            <div class="actions-item">
+                <i class="ico ico-check-green"></i>
+                <a href="#" class="remove"><span>Quitar</span> <i class="ico ico-close-red"></i></a>
+            </div>
+
+        </article>
+        <!-- // item -->
+
+    </div>
+    <!-- // row-items -->
+
+    <!-- row-items -->
+    <div class="row-items cl">
+
+        <!-- item -->
+        <article class="item">
+            <div class="portrait">
+                <span class="badge"><span class="badge-text">ebook gratis</span></span>
+                <img src="images/publishings/dummy-qmementix.jpg" alt="" class="portrait-img" />
+            </div>
+
+            <div class="content cl">
+                <ul class="format">
+                    <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                    <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                    <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                </ul>
+
+                <p class="title9 upper">Memento</p>
+                <p class="item-title">Memento IVA</p>
+                <p class="item-claim">Hoy con un ebook de regalo</p>
+
+                      <span class="price">
+                        <small>Desde</small>
+                        <b>96,50 €</b>
+                        <small>+ IVA</small>
+                      </span>
+            </div>
+
+            <div class="actions-item">
+                <i class="ico ico-check-green"></i>
+                <a href="#" class="remove"><span>Quitar</span> <i class="ico ico-close-red"></i></a>
+            </div>
+
+        </article>
+        <!-- // item -->
+
+        <!-- item -->
+        <article class="item">
+            <div class="portrait">
+                <img src="images/publishings/dummy-memento.jpg" alt="" class="portrait-img" />
+            </div>
+
+            <div class="content cl">
+                <ul class="format">
+                    <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                    <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                </ul>
+
+                <p class="title9 upper">Memento</p>
+                <p class="item-title">Impuesto sobre Sociedades</p>
+                <p class="item-claim">Ahora un 5% más barato</p>
+
+                <del class="old-price">
+                    <b>99,10 €</b>
+                    <small>+ IVA</small>
+                </del>
+                <ins class="price">
+                    <b>89,10 €</b>
+                    <small>+ IVA</small>
+                </ins>
+            </div>
+
+            <div class="actions-item">
+                      <span class="btn">
+                        <a href="#">Añadir</a>
+                      </span>
+            </div>
+
+        </article>
+        <!-- // item -->
+
+        <!-- item -->
+        <article class="item">
+            <div class="portrait">
+                <img src="images/publishings/dummy-revista.jpg" alt="" class="portrait-img" />
+            </div>
+
+            <div class="content cl">
+                <ul class="format">
+                    <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                    <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                    <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                </ul>
+
+                <p class="title9 upper">Memento</p>
+                <p class="item-title">Memento Concursal</p>
+
+                      <span class="price">
+                        <b>72,50 €</b>
+                        <small>+ IVA</small>
+                      </span>
+            </div>
+
+            <div class="actions-item">
+                <i class="ico ico-check-green"></i>
+                <a href="#" class="remove"><span>Quitar</span> <i class="ico ico-close-red"></i></a>
+            </div>
+
+        </article>
+        <!-- // item -->
+
+        <!-- item -->
+        <article class="item">
+            <div class="portrait">
+                <img src="images/publishings/dummy-pack.jpg" alt="" class="portrait-img" />
+            </div>
+
+            <div class="content cl">
+                <ul class="format">
+                    <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                    <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En papel</span></li>
+                </ul>
+
+                <p class="title9 upper">Memento</p>
+                <p class="item-title">Grupos Consolidados</p>
+
+                      <span class="price">
+                        <small>Desde</small>
+                        <b>72,50 €</b>
+                        <small>+ IVA</small>
+                      </span>
+            </div>
+
+            <div class="actions-item">
+                      <span class="btn">
+                        <a href="#">Añadir</a>
+                      </span>
+            </div>
+
+        </article>
+        <!-- // item -->
+
+    </div>
+    <!-- // row-items -->
+
+    </article>
+    <!-- // related-items -->
+    </div>
+
+    </div>
+
+    <!-- aside -->
+    <aside class="aside">
+
+        <form action="" method="post" class="">
+            <div class="resume">
+                <span class="claim">20% más barato</span>
+                <span class="price">192,66 &euro;</span>
+            </div>
+
+            <table class="tb-formats">
+                <caption class="offscreen">Cesta de la compra</caption>
+
+                <thead>
+                <tr>
+                    <th>Formato</th>
+                    <th>Precio</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td class="format" colspan="2">
+                        <i class="ico ico-paper-white"></i>
+                        <i class="ico ico-pc-white"></i>
+                        <i class="ico ico-tablet-white"></i>
+                    </td>
+                </tr>
+                <tr class="text">
+                    <td>
+                        <span class="title">Memento Fiscal</span>
+                    </td>
+                    <td class="price">
+                        <b>72,50 &euro;</b>
+                        <small>+ IVA</small>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="format" colspan="2">
+                        <i class="ico ico-paper-white"></i>
+                        <i class="ico ico-pc-white"></i>
+                    </td>
+                </tr>
+                <tr class="text">
+                    <td>
+                        <span class="title">Memento Contable</span>
+                    </td>
+                    <td class="price">
+                        <del>99,10 &euro;</del>
+                        <ins><b>32,50 &euro;</b></ins>
+                        <small>+ IVA</small>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="format" colspan="2">
+                        <i class="ico ico-tablet-white"></i>
+                    </td>
+                </tr>
+                <tr class="text">
+                    <td>
+                        <span class="title">Memento IVA</span>
+                    </td>
+                    <td class="price">
+                        <del>99,10 &euro;</del>
+                        <ins><b>55,50 &euro;</b></ins>
+                        <small>+ IVA</small>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+            <div class="wrap-btn">
+                <button type="submit" class="btn type2 hasIco"><i class="ico ico-arrow-right-white"></i> Comprar ahora</button>
+            </div>
+
+        </form>
+
+    </aside>
+    <!-- //aside -->
+
+    </div>
+
+</div>
+
+
+
+
+{% endblock %}

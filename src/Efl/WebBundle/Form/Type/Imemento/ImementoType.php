@@ -6,7 +6,7 @@
  * Time: 14:05
  */
 
-namespace Efl\WebBundle\Form\Type\QMementix;
+namespace Efl\WebBundle\Form\Type\Imemento;
 
 use eZ\Publish\API\Repository\LocationService;
 use Symfony\Component\Form\AbstractType;
@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 
-class QMementixType extends AbstractType
+class ImementoType extends AbstractType
 {
     /**
      * @var \Symfony\Bundle\FrameworkBundle\Translation\Translator
@@ -48,7 +48,7 @@ class QMementixType extends AbstractType
 
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
-        $builder->setAction( $this->router->generate( 'qmementix_postform' ) );
+        $builder->setAction( $this->router->generate( 'imemento_postform' ) );
         $builder->add(
             'nombre',
             'text',
@@ -236,6 +236,6 @@ class QMementixType extends AbstractType
 
     public function getName()
     {
-        return 'efl_qmementix';
+        return 'efl_imemento';
     }
 }

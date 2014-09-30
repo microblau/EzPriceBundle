@@ -23,8 +23,8 @@ class EflWsConnection implements  EflWsConnectionInterface
 
     public function __construct(array $params, LoggerInterface $logger = null)
     {
-        $this->params   = $params;
-        $this->logger   = $logger;
+        $this->params = $params;
+        $this->logger = $logger;
         $this->ws_res = NULL;
     }
 
@@ -171,8 +171,6 @@ class EflWsConnection implements  EflWsConnectionInterface
 
     private function connect()
     {
-        $this->ws_res = new \SoapClient( $this->params['host'] . $this->params['wsdl'], array( 'trace' => 1 ) );
+        $this->ws_res = new \SoapClient( $this->params['host'] . $this->params['wsdl'] );
     }
-
-
 }

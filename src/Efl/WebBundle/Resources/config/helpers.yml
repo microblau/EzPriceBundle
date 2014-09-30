@@ -8,7 +8,10 @@ parameters:
     eflweb.utils_helper.class: Efl\WebBundle\Helper\UtilsHelper
     eflweb.fechas_helper.class: Efl\WebBundle\Helper\FechasHelper
     eflweb.price_helper.class: Efl\WebBundle\Helper\PriceHelper
-    eflweb.qmementix_helper.class: Efl\WebBundle\Helper\QMementixHelper
+    eflweb.testimonies_helper.class: Efl\WebBundle\Helper\TestimoniesHelper
+    eflweb.menus_helper.class: Efl\WebBundle\Helper\MenusHelper
+    eflweb.leads_helper.class: Efl\WebBundle\Helper\LeadsHelper
+    eflweb.leads_client.parameters:
 
 services:
     eflweb.location_helper:
@@ -37,8 +40,8 @@ services:
             - @ezpublish.api.service.location
             - @ezpublish.api.service.search
 
-    eflweb.qmementix_helper:
-        class: %eflweb.qmementix_helper.class%
+    eflweb.testimonies_helper:
+        class: %eflweb.testimonies_helper.class%
         arguments:
                 - @ezpublish.api.service.location
                 - @ezpublish.api.service.search
@@ -93,3 +96,10 @@ services:
             - @ezpublish.api.service.location
             - @eflweb.discounts_service
             - @ezpublish.api.repository
+
+    eflweb.menus_helper:
+        class: %eflweb.menus_helper.class%
+
+    eflweb.leads_helper:
+        class: %eflweb.leads_helper.class%
+        arguments: ['%eflweb.leads_client.parameters%']

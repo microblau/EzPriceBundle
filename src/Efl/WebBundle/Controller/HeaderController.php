@@ -12,16 +12,23 @@ class HeaderController extends Controller
     /**
      * Construye el menú principal
      *
+     * @param string $route
+     *
      * @return Response
      */
-    public function mainMenuAction()
+    public function mainMenuAction( $route )
     {
         $response = new Response;
         $response->setPublic();
         $response->setSharedMaxAge( 86400 );
 
         $menu = $this->getMenu( 'main' );
-        $menu[69]->setCurrent(true);
+        $selectedItem = $this->get( 'eflweb.menus_helper' )->getSelectedMainMenuItem( $route );
+
+        if ( isset( $menu[$selectedItem] ) )
+        {
+            $menu[$selectedItem]->setCurrent( true );
+        }
 
         $parameters = array(
             'menu' => $menu

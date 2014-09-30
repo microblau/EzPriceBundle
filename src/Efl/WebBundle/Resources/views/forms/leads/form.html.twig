@@ -49,3 +49,12 @@
         <button type="submit" {{ block('button_attributes') }}><i class="ico ico-arrow-right-white"></i> {{ label|trans({}, translation_domain) }}</button>
     </div>
 {% endblock %}
+
+{% block _efl_imemento_send_widget %}
+    {% if label is empty -%}
+        {% set label = name|humanize %}
+    {%- endif -%}
+    <div class="wrap-btn">
+        <button type="submit" {{ block('button_attributes') }}><i class="ico ico-arrow-right-white"></i> {{ label|trans({}, translation_domain) }}</button>
+    </div>
+{% endblock %}

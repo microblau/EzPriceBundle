@@ -1,0 +1,595 @@
+{% extends "EflWebBundle::pagelayout.html.twig" %}
+{% set title = 'QMementix'|trans %}
+{% set mainClass = 'iMemento' %}
+{% block content %}
+    <div class="wrapper cl">
+
+        <div class="oneCol">
+
+            <!-- main -->
+            <div class="main">
+
+                <article class="highlight cl">
+                    <div class="content">
+                        <span class="badge2"><span class="badge2-text">iMemento</span></span>
+                        <p class="super-title">{{ ez_render_field( content, 'title' ) }}</p>
+                        <div class="title4">
+                            {{ ez_render_field( content, 'text1' ) }}
+                        </div>
+                        <div class="title7">
+                            {{ ez_render_field( content, 'text2' ) }}
+                        </div>
+                    </div>
+
+                    <div class="media">
+                        {% if not ez_is_field_empty( content, 'url_youtube') %}
+
+                            <div id="preview-video" class="wrap-video">
+                                {{ ez_render_field( img, 'image' )}}
+                                <a href="{{ ez_render_field( content, 'url_youtube', {'template':'EflWebBundle:fields:only_value.html.twig'} )}}" class="preview-video" title="Ver vídeo">{{ ez_render_field( preview_img, 'image' ) }}</a>
+                            </div>
+                        {% else %}
+                            {{ ez_render_field( img, 'image' )}}
+
+                        {% endif %}
+
+                    </div>
+                </article>
+            </div>           <!-- //main -->
+
+        </div>
+
+        <div class="twoCols">
+        <div class="main">
+
+        <!-- tabs -->
+        <div class="mod-tabs">
+        <span class="tabs-wrap"></span>
+        <div class="tabs-wrap-content cl">
+
+        <p class="tab"><a href="#content-mementos">Mementos <i class="ico"></i></a></p>
+        <!-- // content-mementos -->
+        <div id="content-mementos" class="tabs-content">
+
+        <!-- related-items -->
+        <article class="related-items cl">
+
+        <!-- row-items -->
+        <div class="row-items cl">
+
+            <!-- item -->
+            <article class="item">
+                <div class="portrait">
+                    <img src="images/publishings/dummy-revista.jpg" alt="" class="portrait-img" />
+                </div>
+
+                <div class="content cl">
+                    <ul class="format">
+                        <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                        <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                        <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                    </ul>
+
+                    <p class="title9 upper">Revistas</p>
+                    <p class="item-title">Procedimientos Tributarios 2012-2013</p>
+
+                          <span class="price">
+                            <b>72,50 €</b>
+                            <small>+ IVA</small>
+                          </span>
+                </div>
+
+                <div class="actions-item">
+                    <i class="ico ico-check-green"></i>
+                    <a href="#" class="remove"><span>Quitar</span> <i class="ico ico-close-red"></i></a>
+                </div>
+
+            </article>
+            <!-- // item -->
+
+            <!-- item -->
+            <article class="item">
+                <div class="portrait">
+                    <img src="images/publishings/dummy-pack.jpg" alt="" class="portrait-img" />
+                </div>
+
+                <div class="content cl">
+                    <ul class="format">
+                        <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                        <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En papel</span></li>
+                    </ul>
+
+                    <p class="title9 upper">Pack</p>
+                    <p class="item-title">Pack Memento Impuesto sobre Sociedades + Claves Prácticas...</p>
+
+                          <span class="price">
+                            <small>Desde</small>
+                            <b>72,50 €</b>
+                            <small>+ IVA</small>
+                          </span>
+                </div>
+
+                <div class="actions-item">
+                          <span class="btn">
+                            <a href="#">Añadir</a>
+                          </span>
+                </div>
+
+            </article>
+            <!-- // item -->
+
+            <!-- item -->
+            <article class="item">
+                <div class="portrait">
+                    <img src="images/publishings/dummy-memento.jpg" alt="" class="portrait-img" />
+                </div>
+
+                <div class="content cl">
+                    <ul class="format">
+                        <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                        <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                    </ul>
+
+                    <p class="title9 upper">Memento de Autor</p>
+                    <p class="item-title">Retribución variable</p>
+                    <p class="item-claim">Ahora un 5% más barato</p>
+
+                    <del class="old-price">
+                        <b>99,10 €</b>
+                        <small>+ IVA</small>
+                    </del>
+                    <ins class="price">
+                        <b>89,10 €</b>
+                        <small>+ IVA</small>
+                    </ins>
+                </div>
+
+                <div class="actions-item">
+                          <span class="btn">
+                            <a href="#">Añadir</a>
+                          </span>
+                </div>
+
+            </article>
+            <!-- // item -->
+
+            <!-- item -->
+            <article class="item">
+                <div class="portrait">
+                    <span class="badge"><span class="badge-text">ebook gratis</span></span>
+                    <img src="images/publishings/dummy-qmementix.jpg" alt="" class="portrait-img" />
+                </div>
+
+                <div class="content cl">
+                    <ul class="format">
+                        <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                        <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                        <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                    </ul>
+
+                    <p class="title9 upper">Qmementix</p>
+                    <p class="item-title">Concursal 2014</p>
+                    <p class="item-claim">Hoy con un ebook de regalo</p>
+
+                          <span class="price">
+                            <small>Desde</small>
+                            <b>96,50 €</b>
+                            <small>+ IVA</small>
+                          </span>
+                </div>
+
+                <div class="actions-item">
+                    <i class="ico ico-check-green"></i>
+                    <a href="#" class="remove"><span>Quitar</span> <i class="ico ico-close-red"></i></a>
+                </div>
+
+            </article>
+            <!-- // item -->
+
+        </div>
+        <!-- // row-items -->
+
+        <!-- row-items -->
+        <div class="row-items cl">
+
+            <!-- item -->
+            <article class="item">
+                <div class="portrait">
+                    <span class="badge"><span class="badge-text">ebook gratis</span></span>
+                    <img src="images/publishings/dummy-qmementix.jpg" alt="" class="portrait-img" />
+                </div>
+
+                <div class="content cl">
+                    <ul class="format">
+                        <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                        <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                        <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                    </ul>
+
+                    <p class="title9 upper">Qmementix</p>
+                    <p class="item-title">Concursal 2014</p>
+                    <p class="item-claim">Hoy con un ebook de regalo</p>
+
+                          <span class="price">
+                            <small>Desde</small>
+                            <b>96,50 €</b>
+                            <small>+ IVA</small>
+                          </span>
+                </div>
+
+                <div class="actions-item">
+                    <i class="ico ico-check-green"></i>
+                    <a href="#" class="remove"><span>Quitar</span> <i class="ico ico-close-red"></i></a>
+                </div>
+
+            </article>
+            <!-- // item -->
+
+            <!-- item -->
+            <article class="item">
+                <div class="portrait">
+                    <img src="images/publishings/dummy-memento.jpg" alt="" class="portrait-img" />
+                </div>
+
+                <div class="content cl">
+                    <ul class="format">
+                        <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                        <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                    </ul>
+
+                    <p class="title9 upper">Memento de Autor</p>
+                    <p class="item-title">Retribución variable</p>
+                    <p class="item-claim">Ahora un 5% más barato</p>
+
+                    <del class="old-price">
+                        <b>99,10 €</b>
+                        <small>+ IVA</small>
+                    </del>
+                    <ins class="price">
+                        <b>89,10 €</b>
+                        <small>+ IVA</small>
+                    </ins>
+                </div>
+
+                <div class="actions-item">
+                          <span class="btn">
+                            <a href="#">Añadir</a>
+                          </span>
+                </div>
+
+            </article>
+            <!-- // item -->
+
+            <!-- item -->
+            <article class="item">
+                <div class="portrait">
+                    <img src="images/publishings/dummy-revista.jpg" alt="" class="portrait-img" />
+                </div>
+
+                <div class="content cl">
+                    <ul class="format">
+                        <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                        <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                        <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                    </ul>
+
+                    <p class="title9 upper">Revistas</p>
+                    <p class="item-title">Procedimientos Tributarios 2012-2013</p>
+
+                          <span class="price">
+                            <b>72,50 €</b>
+                            <small>+ IVA</small>
+                          </span>
+                </div>
+
+                <div class="actions-item">
+                    <i class="ico ico-check-green"></i>
+                    <a href="#" class="remove"><span>Quitar</span> <i class="ico ico-close-red"></i></a>
+                </div>
+
+            </article>
+            <!-- // item -->
+
+            <!-- item -->
+            <article class="item">
+                <div class="portrait">
+                    <img src="images/publishings/dummy-pack.jpg" alt="" class="portrait-img" />
+                </div>
+
+                <div class="content cl">
+                    <ul class="format">
+                        <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                        <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En papel</span></li>
+                    </ul>
+
+                    <p class="title9 upper">Pack</p>
+                    <p class="item-title">Pack Memento Impuesto sobre Sociedades + Claves Prácticas...</p>
+
+                          <span class="price">
+                            <small>Desde</small>
+                            <b>72,50 €</b>
+                            <small>+ IVA</small>
+                          </span>
+                </div>
+
+                <div class="actions-item">
+                          <span class="btn">
+                            <a href="#">Añadir</a>
+                          </span>
+                </div>
+
+            </article>
+            <!-- // item -->
+
+        </div>
+        <!-- // row-items -->
+
+        </article>
+        <!-- // related-items -->
+
+        </div>
+        <!-- // content-mementos -->
+
+        <p class="tab active"><a href="#content-packs">Packs Jurídicos <i class="ico"></i></a></p>
+        <!-- // content-packs -->
+        <div id="content-packs" class="tabs-content active">
+
+            <!-- related-packs -->
+            <article class="related-packs cl">
+
+                <!-- row-packs -->
+                <div class="row-packs cl">
+
+                    <!-- item (pack) -->
+                    <article class="item">
+                        <div class="content cl">
+                            <p class="item-title">Pack iMemento Base<br /> (MF-MS-MM-MC) iMemento Base</p>
+                            <ul class="format">
+                                <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                                <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                                <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                            </ul>
+
+                            <div class="wysiwyg">
+                                <p>Pack compuesto por:  Memento Fiscal, Memento Contable, Memento Social y Memento Mercantil.</p>
+                                <p>Benefíciese de un 15% de descuento al comprar estos cuatro Mementos juntos para su iPad.</p>
+                                <p>Las obras imprescindibles de Ediciones Francis Lefebvre ahora disponibles para su iPad.</p>
+                            </div>
+
+                            <p class="item-claim">Ahora un 5% más barato</p>
+                            <del class="old-price">
+                                <b>99,10 €</b>
+                                <small>+ IVA</small>
+                            </del>
+
+                            <ins class="price">
+                                <b>89,10 €</b>
+                                <small>+ IVA</small>
+                            </ins>
+                        </div>
+
+                        <div class="actions-item">
+                          <span class="btn">
+                            <a href="#">Añadir</a>
+                          </span>
+                        </div>
+
+                    </article>
+                    <!-- // item (pack) -->
+
+                    <!-- item (pack) -->
+                    <article class="item">
+                        <div class="content cl">
+                            <p class="item-title">iMemento Pack Fiscal<br /> (MF-MIS-MIV-MIRF)</p>
+                            <ul class="format">
+                                <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                                <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                                <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                            </ul>
+
+                            <div class="wysiwyg">
+                                <p>Pack compuesto por:  Memento Fiscal, Memento Contable, Memento Social y Memento Mercantil.</p>
+                                <p>Benefíciese de un 15% de descuento al comprar estos cuatro Mementos juntos para su iPad.</p>
+                                <p>Las obras imprescindibles de Ediciones Francis Lefebvre ahora disponibles para su iPad.</p>
+                            </div>
+
+                            <p class="item-claim">Ahora un 5% más barato</p>
+                            <del class="old-price">
+                                <b>99,10 €</b>
+                                <small>+ IVA</small>
+                            </del>
+
+                            <ins class="price">
+                                <b>89,10 €</b>
+                                <small>+ IVA</small>
+                            </ins>
+                        </div>
+
+                        <div class="actions-item">
+                            <i class="ico ico-check-green"></i>
+                            <a href="#" class="remove"><span>Quitar</span> <i class="ico ico-close-red"></i></a>
+                        </div>
+
+                    </article>
+                    <!-- // item (pack) -->
+
+                </div>
+                <!-- // row-packs -->
+
+                <!-- // row-packs -->
+                <div class="row-packs cl">
+
+                    <!-- item (pack) -->
+                    <article class="item">
+                        <div class="content cl">
+                            <p class="item-title">Pack iMemento Base<br /> (MF-MS-MM-MC) iMemento Base</p>
+                            <ul class="format">
+                                <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                                <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                                <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                            </ul>
+
+                            <div class="wysiwyg">
+                                <p>Pack compuesto por:  Memento Fiscal, Memento Contable, Memento Social y Memento Mercantil.</p>
+                                <p>Benefíciese de un 15% de descuento al comprar estos cuatro Mementos juntos para su iPad.</p>
+                                <p>Las obras imprescindibles de Ediciones Francis Lefebvre ahora disponibles para su iPad.</p>
+                            </div>
+
+                            <p class="item-claim">Ahora un 5% más barato</p>
+                            <del class="old-price">
+                                <b>99,10 €</b>
+                                <small>+ IVA</small>
+                            </del>
+
+                            <ins class="price">
+                                <b>89,10 €</b>
+                                <small>+ IVA</small>
+                            </ins>
+                        </div>
+
+                        <div class="actions-item">
+                          <span class="btn">
+                            <a href="#">Añadir</a>
+                          </span>
+                        </div>
+
+                    </article>
+                    <!-- // item (pack) -->
+
+                    <!-- item (pack) -->
+                    <article class="item">
+                        <div class="content cl">
+                            <p class="item-title">iMemento Pack Fiscal<br /> (MF-MIS-MIV-MIRF)</p>
+                            <ul class="format">
+                                <li><i class="ico ico-paper-white"></i> <span class="offscreen">En papel</span></li>
+                                <li><i class="ico ico-pc-white"></i> <span class="offscreen">En internet</span></li>
+                                <li><i class="ico ico-tablet-white"></i> <span class="offscreen">En tablet</span></li>
+                            </ul>
+
+                            <div class="wysiwyg">
+                                <p>Pack compuesto por:  Memento Fiscal, Memento Contable, Memento Social y Memento Mercantil.</p>
+                                <p>Benefíciese de un 15% de descuento al comprar estos cuatro Mementos juntos para su iPad.</p>
+                                <p>Las obras imprescindibles de Ediciones Francis Lefebvre ahora disponibles para su iPad.</p>
+                            </div>
+
+                            <p class="item-claim">Ahora un 5% más barato</p>
+                            <del class="old-price">
+                                <b>99,10 €</b>
+                                <small>+ IVA</small>
+                            </del>
+
+                            <ins class="price">
+                                <b>89,10 €</b>
+                                <small>+ IVA</small>
+                            </ins>
+                        </div>
+
+                        <div class="actions-item">
+                            <i class="ico ico-check-green"></i>
+                            <a href="#" class="remove"><span>Quitar</span> <i class="ico ico-close-red"></i></a>
+                        </div>
+
+                    </article>
+                    <!-- // item (pack) -->
+
+                </div>
+                <!-- // row-packs -->
+
+            </article>
+            <!-- // related-packs -->
+
+        </div>
+        <!-- // content-packs -->
+
+        </div>
+        <!-- // tabs -->
+        </div>
+
+        </div>
+
+        <!-- aside -->
+        <aside class="aside">
+
+            <form action="" method="post" class="">
+                <div class="resume">
+                    <span class="claim">20% más barato</span>
+                    <span class="price">192,66 &euro;</span>
+                </div>
+
+                <table class="tb-formats">
+                    <caption class="offscreen">Cesta de la compra</caption>
+
+                    <thead>
+                    <tr>
+                        <th>Formato</th>
+                        <th>Precio</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <td class="format" colspan="2">
+                            <i class="ico ico-paper-white"></i>
+                            <i class="ico ico-pc-white"></i>
+                            <i class="ico ico-tablet-white"></i>
+                        </td>
+                    </tr>
+                    <tr class="text">
+                        <td>
+                            <span class="title">Procedimientos Tributarios 2012-2013</span>
+                        </td>
+                        <td class="price">
+                            <b>72,50 &euro;</b>
+                            <small>+ IVA</small>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="format" colspan="2">
+                            <i class="ico ico-paper-white"></i>
+                            <i class="ico ico-pc-white"></i>
+                        </td>
+                    </tr>
+                    <tr class="text">
+                        <td>
+                            <span class="title">Procedimientos Tributarios 2012-2013</span>
+                        </td>
+                        <td class="price">
+                            <del>99,10 &euro;</del>
+                            <ins><b>32,50 &euro;</b></ins>
+                            <small>+ IVA</small>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="format" colspan="2">
+                            <i class="ico ico-tablet-white"></i>
+                        </td>
+                    </tr>
+                    <tr class="text">
+                        <td>
+                            <span class="title">Procedimientos Tributarios 2012-2013</span>
+                        </td>
+                        <td class="price">
+                            <del>99,10 &euro;</del>
+                            <ins><b>55,50 &euro;</b></ins>
+                            <small>+ IVA</small>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+                <div class="wrap-btn">
+                    <button type="button" class="btn type2 hasIco"><i class="ico ico-arrow-right-white"></i> Comprar ahora</button>
+                </div>
+
+            </form>
+
+        </aside>
+        <!-- //aside -->
+
+        </div>
+
+    </div>
+{% endblock %}

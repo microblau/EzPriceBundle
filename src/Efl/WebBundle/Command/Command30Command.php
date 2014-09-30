@@ -25,11 +25,11 @@ use Exception;
  *
  * Actualiza la clase producto_qmementix
  */
-class Command28Command extends ContainerAwareCommand
+class Command30Command extends ContainerAwareCommand
 {
     protected function configure()
     {
-        $this->setName( 'efl:web:command28' )->setDefinition(array());
+        $this->setName( 'efl:web:command30' )->setDefinition(array());
     }
 
     protected function execute( InputInterface $input, OutputInterface $output )
@@ -43,7 +43,7 @@ class Command28Command extends ContainerAwareCommand
         try
         {
             $repository->beginTransaction();
-            $contentType = $contentTypeService->loadContentTypeByIdentifier( 'producto_qmementix' );
+            $contentType = $contentTypeService->loadContentTypeByIdentifier( 'producto_imemento' );
 
             $titleField = new FieldDefinitionCreateStruct(
                 array(
@@ -75,6 +75,18 @@ class Command28Command extends ContainerAwareCommand
                     'identifier' => 'text2',
                     'names' => array( 'esl-ES' => 'Texto 2' ),
                     'position' => 28,
+                    'isRequired' => false,
+                    'isSearchable' => true,
+                    'fieldGroup' => 'Rediseño Cabecera'
+                )
+            );
+
+            $imagen = new FieldDefinitionCreateStruct(
+                array(
+                    'fieldTypeIdentifier' => 'ezobjectrelation',
+                    'identifier' => 'big_image',
+                    'names' => array( 'esl-ES' => 'Imagen' ),
+                    'position' => 29,
                     'isRequired' => false,
                     'isSearchable' => true,
                     'fieldGroup' => 'Rediseño Cabecera'
@@ -119,11 +131,12 @@ class Command28Command extends ContainerAwareCommand
                 )
             );
 
-            $imagen = new FieldDefinitionCreateStruct(
+
+            $urlAppStore = new FieldDefinitionCreateStruct(
                 array(
-                    'fieldTypeIdentifier' => 'ezobjectrelation',
-                    'identifier' => 'big_image',
-                    'names' => array( 'esl-ES' => 'Imagen' ),
+                    'fieldTypeIdentifier' => 'ezstring',
+                    'identifier' => 'url_appstore',
+                    'names' => array( 'esl-ES' => 'AppStore' ),
                     'position' => 29,
                     'isRequired' => false,
                     'isSearchable' => true,
@@ -264,6 +277,12 @@ class Command28Command extends ContainerAwareCommand
             if ( !in_array( 'text2', $fieldIdentifiers ))
                 $contentTypeService->addFieldDefinition( $contentTypeDraft, $texto2Field );
 
+            if ( !in_array( 'big_image', $fieldIdentifiers ))
+                $contentTypeService->addFieldDefinition( $contentTypeDraft, $imagen );
+
+            if ( !in_array( 'url_appstore', $fieldIdentifiers ))
+                $contentTypeService->addFieldDefinition( $contentTypeDraft, $urlAppStore );
+
             if ( !in_array( 'img_preview_video', $fieldIdentifiers ))
                 $contentTypeService->addFieldDefinition( $contentTypeDraft, $imagenPreviewVideo );
 
@@ -272,9 +291,6 @@ class Command28Command extends ContainerAwareCommand
 
             if ( !in_array( 'img_preview_video_2', $fieldIdentifiers ))
                 $contentTypeService->addFieldDefinition( $contentTypeDraft, $imagenPreviewVideo2 );
-
-            if ( !in_array( 'big_image', $fieldIdentifiers ))
-                $contentTypeService->addFieldDefinition( $contentTypeDraft, $imagen );
 
             if ( !in_array( 'ventaja1', $fieldIdentifiers ))
                 $contentTypeService->addFieldDefinition( $contentTypeDraft, $ventaja1Field );

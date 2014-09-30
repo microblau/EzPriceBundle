@@ -26,10 +26,13 @@ class EflWebExtension extends Extension implements PrependExtensionInterface
      */
     public function load( array $config, ContainerBuilder $container )
     {
+        $configuration = new Configuration();
         $loader = new YamlFileLoader(
             $container,
             new FileLocator( __DIR__ . '/../Resources/config' )
         );
+
+        $config = $this->processConfiguration($configuration, $config);
 
         // Base services override
         $loader->load( 'services.yml' );
@@ -50,6 +53,8 @@ class EflWebExtension extends Extension implements PrependExtensionInterface
 
         // Storage Engines
         $loader->load( 'storage_engines.yml' );
+
+        $container->setParameter('eflweb.leads_client.parameters', $config['leads_client']);
     }
 
     /**

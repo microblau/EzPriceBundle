@@ -777,10 +777,17 @@ var EFL = function(){
         $( 'form.frm-test' ).submit(function (ev){
           ev.preventDefault();
           if( priv.formTest.validate( $(this) ) ){
-            // TODO: Send form with AJAX
-            // This is a fake response:
-            var strResponse = '<p class="title-form">Gracias, hemos recibido su solicitud de prueba gratis correctamente.</p>';
-            $(this).parent().html( strResponse );
+              var form = $(this);
+              $.ajax({
+                  type: "POST",
+                  url: $(form).attr('action'),
+                  data:  $( form ).serialize(),
+                  dataType: 'html',
+                  success:function( data )
+                  {
+                      $( 'form.frm-test' ).parent().html( data );
+                  }
+              });
           }
         });
       }

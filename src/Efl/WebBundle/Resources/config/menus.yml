@@ -4,7 +4,10 @@ parameters:
         mementos: 64
         bases_datos: 13373
         qmemento: 70
-        imemento: 11152
+        imemento:
+            id: 11152
+            label: 'Mementos para iPad'
+            route: imemento
         qmementix:
             id: 69
             label: qMementix

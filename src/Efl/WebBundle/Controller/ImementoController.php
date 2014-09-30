@@ -8,10 +8,10 @@
 
 namespace Efl\WebBundle\Controller;
 
-use Efl\WebBundle\Form\Type\QMementix\QMementixType;
+use Efl\WebBundle\Form\Type\Imemento\ImementoType;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 
-class QMementixController extends Controller
+class ImementoController extends Controller
 {
     /**
      * Página qmementix
@@ -20,18 +20,14 @@ class QMementixController extends Controller
      */
     public function indexAction()
     {
-        $content = $this->getRepository()->getContentService()->loadContent( 20025 );
+        $content = $this->getRepository()->getContentService()->loadContent( 18383 );
         $img = $this->getRepository()->getContentService()->loadContent(
-            $content->getFieldValue( 'img_preview_video' )->destinationContentId
-        );
-
-        $preview = $this->getRepository()->getContentService()->loadContent(
-            $content->getFieldValue( 'img_preview_video_2' )->destinationContentId
+            $content->getFieldValue( 'big_image' )->destinationContentId
         );
 
         $currentUserData = $this->get( 'eflweb.utils_helper' )->getCurrentUserFriendlyData();
         $form = $this->createForm(
-            new QMementixType(
+            new ImementoType(
                 $this->get( 'translator' ),
                 $this->get( 'ezpublish.api.service.location' ),
                 $this->get( 'router' ),
@@ -40,14 +36,13 @@ class QMementixController extends Controller
             $currentUserData
         );
 
-        $testimonios = $this->get( 'eflweb.testimonies_helper' )->getTestimoniesForLocation( 14851 );
+        $testimonios = $this->get( 'eflweb.testimonies_helper' )->getTestimoniesForLocation( 14129 );
 
         return $this->render(
-            'EflWebBundle:qmementix:index.html.twig',
+            'EflWebBundle:imemento:index.html.twig',
             array(
                 'content' => $content,
                 'img' => $img,
-                'preview_img' => $preview,
                 'testimonios' => $testimonios,
                 'form' => $form->createView()
             )
@@ -62,7 +57,7 @@ class QMementixController extends Controller
     public function postFormAction()
     {
         $form = $this->createForm(
-            new QMementixType(
+            new ImementoType(
                 $this->get( 'translator' ),
                 $this->get( 'ezpublish.api.service.location' ),
                 $this->get( 'router' ),
@@ -78,12 +73,12 @@ class QMementixController extends Controller
             $form->handleRequest( $request );
             if ( $form->isValid() )
             {
-                $this->get( 'eflweb.leads_helper' )->sendQMementixLead( $form->getData() );
+                $this->get( 'eflweb.leads_helper' )->sendImementoLead( $form->getData() );
             }
         }
 
         return $this->render(
-            'EflWebBundle:qmementix:form_response.html.twig'
+            'EflWebBundle:imemento:form_response.html.twig'
         );
     }
 
@@ -95,7 +90,7 @@ class QMementixController extends Controller
     public function redirectToIndexAction()
     {
         return $this->redirect(
-            $this->generateUrl( 'qmementix' )
+            $this->generateUrl( 'imemento' )
         );
     }
 
@@ -106,22 +101,17 @@ class QMementixController extends Controller
      */
     public function configAction()
     {
-        $content = $this->getRepository()->getContentService()->loadContent( 20025 );
+        $content = $this->getRepository()->getContentService()->loadContent( 18383 );
 
         $img = $this->getRepository()->getContentService()->loadContent(
-            $content->getFieldValue( 'img_preview_video' )->destinationContentId
-        );
-
-        $preview = $this->getRepository()->getContentService()->loadContent(
-            $content->getFieldValue( 'img_preview_video_2' )->destinationContentId
+            $content->getFieldValue( 'big_image' )->destinationContentId
         );
 
         return $this->render(
-            'EflWebBundle:qmementix:config.html.twig',
+            'EflWebBundle:imemento:config.html.twig',
             array(
                 'content' => $content,
                 'img' => $img,
-                'preview_img' => $preview
             )
         );
     }

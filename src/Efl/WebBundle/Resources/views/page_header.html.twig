@@ -27,6 +27,6 @@
 <nav>
     <div class="wrapper">
         <span class="menu"><a href="#">Mostar menú</a></span>
-        {{ render_esi( controller( "EflWebBundle:Header:mainMenu" ) ) }}
+        {{ render_esi( controller( "EflWebBundle:Header:mainMenu", {'route':app.request.attributes.get('_route') } ) ) }}
     </div>
 </nav>

@@ -22,3 +22,25 @@ video:
 qmementix:
     pattern: /qmementix
     defaults: { _controller: EflWebBundle:QMementix:index }
+
+qmementix_config:
+    pattern: /qmementix/config
+    defaults: { _controller: EflWebBundle:QMementix:config }
+
+qmementix_postform:
+    pattern: /qmementix/post
+    defaults: { _controller: EflWebBundle:QMementix:postForm }
+    methods: [POST]
+
+imemento:
+    pattern: /imemento
+    defaults: { _controller: EflWebBundle:Imemento:index }
+
+imemento_config:
+    pattern: /imemento/config
+    defaults: { _controller: EflWebBundle:Imemento:config }
+
+imemento_postform:
+    pattern: /imemento/post
+    defaults: { _controller: EflWebBundle:Imemento:postForm }
+    methods: [POST]
