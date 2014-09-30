@@ -139,9 +139,11 @@ class DoctrineDatabase extends Gateway
      */
     private function getRelatedContents( $tmpTableName, $contentIds, $limit )
     {
-        $statement = $this->getConnection()->prepare( "SELECT sum(ezproductcollection_item.item_count) as count, contentobject_id FROM ezproductcollection_item, $tmpTableName
+        $statement = $this->getConnection()->prepare( "SELECT sum(ezproductcollection_item.item_count) as count, ezproductcollection_item.contentobject_id FROM ezproductcollection_item, ezcontentobject_tree, $tmpTableName
                  WHERE ezproductcollection_item.productcollection_id=$tmpTableName.productcollection_id
                    AND ezproductcollection_item.contentobject_id NOT IN ( " . implode( ',' , $contentIds ) . " )
+                   AND ezproductcollection_item.contentobject_id = ezcontentobject_tree.contentobject_id
+                   AND is_invisible = 0
               GROUP BY ezproductcollection_item.contentobject_id
               ORDER BY count desc
               LIMIT $limit" );

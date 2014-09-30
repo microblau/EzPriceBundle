@@ -296,4 +296,26 @@ class ProductHelper
         }
 
     }
+
+    public function getTabs( $locationId )
+    {
+        $location = $this->locationService->loadLocation( $locationId );
+
+        $query = new LocationQuery();
+
+        $query->query = new Criterion\LogicalAnd(
+            array(
+                new Criterion\Visibility( Criterion\Visibility::VISIBLE ),
+                new Criterion\Location\Depth( Criterion\Operator::EQ, $location->depth + 1 ),
+                new Criterion\Subtree( $location->pathString ),
+                new Criterion\ContentTypeIdentifier(
+                    array(
+                        'sistema_memento',
+                        'ventajas_producto',
+
+                    )
+                )
+            )
+        );
+    }
 }

@@ -11,7 +11,7 @@ namespace Efl\WebBundle\Controller;
 use Efl\WebBundle\Form\Type\QMementix\QMementixType;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 
-class QMementixController extends Controller
+class QMementoController extends Controller
 {
     /**
      * Página qmementix
