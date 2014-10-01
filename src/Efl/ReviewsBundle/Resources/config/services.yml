@@ -4,7 +4,7 @@ parameters:
     eflweb.persistence.legacy.reviews.handler.class: Efl\ReviewsBundle\eZ\Publish\Core\Persistence\Legacy\Reviews\Handler
     eflweb.persistence.legacy.reviews.gateway.class: Efl\ReviewsBundle\eZ\Publish\Core\Persistence\Legacy\Reviews\Gateway\Doctrine
     eflweb.reviews_per_page: 5
-
+    eflweb.controller.product.reviews.class: Efl\ReviewsBundle\Controller\ReviewsController
 
 services:
     eflweb.reviews_service:
@@ -22,3 +22,7 @@ services:
         class: %eflweb.persistence.legacy.reviews.gateway.class%
         arguments:
             - @doctrine.orm.entity_manager
+
+    eflweb.controller.product.reviews:
+        class: %eflweb.controller.product.reviews.class%
+        parent: ezpublish.controller.base

@@ -12,12 +12,7 @@
                     <p class="tab {% if i == 0 %}active{% endif %}"><a href="#{{ tab.id }}">{{ tab.label }} <i class="ico"></i></a></p>
 
                     <div id="{{ tab.id }}" class="tabs-content {% if i == 0 %}active{% endif %}">
-
-                        <article class="release-detail">
-                            <div class="wysiwyg">
                                 {{ tab.content|raw }}
-                            </div>
-                        </article>
                     </div>
                 {% endfor %}
             </div>

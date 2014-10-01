@@ -17,6 +17,7 @@ parameters:
     eflweb.twig.extension.metadata.class: Efl\WebBundle\Twig\Extensions\FezMetaDataExtension
     pagerfanta.view.efl.class: Efl\WebBundle\PagerFanta\View\EflView
     lexik_currency.doctrine.orm.entity_manager: newhome_repository_connection
+    eflweb.controller.product.view.class: Efl\WebBundle\Controller\ProductController
 
 services:
     eflweb.twig.extension.metadata:
@@ -43,3 +44,7 @@ services:
         public: false
         tags:
             - { name: 'pagerfanta.view', alias: 'efl'}
+
+    eflweb.controller.product.view:
+        class: %eflweb.controller.product.view.class%
+        parent: ezpublish.controller.base

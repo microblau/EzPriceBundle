@@ -1,0 +1,20 @@
+<article class="release-detail">
+    <div class="wysiwyg">
+{% if faqs|length > 0 %}
+    <ul>
+        {% for faq in faqs %}
+            <li><a href="#faq_{{ faq.id }}">{{ ez_content_name(faq ) }}</a></li>
+        {% endfor %}
+    </ul>
+
+    {% for faq in faqs %}
+        <div class="faq" id="faq_{{ faq.id }}">
+            <div class="faq-title"><strong>{{ ez_content_name( faq ) }}</strong></div>
+            <div class="faq-content">
+                {{ ez_render_field( faq, 'texto_respuesta' ) }}
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+        </div>
+    </article>

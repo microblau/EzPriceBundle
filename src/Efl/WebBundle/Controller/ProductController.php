@@ -4,6 +4,7 @@ namespace Efl\WebBundle\Controller;
 
 use Efl\BasketBundle\Form\Type\AddToBasketType;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
+use eZ\Publish\API\Repository\Values\Content\Content;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
@@ -111,7 +112,7 @@ class ProductController extends Controller
             array(
                 'location' => $location,
                 'content' => $content,
-                'tabs' => $this->get( 'eflweb.product_helper' )->getTabs( $locationId )
+                'tabs' => $this->get( 'eflweb.product_helper' )->getTabs( $locationId ),
             ),
             $response
         );
@@ -294,14 +295,43 @@ class ProductController extends Controller
             $products[] = $item->contentInfo->mainLocationId;
         }
 
-
         return $this->render(
             'EflWebBundle:product:relatedbyorders.html.twig',
             array(
-                'products' => $products,
-                'formats' => $formats
+                'products' => $products
             ),
             $response
+        );
+    }
+
+    public function renderFaqsProduct( array $faqs )
+    {
+        return $this->render(
+            'EflWebBundle:product:faqs.html.twig',
+            array(
+                'faqs' => $faqs
+            )
+        );
+    }
+
+    public function renderSistemaMementoProduct( Content $sistema_memento )
+    {
+        return $this->render(
+            'EflWebBundle:product:sistema_memento.html.twig',
+            array(
+                'sistemaMemento' => $sistema_memento
+            )
+        );
+    }
+
+    public function renderInfoField( Content $content, $field )
+    {
+        return $this->render(
+            'EflWebBundle:product:info_field.html.twig',
+            array(
+                'content' => $content,
+                'field' => $field
+            )
         );
     }
 }

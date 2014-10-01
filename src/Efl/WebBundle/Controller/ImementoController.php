@@ -37,7 +37,7 @@ class ImementoController extends Controller
         );
 
         $testimonios = $this->get( 'eflweb.testimonies_helper' )->getTestimoniesForLocation( 14129 );
-        $faqs = $this->get( 'eflweb.product_helper' )->getFaqsForContent( $content, 'faqs_producto' );
+        $data = $this->get( 'eflweb.product_helper' )->getDataForContent( $content );
 
         return $this->render(
             'EflWebBundle:imemento:index.html.twig',
@@ -46,7 +46,7 @@ class ImementoController extends Controller
                 'img' => $img,
                 'testimonios' => $testimonios,
                 'form' => $form->createView(),
-                'faqs' => $faqs
+                'faqs' => $data['faqs']
             )
         );
     }

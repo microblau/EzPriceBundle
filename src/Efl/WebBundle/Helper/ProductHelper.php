@@ -2,6 +2,7 @@
 
 namespace Efl\WebBundle\Helper;
 
+use Efl\ReviewsBundle\Controller\ReviewsController;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\SearchService;
@@ -13,7 +14,7 @@ use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use Efl\ReviewsBundle\eZ\Publish\Core\Repository\ReviewsService;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\ContentTypeService;
-use eZ\Publish\Core\MVC\Symfony\Templating\Twig\Extension\ContentExtension;
+use Efl\WebBundle\Controller\ProductController;
 
 class ProductHelper
 {
@@ -47,7 +48,9 @@ class ProductHelper
      */
     private $contentTypeService;
 
-    private $contentExtension;
+    private $productController;
+
+    private $reviewsController;
 
     public function __construct(
         ContentService $contentService,
@@ -56,7 +59,8 @@ class ProductHelper
         SearchService $searchService,
         ReviewsService $reviewsService,
         ContentTypeService $contentTypeService,
-        ContentExtension $contentExtension
+        ProductController $productController,
+        ReviewsController $reviewsController
     )
     {
         $this->contentService = $contentService;
@@ -65,7 +69,8 @@ class ProductHelper
         $this->searchService = $searchService;
         $this->reviewsService = $reviewsService;
         $this->contentTypeService = $contentTypeService;
-        $this->contentExtension = $contentExtension;
+        $this->productController = $productController;
+        $this->reviewsController = $reviewsController;
     }
 
     /**
@@ -161,8 +166,9 @@ class ProductHelper
      * @param Location $location
      * @return array|bool
      */
-    private function contentHasSistemaMemento( Location $location )
+    private function contentHasSistemaMemento( Content $content )
     {
+        $location = $this->locationService->loadLocation( $content->contentInfo->mainLocationId );
         $sistemaMemento = false;
 
         $query = new LocationQuery();
@@ -402,22 +408,41 @@ class ProductHelper
 
     private function getContentForTab( $class, Content $content )
     {
+        $extraData = $this->getDataForContent( $content );
         switch ( $class )
         {
             case 'sistema_memento':
-                return 'Sistema Memento';
+                return $this->productController->renderSistemaMementoProduct( $extraData['sistema_memento'] )->getContent();
 
             case 'ventajas_producto':
-                return $this->contentExtension->renderField( $content, 'ventajas' );
+                return $this->productController->renderInfoField(
+                    $content,
+                    'ventajas'
+                )->getContent();
 
             case 'condiciones_producto':
-                return $this->contentExtension->renderField( $content, 'contenido' );
+                return $this->productController->renderInfoField(
+                    $content,
+                    'contenido'
+                )->getContent();
 
             case 'novedades_producto':
-                return $this->contentExtension->renderField( $content, 'novedades' );
+                return $this->productController->renderInfoField(
+                    $content,
+                    'novedades'
+                )->getContent();
 
             case 'actualizaciones_producto':
-                return $this->contentExtension->renderField( $content, 'actualizaciones' );
+                return $this->productController->renderInfoField(
+                   $content,
+                   'actualizaciones'
+                )->getContent();
+
+            case 'faqs_producto':
+                return $this->productController->renderFaqsProduct( $extraData['faqs'] )->getContent();
+
+            case 'opiniones_clientes':
+                return $this->reviewsController->pagerAction( $content->contentInfo->mainLocationId )->getContent();
 
             default:
                 return 'Pestaña';
@@ -460,9 +485,9 @@ class ProductHelper
         return null;
     }
 
-    public function getFaqsForContent( Content $content, $fieldIdentifier )
+    public function getDataForContent( Content $content )
     {
-        $faqsValue = $content->getFieldValue( $fieldIdentifier );
+        $faqsValue = $content->getFieldValue( 'faqs_producto' );
 
         $faqs = array();
         foreach ( $faqsValue->destinationContentIds as $faqContentId )
@@ -470,7 +495,10 @@ class ProductHelper
             $faqs[] = $this->contentService->loadContent( $faqContentId );
         }
 
-        return $faqs;
+        return array(
+            'faqs' => $faqs,
+            'sistema_memento' => $this->contentHasSistemaMemento( $content )
+        );
     }
 
 }

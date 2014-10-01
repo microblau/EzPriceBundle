@@ -1,0 +1,15 @@
+<article class="release-detail">
+    <div class="wysiwyg">
+
+        <p class="title10">Sistema Memento</p>
+        <p class="title9 upper">{{ ez_render_field( sistemaMemento.content, 'titulo') }}</p>
+        {{ ez_render_field( sistemaMemento.image, 'image', {
+        'template':'EflWebBundle:fields:portrait_img.html.twig',
+        'parameters': {
+        'alias':'portrait',
+        'attrs': {'class':'portrait-img'}
+        }} ) }}
+        {{ ez_render_field( sistemaMemento.content, 'texto', {template: 'EflWebBundle:fields:only_value.html.twig'}) }}
+
+    </div>
+</article>
