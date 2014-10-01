@@ -70,33 +70,7 @@
 
 
             <section class="benefits">
-                <article class="benefit-detail">
-                    <i class="ico ico-check-white"></i>
-                    <div class="cont-text">
-                        {{ ez_render_field(content, 'ventaja1') }}
-                    </div>
-                </article>
-
-                <article class="benefit-detail">
-                    <i class="ico ico-check-white"></i>
-                    <div class="cont-text">
-                        {{ ez_render_field(content, 'ventaja2') }}
-                    </div>
-                </article>
-
-                <article class="benefit-detail">
-                    <i class="ico ico-check-white"></i>
-                    <div class="cont-text">
-                        {{ ez_render_field(content, 'ventaja3') }}
-                    </div>
-                </article>
-
-                <article class="benefit-detail">
-                    <i class="ico ico-check-white"></i>
-                    <div class="cont-text">
-                        {{ ez_render_field(content, 'ventaja4') }}
-                    </div>
-                </article>
+                {{ ez_render_field(content, 'ventajas') }}
             </section>
             <section class="appMarket">
                 <a href="{{ ez_render_field(content, 'url_appstore', {'template':'EflWebBundle:fields:only_value.html.twig'} ) }}"><img src="{{ asset ("bundles/eflweb/images/appstore@2x.png")}}" alt="" class="appMarket-img"></a>
@@ -135,67 +109,62 @@
     <span class="tabs-wrap"></span>
 
     <div class="tabs-wrap-content">
-        <p class="tab active"><a href="#features-content">Contenidos <i class="ico"></i></a></p>
-        <div id="features-content" class="tabs-content active">
-            <article class="features-detail">
-                <ul class="layout-3cols">
-                    <li class="col1">
+        {%  if not ez_is_field_empty( content, 'contenido' ) %}
+            <p class="tab active"><a href="#features-content">Condiciones de la suscripción <i class="ico"></i></a></p>
+            <div id="features-content" class="tabs-content active">
+                <article class="features-detail">
+                    <div class="wysiwyg layout-3cols">
+                        {{ ez_render_field(content, 'contenido') }}
+                    </div>
+                </article>
+            </div>
+        {% endif %}
 
-                        <div class="wysiwyg">
-                           {{ ez_render_field(content, 'contenidos1') }}
-                        </div>
+        {% if not ez_is_field_empty( content, 'contenidos' ) %}
+            <p class="tab active"><a href="#features-contents">Condiciones <i class="ico"></i></a></p>
+            <div id="features-contents" class="tabs-content active">
+                <article class="features-detail">
+                    <div class="wysiwyg layout-3cols">
+                        {{ ez_render_field(content, 'contenido') }}
+                    </div>
+                </article>
+            </div>
+        {% endif %}
+        {% if not ez_is_field_empty( content, 'funcionalidades' ) %}
+            <p class="tab"><a href="#features-functionalities">Funcionalidades <i class="ico"></i></a></p>
+            <div id="features-functionalities" class="tabs-content">
+                <article class="features-detail">
+                    <div class="wysiwyg layout-3cols">
+                        {{ ez_render_field(content, 'funcionalidades') }}
+                    </div>
+                </article>
+            </div>
+        {% endif %}
+        {% if not ez_is_field_empty( content, 'faqs_producto' ) %}
+            <p class="tab"><a href="#features-faq">Preguntas frecuentes <i class="ico"></i></a></p>
+            <div id="features-faq" class="tabs-content">
+                <article class="features-detail">
+                    <div class="wysiwyg layout-3cols">
+                        {% if faqs|length > 0 %}
+                            <ul>
+                        {% for faq in faqs %}
+                                <li><a href="#faq_{{ faq.id }}">{{ ez_content_name(faq ) }}</a></li>
+                        {% endfor %}
+                            </ul>
 
-                    </li>
-                    <li class="col2">
-
-                        <div class="wysiwyg">
-                            {{ ez_render_field(content, 'contenidos2') }}
-                        </div>
-
-                    </li>
-                    <li class="col3">
-
-                        <div class="wysiwyg">
-                            {{ ez_render_field(content, 'contenidos3') }}
-                        </div>
-
-                    </li>
-                </ul>
-
-            </article>
-
-        </div>
-
-        <p class="tab"><a href="#features-functionalities">Funcionalidades <i class="ico"></i></a></p>
-        <div id="features-functionalities" class="tabs-content">
-            <article class="features-detail">
-                <ul class="layout-3cols">
-                    <li class="col1">
-
-                        <div class="wysiwyg">
-                            {{ ez_render_field(content, 'funcionalidad1') }}
-                        </div>
-
-                    </li>
-                    <li class="col2">
-
-                        <div class="wysiwyg">
-                            {{ ez_render_field(content, 'funcionalidad2') }}
-                        </div>
-
-                    </li>
-                    <li class="col3">
-
-                        <div class="wysiwyg">
-                            {{ ez_render_field(content, 'funcionalidad3') }}
-                        </div>
-
-                    </li>
-                </ul>
-            </article>
-
-        </div>
-
+                            {% for faq in faqs %}
+                                <div class="faq" id="faq_{{ faq.id }}">
+                                    <div class="faq-title"><strong>{{ ez_content_name( faq ) }}</strong></div>
+                                    <div class="faq-content">
+                                        {{ ez_render_field( faq, 'texto_respuesta' ) }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </article>
+            </div>
+        {% endif %}
     </div>
 
 </article>

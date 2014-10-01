@@ -70,33 +70,7 @@
 
 
             <section class="benefits">
-                <article class="benefit-detail">
-                    <i class="ico ico-check-white"></i>
-                    <div class="cont-text">
-                        {{ ez_render_field(content, 'ventaja1') }}
-                    </div>
-                </article>
-
-                <article class="benefit-detail">
-                    <i class="ico ico-check-white"></i>
-                    <div class="cont-text">
-                        {{ ez_render_field(content, 'ventaja2') }}
-                    </div>
-                </article>
-
-                <article class="benefit-detail">
-                    <i class="ico ico-check-white"></i>
-                    <div class="cont-text">
-                        {{ ez_render_field(content, 'ventaja3') }}
-                    </div>
-                </article>
-
-                <article class="benefit-detail">
-                    <i class="ico ico-check-white"></i>
-                    <div class="cont-text">
-                        {{ ez_render_field(content, 'ventaja4') }}
-                    </div>
-                </article>
+                {{ ez_render_field(content, 'ventajas') }}
             </section>
 
             {% if testimonios|length %}
@@ -132,68 +106,50 @@
     <span class="tabs-wrap"></span>
 
     <div class="tabs-wrap-content">
-        <p class="tab active"><a href="#features-content">Contenidos <i class="ico"></i></a></p>
+        {%  if not ez_is_field_empty( content, 'contenido' ) %}
+        <p class="tab active"><a href="#features-content">Condiciones de la suscripción <i class="ico"></i></a></p>
         <div id="features-content" class="tabs-content active">
             <article class="features-detail">
-                <ul class="layout-3cols">
-                    <li class="col1">
-
-                        <div class="wysiwyg">
-                           {{ ez_render_field(content, 'contenidos1') }}
-                        </div>
-
-                    </li>
-                    <li class="col2">
-
-                        <div class="wysiwyg">
-                            {{ ez_render_field(content, 'contenidos2') }}
-                        </div>
-
-                    </li>
-                    <li class="col3">
-
-                        <div class="wysiwyg">
-                            {{ ez_render_field(content, 'contenidos3') }}
-                        </div>
-
-                    </li>
-                </ul>
-
+                <div class="wysiwyg layout-3cols">
+                    {{ ez_render_field(content, 'contenido') }}
+                </div>
             </article>
-
         </div>
+        {% endif %}
 
-        <p class="tab"><a href="#features-functionalities">Funcionalidades <i class="ico"></i></a></p>
-        <div id="features-functionalities" class="tabs-content">
-            <article class="features-detail">
-                <ul class="layout-3cols">
-                    <li class="col1">
-
-                        <div class="wysiwyg">
-                            {{ ez_render_field(content, 'funcionalidad1') }}
-                        </div>
-
-                    </li>
-                    <li class="col2">
-
-                        <div class="wysiwyg">
-                            {{ ez_render_field(content, 'funcionalidad2') }}
-                        </div>
-
-                    </li>
-                    <li class="col3">
-
-                        <div class="wysiwyg">
-                            {{ ez_render_field(content, 'funcionalidad3') }}
-                        </div>
-
-                    </li>
-                </ul>
-            </article>
-
-        </div>
+        {% if not ez_is_field_empty( content, 'contenidos' ) %}
+            <p class="tab active"><a href="#features-contents">Condiciones <i class="ico"></i></a></p>
+            <div id="features-contents" class="tabs-content active">
+                <article class="features-detail">
+                    <div class="wysiwyg layout-3cols">
+                        {{ ez_render_field(content, 'contenido') }}
+                    </div>
+                </article>
+            </div>
+        {% endif %}
+        {% if not ez_is_field_empty( content, 'funcionalidades' ) %}
+            <p class="tab"><a href="#features-functionalities">Funcionalidades <i class="ico"></i></a></p>
+            <div id="features-functionalities" class="tabs-content">
+                <article class="features-detail">
+                    <div class="wysiwyg layout-3cols">
+                        {{ ez_render_field(content, 'funcionalidades') }}
+                    </div>
+                </article>
+            </div>
+        {% endif %}
 
     </div>
 
 </article>
+{% endblock %}
+
+{% block footerScript %}
+    {% javascripts
+    '@EflWebBundle/Resources/public/js/jquery.columnizer.js'
+    %}
+<!--[if lte IE 9]>
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+<![endif]-->
+    {% endjavascripts %}
+    {{ parent() }}
 {% endblock %}

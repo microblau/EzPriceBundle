@@ -216,6 +216,13 @@ class ProductHelper
         );
     }
 
+    /**
+     * Hay que mostrar resume?
+     *
+     * @param Content $content
+     *
+     * @return bool
+     */
     public function contentHasResume( Content $content )
     {
         return !$this->fieldHelper->isFieldEmpty( $content, 'texto_oferta' )
@@ -318,4 +325,54 @@ class ProductHelper
             )
         );
     }
+
+    /**
+     * Devuelve el formato asociado al producto pasado
+     * para así obtener el precio
+     *
+     * @param $contentId
+     *
+     * @return Content|null
+     * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
+     */
+    public function getFormatForContent( $contentId )
+    {
+        $content =  $this->contentService->loadContent( $contentId );
+
+        $productClass = $this->contentTypeService->loadContentType(
+            $content->contentInfo->contentTypeId
+        )->identifier;
+
+        $formats = $this->getFormatosForLocation(
+            $this->locationService->loadLocation(
+                $content->contentInfo->mainLocationId
+            )
+        );
+
+        if ( $productClass == 'producto' && isset( $formats['formato_papel'] ) )
+        {
+            return $formats['formato_papel']['content'];
+        }
+
+        if ( strpos( $productClass, 'formato' ) !== false )
+        {
+            return $content;
+        }
+
+        return null;
+    }
+
+    public function getFaqsForContent( Content $content, $fieldIdentifier )
+    {
+        $faqsValue = $content->getFieldValue( $fieldIdentifier );
+
+        $faqs = array();
+        foreach ( $faqsValue->destinationContentIds as $faqContentId )
+        {
+            $faqs[] = $this->contentService->loadContent( $faqContentId );
+        }
+
+        return $faqs;
+    }
+
 }

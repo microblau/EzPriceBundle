@@ -1,5 +1,5 @@
 <div class="portrait">
-    {%  if not ez_is_field_empty( content, 'ebook_gratis' ) %}
+    {%  if format is not null and not ez_is_field_empty( format, 'ebook_gratis' ) %}
         <span class="badge"><span class="badge-text">ebook gratis</span></span>
     {% endif %}
     {{ ez_render_field( image, 'image', {

@@ -20,13 +20,12 @@ class discountsType extends eZWorkflowEventType
     	$parameters = $process->attribute( 'parameter_list' );
     	$objectID = $parameters['object_id'];
         $object = eZContentObject::fetch( $objectID );
-        eZLog::write( strpos( $object->attribute( 'content_class' )->attribute( 'identifier' ), 'formato' ), 'formato.log' );
         if( ( ( strpos( $object->attribute( 'content_class' )->attribute( 'identifier' ), 'formato' ) !== false ) or
                 $object->attribute( 'contentclass_id' ) == 49 )
                 or  ( $object->attribute( 'contentclass_id' ) == 48 ) or ( $object->attribute( 'contentclass_id' ) == 100 )
                 or ( $object->attribute( 'contentclass_id' ) == 61 ) )
         {
-            eZLog::write( 'entro', 'formato.log' );
+
 	        $data = $object->dataMap();
 		
 			if( $data['precio_oferta'] && $data['fecha_inicio_oferta'] && $data['fecha_fin_oferta'] && ( $data['precio_oferta']->content()->attribute( 'price' ) > 0 ) and ( $data['fecha_inicio_oferta']->content()->timestamp() < time() ) and ( $data['fecha_fin_oferta']->content()->timestamp() + 86400 >  time() ) )
