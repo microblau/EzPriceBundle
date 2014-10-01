@@ -1,0 +1,26 @@
+Efl\DiscountsBundle\Entity\EzdiscountsubruleValue:
+    type: entity
+    table: ezdiscountsubrule_value
+    id:
+        discountsubruleId:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: discountsubrule_id
+        value:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            default: '0'
+            id: true
+        issection:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            default: '0'
+            id: true
+    lifecycleCallbacks: {  }

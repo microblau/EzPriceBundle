@@ -1,0 +1,39 @@
+Efl\DiscountsBundle\Entity\EzuserDiscountrule:
+    type: entity
+    table: ezuser_discountrule
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        contentobjectId:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: ''
+            column: contentobject_id
+        discountruleId:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: ''
+            column: discountrule_id
+        name:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+            comment: ''
+            default: ''
+    manyToOne:
+        EzDiscountRule:
+            targetEntity: Efl\DiscountsBundle\Entity\Ezdiscountrule
+            joinColumn:
+                name: ezdiscountrule_id
+                referencedColumnNam: id
+    lifecycleCallbacks: {  }
