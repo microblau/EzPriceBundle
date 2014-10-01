@@ -93,7 +93,7 @@ class ProductController extends Controller
             array(
                 'location' => $location,
                 'content' => $content,
-                'tabsInfo' => $this->get( 'eflweb.product_helper' )->getActiveTab( $locationId )
+                'tabs' => $this->get( 'eflweb.product_helper' )->getTabs( $locationId )
             ),
             $response
         );

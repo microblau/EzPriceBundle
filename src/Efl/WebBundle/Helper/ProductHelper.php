@@ -13,6 +13,7 @@ use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use Efl\ReviewsBundle\eZ\Publish\Core\Repository\ReviewsService;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\Core\MVC\Symfony\Templating\Twig\Extension\ContentExtension;
 
 class ProductHelper
 {
@@ -46,13 +47,16 @@ class ProductHelper
      */
     private $contentTypeService;
 
+    private $contentExtension;
+
     public function __construct(
         ContentService $contentService,
         LocationService $locationService,
         FieldHelper $fieldHelper,
         SearchService $searchService,
         ReviewsService $reviewsService,
-        ContentTypeService $contentTypeService
+        ContentTypeService $contentTypeService,
+        ContentExtension $contentExtension
     )
     {
         $this->contentService = $contentService;
@@ -61,6 +65,7 @@ class ProductHelper
         $this->searchService = $searchService;
         $this->reviewsService = $reviewsService;
         $this->contentTypeService = $contentTypeService;
+        $this->contentExtension = $contentExtension;
     }
 
     /**
@@ -300,6 +305,7 @@ class ProductHelper
     public function getTabs( $locationId )
     {
         $location = $this->locationService->loadLocation( $locationId );
+        $productContent = $this->contentService->loadContent( $location->contentId );
 
         $query = new LocationQuery();
 
@@ -312,10 +318,102 @@ class ProductHelper
                     array(
                         'sistema_memento',
                         'ventajas_producto',
-
+                        'condiciones_producto',
+                        'novedades_producto',
+                        'actualizaciones_producto',
+                        'opiniones_clientes',
+                        'noticias_relacionadas_producto',
+                        'faqs_producto'
                     )
                 )
             )
         );
+
+        $query->sortClauses = array( new Query\SortClause\Location\Priority() );
+
+        $results = $this->searchService->findLocations( $query )->searchHits;
+
+        $contents = array();
+
+        foreach ( $results as $result )
+        {
+            $content = $this->contentService->loadContent(
+                $result->valueObject->contentInfo->id
+            );
+
+            $contentType = $this->contentTypeService->loadContentType( $content->contentInfo->contentTypeId )->identifier;
+            $tabLiteral = $this->getLiteralForTab(
+                $contentType,
+                $location
+            );
+
+            $tabContent = $this->getContentForTab(
+                $contentType,
+                $productContent
+            );
+
+            $contents[] = array(
+                'label' => $tabLiteral,
+                'content' => $tabContent,
+                'id' => $contentType
+            );
+        }
+
+        return $contents;
+    }
+
+    private function getLiteralForTab( $class, Location $location )
+    {
+        switch ( $class )
+        {
+            case 'sistema_memento':
+                return 'Sistema Memento';
+
+            case 'ventajas_producto':
+                return 'Ventajas';
+
+
+            case 'condiciones_producto':
+                return 'Condiciones';
+
+            case 'novedades_producto':
+                return $location->parentLocationId == 66 ? 'Últimas noticias' : 'Novedades';
+
+            case 'actualizaciones_producto':
+                return 'Actualizaciones';
+
+            case 'faqs_producto':
+                return 'Preguntas Frecuentes';
+
+            case 'opiniones_clientes':
+                return 'Opinión de los clientes';
+
+            default:
+                return 'Pestaña';
+        }
+    }
+
+    private function getContentForTab( $class, Content $content )
+    {
+        switch ( $class )
+        {
+            case 'sistema_memento':
+                return 'Sistema Memento';
+
+            case 'ventajas_producto':
+                return $this->contentExtension->renderField( $content, 'ventajas' );
+
+            case 'condiciones_producto':
+                return $this->contentExtension->renderField( $content, 'contenido' );
+
+            case 'novedades_producto':
+                return $this->contentExtension->renderField( $content, 'novedades' );
+
+            case 'actualizaciones_producto':
+                return $this->contentExtension->renderField( $content, 'actualizaciones' );
+
+            default:
+                return 'Pestaña';
+        }
     }
 }

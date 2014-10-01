@@ -70,6 +70,7 @@ services:
             - @ezpublish.api.service.search
             - @eflweb.reviews_service
             - @ezpublish.api.service.content_type
+            - @ezpublish.twig.extension.content
 
     eflweb.utils_helper:
         class: %eflweb.utils_helper.class%
