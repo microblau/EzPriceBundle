@@ -477,11 +477,14 @@ label.error input[type=text], label.error input[type=password], label.error text
       .tab a .ico { float: right; margin-top: .4em; width: 1.9em; height: 1.2em; background-position: -26.8em -2.3em; }
 
     .magazines .tabs-wrap-content { margin: 0 -1em; padding: 2em; background-color: #EAEFF0; }
-    
-      .tabs-content { position: absolute; top: -9999em; left: -9999em; padding: 1em 0; }
+   
+    .tabs-content { position: absolute; top: -9999em; left: -999em; padding: 1em 0; width: 100%; }
+
         /*Active*/
         .tabs-content.active { position: static; }
           .tab.active a .ico { background-position: -26.8em -3.4em; }
+
+
 
 
 /*==== 1. Filter Types ====*/

@@ -365,6 +365,9 @@ var EFL = function(){
       }
     },
 		behaviours: {
+      columns:function(){
+        return false;
+      },
       calendar:function(){
         $( '.frm-calendar' ).on( 'change', 'select#month', function(){
           $( '.listCalendar > li' ).show();
@@ -762,6 +765,28 @@ var EFL = function(){
         if( $( 'body.promo' ).length ){
           priv.promo.behaviours();
         }
+
+        if( $('html').hasClass('ie9') ){
+          var ln = $( '.layout-3cols' ).length;
+          for (var i=0; i<ln; i++){
+            try{
+              $( $( '.layout-3cols' )[i] ).columnize({ columns: 3, debug: 1 });
+            }catch(e){
+              console.error( 'Error on columnize: ' + e )
+            }
+          }
+          
+          ln = $( '.layout-2cols' ).length;
+          for (var i=0; i<ln; i++){
+            try{
+              $( $( '.layout-2cols' )[i] ).columnize({ columns: 2, debug: 1 });
+            }catch(e){
+              console.error( 'Error on columnize: ' + e )
+            }
+          }
+          
+        }
+
       }
 
 
@@ -777,17 +802,10 @@ var EFL = function(){
         $( 'form.frm-test' ).submit(function (ev){
           ev.preventDefault();
           if( priv.formTest.validate( $(this) ) ){
-              var form = $(this);
-              $.ajax({
-                  type: "POST",
-                  url: $(form).attr('action'),
-                  data:  $( form ).serialize(),
-                  dataType: 'html',
-                  success:function( data )
-                  {
-                      $( 'form.frm-test' ).parent().html( data );
-                  }
-              });
+            // TODO: Send form with AJAX
+            // This is a fake response:
+            var strResponse = '<p class="title-form">Gracias, hemos recibido su solicitud de prueba gratis correctamente.</p>';
+            $(this).parent().html( strResponse );
           }
         });
       }

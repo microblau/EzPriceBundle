@@ -8,7 +8,7 @@
                 jQuery.ez( 'wsproduct::get::' + $(".autocomplete").val(), {}, function( data ) {
                     response( $.map( data.content, function( item ) {
                         return {
-                            label: item.name,
+                            label: item.cod + ' - ' + item.name,
                             value: item.name,
                             code: item.cod
                         }

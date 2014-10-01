@@ -46,11 +46,15 @@ class PriceHelper
      */
     private $locationService;
 
-
+    /**
+     * @var DiscountsService
+     */
     private $discountsService;
 
+    /**
+     * @var Repository
+     */
     private $repository;
-
 
     public function __construct(
         ContentTypeService $contentTypeService,
@@ -77,7 +81,7 @@ class PriceHelper
      */
     public function getPrices( $contentId )
     {
-        $format = $this->getFormatForContent( $contentId );
+        $format = $this->productHelper->getFormatForContent( $contentId );
 
         if ( $format != null )
         {
@@ -92,33 +96,6 @@ class PriceHelper
             }
 
             return $prices;
-        }
-
-        return null;
-    }
-
-    private function getFormatForContent( $contentId )
-    {
-        $content =  $this->contentService->loadContent( $contentId );
-
-        $productClass = $this->contentTypeService->loadContentType(
-            $content->contentInfo->contentTypeId
-        )->identifier;
-
-        $formats = $this->productHelper->getFormatosForLocation(
-            $this->locationService->loadLocation(
-                $content->contentInfo->mainLocationId
-            )
-        );
-
-        if ( $productClass == 'producto' && isset( $formats['formato_papel'] ) )
-        {
-            return $formats['formato_papel']['content'];
-        }
-
-        if ( strpos( $productClass, 'formato' ) !== false )
-        {
-            return $content;
         }
 
         return null;

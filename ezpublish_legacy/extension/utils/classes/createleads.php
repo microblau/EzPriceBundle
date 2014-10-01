@@ -46,7 +46,7 @@ $productAttr = eZContentObjectAttribute::fetch( $data['producto']->ContentObject
 			
 	          break;
 	       case 15258:
-$data = $collection->dataMap();
+        $data = $collection->dataMap();
         $product = $data['prod_qmeime']->DataText ;
 
    
