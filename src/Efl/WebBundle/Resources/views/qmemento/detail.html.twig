@@ -1,0 +1,265 @@
+{% extends "EflWebBundle::pagelayout.html.twig" %}
+{% set mainClass = 'iMemento' %}
+{% block content %}
+<div class="wrapper cl">
+
+    <div class="oneCol">
+
+        <!-- main -->
+        <div class="main">
+
+            <article class="highlight cl">
+                <div class="content">
+                    <span class="badge2"><span class="badge2-text">qMemento</span></span>
+                    <p class="super-title">{{ ez_render_field( parentContent, 'title' ) }}</p>
+                    <div class="title4">
+                        {{ ez_render_field( parentContent, 'text1' ) }}
+                    </div>
+                    <div class="title7">
+                        {{ ez_render_field( parentContent, 'text2' ) }}
+                    </div>
+                </div>
+
+                <div class="media">
+                    {% if not ez_is_field_empty( parentContent, 'url_youtube') %}
+
+                        <div id="preview-video" class="wrap-video">
+                            {{ ez_render_field( img, 'image' )}}
+                            <a href="{{ ez_render_field( parentContent, 'url_youtube', {'template':'EflWebBundle:fields:only_value.html.twig'} )}}" class="preview-video" title="Ver vídeo">{{ ez_render_field( preview_img, 'image' ) }}</a>
+                        </div>
+                    {% else %}
+                        {{ ez_render_field( img, 'image' )}}
+                    {% endif %}
+                </div>
+            </article>
+
+            <section class="filter-types">
+                <span class="menu"><a href="#">Mostrar menú</a></span>
+                <div class="wrap-filter">
+                    {{ knp_menu_render(menu, {'branch_class': 'cols7', 'currentClass': 'active'} )}}
+                </div>
+            </section>
+        </div>
+        <!-- //main -->
+
+    </div>
+</div>
+
+    <section class="plans">
+    <div class="wrapper cl">
+    <div class="related-plans">
+
+        <article class="item">
+            <p class="title9 upper">qMemento</p>
+            <p class="item-title">Esencial</p>
+
+            <div class="intro">
+                <p>Básico pero resolutivo.</p>
+                <p>Contrate su Memento con todas las fuentes citadas en él.</p>
+            </div>
+
+              <span class="btn">
+                <a href="#">Comprar ahora <small>solo por 300 &euro;</small></a>
+              </span>
+
+            <div id="more-item-0" class="more-detail" style="display: none;">
+                <section class="additional-info">
+                    <p><b>Mementos incluidos</b></p>
+                    <ul>
+                        <li>Fiscal</li>
+                        <li>Fiscal Foral (opcional)</li>
+                        <li>Canarias (opcional)</li>
+                        <li>Contable</li>
+                    </ul>
+                </section>
+                <section class="additional-info bbdd">
+                    <p><b>Bases de datos</b></p>
+                    <p>Normativa citada Memento</p>
+                </section>
+                <section class="additional-info utils">
+                    <p><b>Utilidades</b></p>
+                    <p>Diccionario Jurídico</p>
+                </section>
+
+                <span class="btn">
+                  <a href="#">Comprar ahora <small>solo por 300 &euro;</small></a>
+                </span>
+            </div>
+            <p class="more">
+                <a href="#more-item-0" data-open-text="Más Información" data-close-text="Cerrar" data-toggle-icon="ico-close-blue">Más Información</a>
+                <i class="ico ico-arrow-bottom-blue"></i>
+            </p>
+
+        </article>
+
+        <article class="item">
+            <p class="title9 upper">qMemento</p>
+            <p class="item-title">Uno</p>
+
+            <div class="intro">
+                <p>Básico pero resolutivo.</p>
+                <p>Contrate su Memento con todas las fuentes citadas en él.</p>
+            </div>
+
+              <span class="btn">
+                <a href="#">Pruébelo gratis ahora durante 15 días</a>
+              </span>
+
+            <div id="more-item-1" class="more-detail" style="display: none;">
+                <section class="additional-info">
+                    <p><b>Mementos incluidos</b></p>
+                    <ul>
+                        <li>Fiscal</li>
+                        <li>Fiscal Foral (opcional)</li>
+                        <li>Canarias (opcional)</li>
+                        <li>Contable</li>
+                    </ul>
+                </section>
+                <section class="additional-info bbdd">
+                    <p><b>Bases de datos</b></p>
+                    <ul>
+                        <li>Normativa citada Memento</li>
+                        <li>+ 16000 normas</li>
+                        <li>+ 355.000 sentencias</li>
+                        <li>+ 82.000 resoluciones</li>
+                    </ul>
+                </section>
+                <section class="additional-info utils">
+                    <p><b>Utilidades</b></p>
+                    <p>Diccionario Jurídico</p>
+                </section>
+
+                <span class="btn">
+                  <a href="#">Pruébelo gratis ahora durante 15 días</a>
+                </span>
+            </div>
+            <p class="more">
+                <a href="#more-item-1" data-open-text="Más Información" data-close-text="Cerrar" data-toggle-icon="ico-close-blue">Más Información</a>
+                <i class="ico ico-arrow-bottom-blue"></i>
+            </p>
+
+        </article>
+
+        <article class="item">
+            <p class="title9 upper">qMemento</p>
+            <p class="item-title">Base</p>
+
+            <div class="intro">
+                <p>Básico pero resolutivo.</p>
+                <p>Contrate su Memento con todas las fuentes citadas en él.</p>
+            </div>
+
+              <span class="btn">
+                <a href="#">Comprar ahora <small>solo por 300 &euro;</small></a>
+              </span>
+
+            <div id="more-item-2" class="more-detail" style="display: none;">
+                <section class="additional-info">
+                    <p><b>Mementos incluidos</b></p>
+                    <ul>
+                        <li>Fiscal</li>
+                        <li>Fiscal Foral (opcional)</li>
+                        <li>Canarias (opcional)</li>
+                        <li>Contable</li>
+                        <li>IS</li>
+                        <li>IVA</li>
+                        <li>IRPF</li>
+                        <li>Sucesiones y Transmisiones</li>
+                        <li>Procedimientos Tributarios</li>
+                    </ul>
+                </section>
+                <section class="additional-info bbdd">
+                    <p><b>Bases de datos</b></p>
+                    <ul>
+                        <li>Normativa citada Memento</li>
+                        <li>+ 16000 normas</li>
+                        <li>+ 355.000 sentencias</li>
+                        <li>+ 82.000 resoluciones</li>
+                    </ul>
+                </section>
+                <section class="additional-info utils">
+                    <p><b>Utilidades</b></p>
+                    <p>Diccionario Jurídico</p>
+                </section>
+
+                <span class="btn">
+                  <a href="#">Comprar ahora <small>solo por 300 &euro;</small></a>
+                </span>
+            </div>
+            <p class="more">
+                <a href="#more-item-2" data-open-text="Más Información" data-close-text="Cerrar" data-toggle-icon="ico-close-blue">Más Información</a>
+                <i class="ico ico-arrow-bottom-blue"></i>
+            </p>
+
+        </article>
+
+        <article class="item">
+            <p class="title9 upper">qMemento</p>
+            <p class="item-title">Plus</p>
+
+            <div class="intro">
+                <p>Básico pero resolutivo.</p>
+                <p>Contrate su Memento con todas las fuentes citadas en él.</p>
+            </div>
+
+              <span class="btn">
+                <a href="#">Pruébelo gratis ahora durante 15 días</a>
+              </span>
+
+            <div id="more-item-3" class="more-detail" style="display: none;">
+                <section class="additional-info">
+                    <p><b>Mementos incluidos</b></p>
+                    <ul>
+                        <li>Fiscal</li>
+                        <li>Fiscal Foral (opcional)</li>
+                        <li>Canarias (opcional)</li>
+                        <li>Contable</li>
+                        <li>IS</li>
+                        <li>IVA</li>
+                        <li>IRPF</li>
+                        <li>Sucesiones y Transmisiones</li>
+                        <li>Procedimientos Tributarios</li>
+                    </ul>
+                </section>
+                <section class="additional-info bbdd">
+                    <p><b>Bases de datos</b></p>
+                    <ul>
+                        <li>Normativa citada Memento</li>
+                        <li>+ 16000 normas</li>
+                        <li>+ 355.000 sentencias</li>
+                        <li>+ 82.000 resoluciones</li>
+                    </ul>
+                </section>
+                <section class="additional-info utils">
+                    <p><b>Utilidades</b></p>
+                    <p>Diccionario Jurídico</p>
+                </section>
+
+                <span class="btn">
+                  <a href="#">Pruébelo gratis ahora durante 15 días</a>
+                </span>
+            </div>
+            <p class="more">
+                <a href="#more-item-3" data-open-text="Más Información" data-close-text="Cerrar" data-toggle-icon="ico-close-blue">Más Información</a>
+                <i class="ico ico-arrow-bottom-blue"></i>
+            </p>
+
+        </article>
+
+    </div>
+
+    </div>
+    </section>
+
+{% endblock %}
+
+{% block footerScript %}
+    {% javascripts
+    '@EflWebBundle/Resources/public/js/jquery.columnizer.js'
+    %}
+<!--[if lte IE 9]>
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+<![endif]-->
+    {% endjavascripts %}
+    {{ parent() }}
+{% endblock %}

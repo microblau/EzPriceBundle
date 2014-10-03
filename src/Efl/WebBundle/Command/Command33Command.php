@@ -120,19 +120,12 @@ class Command33Command extends ContainerAwareCommand
             'esl-ES'
         );
 
-        $contentCreateStruct->setField( 'title', 'Todos sus mementos en Internet' );
-        $contentCreateStruct->setField( 'text1', "<?xml version='1.0' encoding='utf-8'?><section><paragraph>Olvídese del papel... disponga ya de todos los mementos en soporte Internet, siempre actualizados y conectados entre sí.</paragraph></section>");
-        $contentCreateStruct->setField( 'text2', "<?xml version='1.0' encoding='utf-8'?><section><paragraph>Saque el máximo partido a la información de sus mementos imprimiendo, copiando, pegando en sus documentos y añadiendo notas y creando dossiers con los recortes de sus mementos.</paragraph></section>");
-        $contentCreateStruct->setField( 'ventaja1', "<?xml version='1.0' encoding='utf-8'?><section><paragraph>Actualización diaria de todos los contenidos.</paragraph></section>");
-        $contentCreateStruct->setField( 'ventaja2', "<?xml version='1.0' encoding='utf-8'?><section><paragraph>Actualización diaria de todos los contenidos.</paragraph></section>");
-        $contentCreateStruct->setField( 'ventaja3', "<?xml version='1.0' encoding='utf-8'?><section><paragraph>Actualización diaria de todos los contenidos.</paragraph></section>");
-        $contentCreateStruct->setField( 'ventaja4', "<?xml version='1.0' encoding='utf-8'?><section><paragraph>Actualización <strong>diaria</strong> de todos los contenidos.</paragraph></section>");
-        $contentCreateStruct->setField( 'contenidos1', "<?xml version='1.0' encoding='utf-8'?><section><paragraph>Actualización diaria de todos los contenidos.</paragraph></section>");
-        $contentCreateStruct->setField( 'contenidos2', "<?xml version='1.0' encoding='utf-8'?><section><paragraph>Actualización diaria de todos los contenidos.</paragraph></section>");
-        $contentCreateStruct->setField( 'contenidos3', "<?xml version='1.0' encoding='utf-8'?><section><paragraph>Actualización diaria de todos los contenidos.</paragraph></section>");
-        $contentCreateStruct->setField( 'funcionalidad1', "<?xml version='1.0' encoding='utf-8'?><section><paragraph>Actualización <strong>diaria</strong> de todos los contenidos.</paragraph></section>");
-        $contentCreateStruct->setField( 'funcionalidad2', "<?xml version='1.0' encoding='utf-8'?><section><paragraph>Actualización <strong>diaria</strong> de todos los contenidos.</paragraph></section>");
-        $contentCreateStruct->setField( 'funcionalidad3', "<?xml version='1.0' encoding='utf-8'?><section><paragraph>Actualización <strong>diaria</strong> de todos los contenidos.</paragraph><paragraph>Actualización <strong>diaria</strong> de todos los contenidos.</paragraph></section>");
+        $contentCreateStruct->setField( 'title', 'Domine la información jurídica con facilidad' );
+        $contentCreateStruct->setField( 'text1', "<?xml version='1.0' encoding='utf-8'?><section><paragraph>El mejor motor de búsqueda de soluciones jurídicas del mercado, los Mementos Francis Lefebvre, y el sistema documentario más completo en la actualidad, Quantor.</paragraph></section>");
+        $contentCreateStruct->setField( 'text2', "<?xml version='1.0' encoding='utf-8'?><section><paragraph>Con el objetivo de dar un gran paso adelante en los actuales sistemas de consulta, Nautis 4 ha evolucionado QMemento Essencial, aportando una forma aún más fácil y directa de acceder a la información.</paragraph></section>");
+        $contentCreateStruct->setField( 'ventajas', '<?xml version="1.0" encoding="utf-8"?><section xmlns:image="http://ez.no/namespaces/ezpublish3/image/" xmlns:xhtml="http://ez.no/namespaces/ezpublish3/xhtml/" xmlns:custom="http://ez.no/namespaces/ezpublish3/custom/"><paragraph xmlns:tmp="http://ez.no/namespaces/ezpublish3/temporary/"><ul><li><paragraph xmlns:tmp="http://ez.no/namespaces/ezpublish3/temporary/">Actualización diaria de todos los contenidos.</paragraph></li></ul></paragraph></section>');
+        $contentCreateStruct->setField( 'contenidos', "<?xml version='1.0' encoding='utf-8'?><section><paragraph>Actualización diaria de todos los contenidos.</paragraph></section>");
+        $contentCreateStruct->setField( 'funcionalidades', '<section xmlns:image="http://ez.no/namespaces/ezpublish3/image/" xmlns:xhtml="http://ez.no/namespaces/ezpublish3/xhtml/" xmlns:custom="http://ez.no/namespaces/ezpublish3/custom/"><paragraph xmlns:tmp="http://ez.no/namespaces/ezpublish3/temporary/"><ul><li><paragraph xmlns:tmp="http://ez.no/namespaces/ezpublish3/temporary/">Actualización diaria de todos los contenidos.</paragraph></li></ul></paragraph></section>');
         $contentCreateStruct->setField( 'url_youtube', "http://www.youtube.com/embed/zOwWqWusi64?rel=0&amp;amp;autoplay=1");
         $contentCreateStruct->setField( 'img_preview_video', new Value( $img1 ) );
         $contentCreateStruct->setField( 'img_preview_video_2', new Value( $img2 ) );

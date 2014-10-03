@@ -1,5 +1,5 @@
 {% extends "EflWebBundle::pagelayout.html.twig" %}
-{% set title = 'QMementix'|trans %}
+{% set title = 'QMemento'|trans %}
 {% set mainClass = 'iMemento' %}
 {% block content %}
 <div class="wrapper cl">
@@ -11,7 +11,7 @@
 
             <article class="highlight cl">
                 <div class="content">
-                    <span class="badge2"><span class="badge2-text">iMemento</span></span>
+                    <span class="badge2"><span class="badge2-text">qMemento</span></span>
                     <p class="super-title">{{ ez_render_field( content, 'title' ) }}</p>
                     <div class="title4">
                         {{ ez_render_field( content, 'text1' ) }}
@@ -22,7 +22,7 @@
 
                     <div class="call-to-action">
                         <span class="claim"><a href="#" class="ask-test">Pruebe gratis durante 15 días</a> o</span>
-                        <button type="button" class="btn type2 hasIco twoLines"><i class="ico ico-arrow-right-white"></i> Seleccionar Mementos <small> para qMementix</small></button>
+                        <button type="button" class="btn type2 hasIco twoLines"><i class="ico ico-arrow-right-white"></i> Seleccionar Plan <small> ver opciones</small></button>
 
                         <article class="wrap-frm-test">
                             {% form_theme form 'EflWebBundle:forms/leads:form.html.twig' %}
@@ -56,10 +56,10 @@
                 <div class="media">
                     {% if not ez_is_field_empty( content, 'url_youtube') %}
 
-                    <div id="preview-video" class="wrap-video">
-                        {{ ez_render_field( img, 'image' )}}
-                        <a href="{{ ez_render_field( content, 'url_youtube', {'template':'EflWebBundle:fields:only_value.html.twig'} )}}" class="preview-video" title="Ver vídeo">{{ ez_render_field( preview_img, 'image' ) }}</a>
-                    </div>
+                        <div id="preview-video" class="wrap-video">
+                            {{ ez_render_field( img, 'image' )}}
+                            <a href="{{ ez_render_field( content, 'url_youtube', {'template':'EflWebBundle:fields:only_value.html.twig'} )}}" class="preview-video" title="Ver vídeo">{{ ez_render_field( preview_img, 'image' ) }}</a>
+                        </div>
                     {% else %}
                         {{ ez_render_field( img, 'image' )}}
 
@@ -71,11 +71,8 @@
 
             <section class="benefits cl">
                 <article class="benefit-detail-2">
-                {{ ez_render_field(content, 'ventajas', {'template':'EflWebBundle:fields:only_value.html.twig'}) }}
-                    </article>
-            </section>
-            <section class="appMarket">
-                <a href="{{ ez_render_field(content, 'url_appstore', {'template':'EflWebBundle:fields:only_value.html.twig'} ) }}"><img src="{{ asset ("bundles/eflweb/images/appstore@2x.png")}}" alt="" class="appMarket-img"></a>
+                    {{ ez_render_field(content, 'ventajas', {'template':'EflWebBundle:fields:only_value.html.twig'}) }}
+                </article>
             </section>
 
             {% if testimonios|length %}
@@ -87,7 +84,7 @@
                     </div>
 
                     <div class="authoring">
-                        {{ ez_render_field( testimonio.imgObject, 'image', {'parameters': { 'alias': 'foto_testimonio'} } ) }}
+                        {{ ez_render_field( testimonio.imgObject, 'image', {'parameters': { 'alias': 'foto_testimonio'} } )|raw }}
                         <p class="author">{{ ez_render_field( testimonio.content, 'nombre_persona') }}</p>
                     </div>
 
@@ -111,23 +108,13 @@
     <span class="tabs-wrap"></span>
 
     <div class="tabs-wrap-content">
-        {%  if not ez_is_field_empty( content, 'contenido' ) %}
-            <p class="tab active"><a href="#features-content">Condiciones de la suscripción <i class="ico"></i></a></p>
-            <div id="features-content" class="tabs-content active">
-                <article class="features-detail">
-                    <div class="wysiwyg layout-3cols">
-                        {{ ez_render_field(content, 'contenido') }}
-                    </div>
-                </article>
-            </div>
-        {% endif %}
 
         {% if not ez_is_field_empty( content, 'contenidos' ) %}
             <p class="tab active"><a href="#features-contents">Condiciones <i class="ico"></i></a></p>
             <div id="features-contents" class="tabs-content active">
                 <article class="features-detail">
                     <div class="wysiwyg layout-3cols">
-                        {{ ez_render_field(content, 'contenido') }}
+                        {{ ez_render_field(content, 'contenidos') }}
                     </div>
                 </article>
             </div>
@@ -142,32 +129,19 @@
                 </article>
             </div>
         {% endif %}
-        {% if not ez_is_field_empty( content, 'faqs_producto' ) %}
-            <p class="tab"><a href="#features-faq">Preguntas frecuentes <i class="ico"></i></a></p>
-            <div id="features-faq" class="tabs-content">
-                <article class="features-detail">
-                    <div class="wysiwyg layout-3cols">
-                        {% if faqs|length > 0 %}
-                            <ul>
-                        {% for faq in faqs %}
-                                <li><a href="#faq_{{ faq.id }}">{{ ez_content_name(faq ) }}</a></li>
-                        {% endfor %}
-                            </ul>
 
-                            {% for faq in faqs %}
-                                <div class="faq" id="faq_{{ faq.id }}">
-                                    <div class="faq-title"><strong>{{ ez_content_name( faq ) }}</strong></div>
-                                    <div class="faq-content">
-                                        {{ ez_render_field( faq, 'texto_respuesta' ) }}
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                </article>
-            </div>
-        {% endif %}
     </div>
 
 </article>
+{% endblock %}
+
+{% block footerScript %}
+    {% javascripts
+    '@EflWebBundle/Resources/public/js/jquery.columnizer.js'
+    %}
+<!--[if lte IE 9]>
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+<![endif]-->
+    {% endjavascripts %}
+    {{ parent() }}
 {% endblock %}

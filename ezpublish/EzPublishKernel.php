@@ -76,7 +76,7 @@ class EzPublishKernel extends Kernel
             new \JMS\DiExtraBundle\JMSDiExtraBundle( $this ),
             new \JMS\AopBundle\JMSAopBundle(),
             new \Gregwar\CaptchaBundle\GregwarCaptchaBundle(),
-            new Lexik\Bundle\CurrencyBundle\LexikCurrencyBundle(),
+            new \Lexik\Bundle\CurrencyBundle\LexikCurrencyBundle(),
             new \Efl\WebBundle\EflWebBundle(),
             new \Efl\WebServiceBundle\EflWebServiceBundle(),
             new \Efl\ReviewsBundle\EflReviewsBundle(),

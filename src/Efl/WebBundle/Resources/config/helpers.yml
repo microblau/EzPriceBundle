@@ -11,6 +11,7 @@ parameters:
     eflweb.testimonies_helper.class: Efl\WebBundle\Helper\TestimoniesHelper
     eflweb.menus_helper.class: Efl\WebBundle\Helper\MenusHelper
     eflweb.leads_helper.class: Efl\WebBundle\Helper\LeadsHelper
+    eflweb.qmemento_helper.class: Efl\WebBundle\Helper\QMementoHelper
     eflweb.leads_client.parameters:
 
 services:
@@ -101,7 +102,19 @@ services:
 
     eflweb.menus_helper:
         class: %eflweb.menus_helper.class%
+        arguments:
+            - @ezpublish.api.service.url_alias
+            - @ezpublish.api.service.location
+            - @ezpublish.api.service.content
+        calls:
+            - [setRequest, [@request_stack]]
 
     eflweb.leads_helper:
         class: %eflweb.leads_helper.class%
         arguments: ['%eflweb.leads_client.parameters%']
+
+    eflweb.qmemento_helper:
+        class: %eflweb.qmemento_helper.class%
+        arguments:
+            - @ezpublish.api.service.location
+            - @ezpublish.api.service.search

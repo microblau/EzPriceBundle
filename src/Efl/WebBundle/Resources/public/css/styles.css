@@ -316,18 +316,18 @@ label.error input[type=text], label.error input[type=password], label.error text
 /*Wysiwyg*/
 .wysiwyg { font-size: 2rem; font-family: 'ProximaNovaLight', Arial, helvetica, sans-serif; color: #535660; line-height: 120%; }
     .static .wysiwyg { font-size: 1.8rem; }
-  .wysiwyg b { font-family: 'ProximaNovaBold', Arial, helvetica, sans-serif; }
+  .wysiwyg b { font-family: 'ProximaNovaBold', Arial, helvetica, sans-serif; font-weight: normal; } /* font-weight: normal; to fix overwrite bold in Firefox */
     /*Media*/
     .wysiwyg .media-wrapper { margin: 0 auto; max-width: 26.6em;  }
     .wysiwyg .media { position: relative; margin:0 auto 1.5em; padding-top: 56.25%; width: 100%; }
     .wysiwyg .media iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
   .wysiwyg p, .wysiwyg ul, .wysiwyg ol { margin-bottom: 1em; }
-  .wysiwyg ul li { position: relative; padding-left: .7em; }
+  .wysiwyg ul li { position: relative; margin-bottom: .5em; padding-left: .7em; }
     .wysiwyg ul li:before { content:'- '; position: absolute; left: 0; }
 
   .wysiwyg ol { list-style: none; counter-reset: num; }
   /*First Level*/
-  .wysiwyg ol li { position: relative; padding-left: 1.2em; font-weight: bold; }
+  .wysiwyg ol li { position: relative; padding-left: 1.2em; }
       .wysiwyg ol li:before { content: counter(num) '. '; counter-increment: num; position: absolute; left: 0; }
     /*Second Level*/
     .wysiwyg ol ol li { padding-left: 1.8em; font-weight: normal; }
@@ -474,7 +474,7 @@ label.error input[type=text], label.error input[type=password], label.error text
 .mod-tabs { margin-bottom: 2em; }
   .tab { border-width: 1px 0; border-style: solid; border-color: #fff; margin-top: -.1em; background-color: #eaeff0; text-align: center; }
     .tab a { display: block; padding: .7em 1.01em; font-size: 2.1rem; font-family: 'ProximaNovaBold', Arial, helvetica, sans-serif; color: #191a1f; text-decoration: none; }
-      .tab a .ico { float: right; margin-top: .4em; width: 1.9em; height: 1.2em; background-position: -26.8em -2.3em; }
+      .tab a .ico { float: right; margin-top: .4em; width: 1.9em; height: 1.2em; background-position: -26.8em -2.8em; }
 
     .magazines .tabs-wrap-content { margin: 0 -1em; padding: 2em; background-color: #EAEFF0; }
    
@@ -482,7 +482,7 @@ label.error input[type=text], label.error input[type=password], label.error text
 
         /*Active*/
         .tabs-content.active { position: static; }
-          .tab.active a .ico { background-position: -26.8em -3.4em; }
+          .tab.active a .ico { background-position: -26.8em -3.9em; }
 
 
 
@@ -547,14 +547,26 @@ label.error input[type=text], label.error input[type=password], label.error text
 .promo .benefits { display: block; margin-bottom: 2em; }
   #bodyContent.promo .benefits .wrapper { padding: 0 2em; }
   
-  .benefit-detail { float: left; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; padding: 2em; background-color: #f3f3f3; overflow: hidden; }
+  /*--- 3.1. Benefit Detail (when each benefit is an independent element) ---*/
+  .benefit-detail { float: left; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; padding: 2em; width: 100%; background-color: #f3f3f3; overflow: hidden; }
     .home .benefit-detail, .iMemento .benefit-detail { background-color: #fff; }
-    .promo .benefit-detail { width: 100%; }
+    
   .benefit-detail .ico-check-white { float: left; border-radius: 50%; background-color: #596274; }
 
   .benefit-detail .cont-text { padding: 0 2.2em; font-size: 1.8rem; font-family: 'ProximaNovaLight', Arial, helvetica, sans-serif; color: #596274; }
       .benefit-detail .cont-text b, .benefit-detail .cont-text strong { font-family: 'ProximaNovaSemibold', Arial, helvetica, sans-serif; }
 
+  /*--- 3.2. Benefit Detail 2 (when content not allow styles) ---*/
+  .benefit-detail-2 { padding: 0 2em 1em 2em; }
+    .benefit-detail-2 li { position: relative; margin-left: 2.2em; padding: 1.1em 0; font-size: 1.8rem; font-family: 'ProximaNovaLight', Arial, helvetica, sans-serif; line-height: 130%; color: #596274; }
+      .benefit-detail-2 li b, .benefit-detail-2 li strong { font-family: 'ProximaNovaSemibold', Arial, helvetica, sans-serif; font-weight: normal; } /* font-weight: normal; to fix overwrite bold in Firefox */
+
+        .benefit-detail-2 li:before { content:''; position: absolute; top: 1.8em; left: -4em; border-radius: 50%; width: 2.6em; height: 2.6em; background: #596274 url(../images/sprite_icons@2x.png) -26.3em -4.8em no-repeat; background-size: 300px auto; font-size: 1rem; }
+        
+        .ie9 .benefit-detail-2 li:before,
+        .ie10 .benefit-detail-2 li:before,
+        .ie11 .benefit-detail-2 li:before { background-position: -26.5em -4.8em; }
+        
 /*==== 4. App Market ====*/
 .appMarket { display: none; }
   .magazines .appMarket { display: block; margin-bottom: 2em; text-align: center; }
@@ -745,7 +757,7 @@ label.error input[type=text], label.error input[type=password], label.error text
   .layer { margin-top: .9em; padding: 1.8em; background-color: #ebeff0; font-size: 1.3rem; font-family: 'ProximaNovaRegular', Arial, helvetica, sans-serif; color: #525660; line-height: 130%; }
       .ie9 .layer { margin-top: .75em; }
     .layer a { font-family: 'ProximaNovaBold', Arial, helvetica, sans-serif; }
-    .layer b, .layer strong { font-family: 'ProximaNovaSemibold', Arial, helvetica, sans-serif; }
+    .layer b, .layer strong { font-family: 'ProximaNovaSemibold', Arial, helvetica, sans-serif; font-weight: normal; } /* font-weight: normal; to fix overwrite bold in Firefox */
     .layer .close { display: inline-block; float: right; margin-top: -1em; margin-right: -1em; }
     .layer p { margin-bottom: 1em; }
       .layer p.hasIco .ico { float: left; }
@@ -762,6 +774,13 @@ label.error input[type=text], label.error input[type=password], label.error text
 .features { margin-bottom: 2em; }
   .features-detail { padding: 1em; }
     .features-detail .wysiwyg { font-size: 1.8rem; font-family: 'ProximaNovaRegular', Arial, helvetica, sans-serif; }
+
+  /*--- 15.1. Content Features ---*/
+  table.renderedtable { border: none; margin: 1em 0 1em 0; width: 100%; }
+    table.renderedtable th, table.renderedtable td { border-right: 1px solid #FFF; border-bottom: 1px solid #FFF; padding: .5em; vertical-align: top; }
+        table.renderedtable td:first-child { border-left: 1px solid #FFF; }
+        table.renderedtable tr.bglight { background-color: #F2F6F7; }
+        table.renderedtable tr.bgdark { background-color: #EAEFF0; }
 
 /*==== 16. Basket Shopping ====*/
 .img-basket { margin: 2.5em auto 3.5em; width: 16em; }

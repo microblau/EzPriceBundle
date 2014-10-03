@@ -44,3 +44,13 @@ imemento_postform:
     pattern: /imemento/post
     defaults: { _controller: EflWebBundle:Imemento:postForm }
     methods: [POST]
+
+qmemento:
+    pattern: /qmemento
+    defaults: { _controller: EflWebBundle:QMemento:index }
+
+qmemento_post:
+    pattern: /qmemento/post
+    defaults: { _controller: EflWebBundle:QMemento:postForm }
+    methods: [POST]
+

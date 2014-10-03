@@ -19,58 +19,15 @@
                     <div class="title7">
                         {{ ez_render_field( content, 'text2' ) }}
                     </div>
-
-                    <div class="call-to-action">
-                        <span class="claim"><a href="#" class="ask-test">Pruebe gratis durante 15 días</a> o</span>
-                        <button type="button" class="btn type2 hasIco twoLines"><i class="ico ico-arrow-right-white"></i> Seleccionar Mementos <small> para qMementix</small></button>
-
-                        <article class="wrap-frm-test">
-                            {% form_theme form 'EflWebBundle:forms/leads:form.html.twig' %}
-                            {{ form_start(form, {'attr': {'novalidate':'novalidate', 'class': 'frm-test cl' }}) }}
-                                <fieldset>
-                                    <legend class="title-form">Solicite una prueba gratis y sin compromiso.</legend>
-
-                                    {{ form_row( form.nombre,  { 'id': 'name'} ) }}
-
-                                    {{ form_row( form.apellido1, { 'id': 'surname' } ) }}
-
-                                    {{ form_row( form.apellido2, { 'id': 'surname2' } ) }}
-
-                                    {{ form_row( form.phone, { 'id': 'phone' } ) }}
-
-                                    {{ form_row( form.email, { 'id': 'email' } ) }}
-
-                                    {{ form_row( form.cp, { 'id': 'cp' } ) }}
-
-                                    {{ form_row( form.conditions, { 'id': 'legal' } ) }}
-                                </fieldset>
-
-                            {{ form_row( form.send ) }}
-
-                            {{ form_end(form) }}
-                        </article>
-                    </div>
-
                 </div>
 
-                <div class="media">
-                    {% if not ez_is_field_empty( content, 'url_youtube') %}
-
-                        <div id="preview-video" class="wrap-video">
-                            {{ ez_render_field( img, 'image' )}}
-                            <a href="{{ ez_render_field( content, 'url_youtube', {'template':'EflWebBundle:fields:only_value.html.twig'} )}}" class="preview-video" title="Ver vídeo">{{ ez_render_field( preview_img, 'image' ) }}</a>
-                        </div>
-                    {% else %}
-                        {{ ez_render_field( img, 'image' )}}
-
-                    {% endif %}
-
-                </div>
             </article>
 
 
-            <section class="benefits">
-                {{ ez_render_field(content, 'ventajas') }}
+            <section class="benefits cl">
+                <article class="benefit-detail-2">
+                    {{ ez_render_field(content, 'ventajas', {'template':'EflWebBundle:fields:only_value.html.twig'}) }}
+                </article>
             </section>
 
             {% if testimonios|length %}

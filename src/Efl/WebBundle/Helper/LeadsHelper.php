@@ -69,7 +69,6 @@ class LeadsHelper
             $this->connect();
         }
 
-        print_r( $data );
         $this->client->CreateLead(
             array(
                 "StrLeadFirstName" => $data['nombre'],
@@ -82,6 +81,39 @@ class LeadsHelper
                 "ArrStrProductName" => array('Imemento'),
                 "StrBusinessAction" => '10931',
                 "StrRequest" => 'Información',
+                "StrSource" => 'http://www.efl.es',
+                "StrObservations" => ''
+            )
+        );
+    }
+
+    /**
+     * Manda lead de petición prueba qmemento
+     *
+     * @param array $data
+     */
+    public function sendQMementoLead( $data )
+    {
+        if ( $this->client === null )
+        {
+            $this->connect();
+        }
+
+        print_r ($data);
+        die();
+
+        $this->client->CreateLead(
+            array(
+                "StrLeadFirstName" => $data['nombre'],
+                "StrLeadLastName1" => $data['apellido1'],
+                "StrLeadLastName2" => $data['apellido2'],
+                "StrLeadPostalCode" =>  $data['cp'],
+                "StrLeadPhoneHome" => $data['phone'],
+                "StrLeadMail" => $data['email'],
+                "ArrStrProductId" => array(),
+                "ArrStrProductName" => array( 'Productos electrónicos - Qmemento ' ),
+                "StrBusinessAction" => '10930',
+                "StrRequest" => 'Demo',
                 "StrSource" => 'http://www.efl.es',
                 "StrObservations" => ''
             )

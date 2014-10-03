@@ -3,14 +3,17 @@ parameters:
         catalog: 61
         mementos: 64
         bases_datos: 13373
-        qmemento: 70
+        qmemento:
+            id: 70
+            label: 'qMemento'
+            route: qmemento
         imemento:
             id: 11152
             label: 'Mementos para iPad'
             route: imemento
         qmementix:
             id: 69
-            label: qMementix
+            label: 'qMementix'
             route: qmementix
 
     eflweb.footer.groups_menu.locations:
@@ -128,6 +131,15 @@ services:
             - @ezpublish.translation_helper
             - %eflweb.footer.rrss%
 
+    efl.qmemento.menu.builder:
+        class: Efl\WebBundle\Menu\QMemento\Builder
+        arguments:
+            - @knp_menu.factory
+            - @router
+            - @ezpublish.api.service.location
+            - @ezpublish.translation_helper
+            - @ezpublish.api.service.search
+
     efl.menu.main:
         class: Efl\WebBundle\Menu\Main\Builder
         factory_service: efl.main.menu.builder
@@ -190,6 +202,15 @@ services:
         scope: request
         tags:
             - { name: knp_menu.menu, alias: footer_rss }
+
+    efl.menu.qmemento:
+        class: Efl\WebBundle\Menu\QMemento\Builder
+        factory_service: efl.qmemento.menu.builder
+        factory_method: createMenu
+        arguments: [@request]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: qmemento }
 
 # nosotros
     efl.nosotros.menu.builder:

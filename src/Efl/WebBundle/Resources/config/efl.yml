@@ -19,7 +19,7 @@ system:
                 filters:
                     - { name: geometry/scalewidthdownonly, params: [480] }
             foto_testimonio:
-                reference: original
+                reference: null
                 filters:
                     - { name: geometry/scale, params: [162,162] }
         content_view:
@@ -54,6 +54,16 @@ system:
                     match:
                         Identifier\ContentType: [producto]
             full:
+                producto_nautis:
+                    controller: "EflWebBundle:QMemento:detail"
+                    template: "EflWebBundle:qmemento:detail.html.twig"
+                    match:
+                        Identifier\ContentType: [producto_nautis]
+                qmemento:
+                    controller: "EflWebBundle:QMemento:index"
+                    template: "EflWebBundle:qmemento:index.html.twig"
+                    match:
+                        Identifier\ContentType: [qmemento]
                 qmementix:
                     controller: "EflWebBundle:QMementix:redirectToIndex"
                     match:

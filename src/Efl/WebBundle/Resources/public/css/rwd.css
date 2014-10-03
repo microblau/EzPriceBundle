@@ -267,7 +267,7 @@
 .basket .highlight .content { float: none; width: auto; max-width: 100%; }
 	
 	/*--- 2.1. Call to action ---*/
-	.highlight .call-to-action { max-width: initial; }
+	.highlight .call-to-action { max-width: 100%; }
 		.ie9 .highlight .call-to-action { overflow: hidden; max-width: 62em; text-align: left; }
 	.highlight .call-to-action .claim { margin-right: 1em; padding-top: 1.2em; }
 		.highlight .call-to-action .claim { float: left; }
@@ -309,11 +309,18 @@
 
 /*==== 3. Benefits ====*/
 .benefits { display: block; border-width: 1px 0; border-style: solid; border-color: #dcddde; margin-bottom: 2.5em; padding-top: 2em; overflow: hidden; }
+	
+	/*--- 3.1. Benefit Detail (when each benefit is an independent element) ---*/
 	.benefit-detail { margin-bottom: 2em; padding: 0; width: 50%; }
+		.benefit-detail .cont-text { font-size: 1.9rem; font-family: 'ProximaNovaRegular', Arial, helvetica, sans-serif; }
+			/*On Promo*/
+			.promo .benefit-detail .cont-text { padding-right: 1em; font-size: 1.8rem; }
 
-	.benefit-detail .cont-text { font-size: 1.9rem; font-family: 'ProximaNovaRegular', Arial, helvetica, sans-serif; }
-		/*On Promo*/
-		.promo .benefit-detail .cont-text { padding-right: 1em; font-size: 1.8rem; }
+	/*--- 3.2. Benefit Detail 2 (when content not allow styles) ---*/
+	.benefit-detail-2 { padding: 0 0 1em 0; }
+	.benefit-detail-2 li { float: left; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; margin: 0 2.4em; width: 38%; }
+	.benefit-detail-2 li:before { top: 2em; }
+
 		
 
 /*==== 4. App Market ====*/
@@ -750,7 +757,13 @@ ul.tabs-wrap { border-bottom: 1px solid #ebf0f1; text-align: left; }
 
 /*==== 3. Benefits ====*/
 .benefits { padding-bottom: 2em; }
+	
+	/*--- 3.1. Benefit Detail (when each benefit is an independent element) ---*/
 	.benefit-detail { margin-bottom: 0; width: 25%; }
+
+	/*--- 3.2. Benefit Detail 2 (when content not allow styles) ---*/
+	.benefit-detail-2 li { margin: 0 1.4em 0 2.4em; padding-top: 0; width: 17.5%; }
+		.benefit-detail-2 li:before { top: 0; }
 
 /*==== 4. Direct Links ====*/
 .direct-links .threeCols .direct-link { min-height: 7em; }
@@ -1005,7 +1018,7 @@ ul.tabs-wrap { border-bottom: 1px solid #ebf0f1; text-align: left; }
 				.articleItem .actions .active a.play { background-position: -17.4em -13.6em; }
 
 	/*==== 1. Module Utils ====*/
-		.main-content > .utils { float: left; width: 100%; }
+
 	  /*--- 1.1. Reviews ---*/
 		/*On tabs-content*/
 	    .tabs-content .reviews-link { margin: 0 0 1.5em; font-size: 1.2rem; }
@@ -1161,6 +1174,13 @@ nav li { padding: 1.2em 1.7em 1.2em; }
 		/*Preview Video*/
     .highlight .media .preview-video { margin-top: -5.5em; margin-left: -5.5em; }
 			.highlight .media .preview-video img { width: 11em; }
+
+/*==== 3. Benefits ====*/
+.benefits { padding-bottom: 2em; }
+	
+	/*--- 3.2. Benefit Detail 2 (when content not allow styles) ---*/
+	.benefit-detail-2 li { margin: 0 1.4em 0 2.4em; padding-top: 0; width: 18.7%; }
+	
 
 /*==== 5. Item ====*/
 .item { min-height: 50em; }
