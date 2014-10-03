@@ -37,6 +37,7 @@ class ProductController extends Controller
                 'image' => $this->get( 'eflweb.product_helper' )->getImageByProductLocationId(
                     $locationId
                 ),
+                'path' => $this->getRepository()->getURLAliasService()->reverseLookup( $location )->path
             ),
             $response
         );
@@ -216,12 +217,16 @@ class ProductController extends Controller
     /**
      * Previsualización producto
      *
-     * @param $locationId
+     * @param $url
      *
      * @return mixed
      */
-    public function previewAction( $locationId )
+    public function previewAction( $url )
     {
+        $url = "/$url";
+
+        $locationId = $this->getRepository()->getURLAliasService()->lookup( $url )->destination;
+
         return $this->fullAction(
             $locationId,
             'preview'
@@ -231,12 +236,16 @@ class ProductController extends Controller
     /**
      * Sumario producto
      *
-     * @param $locationId
+     * @param $url
      *
      * @return mixed
      */
-    public function summaryAction( $locationId )
+    public function summaryAction( $url )
     {
+        $url = "/$url";
+
+        $locationId = $this->getRepository()->getURLAliasService()->lookup( $url )->destination;
+
         return $this->fullAction(
             $locationId,
             'summary'

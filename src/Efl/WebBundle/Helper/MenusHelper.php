@@ -45,7 +45,7 @@ class MenusHelper
 
     }
 
-    public function getSelectedMainMenuItem( $route )
+    public function getSelectedMainMenuItem( $route = '', $locationId = null )
     {
         if ( strpos( $route, 'qmementix' ) !== false )
         {
@@ -64,10 +64,6 @@ class MenusHelper
 
         if ( $route == 'ez_urlalias' )
         {
-            $locationId = $this->URLAliasService->lookup(
-                $this->request->attributes->get('semanticPathinfo')
-            )->destination;
-
             $contentTypeId = $this->contentService->loadContent(
                 $this->locationService->loadLocation( $locationId )->contentId
             )->contentInfo->contentTypeId;
@@ -75,6 +71,11 @@ class MenusHelper
             if ( $contentTypeId == 99 )
             {
                 return 70;
+            }
+
+            if ( $locationId ==  61 )
+            {
+                return 61;
             }
         }
 

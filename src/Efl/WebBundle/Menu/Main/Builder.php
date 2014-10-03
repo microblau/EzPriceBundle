@@ -16,7 +16,6 @@ use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 use eZ\Publish\Core\Helper\TranslationHelper;
 
 /**
@@ -124,7 +123,9 @@ class Builder
                 $items[] = array(
                     'id' => $locationId['id'],
                     'label' => $locationId['label'],
-                    'uri' => $this->router->generate( $locationId['route'] )
+                    'uri' => isset( $locationId['route'] )
+                        ? $this->router->generate( $locationId['route'] )
+                        : $this->router->generate( $this->locationService->loadLocation( $locationId['id'] ) )
                 );
             }
         }

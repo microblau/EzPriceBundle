@@ -53,7 +53,18 @@ system:
                     template: "EflWebBundle:related_by_orders:product.html.twig"
                     match:
                         Identifier\ContentType: [producto]
+            line:
+                producto:
+                    controller: "EflWebBundle:Product:relatedByOrders"
+                    template: "EflWebBundle:line:product.html.twig"
+                    match:
+                        Identifier\ContentType: [producto]
             full:
+                catalog:
+                    controller: "EflWebBundle:Catalog:list"
+                    template: "EflWebBundle:full:product_list.html.twig"
+                    match:
+                        Id\Location: [61]
                 producto_nautis:
                     controller: "EflWebBundle:QMemento:detail"
                     template: "EflWebBundle:qmemento:detail.html.twig"

@@ -1,6 +1,8 @@
 parameters:
     eflweb.main_menu.locations:
-        catalog: 61
+        catalog:
+            id: 61
+            label: 'Catálogo de Publicaciones'
         mementos: 64
         bases_datos: 13373
         qmemento:
@@ -140,6 +142,15 @@ services:
             - @ezpublish.translation_helper
             - @ezpublish.api.service.search
 
+    efl.catalog.menu.type.builder:
+        class: Efl\WebBundle\Menu\Catalog\Type\Builder
+        arguments:
+            - @knp_menu.factory
+            - @router
+            - @ezpublish.api.service.location
+            - @ezpublish.translation_helper
+            - @ezpublish.api.service.search
+
     efl.menu.main:
         class: Efl\WebBundle\Menu\Main\Builder
         factory_service: efl.main.menu.builder
@@ -211,6 +222,15 @@ services:
         scope: request
         tags:
             - { name: knp_menu.menu, alias: qmemento }
+
+    efl.menu.catalog.type:
+        class: Efl\WebBundle\Menu\Catalog\Type\Builder
+        factory_service: efl.catalog.menu.type.builder
+        factory_method: createMenu
+        arguments: [@request]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: catalog_type }
 
 # nosotros
     efl.nosotros.menu.builder:

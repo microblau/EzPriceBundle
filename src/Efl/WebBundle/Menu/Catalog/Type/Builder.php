@@ -3,22 +3,20 @@
  * Created by PhpStorm.
  * User: carlos
  * Date: 3/10/14
- * Time: 14:57
+ * Time: 19:00
  */
 
-namespace Efl\WebBundle\Menu\QMemento;
+namespace Efl\WebBundle\Menu\Catalog\Type;
 
 use eZ\Publish\API\Repository\LocationService;
-use eZ\Publish\API\Repository\SearchService;
-use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 use eZ\Publish\Core\Helper\TranslationHelper;
+use eZ\Publish\Core\Repository\SearchService;
 
 class Builder
 {

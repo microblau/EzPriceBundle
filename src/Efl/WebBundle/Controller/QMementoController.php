@@ -130,8 +130,9 @@ class QMementoController extends Controller
         );
 
         $menu = $this->getMenu( 'qmemento' );
-        $menu['item_' .I$sio$slocationId]
+        $menu['item_' . $locationId]->setCurrent(true);
 
+        $versions = $this->get( 'eflweb.qmemento_helper' )->getVersionsForQmemento( $locationId );
 
         /** @var Response $response */
         $response = $this->get( 'ez_content' )->viewLocation(
@@ -142,7 +143,8 @@ class QMementoController extends Controller
                 'parentContent' => $parentContent,
                 'img' => $img,
                 'preview_img' => $preview,
-                'menu' => $menu
+                'menu' => $menu,
+                'versions' => $versions
             )
         );
 

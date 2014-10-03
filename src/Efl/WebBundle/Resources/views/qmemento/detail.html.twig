@@ -36,7 +36,7 @@
             <section class="filter-types">
                 <span class="menu"><a href="#">Mostrar menú</a></span>
                 <div class="wrap-filter">
-                    {{ knp_menu_render(menu, {'branch_class': 'cols7', 'currentClass': 'active'} )}}
+                    {{ knp_menu_render(menu, {'currentClass': 'active' } )}}
                 </div>
             </section>
         </div>
@@ -49,40 +49,39 @@
     <div class="wrapper cl">
     <div class="related-plans">
 
+        {% if versions.0 %}
         <article class="item">
             <p class="title9 upper">qMemento</p>
-            <p class="item-title">Esencial</p>
+            <p class="item-title">{{ ez_content_name( versions.0 )|replace({ 'QMemento': '' }) }}</p>
 
             <div class="intro">
-                <p>Básico pero resolutivo.</p>
+                {% if not ez_is_field_empty(versions.0, 'subtitulo') %}
+                <p>{{ ez_render_field( versions.0, 'subtitulo') }}.</p>
+                {% endif %}
                 <p>Contrate su Memento con todas las fuentes citadas en él.</p>
             </div>
 
               <span class="btn">
-                <a href="#">Comprar ahora <small>solo por 300 &euro;</small></a>
+                <a href="#">Pruébelo gratis ahora durante 15 días</a>
               </span>
 
             <div id="more-item-0" class="more-detail" style="display: none;">
+                {% if not ez_is_field_empty(versions.0, 'info1') %}
                 <section class="additional-info">
-                    <p><b>Mementos incluidos</b></p>
-                    <ul>
-                        <li>Fiscal</li>
-                        <li>Fiscal Foral (opcional)</li>
-                        <li>Canarias (opcional)</li>
-                        <li>Contable</li>
-                    </ul>
+                    <p><b>Información Analítica</b></p>
+                    {{ ez_render_field( versions.0, 'info1' ) }}
                 </section>
+                {% endif %}
+                {% if not ez_is_field_empty(versions.0, 'base') %}
                 <section class="additional-info bbdd">
-                    <p><b>Bases de datos</b></p>
-                    <p>Normativa citada Memento</p>
+                    <p><b>Base jurídica</b></p>
+                    {{ ez_render_field( versions.0, 'base' ) }}
                 </section>
-                <section class="additional-info utils">
-                    <p><b>Utilidades</b></p>
-                    <p>Diccionario Jurídico</p>
-                </section>
+                {% endif %}
+
 
                 <span class="btn">
-                  <a href="#">Comprar ahora <small>solo por 300 &euro;</small></a>
+                   <a href="#">Pruébelo gratis ahora durante 15 días</a>
                 </span>
             </div>
             <p class="more">
@@ -91,160 +90,168 @@
             </p>
 
         </article>
+        {% endif %}
 
-        <article class="item">
-            <p class="title9 upper">qMemento</p>
-            <p class="item-title">Uno</p>
+        {% if versions.1 %}
+            <article class="item">
+                <p class="title9 upper">qMemento</p>
+                <p class="item-title">{{ ez_content_name( versions.1 )|replace({ 'QMemento': '' }) }}</p>
 
-            <div class="intro">
-                <p>Básico pero resolutivo.</p>
-                <p>Contrate su Memento con todas las fuentes citadas en él.</p>
-            </div>
-
-              <span class="btn">
-                <a href="#">Pruébelo gratis ahora durante 15 días</a>
-              </span>
-
-            <div id="more-item-1" class="more-detail" style="display: none;">
-                <section class="additional-info">
-                    <p><b>Mementos incluidos</b></p>
-                    <ul>
-                        <li>Fiscal</li>
-                        <li>Fiscal Foral (opcional)</li>
-                        <li>Canarias (opcional)</li>
-                        <li>Contable</li>
-                    </ul>
-                </section>
-                <section class="additional-info bbdd">
-                    <p><b>Bases de datos</b></p>
-                    <ul>
-                        <li>Normativa citada Memento</li>
-                        <li>+ 16000 normas</li>
-                        <li>+ 355.000 sentencias</li>
-                        <li>+ 82.000 resoluciones</li>
-                    </ul>
-                </section>
-                <section class="additional-info utils">
-                    <p><b>Utilidades</b></p>
-                    <p>Diccionario Jurídico</p>
-                </section>
-
-                <span class="btn">
-                  <a href="#">Pruébelo gratis ahora durante 15 días</a>
-                </span>
-            </div>
-            <p class="more">
-                <a href="#more-item-1" data-open-text="Más Información" data-close-text="Cerrar" data-toggle-icon="ico-close-blue">Más Información</a>
-                <i class="ico ico-arrow-bottom-blue"></i>
-            </p>
-
-        </article>
-
-        <article class="item">
-            <p class="title9 upper">qMemento</p>
-            <p class="item-title">Base</p>
-
-            <div class="intro">
-                <p>Básico pero resolutivo.</p>
-                <p>Contrate su Memento con todas las fuentes citadas en él.</p>
-            </div>
-
-              <span class="btn">
-                <a href="#">Comprar ahora <small>solo por 300 &euro;</small></a>
-              </span>
-
-            <div id="more-item-2" class="more-detail" style="display: none;">
-                <section class="additional-info">
-                    <p><b>Mementos incluidos</b></p>
-                    <ul>
-                        <li>Fiscal</li>
-                        <li>Fiscal Foral (opcional)</li>
-                        <li>Canarias (opcional)</li>
-                        <li>Contable</li>
-                        <li>IS</li>
-                        <li>IVA</li>
-                        <li>IRPF</li>
-                        <li>Sucesiones y Transmisiones</li>
-                        <li>Procedimientos Tributarios</li>
-                    </ul>
-                </section>
-                <section class="additional-info bbdd">
-                    <p><b>Bases de datos</b></p>
-                    <ul>
-                        <li>Normativa citada Memento</li>
-                        <li>+ 16000 normas</li>
-                        <li>+ 355.000 sentencias</li>
-                        <li>+ 82.000 resoluciones</li>
-                    </ul>
-                </section>
-                <section class="additional-info utils">
-                    <p><b>Utilidades</b></p>
-                    <p>Diccionario Jurídico</p>
-                </section>
-
-                <span class="btn">
-                  <a href="#">Comprar ahora <small>solo por 300 &euro;</small></a>
-                </span>
-            </div>
-            <p class="more">
-                <a href="#more-item-2" data-open-text="Más Información" data-close-text="Cerrar" data-toggle-icon="ico-close-blue">Más Información</a>
-                <i class="ico ico-arrow-bottom-blue"></i>
-            </p>
-
-        </article>
-
-        <article class="item">
-            <p class="title9 upper">qMemento</p>
-            <p class="item-title">Plus</p>
-
-            <div class="intro">
-                <p>Básico pero resolutivo.</p>
-                <p>Contrate su Memento con todas las fuentes citadas en él.</p>
-            </div>
+                <div class="intro">
+                    {% if not ez_is_field_empty(versions.1, 'subtitulo') %}
+                        <p>{{ ez_render_field( versions.1, 'subtitulo') }}.</p>
+                    {% endif %}
+                    <p>Contrate su Memento con todas las fuentes citadas en él.</p>
+                </div>
 
               <span class="btn">
                 <a href="#">Pruébelo gratis ahora durante 15 días</a>
               </span>
 
-            <div id="more-item-3" class="more-detail" style="display: none;">
-                <section class="additional-info">
-                    <p><b>Mementos incluidos</b></p>
-                    <ul>
-                        <li>Fiscal</li>
-                        <li>Fiscal Foral (opcional)</li>
-                        <li>Canarias (opcional)</li>
-                        <li>Contable</li>
-                        <li>IS</li>
-                        <li>IVA</li>
-                        <li>IRPF</li>
-                        <li>Sucesiones y Transmisiones</li>
-                        <li>Procedimientos Tributarios</li>
-                    </ul>
-                </section>
-                <section class="additional-info bbdd">
-                    <p><b>Bases de datos</b></p>
-                    <ul>
-                        <li>Normativa citada Memento</li>
-                        <li>+ 16000 normas</li>
-                        <li>+ 355.000 sentencias</li>
-                        <li>+ 82.000 resoluciones</li>
-                    </ul>
-                </section>
-                <section class="additional-info utils">
-                    <p><b>Utilidades</b></p>
-                    <p>Diccionario Jurídico</p>
-                </section>
+                <div id="more-item-0" class="more-detail" style="display: none;">
+                    {% if not ez_is_field_empty(versions.1, 'info1') %}
+                        <section class="additional-info">
+                            <p><b>Información Analítica</b></p>
+                            {{ ez_render_field( versions.1, 'info1' ) }}
+                        </section>
+                    {% endif %}
+                    {% if not ez_is_field_empty(versions.1, 'info2') %}
+                        <section class="additional-info">
+                            <p><b>Información Analítica II</b></p>
+                            {{ ez_render_field( versions.1, 'info2' ) }}
+                        </section>
+                    {% endif %}
+                    {% if not ez_is_field_empty(versions.1, 'base') %}
+                        <section class="additional-info bbdd">
+                            <p><b>Base jurídica</b></p>
+                            {{ ez_render_field( versions.1, 'base' ) }}
+                        </section>
+                    {% endif %}
 
-                <span class="btn">
-                  <a href="#">Pruébelo gratis ahora durante 15 días</a>
+
+                    <span class="btn">
+                   <a href="#">Pruébelo gratis ahora durante 15 días</a>
                 </span>
-            </div>
-            <p class="more">
-                <a href="#more-item-3" data-open-text="Más Información" data-close-text="Cerrar" data-toggle-icon="ico-close-blue">Más Información</a>
-                <i class="ico ico-arrow-bottom-blue"></i>
-            </p>
+                </div>
+                <p class="more">
+                    <a href="#more-item-0" data-open-text="Más Información" data-close-text="Cerrar" data-toggle-icon="ico-close-blue">Más Información</a>
+                    <i class="ico ico-arrow-bottom-blue"></i>
+                </p>
 
-        </article>
+            </article>
+        {% endif %}
+
+        {% if versions.2 %}
+            <article class="item">
+                <p class="title9 upper">qMemento</p>
+                <p class="item-title">{{ ez_content_name( versions.2 )|replace({ 'QMemento': '' }) }}</p>
+
+                <div class="intro">
+                    {% if not ez_is_field_empty(versions.2, 'subtitulo') %}
+                        <p>{{ ez_render_field( versions.2, 'subtitulo') }}.</p>
+                    {% endif %}
+                    <p>Contrate su Memento con todas las fuentes citadas en él.</p>
+                </div>
+
+              <span class="btn">
+                <a href="#">Pruébelo gratis ahora durante 15 días</a>
+              </span>
+
+                <div id="more-item-0" class="more-detail" style="display: none;">
+                    {% if not ez_is_field_empty(versions.2, 'info1') %}
+                        <section class="additional-info">
+                            <p><b>Información Analítica</b></p>
+                            {{ ez_render_field( versions.2, 'info1' ) }}
+                        </section>
+                    {% endif %}
+                    {% if not ez_is_field_empty(versions.2, 'info2') %}
+                        <section class="additional-info">
+                            <p><b>Información Analítica II</b></p>
+                            {{ ez_render_field( versions.2, 'info2' ) }}
+                        </section>
+                    {% endif %}
+                    {% if not ez_is_field_empty(versions.2, 'info3') %}
+                        <section class="additional-info">
+                            <p><b>Información Analítica III</b></p>
+                            {{ ez_render_field( versions.2, 'info3' ) }}
+                        </section>
+                    {% endif %}
+                    {% if not ez_is_field_empty(versions.2, 'base') %}
+                        <section class="additional-info bbdd">
+                            <p><b>Base jurídica</b></p>
+                            {{ ez_render_field( versions.2, 'base' ) }}
+                        </section>
+                    {% endif %}
+
+
+                    <span class="btn">
+                   <a href="#">Pruébelo gratis ahora durante 15 días</a>
+                </span>
+                </div>
+                <p class="more">
+                    <a href="#more-item-0" data-open-text="Más Información" data-close-text="Cerrar" data-toggle-icon="ico-close-blue">Más Información</a>
+                    <i class="ico ico-arrow-bottom-blue"></i>
+                </p>
+
+            </article>
+        {% endif %}
+
+        {% if versions.3 is defined%}
+            <article class="item">
+                <p class="title9 upper">qMemento</p>
+                <p class="item-title">{{ ez_content_name( versions.3 )|replace({ 'QMemento': '' }) }}</p>
+
+                <div class="intro">
+                    {% if not ez_is_field_empty(versions.3, 'subtitulo') %}
+                        <p>{{ ez_render_field( versions.3, 'subtitulo') }}.</p>
+                    {% endif %}
+                    <p>Contrate su Memento con todas las fuentes citadas en él.</p>
+                </div>
+
+              <span class="btn">
+                <a href="#">Pruébelo gratis ahora durante 15 días</a>
+              </span>
+
+                <div id="more-item-0" class="more-detail" style="display: none;">
+                    {% if not ez_is_field_empty(versions.3, 'info1') %}
+                        <section class="additional-info">
+                            <p><b>Información Analítica</b></p>
+                            {{ ez_render_field( versions.3, 'info1' ) }}
+                        </section>
+                    {% endif %}
+                    {% if not ez_is_field_empty(versions.3, 'info2') %}
+                        <section class="additional-info">
+                            <p><b>Información Analítica II</b></p>
+                            {{ ez_render_field( versions.3, 'info2' ) }}
+                        </section>
+                    {% endif %}
+                    {% if not ez_is_field_empty(versions.3, 'info3') %}
+                        <section class="additional-info">
+                            <p><b>Información Analítica III</b></p>
+                            {{ ez_render_field( versions.3, 'info3' ) }}
+                        </section>
+                    {% endif %}
+                    {% if not ez_is_field_empty(versions.3, 'base') %}
+                        <section class="additional-info bbdd">
+                            <p><b>Base jurídica</b></p>
+                            {{ ez_render_field( versions.3, 'base' ) }}
+                        </section>
+                    {% endif %}
+
+
+                    <span class="btn">
+                   <a href="#">Pruébelo gratis ahora durante 15 días</a>
+                </span>
+                </div>
+                <p class="more">
+                    <a href="#more-item-0" data-open-text="Más Información" data-close-text="Cerrar" data-toggle-icon="ico-close-blue">Más Información</a>
+                    <i class="ico ico-arrow-bottom-blue"></i>
+                </p>
+
+            </article>
+        {% endif %}
+
+
 
     </div>
 

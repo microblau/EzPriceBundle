@@ -8,12 +8,16 @@ newsletter_configure:
     defaults: { _controller: EflWebBundle:Newsletter:configure }
 
 preview:
-    pattern: /preview/{locationId}
+    pattern: "{url}/previusalizacion"
     defaults: { _controller: EflWebBundle:Product:preview }
+    requirements:
+        url: .+
 
 summary:
-    pattern: /summary/{locationId}
+    pattern: "{url}/sumario"
     defaults: { _controller: EflWebBundle:Product:summary }
+    requirements:
+        url: .+
 
 video:
     pattern: /video/{locationId}

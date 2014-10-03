@@ -16,14 +16,14 @@ class HeaderController extends Controller
      *
      * @return Response
      */
-    public function mainMenuAction( $route )
+    public function mainMenuAction( $route = '', $locationId = null )
     {
         $response = new Response;
         $response->setPublic();
         $response->setSharedMaxAge( 86400 );
 
         $menu = $this->getMenu( 'main' );
-        $selectedItem = $this->get( 'eflweb.menus_helper' )->getSelectedMainMenuItem( $route );
+        $selectedItem = $this->get( 'eflweb.menus_helper' )->getSelectedMainMenuItem( $route, $locationId );
 
         if ( isset( $menu[$selectedItem] ) )
         {

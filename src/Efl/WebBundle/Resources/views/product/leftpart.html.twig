@@ -11,11 +11,11 @@
     }) }}
     <ul class="actions">
         {% if not ez_is_field_empty( content, 'preview' ) %}
-        <li {% if viewType == 'preview' %}class="active"{% endif %}><a href="{{ path( 'preview', {'locationId' : location.id}) }}" class="preview">Vista Previa</a></li>
+        <li {% if viewType == 'preview' %}class="active"{% endif %}><a href="{{ path( 'preview', {'url' : path|slice(1, ezpublish.requestedUriString|length )}) }}" class="preview">Vista Previa</a></li>
         {% endif %}
         <li><a href="#" class="print">Imprimir</a></li>
         {% if not ez_is_field_empty( content, 'sumario' ) %}
-        <li  {% if viewType == 'summary' %}class="active"{% endif %}><a href="{{ path( 'summary', {'locationId' : location.id}) }}" class="list">Listado</a></li>
+        <li  {% if viewType == 'summary' %}class="active"{% endif %}><a href="{{ path( 'summary', {'url' : path|slice(1, ezpublish.requestedUriString|length )}) }}" class="list">Listado</a></li>
         {% endif %}
         {% if not ez_is_field_empty( content, 'youtube' ) %}
         <li><a href="{{ path( 'video', {'locationId' : location.id}) }}" class="play fancybox" data-fancybox-type="iframe">Reproducir</a></li>
