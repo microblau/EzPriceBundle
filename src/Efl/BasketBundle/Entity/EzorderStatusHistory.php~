@@ -1,0 +1,139 @@
+<?php
+
+namespace Efl\BasketBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * EzorderStatusHistory
+ */
+class EzorderStatusHistory
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var integer
+     */
+    private $modified;
+
+    /**
+     * @var integer
+     */
+    private $modifierId;
+
+    /**
+     * @var integer
+     */
+    private $orderId;
+
+    /**
+     * @var integer
+     */
+    private $statusId;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set modified
+     *
+     * @param integer $modified
+     * @return EzorderStatusHistory
+     */
+    public function setModified($modified)
+    {
+        $this->modified = $modified;
+
+        return $this;
+    }
+
+    /**
+     * Get modified
+     *
+     * @return integer 
+     */
+    public function getModified()
+    {
+        return $this->modified;
+    }
+
+    /**
+     * Set modifierId
+     *
+     * @param integer $modifierId
+     * @return EzorderStatusHistory
+     */
+    public function setModifierId($modifierId)
+    {
+        $this->modifierId = $modifierId;
+
+        return $this;
+    }
+
+    /**
+     * Get modifierId
+     *
+     * @return integer 
+     */
+    public function getModifierId()
+    {
+        return $this->modifierId;
+    }
+
+    /**
+     * Set orderId
+     *
+     * @param integer $orderId
+     * @return EzorderStatusHistory
+     */
+    public function setOrderId($orderId)
+    {
+        $this->orderId = $orderId;
+
+        return $this;
+    }
+
+    /**
+     * Get orderId
+     *
+     * @return integer 
+     */
+    public function getOrderId()
+    {
+        return $this->orderId;
+    }
+
+    /**
+     * Set statusId
+     *
+     * @param integer $statusId
+     * @return EzorderStatusHistory
+     */
+    public function setStatusId($statusId)
+    {
+        $this->statusId = $statusId;
+
+        return $this;
+    }
+
+    /**
+     * Get statusId
+     *
+     * @return integer 
+     */
+    public function getStatusId()
+    {
+        return $this->statusId;
+    }
+}

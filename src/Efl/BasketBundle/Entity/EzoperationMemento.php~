@@ -1,0 +1,152 @@
+<?php
+
+namespace Efl\BasketBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * EzoperationMemento
+ */
+class EzoperationMemento
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var string
+     */
+    private $mementoKey;
+
+    /**
+     * @var integer
+     */
+    private $main;
+
+    /**
+     * @var string
+     */
+    private $mainKey;
+
+    /**
+     * @var string
+     */
+    private $mementoData;
+
+
+    /**
+     * Set id
+     *
+     * @param integer $id
+     * @return EzoperationMemento
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set mementoKey
+     *
+     * @param string $mementoKey
+     * @return EzoperationMemento
+     */
+    public function setMementoKey($mementoKey)
+    {
+        $this->mementoKey = $mementoKey;
+
+        return $this;
+    }
+
+    /**
+     * Get mementoKey
+     *
+     * @return string 
+     */
+    public function getMementoKey()
+    {
+        return $this->mementoKey;
+    }
+
+    /**
+     * Set main
+     *
+     * @param integer $main
+     * @return EzoperationMemento
+     */
+    public function setMain($main)
+    {
+        $this->main = $main;
+
+        return $this;
+    }
+
+    /**
+     * Get main
+     *
+     * @return integer 
+     */
+    public function getMain()
+    {
+        return $this->main;
+    }
+
+    /**
+     * Set mainKey
+     *
+     * @param string $mainKey
+     * @return EzoperationMemento
+     */
+    public function setMainKey($mainKey)
+    {
+        $this->mainKey = $mainKey;
+
+        return $this;
+    }
+
+    /**
+     * Get mainKey
+     *
+     * @return string 
+     */
+    public function getMainKey()
+    {
+        return $this->mainKey;
+    }
+
+    /**
+     * Set mementoData
+     *
+     * @param string $mementoData
+     * @return EzoperationMemento
+     */
+    public function setMementoData($mementoData)
+    {
+        $this->mementoData = $mementoData;
+
+        return $this;
+    }
+
+    /**
+     * Get mementoData
+     *
+     * @return string 
+     */
+    public function getMementoData()
+    {
+        return $this->mementoData;
+    }
+}

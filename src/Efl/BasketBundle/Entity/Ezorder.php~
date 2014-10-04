@@ -1,0 +1,419 @@
+<?php
+
+namespace Efl\BasketBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Ezorder
+ */
+class Ezorder
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var string
+     */
+    private $accountIdentifier;
+
+    /**
+     * @var integer
+     */
+    private $created;
+
+    /**
+     * @var string
+     */
+    private $dataText1;
+
+    /**
+     * @var string
+     */
+    private $dataText2;
+
+    /**
+     * @var string
+     */
+    private $email;
+
+    /**
+     * @var integer
+     */
+    private $ignoreVat;
+
+    /**
+     * @var integer
+     */
+    private $isArchived;
+
+    /**
+     * @var integer
+     */
+    private $isTemporary;
+
+    /**
+     * @var integer
+     */
+    private $orderNr;
+
+    /**
+     * @var integer
+     */
+    private $productcollectionId;
+
+    /**
+     * @var integer
+     */
+    private $statusId;
+
+    /**
+     * @var integer
+     */
+    private $statusModified;
+
+    /**
+     * @var integer
+     */
+    private $statusModifierId;
+
+    /**
+     * @var integer
+     */
+    private $userId;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set accountIdentifier
+     *
+     * @param string $accountIdentifier
+     * @return Ezorder
+     */
+    public function setAccountIdentifier($accountIdentifier)
+    {
+        $this->accountIdentifier = $accountIdentifier;
+
+        return $this;
+    }
+
+    /**
+     * Get accountIdentifier
+     *
+     * @return string 
+     */
+    public function getAccountIdentifier()
+    {
+        return $this->accountIdentifier;
+    }
+
+    /**
+     * Set created
+     *
+     * @param integer $created
+     * @return Ezorder
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return integer 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set dataText1
+     *
+     * @param string $dataText1
+     * @return Ezorder
+     */
+    public function setDataText1($dataText1)
+    {
+        $this->dataText1 = $dataText1;
+
+        return $this;
+    }
+
+    /**
+     * Get dataText1
+     *
+     * @return string 
+     */
+    public function getDataText1()
+    {
+        return $this->dataText1;
+    }
+
+    /**
+     * Set dataText2
+     *
+     * @param string $dataText2
+     * @return Ezorder
+     */
+    public function setDataText2($dataText2)
+    {
+        $this->dataText2 = $dataText2;
+
+        return $this;
+    }
+
+    /**
+     * Get dataText2
+     *
+     * @return string 
+     */
+    public function getDataText2()
+    {
+        return $this->dataText2;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Ezorder
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set ignoreVat
+     *
+     * @param integer $ignoreVat
+     * @return Ezorder
+     */
+    public function setIgnoreVat($ignoreVat)
+    {
+        $this->ignoreVat = $ignoreVat;
+
+        return $this;
+    }
+
+    /**
+     * Get ignoreVat
+     *
+     * @return integer 
+     */
+    public function getIgnoreVat()
+    {
+        return $this->ignoreVat;
+    }
+
+    /**
+     * Set isArchived
+     *
+     * @param integer $isArchived
+     * @return Ezorder
+     */
+    public function setIsArchived($isArchived)
+    {
+        $this->isArchived = $isArchived;
+
+        return $this;
+    }
+
+    /**
+     * Get isArchived
+     *
+     * @return integer 
+     */
+    public function getIsArchived()
+    {
+        return $this->isArchived;
+    }
+
+    /**
+     * Set isTemporary
+     *
+     * @param integer $isTemporary
+     * @return Ezorder
+     */
+    public function setIsTemporary($isTemporary)
+    {
+        $this->isTemporary = $isTemporary;
+
+        return $this;
+    }
+
+    /**
+     * Get isTemporary
+     *
+     * @return integer 
+     */
+    public function getIsTemporary()
+    {
+        return $this->isTemporary;
+    }
+
+    /**
+     * Set orderNr
+     *
+     * @param integer $orderNr
+     * @return Ezorder
+     */
+    public function setOrderNr($orderNr)
+    {
+        $this->orderNr = $orderNr;
+
+        return $this;
+    }
+
+    /**
+     * Get orderNr
+     *
+     * @return integer 
+     */
+    public function getOrderNr()
+    {
+        return $this->orderNr;
+    }
+
+    /**
+     * Set productcollectionId
+     *
+     * @param integer $productcollectionId
+     * @return Ezorder
+     */
+    public function setProductcollectionId($productcollectionId)
+    {
+        $this->productcollectionId = $productcollectionId;
+
+        return $this;
+    }
+
+    /**
+     * Get productcollectionId
+     *
+     * @return integer 
+     */
+    public function getProductcollectionId()
+    {
+        return $this->productcollectionId;
+    }
+
+    /**
+     * Set statusId
+     *
+     * @param integer $statusId
+     * @return Ezorder
+     */
+    public function setStatusId($statusId)
+    {
+        $this->statusId = $statusId;
+
+        return $this;
+    }
+
+    /**
+     * Get statusId
+     *
+     * @return integer 
+     */
+    public function getStatusId()
+    {
+        return $this->statusId;
+    }
+
+    /**
+     * Set statusModified
+     *
+     * @param integer $statusModified
+     * @return Ezorder
+     */
+    public function setStatusModified($statusModified)
+    {
+        $this->statusModified = $statusModified;
+
+        return $this;
+    }
+
+    /**
+     * Get statusModified
+     *
+     * @return integer 
+     */
+    public function getStatusModified()
+    {
+        return $this->statusModified;
+    }
+
+    /**
+     * Set statusModifierId
+     *
+     * @param integer $statusModifierId
+     * @return Ezorder
+     */
+    public function setStatusModifierId($statusModifierId)
+    {
+        $this->statusModifierId = $statusModifierId;
+
+        return $this;
+    }
+
+    /**
+     * Get statusModifierId
+     *
+     * @return integer 
+     */
+    public function getStatusModifierId()
+    {
+        return $this->statusModifierId;
+    }
+
+    /**
+     * Set userId
+     *
+     * @param integer $userId
+     * @return Ezorder
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
+
+    /**
+     * Get userId
+     *
+     * @return integer 
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+}

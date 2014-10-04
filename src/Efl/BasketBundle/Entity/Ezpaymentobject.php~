@@ -1,0 +1,139 @@
+<?php
+
+namespace Efl\BasketBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Ezpaymentobject
+ */
+class Ezpaymentobject
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var integer
+     */
+    private $orderId;
+
+    /**
+     * @var string
+     */
+    private $paymentString;
+
+    /**
+     * @var integer
+     */
+    private $status;
+
+    /**
+     * @var integer
+     */
+    private $workflowprocessId;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set orderId
+     *
+     * @param integer $orderId
+     * @return Ezpaymentobject
+     */
+    public function setOrderId($orderId)
+    {
+        $this->orderId = $orderId;
+
+        return $this;
+    }
+
+    /**
+     * Get orderId
+     *
+     * @return integer 
+     */
+    public function getOrderId()
+    {
+        return $this->orderId;
+    }
+
+    /**
+     * Set paymentString
+     *
+     * @param string $paymentString
+     * @return Ezpaymentobject
+     */
+    public function setPaymentString($paymentString)
+    {
+        $this->paymentString = $paymentString;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentString
+     *
+     * @return string 
+     */
+    public function getPaymentString()
+    {
+        return $this->paymentString;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     * @return Ezpaymentobject
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer 
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set workflowprocessId
+     *
+     * @param integer $workflowprocessId
+     * @return Ezpaymentobject
+     */
+    public function setWorkflowprocessId($workflowprocessId)
+    {
+        $this->workflowprocessId = $workflowprocessId;
+
+        return $this;
+    }
+
+    /**
+     * Get workflowprocessId
+     *
+     * @return integer 
+     */
+    public function getWorkflowprocessId()
+    {
+        return $this->workflowprocessId;
+    }
+}

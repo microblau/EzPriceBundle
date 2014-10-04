@@ -2,9 +2,10 @@ parameters:
     # API services
     eflweb.basket_service.class: Efl\BasketBundle\eZ\Publish\Core\Repository\BasketService
     eflweb.persistence.legacy.basket.handler.class: Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Handler
-    eflweb.persistence.legacy.basket.gateway.class: Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Gateway\DoctrineDatabase
+    eflweb.persistence.legacy.basket.gateway.class: Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Gateway\Legacy
     ezprice.api.storage_engine.legacy.handler.ezprice.eflautomaticvathandler.class: Efl\BasketBundle\Core\Persistence\Legacy\Price\VatHandler\EflAutomaticVatHandler
     eflweb.cart_helper.class: Efl\BasketBundle\Helper\CartHelper
+    eflweb.persistence.legacy.basket.related.class: Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Gateway\RelatedByOrders
 
 services:
     eflweb.basket_service:
@@ -16,11 +17,15 @@ services:
         class: %eflweb.persistence.legacy.basket.handler.class%
         arguments:
             - @eflweb.persistence.legacy.basket.gateway.inner
+            - @ezpublish.api.service.content
 
     eflweb.persistence.legacy.basket.gateway.inner:
         class: %eflweb.persistence.legacy.basket.gateway.class%
         arguments:
             - @ezpublish.api.service.content
+            - @eflweb.persistence.legacy.basket.related
+            - @doctrine.orm.entity_manager
+            - @session
         calls:
             - [setConnection, [@ezpublish.api.storage_engine.legacy.dbhandler]]
 
@@ -40,3 +45,6 @@ services:
     eflweb.cart_helper:
         class: %eflweb.cart_helper.class%
         arguments: [@ezpublish_legacy.kernel]
+
+    eflweb.persistence.legacy.basket.related:
+        class: %eflweb.persistence.legacy.basket.related.class%

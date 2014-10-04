@@ -2,32 +2,22 @@
 /**
  * Created by PhpStorm.
  * User: carlos
- * Date: 23/09/14
- * Time: 12:36
+ * Date: 4/10/14
+ * Time: 12:55
  */
 
 namespace Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Gateway;
 
-use Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Gateway;
-use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\Core\Persistence\Database\DatabaseHandler;
 
-class DoctrineDatabase extends Gateway
+/**
+ * Clase auxiliar para ayudar en esta tarea y dejar la otra más limpia
+ *
+ * Class RelatedByOrders
+ * @package Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Gateway
+ */
+class RelatedByOrders
 {
-    /**
-     * @var \eZ\Publish\API\Repository\ContentService
-     */
-    private $contentService;
-
-    /**
-     * @var DatabaseHandler
-     */
-    private $dbHandler;
-
-    public function __construct( ContentService $contentService )
-    {
-        $this->contentService = $contentService;
-    }
 
     /**
      * Set database handler
@@ -68,6 +58,7 @@ class DoctrineDatabase extends Gateway
         return $this->dbHandler;
     }
 
+
     /**
      * Productos que han sido comprados en compras en las que también se ha comprado este producto
      *
@@ -83,12 +74,7 @@ class DoctrineDatabase extends Gateway
         $this->fillTemporaryTable( $tmpTableName, $contentIds );
         $result = $this->getRelatedContents( $tmpTableName, $contentIds, $limit );
         $this->deleteTemporaryTable( $tmpTableName );
-        $products = array();
-        foreach ( $result as $row )
-        {
-            $products[] = $this->contentService->loadContent( $row['contentobject_id'] );
-        }
-        return $products;
+        return $result;
     }
 
     /**
@@ -195,4 +181,4 @@ class DoctrineDatabase extends Gateway
         return $tables;
 
     }
-}
+} 

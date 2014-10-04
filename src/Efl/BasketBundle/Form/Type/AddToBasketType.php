@@ -10,7 +10,6 @@ namespace Efl\BasketBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
@@ -44,6 +43,13 @@ class AddToBasketType extends AbstractType
             foreach ( $this->formats as $format )
             {
                 $formats[$format['content']->id] = $format['content']->id;
+                /*$builder->add(
+                    'delete_format_' . $format['content']->id,
+                    'hidden',
+                    array(
+                        'data' => 0
+                    )
+                );*/
             }
 
             $builder->add(
@@ -71,13 +77,7 @@ class AddToBasketType extends AbstractType
     {
         $collectionConstraint = new Collection(
             array(
-                'formats' => array(
-                    new NotBlank(
-                        array(
-                            'message' => $this->translator->trans( 'Debe seleccionar al menos un formato')
-                        )
-                    )
-                )
+                'formats' => array()
             )
         );
 

@@ -1,0 +1,39 @@
+<?php
+
+namespace Efl\BasketBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Ezproductcollection
+ *
+ * @ORM\Table(name="ezproductcollection")
+ * @ORM\Entity
+ */
+class Ezproductcollection
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="created", type="integer", nullable=true)
+     */
+    private $created;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="currency_code", type="string", length=4, nullable=false)
+     */
+    private $currencyCode = '';
+
+
+}

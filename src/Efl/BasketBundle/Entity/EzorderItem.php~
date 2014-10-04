@@ -1,0 +1,195 @@
+<?php
+
+namespace Efl\BasketBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * EzorderItem
+ */
+class EzorderItem
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var string
+     */
+    private $description;
+
+    /**
+     * @var integer
+     */
+    private $isVatInc;
+
+    /**
+     * @var integer
+     */
+    private $orderId;
+
+    /**
+     * @var float
+     */
+    private $price;
+
+    /**
+     * @var string
+     */
+    private $type;
+
+    /**
+     * @var float
+     */
+    private $vatValue;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return EzorderItem
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set isVatInc
+     *
+     * @param integer $isVatInc
+     * @return EzorderItem
+     */
+    public function setIsVatInc($isVatInc)
+    {
+        $this->isVatInc = $isVatInc;
+
+        return $this;
+    }
+
+    /**
+     * Get isVatInc
+     *
+     * @return integer 
+     */
+    public function getIsVatInc()
+    {
+        return $this->isVatInc;
+    }
+
+    /**
+     * Set orderId
+     *
+     * @param integer $orderId
+     * @return EzorderItem
+     */
+    public function setOrderId($orderId)
+    {
+        $this->orderId = $orderId;
+
+        return $this;
+    }
+
+    /**
+     * Get orderId
+     *
+     * @return integer 
+     */
+    public function getOrderId()
+    {
+        return $this->orderId;
+    }
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     * @return EzorderItem
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float 
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return EzorderItem
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set vatValue
+     *
+     * @param float $vatValue
+     * @return EzorderItem
+     */
+    public function setVatValue($vatValue)
+    {
+        $this->vatValue = $vatValue;
+
+        return $this;
+    }
+
+    /**
+     * Get vatValue
+     *
+     * @return float 
+     */
+    public function getVatValue()
+    {
+        return $this->vatValue;
+    }
+}
