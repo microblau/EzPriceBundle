@@ -155,28 +155,6 @@ class Command27Command extends ContainerAwareCommand
             )
         );
 
-        $textoAux1 = new FieldDefinitionCreateStruct(
-            array(
-                'fieldTypeIdentifier' => 'ezxmltext',
-                'identifier' => 'textoAux1',
-                'names' => array( 'esl-ES' => 'Texto debajo del precio' ),
-                'position' => 5,
-                'isRequired' => false,
-                'isSearchable' => false
-            )
-        );
-
-        $textoAux2 = new FieldDefinitionCreateStruct(
-            array(
-                'fieldTypeIdentifier' => 'ezxmltext',
-                'identifier' => 'textoAux2',
-                'names' => array( 'esl-ES' => 'Texto que se despliegue pinchando enlaces en el anterior' ),
-                'position' => 6,
-                'isRequired' => false,
-                'isSearchable' => false
-            )
-        );
-
         $fechaInicioOferta = new FieldDefinitionCreateStruct(
             array(
                 'fieldTypeIdentifier' => 'ezdate',
@@ -206,7 +184,7 @@ class Command27Command extends ContainerAwareCommand
                 'nameSchema' => '<producto> - ' . $data['nombre'],
                 'names' => array( 'esl-ES' => $data['nombre'] ),
                 'fieldDefinitions' => array(
-                    $wsProductField, $wsPriceField, $wsPriceFieldOferta, $categoria, $textoAux1, $textoAux2,
+                    $wsProductField, $wsPriceField, $wsPriceFieldOferta, $categoria,
                     $fechaInicioOferta,
                     $fechaFinOferta,
                 )

@@ -8,9 +8,11 @@
 <span class="login"><i class="ico ico-user-black"></i> <a href="{{ path('login') }}">Acceder a mi cuenta</a></span>
 {% endif %}
 {% if not cart_is_empty %}
+    <div class="cart">
 <a href="{{ path( 'ez_legacy', {'module_uri': '/basket/basket'} ) }}">
     <span class="link">Finalizar compra</span>
-    <span class="price"> {{ cart_total }} €</span>
+    <span class="price"> {{ cart_total|currency_convert_format( 'EUR' ) }}</span>
     <span class="amount"> {{ cart_n_items }}</span>
 </a>
+    </div>
 {% endif %}

@@ -37,11 +37,6 @@ class PriceHelper
     private $contentService;
 
     /**
-     * @var ProductHelper
-     */
-    private $productHelper;
-
-    /**
      * @var LocationService
      */
     private $locationService;
@@ -59,7 +54,6 @@ class PriceHelper
     public function __construct(
         ContentTypeService $contentTypeService,
         ContentService $contentService,
-        ProductHelper $productHelper,
         LocationService $locationService,
         DiscountsService $discountsService,
         Repository $repository
@@ -67,7 +61,6 @@ class PriceHelper
     {
         $this->contentTypeService = $contentTypeService;
         $this->contentService = $contentService;
-        $this->productHelper = $productHelper;
         $this->locationService = $locationService;
         $this->discountsService = $discountsService;
         $this->repository = $repository;
@@ -81,14 +74,16 @@ class PriceHelper
      */
     public function getPrices( $contentId )
     {
-        $format = $this->productHelper->getFormatForContent( $contentId );
+        $format = $this->contentService->loadContent( $contentId );
 
         if ( $format != null )
         {
             $offer = $this->offerPrice( $format );
             $base = $this->basePrice( $format );
 
-            $prices = array('base' => $base);
+            $prices = array(
+                'base' => $base
+            );
 
             if ( $offer )
             {

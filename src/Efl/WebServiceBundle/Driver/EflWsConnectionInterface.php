@@ -29,4 +29,9 @@ interface EflWsConnectionInterface
      * obtiene datos usuario
      */
     public function getUsuario( $idUsuario );
+
+    /**
+     * obtiene precio de un producto
+     */
+    public function recuperarProductosPrecio( $cod );
 }

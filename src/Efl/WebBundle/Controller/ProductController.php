@@ -138,7 +138,7 @@ class ProductController extends Controller
 
         $params = array(
             'viewType' => $viewType,
-            'hasResume' => $this->get( 'eflweb.product_helper' )->contentHasResume( $content )
+            'hasDiscount' => $this->get( 'eflweb.product_helper' )->contentHasOffer( $content )
         );
 
         $formats = $this->get( 'eflweb.product_helper' )->getFormatosForLocation( $location );
@@ -157,6 +157,18 @@ class ProductController extends Controller
             if ( $request->isMethod( 'post' ) )
             {
                 $form->handleRequest( $request );
+                if ( $form->isValid() )
+                {
+                    $products = $form->getData( 'formats' );
+                    foreach ( $products['formats'] as $productId )
+                    {
+                        $this->get( 'eflweb.basket_service' )->addProductToBasket( $productId );
+                    }
+
+                    return $this->redirect(
+                        $this->generateUrl( $location )
+                    );
+                }
             }
 
             $params['form'] = $form->createView();
@@ -180,7 +192,7 @@ class ProductController extends Controller
         return $response;
     }
 
-    public function relatedByOrdersAction(
+    public function lineAction(
         $locationId,
         $viewType,
         $layout = false,
@@ -197,13 +209,15 @@ class ProductController extends Controller
         );
         $formats = $this->get( 'eflweb.product_helper' )->getFormatosForLocation( $location );
 
+
         $response = $this->get( 'ez_content' )->viewLocation(
             $locationId,
             $viewType,
             $layout,
             array(
                 'product' => $data,
-                'formats' => $formats
+                'formats' => $formats,
+                'hasDiscount' => $this->get( 'eflweb.product_helper' )->contentHasOffer( $content )
             )
         );
 

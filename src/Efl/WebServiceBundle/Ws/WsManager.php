@@ -36,4 +36,9 @@ class WsManager implements WsManagerInterface
     {
         return $this->connection->existeUsuario( $email );
     }
+
+    public function recuperarProductosPrecio( $cod )
+    {
+        return $this->connection->recuperarProductosPrecio( $cod );
+    }
 } 

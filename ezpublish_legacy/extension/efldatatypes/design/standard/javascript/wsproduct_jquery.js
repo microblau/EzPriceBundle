@@ -9,7 +9,7 @@
                     response( $.map( data.content, function( item ) {
                         return {
                             label: item.cod + ' - ' + item.name,
-                            value: item.name,
+                            value: item.cod,
                             code: item.cod
                         }
                     }));

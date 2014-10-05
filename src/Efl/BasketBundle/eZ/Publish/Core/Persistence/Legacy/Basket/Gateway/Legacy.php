@@ -211,13 +211,16 @@ class Legacy extends Gateway
         $price = 0.0;
         $isVATIncluded = true;
 
-        $price = $content->getFieldValue( 'precio' )->price;
+        $priceObject = $content->getFieldValue( 'precio' );
+        $price = $priceObject->price;
 
+        /** @var \Efl\BasketBundle\Entity\Ezbasket $basket */
         $basket = $this->currentBasket();
 
         /* Check if the item with the same options is not already in the basket: */
         $itemID = false;
-        $collection = $this->getItemsByProductCollectionId( $basket->getProductcollectionId() );
+        $collection = $this->getProductCollectionByProductCollectionId( $basket->getProductcollectionId() );
+
 
         if ( !$collection )
         {
@@ -228,126 +231,50 @@ class Legacy extends Gateway
         {
 
             $count = 0;
-            /* Calculate number of options passed via the HTTP variable: */
-            foreach ( array_keys( $optionList ) as $key )
-            {
-                if ( is_array( $optionList[$key] ) )
-                    $count += count( $optionList[$key] );
-                else
-                    $count++;
-            }
-            $collectionItems = $collection->itemList( false );
+
+            $collectionItems = $this->getProductCollectionItems( $collection->getId() );
+
             foreach ( $collectionItems as $item )
             {
                 /* For all items in the basket which have the same object_id: */
-                if ( $item['contentobject_id'] == $objectID )
+                if ( $item->getContentobjectId() == $contentId )
                 {
-                    $options = eZProductCollectionItemOption::fetchList( $item['id'], false );
-                    /* If the number of option for this item is not the same as in the HTTP variable: */
-                    if ( count( $options ) != $count )
-                    {
-                        break;
-                    }
-                    $theSame = true;
-                    foreach ( $options as $option )
-                    {
-                        /* If any option differs, go away: */
-                        if ( ( is_array( $optionList[$option['object_attribute_id']] ) &&
-                                !in_array( $option['option_item_id'], $optionList[$option['object_attribute_id']] ) )
-                            || ( !is_array( $optionList[$option['object_attribute_id']] ) &&
-                                $option['option_item_id'] != $optionList[$option['object_attribute_id']] ) )
-                        {
-                            $theSame = false;
-                            break;
-                        }
-                    }
-                    if ( $theSame )
-                    {
-                        $itemID = $item['id'];
-                        break;
-                    }
+                    $itemObject = $item;
+                    break;
                 }
             }
 
-            if ( $itemID )
+            if ( isset( $itemObject ) )
             {
                 /* If found in the basket, just increment number of that items: */
-                $item = eZProductCollectionItem::fetch( $itemID );
-                $item->setAttribute( 'item_count', $quantity + $item->attribute( 'item_count' ) );
-                $item->store();
+                $item->setItemCount( $quantity + $item->getItemCount() );
+                $this->em->persist( $item );
+                $this->em->flush();
             }
             else
             {
-                $item = eZProductCollectionItem::create( $basket->attribute( "productcollection_id" ) );
+                $item = new EzproductcollectionItem();
+                $item->setName(  $content->contentInfo->name );
+                $item->setContentobjectId( $content->id );
+                $item->setItemCount( $quantity );
+                $item->setPrice( $price );
+                $item->setIsVatInc( $priceObject->isVatIncluded ? 1 : 0 );
+                $item->setProductcollectionId( $basket->getProductcollectionId() );
 
-                $item->setAttribute( 'name', $object->attribute( 'name' ) );
-                $item->setAttribute( "contentobject_id", $objectID );
-                $item->setAttribute( "item_count", $quantity );
-                $item->setAttribute( "price", $price );
-                if ( $priceObj->attribute( 'is_vat_included' ) )
-                {
-                    $item->setAttribute( "is_vat_inc", '1' );
-                }
-                else
-                {
-                    $item->setAttribute( "is_vat_inc", '0' );
-                }
-                $item->setAttribute( "vat_value", $priceObj->attribute( 'vat_percent' ) );
-                $item->setAttribute( "discount", $priceObj->attribute( 'discount_percent' ) );
-                $item->store();
-                $priceWithoutOptions = $price;
+                $this->em->persist( $item );
+                $this->em->flush();
 
-                $optionIDList = array();
-                foreach ( array_keys( $optionList ) as $key )
-                {
-                    $attributeID = $key;
-                    $optionString = $optionList[$key];
-                    if ( is_array( $optionString ) )
-                    {
-                        foreach ( $optionString as $optionID )
-                        {
-                            $optionIDList[] = array( 'attribute_id' => $attributeID,
-                                'option_string' => $optionID );
-                        }
-                    }
-                    else
-                    {
-                        $optionIDList[] = array( 'attribute_id' => $attributeID,
-                            'option_string' => $optionString );
-                    }
-                }
-
-                $db = eZDB::instance();
-                $db->begin();
-                foreach ( $optionIDList as $optionIDItem )
-                {
-                    $attributeID = $optionIDItem['attribute_id'];
-                    $optionString = $optionIDItem['option_string'];
-
-                    $attribute = eZContentObjectAttribute::fetch( $attributeID, $object->attribute( 'current_version' ) );
-                    $dataType = $attribute->dataType();
-                    $optionData = $dataType->productOptionInformation( $attribute, $optionString, $item );
-                    if ( $optionData )
-                    {
-                        $optionData['additional_price'] = eZShopFunctions::convertAdditionalPrice( $currency, $optionData['additional_price'] );
-                        $optionItem = eZProductCollectionItemOption::create( $item->attribute( 'id' ), $optionData['id'], $optionData['name'],
-                            $optionData['value'], $optionData['additional_price'], $attributeID );
-                        $optionItem->store();
-                        $price += $optionData['additional_price'];
-                    }
-                }
-
-                if ( $price != $priceWithoutOptions )
-                {
-                    $item->setAttribute( "price", $price );
-                    $item->store();
-                }
-                $db->commit();
             }
         }
 
     }
 
+    /**
+     * Datos a añadir a la cesta
+     *
+     * @param EzproductcollectionItem $product
+     * @return array|bool
+     */
     private function getAddedProductData( EzproductcollectionItem $product )
     {
         $content = $this->contentService->loadContent( $product->getContentobjectId() );
@@ -404,5 +331,43 @@ class Legacy extends Gateway
         }
 
         return false;
+    }
+
+    /**
+     * Colección de productos par un id dado
+     *
+     * @param int $productCollectionId
+     * @return mixed
+     */
+    private function getProductCollectionByProductCollectionId ( $productCollectionId )
+    {
+        $query = $this->em->createQueryBuilder();
+        $query
+            ->select( 'ezproductcollection' )
+            ->from( 'EflBasketBundle:Ezproductcollection','ezproductcollection' )
+            ->where(
+                $query->expr()->eq( 'ezproductcollection.id', ':productCollectionId')
+            )
+            ->setParameter( 'productCollectionId', $productCollectionId );
+
+        return $query->getQuery()->getResult()[0];
+    }
+
+    /**
+     * @param $productCollectionId
+     * @return \Efl\BasketBundle\Entity\EzproductcollectionItem[]
+     */
+    private function getProductCollectionItems( $productCollectionId )
+    {
+        $query = $this->em->createQueryBuilder();
+        $query
+            ->select( 'ezproductcollection_item' )
+            ->from( 'EflBasketBundle:EzproductcollectionItem','ezproductcollection_item' )
+            ->where(
+                $query->expr()->eq( 'ezproductcollection_item.productcollectionId', ':productCollectionId')
+            )
+            ->setParameter( 'productCollectionId', $productCollectionId );
+
+        return $query->getQuery()->getResult();
     }
 }

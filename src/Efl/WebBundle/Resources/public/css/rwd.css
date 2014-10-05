@@ -477,7 +477,7 @@
 		.resume .claim, .resume .price, .resume .old-price { display: block; margin-bottom: .1em; }
 			.resume .claim { font-size: 2rem; font-family: 'ProximaNovaSemibold', Arial, Helvetica, sans-serif; color: #596274;}
 			.resume .price, .resume .old-price { color: #191a1f; }
-				.resume .price { font-size: 4.3rem; font-family: 'ProximaNovaBold', Arial, helvetica, sans-serif; }
+				td.price ins.price { font-size: 3.1rem; font-family: 'ProximaNovaBold', Arial, helvetica, sans-serif; }
 				.resume .old-price { font-size: 2rem; font-family: 'ProximaNovaSemibold', Arial, helvetica, sans-serif; }
 
 	/*==== Filter (Including overwrite styles from static pages)  ====*/

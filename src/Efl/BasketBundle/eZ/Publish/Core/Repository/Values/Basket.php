@@ -27,12 +27,19 @@ class Basket extends APIBasket
         $this->items = $items;
     }
 
+    /**
+     * Total en cesta impuestos no incluidos
+     *
+     * @return float
+     */
     public function getTotalExVat()
     {
         $total = 0.0;
         foreach ( $this->items as $item )
         {
-            return $item->getTotalExVat();
+            $total += $item->getTotalExVat();
         }
+
+        return $total;
     }
 }

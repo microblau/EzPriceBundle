@@ -49,13 +49,13 @@ system:
                         Identifier\ContentType: [producto]
             relatedByOrders:
                 producto:
-                    controller: "EflWebBundle:Product:relatedByOrders"
+                    controller: "EflWebBundle:Product:line"
                     template: "EflWebBundle:related_by_orders:product.html.twig"
                     match:
                         Identifier\ContentType: [producto]
             line:
                 producto:
-                    controller: "EflWebBundle:Product:relatedByOrders"
+                    controller: "EflWebBundle:Product:line"
                     template: "EflWebBundle:line:product.html.twig"
                     match:
                         Identifier\ContentType: [producto]

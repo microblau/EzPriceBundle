@@ -87,7 +87,7 @@ class wsProductType extends eZDataType
         {
             $data = $http->postVariable( $base . '_ezstring_data_text_' . $contentObjectAttribute->attribute( 'id' ) );
             $data_int = $http->postVariable( $base . '_ezstring_data_int_' . $contentObjectAttribute->attribute( 'id' ) );
-            $contentObjectAttribute->setAttribute( 'data_text', $data_int . '|'  . $data );
+            $contentObjectAttribute->setAttribute( 'data_text', $data_int );
             return true;
         }
         return false;
@@ -162,11 +162,7 @@ class wsProductType extends eZDataType
      */
     function objectAttributeContent( $contentObjectAttribute )
     {
-        $data = explode( '|', $contentObjectAttribute->attribute( 'data_text' ) );
-        return array(
-            'name' => $data[1],
-            'id' => $data[0]
-        );
+        return $contentObjectAttribute->attribute( 'data_text' );
     }
 
     /**
@@ -177,8 +173,7 @@ class wsProductType extends eZDataType
      */
     function metaData( $contentObjectAttribute )
     {
-        $data = explode( '|', $contentObjectAttribute->attribute( 'data_text' ) );
-        return $data[1];
+        return $contentObjectAttribute->attribute( 'data_text' );
     }
 
     /**
@@ -215,8 +210,7 @@ class wsProductType extends eZDataType
      */
     function title( $contentObjectAttribute, $name = null )
     {
-        $data = explode( '|', $contentObjectAttribute->attribute( 'data_text' ) );
-        return $data[1];
+        return $contentObjectAttribute->attribute( 'data_text' );
     }
 
     /**

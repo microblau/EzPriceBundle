@@ -22,16 +22,19 @@
 
         <p class="title9 upper">{{ ez_render_field(product.parent, 'name') }}</p>
         <p class="item-title">{{ ez_render_field( product.content, 'nombre' ) }}</p>
-        {% if not ez_is_field_empty( product.content, 'texto_oferta') %}
+        {% if hasDiscount %}
             <p class="item-claim">{{ ez_render_field(product.content, 'texto_oferta') }}</p>
         {% endif %}
-        {{ render_esi(controller("EflWebBundle:Price:showPrice", {'contentId': product.content.id, 'twigTemplate':'line'} )) }}
+        {% if formats|length %}
+        {{ render_esi(controller("EflWebBundle:Price:showPrice", {'contentId': formats['formato_papel'].content.id, 'twigTemplate':'line'} )) }}
+        {% endif %}
     </div>
 
+    {% if formats|length %}
     <div class="actions-item">
         <span class="btn">
             <a href="{{ path( 'ez_urlalias', {'locationId': product.content.contentInfo.mainLocationId} ) }}">Añadir</a>
         </span>
     </div>
-
+    {% endif %}
 </article>

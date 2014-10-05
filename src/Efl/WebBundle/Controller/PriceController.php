@@ -20,6 +20,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PriceController extends Controller
 {
+    /**
+     * Muestra el precio con oferta si lo hubiera según la twigTemplate dada
+     *
+     * @param $contentId
+     * @param $twigTemplate
+     * @return Response
+     */
     public function showPriceAction( $contentId, $twigTemplate )
     {
         $response = new Response;

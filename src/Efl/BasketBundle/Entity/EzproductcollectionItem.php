@@ -77,8 +77,6 @@ class EzproductcollectionItem
      */
     private $vatValue;
 
-
-
     /**
      * Get id
      *

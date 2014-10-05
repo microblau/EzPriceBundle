@@ -17,20 +17,21 @@
 
     <!-- aside -->
     <aside class="aside">
-        {% if hasResume %}
-            <div class="resume">
-                {% if not ez_is_field_empty( content, 'texto_oferta' ) %}
-                    <span class="claim">{{ ez_render_field( content, 'texto_oferta', {'template':'EflWebBundle:fields:only_value.html.twig'}) }}</span>
-                {% endif %}
-
-                {{ render(controller("EflWebBundle:Price:showPrice", {'contentId': content.id, 'twigTemplate':'editorial'} )) }}
-            </div>
-        {% endif %}
         {% if formats is defined %}
             {% form_theme form 'EflBasketBundle:forms:addtobasket.html.twig' %}
             {{ form_start(form, {'attr': {'novalidate':'novalidate' }}) }}
+
+
+            <div class="resume">
+                {% if hasDiscount %}
+                    <span class="claim">{{ ez_render_field( content, 'texto_oferta', {'template':'EflWebBundle:fields:only_value.html.twig'}) }}</span>
+                {% endif %}
+
+
+            </div>
+
         <table class="tb-formats">
-            <caption class="title">{{ ez_render_field( content, 'nombre' ) }}</caption>
+
 
             <thead>
             <tr>
@@ -48,34 +49,58 @@
             {% endif %}
             {% set n = 0 %}
             {% for format in formats %}
+
                 <tr>
                     <td class="format">
                         <i class="ico ico-{{ format.data.icon }}-white"></i> <span>{{ format.data.literal }}</span>
                     </td>
                     <td class="price">
-                        {{ render(controller("EflWebBundle:Price:showPrice", {'contentId': format.content.id, 'twigTemplate':'product_format'} )) }}
+                        {{ render(controller("EflWebBundle:Price:showPrice", {'contentId': format.content.id,
+                        'twigTemplate': format.data.icon == 'paper' ? 'editorial' : 'product_format'} )) }}
                     </td>
                     <td>
                         {{ form_widget(form.formats[n] ) }}
                     </td>
                 </tr>
-                {% if not ez_is_field_empty( format.content, 'textoAux1' ) %}
+
+
+                    {% if format.data.icon == 'pc' %}
                     <tr class="text">
                         <td colspan="3" class="wrap-info-text">
                             <div class="info-text">
-                                {{ ez_render_field( format.content, 'textoAux1', {'template':'EflWebBundle:fields:only_value.html.twig'} ) }}
+                                <span class="info-text">Acceda a su Memento siempre que quiera en Internet, siempre actualizados y conectados entre sí con <a href="#qMementix" class="layer-trigger">qMementix</a>.</span>
                             </div>
-                            <div class="wrap-layer">
+                            <div id="qMementix" class="wrap-layer">
                                 <i class="ico ico-arrow-top-layer"></i>
                                 <div class="layer">
                                     <a href="#" class="close" title="Cerrar"><i class="ico ico-close-gray"></i> <span class="offscreen">Cerrar</span></a>
-                                    <p class="layer-title">{{ format.data.titleInfo }}</p>
-                                    {{ ez_render_field( format.content, 'textoAux2', {'template':'EflWebBundle:fields:only_value.html.twig'} ) }}
+                                    <p class="layer-title">qMementix</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adiiscing elit. Ut vel lacus et lectus ornare pota at quis turpis. Praesent vitae tortor nisl. Integer ac quam neque. Aliquam quis me tus vulputate, laoreet velit non, ornare lecs.</p>
+
+                                    <p><a href="{{ path('qmementix') }}">Más detalles sobre qMementix</a></p>
                                 </div>
                             </div>
                         </td>
                     </tr>
-                {% endif %}
+                    {% elseif format.data.icon == 'tablet' %}
+                        <tr class="text">
+                            <td colspan="3" class="wrap-info-text">
+                                <div class="info-text">
+                                    <span class="info-text">Sus Mementos en su iPad, con acceso incluso sin conexión a internet a través de <a href="#iMemento" class="layer-trigger">iMemento</a>.</span>
+                                </div>
+                                <div id="iMemento" class="wrap-layer">
+                                    <i class="ico ico-arrow-top-layer"></i>
+                                    <div class="layer">
+                                        <a href="#" class="close" title="Cerrar"><i class="ico ico-close-gray"></i> <span class="offscreen">Cerrar</span></a>
+                                        <p class="layer-title">iMemento</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adiiscing elit. Ut vel lacus et lectus ornare pota at quis turpis. Praesent vitae tortor nisl. Integer ac quam neque. Aliquam quis me tus vulputate, laoreet velit non, ornare lecs.</p>
+                                        <p><a href="{{ path('imemento') }}" class="layer-link">Más detalles sobre iMemento</a></p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endif %}
+
                 {% set n = n +1 %}
             {% endfor %}
 
@@ -129,40 +154,6 @@
                     loadResults(locationId, page )
                 });
 
-                $( document ).on( 'click', '.info-text a', function(e){
-                    e.preventDefault();
-                    var layer = $(this).parent().parent().next("div"),
-                            position = $(this).position(),
-                            _l = position.left,
-                            _t = position.top,
-                            _w = $(this).outerWidth(),
-                            _h = $(this).outerHeight(),
-                            _zI = 100;
-
-                    var $ico = $( $(this).parent().next("div") ).find( '.ico-arrow-top-layer' ),
-                            _wI = $ico.outerWidth(),
-                            _hI = $ico.outerHeight();
-
-                    $( '.wrap-layer' ).fadeOut( 200 );
-                    $( layer ).find('.layer').css({
-                        'top' : _t + _h + _hI
-                    });
-                    $( layer ).fadeIn( 200 );
-
-
-
-                    $ico.css({
-                        'display' : 'inline-block',
-                        'position' : 'absolute',
-                        'top' : _t + _h,
-                        'left' : (_l + (_w / 2)) - (_wI / 2) //Left of layer-trigger + half of width and minus half of icon width
-                    })
-                });
-
-                $( document ).on( 'click', '.layer .close', function(e){
-                    e.preventDefault();
-                    $(this).parent().parent().fadeOut( 200 );
-                })
             });
 
             function loadResults(locationId, page)

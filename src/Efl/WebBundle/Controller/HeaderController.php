@@ -48,9 +48,10 @@ class HeaderController extends Controller
         $response->setSharedMaxAge( 3600 );
         $response->setVary( 'Cookie' );
 
-        $cart_is_empty = $this->get( 'eflweb.cart_helper' )->isCurrentCartEmpty();
-        $cart_total = $this->get( 'eflweb.cart_helper' )->getCurrentCartTotal();
-        $cart_nItems = $this->get( 'eflweb.cart_helper' )->getCurrentCartNItems();
+        $cart = $this->get( 'eflweb.basket_service' )->getCurrentBasket();
+        $cart_is_empty = count( $cart->getItems() ) == 0;
+        $cart_total = $cart->getTotalExVat();
+        $cart_nItems = count( $cart->getItems() );
 
         return $this->render(
             "EflWebBundle:header:user_links.html.twig",

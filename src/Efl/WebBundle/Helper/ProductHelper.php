@@ -15,6 +15,7 @@ use Efl\ReviewsBundle\eZ\Publish\Core\Repository\ReviewsService;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\ContentTypeService;
 use Efl\WebBundle\Controller\ProductController;
+use Efl\WebBundle\Helper\PriceHelper;
 
 class ProductHelper
 {
@@ -52,6 +53,8 @@ class ProductHelper
 
     private $reviewsController;
 
+    private $priceHelper;
+
     public function __construct(
         ContentService $contentService,
         LocationService $locationService,
@@ -60,7 +63,8 @@ class ProductHelper
         ReviewsService $reviewsService,
         ContentTypeService $contentTypeService,
         ProductController $productController,
-        ReviewsController $reviewsController
+        ReviewsController $reviewsController,
+        PriceHelper $priceHelper
     )
     {
         $this->contentService = $contentService;
@@ -71,6 +75,7 @@ class ProductHelper
         $this->contentTypeService = $contentTypeService;
         $this->productController = $productController;
         $this->reviewsController = $reviewsController;
+        $this->priceHelper = $priceHelper;
     }
 
     /**
@@ -234,11 +239,14 @@ class ProductHelper
      *
      * @return bool
      */
-    public function contentHasResume( Content $content )
+    public function contentHasOffer( Content $content )
     {
-        return !$this->fieldHelper->isFieldEmpty( $content, 'texto_oferta' )
-            || !$this->fieldHelper->isFieldEmpty( $content, 'precio' )
-            || !$this->fieldHelper->isFieldEmpty( $content, 'precio_oferta' );
+        $prices = array();
+        if ( $format = $this->getFormatForContent( $content->id ) )
+        {
+            $prices = $this->priceHelper->getPrices($format->id);
+        }
+        return isset( $prices['offer'] );
     }
 
     public function getFormatosForLocation( Location $location )
