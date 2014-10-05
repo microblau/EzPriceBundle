@@ -31,7 +31,7 @@ class Price implements Converter
     public function toStorageValue( FieldValue $value, StorageFieldValue $storageFieldValue )
     {
         $storageFieldValue->dataFloat = $value->data['price'];
-        $storageFieldValue->dataText = (int)$value->data['isVatIncluded'] . ',1';
+        $storageFieldValue->dataText = (int)$value->data['vatId'] . ',' . (int)$value->data['isVatIncluded'];
         $storageFieldValue->sortKeyInt = $value->sortKey;
     }
 
@@ -49,6 +49,8 @@ class Price implements Converter
 
     public function toStorageFieldDefinition( FieldDefinition $fieldDef, StorageFieldDefinition $storageDef )
     {
+        $storageDef->dataFloat1 = $fieldDef->fieldTypeConstraints->fieldSettings['vat_id'];
+        $storageDef->dataInt1 = $fieldDef->fieldTypeConstraints->fieldSettings['is_vat_included'] ? 1 : 2;
     }
 
     public function toFieldDefinition( StorageFieldDefinition $storageDef, FieldDefinition $fieldDef )

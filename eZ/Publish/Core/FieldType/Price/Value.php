@@ -25,10 +25,15 @@ class Value extends BaseValue
     public $isVatIncluded = true;
 
     /**
+     * @var string
+     */
+    public $vatId;
+
+    /**
      * @param float|array $price Either the price as a float, or an array of properties (price, isVatIncluded)
      * @param bool $isVatIncluded
      */
-    public function __construct( $price = null, $isVatIncluded = true )
+    public function __construct( $price = null, $isVatIncluded = true, $vatId = '' )
     {
         if ( is_array( $price ) )
         {
@@ -38,6 +43,7 @@ class Value extends BaseValue
         {
             $this->price = $price;
             $this->isVatIncluded = $isVatIncluded;
+            $this->vatId = $vatId;
         }
     }
 
