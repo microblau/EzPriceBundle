@@ -1,0 +1,30 @@
+<!-- main -->
+
+    <div class="wrap-title">
+        <p class="title3">Catálogo</p>
+    </div>
+    <article class="related-items cl">
+        {% if pager|length() > 0 %}
+            {% for product in pager %}
+                {{ render_esi( controller( 'ez_content:viewLocation', {'locationId': product.contentInfo.mainLocationId, 'viewType': 'line'  } ) ) }}
+            {% endfor %}
+        {% else %}
+            No se han encontrado resultados
+        {% endif %}
+
+
+
+    </article>
+
+    <div class="right">
+        {% if pager.haveToPaginate() %}
+            {{ pagerfanta( pager, 'efl',
+            {
+            'prev_message': '&lt;',
+            'next_message': '&gt;',
+            'css_disabled_class': 'btn btn-filter'
+            } ) }}
+        {% endif %}
+    </div>
+
+<!-- //main -->

@@ -457,7 +457,16 @@ var EFL = function(){
         })
         .on( 'submit', function(ev){ /*to check if send form data ok*/
           ev.preventDefault();
-          console.log( frm.serialize() )
+          console.log( frm.serialize() );
+
+                $.ajax({
+                    type: "GET",
+                    url: $(frm).attr('action'),
+                    data: $( frm ).serialize(),
+                    dataType: 'html',
+                    success:function( data )
+                    { $( '#searchResults' ).html( data ); }
+                });
         })
       },
       customerServices:function(){

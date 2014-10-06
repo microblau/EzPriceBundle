@@ -31,6 +31,7 @@ use eZ\Bundle\EzPublishLegacyBundle\Routing\FallbackRouter;
 use Efl\WebBundle\Exceptions\Newsletter\HashNotFoundException;
 use Efl\WebBundle\Exceptions\Newsletter\HashAlreadyUsedException;
 use Efl\WebBundle\Exceptions\Newsletter\NewsletterAccessDenied;
+use Efl\WebBundle\Helper\CatalogHelper;
 
 class NewsletterHelper
 {
@@ -89,10 +90,13 @@ class NewsletterHelper
      */
     private $legacyRouter;
 
+    private $catalogHelper;
     /**
      * @var array
      */
     protected $newsletterConfig;
+
+
 
     public function __construct(
         Repository $repository,
@@ -106,6 +110,7 @@ class NewsletterHelper
         EngineInterface $templating,
         RouterInterface $router,
         FallbackRouter $legacyRouter,
+        CatalogHelper $catalogHelper,
         array $newsletterConfig
     )
     {
@@ -120,6 +125,7 @@ class NewsletterHelper
         $this->templating = $templating;
         $this->router = $router;
         $this->legacyRouter = $legacyRouter;
+        $this->catalogHelper = $catalogHelper;
         $this->newsletterConfig = $newsletterConfig;
     }
 
@@ -140,30 +146,9 @@ class NewsletterHelper
      */
     public function getAreasInteres()
     {
-        $location = $this->locationService->loadLocation( 143 );
-
-        $query = new LocationQuery();
-
-        $query->query = new Criterion\LogicalAnd(
-            array(
-                new Criterion\Visibility( Criterion\Visibility::VISIBLE ),
-                new Criterion\Location\Depth( Criterion\Operator::EQ, $location->depth + 1 ),
-                new Criterion\Subtree( $location->pathString )
-            )
+        return new SimpleChoiceList(
+            $this->catalogHelper->getRamasDelDerecho()
         );
-
-        $query->sortClauses = array( new Query\SortClause\Location\Priority() );
-
-        $results = $this->repository->getSearchService()->findLocations( $query )->searchHits;
-
-        $values = array();
-
-        foreach ( $results as $result )
-        {
-            $values[$result->valueObject->contentInfo->id] = $result->valueObject->contentInfo->name;
-        }
-
-        return new SimpleChoiceList(  $values );
     }
 
     public function getEbooksRegalo()
