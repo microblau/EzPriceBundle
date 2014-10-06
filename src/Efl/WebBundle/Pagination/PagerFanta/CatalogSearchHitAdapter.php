@@ -25,9 +25,9 @@ class CatalogSearchHitAdapter implements  AdapterInterface
     private $nbResults;
 
     /**
-     * @var string
+     * @var array
      */
-    private $searchTerm;
+    private $params;
 
     /**
      * @var array
@@ -40,12 +40,12 @@ class CatalogSearchHitAdapter implements  AdapterInterface
      * @param \eZ\Publish\Core\MVC\Legacy\Kernel $legacyKernel
      * @param string $searchTerm
      */
-    public function __construct( Kernel $legacyKernel, $searchTerm )
+    public function __construct( Kernel $legacyKernel, $params = array() )
     {
         $this->legacyKernel = $legacyKernel;
-        $this->searchTerm = $searchTerm;
+        $this->params = $this->addSearchParams( $params );
         $this->defaultSearchParams = array(
-            'query' => $this->searchTerm,
+            'query' => '',
             'as_objects' => false,
             'class_id' => array( 'producto' ),
             'fields_to_return' => array( 'id' )
@@ -64,7 +64,9 @@ class CatalogSearchHitAdapter implements  AdapterInterface
             return $this->nbResults;
         }
 
-        $searchResults = $this->doSearch( $this->defaultSearchParams + array( 'limit' => 0 ) );
+        $searchResults = $this->doSearch(
+            $this->defaultSearchParams + $this->params +  array( 'limit' => 0 )
+        );
 
         return $this->nbResults = $searchResults['SearchCount'];
     }
@@ -84,14 +86,13 @@ class CatalogSearchHitAdapter implements  AdapterInterface
             'published' => 'desc',
         );
 
-        $searchParams = $this->defaultSearchParams + array(
+        $searchParams = $this->defaultSearchParams + $this->params + array(
                 'sort' => $sort,
                 'offset' => $offset,
                 'limit' => $length
             );
 
         $searchResults = $this->doSearch( $searchParams );
-
 
         if ( !isset( $this->nbResults ) )
         {
@@ -119,5 +120,52 @@ class CatalogSearchHitAdapter implements  AdapterInterface
                 );
             }
         );
+    }
+
+    public function addSearchParams( array $params = array() )
+    {
+        $filter = $subTree = $queryParams = array();
+
+        if ( isset( $params['areas'] ) )
+        {
+            $areas = $params['areas'];
+            if ( !is_array( $params['areas'] ) )
+            {
+                $areas = array( $params['areas'] );
+            }
+
+            $filter['areas'] = array();
+            $filter['areas'][] = 'or';
+            foreach ( $areas as $area )
+            {
+                $filter['areas'][] = 'submeta_area___id____si:' . $area;
+            }
+        }
+
+        if ( isset( $params['types'] ) )
+        {
+            $types = $params['types'];
+            if ( !is_array( $params['types'] ) )
+            {
+                $types = array( $params['types'] );
+            }
+
+            foreach ( $types as $type )
+            {
+                $subTree[] = $type;
+            }
+        }
+
+        if ( !empty ( $filter ) )
+        {
+            $queryParams['filter'] = array( 'and', $filter );
+        }
+
+        if ( !empty( $subTree ) )
+        {
+            $queryParams['subtree_array'] = $subTree;
+        }
+
+        return  $queryParams;
     }
 }

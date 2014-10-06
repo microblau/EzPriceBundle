@@ -12,6 +12,7 @@ parameters:
     eflweb.menus_helper.class: Efl\WebBundle\Helper\MenusHelper
     eflweb.leads_helper.class: Efl\WebBundle\Helper\LeadsHelper
     eflweb.qmemento_helper.class: Efl\WebBundle\Helper\QMementoHelper
+    eflweb.catalog_helper.class: Efl\WebBundle\Helper\CatalogHelper
     eflweb.leads_client.parameters:
 
 services:
@@ -33,6 +34,7 @@ services:
             - @templating
             - @router
             - @ezpublish_legacy.router
+            - @eflweb.catalog_helper
             - %newsletter.subscription_mail%
 
     eflweb.nosotros_helper:
@@ -119,3 +121,10 @@ services:
             - @ezpublish.api.service.location
             - @ezpublish.api.service.search
             - @ezpublish.api.service.content
+
+    eflweb.catalog_helper:
+        class: %eflweb.catalog_helper.class%
+        arguments:
+            - @ezpublish.api.service.content
+            - @ezpublish.api.service.location
+            - @ezpublish.api.service.search

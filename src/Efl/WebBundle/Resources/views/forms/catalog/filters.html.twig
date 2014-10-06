@@ -1,0 +1,42 @@
+{% block choice_row -%}
+<label for="{{ form.vars.id }}" class="field row-item">
+    {{- form_label(form) -}}
+    {{- form_errors(form) -}}
+    {{- form_widget(form) -}}
+</label>
+{%- endblock choice_row %}
+
+
+{% block choice_label %}
+    {% if label is not sameas(false) -%}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif %}
+        {% if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif %}
+        {% if label is empty -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+        <span class="lbl upper"><b>{{ label|trans({}, translation_domain) }}</b></span>
+
+    {%- endif %}
+{% endblock choice_label %}
+
+{% block choice_widget %}
+    {% set icons =  ['', 'paper', 'tablet', 'pc'] %}
+<select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+   {% for i,choice in form.vars.choices %}
+      <option value="{{ choice.value }}" id="{{ form.vars.name }}-opt-{{ i }}" {% if choice is selectedchoice(value) %} selected="selected"{% endif %} {% if form.vars.name == 'formats' %}data-ico="ico ico-{{ icons[i] }}-white"{% endif %}>{{ choice.label|trans({}, translation_domain) }}</option>
+   {% endfor %}
+</select>
+{% endblock %}
+
+{% block _efl_catalog_filters_form_search_widget %}
+    <div class="wrap-btn">
+    {% if label is empty -%}
+        {% set label = name|humanize %}
+    {%- endif -%}
+    <button type="submit" {{ block('button_attributes') }}><i class="ico ico-arrow-right-white"></i> {{ label|trans({}, translation_domain) }}</button>
+    </div>
+{% endblock %}

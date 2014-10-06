@@ -58,3 +58,7 @@ qmemento_post:
     defaults: { _controller: EflWebBundle:QMemento:postForm }
     methods: [POST]
 
+catalog_search:
+    pattern: /catalog/search
+    defaults: { _controller: EflWebBundle:Catalog:search }
+    methods: [GET]

@@ -21,62 +21,21 @@
 <aside class="aside">
 
     <section class="filter">
-        <form action="" method="post" class="frm frm-filter">
+        {% form_theme form 'EflWebBundle:forms/catalog:filters.html.twig' %}
+        {{ form_start(form, {'attr': {'novalidate':'novalidate', 'class': 'frm frm-filter' }}) }}
             <fieldset>
                 <legend class="title7">A continuación puede filtrar los resultados</legend>
             </fieldset>
 
-            <label for="branch" class="field row-item">
-                <span class="lbl upper"><b>Ramas del Derecho</b></span>
-                <select id="branch" name="branch">
-                    <option value=""></option>
-                    <option value="Derecho tributario" id="branch-opt1" selected="selected">Derecho tributario</option>
-                    <option value="Derecho laboral" id="branch-opt2">Derecho laboral</option>
-                    <option value="Derecho mercantil" id="branch-opt3">Derecho mercantil</option>
-                    <option value="Derecho contable" id="branch-opt4">Derecho contable</option>
-                    <option value="Derecho inmobiliario" id="branch-opt5">Derecho inmobiliario</option>
-                    <option value="Derecho administrativo" id="branch-opt6">Derecho administrativo</option>
-                    <option value="Derecho procesal" id="branch-opt7">Derecho procesal</option>
-                    <option value="Derecho civil" id="branch-opt8">Derecho civil</option>
-                    <option value="Derecho penal" id="branch-opt9">Derecho penal</option>
-                </select>
-            </label>
+            {{ form_row( form.areas ) }}
 
-            <label for="type" class="field row-item">
-                <span class="lbl upper"><b>Tipo</b></span>
-                <select id="type" name="type">
-                    <option value=""></option>
-                    <option value="Mementos" id="type-opt1">Mementos</option>
-                    <option value="Mementos expertos" id="type-opt2" selected="selected">Mementos expertos</option>
-                    <option value="Mementos de autor" id="type-opt3">Mementos de autor</option>
-                    <option value="Códigos Tribunal Supremo" id="type-opt4">Códigos Tribunal Supremo</option>
-                    <option value="Manuales El Derecho" id="type-opt5">Manuales El Derecho</option>
-                    <option value="Respuestas" id="type-opt6">Respuestas</option>
-                    <option value="Actum" id="type-opt7">Actum</option>
-                    <option value="Formularios" id="type-opt8">Formularios</option>
-                </select>
-            </label>
 
-            <label for="state" class="field row-item">
-                <span class="lbl upper"><b>Estado</b></span>
-                <select id="state" name="state">
-                    <option value=""></option>
-                    <option value="En prepublicación" id="state-opt1">En prepublicación</option>
-                    <option value="Novedades" id="state-opt2">Novedades</option>
-                    <option value="Ofertas" id="state-opt3">Ofertas</option>
-                    <option value="Packs" id="state-opt4">Packs</option>
-                </select>
-            </label>
+            {{ form_row( form.types ) }}
 
-            <label for="format" class="field row-item">
-                <span class="lbl upper"><b>Formato</b></span>
-                <select id="format" name="format" class="format">
-                    <option value=""></option>
-                    <option value="En papel" id="format-opt1" data-ico="ico ico-paper-white">En papel</option>
-                    <option value="Para iPad (iMemento)" id="format-opt2" data-ico="ico ico-tablet-white">Para iPad (iMemento)</option>
-                    <option value="Versión online (qMementix)" id="format-opt3" data-ico="ico ico-pc-white">Versión online (qMementix)</option>
-                </select>
-            </label>
+            {{ form_row( form.states ) }}
+
+            {{ form_row( form.formats ) }}
+
 
             <label for="order" class="field row-item lbl-order">
                 <span class="lbl upper"><b>Ordenar</b></span>
@@ -86,44 +45,42 @@
                 </select>
             </label>
 
-            <div class="wrap-btn">
-                <button type="submit" class="btn type3 hasIco"><i class="ico ico-arrow-right-white"></i> Buscar</button>
-            </div>
+           {{ form_row( form.search ) }}
 
-        </form>
+        {{ form_end(form) }}
     </section>
 
 </aside>
 <!-- //aside -->
 
 <!-- main -->
-<div class="main">
-<div class="wrap-title">
-    <p class="title3">Catálogo</p>
-</div>
-<article class="related-items cl">
-    {% if pager|length() > 0 %}
-        {% for product in pager %}
-            {{ render_esi( controller( 'ez_content:viewLocation', {'locationId': product.contentInfo.mainLocationId, 'viewType': 'line'  } ) ) }}
-        {% endfor %}
-    {% else %}
-        No se han encontrado resultados
-    {% endif %}
+<div class="main" id="searchResults">
+    <div class="wrap-title">
+        <p class="title3">Catálogo</p>
+    </div>
+    <article class="related-items cl">
+        {% if pager|length() > 0 %}
+            {% for product in pager %}
+                {{ render_esi( controller( 'ez_content:viewLocation', {'locationId': product.contentInfo.mainLocationId, 'viewType': 'line'  } ) ) }}
+            {% endfor %}
+        {% else %}
+            No se han encontrado resultados
+        {% endif %}
 
 
 
-</article>
+    </article>
 
-<div class="right">
-    {% if pager.haveToPaginate() %}
-        {{ pagerfanta( pager, 'efl',
-        {
-        'prev_message': '&lt;',
-        'next_message': '&gt;',
-        'css_disabled_class': 'btn btn-filter'
-        } ) }}
-    {% endif %}
-</div>
+    <div class="right">
+        {% if pager.haveToPaginate() %}
+            {{ pagerfanta( pager, 'efl',
+            {
+            'prev_message': '&lt;',
+            'next_message': '&gt;',
+            'css_disabled_class': 'btn btn-filter'
+            } ) }}
+        {% endif %}
+    </div>
 
 </div>
 <!-- //main -->
