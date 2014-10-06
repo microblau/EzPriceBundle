@@ -45,13 +45,15 @@ class HeaderController extends Controller
     public function userLinksAction()
     {
         $response = new Response();
-        $response->setSharedMaxAge( 3600 );
-        $response->setVary( 'Cookie' );
 
         $cart = $this->get( 'eflweb.basket_service' )->getCurrentBasket();
         $cart_is_empty = count( $cart->getItems() ) == 0;
         $cart_total = $cart->getTotalExVat();
         $cart_nItems = count( $cart->getItems() );
+
+        $response->setSharedMaxAge( 0 );
+        $response->setVary( 'Cookie' );
+        $response->setEtag( $cart_total );
 
         return $this->render(
             "EflWebBundle:header:user_links.html.twig",
@@ -62,7 +64,6 @@ class HeaderController extends Controller
             ),
             $response
         );
-
     }
 
     public function searchBoxAction()

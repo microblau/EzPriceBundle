@@ -75,6 +75,7 @@
         {% if pager.haveToPaginate() %}
             {{ pagerfanta( pager, 'efl',
             {
+            'routeName': 'catalog_search', 'routeParams' : { 'page': page },
             'prev_message': '&lt;',
             'next_message': '&gt;',
             'css_disabled_class': 'btn btn-filter'
@@ -90,4 +91,29 @@
 
 
 </div>
+{% endblock %}
+
+{% block footerScript %}
+    {{ parent() }}
+    <script  type="text/javascript">
+        (function( $ )
+        {
+            $( document ).ready(function() {
+                $(document).on('click', '.pagination a', function(e){
+                    e.preventDefault();
+                    loadResults( $(this).attr('href'))
+                });
+
+            });
+
+            function loadResults(route, page)
+            {
+                $.ajax({
+                    url: route,
+                    method: 'GET',
+                    success: function(content) {$("#searchResults").html(content)}
+                })
+            }
+        })(jQuery);
+    </script>
 {% endblock %}

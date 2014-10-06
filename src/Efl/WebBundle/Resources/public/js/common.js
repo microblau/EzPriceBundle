@@ -457,7 +457,6 @@ var EFL = function(){
         })
         .on( 'submit', function(ev){ /*to check if send form data ok*/
           ev.preventDefault();
-          console.log( frm.serialize() );
 
                 $.ajax({
                     type: "GET",

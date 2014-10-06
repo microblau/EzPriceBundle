@@ -26,7 +26,8 @@ class CatalogController extends Controller
             )
         );
         $pager->setMaxPerPage( 10 );
-        $pager->setCurrentPage( $request->get( 'page', 1 ) );
+        $page = $request->get( 'page', 1 );
+        $pager->setCurrentPage( $page );
 
         /** @var Response $response */
         $response = $this->get( 'ez_content' )->viewLocation(
@@ -35,7 +36,8 @@ class CatalogController extends Controller
             $layout,
             array(
                 'pager' => $pager,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'page' => $page
             )
         );
 
