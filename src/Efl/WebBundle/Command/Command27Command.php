@@ -206,7 +206,7 @@ class Command27Command extends ContainerAwareCommand
                 'nameSchema' => '<producto> - ' . $data['nombre'],
                 'names' => array( 'esl-ES' => $data['nombre'] ),
                 'fieldDefinitions' => array(
-                    $wsProductField, $wsPriceField, $wsPriceFieldOferta, $categoria, $textoAux1, $textoAux2,
+                    $wsProductField, $wsPriceField, $wsPriceFieldOferta, $categoria,
                     $fechaInicioOferta,
                     $fechaFinOferta,
                 )

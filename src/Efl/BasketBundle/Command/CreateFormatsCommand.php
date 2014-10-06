@@ -110,17 +110,16 @@ class CreateFormatsCommand extends ContainerAwareCommand
             $draft = $repository->getContentService()->createContent($contentCreateStruct, array($locationCreateStruct));
             $repository->getContentService()->publishVersion($draft->versionInfo);
             $location = $repository->getLocationService()->loadLocation( $locationId );
-            $output->writeln( "Creando $format bajo " . $location->contentInfo->name );
+            //$output->writeln( "Creando $format bajo " . $location->contentInfo->name );
 
         }
         catch( \Exception $e )
         {
-            print $e->getMessage();
+            $output->writeln( '<bg=red;options=bold>' . $e->getMessage() . '</bg=red;options=bold>' );
+            $output->writeln( '<bg=red;options=bold>No hemos encontrado precio para ' . $ref . '</bg=red;options=bold>' );
+            $output->writeln('');
         }
-    }
-
-    private function getPriceForRef( $ref )
-    {
 
     }
+
 }

@@ -28,12 +28,21 @@ class WsManager implements WsManagerInterface
 
     /**
      * @param $email
-     * @param $password
      *
      * @return mixed
      */
     public function existeUsuario( $email )
     {
         return $this->connection->existeUsuario( $email );
+    }
+
+    /**
+     * @param $cod
+     *
+     * @return mixed
+     */
+    public function recuperarProductosPrecio( $cod )
+    {
+        return $this->connection->recuperarPreciosProducto( $cod );
     }
 } 

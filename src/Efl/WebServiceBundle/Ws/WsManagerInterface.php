@@ -28,4 +28,13 @@ interface WsManagerInterface
      * @return mixed
      */
     public function existeUsuario( $email );
+
+    /**
+     * Precio base de un producto
+     *
+     * @param $cod
+     *
+     * @return mixed
+     */
+    public function recuperarProductosPrecio( $cod );
 }

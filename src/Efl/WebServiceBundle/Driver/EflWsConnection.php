@@ -169,6 +169,27 @@ class EflWsConnection implements  EflWsConnectionInterface
         return $usuario;
     }
 
+    public function recuperarPreciosProducto( $cod )
+    {
+        if ( $this->ws_res === null )
+        {
+            $this->connect();
+        }
+
+        $data = $this->ws_res->RecuperarProductosPrecio(
+            array(
+                'StrIdProducto' => $cod
+            )
+        );
+
+        print_r( $data );
+        if ( isset( $data->RecuperarProductosPrecioResult->data->Producto ) )
+            return (float)$data->RecuperarProductosPrecioResult->data->Producto->precioBase;
+    }
+
+    /**
+     * conexión al ws
+     */
     private function connect()
     {
         $this->ws_res = new \SoapClient( $this->params['host'] . $this->params['wsdl'] );
