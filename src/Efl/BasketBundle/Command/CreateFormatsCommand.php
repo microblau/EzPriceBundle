@@ -111,7 +111,6 @@ class CreateFormatsCommand extends ContainerAwareCommand
             $repository->getContentService()->publishVersion($draft->versionInfo);
             $location = $repository->getLocationService()->loadLocation( $locationId );
             $output->writeln( "Creando $format bajo " . $location->contentInfo->name );
-            die();
 
         }
         catch( \Exception $e )
