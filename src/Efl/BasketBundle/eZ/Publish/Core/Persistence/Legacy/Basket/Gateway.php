@@ -19,7 +19,6 @@ abstract class Gateway
      */
     abstract public function relatedPurchasedListForContentIds( array $contentIds, $limit );
 
-
     /**
      * Cesta actual
      *
@@ -38,13 +37,14 @@ abstract class Gateway
     /**
      * Añadir producto a la cesta
      *
+     * @param int $productCollectionId
      * @param $contentId
      * @param array $optionList
      * @param int $quantity
      *
      * @return mixed
      */
-    abstract public function addProductToBasket( $contentId, array $optionList = array(), $quantity = 1 );
+    abstract public function addProductToProductCollection( $productCollectionId, $contentId, array $optionList = array(), $quantity = 1 );
 
     /**
      * Quitar producto de la cesta

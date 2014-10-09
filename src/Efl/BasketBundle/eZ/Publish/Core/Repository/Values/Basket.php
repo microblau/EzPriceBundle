@@ -23,8 +23,6 @@ class Basket extends APIBasket
 
     public function getItems()
     {
-        3+
-        º0 
         return $this->items;
     }
 

@@ -47,27 +47,27 @@ class BasketService
      */
     public function getCurrentBasket( $byOrderId = -1 )
     {
-        if ( $this->basket != null )
+        if ( $this->basket == null )
         {
-            return $this->basket;
+            $basket = new Basket(
+                $this->basketHandler->currentBasket( $byOrderId )
+            );
+
+            $basketItems = $this->basketHandler->getItemsByProductCollectionId( $basket->productCollectionId );
+
+            $items = array();
+
+            foreach( $basketItems as $basketItem )
+            {
+                $items[] = new BasketItem( $basketItem );
+            }
+
+            $basket->setItems( $items );
+
+            $this->basket = $basket;
         }
 
-        $data = $this->basketHandler->currentBasket( $byOrderId );
-
-        $basketItems = $this->basketHandler->getItemsByProductCollectionId( $data['productCollectionId'] );
-
-        $items = array();
-
-        foreach( $basketItems as $basketItem )
-        {
-            print_r( $basketItem );
-            $items[] = new BasketItem( $basketItem );
-        }
-
-        $basket = new Basket( $data );
-        $basket->setItems( $items );
-
-        return $basket;
+        return $this->basket;
 
     }
 
@@ -82,9 +82,11 @@ class BasketService
      */
     public function addProductToBasket( $contentId, array $optionList = array(), $quantity = 1 )
     {
-        $basketItem = $this->basketHandler->addProductToBasket( $contentId, $optionList, $quantity );
-        return new BasketItem(
-            $basketItem
+        return $this->basketHandler->addProductToBasket(
+            $this->getCurrentBasket(),
+            $contentId,
+            $optionList,
+            $quantity
         );
     }
 

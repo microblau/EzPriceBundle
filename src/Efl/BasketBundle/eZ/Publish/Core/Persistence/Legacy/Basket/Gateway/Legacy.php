@@ -148,7 +148,7 @@ class Legacy extends Gateway
      * Cesta. Si no se le pasa $byOrderId obtendrá la cesta en sesión
      *
      * @param int $byOrderId
-     * @return \Efl\BasketBundle\Entity\Ezbasket
+     * @return array
      */
     public function currentBasket( $byOrderId = -1 )
     {
@@ -181,7 +181,12 @@ class Legacy extends Gateway
 
         if( count( $basket) )
         {
-            return $basket[0];
+            return array(
+                'id' => $basket[0]->getId(),
+                'sessionId' => $basket[0]->getSessionId(),
+                'productCollectionId' => $basket[0]->getProductCollectionId(),
+                'orderId' => $basket[0]->getOrderId()
+            );
         }
 
         $this->em->beginTransaction();
@@ -201,7 +206,12 @@ class Legacy extends Gateway
 
         $this->em->commit();
 
-        return $basket;
+        return array(
+            'id' => $basket->getId(),
+            'sessionId' => $basket->getSessionId(),
+            'productCollectionId' => $basket->getProductCollectionId(),
+            'orderId' => $basket->getOrderId()
+        );
     }
 
     /**
@@ -227,7 +237,6 @@ class Legacy extends Gateway
 
         foreach ( $collection as $product )
         {
-
             $addedProducts[] = $this->getAddedProductData( $product );
         }
 
@@ -237,13 +246,14 @@ class Legacy extends Gateway
     /**
      * Añade producto a la colección de productos en la cesta
      *
+     * @param $productCollectionId
      * @param $contentId
      * @param array $optionList
      * @param int $quantity
      *
      * @return mixed|void
      */
-    public function addProductToBasket( $contentId, array $optionList = array(), $quantity = 1 )
+    public function addProductToProductCollection( $productCollectionId, $contentId, array $optionList = array(), $quantity = 1 )
     {
         $content = $this->contentService->loadContent( $contentId );
         $currentVersionNo = $content->contentInfo->currentVersionNo;
@@ -252,13 +262,9 @@ class Legacy extends Gateway
         $priceObject = $content->getFieldValue( 'precio' );
         $price = $priceObject->price;
 
-        /** @var \Efl\BasketBundle\Entity\Ezbasket $basket */
-        $basket = $this->currentBasket();
-
         /* Check if the item with the same options is not already in the basket: */
         $itemID = false;
-        $collection = $this->getProductCollectionByProductCollectionId( $basket->getProductcollectionId() );
-
+        $collection = $this->getProductCollectionByProductCollectionId( $productCollectionId );
 
         if ( !$collection )
         {
@@ -295,7 +301,7 @@ class Legacy extends Gateway
                 $item->setItemCount( $quantity );
                 $item->setPrice( $price );
                 $item->setIsVatInc( $priceObject->isVatIncluded ? 1 : 0 );
-                $item->setProductcollectionId( $basket->getProductcollectionId() );
+                $item->setProductcollectionId( $productCollectionId );
                 $item->setVatValue(
                     $this->contentVatService->loadVatRateForField( $priceFieldId, $currentVersionNo )->percentage
                 );
@@ -312,7 +318,7 @@ class Legacy extends Gateway
 
             }
 
-            return $item;
+            return $this->getAddedProductData( $item );
         }
     }
 
@@ -383,15 +389,16 @@ class Legacy extends Gateway
             }
 
             $addedProduct = array(
-                "id" => $product->getId(),
-                "vatValue" => $realVatValue,
-                "itemCount" => $count,
-                "objectName" => $objectName,
-                "priceExVat" => $priceExVAT,
-                "priceIncVat" => $priceIncVAT,
-                "discountPercent" => $discountPercent,
-                "totalPriceExVat" => $totalPriceExVAT,
-                "totalPriceIncVat" => $totalPriceIncVAT,
+                'id' => $product->getId(),
+                'vatValue' => $realVatValue,
+                'itemCount' => $count,
+                'locationId' => $content->contentInfo->mainLocationId,
+                'objectName' => $objectName,
+                'priceExVat' => $priceExVAT,
+                'priceIncVat' => $priceIncVAT,
+                'discountPercent' => $discountPercent,
+                'totalPriceExVat' => $totalPriceExVAT,
+                'totalPriceIncVat' => $totalPriceIncVAT,
                 'content' => $content
             );
 

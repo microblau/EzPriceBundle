@@ -8,6 +8,9 @@
 
 namespace Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket;
 
+use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Basket;
+use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\BasketItem;
+
 class Handler
 {
     /**
@@ -24,6 +27,11 @@ class Handler
         $this->basketGateway = $basketGateway;
     }
 
+    /**
+     * @param $contentIds
+     * @param $limit
+     * @return \eZ\Publish\API\Repository\Values\Content\Content[]
+     */
     public function getRelatedPurchasedListForContentIds( $contentIds, $limit )
     {
         return $this->basketGateway->relatedPurchasedListForContentIds( $contentIds, $limit );
@@ -35,13 +43,7 @@ class Handler
      */
     public function currentBasket( $byOrderId = -1 )
     {
-        $data = $this->basketGateway->currentBasket( $byOrderId );
-        return array(
-            'id' => $data->getId(),
-            'sessionId' => $data->getSessionId(),
-            'productCollectionId' => $data->getProductCollectionId(),
-            'orderId' => $data->getOrderId()
-        );
+        return $this->basketGateway->currentBasket( $byOrderId );
     }
 
     /**
@@ -49,7 +51,7 @@ class Handler
      *
      * @param $productCollectionId
      *
-     * return array;
+     * @return array;
      */
     public function getItemsByProductCollectionId( $productCollectionId )
     {
@@ -65,10 +67,16 @@ class Handler
      *
      * @return \Efl\BasketBundle\Entity\EzproductcollectionItem
      */
-    public function addProductToBasket( $contentId, array $optionList = array(), $quantity = 1 )
+    public function addProductToBasket( Basket $basket, $contentId, array $optionList = array(), $quantity = 1 )
     {
-        $data = $this->basketGateway->addProductToBasket( $contentId, $optionList, $quantity );
-        return $this->basketGateway->addProductToBasket( $contentId, $optionList, $quantity );
+        return new BasketItem(
+            $this->basketGateway->addProductToProductCollection(
+                $basket->productCollectionId,
+                $contentId,
+                $optionList,
+                $quantity
+            )
+        );
     }
 
     public function removeProductFromBasket( $contentId )
