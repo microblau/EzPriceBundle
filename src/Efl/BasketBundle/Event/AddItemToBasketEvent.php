@@ -25,7 +25,7 @@ class AddItemToBasketEvent extends Event
     {
         $this->basket = $basket;
         print_r ($item );
-        die();
+        die('xxx');
         $this->item = $item;
     }
 }
