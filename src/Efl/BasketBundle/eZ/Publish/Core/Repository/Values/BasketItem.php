@@ -14,13 +14,33 @@ class BasketItem extends APIBasketItem
 {
     protected $content;
 
+    /**
+     * Contenido asociado
+     *
+     * @return mixed
+     */
     public function getContent()
     {
         return $this->content;
     }
 
+    /**
+     * Total sin impuestos
+     *
+     * @return float
+     */
     public function getTotalExVat()
     {
         return $this->totalPriceExVat;
+    }
+
+    /**
+     * Total con impuestos
+     *
+     * @return float
+     */
+    public function getTotalIncVat()
+    {
+        return $this->totalPriceIncVat;
     }
 } 

@@ -12,8 +12,11 @@ use Efl\BasketBundle\Entity\Ezbasket;
 use Efl\BasketBundle\Entity\Ezproductcollection;
 use Efl\BasketBundle\Entity\EzproductcollectionItem;
 use Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Gateway;
+use Efl\DiscountsBundle\eZ\Publish\Core\Repository\DiscountsService;
 use eZ\Publish\API\Repository\ContentService;
+use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Persistence\Database\DatabaseHandler;
+use EzSystems\EzPriceBundle\API\Price\ContentVatService;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Doctrine\ORM\EntityManager;
 
@@ -24,7 +27,25 @@ class Legacy extends Gateway
      */
     protected $contentService;
 
+    /**
+     * @var RelatedByOrders
+     */
     protected $relatedByOrdersService;
+
+    /**
+     * @var ContentVatService
+     */
+    protected $contentVatService;
+
+    /**
+     * @var DiscountsService
+     */
+    protected $discountsService;
+
+    /**
+     * @var Repository
+     */
+    protected $repository;
 
     /**
      * EntityManager
@@ -46,12 +67,18 @@ class Legacy extends Gateway
     public function __construct(
         ContentService $contentService,
         RelatedByOrders $relatedByOrders,
+        ContentVatService $contentVatService,
+        DiscountsService $discountsService,
+        Repository $repository,
         EntityManager $em,
         Session $session
     )
     {
         $this->contentService = $contentService;
         $this->relatedByOrdersService = $relatedByOrders;
+        $this->contentVatService = $contentVatService;
+        $this->discountsService = $discountsService;
+        $this->repository = $repository;
         $this->em = $em;
         $this->session = $session;
     }
@@ -121,7 +148,7 @@ class Legacy extends Gateway
      * Cesta. Si no se le pasa $byOrderId obtendrá la cesta en sesión
      *
      * @param int $byOrderId
-     * @return mixed
+     * @return \Efl\BasketBundle\Entity\Ezbasket
      */
     public function currentBasket( $byOrderId = -1 )
     {
@@ -178,6 +205,8 @@ class Legacy extends Gateway
     }
 
     /**
+     * Obtiene los productos que están incluidos en la colección
+     *
      * @param $productCollectionId
      * @return \Efl\BasketBundle\Entity\EzproductcollectionItem[]
      */
@@ -198,18 +227,27 @@ class Legacy extends Gateway
 
         foreach ( $collection as $product )
         {
+
             $addedProducts[] = $this->getAddedProductData( $product );
         }
 
         return $addedProducts;
     }
 
+    /**
+     * Añade producto a la colección de productos en la cesta
+     *
+     * @param $contentId
+     * @param array $optionList
+     * @param int $quantity
+     *
+     * @return mixed|void
+     */
     public function addProductToBasket( $contentId, array $optionList = array(), $quantity = 1 )
     {
         $content = $this->contentService->loadContent( $contentId );
-        $locationId = $content->contentInfo->mainLocationId;
-        $price = 0.0;
-        $isVATIncluded = true;
+        $currentVersionNo = $content->contentInfo->currentVersionNo;
+        $priceFieldId = $content->getFields()[1]->id;
 
         $priceObject = $content->getFieldValue( 'precio' );
         $price = $priceObject->price;
@@ -229,9 +267,6 @@ class Legacy extends Gateway
         }
         else
         {
-
-            $count = 0;
-
             $collectionItems = $this->getProductCollectionItems( $collection->getId() );
 
             foreach ( $collectionItems as $item )
@@ -254,17 +289,53 @@ class Legacy extends Gateway
             else
             {
                 $item = new EzproductcollectionItem();
-                $item->setName(  $content->contentInfo->name );
+
+                $item->setName( $content->contentInfo->name );
                 $item->setContentobjectId( $content->id );
                 $item->setItemCount( $quantity );
                 $item->setPrice( $price );
                 $item->setIsVatInc( $priceObject->isVatIncluded ? 1 : 0 );
                 $item->setProductcollectionId( $basket->getProductcollectionId() );
+                $item->setVatValue(
+                    $this->contentVatService->loadVatRateForField( $priceFieldId, $currentVersionNo )->percentage
+                );
+
+                $discount = $this->discountsService->getDiscountPercent(
+                    $this->repository->getCurrentUser(),
+                    $content
+                );
+
+                $item->setDiscount( $discount ? $discount : 0 );
 
                 $this->em->persist( $item );
                 $this->em->flush();
 
             }
+
+            return $item;
+        }
+    }
+
+    /**
+     * Quitar el producto de la colección de productos actual
+     *
+     * @param $contentId
+     *
+     * @return mixed|void
+     */
+    public function removeProductFromBasket( $contentId )
+    {
+        $basket = $this->currentBasket();
+        $productCollectionId = $basket->getProductcollectionId();
+
+        $productCollectionItems = $this->getProductCollectionItem(
+            $productCollectionId, $contentId
+        );
+
+        if ( count( $productCollectionItems ) )
+        {
+            $this->em->remove( $productCollectionItems[0] );
+            $this->em->flush();
         }
 
     }
@@ -278,9 +349,6 @@ class Legacy extends Gateway
     private function getAddedProductData( EzproductcollectionItem $product )
     {
         $content = $this->contentService->loadContent( $product->getContentobjectId() );
-
-        $discountPercent = 0.0;
-        $isVATIncluded = true;
 
         if ( $content !== null )
         {
@@ -318,14 +386,14 @@ class Legacy extends Gateway
                 "id" => $product->getId(),
                 "vatValue" => $realVatValue,
                 "itemCount" => $count,
-                "locationId" => $nodeID,
                 "objectName" => $objectName,
                 "priceExVat" => $priceExVAT,
                 "priceIncVat" => $priceIncVAT,
                 "discountPercent" => $discountPercent,
                 "totalPriceExVat" => $totalPriceExVAT,
                 "totalPriceIncVat" => $totalPriceIncVAT,
-                'content' => $content );
+                'content' => $content
+            );
 
             return $addedProduct;
         }
@@ -367,6 +435,33 @@ class Legacy extends Gateway
                 $query->expr()->eq( 'ezproductcollection_item.productcollectionId', ':productCollectionId')
             )
             ->setParameter( 'productCollectionId', $productCollectionId );
+
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * Obtiene un item de compra en función del id de la colección
+     * de productos y el objeto.
+     *
+     * @param $productCollectionId
+     * @param $contentId
+     *
+     * @return array
+     */
+    private function getProductCollectionItem( $productCollectionId, $contentId )
+    {
+        $query = $this->em->createQueryBuilder();
+        $query
+            ->select( 'ezproductcollection_item' )
+            ->from( 'EflBasketBundle:EzproductcollectionItem','ezproductcollection_item' )
+            ->where(
+                $query->expr()->andX(
+                    $query->expr()->eq( 'ezproductcollection_item.productcollectionId', ':productCollectionId' ),
+                    $query->expr()->eq( 'ezproductcollection_item.contentobjectId', ':contentId')
+                )
+            )
+            ->setParameter( 'productCollectionId', $productCollectionId )
+            ->setParameter( 'contentId', $contentId );
 
         return $query->getQuery()->getResult();
     }

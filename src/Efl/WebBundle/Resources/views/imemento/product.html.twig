@@ -26,15 +26,20 @@
             <p class="item-claim">{{ ez_render_field(product.content, 'texto_oferta') }}</p>
         {% endif %}
         {% if formats|length %}
-            {{ render_esi(controller("EflWebBundle:Price:showPrice", {'contentId': formats['formato_papel'].content.id, 'twigTemplate':'line'} )) }}
+            {{ render_esi(controller("EflWebBundle:Price:showPrice", {'contentId': formats['formato_ipad'].content.id, 'twigTemplate':'line'} )) }}
         {% endif %}
     </div>
 
     {% if formats|length %}
         <div class="actions-item">
-        <span class="btn">
-            <a href="{{ path( 'ez_urlalias', {'locationId': product.content.contentInfo.mainLocationId} ) }}">Añadir</a>
-        </span>
+            {% if alreadyInBasket %}
+            <i class="ico ico-check-green"></i>
+            <a href="#" class="remove"><span>Quitar</span> <i class="ico ico-close-red"></i></a>
+            {% else %}
+            <span class="btn">
+                <a href="#">Añadir</a>
+            </span>
+            {% endif %}
         </div>
     {% endif %}
 </article>

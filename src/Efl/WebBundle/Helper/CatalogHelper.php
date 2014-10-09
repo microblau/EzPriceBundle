@@ -102,8 +102,71 @@ class CatalogHelper
         return $values;
     }
 
-    public function buildSearchParamsFormRequest()
+    /**
+     * Obtiene todos los productos que tienen algún hijo internet
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchHit[]
+     * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
+     */
+    public function getInternetProducts()
     {
+        $location = $this->locationService->loadLocation( 61 );
 
+        $query = new LocationQuery();
+
+        $query->query = new Criterion\LogicalAnd(
+            array(
+                new Criterion\Visibility( Criterion\Visibility::VISIBLE ),
+                new Criterion\Subtree( $location->pathString ),
+                new Criterion\ContentTypeIdentifier( 'formato_internet' )
+            )
+        );
+
+        $results = $this->searchService->findLocations( $query )->searchHits;
+
+        $locations = array();
+
+        foreach ( $results as $result )
+        {
+            $locations[] = $this->locationService->loadLocation(
+                $result->valueObject->parentLocationId
+            );
+        }
+
+        return $locations;
+    }
+
+    /**
+     * Obtiene todos los productos que tienen algún hijo ipad
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchHit[]
+     * @throws \eZ\Publish\Core\Base\Exceptions\UnauthorizedException
+     */
+    public function getIpadProducts()
+    {
+        $location = $this->locationService->loadLocation( 61 );
+
+        $query = new LocationQuery();
+
+        $query->query = new Criterion\LogicalAnd(
+            array(
+                new Criterion\Visibility( Criterion\Visibility::VISIBLE ),
+                new Criterion\Subtree( $location->pathString ),
+                new Criterion\ContentTypeIdentifier( 'formato_ipad' )
+            )
+        );
+
+        $results = $this->searchService->findLocations( $query )->searchHits;
+
+        $locations = array();
+
+        foreach ( $results as $result )
+        {
+            $locations[] = $this->locationService->loadLocation(
+                $result->valueObject->parentLocationId
+            );
+        }
+
+        return $locations;
     }
 }

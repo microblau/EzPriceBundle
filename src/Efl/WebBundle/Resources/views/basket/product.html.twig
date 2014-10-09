@@ -1,0 +1,33 @@
+<p class="th">Producto</p>
+
+<div class="portrait">
+    {{ ez_render_field( image, 'image', {
+    'template':'EflWebBundle:fields:portrait_img.html.twig',
+    'parameters': {
+    'alias':'portrait',
+    'attrs': {'class':'portrait-img'}
+    }
+    }) }}
+    {% if formats|length %}
+            {% for format in formats %}
+                <i class="ico ico-{{ format.data.icon }}-white"></i>
+            {% endfor %}
+    {% endif %}
+
+</div>
+<div class="main-content">
+    <p class="title9 upper">{{ ez_render_field( productParent, 'name') }}</p>
+    <p class="title5">{{ ez_render_field( product, 'nombre') }}</p>
+    <div class="wysiwyg">
+        {{ ez_render_field( product, 'entradilla', {'template':'EflWebBundle:fields:only_value.html.twig'} ) }}
+        {% if not ez_is_field_empty( product, 'mas_info') %}
+        <p class="more"><i class="ico ico-arrow-right-blue"></i> <a href="#more-item">Más detalles sobre el memento</a> <i class="ico ico-arrow-bottom-blue"></i></p>
+
+
+
+        <div id="more-item" class="more-detail" style="display: none;">
+            {{ ez_render_field( product, 'mas_info', {'template':'EflWebBundle:fields:only_value.html.twig'} ) }}        </div>
+        {% endif %}
+
+    </div>
+</div>

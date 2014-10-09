@@ -31,11 +31,17 @@ class Handler
 
     /**
      * @param int $byOrderId
-     * @return \Efl\BasketBundle\Entity\Ezbasket
+     * @return array
      */
     public function currentBasket( $byOrderId = -1 )
     {
-        return $this->basketGateway->currentBasket( $byOrderId );
+        $data = $this->basketGateway->currentBasket( $byOrderId );
+        return array(
+            'id' => $data->getId(),
+            'sessionId' => $data->getSessionId(),
+            'productCollectionId' => $data->getProductCollectionId(),
+            'orderId' => $data->getOrderId()
+        );
     }
 
     /**
@@ -50,8 +56,23 @@ class Handler
         return $this->basketGateway->getItemsByProductCollectionId( $productCollectionId );
     }
 
+    /**
+     * Añadir un producto a la cesta
+     *
+     * @param $contentId
+     * @param array $optionList
+     * @param int $quantity
+     *
+     * @return \Efl\BasketBundle\Entity\EzproductcollectionItem
+     */
     public function addProductToBasket( $contentId, array $optionList = array(), $quantity = 1 )
     {
-        $this->basketGateway->addProductToBasket( $contentId, $optionList, $quantity );
+        $data = $this->basketGateway->addProductToBasket( $contentId, $optionList, $quantity );
+        return $this->basketGateway->addProductToBasket( $contentId, $optionList, $quantity );
+    }
+
+    public function removeProductFromBasket( $contentId )
+    {
+        $this->basketGateway->removeProductFromBasket( $contentId );
     }
 }

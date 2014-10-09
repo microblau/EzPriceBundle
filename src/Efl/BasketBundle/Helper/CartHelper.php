@@ -8,83 +8,48 @@
 
 namespace Efl\BasketBundle\Helper;
 
-use Closure;
-use eZBasket;
+use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\API\Repository\Values\Content\Content;
 
 class CartHelper
 {
-    /**
-     * @var \Closure
-     */
-    private $kernelClosure;
+    private $contentTypeService;
 
-    /**
-     * @var \EzBasket $cart
-     */
-    protected $cart;
-
-    public function __construct( Closure $legacyKernelClosure )
+    public function __construct(
+        ContentTypeService $contentTypeService
+    )
     {
-        $this->kernelClosure = $legacyKernelClosure;
+        $this->contentTypeService = $contentTypeService;
     }
 
-    /**
-     * @return \eZ\Publish\Core\MVC\Legacy\Kernel
-     */
-    protected function getLegacyKernel()
+    public function getDataForBasketItem( Content $content )
     {
-        $kernelClosure = $this->kernelClosure;
-        return $kernelClosure();
-    }
+        $contentTypeIdentifer = $this->contentTypeService->loadContentType(
+            $content->contentInfo->contentTypeId
+        )->identifier;
 
-    /**
-     * Returns the current cart or false is the cart is empty
-     *
-     * @return \eZBasket|false
-     */
-    private function getCartObject()
-    {
-        if ( is_null( $this->cart ) )
+        switch( $contentTypeIdentifer )
         {
-            $this->cart = $this->getLegacyKernel()->runCallback(
-                function()
-                {
-                    return eZBasket::currentBasket();
-                },
-                false
-            );
+            case 'formato_papel':
+                $literal = 'En Papel';
+                $icon = 'paper';
+                break;
 
+            case 'formato_ipad':
+                $literal = 'Para Ipad';
+                $icon = 'tablet';
+                break;
+
+            case 'formato_internet':
+                $literal = 'En Internet';
+                $icon = 'pc';
+                break;
         }
-        return $this->cart;
-    }
 
-    /**
-     * Returns true if cart is empty
-     *
-     * @return bool;
-     */
-    public function isCurrentCartEmpty()
-    {
-        return $this->getCartObject()->isEmpty();
-    }
-
-    /**
-     * Returns the current cart total
-     *
-     * @return float;
-     */
-    public function getCurrentCartTotal()
-    {
-        return $this->getCartObject()->totalExVAT();
-    }
-
-    /**
-     * Return the number of unique products in the list
-     *
-     * @return int
-     */
-    public function getCurrentCartNItems()
-    {
-        return count( $this->getCartObject()->items() );
+        return array(
+            'canModifyUnits' => $contentTypeIdentifer == 'formato_papel',
+            'literal' => $literal,
+            'icon' => $icon
+        );
     }
 }

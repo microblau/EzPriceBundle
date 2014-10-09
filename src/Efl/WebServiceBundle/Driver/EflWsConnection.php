@@ -182,7 +182,6 @@ class EflWsConnection implements  EflWsConnectionInterface
             )
         );
 
-        print_r( $data );
         if ( isset( $data->RecuperarProductosPrecioResult->data->Producto ) )
             return (float)$data->RecuperarProductosPrecioResult->data->Producto->precioBase;
     }

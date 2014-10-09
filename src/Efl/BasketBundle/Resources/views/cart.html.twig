@@ -1,0 +1,152 @@
+{% extends "EflWebBundle::pagelayout.html.twig" %}
+
+{% set mainClass = 'basket' %}
+{% set title = 'Su cesta de la compra' %}
+
+{% block content %}
+    <div class="wrapper cl">
+
+    <div class="oneCol">
+    <div class="main">
+
+    <article class="highlight cl">
+        <div class="content">
+            <p class="title1">Detalles del pedido</p>
+            {% set productsAdded = app.session.flashbag.get("basketMsg") %}
+            {% for product in productsAdded %}
+            <p class="title7">{{ product|raw }}</p>
+            {% endfor %}
+        </div>
+    </article>
+
+    <section class="tb-basket">
+    <!-- basket item -->
+    {% for item in items %}
+    <article class="basket-item cl">
+        <!-- basket item: info item -->
+        <article class="articleItem">
+            {{ item.product_info|raw }}
+        </article>
+        <!-- basket item: info item -->
+
+        <!-- basket item: table formats (and prices) -->
+        <table class="tb-formats">
+            <caption class="title">Procedimientos Tributarios 2012-2013</caption>
+
+            <thead>
+            <tr>
+                <th colspan="2" class="heading-units">Unidades</th>
+                <th colspan="2" class="heading-price">Precio</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td class="amount">
+                    {% if item.product_data.canModifyUnits %}
+                    <input type="text" name="" id="" value="{{ item.product_item_count }}" />
+                    <a href="#" title="Añadir unidad" class="more-item"><i class="ico ico-more"></i></a>
+                    <a href="#" title="Quitar unidad" class="less-item"><i class="ico ico-less"></i></a>
+                        {% else %}
+                        1
+                    {% endif %}
+                </td>
+                <td class="format">
+                    <i class="ico ico-{{ item.product_data.icon }}-white"></i> <span>{{ item.product_data.literal }}</span>
+                        <span class="unit-price">
+                          <small>Precio Unitario:</small>
+                          <span class="info-text">{{ item.product_unit_price|currency_convert_format('EUR') }}</span>
+                        </span>
+                </td>
+                <td class="price">
+                    <b>{{ item.product_total_price|currency_convert_format('EUR') }}</b>
+                    <small>+ IVA</small>
+                </td>
+                <td class="actions-item">
+                    <a href="#"><i class="ico ico-close-red"></i></a>
+                </td>
+            </tr>
+
+
+            </tbody>
+        </table>
+        <!-- //basket item: table formats (and prices) -->
+
+    </article>
+    <!-- //basket item -->
+    {% endfor %}
+
+
+    <!-- basket shipping cost -->
+    <article class="basket-shipping-cost">
+        <article class="genericInfo-detail">
+            <i class="ico ico-box-gray"></i>
+            <div class="cont-text">
+                <p class="title upper"><b>Gastos de envío gratis</b></p>
+                <p class="title">Para pedidos de más de <b>30&euro;</b> enviamos gratis su compra a cualquier lugar de la península.</p>
+            </div>
+                  <span class="tb-formats">
+                    <span class="price">
+                      <b>0,00 €</b>
+                    </span>
+                  </span>
+        </article>
+    </article>
+    <!-- //basket shipping cost -->
+
+    <!-- basket subtotal -->
+    <section class="basket-subtotal">
+                <span class="tb-formats">
+                  <span class="price">
+                    <small class="txt upper">Subtotal</small>
+                    <b>{{ totalExVat|currency_convert_format('EUR') }}</b>
+                  </span>
+                  <span class="price">
+                    <small class="txt upper">IVA</small>
+                    <b>{{ totalTaxAmount|currency_convert_format('EUR') }}</b>
+                  </span>
+                </span>
+    </section>
+    <!-- //basket subtotal -->
+
+    <!-- basket total -->
+    <section class="basket-total cl">
+
+        <article class="voucher">
+            <span><i class="ico ico-arrow-right-blue"></i> <a href="#">¿Tiene algún código promocional?</a></span>
+            <form action="#" method="post">
+                <label for="voucher-code" class="offscreen">Email</label>
+                <input id="voucher-code" type="text" class="voucher-code" />
+                <button type="submit" class="btn type5">Aplicar</button>
+            </form>
+        </article>
+
+                <span class="tb-formats">
+                  <span class="price">
+                    <small class="txt upper">Importe Total</small>
+                    <b>{{ totalIncVat|currency_convert_format('EUR') }}</b>
+                  </span>
+                </span>
+    </section>
+    <!-- //basket total -->
+
+    <section class="basket-payment">
+        <span><i class="ico ico-arrow-right-blue"></i> <a href="{{ path('ez_urlalias', {'locationId':2 } ) }}">Seguir comprando</a> o</span>
+        <div class="wrap-btn">
+            <button type="submit" class="btn type2 hasIco"><i class="ico ico-arrow-right-white"></i>Pagar ahora</button>
+        </div>
+    </section>
+
+    </section>
+
+    </div>
+    </div>
+
+    </div>
+{% endblock %}
+
+{% block header %}
+    <header role="banner" class="header alternative">
+        {% include 'EflWebBundle::page_header_buy.html.twig' %}
+    </header>
+{% endblock %}

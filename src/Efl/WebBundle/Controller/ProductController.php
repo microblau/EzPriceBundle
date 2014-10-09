@@ -2,6 +2,7 @@
 
 namespace Efl\WebBundle\Controller;
 
+use Efl\BasketBundle\Event\AddItemToBasketEvent;
 use Efl\BasketBundle\Form\Type\AddToBasketType;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\Values\Content\Content;
@@ -143,13 +144,23 @@ class ProductController extends Controller
 
         $formats = $this->get( 'eflweb.product_helper' )->getFormatosForLocation( $location );
 
+        // formamos un array de format ids para luego hacer borrado
+        $formatsIds = array();
+        foreach ( $formats as $format )
+        {
+            $formatsIds[] = $format['content']->id;
+        }
+
         if ( count( $formats ) )
         {
+
             $form = $this->createForm(
                 new AddToBasketType(
                     $formats,
-                    $this->get( 'translator' )
-                )
+                    $this->get( 'translator' ),
+                    $this->get( 'eflweb.basket_service')
+                ),
+                array()
             );
 
             $request = $this->container->get( 'request_stack' )->getCurrentRequest();
@@ -160,13 +171,57 @@ class ProductController extends Controller
                 if ( $form->isValid() )
                 {
                     $products = $form->getData( 'formats' );
-                    foreach ( $products['formats'] as $productId )
+
+                    // borramos de la cesta, si estuvieran, aquellos ids q no vienen en el post
+                    foreach ( $formatsIds as $formatId )
                     {
-                        $this->get( 'eflweb.basket_service' )->addProductToBasket( $productId );
+                        if (
+                            ( !in_array( $formatId, $products['formats'] ) ) &&
+                            ( $this->get( 'eflweb.basket_service' )->isProductInBasket( $formatId ) )
+                        )
+                        {
+                            $this->get( 'eflweb.basket_service' )->removeProductFromBasket( $formatId );
+                            $this->get( 'session' )->getFlashBag()->add(
+                                'basketMsg',
+                                $this->get( 'translator' )->trans(
+                                    'Acabamos de quitar el <b>%product%</b> de la compra.',
+                                    array(
+                                        '%product%' => $content->contentInfo->name
+                                    )
+                                )
+                            );
+                        }
                     }
 
+                    foreach ( $products['formats'] as $productId )
+                    {
+                        // sólo añadimos si el producto no estaba ya en cesta
+                        if ( !$this->get( 'eflweb.basket_service' )->isProductInBasket( $productId ) )
+                        {
+                            $basketItem = $this->get( 'eflweb.basket_service' )->addProductToBasket( $productId );
+                            /*$this->get( 'session' )->getFlashBag()->add(
+                                'basketMsg',
+                                $this->get( 'translator' )->trans(
+                                    'Acabamos de añadir el <b>%product%</b> a la compra.',
+                                    array(
+                                        '%product%' => $content->contentInfo->name
+                                    )
+                                )
+                            );*/
+
+                            $event = new AddItemToBasketEvent(
+                                $this->get( 'eflweb.basket_service' )->getCurrentBasket(),
+                                $basketItem
+                            );
+                            $dispatcher = $this->get('event_dispatcher');
+                            $dispatcher->dispatch('eflweb.event.additemtobasket', $event);
+                        }
+                    }
+
+
+
                     return $this->redirect(
-                        $this->generateUrl( $location )
+                        $this->generateUrl( 'cart' )
                     );
                 }
             }
@@ -209,7 +264,6 @@ class ProductController extends Controller
         );
         $formats = $this->get( 'eflweb.product_helper' )->getFormatosForLocation( $location );
 
-
         $response = $this->get( 'ez_content' )->viewLocation(
             $locationId,
             $viewType,
@@ -222,7 +276,7 @@ class ProductController extends Controller
         );
 
         $response->setPublic();
-        $response->setSharedMaxAge( 60 );
+        $response->setSharedMaxAge( 7200 );
         $response->headers->set( 'X-Location-Id', $locationId );
 
         return $response;

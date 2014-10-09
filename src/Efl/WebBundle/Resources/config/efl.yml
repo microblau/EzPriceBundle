@@ -50,13 +50,30 @@ system:
             relatedByOrders:
                 producto:
                     controller: "EflWebBundle:Product:line"
-                    template: "EflWebBundle:related_by_orders:product.html.twig"
+                    template: "EflWebBundle:line:product.html.twig"
                     match:
                         Identifier\ContentType: [producto]
             line:
                 producto:
                     controller: "EflWebBundle:Product:line"
                     template: "EflWebBundle:line:product.html.twig"
+                    match:
+                        Identifier\ContentType: [producto]
+            qmementix:
+                producto:
+                    controller: "EflWebBundle:Qmementix:viewElement"
+                    template: "EflWebBundle:qmementix:product.html.twig"
+                    match:
+                        Identifier\ContentType: [producto]
+            basket:
+                producto:
+                    controller: "EflBasketBundle:Checkout:viewItem"
+                    template: "EflWebBundle:basket:product.html.twig"
+                    match:
+            imemento:
+                producto:
+                    controller: "EflWebBundle:Imemento:viewElement"
+                    template: "EflWebBundle:imemento:product.html.twig"
                     match:
                         Identifier\ContentType: [producto]
             full:

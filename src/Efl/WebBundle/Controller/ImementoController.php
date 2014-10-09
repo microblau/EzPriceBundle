@@ -109,12 +109,61 @@ class ImementoController extends Controller
             $content->getFieldValue( 'big_image' )->destinationContentId
         );
 
+        $products = $this->get( 'eflweb.catalog_helper' )->getIpadProducts();
+
         return $this->render(
             'EflWebBundle:imemento:config.html.twig',
             array(
                 'content' => $content,
                 'img' => $img,
+                'products' => $products
             )
         );
+    }
+
+    /**
+     * Vista de los elementos configurables
+     *
+     * @param $locationId
+     * @param $viewType
+     * @param bool $layout
+     * @param array $params
+     *
+     * @return mixed
+     */
+    public function viewElementAction(
+        $locationId,
+        $viewType,
+        $layout = false,
+        array $params = array()
+    )
+    {
+        $content = $this->getRepository()->getContentService()->loadContent(
+            $this->getRepository()->getLocationService()->loadLocation( $locationId )->contentId
+        );
+        $data = $this->get( 'eflweb.product_helper' )->buildElementForLineView( $content );
+
+        $location = $this->getRepository()->getLocationService()->loadLocation(
+            $locationId
+        );
+        $formats = $this->get( 'eflweb.product_helper' )->getFormatosForLocation( $location );
+
+        $response = $this->get( 'ez_content' )->viewLocation(
+            $locationId,
+            $viewType,
+            $layout,
+            array(
+                'product' => $data,
+                'formats' => $formats,
+                'hasDiscount' => $this->get( 'eflweb.product_helper' )->contentHasOffer( $content ),
+                'alreadyInBasket' => $this->get( 'eflweb.basket_service' )->isProductInBasket( $formats['formato_ipad']['content']->id )
+            )
+        );
+
+        $response->setPublic();
+        $response->setSharedMaxAge( 7200 );
+        $response->headers->set( 'X-Location-Id', $locationId );
+
+        return $response;
     }
 }

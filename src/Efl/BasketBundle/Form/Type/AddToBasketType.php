@@ -13,6 +13,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Efl\BasketBundle\eZ\Publish\Core\Repository\BasketService;
 
 class AddToBasketType extends AbstractType
 {
@@ -26,30 +29,33 @@ class AddToBasketType extends AbstractType
      */
     private $translator;
 
+    private $basketService;
+
     public function __construct(
         array $formats,
-        Translator $translator
+        Translator $translator,
+        BasketService $basketService
     )
     {
         $this->formats = $formats;
         $this->translator = $translator;
+        $this->basketService = $basketService;
     }
 
     public function buildForm( FormBuilderInterface $builder, array $options )
     {
-        $formats = array();
+        $formats = $data = array();
         if ( count ($this->formats ) )
         {
             foreach ( $this->formats as $format )
             {
-                $formats[$format['content']->id] = $format['content']->id;
-                /*$builder->add(
-                    'delete_format_' . $format['content']->id,
-                    'hidden',
-                    array(
-                        'data' => 0
-                    )
-                );*/
+                $id = $format['content']->id;
+                $formats[$id] = $id;
+                if ( $this->basketService->isProductInBasket( $id ) )
+                {
+                    $data[] = $id;
+                }
+
             }
 
             $builder->add(
@@ -58,7 +64,8 @@ class AddToBasketType extends AbstractType
                 array(
                     'choices' => $formats,
                     'expanded' => true,
-                    'multiple' => true
+                    'multiple' => true,
+                    'data' => $data
                 )
             );
 
@@ -77,7 +84,8 @@ class AddToBasketType extends AbstractType
     {
         $collectionConstraint = new Collection(
             array(
-                'formats' => array()
+                'formats' => array(),
+                //'data' => array()
             )
         );
 

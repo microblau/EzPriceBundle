@@ -126,6 +126,7 @@ class CatalogSearchHitAdapter implements  AdapterInterface
     {
         $filter = $subTree = $queryParams = array();
 
+        // areas
         if ( isset( $params['areas'] ) )
         {
             $areas = $params['areas'];
@@ -142,6 +143,7 @@ class CatalogSearchHitAdapter implements  AdapterInterface
             }
         }
 
+        // types
         if ( isset( $params['types'] ) )
         {
             $types = $params['types'];
@@ -153,6 +155,27 @@ class CatalogSearchHitAdapter implements  AdapterInterface
             foreach ( $types as $type )
             {
                 $subTree[] = $type;
+            }
+        }
+
+        //states
+        if ( isset( $params['state'] ) )
+        {
+            switch( $params['state'] )
+            {
+                case 1:
+                    $filter['prepublicaciones'] = array(
+                        'attr_fecha_aparicion_dt:[NOW TO NOW/DAY+90DAY]'
+                    );
+                break;
+
+                case 2:
+                    $filter['prepublicaciones'] = array(
+                        'attr_fecha_aparicion_dt:[NOW/DAY-90DAY TO NOW]'
+                    );
+                break;
+
+                default:;
             }
         }
 

@@ -69,6 +69,12 @@ class CatalogController extends Controller
             $params['types'] = $types;
         }
 
+        $state = $form->get( 'states' )->getData();
+        if ( !empty ( $state ) )
+        {
+            $params['state'] = $state;
+        }
+
         $pager = new Pagerfanta(
             new CatalogSearchAdapter(
                 $this->getLegacyKernel(),

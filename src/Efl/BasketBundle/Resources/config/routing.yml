@@ -1,0 +1,7 @@
+cart:
+    pattern: /checkout/cart
+    defaults: { _controller: EflBasketBundle:Checkout:cart }
+
+oldbasket:
+    pattern: /basket/basket
+    defaults: { _controller: EflBasketBundle:Checkout:basket }

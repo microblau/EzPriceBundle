@@ -1,0 +1,29 @@
+{% extends "EflWebBundle::pagelayout.html.twig" %}
+
+{% set mainClass = 'basket' %}
+{% set title = 'Su cesta de la compra' %}
+
+{% block content %}
+    <div class="wrapper cl">
+
+        <div class="oneCol">
+            <div class="main">
+
+                <article class="highlight cl">
+                    <div class="content center">
+                        <p class="title1">Cesta de la compra vacía</p>
+                        <p class="title7">Actualmente <b>no hay ningún producto en la cesta</b> de la compra</p>
+                        <img src="{{ asset( "bundles/eflweb/images/img-basket.png" )}}" alt="" class="img-basket" />
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block header %}
+    <header role="banner" class="header alternative">
+        {% include 'EflWebBundle::page_header_buy.html.twig' %}
+    </header>
+{% endblock %}

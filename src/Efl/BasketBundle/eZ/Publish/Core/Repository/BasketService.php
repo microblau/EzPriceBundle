@@ -11,6 +11,7 @@ namespace Efl\BasketBundle\eZ\Publish\Core\Repository;
 use Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Handler as BasketHandler;
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Basket;
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\BasketItem;
+use eZ\Publish\API\Repository\ContentService;
 
 class BasketService
 {
@@ -19,13 +20,17 @@ class BasketService
      */
     protected $basketHandler;
 
+    protected $contentService;
+
     private $basket = null;
 
     public function __construct(
-        BasketHandler $basketHandler
+        BasketHandler $basketHandler,
+        ContentService $contentService
     )
     {
         $this->basketHandler = $basketHandler;
+        $this->contentService = $contentService;
     }
 
     public function getRelatedPurchasedListForContentIds( $contentIds, $limit )
@@ -48,30 +53,71 @@ class BasketService
         }
 
         $data = $this->basketHandler->currentBasket( $byOrderId );
-        $productCollectionId = $data->getProductcollectionId();
-        $basketItems = $this->basketHandler->getItemsByProductCollectionId( $productCollectionId );
+
+        $basketItems = $this->basketHandler->getItemsByProductCollectionId( $data['productCollectionId'] );
 
         $items = array();
 
         foreach( $basketItems as $basketItem )
         {
+            print_r( $basketItem );
             $items[] = new BasketItem( $basketItem );
         }
 
-        return new Basket(
-            array(
-                'id' => $data->getId(),
-                'productCollectionId' => $productCollectionId,
-                'sessionId' => $data->getSessionId(),
-                'orderId' => $data->getOrderId(),
-                'items' => $items
-            )
+        $basket = new Basket( $data );
+        $basket->setItems( $items );
+
+        return $basket;
+
+    }
+
+    /**
+     * Añadir producto a la cesta
+     *
+     * @param $contentId
+     * @param array $optionList
+     * @param int $quantity
+     *
+     * @return \Efl\BasketBundle\eZ\Publish\Core\Repository\Values\BasketItem
+     */
+    public function addProductToBasket( $contentId, array $optionList = array(), $quantity = 1 )
+    {
+        $basketItem = $this->basketHandler->addProductToBasket( $contentId, $optionList, $quantity );
+        return new BasketItem(
+            $basketItem
         );
     }
 
-    public function addProductToBasket( $contentId, array $optionList = array(), $quantity = 1 )
+    /**
+     * Determinar si el producto ya está o no en la cesta
+     *
+     * @param $contentId
+     *
+     * @return bool
+     */
+    public function isProductInBasket( $contentId )
     {
-        $this->basketHandler->addProductToBasket( $contentId, $optionList, $quantity );
+        $items = $this->getCurrentBasket()->getItems();
+
+        foreach ( $items as $item )
+        {
+            if ( $item->getContent()->id == $contentId )
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Quita el producto de la cesta
+     *
+     * @param $contentId
+     */
+    public function removeProductFromBasket( $contentId )
+    {
+        $this->basketHandler->removeProductFromBasket( $contentId );
     }
 }
 
