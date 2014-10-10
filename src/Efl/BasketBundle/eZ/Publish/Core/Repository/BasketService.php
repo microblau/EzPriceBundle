@@ -8,10 +8,13 @@
 
 namespace Efl\BasketBundle\eZ\Publish\Core\Repository;
 
+use Efl\BasketBundle\Event\AddItemToBasketEvent;
+use Efl\BasketBundle\Event\RemoveItemFromBasketEvent;
 use Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Handler as BasketHandler;
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Basket;
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\BasketItem;
 use eZ\Publish\API\Repository\ContentService;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class BasketService
 {
@@ -22,15 +25,19 @@ class BasketService
 
     protected $contentService;
 
+    protected $eventDispatcher;
+
     private $basket = null;
 
     public function __construct(
         BasketHandler $basketHandler,
-        ContentService $contentService
+        ContentService $contentService,
+        EventDispatcherInterface $eventDispatcher
     )
     {
         $this->basketHandler = $basketHandler;
         $this->contentService = $contentService;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function getRelatedPurchasedListForContentIds( $contentIds, $limit )
@@ -47,25 +54,22 @@ class BasketService
      */
     public function getCurrentBasket( $byOrderId = -1 )
     {
-        if ( $this->basket == null )
+        $basket = new Basket(
+            $this->basketHandler->currentBasket( $byOrderId )
+        );
+
+        $basketItems = $this->basketHandler->getItemsByProductCollectionId( $basket->productCollectionId );
+
+        $items = array();
+
+        foreach( $basketItems as $basketItem )
         {
-            $basket = new Basket(
-                $this->basketHandler->currentBasket( $byOrderId )
-            );
-
-            $basketItems = $this->basketHandler->getItemsByProductCollectionId( $basket->productCollectionId );
-
-            $items = array();
-
-            foreach( $basketItems as $basketItem )
-            {
-                $items[] = new BasketItem( $basketItem );
-            }
-
-            $basket->setItems( $items );
-
-            $this->basket = $basket;
+            $items[] = new BasketItem( $basketItem );
         }
+
+        $basket->setItems( $items );
+
+        $this->basket = $basket;
 
         return $this->basket;
 
@@ -78,16 +82,19 @@ class BasketService
      * @param array $optionList
      * @param int $quantity
      *
-     * @return \Efl\BasketBundle\eZ\Publish\Core\Repository\Values\BasketItem
+     * @return void
      */
     public function addProductToBasket( $contentId, array $optionList = array(), $quantity = 1 )
     {
-        return $this->basketHandler->addProductToBasket(
+        $item = $this->basketHandler->addProductToBasket(
             $this->getCurrentBasket(),
             $contentId,
             $optionList,
             $quantity
         );
+
+        $event = new AddItemToBasketEvent( $item );
+        $this->eventDispatcher->dispatch('eflweb.event.additemtobasket', $event);
     }
 
     /**
@@ -116,10 +123,18 @@ class BasketService
      * Quita el producto de la cesta
      *
      * @param $contentId
+     *
+     * @return void
      */
     public function removeProductFromBasket( $contentId )
     {
-        $this->basketHandler->removeProductFromBasket( $contentId );
+        $item = $this->basketHandler->removeProductFromBasket(
+            $this->getCurrentBasket(),
+            $contentId
+        );
+
+        $event = new RemoveItemFromBasketEvent( $item );
+        $this->eventDispatcher->dispatch('eflweb.event.removeitemfrombasket', $event);
     }
 }
 

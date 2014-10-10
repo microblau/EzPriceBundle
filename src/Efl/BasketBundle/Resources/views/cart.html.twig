@@ -4,6 +4,7 @@
 {% set title = 'Su cesta de la compra' %}
 
 {% block content %}
+    {{ form_start(form, {'attr': {'novalidate':'novalidate'}}) }}
     <div class="wrapper cl">
 
     <div class="oneCol">
@@ -21,7 +22,7 @@
 
     <section class="tb-basket">
     <!-- basket item -->
-    {% for item in items %}
+    {% for i,item in items %}
     <article class="basket-item cl">
         <!-- basket item: info item -->
         <article class="articleItem">
@@ -63,7 +64,8 @@
                     <small>+ IVA</small>
                 </td>
                 <td class="actions-item">
-                    <a href="#"><i class="ico ico-close-red"></i></a>
+                    {#<a href="#"><i class="ico ico-close-red"></i></a>#}
+                    {{ form_widget( form['delete_' ~ i] ) }}
                 </td>
             </tr>
 
@@ -114,11 +116,11 @@
 
         <article class="voucher">
             <span><i class="ico ico-arrow-right-blue"></i> <a href="#">¿Tiene algún código promocional?</a></span>
-            <form action="#" method="post">
+
                 <label for="voucher-code" class="offscreen">Email</label>
                 <input id="voucher-code" type="text" class="voucher-code" />
                 <button type="submit" class="btn type5">Aplicar</button>
-            </form>
+
         </article>
 
                 <span class="tb-formats">
@@ -143,6 +145,7 @@
     </div>
 
     </div>
+    {{ form_end(form) }}
 {% endblock %}
 
 {% block header %}

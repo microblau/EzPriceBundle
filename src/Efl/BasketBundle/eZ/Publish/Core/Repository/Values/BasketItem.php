@@ -17,7 +17,7 @@ class BasketItem extends APIBasketItem
     /**
      * Contenido asociado
      *
-     * @return mixed
+     * @return \eZ\Publish\API\Repository\Values\Content\Content
      */
     public function getContent()
     {

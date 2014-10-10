@@ -11,7 +11,7 @@ namespace Efl\BasketBundle\Event;
 use Efl\BasketBundle\eZ\Publish\API\Repository\Values\BasketItem;
 use Symfony\Component\EventDispatcher\Event;
 
-class AddItemToBasketEvent extends Event
+class RemoveItemFromBasketEvent extends Event
 {
     private $item = null;
 

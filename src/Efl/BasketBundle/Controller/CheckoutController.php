@@ -32,6 +32,36 @@ class CheckoutController extends Controller
      */
     function cartAction()
     {
+        $form = $this->get( 'efl.form.cart' );
+        $currentBasket = $this->get( 'eflweb.basket_service' )->getCurrentBasket();
+        $currentItems = $currentBasket->getItems();
+
+        $request = $this->container->get( 'request_stack' )->getCurrentRequest();
+
+        if ( $request->isMethod( 'post' ) )
+        {
+            $form->handleRequest( $request );
+
+            if ( $form->isValid() )
+            {
+                // miramos si se ha clicado alguno de los botones de eliminar
+                foreach( $currentItems as $currentItem )
+                {
+                    if  ( $form->get( 'delete_' . $currentItem->id )->isClicked() )
+                    {
+                        $this->get( 'eflweb.basket_service' )->removeProductFromBasket( $currentItem->getContent()->id );
+                    }
+                }
+            }
+            else
+            {
+                foreach( $form->getErrors() as $error )
+                {
+                    print $error->getMessage();
+                }
+            }
+        }
+
         $currentBasket = $this->get( 'eflweb.basket_service' )->getCurrentBasket();
         $currentItems = $currentBasket->getItems();
         $template = count( $currentItems ) ? 'cart' : 'empty-cart';
@@ -42,7 +72,7 @@ class CheckoutController extends Controller
             $params['items'] = array();
             foreach( $currentItems as $item )
             {
-                $params['items'][] = array(
+                $params['items'][$item->id] = array(
                     'product_info' => $this->viewItemAction(
                         $item->locationId,
                         'basket'
@@ -60,6 +90,7 @@ class CheckoutController extends Controller
         $params['totalExVat'] = $currentBasket->getTotalExVat();
         $params['totalIncVat'] = $currentBasket->getTotalIncVat();
         $params['totalTaxAmount'] = $currentBasket->getTotalTaxAmount();
+        $params['form'] = $form->createView();
 
         return $this->render(
             'EflBasketBundle::' . $template .  '.html.twig',
@@ -92,8 +123,6 @@ class CheckoutController extends Controller
         $content = $this->getRepository()->getContentService()->loadContent(
             $parentLocation->contentId
         );
-
-        $data = $this->get( 'eflweb.product_helper' )->buildElementForLineView( $content );
 
         $formats = $this->get( 'eflweb.product_helper' )->getFormatosForLocation( $parentLocation );
 

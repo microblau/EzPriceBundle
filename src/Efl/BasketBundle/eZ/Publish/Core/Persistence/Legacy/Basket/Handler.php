@@ -18,8 +18,6 @@ class Handler
      */
     protected $basketGateway;
 
-    private $contentService;
-
     public function __construct(
         Gateway $basketGateway
     )
@@ -79,8 +77,19 @@ class Handler
         );
     }
 
-    public function removeProductFromBasket( $contentId )
+    /**
+     * @param Basket $basket
+     * @param $contentId
+     *
+     * @return \Efl\BasketBundle\Entity\EzproductcollectionItem
+     */
+    public function removeProductFromBasket( Basket $basket, $contentId )
     {
-        $this->basketGateway->removeProductFromBasket( $contentId );
+        return new BasketItem(
+            $this->basketGateway->removeProductFromBasket(
+                $basket->productCollectionId,
+                $contentId
+            )
+        );
     }
 }

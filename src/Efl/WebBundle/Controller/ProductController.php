@@ -2,7 +2,6 @@
 
 namespace Efl\WebBundle\Controller;
 
-use Efl\BasketBundle\Event\AddItemToBasketEvent;
 use Efl\BasketBundle\Form\Type\AddToBasketType;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\Values\Content\Content;
@@ -181,15 +180,6 @@ class ProductController extends Controller
                         )
                         {
                             $this->get( 'eflweb.basket_service' )->removeProductFromBasket( $formatId );
-                            $this->get( 'session' )->getFlashBag()->add(
-                                'basketMsg',
-                                $this->get( 'translator' )->trans(
-                                    'Acabamos de quitar el <b>%product%</b> de la compra.',
-                                    array(
-                                        '%product%' => $content->contentInfo->name
-                                    )
-                                )
-                            );
                         }
                     }
 
@@ -198,27 +188,9 @@ class ProductController extends Controller
                         // sólo añadimos si el producto no estaba ya en cesta
                         if ( !$this->get( 'eflweb.basket_service' )->isProductInBasket( $productId ) )
                         {
-                            $basketItem = $this->get( 'eflweb.basket_service' )->addProductToBasket( $productId );
-                            /*$this->get( 'session' )->getFlashBag()->add(
-                                'basketMsg',
-                                $this->get( 'translator' )->trans(
-                                    'Acabamos de añadir el <b>%product%</b> a la compra.',
-                                    array(
-                                        '%product%' => $content->contentInfo->name
-                                    )
-                                )
-                            );*/
-
-                            $event = new AddItemToBasketEvent(
-                                $this->get( 'eflweb.basket_service' )->getCurrentBasket(),
-                                $basketItem
-                            );
-                            $dispatcher = $this->get('event_dispatcher');
-                            $dispatcher->dispatch('eflweb.event.additemtobasket', $event);
+                            $this->get( 'eflweb.basket_service' )->addProductToBasket( $productId );
                         }
                     }
-
-
 
                     return $this->redirect(
                         $this->generateUrl( 'cart' )

@@ -1,0 +1,19 @@
+parameters:
+    eflweb.listener.messages.class: Efl\MessagesBundle\Listeners\Messages
+
+services:
+    eflweb.listener.messages.basket.item.add:
+        class: %eflweb.listener.messages.class%
+        arguments:
+            - @session
+            - @translator
+        tags:
+            - { name: kernel.event_listener, event: eflweb.event.additemtobasket, method: onAddItemToBasket }
+
+    eflweb.listener.messages.basket.item.remove:
+            class: %eflweb.listener.messages.class%
+            arguments:
+                - @session
+                - @translator
+            tags:
+                - { name: kernel.event_listener, event: eflweb.event.removeitemfrombasket, method: onRemoveItemFromBasket }

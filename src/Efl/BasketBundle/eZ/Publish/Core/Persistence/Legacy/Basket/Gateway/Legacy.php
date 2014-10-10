@@ -14,6 +14,7 @@ use Efl\BasketBundle\Entity\EzproductcollectionItem;
 use Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Gateway;
 use Efl\DiscountsBundle\eZ\Publish\Core\Repository\DiscountsService;
 use eZ\Publish\API\Repository\ContentService;
+use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Persistence\Database\DatabaseHandler;
 use EzSystems\EzPriceBundle\API\Price\ContentVatService;
@@ -26,6 +27,11 @@ class Legacy extends Gateway
      * @var \eZ\Publish\API\Repository\ContentService
      */
     protected $contentService;
+
+    /**
+     * @var \eZ\Publish\API\Repository\LocationService
+     */
+    protected $locationService;
 
     /**
      * @var RelatedByOrders
@@ -66,6 +72,7 @@ class Legacy extends Gateway
 
     public function __construct(
         ContentService $contentService,
+        LocationService $locationService,
         RelatedByOrders $relatedByOrders,
         ContentVatService $contentVatService,
         DiscountsService $discountsService,
@@ -75,6 +82,7 @@ class Legacy extends Gateway
     )
     {
         $this->contentService = $contentService;
+        $this->locationService = $locationService;
         $this->relatedByOrdersService = $relatedByOrders;
         $this->contentVatService = $contentVatService;
         $this->discountsService = $discountsService;
@@ -296,7 +304,14 @@ class Legacy extends Gateway
             {
                 $item = new EzproductcollectionItem();
 
-                $item->setName( $content->contentInfo->name );
+                $objectNameExploded = explode( ' - ', $content->contentInfo->name );
+                $location = $this->locationService->loadLocation( $content->contentInfo->mainLocationId );
+                $parentLocation = $this->locationService->loadLocation( $location->parentLocationId );
+                $parentContent = $this->contentService->loadContent(
+                    $parentLocation->contentId
+                );
+
+                $item->setName( $parentContent->contentInfo->name . ' - ' . $objectNameExploded[1] );
                 $item->setContentobjectId( $content->id );
                 $item->setItemCount( $quantity );
                 $item->setPrice( $price );
@@ -325,15 +340,13 @@ class Legacy extends Gateway
     /**
      * Quitar el producto de la colección de productos actual
      *
+     * @param $productCollectionId
      * @param $contentId
      *
      * @return mixed|void
      */
-    public function removeProductFromBasket( $contentId )
+    public function removeProductFromBasket( $productCollectionId, $contentId )
     {
-        $basket = $this->currentBasket();
-        $productCollectionId = $basket->getProductcollectionId();
-
         $productCollectionItems = $this->getProductCollectionItem(
             $productCollectionId, $contentId
         );
@@ -343,6 +356,8 @@ class Legacy extends Gateway
             $this->em->remove( $productCollectionItems[0] );
             $this->em->flush();
         }
+
+        return $this->getAddedProductData( $productCollectionItems[0] );
 
     }
 
@@ -367,8 +382,6 @@ class Legacy extends Gateway
 
             $count = $product->getItemCount();
             $discountPercent = $product->getDiscount();
-            $nodeID = $content->contentInfo->mainLocationId;
-            $objectName = $content->contentInfo->name;
 
             $isVATIncluded = $product->getIsVatInc();
             $price = $product->getPrice();
@@ -391,9 +404,9 @@ class Legacy extends Gateway
             $addedProduct = array(
                 'id' => $product->getId(),
                 'vatValue' => $realVatValue,
-                'itemCount' => $count,
+                'itemCount' => $product->getItemCount(),
                 'locationId' => $content->contentInfo->mainLocationId,
-                'objectName' => $objectName,
+                'objectName' => $product->getName(),
                 'priceExVat' => $priceExVAT,
                 'priceIncVat' => $priceIncVAT,
                 'discountPercent' => $discountPercent,

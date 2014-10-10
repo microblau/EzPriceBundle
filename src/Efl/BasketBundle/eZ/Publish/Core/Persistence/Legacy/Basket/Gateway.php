@@ -49,9 +49,10 @@ abstract class Gateway
     /**
      * Quitar producto de la cesta
      *
+     * @param $productCollectionId
      * @param $contentId
      *
      * @return mixed
      */
-    abstract public function removeProductFromBasket( $contentId );
+    abstract public function removeProductFromBasket( $productCollectionId, $contentId );
 }

@@ -6,7 +6,6 @@ parameters:
     ezprice.api.storage_engine.legacy.handler.ezprice.eflautomaticvathandler.class: Efl\BasketBundle\Core\Persistence\Legacy\Price\VatHandler\EflAutomaticVatHandler
     eflweb.cart_helper.class: Efl\BasketBundle\Helper\CartHelper
     eflweb.persistence.legacy.basket.related.class: Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Gateway\RelatedByOrders
-    eflweb.basket_management.class: Efl\BasketBundle\Services\BasketManagement
 
 services:
     eflweb.basket_service:
@@ -14,6 +13,7 @@ services:
         arguments:
             - @eflweb.persistence.legacy.basket.handler
             - @ezpublish.api.service.content
+            - @debug.event_dispatcher
 
     eflweb.persistence.legacy.basket.handler:
         class: %eflweb.persistence.legacy.basket.handler.class%
@@ -25,6 +25,7 @@ services:
         class: %eflweb.persistence.legacy.basket.gateway.class%
         arguments:
             - @ezpublish.api.service.content
+            - @ezpublish.api.service.location
             - @eflweb.persistence.legacy.basket.related
             - @ezprice.api.service.contentvatservice
             - @eflweb.discounts_service
@@ -53,8 +54,3 @@ services:
 
     eflweb.persistence.legacy.basket.related:
         class: %eflweb.persistence.legacy.basket.related.class%
-
-    eflweb.listener.basket_addproduct:
-        class: %eflweb.basket_management.class%
-        tags:
-            - { name: kernel.event_listener, event: eflweb.event.additemtobasket, method: onAddItemToBasket }

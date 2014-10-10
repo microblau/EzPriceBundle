@@ -6,6 +6,15 @@
 {% block content %}
     <div class="wrapper cl">
 
+        <article class="highlight cl">
+            <div class="content">
+                {% set productsAdded = app.session.flashbag.get("basketMsg") %}
+                {% for product in productsAdded %}
+                    <p class="title7">{{ product|raw }}</p>
+                {% endfor %}
+            </div>
+        </article>
+
         <div class="oneCol">
             <div class="main">
 
