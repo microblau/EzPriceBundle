@@ -4,6 +4,7 @@
 {% set title = 'Su cesta de la compra' %}
 
 {% block content %}
+    {% form_theme form 'EflBasketBundle:forms:cart.html.twig' %}
     {{ form_start(form, {'attr': {'novalidate':'novalidate'}}) }}
     <div class="wrapper cl">
 
@@ -45,7 +46,7 @@
             <tr>
                 <td class="amount">
                     {% if item.product_data.canModifyUnits %}
-                    <input type="text" name="" id="" value="{{ item.product_item_count }}" />
+                    {{ form_widget( form['quantity_' ~ i] ) }}
                     <a href="#" title="Añadir unidad" class="more-item"><i class="ico ico-more"></i></a>
                     <a href="#" title="Quitar unidad" class="less-item"><i class="ico ico-less"></i></a>
                         {% else %}
@@ -117,9 +118,8 @@
         <article class="voucher">
             <span><i class="ico ico-arrow-right-blue"></i> <a href="#">¿Tiene algún código promocional?</a></span>
 
-                <label for="voucher-code" class="offscreen">Email</label>
-                <input id="voucher-code" type="text" class="voucher-code" />
-                <button type="submit" class="btn type5">Aplicar</button>
+                {{ form_row( form.voucher_code) }}
+                {{ form_widget( form.apply_coupon ) }}
 
         </article>
 
@@ -134,6 +134,9 @@
 
     <section class="basket-payment">
         <span><i class="ico ico-arrow-right-blue"></i> <a href="{{ path('ez_urlalias', {'locationId':2 } ) }}">Seguir comprando</a> o</span>
+        <div class="wrap-btn">
+            {{ form_widget( form.update_cart ) }}
+        </div>
         <div class="wrap-btn">
             <button type="submit" class="btn type2 hasIco"><i class="ico ico-arrow-right-white"></i>Pagar ahora</button>
         </div>

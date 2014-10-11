@@ -1,6 +1,6 @@
 parameters:
     # API services
-    eflweb.repository.discounts_service.class: Efl\DiscountsBundle\eZ\Publish\Core\Repository\DiscountsService
+    eflweb.repository.discounts_service.class: Efl\DiscountsBundle\eZ\Publish\Core\Repository\LegacyDiscountsService
     eflweb.persistence.legacy.discounts.handler.class: Efl\DiscountsBundle\eZ\Publish\Core\Persistence\Legacy\Discounts\Handler
     eflweb.persistence.legacy.discounts.gateway.class: Efl\DiscountsBundle\eZ\Publish\Core\Persistence\Legacy\Discounts\Gateway\Doctrine
 

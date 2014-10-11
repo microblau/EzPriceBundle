@@ -30,5 +30,8 @@ class EflDiscountsExtension extends Extension
 
         // Base services override
         $loader->load( 'services.yml' );
+
+        // Discounts
+        $loader->load( 'discounts.yml' );
     }
 }

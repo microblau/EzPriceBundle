@@ -22,8 +22,8 @@ class Handler
         $this->discountsGateway = $discountsGateway;
     }
 
-    public function getDiscountPercent( User $user, Content $content )
+    public function getDiscount( User $user, Content $content )
     {
-        return $this->discountsGateway->getDiscountPercent( $user, $content );
+        return $this->discountsGateway->getDiscount( $user, $content );
     }
 }

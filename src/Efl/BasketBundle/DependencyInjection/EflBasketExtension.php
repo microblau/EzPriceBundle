@@ -33,5 +33,10 @@ class EflBasketExtension extends Extension
 
         // forms
         $loader->load( 'forms.yml' );
+
+        // listeners
+        $loader->load( 'listeners.yml' );
+
+        $loader->load( 'discounts.yml' );
     }
 }

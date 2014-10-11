@@ -1,0 +1,12 @@
+{% block _efl_cart_form_apply_coupon_widget %}
+    {% if label is empty -%}
+        {% set label = name|humanize %}
+    {%- endif -%}
+        <button type="submit" {{ block('button_attributes') }}>{{ label|trans({}, translation_domain) }}</button>
+{% endblock %}
+
+{% block _efl_cart_form_voucher_code_row %}
+        {{- form_label(form) -}}
+        {{- form_errors(form) -}}
+        {{- form_widget(form) -}}
+{% endblock %}

@@ -1,0 +1,6 @@
+parameters:
+    efl.basket.discounts.basketitem.manager.class: Efl\BasketBundle\eZ\Publish\Core\Repository\DiscountsService
+
+services:
+    efl.basket.discounts.basketitem.manager:
+        class: %efl.basket.discounts.basketitem.manager.class%

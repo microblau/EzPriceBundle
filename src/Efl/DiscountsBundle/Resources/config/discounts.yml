@@ -1,0 +1,11 @@
+parameters:
+    efl.discounts.basketitem.legacy.class: Efl\DiscountsBundle\Discounts\BasketItem\Legacy
+
+services:
+    efl.discounts.legacy.prepublicaction:
+        class: %efl.discounts.basketitem.legacy.class%
+        arguments:
+            - @eflweb.discounts_service
+            - @ezpublish.api.repository
+        tags:
+          -  { name: efl.discounts.basketitem, alias: legacy }

@@ -55,4 +55,22 @@ abstract class Gateway
      * @return mixed
      */
     abstract public function removeProductFromBasket( $productCollectionId, $contentId );
+
+    /**
+     * Actualizar el número de unidades de un producto en la cesta
+     *
+     * @param $productCollectionItemId
+     * @param $quantity
+     * @return mixed
+     */
+    abstract public function updateBasketItemQuantity( $productCollectionItemId, $quantity );
+
+    /**
+     * Actualiza el porcentaje aplicado a un item de la cesta
+     *
+     * @param $productCollectionItemId
+     * @param $discountPercent
+     * @return mixed
+     */
+    abstract public function applyDiscountToItem( $productCollectionItemId, $discountPercent );
 }

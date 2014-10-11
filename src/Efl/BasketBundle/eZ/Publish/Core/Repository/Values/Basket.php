@@ -17,15 +17,29 @@ class Basket extends APIBasket
      */
     protected $items;
 
-    protected $totalExVat = null;
+    /**
+     * @var float
+     */
+    protected $totalExVat = 0.0;
 
-    protected $totalIncVat = null;
+    /**
+     * @var float
+     */
+    protected $totalIncVat = 0.0;
 
+    protected $discountCode;
+
+    /**
+     * @return BasketItem[]
+     */
     public function getItems()
     {
         return $this->items;
     }
 
+    /**
+     * @param $items
+     */
     public function setItems( $items )
     {
         $this->items = $items;
@@ -81,5 +95,21 @@ class Basket extends APIBasket
     public function getTotalTaxAmount()
     {
         return $this->totalIncVat - $this->totalExVat;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDiscountCode()
+    {
+        return $this->discountCode;
+    }
+
+    /**
+     * @param $discountCode
+     */
+    public function setDiscountCode( $discountCode )
+    {
+        $this->discountCode = $discountCode;
     }
 }

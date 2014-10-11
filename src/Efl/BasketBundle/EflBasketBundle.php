@@ -8,7 +8,9 @@
 
 namespace Efl\BasketBundle;
 
+use Efl\BasketBundle\DependencyInjection\DiscountsCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Class EflBasketBundle
@@ -20,4 +22,11 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 class EflBasketBundle extends Bundle
 {
     protected $name = 'EflBasketBundle';
+
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $container->addCompilerPass(new DiscountsCompilerPass() );
+    }
 }

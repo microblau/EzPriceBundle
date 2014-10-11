@@ -8,7 +8,7 @@ services:
             - @session
             - @translator
         tags:
-            - { name: kernel.event_listener, event: eflweb.event.additemtobasket, method: onAddItemToBasket }
+            - { name: kernel.event_listener, event: eflweb.event.basket.additem, method: onAddItemToBasket }
 
     eflweb.listener.messages.basket.item.remove:
             class: %eflweb.listener.messages.class%
@@ -16,4 +16,12 @@ services:
                 - @session
                 - @translator
             tags:
-                - { name: kernel.event_listener, event: eflweb.event.removeitemfrombasket, method: onRemoveItemFromBasket }
+                - { name: kernel.event_listener, event: eflweb.event.basket.removeitem, method: onRemoveItemFromBasket }
+
+    eflweb.listener.messages.basket.item.update:
+            class: %eflweb.listener.messages.class%
+            arguments:
+                - @session
+                - @translator
+            tags:
+                - { name: kernel.event_listener, event: eflweb.event.basket.updateitem, method: onUpdateItemInBasket }

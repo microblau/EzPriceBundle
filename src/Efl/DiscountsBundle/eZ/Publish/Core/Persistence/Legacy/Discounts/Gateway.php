@@ -13,5 +13,5 @@ use eZ\Publish\Core\Repository\Values\User\User;
 
 abstract class Gateway
 {
-    abstract public function getDiscountPercent( User $user, Content $content );
+    abstract public function getDiscount( User $user, Content $content );
 }

@@ -8,6 +8,7 @@
 
 namespace Efl\BasketBundle\Helper;
 
+use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\BasketItem;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\Content\Content;
 
@@ -22,32 +23,32 @@ class CartHelper
         $this->contentTypeService = $contentTypeService;
     }
 
-    public function getDataForBasketItem( Content $content )
+    /**
+     * Datos para presentar en la cesta
+     *
+     * @param BasketItem $basketItem
+     * @return array
+     */
+    public function getDataForBasketItem( BasketItem $basketItem )
     {
-        $contentTypeIdentifer = $this->contentTypeService->loadContentType(
-            $content->contentInfo->contentTypeId
-        )->identifier;
-
-        switch( $contentTypeIdentifer )
+        if ( $basketItem->isA( 'formato_papel' ) )
         {
-            case 'formato_papel':
-                $literal = 'En Papel';
-                $icon = 'paper';
-                break;
-
-            case 'formato_ipad':
-                $literal = 'Para Ipad';
-                $icon = 'tablet';
-                break;
-
-            case 'formato_internet':
-                $literal = 'En Internet';
-                $icon = 'pc';
-                break;
+            $literal = 'En Papel';
+            $icon = 'paper';
+        }
+        elseif ( $basketItem->isA( 'formato_ipad' ) )
+        {
+            $literal = 'Para Ipad';
+            $icon = 'tablet';
+        }
+        else
+        {
+            $literal = 'En Internet';
+            $icon = 'pc';
         }
 
         return array(
-            'canModifyUnits' => $contentTypeIdentifer == 'formato_papel',
+            'canModifyUnits' => $basketItem->isA( 'formato_papel' ),
             'literal' => $literal,
             'icon' => $icon
         );

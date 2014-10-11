@@ -8,6 +8,7 @@
 
 namespace Efl\BasketBundle\Controller;
 
+use Efl\BasketBundle\Event\BasketPreShowEvent;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -44,26 +45,49 @@ class CheckoutController extends Controller
 
             if ( $form->isValid() )
             {
-                // miramos si se ha clicado alguno de los botones de eliminar
-                foreach( $currentItems as $currentItem )
+                // estamos aplicando un cupón?
+                $apply_coupon = $form->get( 'apply_coupon' )->isClicked();
+                if ( $apply_coupon )
                 {
-                    if  ( $form->get( 'delete_' . $currentItem->id )->isClicked() )
-                    {
-                        $this->get( 'eflweb.basket_service' )->removeProductFromBasket( $currentItem->getContent()->id );
+                    $this->get( 'eflweb.basket_service')->setDiscountCode(
+                        $form->get( 'voucher_code' )->getData()
+                    );
+                }
+                else
+                {
+                    $update = $form->get('update_cart')->isClicked();
+
+                    foreach ($currentItems as $currentItem) {
+                        if ($update && $form->has('quantity_' . $currentItem->id)) {
+                            $quantity = $form->get('quantity_' . $currentItem->id)->getData();
+                            // si la cantidad es menor que uno borramos item
+                            if ($quantity < 1) {
+                                $this->get('eflweb.basket_service')->removeProductFromBasket($currentItem->getContent()->id);
+                            } // si no actualizamos si el número no coincide con el que teníamos
+                            elseif ($currentItem->itemCount != $quantity) {
+                                $this->get('eflweb.basket_service')->updateBasketItemQuantity($currentItem->id, $quantity);
+                            }
+                        } // miramos si se ha clicado el botón de eliminar para ese elemento
+                        elseif ($form->get('delete_' . $currentItem->id)->isClicked()) {
+                            $this->get('eflweb.basket_service')->removeProductFromBasket($currentItem->getContent()->id);
+                        }
                     }
+
+                    return $this->redirect(
+                        $this->generateUrl('cart')
+                    );
                 }
             }
-            else
-            {
-                foreach( $form->getErrors() as $error )
-                {
-                    print $error->getMessage();
-                }
-            }
+
         }
 
         $currentBasket = $this->get( 'eflweb.basket_service' )->getCurrentBasket();
+
+        $event = new BasketPreShowEvent( $currentBasket );
+        $this->get ('event_dispatcher' )->dispatch( 'eflweb.event.basket.applydiscounts', $event );
+
         $currentItems = $currentBasket->getItems();
+        print_r( $currentItems );
         $template = count( $currentItems ) ? 'cart' : 'empty-cart';
 
         $params = array();
@@ -80,9 +104,7 @@ class CheckoutController extends Controller
                     'product_item_count' => $item->itemCount,
                     'product_unit_price' => $item->totalPriceExVat / $item->itemCount,
                     'product_total_price' => $item->totalPriceExVat,
-                    'product_data' => $this->get( 'eflweb.cart_helper' )->getDataForBasketItem(
-                        $item->getContent()
-                    )
+                    'product_data' => $this->get( 'eflweb.cart_helper' )->getDataForBasketItem( $item )
                 );
             }
         }

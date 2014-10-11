@@ -14,6 +14,10 @@ class BasketItem extends APIBasketItem
 {
     protected $content;
 
+    protected $contentTypeIdentifier;
+
+    protected $discount;
+
     /**
      * Contenido asociado
      *
@@ -22,6 +26,17 @@ class BasketItem extends APIBasketItem
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * Nos dice si el producto es del tipo presentado
+     *
+     * @param $contentTypeIdentifier
+     * @return bool
+     */
+    public function isA( $contentTypeIdentifier )
+    {
+        return $this->contentTypeIdentifier == $contentTypeIdentifier;
     }
 
     /**
@@ -42,5 +57,18 @@ class BasketItem extends APIBasketItem
     public function getTotalIncVat()
     {
         return $this->totalPriceIncVat;
+    }
+
+    public function getDiscount()
+    {
+        return $this->discount;
+    }
+
+    /**
+     * @param float $discount
+     */
+    public function setDiscount( $discount )
+    {
+        $this->discount = $discount;
     }
 } 

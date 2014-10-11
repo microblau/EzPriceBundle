@@ -10,6 +10,7 @@ namespace Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket;
 
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Basket;
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\BasketItem;
+use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Discounts\BasketItem as DiscountBasketItem;
 
 class Handler
 {
@@ -90,6 +91,31 @@ class Handler
                 $basket->productCollectionId,
                 $contentId
             )
+        );
+    }
+
+    /**
+     * Actualizar el número de unidades de un item de la cesta
+     *
+     * @param $productCollectionItemId
+     * @param $quantity
+     * @return BasketItem
+     */
+    public function updateBasketItemQuantity( $productCollectionItemId, $quantity )
+    {
+        return new BasketItem(
+            $this->basketGateway->updateBasketItemQuantity(
+                $productCollectionItemId,
+                $quantity
+            )
+        );
+    }
+
+    public function applyDiscountToItem( BasketItem $basketItem, DiscountBasketItem $discount )
+    {
+        $this->basketGateway->applyDiscountToItem(
+            $basketItem->id,
+            $discount->percentage
         );
     }
 }

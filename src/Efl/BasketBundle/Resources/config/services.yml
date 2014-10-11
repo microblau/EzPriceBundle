@@ -13,7 +13,7 @@ services:
         arguments:
             - @eflweb.persistence.legacy.basket.handler
             - @ezpublish.api.service.content
-            - @debug.event_dispatcher
+            - @event_dispatcher
 
     eflweb.persistence.legacy.basket.handler:
         class: %eflweb.persistence.legacy.basket.handler.class%
@@ -26,9 +26,9 @@ services:
         arguments:
             - @ezpublish.api.service.content
             - @ezpublish.api.service.location
+            - @ezpublish.api.service.content_type
             - @eflweb.persistence.legacy.basket.related
             - @ezprice.api.service.contentvatservice
-            - @eflweb.discounts_service
             - @ezpublish.api.repository
             - @doctrine.orm.entity_manager
             - @session

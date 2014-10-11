@@ -10,6 +10,7 @@ namespace Efl\DiscountsBundle\eZ\Publish\Core\Persistence\Legacy\Discounts\Gatew
 
 use Doctrine\ORM\EntityManager;
 use Efl\DiscountsBundle\Entity\Ezdiscountrule;
+use Efl\DiscountsBundle\Entity\Ezdiscountsubrule;
 use Efl\DiscountsBundle\eZ\Publish\Core\Persistence\Legacy\Discounts\Gateway;
 use eZ\Publish\API\Repository\UserService;
 use eZ\Publish\API\Repository\Values\Content\Content;
@@ -51,9 +52,14 @@ class Doctrine extends Gateway
         $this->repository = $repository;
     }
 
-    public function getDiscountPercent( User $user, Content $content )
+    /**
+     * @param User $user
+     * @param Content $content
+     * @return array|bool
+     */
+    public function getDiscount( User $user, Content $content )
     {
-        $bestMatch = 0.0;
+        $bestMatch = null;
 
         $params = array(
             'contentobject_id' => $content->id,
@@ -80,27 +86,41 @@ class Doctrine extends Gateway
         $idArray = array_merge( $groupsIds, array( $userId ) );
 
         $rules = $this->fetchRulesIdsByIdArray( $idArray );
+        $discountPercentage = 0;
 
         if ( count ( $rules ) )
         {
             $subRules = $this->getSubRulesByRules( $rules );
 
-            foreach ( $subRules as $subRule ) {
-                /** @var \Efl\DiscountsBundle\Entity\Ezdiscountsubrule $subrule */
-                if ( $subRule->getDiscountPercent() > $bestMatch )
+            foreach ( $subRules as $subRule )
+            {
+                /** @var \Efl\DiscountsBundle\Entity\Ezdiscountsubrule $subRule */
+                if ( $subRule->getDiscountPercent() > $discountPercentage )
                 {
                     if ( $subRule->getLimitation() == '*' )
-                        $bestMatch = $subRule->getDiscountPercent();
+                    {
+                        $bestMatch = $subRule;
+                        $discountPercentage = $bestMatch->getDiscountPercent();
+                    }
                     else
                     {
                         $limitationArray = $this->getLimitationArray( $subRule->getId() );
-                        $bestMatch = $this->getBestMatch( $subRule, $limitationArray, $params );
+                        $bestMatchPercentage = $this->getBestMatch( $subRule, $limitationArray, $params );
+                        if ( $bestMatchPercentage > $discountPercentage )
+                        {
+                            $bestMatch = $subRule;
+                            $discountPercentage = $subRule->getDiscountPercent();
+                        }
                     }
                 }
             }
         }
 
-        return $bestMatch > 0 ? $bestMatch : false;
+        return $bestMatch != null && ( $bestMatch->getDiscountPercent() > 0 )
+            ? array(
+                'percentage' => $bestMatch->getDiscountPercent()
+            )
+            : false;
     }
 
     private function fetchRulesIdsByIdArray( array $idArray = array() )
@@ -157,20 +177,26 @@ class Doctrine extends Gateway
                 $hasSectionLimitation = true;
 
                 if ( isset( $params['section_id'] ) && $params['section_id'] == $limitation->getValue() )
+                {
                     $sectionMatch = true;
+                }
             }
             elseif ( $limitation->getIssection() == '2' )
             {
                 $hasObjectLimitation = true;
 
                 if ( isset( $params['contentobject_id'] ) && $params['contentobject_id'] == $limitation->getValue() )
+                {
                     $objectMatch = true;
+                }
             }
             else
             {
                 $hasClassLimitation = true;
                 if ( isset( $params['contentclass_id'] ) && $params['contentclass_id'] == $limitation->getValue() )
+                {
                     $classMatch = true;
+                }
             }
         }
 

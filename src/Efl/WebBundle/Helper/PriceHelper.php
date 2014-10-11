@@ -8,10 +8,8 @@
 
 namespace Efl\WebBundle\Helper;
 
-use eZ\Bundle\EzPublishLegacyBundle\LegacyMapper\Security;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\ContentService;
-use Efl\WebBundle\Helper\ProductHelper;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\LocationService;
 use Efl\DiscountsBundle\eZ\Publish\Core\Repository\DiscountsService;

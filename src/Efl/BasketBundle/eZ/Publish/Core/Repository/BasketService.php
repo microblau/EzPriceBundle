@@ -10,9 +10,11 @@ namespace Efl\BasketBundle\eZ\Publish\Core\Repository;
 
 use Efl\BasketBundle\Event\AddItemToBasketEvent;
 use Efl\BasketBundle\Event\RemoveItemFromBasketEvent;
+use Efl\BasketBundle\Event\UpdateQuantityItemInBasket;
 use Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Handler as BasketHandler;
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Basket;
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\BasketItem;
+use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Discounts\BasketItem as DiscountBasketItem;
 use eZ\Publish\API\Repository\ContentService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -94,7 +96,7 @@ class BasketService
         );
 
         $event = new AddItemToBasketEvent( $item );
-        $this->eventDispatcher->dispatch('eflweb.event.additemtobasket', $event);
+        $this->eventDispatcher->dispatch('eflweb.event.basket.additem', $event);
     }
 
     /**
@@ -134,7 +136,43 @@ class BasketService
         );
 
         $event = new RemoveItemFromBasketEvent( $item );
-        $this->eventDispatcher->dispatch('eflweb.event.removeitemfrombasket', $event);
+        $this->eventDispatcher->dispatch('eflweb.event.basket.removeitem', $event);
+    }
+
+    /**
+     * Actualizar número de unidades de producto en cesta
+     *
+     * @param $productCollectionItemId
+     * @param $quantity
+     */
+    public function updateBasketItemQuantity( $productCollectionItemId, $quantity )
+    {
+        $item = $this->basketHandler->updateBasketItemQuantity(
+            $productCollectionItemId,
+            $quantity
+        );
+
+        $event = new UpdateQuantityItemInBasket( $item, $quantity );
+        $this->eventDispatcher->dispatch('eflweb.event.basket.updateitem', $event);
+    }
+
+    /**
+     * Aplica el código de descuento pasado
+     *
+     * @param $discountCode
+     */
+    public function setDiscountCode( $discountCode )
+    {
+        $this->getCurrentBasket()->setDiscountCode( $discountCode );
+    }
+
+    /**
+     * @param BasketItem $basketItem
+     * @param DiscountBasketItem $discount
+     */
+    public function applyDiscountToItem( BasketItem $basketItem, DiscountBasketItem $discount )
+    {
+        $this->basketHandler->applyDiscountToItem( $basketItem, $discount );
     }
 }
 
