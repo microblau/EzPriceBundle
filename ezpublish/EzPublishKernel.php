@@ -84,7 +84,8 @@ class EzPublishKernel extends Kernel
             new \Efl\ReviewsBundle\EflReviewsBundle(),
             new \Efl\BasketBundle\EflBasketBundle(),
             new \Efl\DiscountsBundle\EflDiscountsBundle(),
-            new \Efl\MessagesBundle\EflMessagesBundle()
+            new \Efl\MessagesBundle\EflMessagesBundle(),
+            new Efl\ShippingBundle\EflShippingBundle()
         );
 
         switch ( $this->getEnvironment() )
