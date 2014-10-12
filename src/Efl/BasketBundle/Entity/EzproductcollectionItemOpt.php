@@ -26,14 +26,14 @@ class EzproductcollectionItemOpt
      *
      * @ORM\Column(name="item_id", type="integer", nullable=false)
      */
-    private $itemId = '0';
+    private $itemId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
-    private $name = '';
+    private $name;
 
     /**
      * @var integer
@@ -47,21 +47,21 @@ class EzproductcollectionItemOpt
      *
      * @ORM\Column(name="option_item_id", type="integer", nullable=false)
      */
-    private $optionItemId = '0';
+    private $optionItemId;
 
     /**
      * @var float
      *
      * @ORM\Column(name="price", type="float", precision=10, scale=0, nullable=false)
      */
-    private $price = '0';
+    private $price;
 
     /**
      * @var string
      *
      * @ORM\Column(name="value", type="string", length=255, nullable=false)
      */
-    private $value = '';
+    private $value;
 
 
 

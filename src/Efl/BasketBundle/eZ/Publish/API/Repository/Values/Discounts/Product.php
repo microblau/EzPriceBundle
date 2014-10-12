@@ -8,10 +8,9 @@
 
 namespace Efl\BasketBundle\eZ\Publish\API\Repository\Values\Discounts;
 
-
 use eZ\Publish\API\Repository\Values\ValueObject;
 
-abstract class BasketItem extends ValueObject
+abstract class Product extends ValueObject
 {
     protected $percentage;
 

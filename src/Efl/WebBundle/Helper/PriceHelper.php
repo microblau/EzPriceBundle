@@ -12,7 +12,7 @@ use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\LocationService;
-use Efl\DiscountsBundle\eZ\Publish\Core\Repository\DiscountsService;
+use Efl\BasketBundle\eZ\Publish\Core\Repository\DiscountsService;
 use eZ\Publish\API\Repository\Repository;
 
 /**
@@ -96,14 +96,13 @@ class PriceHelper
 
     private function offerPrice( Content $content )
     {
-        if ( $discountPercent = $this->discountsService->getDiscountPercent(
-                $this->repository->getCurrentUser(),
+        if ( $discount = $this->discountsService->findBestDiscount(
                 $content
             )
         )
         {
             $basePrice = $this->basePrice( $content );
-            return $basePrice - ( $basePrice * $discountPercent / 100 );
+            return $basePrice - ( $basePrice * $discount->percentage / 100 );
         }
         return false;
 

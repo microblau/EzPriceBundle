@@ -33,7 +33,63 @@ class Ezproductcollection
      *
      * @ORM\Column(name="currency_code", type="string", length=4, nullable=false)
      */
-    private $currencyCode = '';
+    private $currencyCode;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set created
+     *
+     * @param integer $created
+     * @return Ezproductcollection
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return integer 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set currencyCode
+     *
+     * @param string $currencyCode
+     * @return Ezproductcollection
+     */
+    public function setCurrencyCode($currencyCode)
+    {
+        $this->currencyCode = $currencyCode;
+
+        return $this;
+    }
+
+    /**
+     * Get currencyCode
+     *
+     * @return string 
+     */
+    public function getCurrencyCode()
+    {
+        return $this->currencyCode;
+    }
 }

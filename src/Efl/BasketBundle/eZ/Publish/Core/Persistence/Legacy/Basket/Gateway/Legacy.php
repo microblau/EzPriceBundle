@@ -8,11 +8,12 @@
 
 namespace Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Gateway;
 
+use Efl\BasketBundle\Entity\Couponcode;
 use Efl\BasketBundle\Entity\Ezbasket;
 use Efl\BasketBundle\Entity\Ezproductcollection;
 use Efl\BasketBundle\Entity\EzproductcollectionItem;
 use Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Gateway;
-use Efl\DiscountsBundle\eZ\Publish\Core\Repository\LegacyDiscountsService;
+use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Discounts\Product as DiscountProduct;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\ContentTypeService;
@@ -195,12 +196,7 @@ class Legacy extends Gateway
 
         if( count( $basket) )
         {
-            return array(
-                'id' => $basket[0]->getId(),
-                'sessionId' => $basket[0]->getSessionId(),
-                'productCollectionId' => $basket[0]->getProductCollectionId(),
-                'orderId' => $basket[0]->getOrderId()
-            );
+            return $this->getBasketArrayData( $basket[0] );
         }
 
         $this->em->beginTransaction();
@@ -215,17 +211,13 @@ class Legacy extends Gateway
         $basket = new Ezbasket();
         $basket->setSessionId( $this->session->getId() );
         $basket->setProductcollectionId( $collection->getId() );
+        $basket->setOrderId( 0 );
         $this->em->persist( $basket );
         $this->em->flush();
 
         $this->em->commit();
 
-        return array(
-            'id' => $basket->getId(),
-            'sessionId' => $basket->getSessionId(),
-            'productCollectionId' => $basket->getProductCollectionId(),
-            'orderId' => $basket->getOrderId()
-        );
+        return $this->getBasketArrayData( $basket );
     }
 
     /**
@@ -394,7 +386,50 @@ class Legacy extends Gateway
         $item->setPrice( $item->getPrice() * ( 100 - $discountPercent ) / 100 );
         $this->em->persist( $item );
         $this->em->flush();
+
+        return $this->getProductData( $item );
     }
+
+    /**
+     * Crear un cupón nuevo en la base de datos.
+     *
+     * @param $basketId
+     * @param $couponCode
+     * @return array
+     */
+    public function setDiscountCoupon( $basketId, $couponCode )
+    {
+        $basket = $this->em->find( 'EflBasketBundle:Ezbasket', $basketId );
+        if ( !$coupon = $this->em->find( 'EflBasketBundle:Couponcode', $basketId ) )
+        {
+            $coupon = new Couponcode();
+        }
+        $coupon->setBasketId( $basket->getId() );
+        $coupon->setBasket( $basket );
+        $coupon->setCoupon( $couponCode );
+        $this->em->persist( $coupon );
+        $this->em->flush();
+    }
+
+    /**
+     * Función auxiliar para obtener el código de cupón asociado a cesta
+     *
+     * @param $basketId
+     * @return string
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    private function getDiscountCoupon( $basketId )
+    {
+        if ( $coupon = $this->em->find( 'EflBasketBundle:Couponcode', $basketId ) )
+        {
+            return $coupon->getCoupon();
+        }
+
+        return '';
+    }
+
     /**
      * Datos a añadir a la cesta
      *
@@ -434,6 +469,17 @@ class Legacy extends Gateway
                 $totalPriceIncVAT = $count * $priceIncVAT; // * ( 100 - $discountPercent ) / 100 ;
             }
 
+            $discount = null;
+
+            if ( $product->getDiscount() > 0 )
+            {
+                $discount = new DiscountProduct(
+                    array(
+                        'percentage' => $product->getDiscount()
+                    )
+                );
+            }
+
             $addedProduct = array(
                 'id' => $product->getId(),
                 'vatValue' => $realVatValue,
@@ -448,7 +494,8 @@ class Legacy extends Gateway
                 'content' => $content,
                 'contentTypeIdentifier' => $this->contentTypeService->loadContentType(
                     $content->contentInfo->contentTypeId
-                )->identifier
+                )->identifier,
+                'discount' => $discount
             );
 
             return $addedProduct;
@@ -520,5 +567,22 @@ class Legacy extends Gateway
             ->setParameter( 'contentId', $contentId );
 
         return $query->getQuery()->getResult();
+    }
+
+    /**
+     * Representación de la info de la entidad ezbasket para formar nuestro valor
+     *
+     * @param Ezbasket $basket
+     * @return array
+     */
+    private function getBasketArrayData( Ezbasket $basket )
+    {
+        return array(
+            'id' => $basket->getId(),
+            'sessionId' => $basket->getSessionId(),
+            'productCollectionId' => $basket->getProductCollectionId(),
+            'orderId' => $basket->getOrderId(),
+            'discountCode' => $this->getDiscountCoupon( $basket->getId() )
+        );
     }
 }

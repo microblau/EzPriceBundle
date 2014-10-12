@@ -11,7 +11,7 @@ namespace Efl\DiscountsBundle\eZ\Publish\Core\Repository;
 use Efl\DiscountsBundle\eZ\Publish\Core\Persistence\Legacy\Discounts\Handler;
 use eZ\Publish\API\Repository\Values\User\User;
 use eZ\Publish\API\Repository\Values\Content\Content;
-use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Discounts\BasketItem;
+use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Discounts\Product;
 
 class LegacyDiscountsService
 {
@@ -40,6 +40,6 @@ class LegacyDiscountsService
     public function getDiscount( User $user, Content $content )
     {
         $discount = $this->discountsHandler->getDiscount( $user, $content );
-        return $discount ? new BasketItem( $discount ) : false;
+        return $discount ? new Product( $discount ) : false;
     }
 }

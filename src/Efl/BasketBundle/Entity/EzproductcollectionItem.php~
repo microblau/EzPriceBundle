@@ -26,7 +26,7 @@ class EzproductcollectionItem
      *
      * @ORM\Column(name="contentobject_id", type="integer", nullable=false)
      */
-    private $contentobjectId = '0';
+    private $contentobjectId;
 
     /**
      * @var float
@@ -47,28 +47,28 @@ class EzproductcollectionItem
      *
      * @ORM\Column(name="item_count", type="integer", nullable=false)
      */
-    private $itemCount = '0';
+    private $itemCount;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
-    private $name = '';
+    private $name;
 
     /**
      * @var float
      *
      * @ORM\Column(name="price", type="float", precision=10, scale=0, nullable=true)
      */
-    private $price = '0';
+    private $price;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="productcollection_id", type="integer", nullable=false)
      */
-    private $productcollectionId = '0';
+    private $productcollectionId;
 
     /**
      * @var float
@@ -78,4 +78,198 @@ class EzproductcollectionItem
     private $vatValue;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set contentobjectId
+     *
+     * @param integer $contentobjectId
+     * @return EzproductcollectionItem
+     */
+    public function setContentobjectId($contentobjectId)
+    {
+        $this->contentobjectId = $contentobjectId;
+
+        return $this;
+    }
+
+    /**
+     * Get contentobjectId
+     *
+     * @return integer 
+     */
+    public function getContentobjectId()
+    {
+        return $this->contentobjectId;
+    }
+
+    /**
+     * Set discount
+     *
+     * @param float $discount
+     * @return EzproductcollectionItem
+     */
+    public function setDiscount($discount)
+    {
+        $this->discount = $discount;
+
+        return $this;
+    }
+
+    /**
+     * Get discount
+     *
+     * @return float 
+     */
+    public function getDiscount()
+    {
+        return $this->discount;
+    }
+
+    /**
+     * Set isVatInc
+     *
+     * @param integer $isVatInc
+     * @return EzproductcollectionItem
+     */
+    public function setIsVatInc($isVatInc)
+    {
+        $this->isVatInc = $isVatInc;
+
+        return $this;
+    }
+
+    /**
+     * Get isVatInc
+     *
+     * @return integer 
+     */
+    public function getIsVatInc()
+    {
+        return $this->isVatInc;
+    }
+
+    /**
+     * Set itemCount
+     *
+     * @param integer $itemCount
+     * @return EzproductcollectionItem
+     */
+    public function setItemCount($itemCount)
+    {
+        $this->itemCount = $itemCount;
+
+        return $this;
+    }
+
+    /**
+     * Get itemCount
+     *
+     * @return integer 
+     */
+    public function getItemCount()
+    {
+        return $this->itemCount;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return EzproductcollectionItem
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     * @return EzproductcollectionItem
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float 
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set productcollectionId
+     *
+     * @param integer $productcollectionId
+     * @return EzproductcollectionItem
+     */
+    public function setProductcollectionId($productcollectionId)
+    {
+        $this->productcollectionId = $productcollectionId;
+
+        return $this;
+    }
+
+    /**
+     * Get productcollectionId
+     *
+     * @return integer 
+     */
+    public function getProductcollectionId()
+    {
+        return $this->productcollectionId;
+    }
+
+    /**
+     * Set vatValue
+     *
+     * @param float $vatValue
+     * @return EzproductcollectionItem
+     */
+    public function setVatValue($vatValue)
+    {
+        $this->vatValue = $vatValue;
+
+        return $this;
+    }
+
+    /**
+     * Get vatValue
+     *
+     * @return float 
+     */
+    public function getVatValue()
+    {
+        return $this->vatValue;
+    }
 }

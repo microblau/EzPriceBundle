@@ -9,42 +9,44 @@
 namespace Efl\BasketBundle\eZ\Publish\Core\Repository;
 
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\BasketItem;
+use Efl\BasketBundle\Discounts\ProductDiscountInterface;
+use eZ\Publish\Core\Repository\Values\Content\Content;
 
 class DiscountsService
 {
     /**
-     * @var \Efl\BasketBundle\Discounts\BasketItemDiscountInterface[]
+     * @var \Efl\BasketBundle\Discounts\ProductDiscountInterface[]
      */
-    private $discountTypes;
+    private $productDiscountTypes;
 
     public function __construct()
     {
-        $this->discountTypes = array();
+        $this->productDiscountTypes = array();
     }
 
     /**
      * Añade un tipo de descuento
      *
-     * @param BasketItemDiscountInterface $basketItemDiscountType
+     * @param ProductDiscountInterface $productDiscountType
      */
-    public function addDiscountType( BasketItemDiscountInterface $basketItemDiscountType )
+    public function addDiscountType( ProductDiscountInterface $productDiscountType )
     {
-        $this->discountTypes[] = $basketItemDiscountType;
+        $this->productDiscountTypes[] = $productDiscountType;
     }
 
     /**
-     * Aplica el descuento al producto
+     * Devuelve el mejor descuento para el producto
      *
-     * @param BasketItem $basketItem
+     * @param Content $content
      * @return BasketItem|void
      */
-    public function findBestDiscount( BasketItem $basketItem )
+    public function findBestDiscount( Content $content )
     {
         $applicableDiscounts = array();
 
-        foreach ( $this->discountTypes as $discountType )
+        foreach ( $this->productDiscountTypes as $discountType )
         {
-            $discount = $discountType->isApplicableTo( $basketItem );
+            $discount = $discountType->isApplicableTo( $content );
             if ( $discount )
             {
                 $applicableDiscounts[] = $discount;
@@ -62,12 +64,14 @@ class DiscountsService
     /**
      * Devuelve el mejor descuento aplicable
      *
-     * @param \Efl\BasketBundle\eZ\Publish\API\Repository\Values\Discounts\BasketItem[]
+     * @param \Efl\BasketBundle\eZ\Publish\API\Repository\Values\Discounts\Product[]
+     * @return \Efl\BasketBundle\eZ\Publish\API\Repository\Values\Discounts\Product
      */
     private function findBestMatch( array $discounts = array() )
     {
         $bestPercentage =  0.0;
         $bestDiscount = null;
+
         foreach ( $discounts as $discount )
         {
             if ( $discount->percentage > $bestPercentage )
@@ -79,4 +83,4 @@ class DiscountsService
 
         return $bestDiscount;
     }
-} 
+}

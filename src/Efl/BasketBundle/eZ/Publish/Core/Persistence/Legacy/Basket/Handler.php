@@ -10,7 +10,7 @@ namespace Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket;
 
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Basket;
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\BasketItem;
-use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Discounts\BasketItem as DiscountBasketItem;
+use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Discounts\Product;
 
 class Handler
 {
@@ -111,11 +111,37 @@ class Handler
         );
     }
 
-    public function applyDiscountToItem( BasketItem $basketItem, DiscountBasketItem $discount )
+    /**
+     * Setear el código de descuento en la tienda
+     *
+     * @param Basket $basket
+     * @param $couponCode
+     */
+    public function setDiscountCoupon( Basket $basket, $couponCode )
     {
-        $this->basketGateway->applyDiscountToItem(
-            $basketItem->id,
-            $discount->percentage
+        $this->basketGateway->setDiscountCoupon(
+            $basket->id,
+            $couponCode
         );
+    }
+
+    /**
+     * Aplicar descuento a producto
+     *
+     * @param BasketItem $basketItem
+     * @param Product $discount
+     * @return BasketItem
+     */
+    public function applyDiscountToItem( BasketItem $basketItem, Product $discount )
+    {
+        $basketItem = new BasketItem(
+            $this->basketGateway->applyDiscountToItem(
+                $basketItem->id,
+                $discount->percentage
+            )
+        );
+
+        $basketItem->setDiscount( $discount );
+        return $basketItem;
     }
 }

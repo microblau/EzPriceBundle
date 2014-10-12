@@ -26,7 +26,7 @@ class EzproductcollectionItem
      *
      * @ORM\Column(name="contentobject_id", type="integer", nullable=false)
      */
-    private $contentobjectId = '0';
+    private $contentobjectId;
 
     /**
      * @var float
@@ -47,28 +47,28 @@ class EzproductcollectionItem
      *
      * @ORM\Column(name="item_count", type="integer", nullable=false)
      */
-    private $itemCount = '0';
+    private $itemCount;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
-    private $name = '';
+    private $name;
 
     /**
      * @var float
      *
      * @ORM\Column(name="price", type="float", precision=10, scale=0, nullable=true)
      */
-    private $price = '0';
+    private $price;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="productcollection_id", type="integer", nullable=false)
      */
-    private $productcollectionId = '0';
+    private $productcollectionId;
 
     /**
      * @var float
@@ -76,6 +76,8 @@ class EzproductcollectionItem
      * @ORM\Column(name="vat_value", type="float", precision=10, scale=0, nullable=true)
      */
     private $vatValue;
+
+
 
     /**
      * Get id

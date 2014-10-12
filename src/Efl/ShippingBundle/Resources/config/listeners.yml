@@ -1,0 +1,10 @@
+parameters:
+    eflweb.listener.basket.shipping.class: Efl\ShippingBundle\Listeners\Shipping
+
+services:
+    eflweb.listener.basket.shipping:
+        class: %eflweb.listener.basket.shipping.class%
+        arguments:
+            - @efl.basket.shipping
+        tags:
+            - { name: kernel.event_listener, event: eflweb.event.basket.preshow, method: getShippingCost }

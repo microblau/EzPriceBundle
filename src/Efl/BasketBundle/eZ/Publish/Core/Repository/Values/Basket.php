@@ -27,6 +27,9 @@ class Basket extends APIBasket
      */
     protected $totalIncVat = 0.0;
 
+    /**
+     * @var string
+     */
     protected $discountCode;
 
     /**

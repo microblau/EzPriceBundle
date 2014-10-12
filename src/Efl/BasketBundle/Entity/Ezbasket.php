@@ -26,23 +26,21 @@ class Ezbasket
      *
      * @ORM\Column(name="order_id", type="integer", nullable=false)
      */
-    private $orderId = '0';
+    private $orderId;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="productcollection_id", type="integer", nullable=false)
      */
-    private $productcollectionId = '0';
+    private $productcollectionId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="session_id", type="string", length=255, nullable=false)
      */
-    private $sessionId = '';
-
-
+    private $sessionId;
 
     /**
      * Get id

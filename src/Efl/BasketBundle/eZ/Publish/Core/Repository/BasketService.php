@@ -14,7 +14,7 @@ use Efl\BasketBundle\Event\UpdateQuantityItemInBasket;
 use Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket\Handler as BasketHandler;
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Basket;
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\BasketItem;
-use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Discounts\BasketItem as DiscountBasketItem;
+use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Discounts\Product;
 use eZ\Publish\API\Repository\ContentService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -56,22 +56,24 @@ class BasketService
      */
     public function getCurrentBasket( $byOrderId = -1 )
     {
-        $basket = new Basket(
-            $this->basketHandler->currentBasket( $byOrderId )
-        );
-
-        $basketItems = $this->basketHandler->getItemsByProductCollectionId( $basket->productCollectionId );
-
-        $items = array();
-
-        foreach( $basketItems as $basketItem )
+        if ( $this->basket === null )
         {
-            $items[] = new BasketItem( $basketItem );
+            $basket = new Basket(
+                $this->basketHandler->currentBasket($byOrderId)
+            );
+
+            $basketItems = $this->basketHandler->getItemsByProductCollectionId($basket->productCollectionId);
+
+            $items = array();
+
+            foreach ($basketItems as $basketItem) {
+                $items[] = new BasketItem($basketItem);
+            }
+
+            $basket->setItems($items);
+
+            $this->basket = $basket;
         }
-
-        $basket->setItems( $items );
-
-        $this->basket = $basket;
 
         return $this->basket;
 
@@ -156,23 +158,22 @@ class BasketService
         $this->eventDispatcher->dispatch('eflweb.event.basket.updateitem', $event);
     }
 
-    /**
-     * Aplica el código de descuento pasado
-     *
-     * @param $discountCode
-     */
-    public function setDiscountCode( $discountCode )
+    public function setDiscountCoupon( $couponCode )
     {
-        $this->getCurrentBasket()->setDiscountCode( $discountCode );
+        $this->basketHandler->setDiscountCoupon(
+            $this->getCurrentBasket(),
+            $couponCode
+        );
     }
 
     /**
      * @param BasketItem $basketItem
-     * @param DiscountBasketItem $discount
+     * @param Product $discount
+     * @return \Efl\BasketBundle\eZ\Publish\Core\Repository\Values\BasketItem
      */
-    public function applyDiscountToItem( BasketItem $basketItem, DiscountBasketItem $discount )
+    public function applyDiscountToItem( BasketItem $basketItem, Product $discount )
     {
-        $this->basketHandler->applyDiscountToItem( $basketItem, $discount );
+        return $this->basketHandler->applyDiscountToItem( $basketItem, $discount );
     }
 }
 

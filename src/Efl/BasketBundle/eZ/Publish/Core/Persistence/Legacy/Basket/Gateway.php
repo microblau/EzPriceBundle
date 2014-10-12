@@ -73,4 +73,13 @@ abstract class Gateway
      * @return mixed
      */
     abstract public function applyDiscountToItem( $productCollectionItemId, $discountPercent );
+
+    /**
+     * Setear el código de descuento introducido por el usuario
+     *
+     * @param $basketId
+     * @param $couponCode
+     * @return mixed
+     */
+    abstract public function setDiscountCoupon( $basketId, $couponCode );
 }

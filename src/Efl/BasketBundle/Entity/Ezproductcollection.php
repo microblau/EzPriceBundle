@@ -3,7 +3,6 @@
 namespace Efl\BasketBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Ezproductcollection
@@ -34,7 +33,9 @@ class Ezproductcollection
      *
      * @ORM\Column(name="currency_code", type="string", length=4, nullable=false)
      */
-    private $currencyCode = '';
+    private $currencyCode;
+
+
 
     /**
      * Get id
@@ -90,10 +91,5 @@ class Ezproductcollection
     public function getCurrencyCode()
     {
         return $this->currencyCode;
-    }
-
-    public function getItems()
-    {
-        return $this->items;
     }
 }

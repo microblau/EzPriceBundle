@@ -49,7 +49,7 @@ class CheckoutController extends Controller
                 $apply_coupon = $form->get( 'apply_coupon' )->isClicked();
                 if ( $apply_coupon )
                 {
-                    $this->get( 'eflweb.basket_service')->setDiscountCode(
+                    $this->get( 'eflweb.basket_service' )->setDiscountCoupon(
                         $form->get( 'voucher_code' )->getData()
                     );
                 }
@@ -72,11 +72,11 @@ class CheckoutController extends Controller
                             $this->get('eflweb.basket_service')->removeProductFromBasket($currentItem->getContent()->id);
                         }
                     }
-
-                    return $this->redirect(
-                        $this->generateUrl('cart')
-                    );
                 }
+
+                return $this->redirect(
+                    $this->generateUrl('cart')
+                );
             }
 
         }
@@ -84,10 +84,9 @@ class CheckoutController extends Controller
         $currentBasket = $this->get( 'eflweb.basket_service' )->getCurrentBasket();
 
         $event = new BasketPreShowEvent( $currentBasket );
-        $this->get ('event_dispatcher' )->dispatch( 'eflweb.event.basket.applydiscounts', $event );
+        $this->get ('event_dispatcher' )->dispatch( 'eflweb.event.basket.preshow', $event );
 
         $currentItems = $currentBasket->getItems();
-        print_r( $currentItems );
         $template = count( $currentItems ) ? 'cart' : 'empty-cart';
 
         $params = array();

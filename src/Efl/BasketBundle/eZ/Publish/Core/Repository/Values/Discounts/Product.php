@@ -8,9 +8,9 @@
 
 namespace Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Discounts;
 
-use Efl\BasketBundle\eZ\Publish\API\Repository\Values\Discounts\BasketItem as BasketItemDiscount;
+use Efl\BasketBundle\eZ\Publish\API\Repository\Values\Discounts\Product as ProductDiscount;
 
-class BasketItem extends BasketItemDiscount
+class Product extends ProductDiscount
 {
 
 }

@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: carlos
- * Date: 11/10/14
- * Time: 13:28
+ * Date: 12/10/14
+ * Time: 13:37
  */
 
 namespace Efl\BasketBundle\DependencyInjection;
@@ -12,22 +12,22 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
-class DiscountsCompilerPass implements CompilerPassInterface
+class ShippingCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
         $definition = $container->getDefinition(
-            'efl.basket.discounts'
+            'efl.basket.shipping'
         );
 
         $taggedServices = $container->findTaggedServiceIds(
-            'efl.discounts.product'
+            'efl.shipping'
         );
 
         foreach ($taggedServices as $id => $attributes)
         {
             $definition->addMethodCall(
-                'addDiscountType',
+                'addShippingMethod',
                 array(new Reference($id))
             );
         }

@@ -1,0 +1,6 @@
+parameters:
+    efl.basket.shipping.class: Efl\BasketBundle\eZ\Publish\Core\Repository\ShippingService
+
+services:
+    efl.basket.shipping:
+        class: %efl.basket.shipping.class%

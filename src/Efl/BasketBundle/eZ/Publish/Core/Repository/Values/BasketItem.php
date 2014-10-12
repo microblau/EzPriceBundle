@@ -16,7 +16,7 @@ class BasketItem extends APIBasketItem
 
     protected $contentTypeIdentifier;
 
-    protected $discount;
+    protected $discount = null;
 
     /**
      * Contenido asociado
@@ -65,7 +65,7 @@ class BasketItem extends APIBasketItem
     }
 
     /**
-     * @param float $discount
+     * @param Discount $discount
      */
     public function setDiscount( $discount )
     {

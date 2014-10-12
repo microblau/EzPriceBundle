@@ -1,11 +1,23 @@
 parameters:
-    efl.discounts.basketitem.legacy.class: Efl\DiscountsBundle\Discounts\BasketItem\Legacy
+    efl.discounts.product.legacy.class: Efl\DiscountsBundle\Discounts\Product\Legacy
+    efl.discounts.product.coupon.class: Efl\DiscountsBundle\Discounts\Product\Coupon
 
 services:
-    efl.discounts.legacy.prepublicaction:
-        class: %efl.discounts.basketitem.legacy.class%
+    efl.discounts.product.legacy:
+        class: %efl.discounts.product.legacy.class%
         arguments:
             - @eflweb.discounts_service
             - @ezpublish.api.repository
         tags:
-          -  { name: efl.discounts.basketitem, alias: legacy }
+          -  { name: efl.discounts.product, alias: legacy }
+
+    efl.discounts.product.coupon:
+        class: %efl.discounts.product.coupon.class%
+        arguments:
+            - @eflweb.basket_service
+            - @ezpublish.api.service.location
+            - @ezpublish.api.service.content
+            - @ezpublish.api.service.search
+            - @ezpublish.api.repository
+        tags:
+          -  { name: efl.discounts.product, alias: legacy }

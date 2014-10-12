@@ -6,14 +6,14 @@
  * Time: 16:05
  */
 
-namespace Efl\BasketBundle\DependencyInjection;
+namespace Efl\ShippingBundle\DependencyInjection;
 
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
 
-class EflBasketExtension extends Extension
+class EflShippingExtension extends Extension
 {
     /**
      * Loads a specific configuration.
@@ -28,17 +28,8 @@ class EflBasketExtension extends Extension
             new FileLocator( __DIR__ . '/../Resources/config' )
         );
 
-        // Base services override
-        $loader->load( 'services.yml' );
-
-        // forms
-        $loader->load( 'forms.yml' );
-
-        // listeners
-        $loader->load( 'listeners.yml' );
-
-        $loader->load( 'discounts.yml' );
-
         $loader->load( 'shipping.yml' );
+
+        $loader->load( 'listeners.yml' );
     }
 }

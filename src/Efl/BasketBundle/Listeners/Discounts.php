@@ -8,18 +8,18 @@
 
 namespace Efl\BasketBundle\Listeners;
 
-use Efl\BasketBundle\Discounts\BasketItemDiscountManager;
 use Efl\BasketBundle\Event\BasketPreShowEvent;
 use Efl\BasketBundle\eZ\Publish\Core\Repository\BasketService;
+use Efl\BasketBundle\eZ\Publish\Core\Repository\DiscountsService;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class Cart extends Event
+class Discounts extends Event
 {
     /**
-     * @var BasketItemDiscountManager
+     * @var DiscountsService
      */
-    private $basketItemDiscountManager;
+    private $discountsService;
 
     /**
      * @var BasketService
@@ -27,11 +27,11 @@ class Cart extends Event
     private $basketService;
 
     public function __construct(
-        BasketItemDiscountManager $basketItemDiscountManager,
+        DiscountsService $discountsService,
         BasketService $basketService
     )
     {
-        $this->basketItemDiscountManager = $basketItemDiscountManager;
+        $this->discountsService = $discountsService;
         $this->basketService = $basketService;
     }
 
@@ -41,11 +41,13 @@ class Cart extends Event
 
         foreach( $items as $i => $item )
         {
-            $discount = $this->basketItemDiscountManager->findBestDiscount( $item );
-            $this->basketService->applyDiscountToItem( $item, $discount );
-            $items[$i]->setDiscount( $discount );
+            $discount = $this->discountsService->findBestDiscount( $item->getContent() );
+            if ( $discount && $item->getDiscount() === null )
+            {
+                $item = $this->basketService->applyDiscountToItem( $item, $discount );
+                $items[$i] = $item;
+            }
         }
-
         $event->getBasket()->setItems( $items );
     }
 }

@@ -9,12 +9,13 @@
 namespace Efl\BasketBundle\Discounts;
 
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\BasketItem;
+use eZ\Publish\API\Repository\Values\Content\Content;
 
 /**
  * Interface BasketItemDiscountInterface
  * @package Efl\DiscountsBundle\eZ\Publish\API\Repository\Values
  */
-interface BasketItemDiscountInterface
+interface ProductDiscountInterface
 {
     /**
      * Determina si el descuento se puede aplicar al producto
@@ -22,8 +23,8 @@ interface BasketItemDiscountInterface
      * En caso positivo, un objeto que tiene el porcentaje y el mensaje asociado
      * al descuento
      *
-     * @param BasketItem $basketItem
-     * @return \Efl\BasketBundle\eZ\Publish\API\Repository\Values\Discounts\BasketItem|bool
+     * @param Content $content
+     * @return \Efl\BasketBundle\eZ\Publish\API\Repository\Values\Discounts\Product|bool
      */
-    public function isApplicableTo( BasketItem $basketItem );
+    public function isApplicableTo( Content $content );
 }

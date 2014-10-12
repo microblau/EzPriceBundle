@@ -1,11 +1,11 @@
 parameters:
-    eflweb.listener.basket.class: Efl\BasketBundle\Listeners\Cart
+    eflweb.listener.discounts.class: Efl\BasketBundle\Listeners\Discounts
 
 services:
-    eflweb.listener.basket.pre.show:
-        class: %eflweb.listener.basket.class%
+    eflweb.listener.basket.applydiscounts:
+        class: %eflweb.listener.discounts.class%
         arguments:
-            - @efl.basket.discounts.basketitem.manager
+            - @efl.basket.discounts
             - @eflweb.basket_service
         tags:
-            - { name: kernel.event_listener, event: eflweb.event.basket.applydiscounts, method: applyDiscountsToBasket }
+            - { name: kernel.event_listener, event: eflweb.event.basket.preshow, method: applyDiscountsToBasket }

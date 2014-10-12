@@ -99,9 +99,6 @@ class LeadsHelper
             $this->connect();
         }
 
-        print_r ($data);
-        die();
-
         $this->client->CreateLead(
             array(
                 "StrLeadFirstName" => $data['nombre'],
