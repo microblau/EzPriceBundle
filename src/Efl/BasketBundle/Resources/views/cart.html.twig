@@ -90,7 +90,7 @@
             </div>
                   <span class="tb-formats">
                     <span class="price">
-                      <b>0,00 €</b>
+                      <b>{{ shippingCost|currency_convert_format( 'EUR') }}</b>
                     </span>
                   </span>
         </article>
@@ -126,7 +126,7 @@
                 <span class="tb-formats">
                   <span class="price">
                     <small class="txt upper">Importe Total</small>
-                    <b>{{ totalIncVat|currency_convert_format('EUR') }}</b>
+                    <b>{{ total|currency_convert_format('EUR') }}</b>
                   </span>
                 </span>
     </section>

@@ -19,6 +19,8 @@ class WebserviceUser implements UserInterface, EquatableInterface
 
     private $facturacion;
 
+    private $envio;
+
     private $idWs;
 
     public function __construct( $username,
@@ -27,6 +29,7 @@ class WebserviceUser implements UserInterface, EquatableInterface
         $apellido2 = '',
         $colective = '',
         $facturacion = null,
+        $envio = null,
         $idWs = null
     )
     {
@@ -36,6 +39,7 @@ class WebserviceUser implements UserInterface, EquatableInterface
         $this->apellido1 = $apellido1;
         $this->apellido2 = $apellido2;
         $this->facturacion = $facturacion;
+        $this->envio = $envio;
         $this->idWs = $idWs;
     }
 
@@ -132,4 +136,15 @@ class WebserviceUser implements UserInterface, EquatableInterface
     {
         $this->facturacion = $facturacion;
     }
+
+    public function setEnvio( $envio )
+    {
+        $this->envio = $envio;
+    }
+
+    public function getEnvio()
+    {
+        return $this->envio;
+    }
+
 }

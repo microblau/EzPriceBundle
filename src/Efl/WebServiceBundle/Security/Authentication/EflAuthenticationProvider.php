@@ -63,6 +63,7 @@ class EflAuthenticationProvider extends UserAuthenticationProvider
 
             if( $validate = $this->wsManager->validaUsuario( $username, $token->getCredentials() ) )
             {
+               // die('t');
                 return new WebserviceUser(
                     $username,
                     $validate->_nombre,
@@ -70,6 +71,7 @@ class EflAuthenticationProvider extends UserAuthenticationProvider
                     $validate->_apellido2,
                     $validate->_cod_colectivo,
                     $validate->_facturacion,
+                    $validate->_envio,
                     $validate->_idUsuarioLv
                 );
             }
@@ -82,6 +84,7 @@ class EflAuthenticationProvider extends UserAuthenticationProvider
             $ex->setToken($token);
             throw $ex;
         }
+
     }
 
     /**
@@ -121,6 +124,7 @@ class EflAuthenticationProvider extends UserAuthenticationProvider
                     $validation->_apellido2,
                     $validation->_cod_colectivo,
                     $validation->_facturacion,
+                    $validation->_envio,
                     $validation->_idUsuarioLv
                 );
             }

@@ -110,7 +110,9 @@ class CheckoutController extends Controller
 
         $params['totalExVat'] = $currentBasket->getTotalExVat();
         $params['totalIncVat'] = $currentBasket->getTotalIncVat();
+        $params['shippingCost'] = $currentBasket->getShippingCost();
         $params['totalTaxAmount'] = $currentBasket->getTotalTaxAmount();
+        $params['total'] =  $currentBasket->getTotalIncVat() + $currentBasket->getShippingCost();
         $params['form'] = $form->createView();
 
         return $this->render(

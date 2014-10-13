@@ -33,6 +33,11 @@ class Basket extends APIBasket
     protected $discountCode;
 
     /**
+     * @var float
+     */
+    protected $shippingCost;
+
+    /**
      * @return BasketItem[]
      */
     public function getItems()
@@ -115,4 +120,25 @@ class Basket extends APIBasket
     {
         $this->discountCode = $discountCode;
     }
+
+    /**
+     * Setter for shipping cost
+     *
+     * @param float $shippingCost
+     */
+    public function setShippingCost( $shippingCost )
+    {
+        $this->shippingCost = $shippingCost;
+    }
+
+    /**
+     * Getter for shipping cost
+     *
+     * @return float
+     */
+    public function getShippingCost()
+    {
+        return $this->shippingCost;
+    }
+
 }

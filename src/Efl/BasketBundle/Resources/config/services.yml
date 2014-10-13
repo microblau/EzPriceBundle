@@ -14,6 +14,7 @@ services:
             - @eflweb.persistence.legacy.basket.handler
             - @ezpublish.api.service.content
             - @event_dispatcher
+            - @efl.basket.shipping
 
     eflweb.persistence.legacy.basket.handler:
         class: %eflweb.persistence.legacy.basket.handler.class%

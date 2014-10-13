@@ -144,4 +144,18 @@ class Handler
         $basketItem->setDiscount( $discount );
         return $basketItem;
     }
+
+    /**
+     * @param string $oldSessionId     *
+     * @param string $newSessionId
+     *
+     * @return void
+     */
+    public function resetBasketSessionId( $oldSessionId, $newSessionId )
+    {
+        $this->basketGateway->resetBasketSessionId(
+            $oldSessionId,
+            $newSessionId
+        );
+    }
 }

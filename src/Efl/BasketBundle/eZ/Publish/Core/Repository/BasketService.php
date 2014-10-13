@@ -25,21 +25,34 @@ class BasketService
      */
     protected $basketHandler;
 
+    /**
+     * @var ContentService
+     */
     protected $contentService;
 
+    /**
+     * @var EventDispatcherInterface
+     */
     protected $eventDispatcher;
+
+    /**
+     * @var ShippingService
+     */
+    protected $shippingService;
 
     private $basket = null;
 
     public function __construct(
         BasketHandler $basketHandler,
         ContentService $contentService,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        ShippingService $shippingService
     )
     {
         $this->basketHandler = $basketHandler;
         $this->contentService = $contentService;
         $this->eventDispatcher = $eventDispatcher;
+        $this->shippingService = $shippingService;
     }
 
     public function getRelatedPurchasedListForContentIds( $contentIds, $limit )
@@ -71,6 +84,10 @@ class BasketService
             }
 
             $basket->setItems($items);
+
+            $basket->setShippingCost(
+                $this->shippingService->getShippingCostForBasket( $basket )
+            );
 
             $this->basket = $basket;
         }
@@ -174,6 +191,21 @@ class BasketService
     public function applyDiscountToItem( BasketItem $basketItem, Product $discount )
     {
         return $this->basketHandler->applyDiscountToItem( $basketItem, $discount );
+    }
+
+    /**
+     * Actualizar el id de sesión de la cesta
+     *
+     * @param $sessionId
+     *
+     * @return void
+     */
+    public function resetBasketSessionId( $oldSessionId, $newSessionId )
+    {
+        $this->basketHandler->resetBasketSessionId(
+            $oldSessionId,
+            $newSessionId
+        );
     }
 }
 

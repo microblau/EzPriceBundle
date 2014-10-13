@@ -42,11 +42,8 @@ class Discounts extends Event
         foreach( $items as $i => $item )
         {
             $discount = $this->discountsService->findBestDiscount( $item->getContent() );
-            if ( $discount && $item->getDiscount() === null )
-            {
-                $item = $this->basketService->applyDiscountToItem( $item, $discount );
-                $items[$i] = $item;
-            }
+            $item = $this->basketService->applyDiscountToItem( $item, $discount );
+            $items[$i] = $item;
         }
         $event->getBasket()->setItems( $items );
     }

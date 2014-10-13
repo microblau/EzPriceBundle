@@ -29,7 +29,5 @@ class EflShippingExtension extends Extension
         );
 
         $loader->load( 'shipping.yml' );
-
-        $loader->load( 'listeners.yml' );
     }
 }

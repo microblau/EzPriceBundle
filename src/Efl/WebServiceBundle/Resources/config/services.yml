@@ -6,6 +6,7 @@ parameters:
     efl_auth.security.authentication.provider.class: Efl\WebServiceBundle\Security\Authentication\EflAuthenticationProvider
     efl_auth.interactive_event_listener.class: Efl\WebServiceBundle\EventListener\InteractiveLoginListener
     efl_auth.usercreator.class: Efl\WebServiceBundle\Driver\UserCreatorService
+    security.authentication.listener.form.class: Efl\WebServiceBundle\Security\Http\Firewall\EflUsernamePasswordFormAuthenticationListener
 
 services:
     efl_auth.client:
@@ -45,7 +46,7 @@ services:
 
     efl_auth.interactive_event_listener:
         class: %efl_auth.interactive_event_listener.class%
-        arguments: [@ezpublish.api.service.user, @efl_auth.usercreator]
+        arguments: [@ezpublish.api.service.user, @efl_auth.usercreator, @eflweb.basket_service]
         tags:
             - { name: kernel.event_subscriber }
 

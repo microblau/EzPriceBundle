@@ -31,11 +31,23 @@ class ShippingService
     /**
      * Añade un método de envío
      *
-     * @param ShippingInterface $productDiscountType
+     * @param ShippingInterface $shippingMethod
      */
     public function addShippingMethod( ShippingInterface $shippingMethod )
     {
         $this->shippingMethods[] = $shippingMethod;
+    }
+
+    /**
+     * Obtener el precio para la cesta
+     *
+     * @param Basket $basket
+     *
+     * @return float
+     */
+    public function getShippingCostForBasket( Basket $basket )
+    {
+        return $this->findBestMethod( $basket )->cost;
     }
 
     /**

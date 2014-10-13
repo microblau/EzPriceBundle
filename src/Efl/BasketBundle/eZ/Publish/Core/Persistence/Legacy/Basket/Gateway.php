@@ -82,4 +82,15 @@ abstract class Gateway
      * @return mixed
      */
     abstract public function setDiscountCoupon( $basketId, $couponCode );
+
+    /**
+     * Actualizar el id de session de la cesta tras login
+     * para no perder productos
+     *
+     * @param $oldSessionId
+     * @param $newSessionId
+     *
+     * @return mixed
+     */
+    abstract public function resetBasketSessionId( $oldSessionId, $newSessionId );
 }

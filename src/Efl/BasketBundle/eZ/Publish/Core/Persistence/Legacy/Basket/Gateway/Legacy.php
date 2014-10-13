@@ -182,6 +182,8 @@ class Legacy extends Gateway
         }
         else
         {
+            $sessionId = $this->session->getId();
+
             $query = $this->em->createQueryBuilder();
             $query
                 ->select( 'ezbasket' )
@@ -189,7 +191,7 @@ class Legacy extends Gateway
                 ->where(
                     $query->expr()->eq( 'ezbasket.sessionId', ':sessionId')
                 )
-                ->setParameter( 'sessionId', $this->session->getId() );
+                ->setParameter( 'sessionId',  $sessionId );
 
             $basket = $query->getQuery()->getResult();
         }
@@ -209,7 +211,7 @@ class Legacy extends Gateway
         $this->em->flush();
 
         $basket = new Ezbasket();
-        $basket->setSessionId( $this->session->getId() );
+        $basket->setSessionId( $sessionId );
         $basket->setProductcollectionId( $collection->getId() );
         $basket->setOrderId( 0 );
         $this->em->persist( $basket );
@@ -383,13 +385,33 @@ class Legacy extends Gateway
     {
         $item = $this->em->find( 'EflBasketBundle:EzproductcollectionItem', $productCollectionItemId );
         $item->setDiscount( $discountPercent );
-        $item->setPrice( $item->getPrice() * ( 100 - $discountPercent ) / 100 );
+        $content = $this->contentService->loadContent( $item->getContentobjectId() );
+        $price = $content->getFieldValue( 'precio' );
+        $item->setPrice( $price->price * ( 100 - $discountPercent ) / 100 );
         $this->em->persist( $item );
         $this->em->flush();
 
         return $this->getProductData( $item );
     }
 
+    /**
+     * Actualizar id de sesión de la cesta
+     *
+     * @param $oldSessionId
+     * @param $newSessionId
+     *
+     * @return mixed|void
+     */
+    public function resetBasketSessionId( $oldSessionId, $newSessionId )
+    {
+        $qb = $this->em->createQueryBuilder();
+        $q = $qb->update('EflBasketBundle:Ezbasket', 'b')
+                ->set('b.sessionId', $qb->expr()->literal( $newSessionId ) )
+                ->where('b.sessionId = ?1')
+                ->setParameter(1, $oldSessionId )
+                ->getQuery();
+        $q->execute();
+    }
     /**
      * Crear un cupón nuevo en la base de datos.
      *
