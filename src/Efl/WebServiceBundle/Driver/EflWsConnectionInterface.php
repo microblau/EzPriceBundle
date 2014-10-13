@@ -34,4 +34,27 @@ interface EflWsConnectionInterface
      * recupera precio del producto dado en código
      */
     public function recuperarPreciosProducto( $cod );
+
+    /**
+     * Actualizar datos de facturación de usuario
+     *
+     * @param $data
+     * @return mixed
+     */
+
+    public function setUsuarioDatosFacturacion( $data );
+    /**
+     * Actualizar datos de facturación de usuario
+     *
+     * @param $data
+     * @return mixed
+     */
+
+    public function setUsuarioDatosEnvio( $data );
+    /**
+     * Obtener listado de provincias
+     *
+     * @return array
+     */
+    public function getProvincias();
 }

@@ -1,5 +1,7 @@
 parameters:
     efl.basket.shipping.efl.class: Efl\ShippingBundle\ShippingMethod\Efl
+    # las palmas, santa cruz de tenerife, ceuta y melilla
+    efl.basket.shipping.efl.nonpensisular.province.codes: [35, 38, 51, 52]
 
 services:
     efl.basket.shipping.efl:
@@ -7,4 +9,5 @@ services:
         tags:
             -  { name: efl.shipping, alias: efl }
         arguments:
-            - @security.context
+            - @eflweb.utils_helper
+            - %efl.basket.shipping.efl.nonpensisular.province.codes%

@@ -42,7 +42,8 @@ services:
             - @eflweb.utils_helper
             - @ezpublish.api.storage_engine.legacy.dbhandler
             - @ezpublish.api.service.content
-            - ['ceuta', 'melilla', 'palmas, las', 'santa cruz de tenerife']
+             # las palmas, santa cruz de tenerife, ceuta y melilla
+            - [35, 38, 51, 52]
 
     ezprice.api.service.automaticvatservice:
         class: %ezprice.api.service.automaticvatservice.class%

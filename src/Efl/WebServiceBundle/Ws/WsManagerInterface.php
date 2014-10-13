@@ -37,4 +37,26 @@ interface WsManagerInterface
      * @return mixed
      */
     public function recuperarProductosPrecio( $cod );
+
+    /**
+     * setear Datos de Facturación del usuario
+     *
+     * @param array $data
+     * @return mixed
+     */
+    public function setUsuarioDatosFacturacion( array $data );
+
+    /**
+     * setear Datos de Envío del usuario
+     *
+     * @param array $data
+     * @return mixed
+     */
+    public function setUsuarioDatosEnvio( array $data );
+    /**
+     * Obtener listado de provincias
+     *
+     * @return mixed
+     */
+    public function getProvincias();
 }

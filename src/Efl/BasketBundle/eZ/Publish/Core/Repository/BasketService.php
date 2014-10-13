@@ -16,6 +16,7 @@ use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Basket;
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\BasketItem;
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Discounts\Product;
 use eZ\Publish\API\Repository\ContentService;
+use EzSystems\EzPriceBundle\API\Price\Values\VatRate;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class BasketService
@@ -192,6 +193,17 @@ class BasketService
     {
         return $this->basketHandler->applyDiscountToItem( $basketItem, $discount );
     }
+
+    /**
+     * @param BasketItem $basketItem
+     * @param VatRate $vatRate
+     * @return \Efl\BasketBundle\eZ\Publish\Core\Repository\Values\BasketItem
+     */
+    public function applyTaxToItem( BasketItem $basketItem, VatRate $vatRate )
+    {
+        return $this->basketHandler->applyTaxToItem( $basketItem, $vatRate );
+    }
+
 
     /**
      * Actualizar el id de sesión de la cesta

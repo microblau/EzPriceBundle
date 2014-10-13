@@ -11,6 +11,7 @@ namespace Efl\BasketBundle\eZ\Publish\Core\Persistence\Legacy\Basket;
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Basket;
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\BasketItem;
 use Efl\BasketBundle\eZ\Publish\Core\Repository\Values\Discounts\Product;
+use EzSystems\EzPriceBundle\API\Price\Values\VatRate;
 
 class Handler
 {
@@ -142,6 +143,25 @@ class Handler
         );
 
         $basketItem->setDiscount( $discount );
+        return $basketItem;
+    }
+
+    /**
+     * Aplicar tax al item
+     *
+     * @param BasketItem $basketItem
+     * @param VatRate $vatRate
+     * @return BasketItem
+     */
+    public function applyTaxToItem( BasketItem $basketItem, VatRate $vatRate )
+    {
+        $basketItem = new BasketItem(
+            $this->basketGateway->applyTaxToItem(
+                $basketItem->id,
+                $vatRate->percentage
+            )
+        );
+
         return $basketItem;
     }
 

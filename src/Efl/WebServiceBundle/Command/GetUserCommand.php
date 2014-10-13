@@ -36,7 +36,7 @@ class GetUserCommand extends ContainerAwareCommand
             )
         );
         print_r( $ws->getUsuario(
-            94
+            99
         ) );
     }
 }

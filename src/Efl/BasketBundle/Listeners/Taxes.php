@@ -10,16 +10,15 @@ namespace Efl\BasketBundle\Listeners;
 
 use Efl\BasketBundle\Event\BasketPreShowEvent;
 use Efl\BasketBundle\eZ\Publish\Core\Repository\BasketService;
-use Efl\BasketBundle\eZ\Publish\Core\Repository\DiscountsService;
+use EzSystems\EzPriceBundle\API\Price\ContentVatService;
 use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\HttpFoundation\Session\Session;
 
-class Discounts extends Event
+class Taxes extends Event
 {
     /**
-     * @var DiscountsService
+     * @var ContentVatService
      */
-    private $discountsService;
+    private $contentVatService;
 
     /**
      * @var BasketService
@@ -27,24 +26,23 @@ class Discounts extends Event
     private $basketService;
 
     public function __construct(
-        DiscountsService $discountsService,
+        ContentVatService $vatService,
         BasketService $basketService
     )
     {
-        $this->discountsService = $discountsService;
+        $this->contentVatService = $vatService;
         $this->basketService = $basketService;
     }
 
-    public function applyDiscountsToBasket( BasketPreShowEvent $event )
+    public function applyTaxesToBasket( BasketPreShowEvent $event )
     {
         $items = $event->getBasket()->getItems();
 
         foreach( $items as $i => $item )
         {
-            if( $discount = $this->discountsService->findBestDiscount( $item->getContent() ) )
-            {
-                $items[$i] = $this->basketService->applyDiscountToItem( $item, $discount );
-            }
+            $priceField = $item->getContent()->getFields()[1];
+            $vatRate = $this->contentVatService->loadVatRateForField( $priceField->id, $item->getContent()->contentInfo->currentVersionNo );
+            $items[$i] = $this->basketService->applyTaxToItem( $item, $vatRate );
         }
         $event->getBasket()->setItems( $items );
     }

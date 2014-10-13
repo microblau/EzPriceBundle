@@ -46,4 +46,32 @@ class WsManager implements WsManagerInterface
     {
         return $this->connection->recuperarPreciosProducto( $cod );
     }
+
+    /**
+     * @param array $data
+     * @return mixed
+     */
+    public function setUsuarioDatosFacturacion( array $data )
+    {
+        return $this->connection->setUsuarioDatosFacturacion( $data );
+    }
+
+    /**
+     * @param array $data
+     * @return mixed
+     */
+    public function setUsuarioDatosEnvio( array $data )
+    {
+        return $this->connection->setUsuarioDatosEnvio( $data );
+    }
+
+    /**
+     * Obtener las provincias
+     *
+     * @return array|mixed
+     */
+    public function getProvincias()
+    {
+        return $this->connection->getProvincias();
+    }
 } 

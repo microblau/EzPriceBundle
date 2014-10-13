@@ -264,14 +264,11 @@ class Legacy extends Gateway
     public function addProductToProductCollection( $productCollectionId, $contentId, array $optionList = array(), $quantity = 1 )
     {
         $content = $this->contentService->loadContent( $contentId );
-        $currentVersionNo = $content->contentInfo->currentVersionNo;
-        $priceFieldId = $content->getFields()[1]->id;
 
         $priceObject = $content->getFieldValue( 'precio' );
         $price = $priceObject->price;
 
         /* Check if the item with the same options is not already in the basket: */
-        $itemID = false;
         $collection = $this->getProductCollectionByProductCollectionId( $productCollectionId );
 
         if ( !$collection )
@@ -317,10 +314,9 @@ class Legacy extends Gateway
                 $item->setPrice( $price );
                 $item->setIsVatInc( $priceObject->isVatIncluded ? 1 : 0 );
                 $item->setProductcollectionId( $productCollectionId );
-                $item->setVatValue(
-                    $this->contentVatService->loadVatRateForField( $priceFieldId, $currentVersionNo )->percentage
-                );
 
+                // inicializamos vat y descuento y los seteamos mediante listeners
+                $item->setVatValue( 0 );
                 $item->setDiscount( 0 );
 
                 $this->em->persist( $item );
@@ -388,6 +384,24 @@ class Legacy extends Gateway
         $content = $this->contentService->loadContent( $item->getContentobjectId() );
         $price = $content->getFieldValue( 'precio' );
         $item->setPrice( $price->price * ( 100 - $discountPercent ) / 100 );
+        $this->em->persist( $item );
+        $this->em->flush();
+
+        return $this->getProductData( $item );
+    }
+
+    /**
+     * @param $productCollectionItemId
+     * @param $taxPercentage
+     * @return mixed|void
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function applyTaxToItem( $productCollectionItemId, $taxPercentage )
+    {
+        $item = $this->em->find( 'EflBasketBundle:EzproductcollectionItem', $productCollectionItemId );
+        $item->setVatValue( $taxPercentage );
         $this->em->persist( $item );
         $this->em->flush();
 

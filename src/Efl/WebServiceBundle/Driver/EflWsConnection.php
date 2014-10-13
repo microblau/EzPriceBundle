@@ -136,7 +136,9 @@ class EflWsConnection implements  EflWsConnectionInterface
     /**
      * Setea los datos de facturación del usuario
      *
-     * @param $idUsuario
+     * @param $data
+     *
+     * @return mixed
      */
     public function setUsuarioDatosFacturacion( $data )
     {
@@ -160,15 +162,53 @@ class EflWsConnection implements  EflWsConnectionInterface
                 'p_StrDirResto' => $data['dir_resto'],
                 'p_StrDirCpostal' => $data['cp'],
                 'p_StrDirLocalidad' => $data['localidad'],
-                'p_StrDirProvincia' => $data['provincia'],
+                'p_StrIdProvincia' => $data['id_provincia'],
                 'p_IntDirFactIgualEnvio' => (int)$data['direcciones_iguales'],
-                'p_StrObservaciones' => $data['observaciones']
+                'p_IntDirFactModificada' => 1
             )
         );
 
         return $usuario;
     }
 
+    /**
+     * Setea los datos de envío del usuario
+     *
+     * @param $data
+     *
+     * @return mixed
+     */
+    public function setUsuarioDatosEnvio( $data )
+    {
+        if ( $this->ws_res === null )
+        {
+            $this->connect();
+        }
+
+        $usuario = $this->ws_res->SetUsuarioDatosEnvio(
+            array(
+                'p_IntIdUsuarioLv' => $data['idUsuario'],
+                'p_StrNombre' => $data['nombre'],
+                'p_StrApellido1' => $data['apellido1'],
+                'p_StrApellido2' => $data['apellido2'],
+                'p_StrDirNombre' => $data['direccion'],
+                'p_StrDirNumero' => $data['numero'],
+                'p_StrDirResto' => $data['dir_resto'],
+                'p_StrDirCpostal' => $data['cp'],
+                'p_StrDirLocalidad' => $data['localidad'],
+                'p_StrIdProvincia' => $data['id_provincia'],
+            )
+        );
+
+        return $usuario;
+    }
+
+    /**
+     * Recupera precio del producto pasado en cod
+     *
+     * @param $cod
+     * @return float
+     */
     public function recuperarPreciosProducto( $cod )
     {
         if ( $this->ws_res === null )
@@ -186,6 +226,23 @@ class EflWsConnection implements  EflWsConnectionInterface
             return (float)$data->RecuperarProductosPrecioResult->data->Producto->precioBase;
     }
 
+    /**
+     * Listado de provincias
+     */
+    public function getProvincias()
+    {
+        if ( $this->ws_res === null )
+        {
+            $this->connect();
+        }
+
+        $data = $this->ws_res->getProvincias(
+            array()
+        );
+
+        return $data->GetProvinciasResult->data->Provincia;
+
+    }
     /**
      * conexión al ws
      */

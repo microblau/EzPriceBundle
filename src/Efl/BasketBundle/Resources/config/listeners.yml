@@ -1,5 +1,6 @@
 parameters:
     eflweb.listener.discounts.class: Efl\BasketBundle\Listeners\Discounts
+    eflweb.listener.taxes.class: Efl\BasketBundle\Listeners\Taxes
 
 services:
     eflweb.listener.basket.applydiscounts:
@@ -9,3 +10,11 @@ services:
             - @eflweb.basket_service
         tags:
             - { name: kernel.event_listener, event: eflweb.event.basket.preshow, method: applyDiscountsToBasket }
+
+    eflweb.listener.basket.taxes:
+        class: %eflweb.listener.taxes.class%
+        arguments:
+            - @ezprice.api.service.contentvatservice
+            - @eflweb.basket_service
+        tags:
+            - { name: kernel.event_listener, event: eflweb.event.basket.preshow, method: applyTaxesToBasket }

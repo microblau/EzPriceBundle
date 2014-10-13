@@ -35,6 +35,12 @@ class EflAutomaticVatHandler extends Base
      */
     private $provinciasExentas;
 
+
+    /**
+     * Código de Madrid para calcular impuestos
+     */
+    const DEFAULT_PROVINCE = 28;
+
     public function __construct(
         UtilsHelper $utilsHelper,
         DatabaseHandler $handler,
@@ -66,9 +72,9 @@ class EflAutomaticVatHandler extends Base
     private function getProvincia()
     {
         $userData = $this->utilsHelper->getCurrentUserFriendlyData();
-        return isset( $userData['facturacion'] ) && !empty( $userData['facturacion']->_dir_provincia )
-            ? $userData['facturacion']->_dir_provincia
-            : 'Madrid';
+        return isset( $userData['facturacion'] ) && !empty( $userData['facturacion']->_id_provincia )
+            ? $userData['facturacion']->_id_provincia
+            : self::DEFAULT_PROVINCE;
     }
 
     private function getProductCategory( $fieldId, $versionNo )

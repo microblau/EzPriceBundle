@@ -35,9 +35,27 @@ class setUsuarioDatosFacturacionCommand extends ContainerAwareCommand
                 'wsdl' => 'ServiceLibreriaVirtual.svc?wsdl'
             )
         );
+
+
+
+        print_r( $ws->setUsuarioDatosEnvio(
+            array(
+                'idUsuario' => 99,
+                'nombre' => 'Carlitos',
+                'apellido1' => 'Revillo',
+                'apellido2' => 'Vidales',
+                'direccion' => 'Avenida América',
+                'numero' => '26',
+                'dir_resto' => '6 B',
+                'cp' => '24401',
+                'localidad' => 'Ponferrada',
+                'id_provincia' => 24,
+            )
+        ) );
+
         print_r( $ws->setUsuarioDatosFacturacion(
             array(
-                'idUsuario' => 35,
+                'idUsuario' => 99,
                 'nombre_empresa' => '',
                 'nif' => '10204708E',
                 'telefono' => '914401040',
@@ -50,10 +68,11 @@ class setUsuarioDatosFacturacionCommand extends ContainerAwareCommand
                 'dir_resto' => 'Planta 1',
                 'cp' => '28037',
                 'localidad' => 'Madrid',
-                'provincia' => 'Madrid',
-                'direcciones_iguales' => true,
+                'id_provincia' => 28,
+                'direcciones_iguales' => false,
                 'observaciones' => ''
             )
         ) );
+
     }
 }

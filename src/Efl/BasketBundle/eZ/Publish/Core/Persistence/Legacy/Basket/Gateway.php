@@ -75,6 +75,15 @@ abstract class Gateway
     abstract public function applyDiscountToItem( $productCollectionItemId, $discountPercent );
 
     /**
+     * Actualiza el tax asociado al item
+     *
+     * @param $productCollectionItemId
+     * @param $discountPercent
+     * @return mixed
+     */
+    abstract public function applyTaxToItem( $productCollectionItemId, $discountPercent );
+
+    /**
      * Setear el código de descuento introducido por el usuario
      *
      * @param $basketId

@@ -55,6 +55,7 @@ class UtilsHelper
             $data['apellido2'] = $user->getWrappedUser()->getApellido2();
             $data['email'] = $user->getUsername();
             $data['facturacion'] = $user->getWrappedUser()->getFacturacion();
+            $data['envio'] = $user->getWrappedUser()->getEnvio();
         }
         else
         {
