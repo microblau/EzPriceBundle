@@ -48,7 +48,9 @@ ezpublish:
                     - ''
                 local.efl5: newhome
                 local.efl5.dev: newhome
+                efl5.tantacom.com: newhome
                 admin.efl5: administracion
+                administracionefl5.tantacom.com: administracion
                 admin.efl5.dev: administracion
                 formacion.efl.es: forma
                 formacion.eflweb.local: forma
