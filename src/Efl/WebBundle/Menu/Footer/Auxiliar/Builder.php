@@ -6,7 +6,7 @@
  * Time: 13:07
  */
 
-namespace Efl\WebBundle\Menu\Footer\Aux;
+namespace Efl\WebBundle\Menu\Footer\Auxiliar;
 
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;

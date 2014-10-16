@@ -58,7 +58,7 @@ class EflTemplate extends TwitterBootstrap3Template
 
     private function previousDisabledClass()
     {
-        return $this->option('css_prev_class');
+        return $this->option('css_disabled_class');
     }
 
     public function current($page)

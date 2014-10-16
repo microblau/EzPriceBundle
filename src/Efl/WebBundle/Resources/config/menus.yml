@@ -114,7 +114,7 @@ services:
             - %eflweb.footer.groups_menu.locations%
 
     efl.footer.aux.menu.builder:
-        class: Efl\WebBundle\Menu\Footer\Aux\Builder
+        class: Efl\WebBundle\Menu\Footer\Auxiliar\Builder
         arguments:
             - @knp_menu.factory
             - @router
@@ -197,7 +197,7 @@ services:
             - { name: knp_menu.menu, alias: footer_products }
 
     efl.menu.footer.aux:
-        class: Efl\WebBundle\Menu\Footer\Aux\Builder
+        class: Efl\WebBundle\Menu\Footer\Auxiliar\Builder
         factory_service: efl.footer.aux.menu.builder
         factory_method: createMenu
         arguments: [@request]
