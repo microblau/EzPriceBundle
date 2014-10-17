@@ -183,7 +183,7 @@ class FooterController extends Controller
         );
 
         return $this->render(
-            'EflWebBundle:footer:aux.html.twig',
+            'EflWebBundle:footer:auxiliar.html.twig',
             $parameters,
             $response
         );
