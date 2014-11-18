@@ -6,24 +6,26 @@ php:
   - 5.4
   - 5.5
   - 5.6
+  - hhvm
 
 matrix:
     allow_failures:
-        - php: 5.6
+        - php: 5.3
+        - php: hhvm
 
 # test only master (+ Pull requests)
 branches:
   only:
     - master
-    - dev
-    - EZP-23049-price_service
-
-# install dependencies
-install: composer install --dev --prefer-dist
 
 # setup requirements for running unit tests
 before_script:
-  - cp vendor/ezsystems/ezpublish-kernel/config.php-DEVELOPMENT vendor/ezsystems/ezpublish-kernel/config.php
+  # Disable xdebug to speed things up as we don't currently generate coverage on travis
+  - if [ $TRAVIS_PHP_VERSION != "hhvm" ]; then phpenv config-rm xdebug.ini ; fi
+  # Setup github key to avoid api rate limit
+  - ./composer_install_github_key.sh
+  # Install packages using composer
+  - composer install --dev --prefer-dist
 
 # execute phpunit as the script command
 script:
