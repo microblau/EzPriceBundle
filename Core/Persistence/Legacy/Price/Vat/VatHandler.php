@@ -11,7 +11,6 @@ namespace EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Vat;
 use EzSystems\EzPriceBundle\SPI\Persistence\Price\VatHandler as VatHandlerInterface;
 use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Vat\Gateway;
 use EzSystems\EzPriceBundle\API\Price\Values\VatRate;
-use EzSystems\EzPriceBundle\Core\Persistence\Legacy\Price\Vat\AutomaticVatHandlerException;
 
 class VatHandler implements VatHandlerInterface
 {

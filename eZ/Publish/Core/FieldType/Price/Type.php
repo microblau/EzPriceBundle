@@ -9,7 +9,6 @@
 namespace EzSystems\EzPriceBundle\eZ\Publish\Core\FieldType\Price;
 
 use eZ\Publish\Core\FieldType\FieldType;
-use eZ\Publish\SPI\Persistence\Content\FieldValue;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentType;
 use eZ\Publish\SPI\FieldType\Value as SPIValue;
 use eZ\Publish\Core\FieldType\Value as BaseValue;
@@ -32,7 +31,7 @@ class Type extends FieldType
      * It will be used to generate content name and url alias if current field is designated
      * to be used in the content name/urlAlias pattern.
      *
-     * @param \eZ\Publish\SPI\FieldType\Value $value
+     * @param \EzSystems\EzPriceBundle\eZ\Publish\Core\FieldType\Price\Value $value
      *
      * @return string
      */
@@ -112,7 +111,7 @@ class Type extends FieldType
     /**
      * Returns information for FieldValue->$sortKey relevant to the field type.
      *
-     * @param \eZ\Publish\Core\FieldType\Price\Value $value
+     * @param \EzSystems\EzPriceBundle\eZ\Publish\Core\FieldType\Price\Value $value
      *
      * @return array
      */
