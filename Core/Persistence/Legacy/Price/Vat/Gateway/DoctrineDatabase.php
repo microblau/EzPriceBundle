@@ -58,11 +58,11 @@ class DoctrineDatabase extends Gateway
         $statement = $query->prepare();
         $statement->execute();
 
-        if ( $statement->rowCount() === 0 )
+        if ( $row = $statement->fetch( PDO::FETCH_ASSOC ) )
         {
-            throw new VatNotFoundException( 'Vat Rate', $vatRateId );
+            return $row;
         }
 
-        return $statement->fetch();
+        throw new VatNotFoundException( 'Vat Rate', $vatRateId );
     }
 }
