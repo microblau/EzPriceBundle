@@ -1,5 +1,5 @@
 {
-    "name": "ezcommunity/ez-price-bundle",
+    "name": "crevillo/ez-price-bundle",
     "description": "Products price FieldType for eZ Publish Platform",
     "license": "GPL-2.0",
     "keywords": ["ezpublish", "ezprice"],
