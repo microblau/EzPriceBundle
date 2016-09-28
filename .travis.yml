@@ -29,7 +29,7 @@ before_script:
   # For your own organization please create your own token without(!) any scope to avoid both you and us reaching api limitations on this token.  
   - composer config -g github-oauth.github.com "d0285ed5c8644f30547572ead2ed897431c1fc09"
   # Install packages using composer
-  - travis_retry composer update --dev --prefer-dist --no-interaction --optimize-autoloade
+  - travis_retry composer install --dev --prefer-dist --no-interaction --optimize-autoloader
 
 # execute phpunit as the script command
 script: php vendor/bin/phpunit --colors -c phpunit.xml
