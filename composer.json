@@ -9,7 +9,6 @@
             "homepage": "https://github.com/ezcommunity/EzPriceBundle/graphs/contributors"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
         "ezsystems/ezpublish-kernel": "~5.3 | ~6.0 | >=2014.03"
