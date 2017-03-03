@@ -3,6 +3,7 @@
     "description": "Products price FieldType for eZ Publish Platform",
     "license": "GPL-2.0",
     "keywords": ["ezpublish", "ezprice"],
+    "type": "ezplatform-bundle",
     "authors": [
         {
             "name": "eZ Publish dev-team & eZ Community",
