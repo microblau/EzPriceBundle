@@ -13,58 +13,58 @@ parameters:
 services:
     ezprice.fieldType.ezprice.class:
         parent: ezpublish.fieldType
-        class: %ezprice.fieldType.ezprice.class%
+        class: '%ezprice.fieldType.ezprice.class%'
         tags:
             - {name: ezpublish.fieldType, alias: ezprice}
 
     ezprice.fieldType.ezprice.converter:
-        class: %ezprice.fieldType.ezprice.converter.class%
+        class: '%ezprice.fieldType.ezprice.converter.class%'
         tags:
             - {name: ezpublish.storageEngine.legacy.converter, alias: ezprice, lazy: true, callback: '::create'}
 
     ezprice.twig.extension:
-        class: %ezprice.twig.extension.class%
+        class: '%ezprice.twig.extension.class%'
         tags:
             - { name: twig.extension }
         arguments:
-            - @ezprice.api.service.contentvatservice
-            - @ezprice.api.service.pricewithvatcalculator
-            - @?logger
+            - '@ezprice.api.service.contentvatservice'
+            - '@ezprice.api.service.pricewithvatcalculator'
+            - '@?logger'
 
     ezprice.api.service.vatservice:
-        class: %ezprice.api.service.vatservice.class%
+        class: '%ezprice.api.service.vatservice.class%'
         arguments:
-            - @ezprice.api.storage_engine.legacy.handler.ezprice.vathandler
+            - '@ezprice.api.storage_engine.legacy.handler.ezprice.vathandler'
 
     ezprice.api.service.contentvatservice:
-        class: %ezprice.api.service.contentvatservice.class%
+        class: '%ezprice.api.service.contentvatservice.class%'
         arguments:
-            - @ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler
-            - @ezprice.api.service.vatservice
+            - '@ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler'
+            - '@ezprice.api.service.vatservice'
 
     ezprice.api.service.pricewithvatcalculator:
-        class: %ezprice.api.service.pricewithvatcalculator.class%
+        class: '%ezprice.api.service.pricewithvatcalculator.class%'
 
     ezprice.api.storage_engine.legacy.handler.ezprice.vathandler.factory:
-        class: %ezprice.api.storage_engine.legacy.handler.ezprice.vathandler.factory.class%
+        class: '%ezprice.api.storage_engine.legacy.handler.ezprice.vathandler.factory.class%'
         arguments:
-            - @service_container
+            - '@service_container'
 
     ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler.factory:
-        class: %ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler.factory.class%
+        class: '%ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler.factory.class%'
         arguments:
-            - @service_container
+            - '@service_container'
 
     ezprice.api.storage_engine.legacy.handler.ezprice.vathandler:
-        class: %ezprice.api.storage_engine.legacy.handler.ezprice.vathandler.class%
+        class: '%ezprice.api.storage_engine.legacy.handler.ezprice.vathandler.class%'
         factory_service: ezprice.api.storage_engine.legacy.handler.ezprice.vathandler.factory
         factory_method: buildLegacyVatHandler
         arguments:
-            - @ezpublish.api.storage_engine.legacy.dbhandler
+            - '@ezpublish.api.storage_engine.legacy.dbhandler'
 
     ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler:
-        class: %ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler.class%
+        class: '%ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler.class%'
         factory_service: ezprice.api.storage_engine.legacy.handler.ezprice.contentvathandler.factory
         factory_method: buildLegacyContentVatHandler
         arguments:
-            - @ezpublish.api.storage_engine.legacy.dbhandler
+            - '@ezpublish.api.storage_engine.legacy.dbhandler'
