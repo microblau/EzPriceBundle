@@ -1,18 +1,18 @@
 {
-    "name": "crevillo/ez-price-bundle",
+    "name": "ezcommunity/ez-price-bundle",
     "description": "Products price FieldType for eZ Publish Platform",
     "license": "GPL-2.0",
     "keywords": ["ezpublish", "ezprice"],
+    "type": "ezplatform-bundle",
     "authors": [
         {
             "name": "eZ Publish dev-team & eZ Community",
             "homepage": "https://github.com/ezcommunity/EzPriceBundle/graphs/contributors"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "ezsystems/ezpublish-kernel": "~6.0@dev"
+        "ezsystems/ezpublish-kernel": "~5.3 | ~6.0 | >=2014.03"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.1"
